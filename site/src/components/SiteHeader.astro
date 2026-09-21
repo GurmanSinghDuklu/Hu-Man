@@ -2,13 +2,20 @@
 import ThemeToggle from './ThemeToggle.astro';
 import { site } from '../config/site';
 
+// Section anchors only exist on the homepage. From any other page (privacy,
+// 404), link back to "/" plus the anchor so the link actually goes
+// somewhere, instead of a dead "#services" with no matching element.
+const isHome = Astro.url.pathname === '/';
+const prefix = isHome ? '' : '/';
+
 const navLinks = [
-  { href: '#work', label: 'Work' },
-  { href: '#services', label: 'Services' },
-  { href: '#pricing', label: 'Pricing' },
-  { href: '#about', label: 'About' },
-  { href: '#faq', label: 'FAQ' },
+  { href: `${prefix}#work`, label: 'Work' },
+  { href: `${prefix}#services`, label: 'Services' },
+  { href: `${prefix}#pricing`, label: 'Pricing' },
+  { href: `${prefix}#about`, label: 'About' },
+  { href: `${prefix}#faq`, label: 'FAQ' },
 ];
+const auditHref = `${prefix}#audit`;
 ---
 
 <header class="site-header">
@@ -28,7 +35,7 @@ const navLinks = [
     </nav>
 
     <div class="site-header__actions">
-      <a href="#audit" class="btn btn-primary site-header__cta">
+      <a href={auditHref} class="btn btn-primary site-header__cta">
         Get your free presence audit
       </a>
       <ThemeToggle />
@@ -38,7 +45,7 @@ const navLinks = [
         </summary>
         <ul>
           <li>
-            <a href="#audit">Get your free presence audit</a>
+            <a href={auditHref}>Get your free presence audit</a>
           </li>
           {navLinks.map((link) => (
             <li>

@@ -1,0 +1,93 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import { site } from '../config/site';
+---
+
+<BaseLayout
+  title={`Privacy notice | ${site.name}`}
+  description="How this website and its owner handle your information."
+>
+  <SiteHeader slot="header" />
+
+  <section class="wrap privacy">
+    <p class="privacy__draft-flag">
+      Draft — this notice has not been finalised or reviewed. It describes the site as it currently
+      works. Update it before taking on paid client work or collecting any personal data beyond a
+      direct enquiry.
+    </p>
+
+    <h1>Privacy notice</h1>
+    <p class="privacy__updated">Last updated: {new Date().toISOString().slice(0, 10)}.</p>
+
+    <h2>Who this covers</h2>
+    <p>
+      This notice covers this website, run by {site.founder} trading as {site.name} (a working name
+      — see the footer for current contact details). Gurman has not yet registered as a sole trader;
+      that is planned before any paid work begins.
+    </p>
+
+    <h2>This site itself</h2>
+    <p>
+      This site sets no cookies and runs no analytics, advertising or tracking scripts of any kind.
+      It is a static set of pages: visiting it does not create an account, a session or a tracking
+      profile. If analytics are added later, this notice will be updated first and a cookie or
+      consent notice will be added if required.
+    </p>
+
+    <h2>If you get in touch</h2>
+    <p>
+      The "Get your free presence audit" links, and the pricing enquiry links, open your own email
+      app (a <code>mailto:</code> link), your phone's dialler, or WhatsApp. Nothing you type is sent
+      to or stored by this website — it goes directly from your device to Gurman's inbox, phone or
+      WhatsApp, the same as it would if you'd looked up the details yourself. That message is then
+      handled the same way as any other business enquiry: kept only as long as needed to answer you
+      and, if you become a client, as part of the project record.
+    </p>
+
+    <h2>If you become a client</h2>
+    <p>
+      Any project involving an AI assistant, booking system or similar tool will have its own,
+      specific explanation of what data is collected, which providers process it, and how long it is
+      kept, agreed with you before launch. Health-related businesses (for example dental or
+      physiotherapy clients) get extra care here, in line with the rules for special-category data.
+    </p>
+
+    <h2>Your rights</h2>
+    <p>
+      You can ask what information is held about you, ask for it to be corrected or deleted, or
+      raise a concern, by contacting{' '}
+      <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>. If you're not satisfied
+      with the response, you can complain to the UK Information Commissioner's Office (ico.org.uk).
+    </p>
+  </section>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+  .privacy {
+    padding-block: var(--space-7);
+    max-width: 65ch;
+  }
+
+  .privacy__draft-flag {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-3);
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+    margin-bottom: var(--space-5);
+  }
+
+  .privacy__updated {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+  }
+
+  .privacy h2 {
+    margin-top: var(--space-5);
+  }
+</style>

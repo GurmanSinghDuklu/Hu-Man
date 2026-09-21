@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import { site } from '../config/site';
+---
+
+<BaseLayout
+  title={`Page not found | ${site.name}`}
+  description="This page could not be found."
+  index={false}
+>
+  <SiteHeader slot="header" />
+
+  <section class="wrap not-found">
+    <h1>Page not found</h1>
+    <p>
+      The page you were looking for doesn't exist, or the address has changed. Try the homepage, or
+      get in touch if you followed a broken link.
+    </p>
+    <div class="not-found__actions">
+      <a href="/" class="btn btn-primary">
+        Back to the homepage
+      </a>
+      <a href="/#audit" class="btn btn-secondary">
+        Get your free presence audit
+      </a>
+    </div>
+  </section>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+  .not-found {
+    padding-block: var(--space-7);
+    max-width: 40em;
+  }
+
+  .not-found__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-4);
+  }
+</style>

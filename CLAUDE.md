@@ -37,6 +37,7 @@ Build the studio's own marketing website: high-end, fast, local-SEO-ready, with 
   - `npm run lighthouse` — builds nothing itself (run `build` first); serves `dist/` on a throwaway static server (`scripts/serve.mjs`, not `astro preview`, to avoid its singleton-daemon port issue) and runs Lighthouse headless. Reports land in `reports/lighthouse/`.
   - `npm run axe` — same static-server approach, runs `@axe-core/playwright` against `dist/`, tags `wcag2a wcag2aa wcag22aa`.
   - `npm run screenshots` — Playwright screenshots of `dist/` at 360/768/1280px in light and dark (`colorScheme` emulation), saved to `reports/screenshots/`.
+  - `npm run og-image` — rasterises `public/og-image.svg` to `public/og-image.png` (1200×630) via Playwright Chromium. Re-run and commit the PNG whenever the SVG changes; the PNG is what ships (most platforms don't render SVG for `og:image`).
   - Run `npm run build` before `lighthouse`, `axe` or `screenshots` — they all serve the built `dist/`, not the dev server.
 
 ## Phase 1 status (done)
@@ -80,6 +81,36 @@ dental/salon; fixed by using solid `--after-ink-on-accent` there instead of an o
 axe: 0 violations on both themes. Total inline JS ~3.2 kB (well under the ~50 kB budget; Astro
 inlines these small islands directly into the HTML rather than emitting separate .js files for a
 static build this size).
+
+## Phase 3 status (done)
+SEO/meta layer: `Seo.astro` (canonical, Open Graph, Twitter card, JSON-LD ProfessionalService)
+included via `BaseLayout.astro`. JSON-LD is emitted once, homepage-only (`structuredData` prop on
+BaseLayout) — repeating identical business schema on every page is redundant. Canonical link is
+omitted on noindex pages (currently just 404). `public/og-image.svg` is the source; `npm run
+og-image` (script: `scripts/generate-og-image.mjs`) rasterises it to `public/og-image.png`
+(1200×630, committed) via the Playwright Chromium already installed for testing — most social
+platforms don't reliably render SVG for `og:image`, so re-run this whenever the SVG changes.
+`@astrojs/sitemap` added and configured (`astro.config.mjs`); `src/pages/robots.txt.ts` is
+generated (not a static `public/` file) so its `Sitemap:` line can never drift from `site.url`.
+New pages: `/404` (index={false} on BaseLayout, so noindex + no canonical) and `/privacy`
+(indexable, draft flag at the top, describes the real no-tracking/mailto-only state honestly —
+update before any paid work or new data collection).
+
+Real bug found by `/seo-audit` and fixed: `SiteHeader.astro`'s nav anchors (`#services` etc.)
+were hardcoded hash-only links, which do nothing from any page except the homepage (no matching
+element exists on `/privacy` or `/404`). Fixed by prefixing with `/` when not on the homepage
+(`Astro.url.pathname === '/'`). Check this pattern again if more pages are added — anything
+linking to a homepage section from elsewhere needs the `/` prefix, not a bare `#anchor`.
+
+Domain-dependent items are correctly still open (all `site.url`/`astro.config.mjs` `site` still
+`https://example.com` per docs/09 item 8): GSC/Bing sitemap submission, JSON-LD `url` and every
+canonical/OG URL will need the real domain once chosen — update `src/config/site.ts` and
+`astro.config.mjs` together, then rebuild.
+
+Lighthouse 98/100/100/100 (unchanged from Phase 2 — SEO metadata additions cost nothing).
+axe: 0 violations across all three pages (home, privacy, 404). JSON-LD validated against
+Schema.org's ProfessionalService requirements. `/seo-audit` passes on every buildable item; see
+the audit output in this phase's report for the couple of domain-dependent items still open.
 
 ## Working agreements
 - Plan first with `/plan-site`, get approval, then build one phase at a time with `/build-phase N`.

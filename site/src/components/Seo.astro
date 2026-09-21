@@ -1,0 +1,67 @@
+---
+import { site } from '../config/site';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Set to false to add a noindex robots meta tag (e.g. the 404 page). */
+  index?: boolean;
+  /** Emit the ProfessionalService JSON-LD. Only the homepage needs this — repeating identical business schema on every page is redundant, not wrong, but best practice is once per site. */
+  structuredData?: boolean;
+}
+
+const {
+  title,
+  description,
+  index = true,
+  structuredData: includeStructuredData = false,
+} = Astro.props;
+
+const canonicalUrl = new URL(Astro.url.pathname, site.url).toString();
+const ogImageUrl = new URL('/og-image.png', site.url).toString();
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: site.name,
+  description:
+    'Website redesign, online booking and payments, AI enquiry assistants and local SEO for small businesses in Bradford and West Yorkshire.',
+  email: site.contact.email,
+  telephone: `+${site.contact.phoneIntl}`,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: site.location.town,
+    addressRegion: site.location.region,
+    addressCountry: site.location.country,
+  },
+  areaServed: site.areasServed.map((name) => ({ '@type': 'City', name })),
+  founder: { '@type': 'Person', name: site.founder },
+  sameAs: [site.contact.github, site.contact.linkedin],
+  // Placeholder domain — replace once docs/09-open-questions.md item 8 is decided.
+  url: site.url,
+};
+---
+
+{index && <link rel="canonical" href={canonicalUrl} />}
+{!index && <meta name="robots" content="noindex, follow" />}
+
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:site_name" content={site.name} />
+<meta property="og:image" content={ogImageUrl} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="en_GB" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImageUrl} />
+
+{includeStructuredData && (
+  <script type="application/ld+json" set:html={JSON.stringify(structuredData)}></script>
+)}
