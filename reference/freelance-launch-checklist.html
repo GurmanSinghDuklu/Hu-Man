@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>12-week freelance web developer launch checklist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F3F5F9;
+    --surface: #FFFFFF;
+    --ink: #101B33;
+    --muted: #55617A;
+    --line: #D3DAE6;
+    --track: #DCE2ED;
+    --accent: #2440E8;
+    --accent-ink: #FFFFFF;
+    --done: #1B7F55;
+    --display: "Bricolage Grotesque", "Trebuchet MS", "Segoe UI", sans-serif;
+    --body: "DM Sans", "Segoe UI", system-ui, -apple-system, Helvetica, Arial, sans-serif;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0E1424;
+      --surface: #161E33;
+      --ink: #E8ECF6;
+      --muted: #9AA6C0;
+      --line: #2A3450;
+      --track: #26304B;
+      --accent: #8095FF;
+      --accent-ink: #0E1424;
+      --done: #4CC38A;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0E1424;
+    --surface: #161E33;
+    --ink: #E8ECF6;
+    --muted: #9AA6C0;
+    --line: #2A3450;
+    --track: #26304B;
+    --accent: #8095FF;
+    --accent-ink: #0E1424;
+    --done: #4CC38A;
+  }
+  html { scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 96px); }
+  *, *::before, *::after { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 17px;
+    line-height: 1.55;
+    -webkit-text-size-adjust: 100%;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 20px; }
+
+  header.intro { padding: 48px 0 28px; }
+  h1 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(2rem, 6vw, 3.2rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin: 0 0 16px;
+    max-width: 18ch;
+  }
+  .intro p { margin: 0 0 10px; color: var(--muted); max-width: 60ch; }
+
+  /* sticky progress */
+  .tracker {
+    position: sticky;
+    top: env(safe-area-inset-top, 0px);
+    z-index: 5;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+    padding: 12px 0 8px;
+  }
+  .tracker-top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 8px; font-weight: 600; }
+  .tracker-top .pct { font-family: var(--display); font-size: 1.15rem; color: var(--accent); }
+  .runway { display: flex; gap: 4px; }
+  .seg {
+    flex: 1; min-width: 0; background: none; border: 0; padding: 0; cursor: pointer;
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+    font: inherit; color: var(--muted);
+  }
+  .seg .bar {
+    display: block; width: 100%; height: 12px; border-radius: 4px;
+    background: linear-gradient(90deg, var(--accent) var(--p, 0%), var(--track) var(--p, 0%));
+  }
+  .seg .n { font-size: 11px; line-height: 1; }
+  .seg.full .n { color: var(--done); font-weight: 600; }
+  .seg:focus-visible, summary:focus-visible, .btn:focus-visible, input[type="checkbox"]:focus-visible {
+    outline: 3px solid var(--accent); outline-offset: 2px;
+  }
+
+  /* phases and weeks */
+  main { padding-bottom: 40px; }
+  .phase { margin-top: 44px; }
+  .phase h2 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 1.55rem;
+    letter-spacing: -0.01em;
+    margin: 0 0 4px;
+  }
+  .phase > p { margin: 0 0 14px; color: var(--muted); max-width: 60ch; }
+
+  details.week { border-top: 1px solid var(--line); }
+  details.week:last-of-type { border-bottom: 1px solid var(--line); }
+  summary {
+    list-style: none; cursor: pointer;
+    display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; align-items: baseline;
+    padding: 16px 0;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary .title { font-family: var(--display); font-weight: 600; font-size: 1.15rem; line-height: 1.25; }
+  summary .title small { display: block; font-family: var(--body); font-weight: 400; font-size: 0.9rem; color: var(--muted); margin-top: 2px; }
+  summary .count { font-weight: 600; color: var(--muted); white-space: nowrap; }
+  details.week.complete summary .count { color: var(--done); }
+  details.week.complete summary .title::after { content: " \2713"; color: var(--done); }
+  summary::after { content: none; }
+
+  .week-body { padding: 0 0 22px; }
+  .goal { margin: 0 0 12px; padding-left: 14px; border-left: 3px solid var(--accent); color: var(--ink); }
+  ul.tasks { list-style: none; margin: 0; padding: 0; }
+  ul.tasks li { margin: 0; }
+  label.task {
+    display: grid; grid-template-columns: 24px 1fr; gap: 12px; align-items: start;
+    padding: 9px 0; cursor: pointer;
+  }
+  label.task .hint { display: block; color: var(--muted); font-size: 0.9rem; margin-top: 1px; }
+  input[type="checkbox"] {
+    appearance: none; -webkit-appearance: none;
+    width: 24px; height: 24px; margin: 1px 0 0;
+    border: 2px solid var(--muted); border-radius: 6px; background: var(--surface);
+    display: grid; place-content: center; cursor: pointer;
+  }
+  input[type="checkbox"]::after {
+    content: ""; width: 6px; height: 12px; border: solid var(--accent-ink); border-width: 0 2.5px 2.5px 0;
+    transform: rotate(45deg) translate(-1px, -1px) scale(0); transition: transform 0.12s ease-out;
+  }
+  input[type="checkbox"]:checked { background: var(--accent); border-color: var(--accent); }
+  input[type="checkbox"]:checked::after { transform: rotate(45deg) translate(-1px, -1px) scale(1); }
+  input[type="checkbox"]:checked ~ .txt { color: var(--muted); text-decoration: line-through; text-decoration-thickness: 1px; }
+  input[type="checkbox"]:checked ~ .txt .hint { text-decoration: none; }
+  .done-when { margin: 12px 0 0; padding: 10px 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; font-size: 0.95rem; }
+  .done-when strong { font-weight: 600; }
+
+  .footer-note { margin-top: 48px; color: var(--muted); font-size: 0.9rem; max-width: 62ch; }
+  .footer-note p { margin: 0 0 10px; }
+  .btn {
+    font: inherit; font-weight: 600; cursor: pointer;
+    background: transparent; color: var(--ink);
+    border: 1.5px solid var(--line); border-radius: 8px; padding: 8px 14px;
+  }
+  .btn.confirm { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .footer-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+
+  @media (max-width: 520px) {
+    body { font-size: 16px; }
+    .wrap { padding: 0 16px; }
+    header.intro { padding-top: 32px; }
+    .seg .n { font-size: 10px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    input[type="checkbox"]::after { transition: none; }
+  }
+  @media print {
+    .tracker, .footer-actions { display: none; }
+    body { background: #fff; color: #000; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="intro">
+    <h1>Your first 12 weeks as a freelance web developer</h1>
+    <p>One week at a time, from registering as a sole trader to your first paying clients and a plan for months 4 to 6. Tick tasks off as you go.</p>
+    <p>Progress saves in this browser on this device.</p>
+  </header>
+</div>
+
+<div class="tracker" role="region" aria-label="Overall progress">
+  <div class="wrap">
+    <div class="tracker-top">
+      <span id="summaryText">0 of 0 tasks done</span>
+      <span class="pct" id="pctText">0%</span>
+    </div>
+    <div class="runway" id="runway"></div>
+  </div>
+</div>
+
+<div class="wrap">
+  <main id="main"></main>
+
+  <div class="footer-note">
+    <p>Prices, tax and insurance details change, so check gov.uk and your own situation before you commit. None of this is tax or legal advice.</p>
+    <div class="footer-actions">
+      <button class="btn" id="expandBtn" type="button">Open all weeks</button>
+      <button class="btn" id="resetBtn" type="button">Reset progress</button>
+    </div>
+  </div>
+  <div style="height:48px"></div>
+</div>
+
+<script>
+(function () {
+  var STORE_KEY = "freelance-launch-checklist-v1";
+
+  var phases = [
+    {
+      name: "Set up",
+      blurb: "Get the legal, money and admin basics in place so you can take payment with confidence.",
+      weeks: [
+        {
+          title: "Legal and money foundations",
+          goal: "By Sunday you are set up to trade legally and can keep business money separate from personal money.",
+          tasks: [
+            ["Check any apprenticeship, job or college agreement allows outside work", "Read the outside-work or conflict-of-interest clause. Ask if it is unclear."],
+            ["Choose a business name", "Check the domain, Instagram, Google and Companies House for clashes."],
+            ["Register as a sole trader with HMRC", "gov.uk explains when you must. If you might earn under £1,000 in the year, check whether the trading allowance means you do not need to."],
+            ["Open a separate business bank account", "Starling and Tide are common starting points."],
+            ["Set up a simple income and expenses spreadsheet", "Date, client, amount, invoice number, paid or not."],
+            ["Get quotes for professional indemnity and public liability insurance", "Some clients will ask for proof."]
+          ],
+          done: "You have a business name, a business bank account and a clear answer on sole trader registration."
+        },
+        {
+          title: "Contracts, tools and stack",
+          goal: "You have the documents and tools to run a project from first call to final invoice.",
+          tasks: [
+            ["Buy your business domain and set up a professional email"],
+            ["Draft your client contract", "Cover scope, fixed price, 50% deposit, two revision rounds, payment deadline, and code ownership transferring on final payment."],
+            ["Have the contract checked", "A template from Enterprise Nation or a one-off solicitor review is worth it."],
+            ["Create proposal and invoice templates"],
+            ["Do the ICO data protection fee self-assessment", "Needed if you will handle customer or client personal data."],
+            ["Choose your main stack and a self-managed option", "For example Astro or Next.js with a simple CMS, plus WordPress or Webflow for clients who want to edit everything themselves."],
+            ["Set up Figma, a client folder structure and a client tracker", "A Google Sheet or Notion board is enough."]
+          ],
+          done: "You could send a proposal and contract to a client tomorrow."
+        }
+      ]
+    },
+    {
+      name: "Build your shop window",
+      blurb: "Clients buy on proof. Turn your CV into a portfolio they can judge in two minutes.",
+      weeks: [
+        {
+          title: "Portfolio site",
+          goal: "Your portfolio is built and has your first case study written.",
+          tasks: [
+            ["Write one sentence on who you help and what you do", "Example: I build fast, easy-to-edit websites for local salons, barbers and trades."],
+            ["Build the portfolio homepage, services page and contact page"],
+            ["Write the Essence Hair Treatment case study", "Problem, what you did, result. Include screenshots and the live link."],
+            ["Ask the Essence client for a written testimonial and a Google review"],
+            ["Run Lighthouse on your live sites and record the scores", "Speed and accessibility scores make good proof."],
+            ["List your starter packages with starting prices", "One page, standard site, business site with booking or CMS, and a monthly care plan."]
+          ],
+          done: "Your portfolio is live with one strong case study and a services page."
+        },
+        {
+          title: "Proof and presence",
+          goal: "Your portfolio has 3 to 4 case studies and you can be found online.",
+          tasks: [
+            ["Write the Arm documentation contribution as a case study", "It shows initiative and clear technical writing."],
+            ["Build 1 or 2 concept sites for local business types", "For example a barber and an electrician. Make them look real and load fast."],
+            ["Set up your Google Business Profile"],
+            ["Update your LinkedIn headline and add a services section"],
+            ["Test everything on real phones and fix any layout problems"],
+            ["Launch the finished portfolio and share it with friends and family", "Ask them who they know that runs a business."]
+          ],
+          done: "You can send one link that shows real work, prices and how to contact you."
+        }
+      ]
+    },
+    {
+      name: "Find and win your first clients",
+      blurb: "Aim for 2 or 3 discounted founding clients. Their testimonials matter more than the money at this stage.",
+      weeks: [
+        {
+          title: "Build your prospect list",
+          goal: "You have 40 to 50 well-researched local businesses and messages ready to send.",
+          tasks: [
+            ["Pick 1 or 2 niches to start with", "For example salons and barbers, and tradespeople."],
+            ["Search Google Maps for those niches in your area", "Look for no website, a Facebook-only presence, a broken site, or one that is slow or not mobile friendly."],
+            ["Record 40 to 50 businesses in your tracker", "Name, contact details, what is wrong with their web presence, and status."],
+            ["Write three outreach templates", "A DM, an email and a 30-second walk-in script."],
+            ["Build quick homepage mockups for your best 5 prospects"],
+            ["Join local networks", "Bradford Chamber of Commerce, local business Facebook groups, and check whether you are eligible for The King's Trust Enterprise programme."]
+          ],
+          done: "Your tracker is full, your templates are written and 5 mockups are ready to show."
+        },
+        {
+          title: "First outreach wave",
+          goal: "Ten to fifteen personalised contacts sent and at least one conversation booked.",
+          tasks: [
+            ["Send 10 to 15 personalised messages", "Mention something specific about their business and include the mockup link if you have one."],
+            ["Walk into 5 local businesses with a short friendly pitch"],
+            ["Tell your network what you are doing and ask for introductions", "Include the Essence client."],
+            ["Log every contact and reply in your tracker"],
+            ["Book discovery calls with anyone who shows interest"]
+          ],
+          done: "You have sent at least 15 contacts and know your reply rate."
+        },
+        {
+          title: "Discovery calls and proposals",
+          goal: "Every interested business has a clear fixed-price proposal.",
+          tasks: [
+            ["Run discovery calls", "Ask about goals, audience, current site, deadlines and who supplies the content."],
+            ["Send a written fixed-price proposal within 24 hours of each call"],
+            ["Make your founding client offer", "A discounted price in exchange for a testimonial and permission to publish a case study."],
+            ["Follow up on week 6 contacts that have not replied", "Wait 4 to 5 days, then send one short reminder."],
+            ["Send another 10 to 15 new contacts"]
+          ],
+          done: "At least one proposal is out and outreach is continuing every week."
+        },
+        {
+          title: "Sign and start your first project",
+          goal: "A signed contract, a paid deposit and a project underway.",
+          tasks: [
+            ["Get the contract signed and the 50% deposit paid before you start any work"],
+            ["Collect the client's logo, photos and text, with clear deadlines", "Late content is the most common cause of delays."],
+            ["Create a design mockup in Figma and get written approval"],
+            ["Send another 10 contacts to keep the pipeline moving"],
+            ["Do a 15-minute weekly review", "What worked, what to change, who to follow up."]
+          ],
+          done: "You are being paid for your first project and the design is approved."
+        }
+      ]
+    },
+    {
+      name: "Deliver, raise your prices, repeat",
+      blurb: "Turn one-off projects into recurring income and make the process repeatable.",
+      weeks: [
+        {
+          title: "Deliver your first client",
+          goal: "The first site is launched and the client is happy.",
+          tasks: [
+            ["Build the site and test it on real phones and browsers"],
+            ["Run two revision rounds and no more"],
+            ["Launch, then send a short handover video or walkthrough", "Show how to edit text and images."],
+            ["Send the final invoice and collect the remaining 50%"],
+            ["Ask for a testimonial, a Google review and a referral"],
+            ["Offer a monthly care plan", "Hosting, updates, backups, small edits and uptime checks."]
+          ],
+          done: "A live client site, a testimonial and a conversation about a care plan."
+        },
+        {
+          title: "Second client and care plans",
+          goal: "Your process runs a second time and recurring income starts.",
+          tasks: [
+            ["Start client 2 using the same process and templates"],
+            ["Write the case study for your first paid client", "Before and after, what you changed, and the result."],
+            ["Set up the care plan process", "Backups, uptime monitoring, an update schedule and a monthly invoice."],
+            ["Follow up prospects who said not now"],
+            ["Keep sending 10 contacts a week"]
+          ],
+          done: "You have at least one care plan agreed or a clear offer out to a client."
+        },
+        {
+          title: "Raise prices and refine",
+          goal: "Your prices match your proof and your process is faster.",
+          tasks: [
+            ["Raise your package prices by 15 to 25%", "Existing quotes stay the same. New quotes use the new prices."],
+            ["Add new testimonials and case studies to your portfolio"],
+            ["Turn repeated work into templates", "Page layouts, content request emails, launch checklist."],
+            ["Ask every happy client for a referral"],
+            ["Update your Google Business Profile with new work and reviews"]
+          ],
+          done: "Your prices are updated and you have a repeatable delivery process."
+        },
+        {
+          title: "Review and plan months 4 to 6",
+          goal: "You know what worked and have clear targets for the next quarter.",
+          tasks: [
+            ["Add up revenue, hours worked and profit per project"],
+            ["Decide which niche and channel brought the best clients"],
+            ["Set targets for months 4 to 6", "Number of clients, monthly recurring income and a minimum project price."],
+            ["Set aside money for tax and check whether you need to file a Self Assessment return", "Many freelancers keep a percentage of every payment aside for tax. Check gov.uk for your situation."],
+            ["Review your contract and insurance and note any lessons"],
+            ["Plan your next skill upgrade", "Perhaps your main CMS, Shopify or Stripe integration."]
+          ],
+          done: "You have a written plan for the next three months."
+        }
+      ]
+    }
+  ];
+
+  // flatten
+  var weeks = [];
+  var wn = 0;
+  phases.forEach(function (p) {
+    p.weeks.forEach(function (w) {
+      wn += 1;
+      w.n = wn;
+      w.tasks = w.tasks.map(function (t, i) {
+        return { id: "w" + wn + "t" + (i + 1), text: t[0], hint: t[1] || "" };
+      });
+      weeks.push(w);
+    });
+  });
+
+  var state = {};
+  try {
+    var raw = localStorage.getItem(STORE_KEY);
+    if (raw) state = JSON.parse(raw) || {};
+  } catch (e) { state = {}; }
+
+  function save() {
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch (e) {}
+  }
+
+  function esc(s) {
+    return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+  }
+
+  function weekDone(w) {
+    return w.tasks.filter(function (t) { return state[t.id]; }).length;
+  }
+
+  // build
+  var main = document.getElementById("main");
+  var runway = document.getElementById("runway");
+  var html = "";
+  phases.forEach(function (p) {
+    html += '<section class="phase"><h2>' + esc(p.name) + '</h2><p>' + esc(p.blurb) + '</p>';
+    p.weeks.forEach(function (w) {
+      html += '<details class="week" id="week' + w.n + '" data-week="' + w.n + '">';
+      html += '<summary><span class="title">Week ' + w.n + ': ' + esc(w.title) + '</span><span class="count" data-count="' + w.n + '"></span></summary>';
+      html += '<div class="week-body"><p class="goal">' + esc(w.goal) + '</p><ul class="tasks">';
+      w.tasks.forEach(function (t) {
+        html += '<li><label class="task"><input type="checkbox" data-id="' + t.id + '"' + (state[t.id] ? " checked" : "") + '>' +
+          '<span class="txt">' + esc(t.text) + (t.hint ? '<span class="hint">' + esc(t.hint) + '</span>' : "") + '</span></label></li>';
+      });
+      html += '</ul><p class="done-when"><strong>Done when:</strong> ' + esc(w.done) + '</p></div></details>';
+    });
+    html += '</section>';
+  });
+  main.innerHTML = html;
+
+  var segHtml = "";
+  weeks.forEach(function (w) {
+    segHtml += '<button type="button" class="seg" data-goto="' + w.n + '" aria-label="Go to week ' + w.n + '"><span class="bar"></span><span class="n">' + w.n + '</span></button>';
+  });
+  runway.innerHTML = segHtml;
+
+  var total = weeks.reduce(function (a, w) { return a + w.tasks.length; }, 0);
+
+  function refresh() {
+    var doneAll = 0;
+    weeks.forEach(function (w) {
+      var d = weekDone(w);
+      doneAll += d;
+      var pct = Math.round((d / w.tasks.length) * 100);
+      var el = document.getElementById("week" + w.n);
+      el.classList.toggle("complete", d === w.tasks.length);
+      el.querySelector('[data-count="' + w.n + '"]').textContent = d + "/" + w.tasks.length;
+      var seg = runway.querySelector('[data-goto="' + w.n + '"]');
+      seg.style.setProperty("--p", pct + "%");
+      seg.classList.toggle("full", d === w.tasks.length);
+    });
+    document.getElementById("summaryText").textContent = doneAll + " of " + total + " tasks done";
+    document.getElementById("pctText").textContent = Math.round((doneAll / total) * 100) + "%";
+  }
+
+  // open the first unfinished week
+  var firstOpen = weeks.filter(function (w) { return weekDone(w) < w.tasks.length; })[0] || weeks[0];
+  document.getElementById("week" + firstOpen.n).open = true;
+
+  main.addEventListener("change", function (e) {
+    var t = e.target;
+    if (t && t.matches('input[type="checkbox"][data-id]')) {
+      if (t.checked) state[t.getAttribute("data-id")] = true;
+      else delete state[t.getAttribute("data-id")];
+      save();
+      refresh();
+    }
+  });
+
+  runway.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-goto]");
+    if (!b) return;
+    var el = document.getElementById("week" + b.getAttribute("data-goto"));
+    el.open = true;
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    el.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+  });
+
+  var expandBtn = document.getElementById("expandBtn");
+  var allOpen = false;
+  expandBtn.addEventListener("click", function () {
+    allOpen = !allOpen;
+    document.querySelectorAll("details.week").forEach(function (d) { d.open = allOpen; });
+    expandBtn.textContent = allOpen ? "Close all weeks" : "Open all weeks";
+  });
+
+  var resetBtn = document.getElementById("resetBtn");
+  var resetTimer = null;
+  resetBtn.addEventListener("click", function () {
+    if (!resetBtn.classList.contains("confirm")) {
+      resetBtn.classList.add("confirm");
+      resetBtn.textContent = "Tap again to clear all ticks";
+      resetTimer = setTimeout(function () {
+        resetBtn.classList.remove("confirm");
+        resetBtn.textContent = "Reset progress";
+      }, 4000);
+      return;
+    }
+    clearTimeout(resetTimer);
+    state = {};
+    save();
+    document.querySelectorAll('input[type="checkbox"][data-id]').forEach(function (c) { c.checked = false; });
+    resetBtn.classList.remove("confirm");
+    resetBtn.textContent = "Reset progress";
+    refresh();
+  });
+
+  window.addEventListener("beforeprint", function () {
+    document.querySelectorAll("details.week").forEach(function (d) { d.open = true; });
+  });
+
+  refresh();
+})();
+</script>
+</body>
+</html>
