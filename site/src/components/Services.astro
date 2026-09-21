@@ -1,0 +1,59 @@
+---
+import { services } from '../data/content';
+---
+
+<section class="services wrap" id="services" aria-labelledby="services-heading">
+  <h2 id="services-heading">What I do</h2>
+  <ul class="services__list">
+    {services.map((service) => (
+      <li class="services__item">
+        <h3>{service.title}</h3>
+        <p>{service.description}</p>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .services {
+    padding-block: var(--space-6);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .services__list {
+    list-style: none;
+    margin: var(--space-4) 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0;
+  }
+
+  .services__item {
+    padding-block: var(--space-4);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .services__item:last-child {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .services__item h3 {
+    margin-bottom: var(--space-2);
+  }
+
+  .services__item p {
+    color: var(--color-text-muted);
+    max-width: 60ch;
+  }
+
+  @media (min-width: 48rem) {
+    .services__list {
+      grid-template-columns: 1fr 1fr;
+      column-gap: var(--space-5);
+    }
+
+    .services__item {
+      border-top: 1px solid var(--color-border);
+    }
+  }
+</style>

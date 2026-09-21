@@ -1,0 +1,264 @@
+---
+import { pricingTiers } from '../data/pricing';
+import { site } from '../config/site';
+
+function mailtoFor(tierName: string): string {
+  const subject = encodeURIComponent(`${tierName} enquiry`);
+  const body = encodeURIComponent(
+    `Hi Gurman,\n\nI'm interested in the ${tierName} package. My business is...\n\n`,
+  );
+  return `mailto:${site.contact.email}?subject=${subject}&body=${body}`;
+}
+---
+
+<section class="pricing wrap" id="pricing" aria-labelledby="pricing-heading">
+  <h2 id="pricing-heading">Pricing</h2>
+  <p class="pricing__intro">
+    Introductory pricing while I build my portfolio in Bradford. Prices rise as my diary fills, so
+    quotes are valid for 30 days. Monthly plans stay the same.
+  </p>
+
+  <!-- Desktop / wide: comparison table -->
+  <div class="pricing__table-wrap">
+    <table class="pricing__table">
+      <caption class="visually-hidden">
+        Comparison of the Launch, Growth and Full presence packages
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col">
+            <span class="visually-hidden">Detail</span>
+          </th>
+          {pricingTiers.map((tier) => (
+            <th scope="col">{tier.name}</th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">For</th>
+          {pricingTiers.map((tier) => (
+            <td>{tier.for}</td>
+          ))}
+        </tr>
+        <tr>
+          <th scope="row">Includes</th>
+          {pricingTiers.map((tier) => (
+            <td>
+              <ul class="pricing__includes">
+                {tier.includes.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </td>
+          ))}
+        </tr>
+        <tr>
+          <th scope="row">Price</th>
+          {pricingTiers.map((tier) => (
+            <td>
+              <span class="pricing__tag">Introductory</span>
+              <span class="pricing__price">from {tier.introFrom}</span>
+            </td>
+          ))}
+        </tr>
+        <tr>
+          <th scope="row">Monthly plan</th>
+          {pricingTiers.map((tier) => (
+            <td>{tier.monthly}</td>
+          ))}
+        </tr>
+        <tr>
+          <th scope="row">
+            <span class="visually-hidden">Get in touch</span>
+          </th>
+          {pricingTiers.map((tier) => (
+            <td>
+              <a class="btn btn-secondary" href={mailtoFor(tier.name)}>
+                Ask about {tier.name}
+              </a>
+            </td>
+          ))}
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Mobile: stacked cards, price first per tier -->
+  <ul class="pricing__cards">
+    {pricingTiers.map((tier) => (
+      <li class="pricing__card">
+        <h3>{tier.name}</h3>
+        <p class="pricing__card-price">
+          <span class="pricing__tag">Introductory</span>
+          <span class="pricing__price">from {tier.introFrom}</span>
+        </p>
+        <p class="pricing__card-monthly">Monthly plan: {tier.monthly}</p>
+        <dl class="pricing__card-detail">
+          <dt>For</dt>
+          <dd>{tier.for}</dd>
+          <dt>Includes</dt>
+          <dd>
+            <ul class="pricing__includes">
+              {tier.includes.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          </dd>
+        </dl>
+        <a class="btn btn-secondary" href={mailtoFor(tier.name)}>
+          Ask about {tier.name}
+        </a>
+      </li>
+    ))}
+  </ul>
+
+  <p class="pricing__terms">
+    Fixed price after a free discovery call. 50% deposit, two revision rounds, and you own your site
+    and content after final payment. Platform and AI usage fees are billed at cost.
+  </p>
+</section>
+
+<style>
+  .pricing {
+    padding-block: var(--space-6);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .pricing__intro {
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-4);
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  /* Desktop table: shown at >=48rem, hidden below */
+  .pricing__table-wrap {
+    display: none;
+    overflow-x: auto;
+  }
+
+  .pricing__table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 40rem;
+  }
+
+  .pricing__table th,
+  .pricing__table td {
+    text-align: left;
+    padding: var(--space-3);
+    border-top: 1px solid var(--color-border);
+    vertical-align: top;
+  }
+
+  .pricing__table thead th {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    background: var(--color-surface);
+    border-top: none;
+  }
+
+  .pricing__table tbody th {
+    font-family: var(--font-display);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .pricing__includes {
+    margin: 0;
+    padding-left: 1.1em;
+  }
+
+  .pricing__includes li {
+    margin-bottom: var(--space-1);
+  }
+
+  .pricing__tag {
+    display: inline-block;
+    background: var(--color-highlight);
+    color: var(--color-ink);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.75rem;
+    padding: 0.15em 0.5em;
+    border-radius: var(--radius-sm);
+    margin-bottom: var(--space-1);
+  }
+
+  .pricing__price {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.25rem;
+  }
+
+  .pricing__terms {
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+    margin-top: var(--space-4);
+  }
+
+  /* Mobile cards: shown below 48rem, hidden at/above */
+  .pricing__cards {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .pricing__card {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+  }
+
+  .pricing__card h3 {
+    margin-bottom: var(--space-2);
+  }
+
+  .pricing__card-price {
+    margin-bottom: var(--space-1);
+  }
+
+  .pricing__card-monthly {
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+    margin-bottom: var(--space-3);
+  }
+
+  .pricing__card-detail dt {
+    font-family: var(--font-display);
+    font-weight: 600;
+    margin-top: var(--space-3);
+  }
+
+  .pricing__card-detail dd {
+    margin: var(--space-1) 0 0;
+    color: var(--color-text-muted);
+  }
+
+  .pricing__card .btn {
+    margin-top: var(--space-4);
+    width: 100%;
+    justify-content: center;
+  }
+
+  @media (min-width: 48rem) {
+    .pricing__table-wrap {
+      display: block;
+    }
+
+    .pricing__cards {
+      display: none;
+    }
+  }
+</style>

@@ -1,0 +1,51 @@
+---
+import { site } from '../config/site';
+
+const auditMailto = (() => {
+  const subject = encodeURIComponent('Free presence audit');
+  const body = encodeURIComponent('Hi Gurman,\n\nBusiness name:\nWebsite:\nMain service:\n\n');
+  return `mailto:${site.contact.email}?subject=${subject}&body=${body}`;
+})();
+
+const auditTel = `tel:${site.contact.phone.replace(/\s+/g, '')}`;
+---
+
+<section class="audit wrap" id="audit" aria-labelledby="audit-heading">
+  <h2 id="audit-heading">Get your free presence audit</h2>
+  <p class="audit__text">
+    Send me your website address and I'll review it on a phone, check your speed and your Google
+    Business Profile, and see whether Google and ChatGPT recommend you for your main search. You get
+    a short video and a written list of fixes. It's free and there's no obligation.
+  </p>
+
+  <div class="audit__actions">
+    <a class="btn btn-primary" href={auditMailto}>
+      Email me your website
+    </a>
+    <a class="btn btn-secondary" href={auditTel}>
+      Call {site.contact.phone}
+    </a>
+    <a class="btn btn-secondary" href={site.contact.whatsapp} rel="noopener">
+      Message on WhatsApp
+    </a>
+  </div>
+</section>
+
+<style>
+  .audit {
+    padding-block: var(--space-6);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .audit__text {
+    color: var(--color-text-muted);
+    max-width: 60ch;
+    margin-bottom: var(--space-4);
+  }
+
+  .audit__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+</style>

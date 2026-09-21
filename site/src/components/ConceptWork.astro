@@ -1,0 +1,129 @@
+---
+import { realProjects } from '../data/content';
+
+const sectorLabels = [
+  'Barber',
+  'Electrician',
+  'Dental practice',
+  'Physiotherapist',
+  'Takeaway',
+  'Salon',
+];
+---
+
+<section class="concept-work wrap" aria-labelledby="concept-work-heading">
+  <h2 id="concept-work-heading">Concept work</h2>
+  <p class="concept-work__note">
+    These are concept designs for fictional businesses. They show what I would build, not past
+    client work.
+  </p>
+
+  <ul class="concept-work__gallery">
+    {sectorLabels.map((label) => (
+      <li class="concept-work__tile">
+        <figure>
+          <div class="concept-work__tile-placeholder" aria-hidden="true">
+            <span>{label}</span>
+          </div>
+          <figcaption>
+            {label} — concept design for a fictional business. Full gallery arrives in Phase 2.
+          </figcaption>
+        </figure>
+      </li>
+    ))}
+  </ul>
+
+  <h3>Real projects</h3>
+  <ul class="concept-work__real">
+    {realProjects.map((project) => (
+      <li>
+        {project.href ? (
+          <a href={project.href} rel="noopener">
+            {project.name}
+          </a>
+        ) : (
+          <span class="concept-work__real-name">{project.name}</span>
+        )}
+        <span class="concept-work__real-desc"> — {project.description}</span>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .concept-work {
+    padding-block: var(--space-6);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .concept-work__note {
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-4);
+  }
+
+  .concept-work__gallery {
+    list-style: none;
+    margin: 0 0 var(--space-5);
+    padding: 0;
+    display: grid;
+    gap: var(--space-3);
+    grid-template-columns: 1fr;
+  }
+
+  .concept-work__tile figure {
+    margin: 0;
+  }
+
+  .concept-work__tile-placeholder {
+    aspect-ratio: 16 / 10;
+    background: var(--color-surface);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--color-text-muted);
+  }
+
+  .concept-work__tile figcaption {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin-top: var(--space-2);
+  }
+
+  .concept-work__real {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .concept-work__real li {
+    padding-block: var(--space-3);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .concept-work__real li:last-child {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .concept-work__real-name {
+    font-family: var(--font-display);
+    font-weight: 600;
+  }
+
+  .concept-work__real a {
+    font-family: var(--font-display);
+    font-weight: 600;
+  }
+
+  .concept-work__real-desc {
+    color: var(--color-text-muted);
+  }
+
+  @media (min-width: 48rem) {
+    .concept-work__gallery {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

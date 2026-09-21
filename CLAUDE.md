@@ -39,6 +39,18 @@ Build the studio's own marketing website: high-end, fast, local-SEO-ready, with 
   - `npm run screenshots` — Playwright screenshots of `dist/` at 360/768/1280px in light and dark (`colorScheme` emulation), saved to `reports/screenshots/`.
   - Run `npm run build` before `lighthouse`, `axe` or `screenshots` — they all serve the built `dist/`, not the dev server.
 
+## Phase 1 status (done)
+Static home page built: header/nav (with mobile `<details>` menu), hero with a labelled
+before/after placeholder (slider itself is Phase 2), services, chat demo placeholder (Phase 2),
+concept work gallery placeholders + real real-projects list, how-it-works, pricing comparison
+table (desktop) / stacked cards (mobile, price first per tier), about + credentials, FAQ
+(`<details>`), audit/contact, footer. Copy is verbatim from `docs/03-site-spec.md`. Reusable data
+lives in `src/data/content.ts` (services, process, FAQ, credentials, real projects) and
+`src/data/pricing.ts` (mirrors `docs/02-offer-and-pricing.md` — edit the doc first, then this
+file). Lighthouse 99/100/100/100 (the one lost performance point is a diagnostic-only "cache
+lifetime" insight from the throwaway test server with no cache headers; not a real regression).
+axe: 0 violations on both themes.
+
 ## Working agreements
 - Plan first with `/plan-site`, get approval, then build one phase at a time with `/build-phase N`.
 - After each phase: build, typecheck, Lighthouse (aim for 95+ on all four scores), an axe accessibility check, a keyboard test, a reduced-motion test, and screenshots at 360, 768 and 1280px. Critique the screenshots and fix problems before reporting.

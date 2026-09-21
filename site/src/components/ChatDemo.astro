@@ -1,0 +1,53 @@
+---
+---
+
+<section class="chat-demo wrap" aria-labelledby="chat-demo-heading">
+  <h2 id="chat-demo-heading">Try the enquiry assistant</h2>
+  <div class="chat-demo__layout">
+    <p class="chat-demo__intro">
+      This is a scripted demo for a fictional barbershop. A real assistant answers from your own
+      information, hands over to a person when it isn't sure, and is tested before it goes live.
+    </p>
+    <div class="chat-demo__placeholder" role="note" aria-label="Chat demo placeholder">
+      <p>Interactive chat demo arrives in Phase 2.</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .chat-demo {
+    padding-block: var(--space-6);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .chat-demo__layout {
+    display: grid;
+    gap: var(--space-4);
+    align-items: start;
+    margin-top: var(--space-4);
+  }
+
+  .chat-demo__intro {
+    color: var(--color-text-muted);
+  }
+
+  .chat-demo__placeholder {
+    border: 1px dashed var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    min-height: 12rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-muted);
+    font-family: var(--font-display);
+    text-align: center;
+  }
+
+  @media (min-width: 60rem) {
+    .chat-demo__layout {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-5);
+    }
+  }
+</style>

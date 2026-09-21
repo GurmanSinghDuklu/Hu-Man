@@ -1,0 +1,187 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+import { site } from '../config/site';
+
+const navLinks = [
+  { href: '#work', label: 'Work' },
+  { href: '#services', label: 'Services' },
+  { href: '#pricing', label: 'Pricing' },
+  { href: '#about', label: 'About' },
+  { href: '#faq', label: 'FAQ' },
+];
+---
+
+<header class="site-header">
+  <div class="wrap site-header__inner">
+    <a href="/" class="site-header__name">
+      {site.name}
+    </a>
+
+    <nav class="site-header__nav" aria-label="Primary">
+      <ul>
+        {navLinks.map((link) => (
+          <li>
+            <a href={link.href}>{link.label}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="site-header__actions">
+      <a href="#audit" class="btn btn-primary site-header__cta">
+        Get your free presence audit
+      </a>
+      <ThemeToggle />
+      <details class="site-header__menu">
+        <summary aria-label="Open menu">
+          <span aria-hidden="true">Menu</span>
+        </summary>
+        <ul>
+          <li>
+            <a href="#audit">Get your free presence audit</a>
+          </li>
+          {navLinks.map((link) => (
+            <li>
+              <a href={link.href}>{link.label}</a>
+            </li>
+          ))}
+        </ul>
+      </details>
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding-block: var(--space-3);
+  }
+
+  .site-header__name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--color-text);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .site-header__nav {
+    display: none;
+  }
+
+  .site-header__nav ul {
+    display: flex;
+    gap: var(--space-4);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .site-header__nav a {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .site-header__nav a:hover {
+    color: var(--color-accent);
+  }
+
+  .site-header__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .site-header__cta {
+    display: none;
+    white-space: nowrap;
+  }
+
+  .site-header__menu {
+    position: relative;
+  }
+
+  .site-header__menu summary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border);
+    cursor: pointer;
+    list-style: none;
+    font-family: var(--font-display);
+    font-size: 0;
+  }
+
+  .site-header__menu summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .site-header__menu summary::before {
+    content: '≡';
+    font-size: 1.25rem;
+  }
+
+  .site-header__menu[open] summary::before {
+    content: '✕';
+  }
+
+  .site-header__menu ul {
+    position: absolute;
+    right: 0;
+    top: calc(100% + var(--space-2));
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    list-style: none;
+    margin: 0;
+    padding: var(--space-2);
+    min-width: 220px;
+    z-index: 50;
+  }
+
+  .site-header__menu li {
+    display: block;
+  }
+
+  .site-header__menu a {
+    display: block;
+    padding: var(--space-2) var(--space-3);
+    font-family: var(--font-display);
+    font-weight: 500;
+    color: var(--color-text);
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+  }
+
+  .site-header__menu a:hover {
+    background: var(--color-bg);
+  }
+
+  @media (min-width: 60rem) {
+    .site-header__nav {
+      display: block;
+    }
+
+    .site-header__cta {
+      display: inline-flex;
+    }
+
+    .site-header__menu {
+      display: none;
+    }
+  }
+</style>

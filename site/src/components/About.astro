@@ -1,0 +1,101 @@
+---
+import { credentials } from '../data/content';
+---
+
+<section class="about wrap" id="about" aria-labelledby="about-heading">
+  <h2 id="about-heading">About</h2>
+
+  <div class="about__layout">
+    <div class="about__photo-slot" role="img" aria-label="Photo of Gurman not yet added">
+      <span>Photo to follow</span>
+    </div>
+
+    <div>
+      <p class="about__intro">
+        I'm Gurman, a developer based in Bradford. I've shipped live customer pages inside a major
+        bank's Agile team, written open-source documentation for Arm, and built and launched a live
+        website for a family business. I started this studio because local businesses deserve
+        websites as good as national brands', and I'd rather be judged on your bookings than my
+        hours.
+      </p>
+
+      <h3>Credentials</h3>
+      <ul class="about__credentials">
+        {credentials.map((credential) => (
+          <li>
+            {credential.text}
+            {credential.inProgress && <span class="about__badge">In progress</span>}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about {
+    padding-block: var(--space-6);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .about__layout {
+    display: grid;
+    gap: var(--space-4);
+    margin-top: var(--space-4);
+  }
+
+  .about__photo-slot {
+    aspect-ratio: 4 / 5;
+    max-width: 16rem;
+    background: var(--color-surface);
+    border: 1px dashed var(--color-border);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-muted);
+    font-family: var(--font-display);
+    text-align: center;
+    padding: var(--space-3);
+  }
+
+  .about__intro {
+    max-width: 65ch;
+  }
+
+  .about__credentials {
+    list-style: none;
+    margin: var(--space-3) 0 0;
+    padding: 0;
+  }
+
+  .about__credentials li {
+    padding-block: var(--space-2);
+    border-top: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+    max-width: 65ch;
+  }
+
+  .about__credentials li:last-child {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .about__badge {
+    display: inline-block;
+    margin-left: var(--space-2);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.7rem;
+    color: var(--color-accent);
+    border: 1px solid var(--color-accent);
+    border-radius: var(--radius-sm);
+    padding: 0.1em 0.5em;
+  }
+
+  @media (min-width: 60rem) {
+    .about__layout {
+      grid-template-columns: auto 1fr;
+      gap: var(--space-5);
+    }
+  }
+</style>

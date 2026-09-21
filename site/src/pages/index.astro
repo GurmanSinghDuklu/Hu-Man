@@ -1,54 +1,33 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import ThemeToggle from '../components/ThemeToggle.astro';
-import { site } from '../config/site';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import Hero from '../components/Hero.astro';
+import Services from '../components/Services.astro';
+import ChatDemo from '../components/ChatDemo.astro';
+import ConceptWork from '../components/ConceptWork.astro';
+import HowItWorks from '../components/HowItWorks.astro';
+import Pricing from '../components/Pricing.astro';
+import About from '../components/About.astro';
+import Faq from '../components/Faq.astro';
+import Audit from '../components/Audit.astro';
 ---
 
 <BaseLayout
-  title={`${site.name} — website design and AI enquiry assistants in Bradford`}
-  description="Phase 0 scaffold. Content lands in Phase 1."
+  title="Web designer in Bradford | Website redesign, AI chatbots and local SEO"
+  description="Bradford web designer for small businesses: high-end website redesigns, online booking and payments, AI enquiry assistants and local SEO. Free presence audit."
 >
-  <header slot="header" class="site-header">
-    <div class="wrap site-header__inner">
-      <a href="/" class="site-header__name">
-        {site.name}
-      </a>
-      <ThemeToggle />
-    </div>
-  </header>
+  <SiteHeader slot="header" />
 
-  <section class="wrap" style="padding-block: var(--space-6);">
-    <h1>{site.tagline}</h1>
-    <p>
-      Phase 0 scaffold: tokens, fonts, theme toggle and layout are in place. Page content is built
-      in Phase 1.
-    </p>
-  </section>
+  <Hero />
+  <Services />
+  <ChatDemo />
+  <ConceptWork />
+  <HowItWorks />
+  <Pricing />
+  <About />
+  <Faq />
+  <Audit />
 
-  <footer
-    slot="footer"
-    class="wrap"
-    style="padding-block: var(--space-5); color: var(--color-text-muted);"
-  >
-    <p>
-      {site.name} · {site.location.town}, {site.location.region}
-    </p>
-  </footer>
+  <SiteFooter slot="footer" />
 </BaseLayout>
-
-<style>
-  .site-header__inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-block: var(--space-3);
-  }
-
-  .site-header__name {
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 1.1rem;
-    color: var(--color-text);
-    text-decoration: none;
-  }
-</style>
