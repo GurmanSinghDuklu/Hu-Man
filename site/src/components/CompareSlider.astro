@@ -1,0 +1,223 @@
+---
+import MockSite from './MockSite.astro';
+import { sliderSectorIds, getSector } from '../data/sectors';
+
+const tabSectors = sliderSectorIds.map((id) => getSector(id));
+---
+
+<div class="compare-slider" data-compare-slider>
+  <div class="compare-slider__tabs" role="tablist" aria-label="Choose a business type">
+    {tabSectors.map((sector, index) => (
+      <button
+        type="button"
+        role="tab"
+        id={`tab-${sector.id}`}
+        aria-controls={`panel-${sector.id}`}
+        aria-selected={index === 0 ? 'true' : 'false'}
+        tabindex={index === 0 ? 0 : -1}
+        data-compare-tab={sector.id}
+      >
+        {sector.typeLabel}
+      </button>
+    ))}
+    <span class="compare-slider__tabs-label">Concept design, fictional business</span>
+  </div>
+
+  {tabSectors.map((sector, index) => (
+    <div
+      id={`panel-${sector.id}`}
+      role="tabpanel"
+      aria-labelledby={`tab-${sector.id}`}
+      data-compare-panel={sector.id}
+      hidden={index !== 0}
+    >
+      <figure class="compare-slider__figure">
+        <div class="compare-slider__frame" data-compare-frame style="--pos: 50%;">
+          <div class="compare-slider__layer compare-slider__layer--before">
+            <MockSite sector={sector} mode="before" />
+          </div>
+          <div class="compare-slider__layer compare-slider__layer--after">
+            <MockSite sector={sector} mode="after" />
+          </div>
+          <div class="compare-slider__line" aria-hidden="true"></div>
+          <input
+            type="range"
+            min="0"
+            max="100"
+            value="50"
+            aria-label="Reveal the redesign"
+            class="compare-slider__range"
+            data-compare-range
+          />
+          <div class="compare-slider__labels" aria-hidden="true">
+            <span>Before</span>
+            <span>After</span>
+          </div>
+        </div>
+        <figcaption class="compare-slider__caption">
+          Concept redesigns for fictional businesses. Drag to compare.
+        </figcaption>
+      </figure>
+    </div>
+  ))}
+</div>
+
+<script>
+  import '../scripts/compare-slider.ts';
+</script>
+
+<style>
+  .compare-slider__tabs {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    overflow-x: auto;
+    padding-bottom: var(--space-2);
+    margin-bottom: var(--space-3);
+  }
+
+  .compare-slider__tabs button {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border);
+    background: transparent;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .compare-slider__tabs button[aria-selected='true'] {
+    color: var(--color-text);
+    border-color: var(--color-accent);
+    background: var(--color-surface);
+  }
+
+  .compare-slider__tabs-label {
+    margin-left: auto;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    white-space: nowrap;
+  }
+
+  .compare-slider__figure {
+    margin: 0;
+  }
+
+  .compare-slider__frame {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .compare-slider__layer {
+    position: absolute;
+    inset: 0;
+  }
+
+  .compare-slider__layer--after {
+    clip-path: inset(0 0 0 var(--pos));
+    transition: clip-path 0.5s ease;
+  }
+
+  .compare-frame--nudge .compare-slider__layer--after {
+    animation: nudge 1s ease;
+  }
+
+  @keyframes nudge {
+    0% {
+      clip-path: inset(0 0 0 50%);
+    }
+    50% {
+      clip-path: inset(0 0 0 35%);
+    }
+    100% {
+      clip-path: inset(0 0 0 50%);
+    }
+  }
+
+  .compare-slider__line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: var(--pos);
+    width: 3px;
+    background: var(--color-highlight);
+    transform: translateX(-50%);
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .compare-slider__line::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background: var(--color-highlight);
+    border: 3px solid var(--color-ink);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  }
+
+  .compare-slider__range {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: ew-resize;
+    z-index: 3;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  .compare-slider__range:focus-visible + .compare-slider__labels {
+    outline: none;
+  }
+
+  .compare-slider__range:focus-visible ~ .compare-slider__line::after {
+    outline: 3px solid var(--color-focus-ring);
+    outline-offset: 2px;
+  }
+
+  .compare-slider__labels {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 0.75em;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 0.03em;
+    color: rgba(255, 255, 255, 0.85);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .compare-slider__caption {
+    margin-top: var(--space-3);
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .compare-slider__layer--after {
+      transition: none;
+    }
+
+    .compare-frame--nudge .compare-slider__layer--after {
+      animation: none;
+    }
+  }
+</style>

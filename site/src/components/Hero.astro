@@ -1,4 +1,5 @@
 ---
+import CompareSlider from './CompareSlider.astro';
 ---
 
 <section class="hero">
@@ -18,16 +19,8 @@
       </a>
     </div>
 
-    <div class="hero__slider-placeholder" id="work" aria-labelledby="slider-placeholder-heading">
-      <p id="slider-placeholder-heading" class="hero__slider-label">
-        Concept design, fictional business — before/after slider arrives in Phase 2
-      </p>
-      <div class="hero__slider-frame">
-        <span>Barber · Electrician · Dental practice</span>
-      </div>
-      <p class="hero__slider-caption">
-        Concept redesigns for fictional businesses. Drag to compare.
-      </p>
+    <div id="work" class="hero__slider-wrap">
+      <CompareSlider />
     </div>
 
     <p class="hero__credentials">
@@ -66,36 +59,8 @@
     padding-inline: var(--space-2);
   }
 
-  .hero__slider-placeholder {
-    border: 1px dashed var(--color-border);
-    border-radius: var(--radius-md);
-    padding: var(--space-4);
+  .hero__slider-wrap {
     margin-bottom: var(--space-3);
-  }
-
-  .hero__slider-label {
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 0.9rem;
-    color: var(--color-text-muted);
-    margin-bottom: var(--space-3);
-  }
-
-  .hero__slider-frame {
-    aspect-ratio: 16 / 10;
-    background: var(--color-surface);
-    border-radius: var(--radius-sm);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--color-text-muted);
-    font-family: var(--font-display);
-  }
-
-  .hero__slider-caption {
-    font-size: 0.95rem;
-    color: var(--color-text-muted);
-    margin: var(--space-3) 0 0;
   }
 
   .hero__credentials {

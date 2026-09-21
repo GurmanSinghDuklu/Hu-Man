@@ -1,14 +1,7 @@
 ---
+import MockSite from './MockSite.astro';
+import { sectors } from '../data/sectors';
 import { realProjects } from '../data/content';
-
-const sectorLabels = [
-  'Barber',
-  'Electrician',
-  'Dental practice',
-  'Physiotherapist',
-  'Takeaway',
-  'Salon',
-];
 ---
 
 <section class="concept-work wrap" aria-labelledby="concept-work-heading">
@@ -19,14 +12,14 @@ const sectorLabels = [
   </p>
 
   <ul class="concept-work__gallery">
-    {sectorLabels.map((label) => (
+    {sectors.map((sector) => (
       <li class="concept-work__tile">
         <figure>
-          <div class="concept-work__tile-placeholder" aria-hidden="true">
-            <span>{label}</span>
+          <div class="concept-work__tile-frame">
+            <MockSite sector={sector} mode="after" />
           </div>
           <figcaption>
-            {label} — concept design for a fictional business. Full gallery arrives in Phase 2.
+            {sector.typeLabel} — concept design for a fictional business. {sector.galleryIncludes}.
           </figcaption>
         </figure>
       </li>
@@ -74,16 +67,9 @@ const sectorLabels = [
     margin: 0;
   }
 
-  .concept-work__tile-placeholder {
-    aspect-ratio: 16 / 10;
-    background: var(--color-surface);
+  .concept-work__tile-frame {
     border-radius: var(--radius-md);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: var(--font-display);
-    font-weight: 600;
-    color: var(--color-text-muted);
+    overflow: hidden;
   }
 
   .concept-work__tile figcaption {

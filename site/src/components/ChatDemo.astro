@@ -1,4 +1,5 @@
 ---
+import { chatExchanges, chatGreeting } from '../data/chat-demo';
 ---
 
 <section class="chat-demo wrap" aria-labelledby="chat-demo-heading">
@@ -8,11 +9,42 @@
       This is a scripted demo for a fictional barbershop. A real assistant answers from your own
       information, hands over to a person when it isn't sure, and is tested before it goes live.
     </p>
-    <div class="chat-demo__placeholder" role="note" aria-label="Chat demo placeholder">
-      <p>Interactive chat demo arrives in Phase 2.</p>
+
+    <div class="chat-demo__panel" data-chat-demo>
+      <div class="chat-demo__panel-header">
+        <span class="chat-demo__dot" aria-hidden="true"></span>
+        <span>Northgate Barbers — demo</span>
+      </div>
+
+      <div class="chat-demo__log" data-chat-log aria-live="polite" aria-label="Chat conversation">
+        <p class="chat-demo__message chat-demo__message--assistant">{chatGreeting}</p>
+      </div>
+
+      <p class="chat-demo__typing" data-chat-typing hidden aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+      </p>
+
+      <div class="chat-demo__chips" role="group" aria-label="Suggested questions">
+        {chatExchanges.map((exchange) => (
+          <button
+            type="button"
+            class="chat-demo__chip"
+            data-chat-chip={exchange.chip}
+            data-chat-reply={exchange.reply}
+          >
+            {exchange.chip}
+          </button>
+        ))}
+      </div>
     </div>
   </div>
 </section>
+
+<script>
+  import '../scripts/chat-demo.ts';
+</script>
 
 <style>
   .chat-demo {
@@ -31,17 +63,136 @@
     color: var(--color-text-muted);
   }
 
-  .chat-demo__placeholder {
-    border: 1px dashed var(--color-border);
+  .chat-demo__panel {
+    border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
-    padding: var(--space-4);
-    min-height: 12rem;
+    background: var(--color-surface);
+    display: flex;
+    flex-direction: column;
+    max-height: 26rem;
+  }
+
+  .chat-demo__panel-header {
     display: flex;
     align-items: center;
-    justify-content: center;
-    color: var(--color-text-muted);
+    gap: var(--space-2);
+    padding: var(--space-3);
+    border-bottom: 1px solid var(--color-border);
     font-family: var(--font-display);
-    text-align: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  .chat-demo__dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--color-accent);
+    flex-shrink: 0;
+  }
+
+  .chat-demo__log {
+    padding: var(--space-3);
+    overflow-y: auto;
+    flex: 1;
+    min-height: 8rem;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .chat-demo__message {
+    max-width: 85%;
+    margin: 0;
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-md);
+    font-size: 0.95rem;
+    line-height: 1.4;
+  }
+
+  .chat-demo__message--assistant {
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    align-self: flex-start;
+    border-bottom-left-radius: var(--radius-sm);
+  }
+
+  .chat-demo__message--user {
+    background: var(--color-accent);
+    color: var(--color-accent-ink);
+    align-self: flex-end;
+    border-bottom-right-radius: var(--radius-sm);
+  }
+
+  .chat-demo__typing {
+    display: flex;
+    gap: 0.25rem;
+    padding: 0 var(--space-3) var(--space-2);
+    margin: 0;
+  }
+
+  .chat-demo__typing[hidden] {
+    display: none;
+  }
+
+  .chat-demo__typing span {
+    width: 0.4rem;
+    height: 0.4rem;
+    border-radius: 50%;
+    background: var(--color-text-muted);
+    animation: chat-typing-bounce 1s infinite ease-in-out;
+  }
+
+  .chat-demo__typing span:nth-child(2) {
+    animation-delay: 0.15s;
+  }
+
+  .chat-demo__typing span:nth-child(3) {
+    animation-delay: 0.3s;
+  }
+
+  @keyframes chat-typing-bounce {
+    0%,
+    60%,
+    100% {
+      transform: translateY(0);
+      opacity: 0.5;
+    }
+    30% {
+      transform: translateY(-0.2rem);
+      opacity: 1;
+    }
+  }
+
+  .chat-demo__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    padding: var(--space-3);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .chat-demo__chip {
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: var(--space-2) var(--space-3);
+    border-radius: 999px;
+    border: 1px solid var(--color-border);
+    background: var(--color-bg);
+    color: var(--color-text);
+    cursor: pointer;
+  }
+
+  .chat-demo__chip:hover {
+    border-color: var(--color-accent);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .chat-demo__typing span {
+      animation: none;
+      opacity: 0.7;
+    }
   }
 
   @media (min-width: 60rem) {

@@ -51,6 +51,36 @@ file). Lighthouse 99/100/100/100 (the one lost performance point is a diagnostic
 lifetime" insight from the throwaway test server with no cache headers; not a real regression).
 axe: 0 violations on both themes.
 
+## Phase 2 status (done)
+Concept renderer built: `MockSite.astro` renders a before or after mock from `src/data/sectors.ts`
+(all 6 sectors: barber, electrician, dental, physio, takeaway, salon — sample content for
+fictional businesses, `.example` domains only). `CompareSlider.astro` + `src/scripts/compare-
+slider.ts` drive the hero's draggable before/after (tabs: barber/electrician/dental, native range
+input, one-time 50→35→50 nudge on first scroll into view, skipped under reduced motion).
+`ChatDemo.astro` + `src/scripts/chat-demo.ts` is the real scripted chat (no network calls, script
+verbatim from docs/03, ~700ms typing indicator, `aria-live="polite"`). `ConceptWork.astro` now
+renders all 6 sectors as real `MockSite` "after" tiles instead of placeholders.
+
+Two real bugs found and fixed during this phase, worth knowing about if you touch this code:
+1. **CSS container query units and font-size**: an element cannot use its own `cqw`/`cqh` etc.
+   for `font-size` if it is the element that establishes `container-type` — spec disallows it
+   (circular dependency risk), and browsers silently fall back to the inherited size instead of
+   erroring. `MockSite.astro` therefore splits into an outer `.mock-frame` (establishes the
+   container) and an inner `.mock` (uses `font-size: 1.25cqw`). This bug only showed up in the
+   narrow concept-gallery tiles, not the full-width slider, so test cqw-scaled components at
+   their *smallest* rendered width, not just their largest.
+2. **The native `hidden` attribute loses to any class rule that sets `display`** on the same
+   element (specificity). `ChatDemo.astro`'s typing indicator had `display: flex` on its class,
+   which silently defeated `hidden`. Fixed with an explicit `.chat-demo__typing[hidden] { display:
+   none; }` override. Anywhere `el.hidden = true/false` is toggled from script, check for this.
+
+Lighthouse 98/100/100/100 (accessibility briefly dropped to 97 from a contrast issue in the
+booking-card price text on two sector palettes — accent-on-opacity dropped below AA on
+dental/salon; fixed by using solid `--after-ink-on-accent` there instead of an opacity mute).
+axe: 0 violations on both themes. Total inline JS ~3.2 kB (well under the ~50 kB budget; Astro
+inlines these small islands directly into the HTML rather than emitting separate .js files for a
+static build this size).
+
 ## Working agreements
 - Plan first with `/plan-site`, get approval, then build one phase at a time with `/build-phase N`.
 - After each phase: build, typecheck, Lighthouse (aim for 95+ on all four scores), an axe accessibility check, a keyboard test, a reduced-motion test, and screenshots at 360, 768 and 1280px. Critique the screenshots and fix problems before reporting.
