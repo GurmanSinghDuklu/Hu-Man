@@ -1,0 +1,37 @@
+{
+  "name": "duklu-digital-site",
+  "private": true,
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "typecheck": "astro check",
+    "lint": "eslint . && prettier --check .",
+    "format": "prettier --write .",
+    "lighthouse": "node scripts/lighthouse.mjs",
+    "axe": "node scripts/axe.mjs",
+    "screenshots": "node scripts/screenshots.mjs",
+    "check": "npm run typecheck && npm run lint && npm run build"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@fontsource-variable/bricolage-grotesque": "^5.3.0",
+    "@fontsource-variable/newsreader": "^5.3.0",
+    "astro": "^7.3.3",
+    "typescript": "^6.0.3"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.11.0",
+    "eslint-plugin-astro": "^1.7.0",
+    "globals": "^17.12.0",
+    "lighthouse": "^13.5.0",
+    "playwright": "^1.63.0",
+    "prettier": "^3.9.8",
+    "prettier-plugin-astro": "^1.0.1",
+    "typescript-eslint": "^8.70.0"
+  }
+}

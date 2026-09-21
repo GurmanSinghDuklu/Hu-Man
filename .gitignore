@@ -6,3 +6,4 @@ site/reports/
 *.log
 .env
 .env.*
+site/reports/

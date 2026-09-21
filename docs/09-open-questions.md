@@ -1,12 +1,12 @@
 # Open questions for Gurman
 
-Blocking for Phase 0 or 1:
-1. Business name: keep "Duklu Digital" as a working name, or choose another? (Check domain, socials, Google and Companies House first.)
-2. Contact details: publish gurmanduklu@gmail.com and +44 7988 450280, or set up a business email and number first?
-3. Photo: is there a professional photo for the About section, or should the design leave a placeholder for now?
-4. Essence Hair Treatment: confirm the live URL, and that his aunt is happy for it to be shown and described as a family-business project.
-5. Claude Certified Architect: which tier, and what is the exam date? Show it as "in progress" until passed.
-6. Arm pull request: was it merged, or is it still open?
+Blocking for Phase 0 or 1 — answered 2026-09-21:
+1. Business name: **still not decided.** Keep "Duklu Digital" as the working name in `site/src/config/site.ts`, single config value, easy to change later.
+2. Contact details: **publish now.** gurmanduklu@gmail.com and +44 7988 450280 (business email/number still to be confirmed — swap in config when he has them).
+3. Photo: **not yet.** Leave a clearly labelled placeholder slot in the About section.
+4. Essence Hair Treatment: **confirmed live** at https://essencehairtreatment.com (checked, returns 200). Aunt's permission to describe it as a family-business project: confirmed by Gurman.
+5. Claude Certified Architect: **Foundations tier, not yet passed.** Show as "Claude Certified Architect, Foundations (in progress)" — no pass claimed.
+6. Arm pull request: **pushed, awaiting review.** Keep as "submitted as a pull request" — not merged.
 
 Can wait:
 7. Which one or two sectors first (after the discovery conversations)?

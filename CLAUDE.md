@@ -25,7 +25,19 @@ Build the studio's own marketing website: high-end, fast, local-SEO-ready, with 
 - Self-hosted fonts (`@fontsource`), no Google Fonts requests.
 - Small vanilla TypeScript islands only where needed: before/after slider, chat demo, theme toggle.
 - No tracking, no cookies, no third-party scripts. Ask before adding any other dependency.
-- Commands: record the real ones here after Phase 0 (dev, build, preview, lint, typecheck, lighthouse, e2e screenshots).
+- Project lives in `site/` (Astro app root). Astro 7, TypeScript 6, Node 24.
+- Commands (run from `site/`):
+  - `npm run dev` — dev server.
+  - `npm run build` — static build to `site/dist/`.
+  - `npm run preview` — Astro's own preview (a singleton daemon; use `astro preview stop` if a port conflict shows up).
+  - `npm run typecheck` — `astro check`.
+  - `npm run lint` — ESLint (flat config, astro + typescript-eslint plugins) + `prettier --check`.
+  - `npm run format` — `prettier --write .`.
+  - `npm run check` — typecheck + lint + build, in one go.
+  - `npm run lighthouse` — builds nothing itself (run `build` first); serves `dist/` on a throwaway static server (`scripts/serve.mjs`, not `astro preview`, to avoid its singleton-daemon port issue) and runs Lighthouse headless. Reports land in `reports/lighthouse/`.
+  - `npm run axe` — same static-server approach, runs `@axe-core/playwright` against `dist/`, tags `wcag2a wcag2aa wcag22aa`.
+  - `npm run screenshots` — Playwright screenshots of `dist/` at 360/768/1280px in light and dark (`colorScheme` emulation), saved to `reports/screenshots/`.
+  - Run `npm run build` before `lighthouse`, `axe` or `screenshots` — they all serve the built `dist/`, not the dev server.
 
 ## Working agreements
 - Plan first with `/plan-site`, get approval, then build one phase at a time with `/build-phase N`.
