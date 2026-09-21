@@ -112,6 +112,30 @@ axe: 0 violations across all three pages (home, privacy, 404). JSON-LD validated
 Schema.org's ProfessionalService requirements. `/seo-audit` passes on every buildable item; see
 the audit output in this phase's report for the couple of domain-dependent items still open.
 
+## Phase 4 status (done)
+Full QA pass, no new features. Fixed a non-deterministic Prettier formatting bug in
+`MockSite.astro`: a wrapped two-line CSS comment kept growing its indentation on every
+`--write` run (never converged). Rewrote it as a single physical line — stable now. If Prettier
+ever reports the same file dirty right after formatting it, suspect a wrapped comment and check
+for this.
+
+Cross-browser: installed Firefox and WebKit for Playwright (`npx playwright install firefox
+webkit`, not installed by default) and ran the same functional checks (cqw font scaling, theme
+toggle, slider drag, chat demo, console errors) across Chromium/Firefox/WebKit — identical
+behaviour, zero console errors, on all three. Full keyboard tab-order walk (40 stops) confirmed
+correct order and roving-tabindex on the sector tabs. Confirmed the compare slider resets to 50%
+and switches panels correctly via arrow keys, matching the spec.
+
+Full honesty check across the whole built site (all pages, all data files): 0 violations. Every
+credential, price and concept label verified against docs/01, 02 and 03 source tables directly
+(not just spot-checked) — sector sample prices in `src/data/sectors.ts` all trace verbatim to the
+docs/03 table, no personal detail beyond the approved contact list appears anywhere, JSON-LD
+address has no street-level detail.
+
+Lighthouse 98/100/100/100, axe 0 violations on all 3 pages × both themes (6 combinations tested).
+This is the end of the planned build phases (0–4) from `docs/08-roadmap.md`. Phase 5 (deploy,
+domain, Search Console, first real content) needs decisions from Gurman and is not started.
+
 ## Working agreements
 - Plan first with `/plan-site`, get approval, then build one phase at a time with `/build-phase N`.
 - After each phase: build, typecheck, Lighthouse (aim for 95+ on all four scores), an axe accessibility check, a keyboard test, a reduced-motion test, and screenshots at 360, 768 and 1280px. Critique the screenshots and fix problems before reporting.
