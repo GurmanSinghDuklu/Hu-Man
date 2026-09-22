@@ -7,36 +7,46 @@
 export interface Service {
   title: string;
   description: string;
+  /** Which pricing tier this first appears in, per docs/02-offer-and-pricing.md's "Includes"
+   * column. Care plans is the recurring monthly add-on across all tiers, not one tier, so it
+   * uses "Care plan" rather than a tier name. */
+  tag: string;
 }
 
 export const services: Service[] = [
   {
     title: 'Website redesign and launch',
+    tag: 'Launch',
     description:
       'Fast, mobile-first sites for businesses stuck on old or unloved Squarespace, Wix or WordPress setups. Moves your content and redirects your old addresses so you keep the search rankings you have earned.',
   },
   {
     title: 'Booking and online payments',
+    tag: 'Growth',
     description:
       'Customers book, pay a deposit or order straight from your site through providers such as Stripe, Square and SumUp. Card details never touch my code.',
   },
   {
     title: 'AI enquiry assistant',
+    tag: 'Growth',
     description:
       'Answers questions from your own prices, hours and FAQs at any time, collects details and hands over to you. I test it against real questions before launch.',
   },
   {
     title: 'Local and AI-search visibility',
+    tag: 'Growth',
     description:
       'Google Business Profile, service pages, reviews and structured data, plus a monthly check on whether Google and ChatGPT mention you. Nobody can promise placement in AI answers, so I focus on the fundamentals Google says matter.',
   },
   {
     title: 'Automations',
+    tag: 'Full presence',
     description:
       'Missed-call text-back, quote follow-ups, payment reminders and a weekly summary of what needs your attention.',
   },
   {
     title: 'Care plans',
+    tag: 'Care plan',
     description: 'Hosting, updates, backups and small edits every month.',
   },
 ];

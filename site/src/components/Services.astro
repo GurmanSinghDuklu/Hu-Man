@@ -4,9 +4,10 @@ import { services } from '../data/content';
 
 <section class="services wrap" id="services" aria-labelledby="services-heading">
   <h2 id="services-heading">What I do</h2>
-  <ul class="services__list">
+  <ul class="services__grid">
     {services.map((service) => (
-      <li class="services__item">
+      <li class="services__card">
+        <span class="services__tag">{service.tag}</span>
         <h3>{service.title}</h3>
         <p>{service.description}</p>
       </li>
@@ -20,40 +21,48 @@ import { services } from '../data/content';
     border-top: 1px solid var(--color-border);
   }
 
-  .services__list {
+  .services__grid {
     list-style: none;
     margin: var(--space-4) 0 0;
     padding: 0;
     display: grid;
-    gap: 0;
+    gap: 1px;
+    background: var(--color-border);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
   }
 
-  .services__item {
-    padding-block: var(--space-4);
-    border-top: 1px solid var(--color-border);
+  .services__card {
+    background: var(--color-surface);
+    padding: var(--space-4);
   }
 
-  .services__item:last-child {
-    border-bottom: 1px solid var(--color-border);
-  }
-
-  .services__item h3 {
+  .services__tag {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.7rem;
+    letter-spacing: 0.02em;
+    color: var(--color-accent-ink);
+    background: var(--color-accent);
+    padding: 0.2em 0.6em;
+    border-radius: 999px;
     margin-bottom: var(--space-2);
   }
 
-  .services__item p {
+  .services__card h3 {
+    margin-bottom: var(--space-2);
+  }
+
+  .services__card p {
     color: var(--color-text-muted);
     max-width: 60ch;
   }
 
   @media (min-width: 48rem) {
-    .services__list {
+    .services__grid {
       grid-template-columns: 1fr 1fr;
-      column-gap: var(--space-5);
-    }
-
-    .services__item {
-      border-top: 1px solid var(--color-border);
     }
   }
 </style>
