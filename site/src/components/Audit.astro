@@ -38,7 +38,7 @@ const ticker = ['Free presence audit', 'Short video', 'Written list of fixes', '
         <defs>
           <path id="audit-circle" d="M60 60m-44 0a44 44 0 1 1 88 0a44 44 0 1 1-88 0"></path>
         </defs>
-        <circle cx="60" cy="60" r="58" fill="#d4f25a"></circle>
+        <circle cx="60" cy="60" r="58" fill="#00ff30"></circle>
         <g class="audit__badge-text">
           <text font-size="11" font-weight="700" fill="#0b100d">
             <textPath href="#audit-circle" textLength="272" lengthAdjust="spacing">
@@ -89,8 +89,9 @@ const ticker = ['Free presence audit', 'Short video', 'Written list of fixes', '
     color: var(--on-dark);
     background:
       repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 88px),
-      radial-gradient(70% 90% at 80% 100%, rgba(182, 217, 59, 0.3), transparent 70%),
-      linear-gradient(160deg, #051a12 0%, #0b3a2a 55%, #17664b 100%);
+      radial-gradient(60% 80% at 88% 110%, rgba(0, 255, 48, 0.3), transparent 65%),
+      radial-gradient(45% 60% at 5% 0%, rgba(173, 255, 0, 0.1), transparent 70%), var(--graphite-1);
+    border: 1px solid var(--color-line);
     padding-bottom: clamp(3.5rem, 8vw, 6rem);
   }
 
@@ -98,7 +99,7 @@ const ticker = ['Free presence audit', 'Short video', 'Written list of fixes', '
     display: flex;
     overflow: hidden;
     padding-block: 1rem;
-    background: var(--lime);
+    background: var(--acid);
     color: var(--ink);
     margin-bottom: clamp(3rem, 7vw, 5rem);
   }
@@ -174,7 +175,7 @@ const ticker = ['Free presence audit', 'Short video', 'Written list of fixes', '
     margin-top: var(--space-5);
     max-width: 40rem;
     font-size: clamp(1.02rem, 1.4vw, 1.15rem);
-    color: #d3e2da;
+    color: #b3b9c1;
   }
 
   .audit__actions {

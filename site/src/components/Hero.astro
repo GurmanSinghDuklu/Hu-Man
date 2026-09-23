@@ -82,7 +82,9 @@ import RenderCeramicsShop from './renders/RenderCeramicsShop.astro';
     z-index: -1;
     background:
       repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 88px),
-      linear-gradient(180deg, #051a12 0%, #0b3a2a 38%, #17664b 64%, #8fbfa9 82%, var(--paper-2) 96%);
+      radial-gradient(55% 40% at 50% 80%, rgba(0, 255, 48, 0.16), transparent 70%),
+      radial-gradient(40% 30% at 50% 0%, rgba(173, 255, 0, 0.08), transparent 70%),
+      linear-gradient(180deg, #000 0%, var(--black) 100%);
     overflow: hidden;
   }
 
@@ -99,7 +101,8 @@ import RenderCeramicsShop from './renders/RenderCeramicsShop.astro';
     height: 46vw;
     left: -12vw;
     top: 4%;
-    background: #1f8a60;
+    background: var(--neon);
+    opacity: 0.14;
   }
 
   .hero__orb--2 {
@@ -107,8 +110,8 @@ import RenderCeramicsShop from './renders/RenderCeramicsShop.astro';
     height: 34vw;
     right: -8vw;
     top: 18%;
-    background: #b6d93b;
-    opacity: 0.22;
+    background: var(--acid);
+    opacity: 0.12;
     animation-duration: 22s;
     animation-direction: alternate-reverse;
   }
@@ -143,7 +146,8 @@ import RenderCeramicsShop from './renders/RenderCeramicsShop.astro';
     width: 0.55em;
     height: 0.55em;
     border-radius: 50%;
-    background: var(--lime);
+    background: var(--neon);
+    box-shadow: 0 0 10px var(--neon);
   }
 
   .hero__pulse::after {
@@ -151,7 +155,7 @@ import RenderCeramicsShop from './renders/RenderCeramicsShop.astro';
     position: absolute;
     inset: 0;
     border-radius: 50%;
-    background: var(--lime);
+    background: var(--neon);
     animation: pulse 2s ease-out infinite;
   }
 
@@ -176,7 +180,11 @@ import RenderCeramicsShop from './renders/RenderCeramicsShop.astro';
   }
 
   .hero__line--accent {
-    color: var(--lime);
+    background: var(--neon-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 40px rgba(0, 255, 48, 0.25));
     animation-delay: 0.12s;
   }
 
@@ -190,7 +198,7 @@ import RenderCeramicsShop from './renders/RenderCeramicsShop.astro';
   .hero__lede {
     max-width: 36rem;
     font-size: clamp(1rem, 1.5vw, 1.15rem);
-    color: #d3e2da;
+    color: #b3b9c1;
   }
 
   .hero__actions {
@@ -251,7 +259,7 @@ import RenderCeramicsShop from './renders/RenderCeramicsShop.astro';
 
   .hero__side {
     display: none;
-    color: var(--ink);
+    color: var(--color-text-muted);
     text-decoration: none;
     font-size: 0.75rem;
     font-weight: 700;
@@ -260,7 +268,7 @@ import RenderCeramicsShop from './renders/RenderCeramicsShop.astro';
   }
 
   .hero__side:hover {
-    color: var(--forest-600);
+    color: var(--neon);
   }
 
   .hero__down {
@@ -270,8 +278,8 @@ import RenderCeramicsShop from './renders/RenderCeramicsShop.astro';
     height: 2.4rem;
     margin-left: 0.6rem;
     border-radius: 50%;
-    background: var(--ink);
-    color: #fff;
+    background: var(--neon);
+    color: var(--ink);
     vertical-align: middle;
     animation: nudge 2.4s ease-in-out infinite;
   }

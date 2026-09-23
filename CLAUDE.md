@@ -21,7 +21,7 @@ Build the studio's own marketing website: high-end, fast, local-SEO-ready, with 
 
 ## Stack (decided)
 - Astro + TypeScript, static output.
-- Plain CSS with design tokens (custom properties). Single art direction since the Hu/man redesign: emerald hero and panels, warm white page, lime accent (no theme toggle).
+- Plain CSS with design tokens (custom properties). Single art direction: near-black `#07080A` page, neon green `#00FF30` (brand) and acid yellow `#ADFF00` (CTAs, banners, tags), two white `.light` bands (concept work, FAQ). No theme toggle. Legacy token names (`--forest-*`, `--lime`, `--paper*`) are aliases onto this palette in `tokens.css`.
 - Self-hosted fonts (`@fontsource`: Plus Jakarta Sans for UI/display, Newsreader for serif type inside renders), no Google Fonts requests.
 - Small vanilla TypeScript islands only where needed: motion (reveals, count-ups, header state), services preview, gallery filter, chat demo, header menu close.
 - No tracking, no cookies, no third-party scripts. Ask before adding any other dependency.
@@ -185,6 +185,9 @@ services preview, filterable bento gallery, scroll reveals. Two more gotchas:
    on the `.js` class so content shows without JS.
 7. **After deleting components, restart `astro dev`.** It kept serving a stale module graph (all
    hero styles missing) until restarted; the production build was fine.
+Revision 3 recoloured to neon on near-black from Gurman's references (`reference/colour/`, colours
+sampled from the pixels). Neon text only on dark; on `.light` bands `.hl` becomes a highlighter swipe.
+Lighthouse's mobile run treats ~17px bold as normal text, so greys in marquees need 4.5:1.
 Lighthouse 99/100/100/100, axe 0 violations on all three pages.
 
 ## Working agreements

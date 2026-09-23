@@ -86,7 +86,8 @@ const prefix = isHome ? '' : '/';
 <style>
   .site-footer {
     margin-top: clamp(0.5rem, 1.5vw, 1.25rem);
-    background: var(--forest-950);
+    background: #000000;
+    border-top: 1px solid var(--color-line);
     color: var(--on-dark);
     padding-top: clamp(3.5rem, 7vw, 5.5rem);
     overflow: hidden;
@@ -126,7 +127,7 @@ const prefix = isHome ? '' : '/';
   }
 
   .site-footer a:hover {
-    color: var(--lime);
+    color: var(--neon);
   }
 
   .site-footer__label {
@@ -152,7 +153,12 @@ const prefix = isHome ? '' : '/';
     letter-spacing: -0.07em;
     line-height: 0.8;
     margin: clamp(3rem, 6vw, 5rem) 0 0;
-    background: linear-gradient(180deg, var(--lime) 0%, rgba(212, 242, 90, 0.08) 95%);
+    background: linear-gradient(
+      180deg,
+      var(--acid) 0%,
+      var(--neon) 40%,
+      rgba(0, 255, 48, 0.04) 96%
+    );
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;

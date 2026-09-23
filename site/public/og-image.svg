@@ -1,9 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#051a12"/>
-      <stop offset="0.6" stop-color="#0b3a2a"/>
-      <stop offset="1" stop-color="#17664b"/>
+      <stop offset="0" stop-color="#000000"/>
+      <stop offset="0.6" stop-color="#07080a"/>
+      <stop offset="1" stop-color="#0b1f10"/>
     </linearGradient>
     <pattern id="stripes" width="88" height="630" patternUnits="userSpaceOnUse">
       <rect width="1" height="630" fill="#ffffff" fill-opacity=".05"/>
@@ -12,11 +12,11 @@
   </defs>
   <rect width="1200" height="630" fill="url(#bg)"/>
   <rect width="1200" height="630" fill="url(#stripes)"/>
-  <rect x="80" y="70" width="44" height="44" rx="12" fill="#d4f25a"/>
+  <rect x="80" y="70" width="44" height="44" rx="12" fill="#00ff30"/>
   <path d="M107 80 97 104" stroke="#0b100d" stroke-width="4.5" stroke-linecap="round"/>
   <text x="138" y="102" class="t" font-size="28" font-weight="800" fill="#fff">HU/MAN</text>
   <text x="600" y="300" class="t" text-anchor="middle" font-size="118" font-weight="800" letter-spacing="-6" fill="#fff">DESIGN. BUILD.</text>
-  <text x="600" y="420" class="t" text-anchor="middle" font-size="118" font-weight="800" letter-spacing="-6" fill="#d4f25a">GROW.</text>
-  <text x="600" y="505" class="t" text-anchor="middle" font-size="28" fill="#d3e2da">Websites, booking apps and AI assistants for local businesses</text>
-  <text x="600" y="550" class="t" text-anchor="middle" font-size="22" fill="#b9cbc2">Bradford, West Yorkshire</text>
+  <text x="600" y="420" class="t" text-anchor="middle" font-size="118" font-weight="800" letter-spacing="-6" fill="#00ff30">GROW.</text>
+  <text x="600" y="505" class="t" text-anchor="middle" font-size="28" fill="#b3b9c1">Websites, booking apps and AI assistants for local businesses</text>
+  <text x="600" y="550" class="t" text-anchor="middle" font-size="22" fill="#9ca2ab">Bradford, West Yorkshire</text>
 </svg>

@@ -1,35 +1,53 @@
 /**
- * Hu/man design tokens (v2, 2026-09-23): deep emerald hero fading into a
- * warm white page, electric lime as the single accent. Structure inspired by
- * the Webelix agency concept and codex-soft.com; see
- * docs/superpowers/specs/2026-09-23-hu-man-rebrand.md.
+ * Hu/man design tokens (v3, 2026-09-23): near-black canvas with two neons
+ * sampled from Gurman's references (reference/colour/):
+ *   --neon  #00FF30  pure electric green  (reference2: arrow-mark brand)
+ *   --acid  #ADFF00  acid yellow-green    (reference1: Botanica identity)
+ * Neon green is the brand colour (logo, highlights, active states); acid is
+ * the energy colour (primary buttons, banners, tags). They meet only as a
+ * gradient in rare hero moments. White is used for two "gallery" bands.
+ *
+ * Legacy names (--forest-*, --lime, --paper*) are kept as aliases so the
+ * v2 components map onto the new palette without layout changes.
  */
 :root {
-  --forest-950: #04140e;
-  --forest-900: #072219;
-  --forest-800: #0b3326;
-  --forest-700: #0f4a36;
-  --forest-600: #17664b;
-  --forest-400: #4f9c7d;
-  --lime: #d4f25a;
-  --lime-deep: #b6d93b;
+  --neon: #00ff30;
+  --acid: #adff00;
+  --neon-gradient: linear-gradient(100deg, var(--acid) 0%, var(--neon) 100%);
+
+  --black: #07080a;
+  --graphite-1: #0e1013;
+  --graphite-2: #15181c;
+  --graphite-3: #1e2227;
+
+  /* aliases used by components */
+  --forest-950: #000000;
+  --forest-900: var(--graphite-1);
+  --forest-800: var(--graphite-2);
+  --forest-700: var(--graphite-3);
+  --forest-600: var(--neon);
+  --forest-400: var(--neon);
+  --lime: var(--acid);
+  --lime-deep: #8fd400;
   --paper: #ffffff;
-  --paper-2: #f4f5f0;
-  --paper-3: #e9ebe3;
-  --ink: #0b100d;
-  --ink-2: #1c2420;
+  --paper-2: var(--black);
+  --paper-3: var(--graphite-2);
+  --ink: #0a0a0b;
+  --ink-2: #16181b;
 
-  --color-bg: var(--paper-2);
-  --color-text: var(--ink);
-  --color-text-muted: #525c56;
-  --color-line: #dcdfd6;
-  --color-line-strong: #0b100d;
-  --color-focus-ring: #0f7a52;
+  --surface: var(--graphite-1);
+  --surface-2: var(--graphite-2);
 
-  /* On dark (forest) surfaces */
+  --color-bg: var(--black);
+  --color-text: #f2f3f5;
+  --color-text-muted: #9ca2ab;
+  --color-line: rgba(255, 255, 255, 0.1);
+  --color-line-strong: #ffffff;
+  --color-focus-ring: var(--neon);
+
   --on-dark: #ffffff;
-  --on-dark-muted: #b9cbc2;
-  --on-dark-line: rgba(255, 255, 255, 0.16);
+  --on-dark-muted: #a3a9b2;
+  --on-dark-line: rgba(255, 255, 255, 0.12);
 
   --font-sans:
     'Plus Jakarta Sans Variable', 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI',
@@ -54,7 +72,21 @@
   --space-7: 7rem;
 
   --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --shadow-card: 0 30px 60px -30px rgba(4, 20, 14, 0.45);
+  --shadow-card: 0 30px 60px -30px rgba(0, 0, 0, 0.85);
 
+  color-scheme: dark;
+}
+
+/* White "gallery" bands (concept work, FAQ). */
+.light {
+  --color-text: #0a0a0b;
+  --color-text-muted: #5a5f67;
+  --color-line: #e4e6ea;
+  --color-line-strong: #0a0a0b;
+  --color-focus-ring: #0a0a0b;
+  --paper: #ffffff;
+  --paper-2: #f3f4f6;
+  --shadow-card: 0 30px 60px -30px rgba(10, 10, 11, 0.35);
+  color: var(--color-text);
   color-scheme: light;
 }

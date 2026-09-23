@@ -92,14 +92,15 @@ const auditHref = `${prefix}#audit`;
   }
 
   .site-header:global(.is-scrolled) {
-    background: rgba(7, 34, 25, 0.82);
+    background: rgba(7, 8, 10, 0.72);
     backdrop-filter: blur(16px) saturate(1.3);
     -webkit-backdrop-filter: blur(16px) saturate(1.3);
     box-shadow: 0 1px 0 var(--on-dark-line);
   }
 
   .site-header--solid {
-    background: var(--forest-900);
+    background: var(--black);
+    box-shadow: 0 1px 0 var(--on-dark-line);
   }
 
   .site-header__inner {
@@ -157,7 +158,7 @@ const auditHref = `${prefix}#audit`;
 
   .site-header__nav a:hover {
     opacity: 1;
-    color: var(--lime);
+    color: var(--neon);
   }
 
   .site-header__actions {

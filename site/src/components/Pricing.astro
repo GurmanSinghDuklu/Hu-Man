@@ -31,7 +31,7 @@ function mailtoFor(tierName: string): string {
 
     <ul class="pricing__cards">
       {pricingTiers.map((tier) => (
-        <li class:list={['tier', { 'tier--featured on-dark': tier.id === 'growth' }]} data-reveal>
+        <li class:list={['tier', { 'tier--featured': tier.id === 'growth' }]} data-reveal>
           <div class="tier__top">
             <h3>{tier.name}</h3>
             <span class="tier__tag">Introductory</span>
@@ -101,7 +101,7 @@ function mailtoFor(tierName: string): string {
     gap: 0.75rem;
     padding: clamp(1.5rem, 2.6vw, 2.25rem);
     border-radius: var(--radius-lg);
-    background: var(--paper);
+    background: var(--surface);
     border: 1px solid var(--color-line);
     transition:
       transform 0.4s var(--ease-out),
@@ -115,10 +115,28 @@ function mailtoFor(tierName: string): string {
 
   .tier--featured {
     background:
-      radial-gradient(80% 60% at 100% 0%, rgba(182, 217, 59, 0.22), transparent 70%),
-      var(--forest-900);
-    color: var(--on-dark);
+      radial-gradient(90% 70% at 100% 0%, rgba(173, 255, 0, 0.9), transparent 70%), var(--neon);
+    color: var(--ink);
     border-color: transparent;
+  }
+
+  .tier--featured:hover {
+    box-shadow: 0 40px 90px -40px rgba(0, 255, 48, 0.8);
+  }
+
+  .tier--featured .tier__tag {
+    background: var(--ink);
+    color: var(--acid);
+  }
+
+  .tier--featured .btn {
+    background: var(--ink);
+    color: #ffffff;
+  }
+
+  .tier--featured .btn .btn__icon {
+    background: var(--neon);
+    color: var(--ink);
   }
 
   .tier__top {
@@ -162,7 +180,7 @@ function mailtoFor(tierName: string): string {
 
   .tier--featured .tier__from,
   .tier--featured .tier__monthly {
-    color: var(--on-dark-muted);
+    color: rgba(10, 10, 11, 0.7);
   }
 
   .tier__monthly {
@@ -176,7 +194,7 @@ function mailtoFor(tierName: string): string {
   }
 
   .tier--featured .tier__for {
-    border-color: var(--on-dark-line);
+    border-color: rgba(10, 10, 11, 0.18);
   }
 
   .tier__includes {
@@ -203,13 +221,13 @@ function mailtoFor(tierName: string): string {
     margin-top: 0.2em;
     border-radius: 50%;
     background: var(--forest-600)
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.5l2.5 2.5L12 5.5' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.5l2.5 2.5L12 5.5' fill='none' stroke='%230a0a0b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
       center / 80% no-repeat;
   }
 
   .tier--featured .tier__includes li::before {
-    background-color: var(--lime);
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.5l2.5 2.5L12 5.5' fill='none' stroke='%230b100d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-color: var(--ink);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.5l2.5 2.5L12 5.5' fill='none' stroke='%2300ff30' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   }
 
   .tier .btn {

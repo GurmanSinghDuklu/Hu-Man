@@ -61,3 +61,18 @@ cards, client-logo row, centred about heading, big uppercase services list) plus
   count-ups, scroll-driven process line, rotating audit badge, hover lifts. All off under reduced
   motion.
 Lighthouse 99/100/100/100; axe 0 violations on all three pages with every reveal forced visible.
+
+## Revision 3 (same day): neon on near-black
+Gurman supplied two colour references (kept in `reference/colour/`): a Botanica visual identity and
+an arrow-mark brand. Colours sampled from the images' pixels:
+- **Neon green `#00FF30`** (reference2): the brand colour. Logo mark, heading highlights, active tab
+  buttons, services active state, process numbers and line, eyebrow dots, pulse, audit badge,
+  featured pricing card.
+- **Acid / neon yellow `#ADFF00`** (reference1): the energy colour. Primary buttons, the moving audit
+  ticker, "Introductory" and "In progress" tags.
+- The two meet only as a gradient: the hero's "GROW." and the footer wordmark.
+- **Background** near-black `#07080A` with graphite surfaces (`#0E1013`, `#15181C`) and hairline
+  white borders; soft neon glows instead of flat colour fields.
+- **White bands** for concept work and FAQ (`.light`), where highlights become a neon highlighter
+  swipe behind black text (neon text on white would fail contrast).
+Layout, renders and copy unchanged. Lighthouse 99/100/100/100; axe 0 violations on all pages.

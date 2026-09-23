@@ -61,15 +61,15 @@ a {
   border-radius: 6px;
 }
 
-.on-dark :focus-visible {
-  outline-color: var(--lime);
+.light :focus-visible {
+  outline-color: #0a0a0b;
 }
 
 .skip-link {
   position: absolute;
   left: var(--space-3);
   top: -100%;
-  background: var(--lime);
+  background: var(--neon);
   color: var(--ink);
   padding: var(--space-2) var(--space-3);
   border-radius: var(--radius-pill);
@@ -117,15 +117,13 @@ a {
   width: 0.5em;
   height: 0.5em;
   border-radius: 50%;
-  background: var(--forest-600);
+  background: var(--neon);
+  box-shadow: 0 0 10px var(--neon);
 }
 
-.on-dark .eyebrow {
-  color: var(--on-dark-muted);
-}
-
-.on-dark .eyebrow::before {
-  background: var(--lime);
+.light .eyebrow::before {
+  box-shadow: none;
+  background: #0a0a0b;
 }
 
 .section-title {
@@ -134,12 +132,17 @@ a {
   letter-spacing: -0.04em;
 }
 
+/* Highlight: neon text on dark; a neon highlighter swipe behind black text on white. */
 .hl {
-  color: var(--forest-600);
+  color: var(--neon);
 }
 
-.on-dark .hl {
-  color: var(--lime);
+.light .hl {
+  color: #0a0a0b;
+  background: linear-gradient(transparent 58%, var(--neon) 58%, var(--neon) 92%, transparent 92%);
+  padding-inline: 0.06em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
 }
 
 /* ---------- buttons ---------- */
@@ -182,24 +185,40 @@ a {
   transform: rotate(45deg);
 }
 
+/* "Dark" = the contrasting solid: white on the black page, black on white bands. */
 .btn--dark {
-  background: var(--ink);
-  color: #fff;
+  background: #ffffff;
+  color: var(--ink);
 }
 
 .btn--dark .btn__icon {
-  background: var(--lime);
+  background: var(--ink);
+  color: var(--neon);
+}
+
+.light .btn--dark {
+  background: var(--ink);
+  color: #ffffff;
+}
+
+.light .btn--dark .btn__icon {
+  background: var(--neon);
   color: var(--ink);
 }
 
 .btn--lime {
-  background: var(--lime);
+  background: var(--acid);
   color: var(--ink);
+  box-shadow: 0 0 0 0 rgba(173, 255, 0, 0);
+}
+
+.btn--lime:hover {
+  box-shadow: 0 0 32px -6px rgba(173, 255, 0, 0.65);
 }
 
 .btn--lime .btn__icon {
   background: var(--ink);
-  color: var(--lime);
+  color: var(--acid);
 }
 
 .btn--ghost {
@@ -208,15 +227,15 @@ a {
 }
 
 .btn--ghost:hover {
-  background: var(--ink);
-  color: #fff;
-  border-color: var(--ink);
-}
-
-.on-dark .btn--ghost:hover {
   background: #fff;
   color: var(--ink);
   border-color: #fff;
+}
+
+.light .btn--ghost:hover {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
 }
 
 .btn:active {
