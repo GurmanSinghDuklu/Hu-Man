@@ -96,7 +96,7 @@ const work = [
 ] as const;
 ---
 
-<section class="work light" id="work" aria-labelledby="work-title" data-work>
+<section class="work" id="work" aria-labelledby="work-title" data-work>
   <div class="wrap">
     <div class="work__head">
       <div class="work__titles">
@@ -186,7 +186,10 @@ const work = [
   .work {
     margin: clamp(2rem, 5vw, 4rem) clamp(0.5rem, 1.5vw, 1.25rem) 0;
     border-radius: var(--radius-xl);
-    background: #ffffff;
+    background:
+      radial-gradient(55% 45% at 92% 0%, rgba(173, 255, 0, 0.08), transparent 70%),
+      radial-gradient(60% 55% at 0% 100%, rgba(0, 255, 48, 0.1), transparent 70%), var(--graphite-1);
+    border: 1px solid var(--color-line);
     padding-block: clamp(4rem, 9vw, 7rem);
   }
 
@@ -218,8 +221,8 @@ const work = [
     padding: 0.5em 1.3em;
     border-radius: var(--radius-pill);
     border: 1px solid var(--color-line);
-    background: #ffffff;
-    color: var(--ink);
+    background: transparent;
+    color: var(--color-text);
     font: 600 0.85rem var(--font-sans);
     cursor: pointer;
     transition:
@@ -229,13 +232,14 @@ const work = [
   }
 
   .work__filter:hover {
-    border-color: var(--ink);
+    border-color: var(--neon);
+    color: var(--neon);
   }
 
   .work__filter[aria-pressed='true'] {
     background: var(--neon);
     color: var(--ink);
-    border-color: var(--ink);
+    border-color: var(--neon);
     box-shadow: 0 8px 24px -10px rgba(0, 255, 48, 0.9);
   }
 
@@ -257,7 +261,8 @@ const work = [
     display: flex;
     flex-direction: column;
     border-radius: var(--radius-lg);
-    background: #f3f4f6;
+    background: var(--graphite-2);
+    border: 1px solid var(--color-line);
     padding: 0.6rem;
     box-shadow: 0 1px 0 var(--color-line);
     transition:
@@ -267,7 +272,9 @@ const work = [
 
   .work__card:hover figure {
     transform: translateY(-6px);
-    box-shadow: var(--shadow-card);
+    box-shadow:
+      var(--shadow-card),
+      0 0 0 1px rgba(0, 255, 48, 0.35);
   }
 
   .work__media {
@@ -322,7 +329,7 @@ const work = [
     width: 2.6rem;
     height: 2.6rem;
     border-radius: 50%;
-    background: #ffffff;
+    background: var(--graphite-3);
     transition:
       background-color 0.3s,
       transform 0.4s var(--ease-out);
@@ -335,6 +342,7 @@ const work = [
 
   .work__card:hover .work__go {
     background: var(--neon);
+    color: var(--ink);
     transform: rotate(45deg);
   }
 
@@ -358,7 +366,7 @@ const work = [
     list-style: none;
     margin: 0;
     padding: 0;
-    border-top: 1px solid var(--ink);
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
   }
 
   .work__real li {
