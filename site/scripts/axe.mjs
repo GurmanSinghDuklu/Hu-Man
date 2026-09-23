@@ -5,6 +5,8 @@ import { startServer } from './serve.mjs';
 
 const PORT = 4332;
 const SITE_URL = `http://localhost:${PORT}/`;
+const PAGES = ['', 'privacy/', '404.html'];
+
 const distDir = fileURLToPath(new URL('../dist/', import.meta.url));
 
 async function run() {
@@ -15,23 +17,26 @@ async function run() {
     try {
       const context = await browser.newContext();
       const page = await context.newPage();
-      await page.goto(SITE_URL, { waitUntil: 'networkidle' });
+      for (const path of PAGES) {
+        await page.goto(SITE_URL + path, { waitUntil: 'networkidle' });
 
-      const results = await new AxeBuilder({ page })
-        .withTags(['wcag2a', 'wcag2aa', 'wcag22aa'])
-        .analyze();
+        const results = await new AxeBuilder({ page })
+          .withTags(['wcag2a', 'wcag2aa', 'wcag22aa'])
+          .analyze();
 
-      if (results.violations.length === 0) {
-        console.log('axe: 0 violations');
-      } else {
-        console.error(`axe: ${results.violations.length} violation(s)`);
-        for (const v of results.violations) {
-          console.error(`\n[${v.impact}] ${v.id}: ${v.help}`);
-          for (const node of v.nodes) {
-            console.error(`  - ${node.target.join(', ')}`);
+        const label = `/${path}`;
+        if (results.violations.length === 0) {
+          console.log(`axe ${label}: 0 violations`);
+        } else {
+          console.error(`axe ${label}: ${results.violations.length} violation(s)`);
+          for (const v of results.violations) {
+            console.error(`\n[${v.impact}] ${v.id}: ${v.help}`);
+            for (const node of v.nodes) {
+              console.error(`  - ${node.target.join(', ')}`);
+            }
           }
+          process.exitCode = 1;
         }
-        process.exitCode = 1;
       }
     } finally {
       await browser.close();

@@ -1,7 +1,7 @@
 # Open questions for Gurman
 
 Blocking for Phase 0 or 1 — answered 2026-09-21:
-1. Business name: **still not decided.** Keep "Duklu Digital" as the working name in `site/src/config/site.ts`, single config value, easy to change later.
+1. Business name: **working brand "Hu/man" (2026-09-23).** Gurman floated the styles Hu.man, Hu_man, Hu/man, HUMAN and Hu-man; the site uses "Hu/man" in text and "HU/MAN" as the display wordmark. Still a working name, not registered: change `name`/`wordmark` in `site/src/config/site.ts`. Check trademark and domain availability before committing to it.
 2. Contact details: **publish now.** gurmanduklu@gmail.com and +44 7988 450280 (business email/number still to be confirmed — swap in config when he has them).
 3. Photo: **not yet.** Leave a clearly labelled placeholder slot in the About section.
 4. Essence Hair Treatment: **confirmed live** at https://essencehairtreatment.com (checked, returns 200). Aunt's permission to describe it as a family-business project: confirmed by Gurman.

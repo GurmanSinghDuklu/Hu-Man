@@ -1,0 +1,456 @@
+/**
+ * Render system: device frames and UI atoms for the concept mock-ups.
+ *
+ * Every device is its own size container. Its inner body sets font-size from
+ * the container width (cqw), so everything inside is sized in em and scales
+ * with the device. The element that sets container-type never uses its own
+ * cqw for font-size (spec disallows it; see CLAUDE.md Phase 2 note).
+ *
+ * Phone:  32em wide incl. bezel -> 30em screen (1em ~ 13pt on a real phone).
+ * Laptop: 110em wide incl. base -> ~97em screen.
+ * Tablet: 100em wide incl. bezel.
+ */
+
+/* ---------- tile (coloured stage behind devices) ---------- */
+.tile {
+  position: relative;
+  margin: 0;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--tile-bg, #2a2a30);
+  isolation: isolate;
+}
+
+.tile__stage {
+  position: relative;
+  aspect-ratio: var(--tile-ratio, 4 / 3);
+  width: 100%;
+}
+
+.tile__stage > * {
+  position: absolute;
+}
+
+.tile__label {
+  position: absolute;
+  left: 0.75rem;
+  bottom: 0.75rem;
+  z-index: 5;
+  display: inline-flex;
+  gap: 0.4em;
+  align-items: center;
+  padding: 0.35em 0.85em;
+  border-radius: var(--radius-pill);
+  background: rgba(5, 8, 16, 0.72);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.tile__label-dot {
+  width: 0.45em;
+  height: 0.45em;
+  border-radius: 50%;
+  background: var(--magenta-bright);
+}
+
+/* ---------- phone ---------- */
+.dev-phone {
+  container-type: inline-size;
+  aspect-ratio: 390 / 820;
+}
+
+.dev-phone__body {
+  position: absolute;
+  inset: 0;
+  font-size: calc(100cqw / 32);
+  border-radius: 5.2em;
+  background: #0c0c0e;
+  padding: 1em;
+  box-shadow:
+    inset 0 0 0 0.16em #55555c,
+    inset 0 0 0 0.34em #1b1b1e,
+    0 3em 6em -1.5em rgba(0, 0, 0, 0.5),
+    0 1.2em 2.4em -1em rgba(0, 0, 0, 0.4);
+}
+
+.dev-phone--light .dev-phone__body {
+  background: #e9e9ec;
+  box-shadow:
+    inset 0 0 0 0.16em #ffffff,
+    inset 0 0 0 0.34em #c9c9ce,
+    0 3em 6em -1.5em rgba(0, 0, 0, 0.35),
+    0 1.2em 2.4em -1em rgba(0, 0, 0, 0.25);
+}
+
+.dev-phone__screen {
+  position: relative;
+  height: 100%;
+  border-radius: 4.2em;
+  overflow: hidden;
+  background: var(--scr-bg, #ffffff);
+  color: var(--scr-fg, #111114);
+  font-family: var(--font-sans);
+  line-height: 1.3;
+  display: flex;
+  flex-direction: column;
+}
+
+.dev-phone__status {
+  flex: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 4.4em;
+  padding: 0.6em 2.6em 0 3em;
+  font-size: 1em;
+  font-weight: 600;
+  position: relative;
+  z-index: 3;
+}
+
+.dev-phone__island {
+  position: absolute;
+  top: 1em;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 9.6em;
+  height: 2.8em;
+  border-radius: 2em;
+  background: #000;
+}
+
+.dev-phone__icons {
+  display: flex;
+  gap: 0.35em;
+  align-items: center;
+}
+
+.dev-phone__icons i {
+  display: block;
+  background: currentColor;
+  border-radius: 0.15em;
+}
+
+.dev-phone__icons i:nth-child(1) {
+  width: 1.3em;
+  height: 0.8em;
+  clip-path: polygon(0 100%, 100% 0, 100% 100%);
+}
+
+.dev-phone__icons i:nth-child(2) {
+  width: 1.2em;
+  height: 0.8em;
+  border-radius: 1em 1em 0.1em 0.1em;
+}
+
+.dev-phone__icons i:nth-child(3) {
+  width: 2em;
+  height: 0.95em;
+  border-radius: 0.3em;
+}
+
+.dev-phone__content {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.dev-phone__home {
+  position: absolute;
+  bottom: 0.7em;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10em;
+  height: 0.38em;
+  border-radius: 1em;
+  background: currentColor;
+  opacity: 0.85;
+  z-index: 4;
+}
+
+/* ---------- laptop ---------- */
+.dev-laptop {
+  container-type: inline-size;
+}
+
+.dev-laptop__body {
+  font-size: calc(100cqw / 110);
+  position: relative;
+}
+
+.dev-laptop__lid {
+  margin-inline: 6em;
+  padding: 1.5em 1.5em 2.2em;
+  border-radius: 2.4em 2.4em 0.6em 0.6em;
+  background: #0d0d10;
+  box-shadow:
+    inset 0 0 0 0.18em #3b3b42,
+    0 3em 6em -2em rgba(0, 0, 0, 0.5);
+  position: relative;
+}
+
+.dev-laptop__lid::before {
+  content: '';
+  position: absolute;
+  top: 0.55em;
+  left: 50%;
+  width: 0.5em;
+  height: 0.5em;
+  margin-left: -0.25em;
+  border-radius: 50%;
+  background: #23232a;
+}
+
+.dev-laptop__screen {
+  aspect-ratio: 16 / 10;
+  border-radius: 0.5em;
+  overflow: hidden;
+  background: var(--scr-bg, #fff);
+  color: var(--scr-fg, #111);
+  position: relative;
+  font-family: var(--font-sans);
+  line-height: 1.3;
+}
+
+.dev-laptop__base {
+  height: 2.4em;
+  border-radius: 0.3em 0.3em 3em 3em / 0.3em 0.3em 1.6em 1.6em;
+  background: linear-gradient(180deg, #4a4a52 0%, #26262c 35%, #121216 100%);
+  position: relative;
+  box-shadow: 0 2em 3em -1em rgba(0, 0, 0, 0.45);
+}
+
+.dev-laptop__base::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 16em;
+  height: 0.9em;
+  transform: translateX(-50%);
+  border-radius: 0 0 1em 1em;
+  background: #17171b;
+}
+
+.dev-laptop--silver .dev-laptop__base {
+  background: linear-gradient(180deg, #f2f2f4 0%, #c8c8cf 40%, #9d9da5 100%);
+}
+
+.dev-laptop--silver .dev-laptop__base::before {
+  background: #b2b2ba;
+}
+
+/* ---------- browser window (standalone, no laptop) ---------- */
+.dev-browser {
+  container-type: inline-size;
+}
+
+.dev-browser__body {
+  font-size: calc(100cqw / 100);
+  border-radius: 1em;
+  overflow: hidden;
+  background: var(--scr-bg, #fff);
+  color: var(--scr-fg, #111);
+  box-shadow: 0 3em 6em -2em rgba(0, 0, 0, 0.45);
+  font-family: var(--font-sans);
+  line-height: 1.3;
+}
+
+.dev-browser__bar {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  height: 3.6em;
+  padding-inline: 1.4em;
+  background: var(--bar-bg, #1b1b20);
+}
+
+.dev-browser__bar i {
+  width: 0.95em;
+  height: 0.95em;
+  border-radius: 50%;
+  background: #ff5f57;
+}
+
+.dev-browser__bar i:nth-child(2) {
+  background: #febc2e;
+}
+
+.dev-browser__bar i:nth-child(3) {
+  background: #28c840;
+}
+
+.dev-browser__url {
+  margin-inline: auto;
+  width: 34%;
+  height: 1.9em;
+  border-radius: 0.6em;
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 1em;
+  display: grid;
+  place-items: center;
+}
+
+.dev-browser--light .dev-browser__bar {
+  background: #ececef;
+}
+
+.dev-browser--light .dev-browser__url {
+  background: #fff;
+  color: #5f5f66;
+}
+
+.dev-browser__screen {
+  position: relative;
+  aspect-ratio: var(--screen-ratio, 16 / 10);
+  overflow: hidden;
+}
+
+/* ---------- tablet ---------- */
+.dev-tablet {
+  container-type: inline-size;
+  aspect-ratio: 4 / 3;
+}
+
+.dev-tablet__body {
+  position: absolute;
+  inset: 0;
+  font-size: calc(100cqw / 100);
+  border-radius: 3.6em;
+  background: #0c0c0e;
+  padding: 2.2em;
+  box-shadow:
+    inset 0 0 0 0.25em #4a4a52,
+    0 3em 6em -2em rgba(0, 0, 0, 0.5);
+}
+
+.dev-tablet__screen {
+  height: 100%;
+  border-radius: 1.6em;
+  overflow: hidden;
+  background: var(--scr-bg, #fff);
+  color: var(--scr-fg, #111);
+  font-family: var(--font-sans);
+  line-height: 1.3;
+  position: relative;
+}
+
+/* ---------- UI atoms used inside screens ---------- */
+.ui-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+}
+
+.ui-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6em;
+}
+
+.ui-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6em;
+}
+
+.ui-pad {
+  padding-inline: 1.6em;
+}
+
+.ui-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.45em 1em;
+  border-radius: 2em;
+  font-size: 0.95em;
+  font-weight: 500;
+  white-space: nowrap;
+  background: var(--chip-bg, rgba(0, 0, 0, 0.06));
+}
+
+.ui-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 3.6em;
+  border-radius: 2em;
+  font-weight: 600;
+  font-size: 1.05em;
+  background: var(--btn-bg, #111);
+  color: var(--btn-fg, #fff);
+  white-space: nowrap;
+}
+
+.ui-card {
+  border-radius: 1.4em;
+  background: var(--card-bg, #fff);
+  padding: 1.2em;
+}
+
+.ui-muted {
+  opacity: 0.75;
+}
+
+.ui-small {
+  font-size: 0.85em;
+}
+
+.ui-h {
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+
+.ui-avatar {
+  width: 3em;
+  height: 3em;
+  border-radius: 50%;
+  flex: none;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  font-size: 1em;
+}
+
+.ui-line {
+  height: 0.55em;
+  border-radius: 1em;
+  background: currentColor;
+  opacity: 0.14;
+}
+
+.ui-nav {
+  position: absolute;
+  left: 1.4em;
+  right: 1.4em;
+  bottom: 2em;
+  height: 5em;
+  border-radius: 2.6em;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background: var(--nav-bg, #111);
+  z-index: 3;
+}
+
+.ui-nav i {
+  width: 1.6em;
+  height: 1.6em;
+  border-radius: 0.5em;
+  border: 0.18em solid var(--nav-fg, #fff);
+  opacity: 0.55;
+}
+
+.ui-nav i.on {
+  opacity: 1;
+  background: var(--nav-fg, #fff);
+}

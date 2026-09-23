@@ -2,61 +2,95 @@
 import { processSteps } from '../data/content';
 ---
 
-<section class="process wrap" aria-labelledby="process-heading">
-  <h2 id="process-heading">How it works</h2>
-  <ol class="process__list">
-    {processSteps.map((step, index) => (
-      <li class="process__item">
-        <span class="process__number" aria-hidden="true">
-          {index + 1}
-        </span>
-        <div>
+<section class="process" aria-labelledby="process-title">
+  <div class="wrap">
+    <h2 id="process-title" class="section-title">
+      <span class="t-thin t-silver">How it</span> <span class="t-bold t-silver">works</span>
+    </h2>
+    <ol class="process__list">
+      {processSteps.map((step, i) => (
+        <li class="process__step">
+          <span class="process__num" aria-hidden="true">
+            {String(i + 1).padStart(2, '0')}
+          </span>
           <h3>{step.title}</h3>
           <p>{step.description}</p>
-        </div>
-      </li>
-    ))}
-  </ol>
+        </li>
+      ))}
+    </ol>
+  </div>
 </section>
 
 <style>
   .process {
-    padding-block: var(--space-6);
-    border-top: 1px solid var(--color-border);
+    padding-block: clamp(4rem, 9vw, 7rem);
   }
 
   .process__list {
     list-style: none;
-    margin: var(--space-4) 0 0;
+    margin: clamp(2rem, 5vw, 3.5rem) 0 0;
     padding: 0;
-    counter-reset: none;
+    display: grid;
+    gap: 1px;
+    background: var(--color-line);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    overflow: hidden;
   }
 
-  .process__item {
-    display: flex;
-    gap: var(--space-4);
-    padding-block: var(--space-3);
-    border-top: 1px solid var(--color-border);
+  .process__step {
+    background: var(--color-bg);
+    padding: clamp(1.5rem, 2.4vw, 2rem);
+    display: grid;
+    align-content: start;
+    gap: 0.75rem;
+    transition: background-color 0.3s;
   }
 
-  .process__item:last-child {
-    border-bottom: 1px solid var(--color-border);
+  .process__step:hover {
+    background: var(--ink-900);
   }
 
-  .process__number {
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 1.25rem;
-    color: var(--color-accent);
-    flex-shrink: 0;
-    width: 2ch;
+  .process__num {
+    display: inline-grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    border: 1px solid var(--color-line-strong);
+    font-size: 0.85rem;
+    margin-bottom: var(--space-4);
   }
 
-  .process__item h3 {
-    margin-bottom: var(--space-1);
+  .process__step:first-child .process__num {
+    background: linear-gradient(135deg, var(--magenta-bright), var(--blue));
+    border-color: transparent;
   }
 
-  .process__item p {
+  .process__step h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+  }
+
+  .process__step p {
     color: var(--color-text-muted);
+    font-size: 0.95rem;
+  }
+
+  @media (min-width: 40rem) {
+    .process__list {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .process__list {
+      grid-template-columns: repeat(5, 1fr);
+    }
+
+    .process__step {
+      min-height: 17rem;
+    }
   }
 </style>

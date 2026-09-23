@@ -1,0 +1,50 @@
+---
+/**
+ * Phone frame. Screen content goes in the default slot and is sized in em
+ * (the screen is 30em wide). Positioning/tilt come from the parent via
+ * `class` and `style`.
+ */
+interface Props {
+  class?: string;
+  style?: string;
+  /** Screen background and foreground colours. */
+  bg?: string;
+  fg?: string;
+  light?: boolean;
+  /** Hide the status bar for full-bleed hero screens that draw their own. */
+  status?: boolean;
+}
+const {
+  class: className = '',
+  style = '',
+  bg = '#fff',
+  fg = '#111114',
+  light = false,
+  status = true,
+} = Astro.props;
+---
+
+<div
+  class:list={['dev-phone', { 'dev-phone--light': light }, className]}
+  style={`${style};--scr-bg:${bg};--scr-fg:${fg}`}
+>
+  <div class="dev-phone__body">
+    <div class="dev-phone__screen">
+      <span class="dev-phone__island"></span>
+      {status && (
+        <div class="dev-phone__status">
+          <span>9:41</span>
+          <span class="dev-phone__icons">
+            <i />
+            <i />
+            <i />
+          </span>
+        </div>
+      )}
+      <div class="dev-phone__content">
+        <slot />
+      </div>
+      <span class="dev-phone__home"></span>
+    </div>
+  </div>
+</div>

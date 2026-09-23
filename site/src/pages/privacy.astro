@@ -68,26 +68,43 @@ import { site } from '../config/site';
 
 <style>
   .privacy {
-    padding-block: var(--space-7);
-    max-width: 65ch;
+    padding-block: clamp(3rem, 8vw, 6rem);
+    max-width: calc(65ch + 2 * var(--gutter));
   }
 
-  .privacy__draft-flag {
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    padding: var(--space-3);
-    color: var(--color-text-muted);
-    font-size: 0.95rem;
-    margin-bottom: var(--space-5);
-  }
-
-  .privacy__updated {
-    color: var(--color-text-muted);
-    font-size: 0.9rem;
+  .privacy h1 {
+    font-size: clamp(2.75rem, 7vw, 5rem);
+    margin-bottom: var(--space-3);
   }
 
   .privacy h2 {
-    margin-top: var(--space-5);
+    font-size: 1.5rem;
+    letter-spacing: -0.03em;
+    margin: var(--space-5) 0 var(--space-3);
+  }
+
+  .privacy p,
+  .privacy ul {
+    margin: 0 0 var(--space-3);
+    color: rgba(255, 255, 255, 0.88);
+    line-height: 1.65;
+  }
+
+  .privacy a {
+    color: #ff9ae3;
+  }
+
+  .privacy__draft-flag {
+    background: var(--ink-800);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    padding: var(--space-3) var(--space-4);
+    font-size: 0.95rem;
+    margin-bottom: var(--space-5) !important;
+  }
+
+  .privacy__updated {
+    color: var(--color-text-muted) !important;
+    font-size: 0.9rem;
   }
 </style>

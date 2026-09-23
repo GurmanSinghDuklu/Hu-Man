@@ -1,6 +1,6 @@
 # Duklu Digital: project memory
 
-Working name for Gurman Singh Duklu's solo web, AI and local-search studio (Bradford, UK). The name is a placeholder until he chooses one. Keep it in a single config value (`src/config/site.ts`) so it is easy to change.
+Gurman Singh Duklu's solo web, AI and local-search studio (Bradford, UK). Working brand since 2026-09-23: **Hu/man** (wordmark "HU/MAN"), replacing "Duklu Digital". Still a working name: keep it in `src/config/site.ts` (`name`, `wordmark`, `descriptor`) so it is easy to change.
 
 ## Current goal
 Build the studio's own marketing website: high-end, fast, local-SEO-ready, with concept before/after renders, services, pricing, credentials, FAQ and a free-audit contact path. Build it in the phases in `docs/08-roadmap.md`. Do not deploy, buy domains or publish anything without asking first.
@@ -21,9 +21,9 @@ Build the studio's own marketing website: high-end, fast, local-SEO-ready, with 
 
 ## Stack (decided)
 - Astro + TypeScript, static output.
-- Plain CSS with design tokens (custom properties), light and dark themes.
-- Self-hosted fonts (`@fontsource`), no Google Fonts requests.
-- Small vanilla TypeScript islands only where needed: before/after slider, chat demo, theme toggle.
+- Plain CSS with design tokens (custom properties). Single dark art direction since the Hu/man redesign (no theme toggle).
+- Self-hosted fonts (`@fontsource`: Inter for UI/display, Newsreader for serif type inside renders), no Google Fonts requests.
+- Small vanilla TypeScript islands only where needed: chat demo, header menu close.
 - No tracking, no cookies, no third-party scripts. Ask before adding any other dependency.
 - Project lives in `site/` (Astro app root). Astro 7, TypeScript 6, Node 24.
 - Commands (run from `site/`):
@@ -158,6 +158,26 @@ All contrast pairs re-verified computationally (`site/scripts/check-contrast.mjs
 repo for future palette changes). Lighthouse: 98/100/100/100 (performance/accessibility/best-
 practices/seo), matching the Phase 4 baseline exactly. axe: 0 violations across all 3 pages ×
 both themes (6 combinations).
+
+## Hu/man redesign status (done, branch `hu-man-rebrand`)
+Full visual rebuild to match the LUME Agency Dribbble shot and Ronas IT's mock-up grid (spec:
+`docs/superpowers/specs/2026-09-23-hu-man-rebrand.md`). The before/after slider, `MockSite`,
+`sectors.ts` and the theme toggle were removed. Concept work is now ten HTML/CSS/SVG renders in
+`src/components/renders/` built on device frames in `src/components/devices/` (phone, laptop,
+browser, tablet). Things worth knowing:
+1. **Render styles are `<style is:global>` with a unique class prefix per render** (`bb-`, `sa-`,
+   `td-`…). Astro's scoped styles do not reach a `class` passed into a child component, so scoped
+   position rules on `<Phone class="x">` silently never applied (phones rendered at zero width).
+2. **Devices scale with container query units**: the frame is the container and its inner body
+   sets `font-size` from `cqw` (the Phase 2 rule still applies). Phone screen = 30em wide.
+3. **Render text is held to AA contrast too.** Lighthouse and axe both scan it; the renders pass
+   with no exclusions. Check `.ui-muted` and accent-on-white pairs when adding a render.
+4. **The hero glow needs `isolation: isolate` + `overflow-x: clip` on `.hero`**: without the first
+   the body background paints over it; without the second it causes horizontal scroll on phones.
+5. **CSS is inlined** (`build.inlineStylesheets: 'always'`) and the Inter latin woff2 is preloaded,
+   for first paint. `scripts/serve.mjs` now gzips text like a real host, so Lighthouse measures
+   realistic transfer sizes. `scripts/axe.mjs` now scans home, privacy and 404.
+Lighthouse 97/100/100/100, axe 0 violations on all three pages.
 
 ## Working agreements
 - Plan first with `/plan-site`, get approval, then build one phase at a time with `/build-phase N`.

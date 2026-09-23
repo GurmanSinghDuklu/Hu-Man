@@ -7,5 +7,7 @@ export default defineConfig({
   site: 'https://example.com',
   output: 'static',
   compressHTML: true,
+  // Inline the (small) CSS so first paint doesn't wait on stylesheet requests.
+  build: { inlineStylesheets: 'always' },
   integrations: [sitemap()],
 });

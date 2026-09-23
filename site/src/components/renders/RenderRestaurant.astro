@@ -1,0 +1,209 @@
+---
+import Tile from './Tile.astro';
+import Phone from '../devices/Phone.astro';
+import Dish from './Dish.astro';
+interface Props {
+  label?: string;
+  ratio?: string;
+}
+const { label, ratio = '4 / 3' } = Astro.props;
+const bg = '#1a0f0a';
+const fg = '#fff1e3';
+---
+
+<Tile bg="#e6e0d5" ratio={ratio} label={label}>
+  <div class="rs-linen"></div>
+  <Phone class="rs-p1" bg={bg} fg={fg}>
+    <div class="rs-s1">
+      <span class="rs-cond rs-cond--xl">
+        ORDER
+        <br />
+        DIRECT
+      </span>
+      <span class="ui-small rs-dim">Skip the app fees. Collection in about 20 minutes.</span>
+      <Dish class="rs-d1" sauce="#b8431b" />
+      <Dish class="rs-d2" sauce="#e0a23a" garnish="#2f6b3a" />
+      <Dish class="rs-d3" sauce="#7a2a14" />
+    </div>
+  </Phone>
+  <Phone class="rs-p2" bg={bg} fg={fg}>
+    <div class="ui-pad ui-col rs-stack">
+      <span class="rs-cond rs-cond--l">CHEF'S PICKS</span>
+      <div class="rs-feature">
+        <Dish class="rs-fd" sauce="#c0501f" bowl="#2a1a12" />
+      </div>
+      {[
+        ['Chicken karahi', '£9.50'],
+        ['Paneer tikka wrap', '£6.50'],
+        ['Family feast', '£24'],
+      ].map(([n, p]) => (
+        <div class="rs-item">
+          <span>{n}</span>
+          <b>{p}</b>
+          <i>+</i>
+        </div>
+      ))}
+    </div>
+  </Phone>
+  <Phone class="rs-p3" bg="#fff1e3" fg={bg}>
+    <div class="ui-pad ui-col rs-stack">
+      <span class="rs-cond rs-cond--l" style="color:#c2410c">
+        YOUR ORDER
+      </span>
+      <div class="rs-row">
+        <span>1 × Family feast</span>
+        <b>£24.00</b>
+      </div>
+      <div class="rs-row">
+        <span>2 × Paneer tikka wrap</span>
+        <b>£13.00</b>
+      </div>
+      <div class="rs-row rs-total">
+        <span>Total</span>
+        <b>£37.00</b>
+      </div>
+      <div class="rs-ready">
+        <span class="ui-small">Ready for collection</span>
+        <b>in about 20 min</b>
+      </div>
+      <span class="ui-btn" style="--btn-bg:#ff7a1a;--btn-fg:#1a0f0a">
+        Pay with card
+      </span>
+    </div>
+  </Phone>
+</Tile>
+
+<style is:global>
+  .rs-linen {
+    inset: 0;
+    background:
+      repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.025) 0 1px, transparent 1px 3px),
+      repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.03) 0 1px, transparent 1px 4px);
+  }
+  .rs-p1 {
+    left: 2%;
+    top: 20%;
+    width: 31%;
+    transform: rotate(-14deg);
+  }
+  .rs-p2 {
+    left: 34%;
+    top: 4%;
+    width: 31%;
+    transform: rotate(10deg);
+  }
+  .rs-p3 {
+    left: 66%;
+    top: 26%;
+    width: 31%;
+    transform: rotate(-6deg);
+  }
+  .rs-cond {
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 0.86;
+    transform: scaleX(0.72);
+    transform-origin: left;
+    display: block;
+    white-space: nowrap;
+  }
+  .rs-cond--xl {
+    font-size: 6.6em;
+  }
+  .rs-cond--l {
+    font-size: 3.6em;
+  }
+  .rs-dim {
+    opacity: 0.7;
+    max-width: 18em;
+  }
+  .rs-s1 {
+    position: relative;
+    flex: 1;
+    padding: 1em 1.6em;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+  }
+  .rs-d1 {
+    position: absolute;
+    width: 22em;
+    left: -3em;
+    bottom: 8em;
+  }
+  .rs-d2 {
+    position: absolute;
+    width: 15em;
+    right: -2em;
+    bottom: 20em;
+  }
+  .rs-d3 {
+    position: absolute;
+    width: 14em;
+    right: 1em;
+    bottom: 1em;
+  }
+  .rs-stack {
+    gap: 1em;
+    padding-top: 0.6em;
+  }
+  .rs-feature {
+    height: 21em;
+    border-radius: 1.4em;
+    background: #ff7a1a;
+    position: relative;
+    overflow: hidden;
+  }
+  .rs-fd {
+    position: absolute;
+    width: 20em;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .rs-item {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 1em;
+    align-items: center;
+    padding: 1em 0;
+    border-bottom: 1px solid rgba(255, 241, 227, 0.15);
+    font-size: 1.15em;
+  }
+  .rs-item i {
+    width: 1.8em;
+    height: 1.8em;
+    border-radius: 50%;
+    background: #ff7a1a;
+    color: #1a0f0a;
+    display: grid;
+    place-items: center;
+    font-style: normal;
+    font-weight: 700;
+  }
+  .rs-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.9em 0;
+    border-bottom: 1px solid rgba(26, 15, 10, 0.12);
+    font-size: 1.1em;
+  }
+  .rs-total {
+    font-weight: 700;
+    font-size: 1.4em;
+    border: 0;
+  }
+  .rs-ready {
+    background: #1a0f0a;
+    color: #fff1e3;
+    border-radius: 1.4em;
+    padding: 1.4em;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3em;
+  }
+  .rs-ready b {
+    font-size: 2em;
+    letter-spacing: -0.03em;
+  }
+</style>

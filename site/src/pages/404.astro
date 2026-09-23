@@ -19,10 +19,10 @@ import { site } from '../config/site';
       get in touch if you followed a broken link.
     </p>
     <div class="not-found__actions">
-      <a href="/" class="btn btn-primary">
+      <a href="/" class="pill-btn pill-btn--solid">
         Back to the homepage
       </a>
-      <a href="/#audit" class="btn btn-secondary">
+      <a href="/#audit" class="pill-btn">
         Get your free presence audit
       </a>
     </div>
@@ -33,8 +33,18 @@ import { site } from '../config/site';
 
 <style>
   .not-found {
-    padding-block: var(--space-7);
-    max-width: 40em;
+    padding-block: clamp(4rem, 12vw, 9rem);
+    max-width: calc(40em + 2 * var(--gutter));
+  }
+
+  .not-found h1 {
+    font-size: clamp(3rem, 9vw, 6.5rem);
+    margin-bottom: var(--space-4);
+  }
+
+  .not-found p {
+    color: rgba(255, 255, 255, 0.86);
+    font-size: 1.15rem;
   }
 
   .not-found__actions {

@@ -1,129 +1,260 @@
 ---
-import MockSite from './MockSite.astro';
-import { sectors } from '../data/sectors';
 import { realProjects } from '../data/content';
+import RenderPhysioSite from './renders/RenderPhysioSite.astro';
+import RenderRestaurant from './renders/RenderRestaurant.astro';
+import RenderOwnerDigest from './renders/RenderOwnerDigest.astro';
+import RenderFlorist from './renders/RenderFlorist.astro';
+import RenderWalks from './renders/RenderWalks.astro';
+import RenderAssistant from './renders/RenderAssistant.astro';
 ---
 
-<section class="concept-work wrap" aria-labelledby="concept-work-heading">
-  <h2 id="concept-work-heading">Concept work</h2>
-  <p class="concept-work__note">
-    These are concept designs for fictional businesses. They show what I would build, not past
-    client work.
-  </p>
+<section class="work" id="work" aria-labelledby="work-title">
+  <div class="wrap">
+    <div class="work__head">
+      <h2 id="work-title" class="section-title">
+        <span class="t-thin">Concept</span> <span class="t-bold">work</span>
+      </h2>
+      <p class="work__note">
+        These are concept designs for fictional businesses. They show what I would build, not past
+        client work.
+      </p>
+    </div>
 
-  <ul class="concept-work__gallery">
-    {sectors.map((sector) => (
-      <li class="concept-work__tile">
-        <figure>
-          <div class="concept-work__tile-frame">
-            <MockSite sector={sector} mode="after" />
-          </div>
-          <figcaption>
-            <span class="concept-work__tile-tag">{sector.typeLabel}</span>
-            concept design for a fictional business. {sector.galleryIncludes}.
-          </figcaption>
-        </figure>
-      </li>
-    ))}
-  </ul>
+    <div class="work__feature">
+      <figure class="work__item">
+        <RenderPhysioSite ratio="4 / 3" />
+      </figure>
+      <div class="work__feature-cap">
+        <h3>Physio clinic website</h3>
+        <p>Concept · Design, development, online booking</p>
+      </div>
+    </div>
 
-  <h3>Real projects</h3>
-  <ul class="concept-work__real">
-    {realProjects.map((project) => (
-      <li>
-        {project.href ? (
-          <a href={project.href} rel="noopener">
-            {project.name}
-          </a>
-        ) : (
-          <span class="concept-work__real-name">{project.name}</span>
-        )}
-        <span class="concept-work__real-desc"> — {project.description}</span>
-      </li>
-    ))}
-  </ul>
+    <div class="work__row work__row--2">
+      <figure class="work__item">
+        <RenderRestaurant ratio="1 / 1.02" />
+        <figcaption>
+          <b>Restaurant ordering app</b>
+          <span>Concept · Design, online ordering</span>
+        </figcaption>
+      </figure>
+      <figure class="work__item">
+        <RenderOwnerDigest ratio="4 / 3" />
+        <figcaption>
+          <b>Owner digest dashboard</b>
+          <span>Concept · Automation, reporting</span>
+        </figcaption>
+      </figure>
+    </div>
+
+    <div class="work__row work__row--3">
+      <figure class="work__item">
+        <RenderFlorist ratio="1 / 1" />
+        <figcaption>
+          <b>Florist website and shop</b>
+          <span>Concept · Design, payments</span>
+        </figcaption>
+      </figure>
+      <figure class="work__item">
+        <RenderWalks ratio="1 / 1" />
+        <figcaption>
+          <b>Guided walks booking app</b>
+          <span>Concept · Booking, payments</span>
+        </figcaption>
+      </figure>
+      <figure class="work__item">
+        <RenderAssistant ratio="1 / 1" />
+        <figcaption>
+          <b>AI enquiry assistant</b>
+          <span>Concept · AI, testing, handover</span>
+        </figcaption>
+      </figure>
+    </div>
+
+    <div class="work__real">
+      <h3>Real projects</h3>
+      <ul>
+        {realProjects.map((project) => (
+          <li>
+            <span class="work__real-name">
+              {project.href ? (
+                <a href={project.href} rel="noopener">
+                  {project.name}
+                  <svg
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                  >
+                    <path d="M7 17 17 7M9 7h8v8" />
+                  </svg>
+                </a>
+              ) : (
+                project.name
+              )}
+            </span>
+            <span class="work__real-desc">{project.description}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
 </section>
 
 <style>
-  .concept-work {
-    padding-block: var(--space-6);
-    border-top: 1px solid var(--color-border);
+  .work {
+    background: var(--paper);
+    color: var(--paper-text);
+    padding-block: clamp(4rem, 9vw, 7rem);
   }
 
-  .concept-work__note {
-    color: var(--color-text-muted);
-    margin-bottom: var(--space-4);
-  }
-
-  .concept-work__gallery {
-    list-style: none;
-    margin: 0 0 var(--space-5);
-    padding: 0;
+  .work__head {
     display: grid;
     gap: var(--space-3);
-    grid-template-columns: 1fr;
+    margin-bottom: clamp(2rem, 4vw, 3rem);
   }
 
-  .concept-work__tile figure {
+  .work__note {
+    color: var(--paper-muted);
+    max-width: 36rem;
+  }
+
+  .work__feature {
+    display: grid;
+    gap: var(--space-4);
+    margin-bottom: clamp(1rem, 2vw, 1.5rem);
+  }
+
+  .work__feature-cap h3 {
+    font-size: clamp(1.75rem, 3.2vw, 2.6rem);
+    font-weight: 500;
+    letter-spacing: -0.035em;
+    line-height: 1.08;
+    max-width: 10em;
+  }
+
+  .work__feature-cap p,
+  .work__item figcaption span {
+    color: var(--paper-muted);
+    font-size: 0.85rem;
+    margin-top: 0.6rem;
+  }
+
+  .work__item {
     margin: 0;
   }
 
-  .concept-work__tile-frame {
-    border-radius: var(--radius-md);
-    overflow: hidden;
+  .work__item figcaption {
+    display: grid;
+    gap: 0.2rem;
+    padding-top: 1rem;
   }
 
-  .concept-work__tile figcaption {
-    font-size: 0.85rem;
-    color: var(--color-text-muted);
-    margin-top: var(--space-2);
+  .work__item figcaption b {
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    font-size: 0.95rem;
   }
 
-  .concept-work__tile-tag {
-    display: inline-block;
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 0.7rem;
-    letter-spacing: 0.02em;
-    color: var(--color-accent-ink);
-    background: var(--color-accent);
-    padding: 0.2em 0.6em;
-    border-radius: 999px;
-    margin-right: var(--space-2);
+  .work__item figcaption span {
+    margin-top: 0;
   }
 
-  .concept-work__real {
+  .work__row {
+    display: grid;
+    gap: clamp(1rem, 2vw, 1.5rem);
+    margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  .work__real {
+    margin-top: clamp(3rem, 6vw, 5rem);
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .work__real h3 {
+    font-size: clamp(1.75rem, 3vw, 2.4rem);
+    font-weight: 500;
+    letter-spacing: -0.035em;
+  }
+
+  .work__real ul {
     list-style: none;
     margin: 0;
     padding: 0;
+    border-top: 1px solid var(--paper-line);
   }
 
-  .concept-work__real li {
-    padding-block: var(--space-3);
-    border-top: 1px solid var(--color-border);
+  .work__real li {
+    display: grid;
+    gap: 0.25rem;
+    padding-block: 1.25rem;
+    border-bottom: 1px solid var(--paper-line);
   }
 
-  .concept-work__real li:last-child {
-    border-bottom: 1px solid var(--color-border);
-  }
-
-  .concept-work__real-name {
-    font-family: var(--font-display);
+  .work__real-name {
+    font-size: 1.25rem;
     font-weight: 600;
+    letter-spacing: -0.02em;
   }
 
-  .concept-work__real a {
-    font-family: var(--font-display);
-    font-weight: 600;
+  .work__real-name a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    text-decoration: none;
+    min-height: 24px;
   }
 
-  .concept-work__real-desc {
-    color: var(--color-text-muted);
+  .work__real-name a:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .work__real-name svg {
+    width: 0.9em;
+    height: 0.9em;
+  }
+
+  .work__real-desc {
+    color: var(--paper-muted);
   }
 
   @media (min-width: 48rem) {
-    .concept-work__gallery {
+    .work__head {
+      grid-template-columns: 1fr auto;
+      align-items: end;
+    }
+
+    .work__note {
+      max-width: 22rem;
+      text-align: right;
+    }
+
+    .work__feature {
+      grid-template-columns: 1.55fr 1fr;
+    }
+
+    .work__row--2 {
+      grid-template-columns: 1fr 1.36fr;
+      margin-left: 18%;
+    }
+
+    .work__row--3 {
       grid-template-columns: repeat(3, 1fr);
+    }
+
+    .work__real {
+      grid-template-columns: 1fr 2fr;
+      align-items: start;
+    }
+
+    .work__real li {
+      grid-template-columns: 1fr 1.4fr;
+      gap: var(--space-4);
+      align-items: baseline;
     }
   }
 </style>

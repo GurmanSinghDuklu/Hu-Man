@@ -1,0 +1,35 @@
+---
+/** Floating browser window. 100em wide; size screen content in em. */
+interface Props {
+  class?: string;
+  style?: string;
+  bg?: string;
+  fg?: string;
+  url?: string;
+  light?: boolean;
+  ratio?: string;
+}
+const {
+  class: className = '',
+  style = '',
+  bg = '#fff',
+  fg = '#111',
+  url = '',
+  light = false,
+  ratio = '16 / 10',
+} = Astro.props;
+---
+
+<div class:list={['dev-browser', { 'dev-browser--light': light }, className]} style={style}>
+  <div class="dev-browser__body" style={`--scr-bg:${bg};--scr-fg:${fg}`}>
+    <div class="dev-browser__bar">
+      <i></i>
+      <i></i>
+      <i></i>
+      <span class="dev-browser__url">{url}</span>
+    </div>
+    <div class="dev-browser__screen" style={`--screen-ratio:${ratio}`}>
+      <slot />
+    </div>
+  </div>
+</div>

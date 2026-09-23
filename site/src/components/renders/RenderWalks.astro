@@ -1,0 +1,199 @@
+---
+import Tile from './Tile.astro';
+import Phone from '../devices/Phone.astro';
+import Landscape from './Landscape.astro';
+interface Props {
+  label?: string;
+  ratio?: string;
+}
+const { label, ratio = '4 / 3' } = Astro.props;
+---
+
+<Tile bg="#2b2d30" ratio={ratio} label={label}>
+  <Phone class="wk-p1" bg="#0f1113" fg="#f3f3f3">
+    <div class="ui-pad ui-col wk-s">
+      <span class="ui-small ui-muted">Plan your next walk</span>
+      <div class="ui-row">
+        <span class="ui-chip wk-chip on">Guided</span>
+        <span class="ui-chip wk-chip">Family</span>
+        <span class="ui-chip wk-chip">Sunrise</span>
+      </div>
+      <div class="wk-card">
+        <Landscape class="wk-land" night />
+        <span class="wk-ct">
+          Brimham Rocks
+          <br />
+          by night
+        </span>
+        <b class="wk-pr">£28</b>
+      </div>
+      <div class="wk-card">
+        <Landscape class="wk-land" />
+        <span class="wk-ct">
+          Ilkley Moor
+          <br />
+          loop
+        </span>
+        <b class="wk-pr">£22</b>
+      </div>
+    </div>
+  </Phone>
+  <Phone class="wk-p2" bg="#0f1113" fg="#f3f3f3">
+    <div class="wk-hero">
+      <Landscape class="wk-land" />
+      <span class="wk-title">
+        MALHAM COVE
+        <br />
+        AT DAWN
+      </span>
+    </div>
+    <div class="ui-pad ui-col wk-s2">
+      {[
+        ['Price per person', '£35'],
+        ['Group size', 'Up to 12'],
+        ['Walk length', '5 hours'],
+      ].map(([a, b]) => (
+        <div class="wk-row">
+          <span>{a}</span>
+          <b>{b}</b>
+        </div>
+      ))}
+      <span class="ui-small ui-muted">
+        Meet at the village car park. Flask of tea and a local guide included.
+      </span>
+      <div class="ui-row wk-btns">
+        <span class="ui-btn wk-b1">Book this walk</span>
+        <span class="ui-btn wk-b2">Details</span>
+      </div>
+    </div>
+  </Phone>
+  <Phone class="wk-p3" bg="#0f1113" fg="#f3f3f3" status={false}>
+    <Landscape class="wk-full" night />
+    <div class="wk-over">
+      <span class="wk-title">
+        YOU'RE
+        <br />
+        BOOKED
+      </span>
+      <span class="ui-small">Sat 12 Oct · 6:10 am · 2 people</span>
+    </div>
+  </Phone>
+</Tile>
+
+<style is:global>
+  .wk-p1 {
+    left: -4%;
+    top: 14%;
+    width: 30%;
+  }
+  .wk-p2 {
+    left: 32%;
+    top: 6%;
+    width: 34%;
+  }
+  .wk-p3 {
+    left: 72%;
+    top: 14%;
+    width: 30%;
+  }
+  .wk-s {
+    gap: 1em;
+    padding-top: 0.6em;
+  }
+  .wk-chip {
+    background: #1f2225;
+  }
+  .wk-chip.on {
+    background: #f3f3f3;
+    color: #0f1113;
+  }
+  .wk-card {
+    position: relative;
+    height: 18em;
+    border-radius: 1.6em;
+    overflow: hidden;
+  }
+  .wk-land {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .wk-ct {
+    position: absolute;
+    left: 1.2em;
+    bottom: 1.2em;
+    font-weight: 700;
+    font-size: 1.5em;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+  .wk-pr {
+    position: absolute;
+    right: 1.2em;
+    top: 1.2em;
+    background: rgba(0, 0, 0, 0.45);
+    padding: 0.3em 0.8em;
+    border-radius: 1em;
+  }
+  .wk-hero {
+    position: relative;
+    height: 30em;
+    margin: -4.4em 0 0;
+  }
+  .wk-title {
+    position: absolute;
+    left: 1.4em;
+    bottom: 1.2em;
+    font-size: 2.8em;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    line-height: 1;
+  }
+  .wk-s2 {
+    gap: 0.2em;
+    padding-top: 1em;
+  }
+  .wk-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.9em 0;
+    border-bottom: 1px solid #25282c;
+    font-size: 1.05em;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+  .wk-btns {
+    margin-top: 1em;
+  }
+  .wk-b1 {
+    --btn-bg: #f3f3f3;
+    --btn-fg: #0f1113;
+    flex: 1;
+  }
+  .wk-b2 {
+    --btn-bg: transparent;
+    border: 0.12em solid #555;
+    flex: 1;
+  }
+  .wk-full {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .wk-over {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 6em;
+    padding: 0 1.6em;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8em;
+  }
+  .wk-over .wk-title {
+    position: static;
+    font-size: 4em;
+  }
+</style>

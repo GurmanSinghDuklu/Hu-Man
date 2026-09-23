@@ -1,0 +1,41 @@
+---
+/** Layered hills at dawn, for the walking-tour concept. */
+interface Props {
+  class?: string;
+  style?: string;
+  night?: boolean;
+}
+const { class: className = '', style = '', night = false } = Astro.props;
+const sky = night ? ['#07131a', '#0e3a3a', '#3fb58f'] : ['#2a2e57', '#c9607a', '#f6b77a'];
+---
+
+<svg class={className} style={style} viewBox="0 0 300 400" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id={night ? 'skyN' : 'skyD'} x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color={sky[0]} />
+      <stop offset="0.55" stop-color={sky[1]} />
+      <stop offset="1" stop-color={sky[2]} />
+    </linearGradient>
+  </defs>
+  <rect width="300" height="400" fill={`url(#${night ? 'skyN' : 'skyD'})`} />
+  {night ? (
+    <path
+      d="M-20 120 C 60 60, 140 170, 320 90"
+      stroke="#7cf2c0"
+      stroke-opacity=".5"
+      stroke-width="30"
+      fill="none"
+    />
+  ) : (
+    <circle cx="210" cy="215" r="34" fill="#ffd9a0" />
+  )}
+  <path
+    d="M0 250 L60 200 L110 235 L170 180 L230 225 L300 190 V400 H0z"
+    fill={night ? '#0b2a2c' : '#6d3c5c'}
+  />
+  <path
+    d="M0 290 C 70 250, 120 300, 190 262 S 280 270, 300 250 V400 H0z"
+    fill={night ? '#07201f' : '#43294a'}
+  />
+  <path d="M0 330 C 80 300, 170 350, 300 310 V400 H0z" fill={night ? '#041413' : '#231732'} />
+</svg>

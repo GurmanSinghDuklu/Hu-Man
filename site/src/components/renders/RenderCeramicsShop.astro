@@ -1,0 +1,197 @@
+---
+import Tile from './Tile.astro';
+import Phone from '../devices/Phone.astro';
+import Vessel from './Vessel.astro';
+interface Props {
+  label?: string;
+  ratio?: string;
+}
+const { label, ratio = '4 / 3' } = Astro.props;
+const bg = '#f6f1ea';
+const ink = '#1d1a17';
+---
+
+<Tile bg="#6f6663" ratio={ratio} label={label}>
+  <Phone class="cs-p1" bg={bg} fg={ink}>
+    <div class="ui-pad ui-col cs-stack">
+      <span class="cs-search">Search</span>
+      <span class="cs-serif cs-big">NEW COLLECTION</span>
+      <span class="ui-small ui-muted">Hand-thrown in Yorkshire · 24 pieces</span>
+      <div class="cs-photo" style="background:#d9c7b1">
+        <Vessel class="cs-v" shape="vase" body="#b8623d" glaze="#e9dcc6" />
+      </div>
+      <div class="ui-between">
+        <span class="cs-serif cs-mid">Speckled vase</span>
+        <span class="ui-h">£48</span>
+      </div>
+      <div class="cs-photo cs-photo--sm" style="background:#e7ddd0">
+        <Vessel class="cs-v" shape="bowl" body="#3d4a3a" glaze="#d7d1c2" />
+      </div>
+    </div>
+  </Phone>
+  <Phone class="cs-p2" bg={bg} fg={ink}>
+    <div class="ui-col cs-stack">
+      <div class="ui-pad ui-between">
+        <span>‹</span>
+        <span class="ui-h">Kiln &amp; Clay</span>
+        <span>♡</span>
+      </div>
+      <div class="cs-hero" style="background:#c7d0c4">
+        <Vessel class="cs-hv" shape="jug" body="#8c3b2a" glaze="#f1e7d6" />
+      </div>
+      <div class="ui-pad ui-col">
+        <span class="cs-serif cs-big">STONEWARE JUG</span>
+        <span class="ui-small ui-muted">A pouring jug in iron-red glaze, dishwasher safe.</span>
+        <div class="ui-row">
+          <span class="cs-sw" style="background:#8c3b2a"></span>
+          <span class="cs-sw" style="background:#3d4a3a"></span>
+          <span class="cs-sw" style="background:#e3d6bf"></span>
+        </div>
+        <div class="ui-between cs-buy">
+          <span class="ui-h cs-price">£42.00</span>
+          <span class="ui-btn cs-btn">Add to basket</span>
+        </div>
+      </div>
+    </div>
+  </Phone>
+  <Phone class="cs-p3" bg={bg} fg={ink}>
+    <div class="ui-pad ui-col cs-stack">
+      <div class="ui-between">
+        <span class="cs-serif cs-mid">KILN &amp; CLAY</span>
+        <span>☰</span>
+      </div>
+      <div class="ui-row">
+        <span class="ui-chip" style={`background:${ink};color:#fff`}>
+          All
+        </span>
+        <span class="ui-chip">Mugs</span>
+        <span class="ui-chip">Vases</span>
+        <span class="ui-chip">Bowls</span>
+      </div>
+      <div class="cs-grid">
+        <span style="background:#e3c9b5">
+          <Vessel class="cs-gv" shape="cup" body="#2f3b4c" glaze="#e8e1d4" />
+        </span>
+        <span style="background:#cfd6cc">
+          <Vessel class="cs-gv" shape="vase" body="#c7a25a" glaze="#f3ecde" />
+        </span>
+        <span style="background:#d9d1e3">
+          <Vessel class="cs-gv" shape="bowl" body="#9a4a3a" glaze="#efe3d3" />
+        </span>
+        <span style="background:#efe0c2">
+          <Vessel class="cs-gv" shape="jug" body="#44563f" glaze="#ede5d5" />
+        </span>
+      </div>
+      <div class="ui-between ui-small">
+        <span>Everyday mug · £24</span>
+        <span>Bud vase · £32</span>
+      </div>
+    </div>
+    <div class="ui-nav" style="--nav-bg:#1d1a17">
+      <i class="on"></i>
+      <i></i>
+      <i></i>
+      <i></i>
+    </div>
+  </Phone>
+</Tile>
+
+<style is:global>
+  .cs-p1 {
+    left: 4%;
+    top: 12%;
+    width: 30%;
+    transform: rotate(-8deg);
+  }
+  .cs-p2 {
+    left: 35%;
+    top: 6%;
+    width: 30%;
+  }
+  .cs-p3 {
+    left: 66%;
+    top: 12%;
+    width: 30%;
+    transform: rotate(8deg);
+  }
+  .cs-stack {
+    gap: 1em;
+    padding-top: 0.6em;
+  }
+  .cs-search {
+    padding: 0.8em 1.2em;
+    border-radius: 2em;
+    background: rgba(0, 0, 0, 0.06);
+    opacity: 0.7;
+  }
+  .cs-serif {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    line-height: 0.95;
+  }
+  .cs-big {
+    font-size: 3.1em;
+  }
+  .cs-mid {
+    font-size: 1.6em;
+  }
+  .cs-photo {
+    height: 19em;
+    border-radius: 1.2em;
+    position: relative;
+    overflow: hidden;
+  }
+  .cs-photo--sm {
+    height: 10em;
+  }
+  .cs-v {
+    position: absolute;
+    inset: 1.5em 0 1em;
+    width: 100%;
+    height: calc(100% - 2.5em);
+  }
+  .cs-hero {
+    height: 27em;
+    position: relative;
+  }
+  .cs-hv {
+    position: absolute;
+    inset: 3em 0 1.5em;
+    width: 100%;
+    height: calc(100% - 4.5em);
+  }
+  .cs-sw {
+    width: 2em;
+    height: 2em;
+    border-radius: 50%;
+    border: 0.2em solid #fff;
+    box-shadow: 0 0 0 0.1em rgba(0, 0, 0, 0.15);
+  }
+  .cs-buy {
+    margin-top: 0.6em;
+  }
+  .cs-price {
+    font-size: 1.8em;
+  }
+  .cs-btn {
+    --btn-bg: #1d1a17;
+    padding-inline: 2em;
+  }
+  .cs-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.7em;
+  }
+  .cs-grid > span {
+    height: 13em;
+    border-radius: 1.2em;
+    position: relative;
+  }
+  .cs-gv {
+    position: absolute;
+    inset: 1.5em 0.5em 0.8em;
+    width: calc(100% - 1em);
+    height: calc(100% - 2.3em);
+  }
+</style>

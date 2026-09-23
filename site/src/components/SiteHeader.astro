@@ -1,5 +1,4 @@
 ---
-import ThemeToggle from './ThemeToggle.astro';
 import { site } from '../config/site';
 
 // Section anchors only exist on the homepage. From any other page (privacy,
@@ -20,8 +19,8 @@ const auditHref = `${prefix}#audit`;
 
 <header class="site-header">
   <div class="wrap site-header__inner">
-    <a href="/" class="site-header__name">
-      {site.name}
+    <a href="/" class="site-header__name" aria-label={`${site.name} home`}>
+      {site.wordmark}
     </a>
 
     <nav class="site-header__nav" aria-label="Primary">
@@ -35,49 +34,66 @@ const auditHref = `${prefix}#audit`;
     </nav>
 
     <div class="site-header__actions">
-      <a href={auditHref} class="btn btn-primary site-header__cta">
+      <a href={auditHref} class="pill-btn site-header__cta">
         Get your free presence audit
       </a>
-      <ThemeToggle />
       <details class="site-header__menu">
-        <summary aria-label="Open menu">
-          <span aria-hidden="true">Menu</span>
+        <summary aria-label="Menu">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="8" cy="8" r="2.4"></circle>
+            <circle cx="16" cy="8" r="2.4"></circle>
+            <circle cx="8" cy="16" r="2.4"></circle>
+            <circle cx="16" cy="16" r="2.4"></circle>
+          </svg>
         </summary>
-        <ul>
-          <li>
-            <a href={auditHref}>Get your free presence audit</a>
-          </li>
-          {navLinks.map((link) => (
-            <li>
-              <a href={link.href}>{link.label}</a>
-            </li>
-          ))}
-        </ul>
+        <div class="site-header__panel">
+          <ul>
+            {navLinks.map((link) => (
+              <li>
+                <a href={link.href}>{link.label}</a>
+              </li>
+            ))}
+          </ul>
+          <a href={auditHref} class="pill-btn pill-btn--solid">
+            Get your free presence audit
+          </a>
+        </div>
       </details>
     </div>
   </div>
 </header>
 
+<script>
+  // Close the menu after following one of its links (same-page anchors
+  // would otherwise leave the panel open over the section).
+  document.querySelectorAll<HTMLDetailsElement>('.site-header__menu').forEach((menu) => {
+    menu.addEventListener('click', (event) => {
+      if ((event.target as HTMLElement).closest('a')) menu.open = false;
+    });
+  });
+</script>
+
 <style>
   .site-header {
-    border-bottom: 1px solid var(--color-border);
+    position: relative;
+    z-index: 20;
   }
 
   .site-header__inner {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr auto;
     align-items: center;
-    justify-content: space-between;
-    gap: var(--space-3);
-    padding-block: var(--space-3);
+    gap: var(--space-4);
+    min-height: 88px;
   }
 
   .site-header__name {
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 1.1rem;
-    color: var(--color-text);
+    font-weight: 800;
+    font-size: 1.05rem;
+    letter-spacing: -0.02em;
     text-decoration: none;
-    white-space: nowrap;
+    color: var(--color-text);
+    justify-self: start;
   }
 
   .site-header__nav {
@@ -85,34 +101,38 @@ const auditHref = `${prefix}#audit`;
   }
 
   .site-header__nav ul {
-    display: flex;
-    gap: var(--space-4);
     list-style: none;
+    display: flex;
+    gap: 2.4rem;
     margin: 0;
     padding: 0;
   }
 
   .site-header__nav a {
-    font-family: var(--font-display);
-    font-weight: 500;
-    font-size: 0.95rem;
     color: var(--color-text);
     text-decoration: none;
+    font-size: 0.95rem;
+    padding-block: 0.6rem;
+    opacity: 0.85;
+    transition: opacity 0.2s;
   }
 
   .site-header__nav a:hover {
-    color: var(--color-accent);
+    opacity: 1;
   }
 
   .site-header__actions {
     display: flex;
     align-items: center;
     gap: var(--space-3);
+    justify-self: end;
   }
 
   .site-header__cta {
     display: none;
-    white-space: nowrap;
+    min-height: 44px;
+    padding-block: 0.5em;
+    font-size: 0.875rem;
   }
 
   .site-header__menu {
@@ -120,75 +140,80 @@ const auditHref = `${prefix}#audit`;
   }
 
   .site-header__menu summary {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 2.5rem;
-    height: 2.5rem;
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--color-border);
-    cursor: pointer;
     list-style: none;
-    font-family: var(--font-display);
-    font-size: 0;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid var(--color-line-strong);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: background-color 0.2s;
   }
 
   .site-header__menu summary::-webkit-details-marker {
     display: none;
   }
 
-  .site-header__menu summary::before {
-    content: '≡';
-    font-size: 1.25rem;
+  .site-header__menu summary svg {
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.4;
   }
 
-  .site-header__menu[open] summary::before {
-    content: '✕';
+  .site-header__menu[open] summary,
+  .site-header__menu summary:hover {
+    background: rgba(255, 255, 255, 0.1);
   }
 
-  .site-header__menu ul {
+  .site-header__panel {
     position: absolute;
     right: 0;
-    top: calc(100% + var(--space-2));
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
+    top: calc(100% + 0.75rem);
+    width: min(20rem, calc(100vw - 2rem));
+    padding: var(--space-4);
     border-radius: var(--radius-md);
+    background: rgba(18, 23, 38, 0.92);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid var(--color-line);
+    box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.6);
+  }
+
+  .site-header__panel ul {
     list-style: none;
-    margin: 0;
-    padding: var(--space-2);
-    min-width: 220px;
-    z-index: 50;
+    margin: 0 0 var(--space-4);
+    padding: 0;
   }
 
-  .site-header__menu li {
+  .site-header__panel li a {
     display: block;
-  }
-
-  .site-header__menu a {
-    display: block;
-    padding: var(--space-2) var(--space-3);
-    font-family: var(--font-display);
-    font-weight: 500;
-    color: var(--color-text);
+    padding: 0.65rem 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.03em;
     text-decoration: none;
-    border-radius: var(--radius-sm);
+    border-bottom: 1px solid var(--color-line);
   }
 
-  .site-header__menu a:hover {
-    background: var(--color-bg);
+  .site-header__panel .pill-btn {
+    width: 100%;
+    justify-content: center;
   }
 
-  @media (min-width: 60rem) {
+  @media (min-width: 64rem) {
+    .site-header__inner {
+      grid-template-columns: 1fr auto 1fr;
+    }
+
     .site-header__nav {
       display: block;
     }
 
     .site-header__cta {
       display: inline-flex;
-    }
-
-    .site-header__menu {
-      display: none;
     }
   }
 </style>

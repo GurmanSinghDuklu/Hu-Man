@@ -1,15 +1,19 @@
 /**
  * Single source of truth for the studio's identity and contact details.
  *
- * "Duklu Digital" is a working name (see CLAUDE.md, docs/09-open-questions.md
- * item 1) — not decided yet. Change it here and it updates everywhere.
+ * "Hu/man" is the working brand (chosen 2026-09-23; styled variants Gurman
+ * floated: Hu.man, Hu_man, Hu/man, HUMAN, Hu-man). `name` is the plain
+ * text form used in titles and schema; `wordmark` is the display form used in
+ * the hero and footer. Change both here and they update everywhere.
  *
  * Contact details are Gurman's personal email/phone for now (docs/09 item 2:
  * business email and number to be confirmed before launch). Swap them here
  * when that happens.
  */
 export const site = {
-  name: 'Duklu Digital',
+  name: 'Hu/man',
+  wordmark: 'HU/MAN',
+  descriptor: 'Studio',
   nameIsPlaceholder: true,
   tagline: 'Websites that turn local searches into bookings',
   founder: 'Gurman Singh Duklu',

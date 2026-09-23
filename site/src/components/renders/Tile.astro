@@ -1,0 +1,26 @@
+---
+/**
+ * Coloured stage for a concept render. Devices inside are absolutely
+ * positioned with % values. The whole stage is decorative (aria-hidden);
+ * the label names the concept in text and marks it as concept work.
+ */
+interface Props {
+  bg: string;
+  ratio?: string;
+  label?: string;
+  class?: string;
+}
+const { bg, ratio = '4 / 3', label, class: className = '' } = Astro.props;
+---
+
+<div class:list={['tile', className]} style={`--tile-bg:${bg};--tile-ratio:${ratio}`}>
+  <div class="tile__stage" aria-hidden="true">
+    <slot />
+  </div>
+  {label && (
+    <p class="tile__label">
+      <span class="tile__label-dot" aria-hidden="true" />
+      {label}
+    </p>
+  )}
+</div>

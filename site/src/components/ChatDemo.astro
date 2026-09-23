@@ -1,36 +1,25 @@
 ---
 import { chatExchanges, chatGreeting } from '../data/chat-demo';
+import Phone from './devices/Phone.astro';
 ---
 
-<section class="chat-demo wrap" aria-labelledby="chat-demo-heading">
-  <h2 id="chat-demo-heading">Try the enquiry assistant</h2>
-  <div class="chat-demo__layout">
-    <p class="chat-demo__intro">
-      This is a scripted demo for a fictional barbershop. A real assistant answers from your own
-      information, hands over to a person when it isn't sure, and is tested before it goes live.
-    </p>
-
-    <div class="chat-demo__panel" data-chat-demo>
-      <div class="chat-demo__panel-header">
-        <span class="chat-demo__dot" aria-hidden="true"></span>
-        <span>Northgate Barbers — demo</span>
-      </div>
-
-      <div class="chat-demo__log" data-chat-log aria-live="polite" aria-label="Chat conversation">
-        <p class="chat-demo__message chat-demo__message--assistant">{chatGreeting}</p>
-      </div>
-
-      <p class="chat-demo__typing" data-chat-typing hidden aria-hidden="true">
-        <span></span>
-        <span></span>
-        <span></span>
+<section class="chat" aria-labelledby="chat-title" data-chat-demo>
+  <div class="chat__glow" aria-hidden="true"></div>
+  <div class="wrap chat__inner">
+    <div class="chat__copy">
+      <h2 id="chat-title" class="section-title">
+        <span class="t-bold t-silver">Try the</span>
+        <span class="t-thin t-silver">assistant</span>
+      </h2>
+      <p>
+        This is a scripted demo for a fictional barbershop. A real assistant answers from your own
+        information, hands over to a person when it isn't sure, and is tested before it goes live.
       </p>
-
-      <div class="chat-demo__chips" role="group" aria-label="Suggested questions">
+      <div class="chat__chips" role="group" aria-label="Suggested questions">
         {chatExchanges.map((exchange) => (
           <button
             type="button"
-            class="chat-demo__chip"
+            class="chat__chip"
             data-chat-chip={exchange.chip}
             data-chat-reply={exchange.reply}
           >
@@ -39,6 +28,30 @@ import { chatExchanges, chatGreeting } from '../data/chat-demo';
         ))}
       </div>
     </div>
+
+    <Phone class="chat__phone" bg="#f7f4ee" fg="#141414">
+      <div class="chat__head">
+        <span class="chat__avatar" aria-hidden="true">
+          N
+        </span>
+        <span>
+          <b>Northgate Barbers</b>
+          <span>Demo assistant</span>
+        </span>
+      </div>
+      <div class="chat__log" data-chat-log aria-live="polite" aria-label="Chat conversation">
+        <p class="chat__msg chat__msg--assistant">{chatGreeting}</p>
+      </div>
+      <p class="chat__typing" data-chat-typing hidden aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+      </p>
+      <div class="chat__input" aria-hidden="true">
+        <span>Message</span>
+        <i>↑</i>
+      </div>
+    </Phone>
   </div>
 </section>
 
@@ -46,112 +59,201 @@ import { chatExchanges, chatGreeting } from '../data/chat-demo';
   import '../scripts/chat-demo.ts';
 </script>
 
-<style>
-  .chat-demo {
-    padding-block: var(--space-6);
-    border-top: 1px solid var(--color-border);
+<style is:global>
+  .chat {
+    position: relative;
+    padding-block: clamp(4rem, 10vw, 8rem);
+    overflow: hidden;
   }
 
-  .chat-demo__layout {
+  .chat__glow {
+    position: absolute;
+    right: -10%;
+    top: 10%;
+    width: 70%;
+    height: 90%;
+    background: radial-gradient(
+      closest-side,
+      rgba(28, 108, 220, 0.55),
+      rgba(156, 13, 124, 0.35) 55%,
+      transparent
+    );
+    filter: blur(30px);
+    pointer-events: none;
+  }
+
+  .chat__inner {
+    position: relative;
+    display: grid;
+    gap: var(--space-6);
+    align-items: center;
+  }
+
+  .chat__copy {
     display: grid;
     gap: var(--space-4);
-    align-items: start;
-    margin-top: var(--space-4);
+    max-width: 34rem;
   }
 
-  .chat-demo__intro {
-    color: var(--color-text-muted);
+  .chat__copy .section-title {
+    display: grid;
   }
 
-  .chat-demo__panel {
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    background: var(--color-surface);
+  .chat__copy > p {
+    color: rgba(255, 255, 255, 0.86);
+  }
+
+  .chat__chips {
     display: flex;
-    flex-direction: column;
-    max-height: 26rem;
+    flex-wrap: wrap;
+    gap: 0.6rem;
   }
 
-  .chat-demo__panel-header {
+  .chat__chip {
+    min-height: 44px;
+    padding: 0.6em 1.3em;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--color-line-strong);
+    background: rgba(255, 255, 255, 0.04);
+    color: #fff;
+    font: 500 0.95rem var(--font-sans);
+    cursor: pointer;
+    transition:
+      background-color 0.2s,
+      color 0.2s;
+  }
+
+  .chat__chip:hover {
+    background: #fff;
+    color: var(--paper-text);
+  }
+
+  .chat__phone {
+    width: min(340px, 86vw);
+    justify-self: center;
+    position: relative;
+  }
+
+  .chat__head {
     display: flex;
+    gap: 0.9em;
     align-items: center;
-    gap: var(--space-2);
-    padding: var(--space-3);
-    border-bottom: 1px solid var(--color-border);
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 0.9rem;
+    padding: 0.4em 1.6em 1em;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    font-size: 1.15em;
   }
 
-  .chat-demo__dot {
-    width: 0.5rem;
-    height: 0.5rem;
+  .chat__head > span:last-child {
+    display: grid;
+    line-height: 1.25;
+  }
+
+  .chat__head > span:last-child span {
+    font-size: 0.85em;
+    color: #5a5a5a;
+  }
+
+  .chat__avatar {
+    width: 2.8em;
+    height: 2.8em;
     border-radius: 50%;
-    background: var(--color-accent);
-    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    background: #f26b3a;
+    color: #fff;
+    font-weight: 700;
   }
 
-  .chat-demo__log {
-    padding: var(--space-3);
-    overflow-y: auto;
+  .chat__log {
     flex: 1;
-    min-height: 8rem;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 1.2em 1.4em 1em;
     display: flex;
     flex-direction: column;
-    gap: var(--space-2);
+    gap: 0.8em;
   }
 
-  .chat-demo__message {
-    max-width: 85%;
+  .chat__msg {
     margin: 0;
-    padding: var(--space-2) var(--space-3);
-    border-radius: var(--radius-md);
-    font-size: 0.95rem;
+    max-width: 85%;
+    padding: 0.9em 1.2em;
+    border-radius: 1.4em;
+    font-size: 1.3em;
     line-height: 1.4;
   }
 
-  .chat-demo__message--assistant {
-    background: var(--color-bg);
-    border: 1px solid var(--color-border);
+  .chat__msg--assistant {
+    background: #fff;
     align-self: flex-start;
-    border-bottom-left-radius: var(--radius-sm);
+    border-bottom-left-radius: 0.4em;
+    box-shadow: 0 0.2em 0.6em rgba(0, 0, 0, 0.05);
   }
 
-  .chat-demo__message--user {
-    background: var(--color-accent);
-    color: var(--color-accent-ink);
+  .chat__msg--user {
+    background: #141414;
+    color: #fff;
     align-self: flex-end;
-    border-bottom-right-radius: var(--radius-sm);
+    border-bottom-right-radius: 0.4em;
   }
 
-  .chat-demo__typing {
+  .chat__typing {
+    position: absolute;
+    left: 1.4em;
+    bottom: 8.4em;
     display: flex;
-    gap: 0.25rem;
-    padding: 0 var(--space-3) var(--space-2);
+    gap: 0.4em;
     margin: 0;
+    padding: 1em 1.2em;
+    border-radius: 1.4em;
+    background: #fff;
   }
 
-  .chat-demo__typing[hidden] {
+  .chat__input {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 1.2em 2.6em;
+    padding: 0.6em 0.6em 0.6em 1.4em;
+    border-radius: 2em;
+    background: #fff;
+    color: #6b6b6b;
+    font-size: 1.2em;
+    box-shadow: 0 0.2em 0.6em rgba(0, 0, 0, 0.05);
+  }
+
+  .chat__input i {
+    width: 2.2em;
+    height: 2.2em;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: #141414;
+    color: #fff;
+    font-style: normal;
+  }
+
+  .chat__typing[hidden] {
     display: none;
   }
 
-  .chat-demo__typing span {
-    width: 0.4rem;
-    height: 0.4rem;
+  .chat__typing span {
+    width: 0.7em;
+    height: 0.7em;
     border-radius: 50%;
-    background: var(--color-text-muted);
-    animation: chat-typing-bounce 1s infinite ease-in-out;
+    background: #777;
+    animation: chat-typing 1s infinite ease-in-out;
   }
 
-  .chat-demo__typing span:nth-child(2) {
+  .chat__typing span:nth-child(2) {
     animation-delay: 0.15s;
   }
 
-  .chat-demo__typing span:nth-child(3) {
+  .chat__typing span:nth-child(3) {
     animation-delay: 0.3s;
   }
 
-  @keyframes chat-typing-bounce {
+  @keyframes chat-typing {
     0%,
     60%,
     100% {
@@ -159,46 +261,21 @@ import { chatExchanges, chatGreeting } from '../data/chat-demo';
       opacity: 0.5;
     }
     30% {
-      transform: translateY(-0.2rem);
+      transform: translateY(-0.3em);
       opacity: 1;
     }
   }
 
-  .chat-demo__chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-    padding: var(--space-3);
-    border-top: 1px solid var(--color-border);
-  }
-
-  .chat-demo__chip {
-    font-family: var(--font-display);
-    font-size: 0.85rem;
-    font-weight: 500;
-    padding: var(--space-2) var(--space-3);
-    border-radius: 999px;
-    border: 1px solid var(--color-border);
-    background: var(--color-bg);
-    color: var(--color-text);
-    cursor: pointer;
-  }
-
-  .chat-demo__chip:hover {
-    border-color: var(--color-accent);
-  }
-
   @media (prefers-reduced-motion: reduce) {
-    .chat-demo__typing span {
+    .chat__typing span {
       animation: none;
       opacity: 0.7;
     }
   }
 
   @media (min-width: 60rem) {
-    .chat-demo__layout {
-      grid-template-columns: 1fr 1fr;
-      gap: var(--space-5);
+    .chat__inner {
+      grid-template-columns: 1.1fr 1fr;
     }
   }
 </style>

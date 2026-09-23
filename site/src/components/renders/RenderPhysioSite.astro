@@ -1,0 +1,205 @@
+---
+import Tile from './Tile.astro';
+import Laptop from '../devices/Laptop.astro';
+interface Props {
+  label?: string;
+  ratio?: string;
+}
+const { label, ratio = '4 / 3' } = Astro.props;
+---
+
+<Tile bg="#9a3f24" ratio={ratio} label={label}>
+  <div class="ph-glow"></div>
+  <Laptop class="ph-lap" bg="#0f2a24" fg="#ecf5ef">
+    <div class="ph">
+      <div class="ph-nav">
+        <span class="ph-logo">
+          <i></i>Move Well
+        </span>
+        <span class="ph-links">
+          <span>Treatments</span>
+          <span>Team</span>
+          <span>Prices</span>
+          <span>Visit</span>
+        </span>
+        <span class="ph-cta">Book an assessment</span>
+      </div>
+      <svg class="ph-lines" viewBox="0 0 1000 600" preserveAspectRatio="none">
+        {[0, 1, 2, 3, 4, 5, 6].map((i) => (
+          <path
+            d={`M-20 ${420 + i * 22} C 250 ${250 + i * 30}, 520 ${620 - i * 10}, 1020 ${260 + i * 26}`}
+            fill="none"
+            stroke="#a6e36e"
+            stroke-opacity={0.12 + i * 0.06}
+            stroke-width="2"
+          />
+        ))}
+      </svg>
+      <div class="ph-center">
+        <span class="ph-tag">Sports injury · Back pain · Rehab</span>
+        <span class="ph-h">
+          Back to <em>moving well.</em>
+        </span>
+        <span class="ph-sub">
+          Book an assessment online, get your exercise plan by message, and rebook in a tap.
+        </span>
+        <span class="ph-btns">
+          <span class="ph-b1">Book an assessment</span>
+          <span class="ph-b2">See prices</span>
+        </span>
+      </div>
+      <div class="ph-cards">
+        <span>
+          <b>Assessment</b>£60
+        </span>
+        <span>
+          <b>Follow-up</b>£45
+        </span>
+        <span>
+          <b>Sports massage</b>£40
+        </span>
+        <span class="ph-next">
+          <b>Next assessment</b>Tomorrow, 9:15 am
+        </span>
+      </div>
+    </div>
+  </Laptop>
+</Tile>
+
+<style is:global>
+  .ph-glow {
+    inset: 0;
+    background: radial-gradient(60% 60% at 30% 20%, rgba(255, 170, 120, 0.35), transparent 70%);
+  }
+  .ph-lap {
+    left: 4%;
+    top: 11%;
+    width: 92%;
+  }
+  .ph {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+  }
+  .ph-nav {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 2em;
+    padding: 1.8em 3em;
+  }
+  .ph-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    font-weight: 700;
+    font-size: 1.5em;
+    letter-spacing: -0.03em;
+  }
+  .ph-logo i {
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    background: #a6e36e;
+  }
+  .ph-links {
+    display: flex;
+    gap: 2.2em;
+    margin-left: auto;
+    opacity: 0.75;
+  }
+  .ph-cta {
+    background: #a6e36e;
+    color: #0f2a24;
+    padding: 0.7em 1.4em;
+    border-radius: 2em;
+    font-weight: 600;
+  }
+  .ph-lines {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .ph-center {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1.4em;
+    padding-top: 4.5em;
+  }
+  .ph-tag {
+    font-size: 1em;
+    padding: 0.4em 1.1em;
+    border: 1px solid rgba(236, 245, 239, 0.3);
+    border-radius: 2em;
+  }
+  .ph-h {
+    font-size: 7.2em;
+    font-weight: 800;
+    letter-spacing: -0.06em;
+    line-height: 0.92;
+  }
+  .ph-h em {
+    font-weight: 200;
+    display: block;
+    color: #a6e36e;
+  }
+  .ph-sub {
+    font-size: 1.3em;
+    max-width: 30em;
+    opacity: 0.8;
+  }
+  .ph-btns {
+    display: flex;
+    gap: 1em;
+  }
+  .ph-b1 {
+    background: #ecf5ef;
+    color: #0f2a24;
+    padding: 0.9em 1.8em;
+    border-radius: 2em;
+    font-weight: 600;
+  }
+  .ph-b2 {
+    border: 1px solid rgba(236, 245, 239, 0.4);
+    padding: 0.9em 1.8em;
+    border-radius: 2em;
+  }
+  .ph-cards {
+    position: absolute;
+    left: 3em;
+    right: 3em;
+    bottom: 2.4em;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1.3fr;
+    gap: 1em;
+  }
+  .ph-cards span {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3em;
+    padding: 1.2em 1.4em;
+    border-radius: 1em;
+    background: rgba(236, 245, 239, 0.08);
+    font-size: 1.5em;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  .ph-cards b {
+    font-size: 0.6em;
+    font-weight: 500;
+    opacity: 0.7;
+    letter-spacing: 0;
+  }
+  .ph-cards .ph-next {
+    background: #a6e36e;
+    color: #0f2a24;
+    font-size: 1.3em;
+  }
+</style>

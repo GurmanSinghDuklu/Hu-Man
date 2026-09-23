@@ -1,0 +1,44 @@
+---
+/** Top-down illustrated dish in a bowl. */
+interface Props {
+  sauce?: string;
+  bowl?: string;
+  garnish?: string;
+  class?: string;
+  style?: string;
+}
+const {
+  sauce = '#c0501f',
+  bowl = '#f3eee6',
+  garnish = '#5f8f3a',
+  class: className = '',
+  style = '',
+} = Astro.props;
+const bits = [
+  [38, 40],
+  [58, 36],
+  [48, 56],
+  [64, 58],
+  [36, 60],
+  [52, 44],
+  [44, 30],
+  [66, 46],
+];
+---
+
+<svg class={className} style={style} viewBox="0 0 100 100">
+  <circle cx="50" cy="52" r="46" fill="rgba(0,0,0,.25)"></circle>
+  <circle cx="50" cy="48" r="46" fill={bowl}></circle>
+  <circle cx="50" cy="48" r="36" fill={sauce}></circle>
+  <circle cx="44" cy="42" r="22" fill="rgba(255,255,255,.12)"></circle>
+  {bits.map(([x, y], i) => (
+    <ellipse
+      cx={x}
+      cy={y}
+      rx={i % 2 ? 4 : 6}
+      ry={i % 2 ? 3 : 4}
+      fill={i % 3 === 0 ? '#f4d7a1' : garnish}
+      transform={`rotate(${i * 40} ${x} ${y})`}
+    />
+  ))}
+</svg>

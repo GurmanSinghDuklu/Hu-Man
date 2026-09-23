@@ -1,0 +1,232 @@
+---
+import Tile from './Tile.astro';
+import Laptop from '../devices/Laptop.astro';
+import Figure from './Figure.astro';
+interface Props {
+  label?: string;
+  ratio?: string;
+}
+const { label, ratio = '4 / 3' } = Astro.props;
+---
+
+<Tile bg="#f3c9d8" ratio={ratio} label={label}>
+  <Laptop class="sa-lap" bg="#fbf2f1" fg="#2b1b22">
+    <div class="sa-site">
+      <div class="sa-nav">
+        <span class="sa-logo">Atelier Rose</span>
+        <span class="sa-links">
+          <span>Services</span>
+          <span>Stylists</span>
+          <span>Colour</span>
+          <span>Journal</span>
+          <span>Visit</span>
+        </span>
+        <span class="sa-book">Book</span>
+      </div>
+      <div class="sa-hero">
+        <div class="sa-art">
+          <span class="sa-sun"></span>
+          <span class="sa-arch sa-arch--1"></span>
+          <span class="sa-arch sa-arch--2"></span>
+          <span class="sa-arch sa-arch--3">
+            <Figure class="sa-fig" skin="#e3b494" hair="#5a2a1f" top="#2b1b22" variant="long" />
+          </span>
+          <span class="sa-leaf sa-leaf--1"></span>
+          <span class="sa-leaf sa-leaf--2"></span>
+        </div>
+        <div class="sa-card">
+          <span class="sa-kicker">Colour · Cut · Care</span>
+          <span class="sa-head">
+            Book the look <em>you've been saving.</em>
+          </span>
+        </div>
+        <div class="sa-bar">
+          <span>
+            <b>Service</b>Full colour ▾
+          </span>
+          <span>
+            <b>Stylist</b>Any stylist ▾
+          </span>
+          <span>
+            <b>Date</b>Thu 14 ▾
+          </span>
+          <span>
+            <b>Time</b>11:00 am ▾
+          </span>
+          <span class="sa-find">Find a time</span>
+        </div>
+      </div>
+    </div>
+  </Laptop>
+</Tile>
+
+<style is:global>
+  .sa-lap {
+    left: 5%;
+    top: 12%;
+    width: 104%;
+  }
+  .sa-site {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .sa-nav {
+    display: flex;
+    align-items: center;
+    gap: 2em;
+    padding: 1.6em 3em;
+    font-size: 1em;
+  }
+  .sa-logo {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 2em;
+    font-weight: 500;
+    flex: none;
+  }
+  .sa-links {
+    display: flex;
+    gap: 2em;
+    margin-left: auto;
+    opacity: 0.75;
+  }
+  .sa-book {
+    background: #2b1b22;
+    color: #fff;
+    padding: 0.7em 1.6em;
+    border-radius: 2em;
+    font-weight: 600;
+  }
+  .sa-hero {
+    position: relative;
+    flex: 1;
+    margin: 0 3em 3em;
+    border-radius: 1.4em;
+    overflow: hidden;
+    background: linear-gradient(160deg, #f6dcdc 0%, #e9b7c3 55%, #c9708f 100%);
+  }
+  .sa-art {
+    position: absolute;
+    inset: 0;
+  }
+  .sa-sun {
+    position: absolute;
+    width: 22em;
+    height: 22em;
+    border-radius: 50%;
+    right: 8em;
+    top: 3em;
+    background: radial-gradient(circle at 40% 40%, #ffe3c7, #f6a98c 70%);
+  }
+  .sa-arch {
+    position: absolute;
+    bottom: 0;
+    border-radius: 20em 20em 0 0;
+    overflow: hidden;
+  }
+  .sa-arch--1 {
+    right: 30em;
+    width: 16em;
+    height: 26em;
+    background: #b5446e;
+  }
+  .sa-arch--2 {
+    right: 3em;
+    width: 14em;
+    height: 20em;
+    background: #7c2248;
+  }
+  .sa-arch--3 {
+    right: 14em;
+    width: 19em;
+    height: 33em;
+    background: #2b1b22;
+  }
+  .sa-fig {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 88%;
+  }
+  .sa-leaf {
+    position: absolute;
+    width: 9em;
+    height: 4em;
+    border-radius: 0 100% 0 100%;
+    background: #6f8f5a;
+  }
+  .sa-leaf--1 {
+    right: 31em;
+    bottom: 24em;
+    transform: rotate(-30deg);
+  }
+  .sa-leaf--2 {
+    right: 1em;
+    bottom: 18em;
+    transform: rotate(40deg) scale(0.8);
+    background: #577448;
+  }
+  .sa-card {
+    position: absolute;
+    left: 3em;
+    top: 5em;
+    width: 40em;
+    padding: 2.4em;
+    border-radius: 1.2em;
+    background: #b5446e;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+  }
+  .sa-kicker {
+    font-size: 1.1em;
+  }
+  .sa-head {
+    font-size: 3.6em;
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    font-weight: 500;
+  }
+  .sa-head em {
+    font-family: var(--font-serif);
+    font-weight: 400;
+  }
+  .sa-bar {
+    position: absolute;
+    left: 3em;
+    right: 3em;
+    bottom: 2.4em;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr) auto;
+    gap: 0;
+    background: #fff;
+    border-radius: 1em;
+    padding: 1em;
+    align-items: center;
+    box-shadow: 0 1em 3em rgba(43, 27, 34, 0.18);
+  }
+  .sa-bar > span {
+    display: flex;
+    flex-direction: column;
+    font-size: 1.05em;
+    padding-inline: 1em;
+    border-right: 1px solid #eee;
+    gap: 0.2em;
+  }
+  .sa-bar b {
+    font-size: 0.8em;
+    font-weight: 500;
+    color: #6b5f64;
+  }
+  .sa-bar .sa-find {
+    border: 0;
+    background: #2b1b22;
+    color: #fff;
+    padding: 1em 1.8em;
+    border-radius: 0.7em;
+    font-weight: 600;
+  }
+</style>

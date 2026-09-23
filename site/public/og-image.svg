@@ -1,18 +1,30 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
   <defs>
+    <radialGradient id="glow" cx="50%" cy="58%" r="55%">
+      <stop offset="0" stop-color="#c21a9c"/>
+      <stop offset="0.45" stop-color="#7a0a62"/>
+      <stop offset="1" stop-color="#050810"/>
+    </radialGradient>
     <style>
-      .display { font-family: 'Arial', sans-serif; font-weight: 700; }
+      .t { font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif; fill: #fff; }
     </style>
   </defs>
-  <rect width="1200" height="630" fill="#F1F2EE" />
-  <rect x="0" y="0" width="1200" height="630" fill="none" stroke="#D9DBD3" stroke-width="2" />
-  <circle cx="1040" cy="120" r="220" fill="#1F3BD6" opacity="0.08" />
-  <circle cx="1120" cy="480" r="160" fill="#FFE94A" opacity="0.25" />
-  <text x="80" y="200" class="display" font-size="56" fill="#0E1116">Duklu Digital</text>
-  <text x="80" y="290" class="display" font-size="44" fill="#0E1116">Websites that turn local</text>
-  <text x="80" y="344" class="display" font-size="44" fill="#0E1116">searches into bookings</text>
-  <rect x="80" y="410" width="14" height="14" fill="#1F3BD6" />
-  <text x="106" y="422" font-family="Arial, sans-serif" font-size="26" fill="#4C5563">Bradford &amp; West Yorkshire</text>
-  <rect x="80" y="460" width="14" height="14" fill="#FFE94A" />
-  <text x="106" y="472" font-family="Arial, sans-serif" font-size="26" fill="#4C5563">Website redesign · booking · AI enquiry assistants</text>
+  <rect width="1200" height="630" fill="#050810"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+  <text x="80" y="96" class="t" font-size="26" font-weight="700">HU/MAN</text>
+  <text x="72" y="330" class="t" font-size="190" font-weight="800" letter-spacing="-10">HU/MAN</text>
+  <text x="830" y="330" class="t" font-size="140" font-weight="200" font-style="italic" letter-spacing="-5">Studio</text>
+  <g font-size="26" class="t" font-weight="500">
+    <rect x="80" y="390" width="150" height="56" rx="28" fill="#62626c" fill-opacity=".9"/>
+    <text x="155" y="427" text-anchor="middle">Design</text>
+    <rect x="246" y="390" width="210" height="56" rx="28" fill="#8c4276" fill-opacity=".9"/>
+    <text x="351" y="427" text-anchor="middle">Development</text>
+    <rect x="472" y="390" width="180" height="56" rx="28" fill="#a43a8c" fill-opacity=".9"/>
+    <text x="562" y="427" text-anchor="middle">AI assistants</text>
+    <rect x="668" y="390" width="160" height="56" rx="28" fill="#762ca0" fill-opacity=".9"/>
+    <text x="748" y="427" text-anchor="middle">Visibility</text>
+  </g>
+  <line x1="80" y1="486" x2="1120" y2="486" stroke="#fff" stroke-opacity=".7"/>
+  <text x="80" y="546" class="t" font-size="30">Websites, apps and AI assistants that turn local searches into bookings.</text>
+  <text x="80" y="586" class="t" font-size="24" fill-opacity=".75">Bradford, West Yorkshire</text>
 </svg>

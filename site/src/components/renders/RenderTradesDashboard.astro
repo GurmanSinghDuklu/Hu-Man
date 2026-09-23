@@ -1,0 +1,316 @@
+---
+import Tile from './Tile.astro';
+import Laptop from '../devices/Laptop.astro';
+interface Props {
+  label?: string;
+  ratio?: string;
+}
+const { label, ratio = '4 / 3' } = Astro.props;
+const bars = [52, 70, 46, 88, 64, 94, 58];
+const days = Array.from({ length: 28 }, (_, i) => i + 1);
+const busy = new Set([3, 4, 8, 11, 12, 15, 18, 19, 22, 25, 26]);
+---
+
+<Tile bg="#3d3b42" ratio={ratio} label={label}>
+  <Laptop class="td-lap" bg="#0f0f12" fg="#f1f1f4">
+    <div class="td">
+      <aside class="td-side">
+        <span class="td-logo">A</span>
+        {[0, 1, 2, 3, 4].map((i) => (
+          <span class:list={['td-si', { on: i === 0 }]} />
+        ))}
+      </aside>
+      <div class="td-main">
+        <div class="td-top">
+          <span class="td-title">Overview</span>
+          <span class="td-search">Search jobs, quotes, customers</span>
+          <span class="td-av">AE</span>
+        </div>
+        <div class="td-stats">
+          <div class="td-stat td-stat--accent">
+            <span>Open quotes</span>
+            <b>12</b>
+            <i>↗</i>
+          </div>
+          <div class="td-stat">
+            <span>Invoiced this month</span>
+            <b>£8,420</b>
+            <i>↗</i>
+          </div>
+          <div class="td-stat">
+            <span>Avg quote reply</span>
+            <b>3h</b>
+            <i>↗</i>
+          </div>
+          <div class="td-stat">
+            <span>Jobs this week</span>
+            <b>9</b>
+            <i>↗</i>
+          </div>
+        </div>
+        <div class="td-panels">
+          <div class="td-panel">
+            <div class="td-ph">
+              <span>Enquiries</span>
+              <span class="td-pill">Week ▾</span>
+            </div>
+            <div class="td-chart">
+              {bars.map((h) => (
+                <span style={`height:${h}%`} />
+              ))}
+            </div>
+            <div class="td-axis">
+              <span>Mon</span>
+              <span>Tue</span>
+              <span>Wed</span>
+              <span>Thu</span>
+              <span>Fri</span>
+              <span>Sat</span>
+              <span>Sun</span>
+            </div>
+          </div>
+          <div class="td-panel">
+            <div class="td-ph">
+              <span>Jobs in March</span>
+              <span class="td-pill">Month ▾</span>
+            </div>
+            <div class="td-cal">
+              {days.map((d) => (
+                <span class:list={{ on: busy.has(d), today: d === 14 }}>{d}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+        <div class="td-panel td-table">
+          <div class="td-ph">
+            <span>Recent quotes</span>
+            <span class="td-pill">See all</span>
+          </div>
+          {[
+            ['Q-1042', 'Consumer unit upgrade', 'Sent', 'td-s1'],
+            ['Q-1041', 'EV charger install', 'Accepted', 'td-s2'],
+            ['Q-1040', 'Safety inspection', 'Follow-up due', 'td-s3'],
+          ].map(([id, job, status, c]) => (
+            <div class="td-tr">
+              <span>{id}</span>
+              <span>{job}</span>
+              <span class={`td-status ${c}`}>{status}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </Laptop>
+</Tile>
+
+<style is:global>
+  .td-lap {
+    left: 6%;
+    top: 12%;
+    width: 104%;
+  }
+  .td {
+    display: grid;
+    grid-template-columns: 6em 1fr;
+    height: 100%;
+    font-size: 1.05em;
+  }
+  .td-side {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.6em;
+    padding-top: 1.8em;
+    border-right: 1px solid #222228;
+  }
+  .td-logo {
+    width: 2.8em;
+    height: 2.8em;
+    border-radius: 0.8em;
+    background: #ffb703;
+    color: #0b2545;
+    display: grid;
+    place-items: center;
+    font-weight: 800;
+  }
+  .td-si {
+    width: 1.6em;
+    height: 1.6em;
+    border-radius: 0.5em;
+    border: 0.15em solid #55555f;
+  }
+  .td-si.on {
+    background: #7b83eb;
+    border-color: #7b83eb;
+  }
+  .td-main {
+    padding: 1.8em 2.4em;
+    display: flex;
+    flex-direction: column;
+    gap: 1.4em;
+    min-width: 0;
+  }
+  .td-top {
+    display: flex;
+    align-items: center;
+    gap: 2em;
+  }
+  .td-title {
+    font-size: 2.2em;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  .td-search {
+    margin-left: auto;
+    width: 28em;
+    padding: 0.7em 1.2em;
+    border-radius: 2em;
+    background: #1c1c22;
+    color: #a2a2ae;
+    font-size: 0.9em;
+  }
+  .td-av {
+    width: 2.8em;
+    height: 2.8em;
+    border-radius: 50%;
+    background: #d7a86e;
+    color: #1a1208;
+    display: grid;
+    place-items: center;
+    font-weight: 700;
+    font-size: 0.85em;
+  }
+  .td-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1em;
+  }
+  .td-stat {
+    position: relative;
+    background: #f4f4f6;
+    color: #111;
+    border-radius: 1.1em;
+    padding: 1.1em 1.3em;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6em;
+  }
+  .td-stat span {
+    font-size: 0.85em;
+    opacity: 0.75;
+  }
+  .td-stat b {
+    font-size: 2.2em;
+    font-weight: 500;
+    letter-spacing: -0.03em;
+  }
+  .td-stat i {
+    position: absolute;
+    right: 0.9em;
+    top: 0.9em;
+    width: 1.8em;
+    height: 1.8em;
+    border-radius: 50%;
+    background: #111;
+    color: #fff;
+    display: grid;
+    place-items: center;
+    font-style: normal;
+    font-size: 0.85em;
+  }
+  .td-stat--accent {
+    background: #d7a86e;
+  }
+  .td-stat--accent span {
+    opacity: 0.9;
+  }
+  .td-panels {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1em;
+  }
+  .td-panel {
+    background: #18181d;
+    border-radius: 1.1em;
+    padding: 1.2em 1.4em;
+  }
+  .td-ph {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1em;
+    font-weight: 500;
+  }
+  .td-pill {
+    font-size: 0.8em;
+    padding: 0.35em 0.9em;
+    border-radius: 2em;
+    background: #26262d;
+    color: #b9b9c4;
+  }
+  .td-chart {
+    height: 11em;
+    display: flex;
+    align-items: flex-end;
+    gap: 0.9em;
+    padding-inline: 0.4em;
+  }
+  .td-chart span {
+    flex: 1;
+    border-radius: 0.5em;
+    background: linear-gradient(180deg, #8c93f2, #5d64d6);
+  }
+  .td-axis {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75em;
+    color: #a2a2ae;
+    margin-top: 0.6em;
+    padding-inline: 0.4em;
+  }
+  .td-cal {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.45em;
+  }
+  .td-cal span {
+    text-align: center;
+    padding: 0.35em 0;
+    border-radius: 0.5em;
+    font-size: 0.85em;
+    background: #f4f4f6;
+    color: #111;
+  }
+  .td-cal span.on {
+    background: #555dd0;
+    color: #fff;
+  }
+  .td-cal span.today {
+    background: #d7a86e;
+  }
+  .td-tr {
+    display: grid;
+    grid-template-columns: 7em 1fr auto;
+    gap: 1em;
+    padding: 0.7em 0;
+    border-top: 1px solid #25252c;
+    font-size: 0.9em;
+    align-items: center;
+  }
+  .td-status {
+    padding: 0.3em 0.9em;
+    border-radius: 2em;
+    font-size: 0.85em;
+  }
+  .td-s1 {
+    background: #26262d;
+  }
+  .td-s2 {
+    background: #1f3d2a;
+    color: #9be3b0;
+  }
+  .td-s3 {
+    background: #d7a86e;
+    color: #1a1208;
+  }
+</style>

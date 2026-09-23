@@ -1,0 +1,18 @@
+---
+/** Tablet frame, landscape. 100em wide; size screen content in em. */
+interface Props {
+  class?: string;
+  style?: string;
+  bg?: string;
+  fg?: string;
+}
+const { class: className = '', style = '', bg = '#fff', fg = '#111' } = Astro.props;
+---
+
+<div class:list={['dev-tablet', className]} style={style}>
+  <div class="dev-tablet__body">
+    <div class="dev-tablet__screen" style={`--scr-bg:${bg};--scr-fg:${fg}`}>
+      <slot />
+    </div>
+  </div>
+</div>

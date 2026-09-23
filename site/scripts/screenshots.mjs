@@ -9,7 +9,8 @@ const distDir = fileURLToPath(new URL('../dist/', import.meta.url));
 const outDir = fileURLToPath(new URL('../reports/screenshots/', import.meta.url));
 
 const widths = [360, 768, 1280];
-const themes = ['light', 'dark'];
+// The Hu/man design is a single dark art direction, so one colour scheme.
+const themes = ['dark'];
 
 async function run() {
   await mkdir(outDir, { recursive: true });

@@ -11,254 +11,206 @@ function mailtoFor(tierName: string): string {
 }
 ---
 
-<section class="pricing wrap" id="pricing" aria-labelledby="pricing-heading">
-  <h2 id="pricing-heading">Pricing</h2>
-  <p class="pricing__intro">
-    Introductory pricing while I build my portfolio in Bradford. Prices rise as my diary fills, so
-    quotes are valid for 30 days. Monthly plans stay the same.
-  </p>
+<section class="pricing" id="pricing" aria-labelledby="pricing-title">
+  <div class="pricing__glow" aria-hidden="true"></div>
+  <div class="wrap pricing__inner">
+    <div class="pricing__head">
+      <h2 id="pricing-title" class="section-title">
+        <span class="t-bold t-silver">Pricing</span>
+      </h2>
+      <p>
+        Introductory pricing while I build my portfolio in Bradford. Prices rise as my diary fills,
+        so quotes are valid for 30 days. Monthly plans stay the same.
+      </p>
+    </div>
 
-  <!-- Desktop / wide: comparison table -->
-  <div class="pricing__table-wrap">
-    <table class="pricing__table">
-      <caption class="visually-hidden">
-        Comparison of the Launch, Growth and Full presence packages
-      </caption>
-      <thead>
-        <tr>
-          <th scope="col">
-            <span class="visually-hidden">Detail</span>
-          </th>
-          {pricingTiers.map((tier) => (
-            <th scope="col">{tier.name}</th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th scope="row">For</th>
-          {pricingTiers.map((tier) => (
-            <td>{tier.for}</td>
-          ))}
-        </tr>
-        <tr>
-          <th scope="row">Includes</th>
-          {pricingTiers.map((tier) => (
-            <td>
-              <ul class="pricing__includes">
-                {tier.includes.map((item) => (
-                  <li>{item}</li>
-                ))}
-              </ul>
-            </td>
-          ))}
-        </tr>
-        <tr>
-          <th scope="row">Price</th>
-          {pricingTiers.map((tier) => (
-            <td>
-              <span class="pricing__tag">Introductory</span>
-              <span class="pricing__price">from {tier.introFrom}</span>
-            </td>
-          ))}
-        </tr>
-        <tr>
-          <th scope="row">Monthly plan</th>
-          {pricingTiers.map((tier) => (
-            <td>{tier.monthly}</td>
-          ))}
-        </tr>
-        <tr>
-          <th scope="row">
-            <span class="visually-hidden">Get in touch</span>
-          </th>
-          {pricingTiers.map((tier) => (
-            <td>
-              <a class="btn btn-secondary" href={mailtoFor(tier.name)}>
-                Ask about {tier.name}
-              </a>
-            </td>
-          ))}
-        </tr>
-      </tbody>
-    </table>
+    <ul class="pricing__cards">
+      {pricingTiers.map((tier) => (
+        <li class:list={['tier', { 'tier--featured': tier.id === 'growth' }]}>
+          <div class="tier__top">
+            <h3>{tier.name}</h3>
+            <span class="tier__tag">Introductory</span>
+          </div>
+          <p class="tier__price">
+            <span class="tier__from">from</span> {tier.introFrom}
+          </p>
+          <p class="tier__monthly">Monthly plan: {tier.monthly}</p>
+          <p class="tier__for">{tier.for}</p>
+          <ul class="tier__includes">
+            {tier.includes.map((item) => (
+              <li>{item}</li>
+            ))}
+          </ul>
+          <a
+            class:list={['pill-btn', { 'pill-btn--solid': tier.id === 'growth' }]}
+            href={mailtoFor(tier.name)}
+          >
+            Ask about {tier.name}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <p class="pricing__terms">
+      Fixed price after a free discovery call. 50% deposit, two revision rounds, and you own your
+      site and content after final payment. Platform and AI usage fees are billed at cost.
+    </p>
   </div>
-
-  <!-- Mobile: stacked cards, price first per tier -->
-  <ul class="pricing__cards">
-    {pricingTiers.map((tier) => (
-      <li class="pricing__card">
-        <h3>{tier.name}</h3>
-        <p class="pricing__card-price">
-          <span class="pricing__tag">Introductory</span>
-          <span class="pricing__price">from {tier.introFrom}</span>
-        </p>
-        <p class="pricing__card-monthly">Monthly plan: {tier.monthly}</p>
-        <dl class="pricing__card-detail">
-          <dt>For</dt>
-          <dd>{tier.for}</dd>
-          <dt>Includes</dt>
-          <dd>
-            <ul class="pricing__includes">
-              {tier.includes.map((item) => (
-                <li>{item}</li>
-              ))}
-            </ul>
-          </dd>
-        </dl>
-        <a class="btn btn-secondary" href={mailtoFor(tier.name)}>
-          Ask about {tier.name}
-        </a>
-      </li>
-    ))}
-  </ul>
-
-  <p class="pricing__terms">
-    Fixed price after a free discovery call. 50% deposit, two revision rounds, and you own your site
-    and content after final payment. Platform and AI usage fees are billed at cost.
-  </p>
 </section>
 
 <style>
   .pricing {
-    padding-block: var(--space-6);
-    border-top: 1px solid var(--color-border);
-  }
-
-  .pricing__intro {
-    color: var(--color-text-muted);
-    margin-bottom: var(--space-4);
-  }
-
-  .visually-hidden {
-    position: absolute;
-    width: 1px;
-    height: 1px;
+    position: relative;
+    padding-block: clamp(4rem, 9vw, 7rem);
     overflow: hidden;
-    clip: rect(0 0 0 0);
-    white-space: nowrap;
   }
 
-  /* Desktop table: shown at >=48rem, hidden below */
-  .pricing__table-wrap {
-    display: none;
-    overflow-x: auto;
+  .pricing__glow {
+    position: absolute;
+    left: 50%;
+    top: 30%;
+    width: 90%;
+    height: 80%;
+    transform: translateX(-50%);
+    background: radial-gradient(closest-side, rgba(156, 13, 124, 0.55), transparent);
+    filter: blur(30px);
+    pointer-events: none;
   }
 
-  .pricing__table {
-    width: 100%;
-    border-collapse: collapse;
-    min-width: 40rem;
+  .pricing__inner {
+    position: relative;
   }
 
-  .pricing__table th,
-  .pricing__table td {
-    text-align: left;
-    padding: var(--space-3);
-    border-top: 1px solid var(--color-border);
-    vertical-align: top;
+  .pricing__head {
+    display: grid;
+    gap: var(--space-3);
+    margin-bottom: clamp(2rem, 5vw, 3.5rem);
   }
 
-  .pricing__table thead th {
-    font-family: var(--font-display);
-    font-size: 1.1rem;
-    background: var(--color-surface);
-    border-top: none;
+  .pricing__head p {
+    color: rgba(255, 255, 255, 0.86);
+    max-width: 30rem;
   }
 
-  .pricing__table tbody th {
-    font-family: var(--font-display);
-    font-weight: 600;
-    white-space: nowrap;
-  }
-
-  .pricing__includes {
-    margin: 0;
-    padding-left: 1.1em;
-  }
-
-  .pricing__includes li {
-    margin-bottom: var(--space-1);
-  }
-
-  .pricing__tag {
-    display: inline-block;
-    background: var(--color-highlight);
-    color: var(--color-highlight-ink);
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 0.75rem;
-    padding: 0.15em 0.5em;
-    border-radius: var(--radius-sm);
-    margin-bottom: var(--space-1);
-  }
-
-  .pricing__price {
-    display: block;
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 1.25rem;
-  }
-
-  .pricing__terms {
-    color: var(--color-text-muted);
-    font-size: 0.95rem;
-    margin-top: var(--space-4);
-  }
-
-  /* Mobile cards: shown below 48rem, hidden at/above */
   .pricing__cards {
     list-style: none;
     margin: 0;
     padding: 0;
     display: grid;
-    gap: var(--space-4);
+    gap: clamp(0.75rem, 1.5vw, 1.25rem);
   }
 
-  .pricing__card {
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    padding: var(--space-4);
+  .tier {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: clamp(1.5rem, 2.6vw, 2.25rem);
+    border-radius: var(--radius-lg);
+    background: rgba(18, 23, 38, 0.75);
+    border: 1px solid var(--color-line);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
   }
 
-  .pricing__card h3 {
-    margin-bottom: var(--space-2);
+  .tier--featured {
+    background: linear-gradient(160deg, #b0137e 0%, #7a0a62 55%, #3e0a4f 100%);
+    border-color: transparent;
   }
 
-  .pricing__card-price {
-    margin-bottom: var(--space-1);
+  .tier__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-3);
   }
 
-  .pricing__card-monthly {
-    color: var(--color-text-muted);
-    font-size: 0.95rem;
-    margin-bottom: var(--space-3);
-  }
-
-  .pricing__card-detail dt {
-    font-family: var(--font-display);
+  .tier h3 {
+    font-size: 1.5rem;
     font-weight: 600;
+    letter-spacing: -0.03em;
+  }
+
+  .tier__tag {
+    padding: 0.3em 0.9em;
+    border-radius: var(--radius-pill);
+    background: #fff;
+    color: var(--paper-text);
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  .tier__price {
+    font-size: clamp(3rem, 5vw, 4.25rem);
+    font-weight: 700;
+    letter-spacing: -0.055em;
+    line-height: 1;
     margin-top: var(--space-3);
   }
 
-  .pricing__card-detail dd {
-    margin: var(--space-1) 0 0;
-    color: var(--color-text-muted);
+  .tier__from {
+    font-size: 0.3em;
+    font-weight: 300;
+    font-style: italic;
+    letter-spacing: 0;
+    vertical-align: 0.5em;
   }
 
-  .pricing__card .btn {
-    margin-top: var(--space-4);
-    width: 100%;
+  .tier__monthly {
+    color: rgba(255, 255, 255, 0.86);
+  }
+
+  .tier__for {
+    padding-block: var(--space-3);
+    border-block: 1px solid rgba(255, 255, 255, 0.2);
+    font-size: 0.95rem;
+  }
+
+  .tier__includes {
+    list-style: none;
+    margin: 0 0 var(--space-4);
+    padding: 0;
+    display: grid;
+    gap: 0.5rem;
+    font-size: 0.925rem;
+    flex: 1;
+    align-content: start;
+  }
+
+  .tier__includes li {
+    display: flex;
+    gap: 0.6em;
+  }
+
+  .tier__includes li::before {
+    content: '';
+    flex: none;
+    width: 0.45em;
+    height: 0.45em;
+    margin-top: 0.55em;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.8;
+  }
+
+  .tier .pill-btn {
     justify-content: center;
   }
 
-  @media (min-width: 48rem) {
-    .pricing__table-wrap {
-      display: block;
+  .pricing__terms {
+    margin-top: var(--space-5);
+    color: var(--color-text-muted);
+    max-width: 44rem;
+    font-size: 0.95rem;
+  }
+
+  @media (min-width: 60rem) {
+    .pricing__head {
+      grid-template-columns: 1fr auto;
+      align-items: end;
     }
 
     .pricing__cards {
-      display: none;
+      grid-template-columns: repeat(3, 1fr);
     }
   }
 </style>

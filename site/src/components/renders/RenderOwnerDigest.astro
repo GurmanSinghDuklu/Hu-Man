@@ -1,0 +1,265 @@
+---
+import Tile from './Tile.astro';
+import Browser from '../devices/Browser.astro';
+import Phone from '../devices/Phone.astro';
+interface Props {
+  label?: string;
+  ratio?: string;
+}
+const { label, ratio = '4 / 3' } = Astro.props;
+const spark = 'M0 40 L10 34 L20 36 L30 26 L40 30 L50 18 L60 22 L70 12 L80 16 L90 6 L100 10';
+---
+
+<Tile bg="#5d6b73" ratio={ratio} label={label}>
+  <Browser class="od-br" bg="#0c0d10" fg="#f2f2f5" url="owner-digest.example" ratio="16 / 10.4">
+    <div class="od">
+      <div class="od-top">
+        <span class="od-brand">
+          <i></i>Digest
+        </span>
+        <span class="od-stores">
+          <span>Web app</span>
+          <span>Mobile</span>
+        </span>
+      </div>
+      <span class="od-h">
+        Your week, in one message. <em>Enquiries, quotes and bookings at a glance.</em>
+      </span>
+      <div class="od-phones">
+        <Phone class="od-ph" bg="#141519" fg="#f2f2f5">
+          <div class="ui-pad ui-col od-s">
+            <span class="ui-small ui-muted">Enquiries this week</span>
+            <span class="od-big">46</span>
+            <svg viewBox="0 0 100 44" class="od-spark">
+              <path d={spark} fill="none" stroke="#6ee7a8" stroke-width="2.5" />
+            </svg>
+            <div class="ui-row">
+              <span class="ui-chip od-chip">1W</span>
+              <span class="ui-chip od-chip on">1M</span>
+              <span class="ui-chip od-chip">3M</span>
+            </div>
+            {['Website form', 'Missed-call text', 'WhatsApp'].map((t, i) => (
+              <div class="od-li">
+                <span>{t}</span>
+                <b>{[21, 14, 11][i]}</b>
+              </div>
+            ))}
+          </div>
+        </Phone>
+        <Phone class="od-ph od-ph--mid" bg="#141519" fg="#f2f2f5">
+          <div class="ui-pad ui-col od-s od-s--c">
+            <span class="ui-small ui-muted">Answered by the assistant</span>
+            <div class="od-ring">
+              <span>
+                <b>82%</b>
+                <i>of 46</i>
+              </span>
+            </div>
+            <div class="od-legend">
+              <span>
+                <i style="background:#6ee7a8"></i>Answered
+              </span>
+              <span>
+                <i style="background:#7b83eb"></i>Handed over
+              </span>
+            </div>
+            <span class="ui-btn od-btn">Open this week's report</span>
+          </div>
+        </Phone>
+        <Phone class="od-ph" bg="#141519" fg="#f2f2f5">
+          <div class="ui-pad ui-col od-s">
+            <span class="ui-small ui-muted">Needs your attention</span>
+            {[
+              ['Quote Q-1040', 'Follow-up due today'],
+              ['Invoice 2291', 'Reminder sent'],
+              ['New review', 'Reply suggested'],
+              ['Saturday', '2 slots left'],
+            ].map(([a, b]) => (
+              <div class="od-task">
+                <i />
+                <span>
+                  <b>{a}</b>
+                  {b}
+                </span>
+              </div>
+            ))}
+          </div>
+        </Phone>
+      </div>
+    </div>
+  </Browser>
+</Tile>
+
+<style is:global>
+  .od-br {
+    left: 6%;
+    top: 8%;
+    width: 88%;
+  }
+  .od {
+    position: relative;
+    height: 100%;
+    padding: 2.4em 3em;
+    background: radial-gradient(70% 60% at 50% 110%, #2a2f4a, transparent 70%);
+  }
+  .od-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .od-brand {
+    display: flex;
+    gap: 0.6em;
+    align-items: center;
+    font-weight: 700;
+    font-size: 1.4em;
+  }
+  .od-brand i {
+    width: 1.2em;
+    height: 1.2em;
+    border-radius: 0.35em;
+    background: linear-gradient(135deg, #6ee7a8, #7b83eb);
+  }
+  .od-stores {
+    display: flex;
+    gap: 0.8em;
+  }
+  .od-stores span {
+    padding: 0.5em 1.2em;
+    border-radius: 0.6em;
+    background: #fff;
+    color: #0c0d10;
+    font-weight: 600;
+    font-size: 0.95em;
+  }
+  .od-h {
+    display: block;
+    margin-top: 1.4em;
+    font-size: 2.4em;
+    max-width: 22em;
+    letter-spacing: -0.03em;
+    font-weight: 500;
+    line-height: 1.1;
+  }
+  .od-h em {
+    color: #8b8e9c;
+    font-style: normal;
+  }
+  .od-phones {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 13.5em;
+    display: flex;
+    justify-content: center;
+    gap: 4em;
+  }
+  .od-ph {
+    position: relative !important;
+    width: 21em;
+  }
+  .od-ph--mid {
+    margin-top: 2em;
+  }
+  .od-s {
+    gap: 0.9em;
+    padding-top: 0.8em;
+  }
+  .od-s--c {
+    align-items: center;
+    text-align: center;
+  }
+  .od-big {
+    font-size: 4em;
+    font-weight: 600;
+    letter-spacing: -0.04em;
+  }
+  .od-spark {
+    width: 100%;
+  }
+  .od-chip {
+    background: #22232a;
+    font-size: 0.85em;
+  }
+  .od-chip.on {
+    background: #f2f2f5;
+    color: #141519;
+  }
+  .od-li {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.7em 0;
+    border-top: 1px solid #25262d;
+  }
+  .od-ring {
+    width: 17em;
+    height: 17em;
+    border-radius: 50%;
+    background: conic-gradient(#6ee7a8 0 82%, #7b83eb 82% 100%);
+    display: grid;
+    place-items: center;
+    margin-block: 1em;
+  }
+  .od-ring span {
+    width: 13.4em;
+    height: 13.4em;
+    border-radius: 50%;
+    background: #141519;
+    display: grid;
+    place-content: center;
+  }
+  .od-ring b {
+    font-size: 3.2em;
+    letter-spacing: -0.04em;
+  }
+  .od-ring i {
+    font-style: normal;
+    opacity: 0.6;
+  }
+  .od-legend {
+    display: flex;
+    gap: 1.2em;
+    font-size: 0.9em;
+  }
+  .od-legend span {
+    display: flex;
+    align-items: center;
+    gap: 0.4em;
+  }
+  .od-legend i {
+    width: 0.8em;
+    height: 0.8em;
+    border-radius: 50%;
+  }
+  .od-btn {
+    --btn-bg: #f2f2f5;
+    --btn-fg: #141519;
+    width: 100%;
+    margin-top: 1em;
+  }
+  .od-task {
+    display: flex;
+    gap: 0.9em;
+    align-items: center;
+    padding: 0.9em;
+    border-radius: 1.2em;
+    background: #1d1e24;
+  }
+  .od-task i {
+    width: 2.4em;
+    height: 2.4em;
+    border-radius: 0.8em;
+    background: linear-gradient(135deg, #7b83eb, #c21a9c);
+    flex: none;
+  }
+  .od-task span {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.9em;
+    opacity: 0.75;
+  }
+  .od-task b {
+    opacity: 1;
+    font-size: 1.1em;
+  }
+</style>

@@ -1,6 +1,7 @@
 ---
 import '../styles/base.css';
 import Seo from '../components/Seo.astro';
+import interLatin from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
 
 interface Props {
   title: string;
@@ -24,19 +25,8 @@ const { title, description, index = true, structuredData = false } = Astro.props
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta name="generator" content={Astro.generator} />
     <Seo title={title} description={description} index={index} structuredData={structuredData} />
-    <script is:inline>
-      // Runs before paint to avoid a flash of the wrong theme.
-      (function () {
-        try {
-          const stored = window.localStorage.getItem('duklu-theme');
-          if (stored === 'light' || stored === 'dark') {
-            document.documentElement.setAttribute('data-theme', stored);
-          }
-        } catch {
-          // localStorage unavailable — prefers-color-scheme in CSS still applies
-        }
-      })();
-    </script>
+    <meta name="theme-color" content="#050810" />
+    <link rel="preload" href={interLatin} as="font" type="font/woff2" crossorigin />
   </head>
   <body>
     <a href="#main" class="skip-link">

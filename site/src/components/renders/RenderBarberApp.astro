@@ -1,0 +1,313 @@
+---
+import Tile from './Tile.astro';
+import Phone from '../devices/Phone.astro';
+import Figure from './Figure.astro';
+interface Props {
+  label?: string;
+  ratio?: string;
+}
+const { label, ratio = '4 / 3' } = Astro.props;
+const ink = '#141414';
+const cream = '#fbf8f3';
+const orange = '#f26b3a';
+---
+
+<Tile bg="#a4a3d8" ratio={ratio} label={label}>
+  <Phone class="bb-p1" bg={cream} fg={ink}>
+    <div class="ui-pad ui-col bb-stack">
+      <div class="ui-between">
+        <span class="ui-h bb-logo">Northgate</span>
+        <span class="ui-row">
+          <span class="bb-ic"></span>
+          <span class="bb-ic"></span>
+        </span>
+      </div>
+      <div class="ui-row bb-chips">
+        <span class="ui-chip" style={`background:${orange};color:#141414`}>
+          All
+        </span>
+        <span class="ui-chip">Fades</span>
+        <span class="ui-chip">Beards</span>
+        <span class="ui-chip">Kids</span>
+      </div>
+      <div class="ui-between">
+        <span class="ui-h bb-h2">Barbers</span>
+        <span class="ui-small ui-muted">See all</span>
+      </div>
+      <div class="bb-cards">
+        <div class="bb-card" style="background:#f4a15d">
+          <Figure class="bb-fig" skin="#8d5a3b" hair="#15100c" top="#1d2a6b" />
+        </div>
+        <div class="bb-card" style="background:#8fd16a">
+          <Figure class="bb-fig" skin="#e0b08c" hair="#3a2417" top="#111" variant="long" />
+        </div>
+      </div>
+      <div class="ui-between ui-small">
+        <span>Jay · Fades</span>
+        <span>Amir · Beards</span>
+      </div>
+      <div class="ui-between">
+        <span class="ui-h bb-h2">Your next visit</span>
+        <span class="ui-small ui-muted">View</span>
+      </div>
+      <div class="bb-next">
+        <span class="ui-chip bb-next-chip">Skin fade</span>
+        <span class="ui-h bb-next-t">Sat, 9:30 am</span>
+        <span class="ui-small">with Jay · 30 min</span>
+        <span class="bb-bar">
+          <i></i>
+        </span>
+      </div>
+    </div>
+    <div class="ui-nav">
+      <i class="on"></i>
+      <i></i>
+      <i></i>
+      <i></i>
+    </div>
+  </Phone>
+
+  <Phone class="bb-p2" bg={cream} fg={ink}>
+    <div class="ui-pad ui-col bb-stack">
+      <div class="ui-between">
+        <span class="bb-ic bb-back">‹</span>
+        <span class="ui-small">Book a chair</span>
+        <span class="bb-ic"></span>
+      </div>
+      <div class="bb-hero" style={`background:${orange}`}>
+        <svg viewBox="0 0 100 60" class="bb-burst">
+          <path
+            d="M50 2l6 18 18-8-8 18 18 6-18 6 8 18-18-8-6 18-6-18-18 8 8-18-18-6 18-6-8-18 18 8z"
+            fill="#ffd64a"
+          />
+        </svg>
+        <Figure class="bb-hero-fig" skin="#c98e62" hair="#1a1210" top="#f7f3ea" variant="short" />
+      </div>
+      <div class="ui-between">
+        <span class="ui-h bb-h1">Skin fade</span>
+        <span class="ui-h bb-h1">£18</span>
+      </div>
+      <span class="ui-small ui-muted">30 min · Jay · Northgate</span>
+      <div class="bb-days">
+        {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((d, i) => (
+          <span class:list={['bb-day', { on: i === 5 }]}>
+            <b>{d}</b>
+            {12 + i}
+          </span>
+        ))}
+      </div>
+      <div class="bb-slots">
+        {['9:30', '10:15', '11:00', '12:30', '14:00', '16:30'].map((t, i) => (
+          <span class:list={['bb-slot', { on: i === 0 }]}>{t}</span>
+        ))}
+      </div>
+      <span class="ui-btn" style={`--btn-bg:${ink}`}>
+        Pay deposit and book
+      </span>
+    </div>
+  </Phone>
+
+  <Phone class="bb-p3" bg={cream} fg={ink}>
+    <div class="bb-conf">
+      <svg viewBox="0 0 100 130" class="bb-blob" preserveAspectRatio="none">
+        <path
+          d="M50 4c10 0 14 8 22 8s16-4 20 6-4 16-2 26 10 16 4 26-12 6-14 16 8 16 2 24-16 2-22 8-6 12-10 12-6-10-12-12-16 2-20-6 6-14 2-24-14-8-12-18 12-10 10-20-10-18-2-24 14 2 20-6 8-10 14-10z"
+          fill="#ffc83d"
+        />
+      </svg>
+      <Figure class="bb-conf-fig" skin="#a8714b" hair="#120c09" top="#2c63d9" variant="bun" />
+    </div>
+    <div class="ui-pad ui-col bb-conf-text">
+      <span class="ui-h bb-h1">
+        You're booked.
+        <br />
+        See you Saturday.
+      </span>
+      <span class="ui-small ui-muted">Reminder the day before, by text.</span>
+      <span class="ui-btn bb-outline">Add to calendar</span>
+    </div>
+  </Phone>
+</Tile>
+
+<style is:global>
+  .bb-p1 {
+    left: 3%;
+    top: 10%;
+    width: 30%;
+  }
+  .bb-p2 {
+    left: 35%;
+    top: 18%;
+    width: 30%;
+  }
+  .bb-p3 {
+    left: 67%;
+    top: 7%;
+    width: 30%;
+  }
+  .bb-stack {
+    gap: 1.1em;
+    padding-top: 0.6em;
+  }
+  .bb-logo {
+    font-size: 1.9em;
+  }
+  .bb-ic {
+    width: 2.6em;
+    height: 2.6em;
+    border-radius: 50%;
+    border: 0.12em solid rgba(0, 0, 0, 0.15);
+    display: grid;
+    place-items: center;
+    font-size: 1em;
+  }
+  .bb-back {
+    font-size: 1.4em;
+    width: 1.9em;
+    height: 1.9em;
+  }
+  .bb-chips {
+    gap: 0.4em;
+  }
+  .bb-h2 {
+    font-size: 1.35em;
+  }
+  .bb-h1 {
+    font-size: 2.1em;
+  }
+  .bb-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8em;
+  }
+  .bb-card {
+    height: 12.5em;
+    border-radius: 1.4em;
+    overflow: hidden;
+    position: relative;
+  }
+  .bb-fig {
+    position: absolute;
+    inset: 1em 0 0;
+    width: 100%;
+    height: calc(100% - 1em);
+  }
+  .bb-next {
+    background: #a4a3d8;
+    border-radius: 1.6em;
+    padding: 1.2em;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35em;
+    color: #141414;
+  }
+  .bb-next-chip {
+    align-self: flex-start;
+    background: #fff;
+  }
+  .bb-next-t {
+    font-size: 1.8em;
+    margin-top: 0.3em;
+  }
+  .bb-bar {
+    height: 0.5em;
+    border-radius: 1em;
+    background: rgba(255, 255, 255, 0.55);
+    margin-top: 0.6em;
+  }
+  .bb-bar i {
+    display: block;
+    width: 62%;
+    height: 100%;
+    border-radius: 1em;
+    background: #141414;
+  }
+  .bb-hero {
+    height: 17em;
+    border-radius: 1.8em;
+    position: relative;
+    overflow: hidden;
+  }
+  .bb-burst {
+    position: absolute;
+    width: 90%;
+    left: 5%;
+    top: 8%;
+  }
+  .bb-hero-fig {
+    position: absolute;
+    inset: 1.5em 0 0;
+    width: 100%;
+    height: calc(100% - 1.5em);
+  }
+  .bb-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.3em;
+  }
+  .bb-day {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2em;
+    padding: 0.6em 0;
+    border-radius: 1.2em;
+    font-weight: 700;
+    font-size: 1.05em;
+  }
+  .bb-day b {
+    font-size: 0.7em;
+    font-weight: 500;
+    opacity: 0.6;
+  }
+  .bb-day.on {
+    background: #141414;
+    color: #fff;
+  }
+  .bb-day.on b {
+    opacity: 0.8;
+  }
+  .bb-slots {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5em;
+  }
+  .bb-slot {
+    text-align: center;
+    padding: 0.8em 0;
+    border-radius: 1em;
+    border: 0.1em solid rgba(0, 0, 0, 0.14);
+    font-weight: 600;
+  }
+  .bb-slot.on {
+    background: #f26b3a;
+    border-color: #f26b3a;
+    color: #141414;
+  }
+  .bb-conf {
+    position: relative;
+    height: 34em;
+    margin: 0 1.4em;
+  }
+  .bb-blob {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .bb-conf-fig {
+    position: absolute;
+    inset: 4em 0 0;
+    width: 100%;
+    height: calc(100% - 4em);
+  }
+  .bb-conf-text {
+    padding-top: 1.6em;
+    gap: 0.9em;
+  }
+  .bb-outline {
+    background: transparent;
+    color: #141414;
+    border: 0.14em solid #141414;
+  }
+</style>

@@ -16,7 +16,7 @@ export function initChatDemo(): void {
 
   function appendMessage(text: string, from: 'user' | 'assistant'): void {
     const message = document.createElement('p');
-    message.className = `chat-demo__message chat-demo__message--${from}`;
+    message.className = `chat__msg chat__msg--${from}`;
     message.textContent = text;
     log!.appendChild(message);
     log!.scrollTop = log!.scrollHeight;
