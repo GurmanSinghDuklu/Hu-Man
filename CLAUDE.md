@@ -136,6 +136,27 @@ Lighthouse 98/100/100/100, axe 0 violations on all 3 pages × both themes (6 com
 This is the end of the planned build phases (0–4) from `docs/08-roadmap.md`. Phase 5 (deploy,
 domain, Search Console, first real content) needs decisions from Gurman and is not started.
 
+## Redesign status (done)
+Re-skinned the site to the palette in `docs/superpowers/specs/2026-09-22-light-redesign-
+design.md`: warm off-white/terracotta/sage replacing the original chalk/klein/highlighter tokens,
+kept light-first (dark stays the toggle option, not the default — Gurman's choice after
+reviewing a two-direction comparison artifact). Services, the concept gallery captions and the
+credentials list moved from hairline-separated rows to a shared-seam rounded-card grid; pricing
+table/mobile-cards, the compare slider and the concept-renderer sector mocks were already
+token-driven so they picked up the new palette without structural changes. No copy changed — the
+one data addition is a `tag` field on each `Service` entry naming its pricing tier, sourced
+directly from docs/02's own "Includes" column.
+
+Found and fixed one real bug while migrating: `Pricing.astro`'s "Introductory" tag used a
+hardcoded `var(--color-ink)` for its text colour, which isn't redefined in dark mode — it would
+have silently shown the light-mode ink colour on the dark-mode sage background instead of
+tracking the theme. Added an explicit `--color-highlight-ink` token and fixed the reference.
+
+All contrast pairs re-verified computationally (`site/scripts/check-contrast.mjs`, kept in the
+repo for future palette changes). Lighthouse: 98/100/100/100 (performance/accessibility/best-
+practices/seo), matching the Phase 4 baseline exactly. axe: 0 violations across all 3 pages ×
+both themes (6 combinations).
+
 ## Working agreements
 - Plan first with `/plan-site`, get approval, then build one phase at a time with `/build-phase N`.
 - After each phase: build, typecheck, Lighthouse (aim for 95+ on all four scores), an axe accessibility check, a keyboard test, a reduced-motion test, and screenshots at 360, 768 and 1280px. Critique the screenshots and fix problems before reporting.
