@@ -1,241 +1,246 @@
 ---
 import { services } from '../data/content';
+import Arrow from './Arrow.astro';
+import RenderPhysioSite from './renders/RenderPhysioSite.astro';
+import RenderBarberApp from './renders/RenderBarberApp.astro';
+import RenderAssistant from './renders/RenderAssistant.astro';
+import RenderSalonSite from './renders/RenderSalonSite.astro';
+import RenderOwnerDigest from './renders/RenderOwnerDigest.astro';
+import RenderTradesDashboard from './renders/RenderTradesDashboard.astro';
 
-const panels = [
-  {
-    id: 'development',
-    title: 'Development',
-    tone: 'magenta',
-    intro: 'Fast, mobile-first sites and apps, moved over without losing what you have earned.',
-  },
-  {
-    id: 'ai',
-    title: 'AI and automation',
-    tone: 'blue',
-    intro: 'Assistants that answer from your own information, and follow-ups that run themselves.',
-  },
-  {
-    id: 'visibility',
-    title: 'Visibility and care',
-    tone: 'ember',
-    intro: 'Found on Google and in AI search, then kept fast, safe and up to date.',
-  },
-] as const;
+// One preview render per service, in the same order as `services`.
+const previews = [
+  RenderPhysioSite,
+  RenderBarberApp,
+  RenderAssistant,
+  RenderSalonSite,
+  RenderOwnerDigest,
+  RenderTradesDashboard,
+];
 ---
 
-<section class="services" id="services" aria-labelledby="services-title">
-  <h2 id="services-title" class="visually-hidden">
-    Services
-  </h2>
+<section class="services on-dark" id="services" aria-labelledby="services-title" data-services>
+  <div class="wrap">
+    <div class="services__head">
+      <p class="eyebrow" data-reveal>
+        Services
+      </p>
+      <h2 id="services-title" class="section-title" data-reveal>
+        What I <span class="hl">do</span>
+      </h2>
+    </div>
 
-  <article class="panel panel--design" id="design" aria-labelledby="design-title">
-    <div class="wrap panel__inner">
-      <h3 id="design-title" class="panel__title">
-        Design
-      </h3>
-      <div class="panel__body">
-        <div class="panel__blob panel__blob--design" aria-hidden="true"></div>
-        <p class="panel__intro">
-          High-end, mobile-first design for local businesses. You see a mock-up of your new site
-          before any build starts.
-        </p>
-        <a href="#work" class="pill-btn">
+    <div class="services__layout">
+      <ol class="services__list">
+        {services.map((service, i) => (
+          <li
+            class:list={['services__item', { 'is-active': i === 0 }]}
+            data-service={i}
+            data-reveal
+          >
+            <span class="services__num" aria-hidden="true">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <div class="services__body">
+              <h3>{service.title}</h3>
+              <p>{service.description}</p>
+            </div>
+            <span class="services__tag">{service.tag}</span>
+          </li>
+        ))}
+      </ol>
+
+      <div class="services__preview" aria-hidden="true">
+        <div class="services__frame">
+          {previews.map((Preview, i) => (
+            <div class:list={['services__slide', { 'is-active': i === 0 }]} data-slide={i}>
+              <Preview ratio="4 / 3.2" />
+            </div>
+          ))}
+        </div>
+        <p class="services__caption">Concept render · fictional business</p>
+        <a href="#work" class="btn btn--lime services__cta" tabindex="-1">
           See concept work
+          <span class="btn__icon">
+            <Arrow />
+          </span>
         </a>
       </div>
     </div>
-  </article>
-
-  {panels.map((panel) => (
-    <article
-      class={`panel panel--${panel.tone}`}
-      id={panel.id}
-      aria-labelledby={`${panel.id}-title`}
-    >
-      <div class="wrap panel__inner">
-        <h3 id={`${panel.id}-title`} class="panel__title">
-          {panel.title}
-        </h3>
-        <div class="panel__body">
-          {panel.tone === 'ember' && (
-            <div class="panel__blob panel__blob--ember" aria-hidden="true" />
-          )}
-          <p class="panel__intro">{panel.intro}</p>
-          <ul class="panel__list">
-            {services
-              .filter((s) => s.group === panel.id)
-              .map((service) => (
-                <li>
-                  <details>
-                    <summary>
-                      <span>{service.title}</span>
-                      <span class="panel__tag">{service.tag}</span>
-                      <span class="panel__plus" aria-hidden="true" />
-                    </summary>
-                    <p>{service.description}</p>
-                  </details>
-                </li>
-              ))}
-          </ul>
-        </div>
-      </div>
-    </article>
-  ))}
+  </div>
 </section>
 
+<script>
+  import '../scripts/services-preview.ts';
+</script>
+
 <style>
-  .panel {
+  .services {
     position: relative;
+    margin-inline: clamp(0.5rem, 1.5vw, 1.25rem);
+    border-radius: var(--radius-xl);
+    background:
+      radial-gradient(60% 50% at 90% 0%, rgba(182, 217, 59, 0.16), transparent 70%),
+      radial-gradient(70% 60% at 0% 100%, rgba(31, 138, 96, 0.35), transparent 70%),
+      var(--forest-900);
+    color: var(--on-dark);
+    padding-block: clamp(4rem, 9vw, 7rem);
     overflow: hidden;
-    padding-block: clamp(3.5rem, 8vw, 6.5rem);
-    background: #000;
   }
 
-  .panel--magenta {
-    background:
-      radial-gradient(80% 120% at 0% 100%, rgba(233, 90, 40, 0.55), transparent 60%),
-      linear-gradient(120deg, #5a0a3e 0%, #8e0f6a 45%, #b0137e 100%);
+  .services__head {
+    display: grid;
+    gap: var(--space-3);
+    margin-bottom: clamp(2rem, 5vw, 3.5rem);
   }
 
-  .panel--blue {
-    background:
-      radial-gradient(70% 120% at 100% 0%, rgba(77, 142, 240, 0.6), transparent 60%),
-      linear-gradient(120deg, #06102a 0%, #0f2f78 55%, #1c6cdc 100%);
-  }
-
-  .panel--ember {
-    background: #000;
-  }
-
-  .panel__inner {
+  .services__layout {
     display: grid;
     gap: var(--space-5);
+    align-items: start;
   }
 
-  .panel__title {
-    font-size: clamp(2.75rem, 6.5vw, 5rem);
-    font-weight: 500;
-    letter-spacing: -0.05em;
-  }
-
-  .panel__body {
-    display: grid;
-    gap: var(--space-4);
-    justify-items: start;
-    max-width: 36rem;
-  }
-
-  .panel__intro {
-    font-size: clamp(1.1rem, 1.6vw, 1.3rem);
-    line-height: 1.5;
-  }
-
-  .panel__blob {
-    width: clamp(120px, 16vw, 190px);
-    aspect-ratio: 1;
-    border-radius: 22%;
-    filter: blur(14px);
-    margin-bottom: var(--space-3);
-  }
-
-  .panel__blob--design {
-    background: radial-gradient(
-      circle at 50% 55%,
-      #1ea0ff 0%,
-      #1c6cdc 30%,
-      #c21a9c 72%,
-      #7a0a62 100%
-    );
-  }
-
-  .panel__blob--ember {
-    background: radial-gradient(
-      circle at 50% 55%,
-      #8a2bff 0%,
-      #b23cd6 25%,
-      #ff6a1a 70%,
-      #ff9a3c 100%
-    );
-  }
-
-  .panel__list {
+  .services__list {
     list-style: none;
-    width: 100%;
     margin: 0;
     padding: 0;
+    border-top: 1px solid var(--on-dark-line);
   }
 
-  .panel__list li {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.35);
-  }
-
-  .panel__list summary {
-    list-style: none;
+  .services__item {
     display: grid;
-    grid-template-columns: 1fr auto auto;
-    align-items: center;
-    gap: var(--space-3);
-    padding-block: 1.3rem;
-    cursor: pointer;
-    text-transform: uppercase;
-    font-size: clamp(0.95rem, 1.3vw, 1.05rem);
-    letter-spacing: 0.01em;
+    grid-template-columns: 2.5rem 1fr;
+    gap: 0.5rem 1rem;
+    padding-block: clamp(1.25rem, 2.4vw, 1.75rem);
+    border-bottom: 1px solid var(--on-dark-line);
+    transition:
+      padding 0.4s var(--ease-out),
+      background-color 0.3s;
+    cursor: default;
   }
 
-  .panel__list summary::-webkit-details-marker {
+  .services__num {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--on-dark-muted);
+    padding-top: 0.55em;
+  }
+
+  .services__body h3 {
+    font-size: clamp(1.4rem, 2.8vw, 2.25rem);
+    text-transform: uppercase;
+    letter-spacing: -0.035em;
+    font-weight: 800;
+    color: rgba(255, 255, 255, 0.55);
+    transition: color 0.3s;
+  }
+
+  .services__body p {
+    margin-top: 0.6rem;
+    max-width: 34rem;
+    color: var(--on-dark-muted);
+    font-size: 0.95rem;
+  }
+
+  .services__tag {
+    grid-column: 2;
+    justify-self: start;
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 0.3em 0.9em;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--on-dark-line);
+    color: var(--on-dark-muted);
+  }
+
+  .services__item.is-active .services__body h3,
+  .services__item:hover .services__body h3 {
+    color: #fff;
+  }
+
+  .services__item.is-active .services__num {
+    color: var(--lime);
+  }
+
+  .services__item.is-active .services__tag {
+    background: var(--lime);
+    color: var(--ink);
+    border-color: var(--lime);
+  }
+
+  .services__preview {
     display: none;
   }
 
-  .panel__tag {
-    font-size: 0.72rem;
-    text-transform: none;
-    padding: 0.25em 0.8em;
-    border-radius: var(--radius-pill);
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    white-space: nowrap;
-  }
-
-  .panel__plus {
-    position: relative;
-    width: 18px;
-    height: 18px;
-  }
-
-  .panel__plus::before,
-  .panel__plus::after {
-    content: '';
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 16px;
-    height: 1.5px;
-    background: currentColor;
-    transform: translate(-50%, -50%);
-    transition: transform 0.3s var(--ease-out);
-  }
-
-  .panel__plus::after {
-    transform: translate(-50%, -50%) rotate(90deg);
-  }
-
-  details[open] .panel__plus::after {
-    transform: translate(-50%, -50%) rotate(0deg);
-  }
-
-  .panel__list details p {
-    padding-bottom: 1.3rem;
-    max-width: 32rem;
-    color: rgba(255, 255, 255, 0.9);
-  }
-
-  @media (min-width: 60rem) {
-    .panel__inner {
-      grid-template-columns: 1fr 1fr;
-      align-items: start;
+  @media (min-width: 62rem) {
+    .services__layout {
+      grid-template-columns: 1.1fr 1fr;
+      gap: clamp(2.5rem, 5vw, 5rem);
     }
 
-    .panel__body {
-      max-width: 34rem;
+    /* Inactive descriptions are visually hidden but stay in the accessibility tree. */
+    .services__item:not(.is-active) .services__body p {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+      margin: 0;
+    }
+
+    .services__item.is-active .services__body p {
+      animation: fadeUp 0.45s var(--ease-out);
+    }
+
+    .services__preview {
+      display: grid;
+      gap: var(--space-3);
+      position: sticky;
+      top: 110px;
+    }
+
+    .services__frame {
+      position: relative;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.7);
+      aspect-ratio: 4 / 3.2;
+    }
+
+    .services__slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transform: scale(1.04);
+      transition:
+        opacity 0.6s var(--ease-out),
+        transform 0.9s var(--ease-out);
+    }
+
+    .services__slide.is-active {
+      opacity: 1;
+      transform: none;
+    }
+
+    .services__slide :global(.tile) {
+      border-radius: 0;
+    }
+
+    .services__caption {
+      font-size: 0.8rem;
+      color: var(--on-dark-muted);
+    }
+
+    .services__cta {
+      justify-self: start;
+    }
+  }
+
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
     }
   }
 </style>

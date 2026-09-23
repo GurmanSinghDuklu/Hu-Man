@@ -1,5 +1,6 @@
 ---
 import { site } from '../config/site';
+import Arrow from './Arrow.astro';
 
 const auditMailto = (() => {
   const subject = encodeURIComponent('Free presence audit');
@@ -8,65 +9,129 @@ const auditMailto = (() => {
 })();
 
 const auditTel = `tel:${site.contact.phone.replace(/\s+/g, '')}`;
+const ticker = ['Free presence audit', 'Short video', 'Written list of fixes', 'No obligation'];
 ---
 
-<section class="audit" id="audit" aria-labelledby="audit-title">
-  <div class="wrap">
+<section class="audit on-dark" id="audit" aria-labelledby="audit-title">
+  <div class="audit__ticker" aria-hidden="true">
+    <div class="audit__ticker-row">
+      {[...ticker, ...ticker, ...ticker].map((t) => (
+        <span>
+          {t}
+          <i />
+        </span>
+      ))}
+    </div>
+  </div>
+
+  <div class="wrap audit__inner">
     <div class="audit__top">
-      <h2 id="audit-title" class="audit__title">
-        <span class="t-thin">Get your</span> <span class="t-bold">free</span>
-        <span class="t-thin">presence</span> <span class="t-bold">audit.</span>
-      </h2>
-      <svg class="audit__badge" viewBox="0 0 100 100" aria-hidden="true">
+      <div>
+        <p class="eyebrow" data-reveal>
+          Start here
+        </p>
+        <h2 id="audit-title" class="audit__title" data-reveal>
+          Get your free <span class="hl">presence audit</span>
+        </h2>
+      </div>
+      <svg class="audit__badge" viewBox="0 0 120 120" aria-hidden="true">
+        <defs>
+          <path id="audit-circle" d="M60 60m-44 0a44 44 0 1 1 88 0a44 44 0 1 1-88 0"></path>
+        </defs>
+        <circle cx="60" cy="60" r="58" fill="#d4f25a"></circle>
+        <g class="audit__badge-text">
+          <text font-size="11" font-weight="700" fill="#0b100d">
+            <textPath href="#audit-circle" textLength="272" lengthAdjust="spacing">
+              FREE AUDIT · NO OBLIGATION ·
+            </textPath>
+          </text>
+        </g>
         <path
-          d="M50 3c5 0 7 5 12 6s9-3 13 0 2 9 5 13 9 4 10 9-4 8-4 13 5 9 3 13-8 4-11 8-2 10-7 12-9-2-13 0-7 9-12 9-7-6-12-6-9 4-13 1-2-9-5-13-9-4-10-9 4-8 4-13-5-9-3-13 8-4 11-8 2-10 7-12 9 2 13 0 7-9 12-9z"
-          fill="#fff"
-          class="audit__scallop"
-        ></path>
-        <path
-          d="M36 64 64 36M42 36h22v22"
+          d="M48 72 72 48M54 48h18v18"
           fill="none"
-          stroke="#9c0d7c"
-          stroke-width="5"
+          stroke="#0b100d"
+          stroke-width="4"
           stroke-linecap="round"
           stroke-linejoin="round"
         ></path>
       </svg>
     </div>
 
-    <p class="audit__text">
+    <p class="audit__text" data-reveal>
       Send me your website address and I'll review it on a phone, check your speed and your Google
       Business Profile, and see whether Google and ChatGPT recommend you for your main search. You
       get a short video and a written list of fixes. It's free and there's no obligation.
     </p>
 
-    <div class="audit__actions">
-      <a class="pill-btn pill-btn--solid" href={auditMailto}>
+    <div class="audit__actions" data-reveal>
+      <a class="btn btn--lime" href={auditMailto}>
         Email me your website
+        <span class="btn__icon">
+          <Arrow />
+        </span>
       </a>
-      <a class="pill-btn" href={auditTel}>
+      <a class="btn btn--ghost" href={auditTel}>
         Call {site.contact.phone}
       </a>
-      <a class="pill-btn" href={site.contact.whatsapp} rel="noopener">
+      <a class="btn btn--ghost" href={site.contact.whatsapp} rel="noopener">
         Message on WhatsApp
       </a>
-    </div>
-
-    <div class="audit__shapes" aria-hidden="true">
-      <span class="s-circle"></span>
-      <span class="s-pill"></span>
-      <span class="s-eye">
-        <i></i>
-      </span>
-      <span class="s-circle"></span>
-      <span class="s-pill"></span>
     </div>
   </div>
 </section>
 
 <style>
   .audit {
-    padding-block: clamp(4rem, 10vw, 8rem) clamp(3rem, 6vw, 5rem);
+    position: relative;
+    margin: clamp(2rem, 5vw, 4rem) clamp(0.5rem, 1.5vw, 1.25rem) 0;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    color: var(--on-dark);
+    background:
+      repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 88px),
+      radial-gradient(70% 90% at 80% 100%, rgba(182, 217, 59, 0.3), transparent 70%),
+      linear-gradient(160deg, #051a12 0%, #0b3a2a 55%, #17664b 100%);
+    padding-bottom: clamp(3.5rem, 8vw, 6rem);
+  }
+
+  .audit__ticker {
+    display: flex;
+    overflow: hidden;
+    padding-block: 1rem;
+    background: var(--lime);
+    color: var(--ink);
+    margin-bottom: clamp(3rem, 7vw, 5rem);
+  }
+
+  .audit__ticker-row {
+    display: flex;
+    flex: none;
+    animation: ticker 30s linear infinite;
+  }
+
+  .audit__ticker span {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding-right: 1.5rem;
+    white-space: nowrap;
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+  }
+
+  .audit__ticker i {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--ink);
+  }
+
+  @keyframes ticker {
+    to {
+      transform: translateX(-33.333%);
+    }
   }
 
   .audit__top {
@@ -76,25 +141,27 @@ const auditTel = `tel:${site.contact.phone.replace(/\s+/g, '')}`;
     gap: var(--space-4);
   }
 
-  .audit__title {
-    font-size: clamp(3rem, 9vw, 8rem);
-    line-height: 0.98;
-    max-width: 11em;
+  .audit__top > div {
+    display: grid;
+    gap: var(--space-3);
   }
 
-  .audit__title .t-thin {
-    font-weight: 200;
+  .audit__title {
+    font-size: clamp(2.6rem, 7.5vw, 6.5rem);
+    line-height: 0.92;
+    letter-spacing: -0.05em;
+    text-transform: uppercase;
+    max-width: 10em;
   }
 
   .audit__badge {
     flex: none;
-    width: clamp(80px, 16vw, 220px);
+    width: clamp(88px, 13vw, 170px);
   }
 
-  .audit__scallop {
-    transform-box: fill-box;
-    transform-origin: center;
-    animation: spin 24s linear infinite;
+  .audit__badge-text {
+    transform-origin: 60px 60px;
+    animation: spin 18s linear infinite;
   }
 
   @keyframes spin {
@@ -106,8 +173,8 @@ const auditTel = `tel:${site.contact.phone.replace(/\s+/g, '')}`;
   .audit__text {
     margin-top: var(--space-5);
     max-width: 40rem;
-    font-size: clamp(1.05rem, 1.5vw, 1.2rem);
-    color: rgba(255, 255, 255, 0.88);
+    font-size: clamp(1.02rem, 1.4vw, 1.15rem);
+    color: #d3e2da;
   }
 
   .audit__actions {
@@ -117,45 +184,9 @@ const auditTel = `tel:${site.contact.phone.replace(/\s+/g, '')}`;
     margin-top: var(--space-5);
   }
 
-  .audit__shapes {
-    display: grid;
-    grid-template-columns: 1fr 2.8fr 2.7fr 1fr 2.6fr;
-    gap: clamp(0.4rem, 1vw, 0.9rem);
-    margin-top: clamp(3rem, 8vw, 6rem);
-    height: clamp(56px, 10vw, 140px);
-  }
-
-  .audit__shapes > span {
-    border-radius: 999px;
-  }
-
-  .s-circle {
-    background: #fff;
-    aspect-ratio: 1;
-    height: 100%;
-    justify-self: center;
-  }
-
-  .s-pill {
-    background: var(--magenta);
-  }
-
-  .s-eye {
-    background: #fff;
-    border-radius: 50% !important;
-    display: grid;
-    place-items: center;
-  }
-
-  .s-eye i {
-    height: 80%;
-    aspect-ratio: 1;
-    border-radius: 50%;
-    background: radial-gradient(circle, #000 0 45%, var(--magenta) 46% 100%);
-  }
-
   @media (prefers-reduced-motion: reduce) {
-    .audit__scallop {
+    .audit__ticker-row,
+    .audit__badge-text {
       animation: none;
     }
   }

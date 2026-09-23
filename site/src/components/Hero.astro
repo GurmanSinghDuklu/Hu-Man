@@ -1,69 +1,68 @@
 ---
-import { site } from '../config/site';
+import Arrow from './Arrow.astro';
 import RenderBarberApp from './renders/RenderBarberApp.astro';
 import RenderSalonSite from './renders/RenderSalonSite.astro';
-import RenderTradesDashboard from './renders/RenderTradesDashboard.astro';
 import RenderCeramicsShop from './renders/RenderCeramicsShop.astro';
-
-const disciplines = [
-  { label: 'Design', href: '#design', tone: 'a' },
-  { label: 'Development', href: '#development', tone: 'b' },
-  { label: 'AI and automation', href: '#ai', tone: 'c' },
-  { label: 'Visibility', href: '#visibility', tone: 'd' },
-];
 ---
 
-<section class="hero" aria-labelledby="hero-title">
-  <div class="hero__glow" aria-hidden="true"></div>
+<section class="hero on-dark" aria-labelledby="hero-title">
+  <div class="hero__bg" aria-hidden="true">
+    <span class="hero__orb hero__orb--1"></span>
+    <span class="hero__orb hero__orb--2"></span>
+  </div>
+
   <div class="wrap hero__inner">
+    <p class="hero__status">
+      <span class="hero__pulse" aria-hidden="true"></span>
+      Taking on new projects across West Yorkshire
+    </p>
+
     <h1 id="hero-title" class="hero__title">
-      <span class="t-bold t-silver">{site.wordmark}</span>
-      <span class="t-thin t-silver">{site.descriptor}</span>
+      <span class="hero__line">Design. Build.</span>
+      <span class="hero__line hero__line--accent">Grow.</span>
     </h1>
 
-    <div class="hero__row">
-      <ul class="hero__pills" aria-label="Disciplines">
-        {disciplines.map((d) => (
-          <li>
-            <a href={d.href} class={`hero__pill hero__pill--${d.tone}`}>
-              {d.label}
-            </a>
-          </li>
-        ))}
-      </ul>
-      <a href="#services" class="pill-btn hero__all">
-        <svg
-          viewBox="0 0 24 24"
-          aria-hidden="true"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.6"
-        >
-          <path d="M7 17 17 7M9 7h8v8"></path>
-        </svg>
-        All services
-      </a>
-    </div>
+    <p class="hero__lede">
+      Websites, booking apps and AI assistants that turn local searches into bookings. Designed,
+      built and looked after in Bradford.
+    </p>
 
-    <div class="hero__intro">
-      <p class="hero__lede">
-        Websites, apps and AI assistants that turn local searches into bookings. Designed, built and
-        looked after in Bradford.
-      </p>
-      <a href="#audit" class="pill-btn">
+    <div class="hero__actions">
+      <a href="#work" class="btn btn--lime">
+        See concept work
+        <span class="btn__icon">
+          <Arrow />
+        </span>
+      </a>
+      <a href="#audit" class="btn btn--ghost">
         Get your free presence audit
       </a>
     </div>
+  </div>
 
-    <p class="hero__concept">
-      <span aria-hidden="true"></span>Concept designs for fictional businesses
-    </p>
-    <div class="hero__grid">
-      <RenderBarberApp label="Concept · Barber booking app" ratio="16 / 11" />
-      <RenderSalonSite label="Concept · Salon website" ratio="16 / 11" />
-      <RenderTradesDashboard label="Concept · Electrician quotes dashboard" ratio="16 / 11" />
-      <RenderCeramicsShop label="Concept · Ceramics shop app" ratio="16 / 11" />
+  <div class="wrap hero__stage">
+    <a href="#work" class="hero__side hero__side--left">
+      Concept work
+    </a>
+    <div class="hero__cards">
+      <div class="hero__card hero__card--1">
+        <RenderCeramicsShop ratio="1 / 1" />
+      </div>
+      <div class="hero__card hero__card--2">
+        <RenderBarberApp ratio="4 / 3.4" label="Concept · fictional businesses" />
+      </div>
+      <div class="hero__card hero__card--3">
+        <RenderSalonSite ratio="1 / 1" />
+      </div>
     </div>
+    <a href="#tools" class="hero__side hero__side--right">
+      Scroll down
+      <span class="hero__down" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 5v14M6 13l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </span>
+    </a>
   </div>
 </section>
 
@@ -72,150 +71,245 @@ const disciplines = [
     position: relative;
     isolation: isolate;
     overflow-x: clip;
-    padding-top: clamp(2rem, 6vw, 4.5rem);
-    padding-bottom: var(--space-6);
+    margin-top: -76px;
+    padding-top: calc(76px + clamp(2.5rem, 7vw, 5.5rem));
+    color: var(--on-dark);
   }
 
-  .hero__glow {
+  .hero__bg {
     position: absolute;
-    left: 50%;
-    top: -140px;
-    width: min(1400px, 150vw);
-    height: 1250px;
-    transform: translateX(-50%);
-    background:
-      radial-gradient(
-        38% 34% at 50% 44%,
-        rgba(194, 26, 156, 0.95),
-        rgba(156, 13, 124, 0.7) 45%,
-        transparent 100%
-      ),
-      radial-gradient(55% 45% at 50% 42%, rgba(120, 8, 96, 0.55), transparent 100%);
-    filter: blur(20px);
-    pointer-events: none;
+    inset: 0 0 0 0;
     z-index: -1;
+    background:
+      repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 88px),
+      linear-gradient(180deg, #051a12 0%, #0b3a2a 38%, #17664b 64%, #8fbfa9 82%, var(--paper-2) 96%);
+    overflow: hidden;
+  }
+
+  .hero__orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(70px);
+    opacity: 0.55;
+    animation: orb 18s ease-in-out infinite alternate;
+  }
+
+  .hero__orb--1 {
+    width: 46vw;
+    height: 46vw;
+    left: -12vw;
+    top: 4%;
+    background: #1f8a60;
+  }
+
+  .hero__orb--2 {
+    width: 34vw;
+    height: 34vw;
+    right: -8vw;
+    top: 18%;
+    background: #b6d93b;
+    opacity: 0.22;
+    animation-duration: 22s;
+    animation-direction: alternate-reverse;
+  }
+
+  @keyframes orb {
+    to {
+      transform: translate(8vw, 6vh) scale(1.12);
+    }
   }
 
   .hero__inner {
+    display: grid;
+    justify-items: center;
+    text-align: center;
+    gap: clamp(1.25rem, 2.5vw, 1.75rem);
+  }
+
+  .hero__status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6em;
+    padding: 0.45em 1.1em;
+    border-radius: var(--radius-pill);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--on-dark-line);
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+
+  .hero__pulse {
     position: relative;
+    width: 0.55em;
+    height: 0.55em;
+    border-radius: 50%;
+    background: var(--lime);
+  }
+
+  .hero__pulse::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: var(--lime);
+    animation: pulse 2s ease-out infinite;
+  }
+
+  @keyframes pulse {
+    to {
+      transform: scale(3.2);
+      opacity: 0;
+    }
   }
 
   .hero__title {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    column-gap: 0.12em;
-    font-size: clamp(3.4rem, 11.4vw, 10.75rem);
-    line-height: 0.9;
-    margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
-  }
-
-  .hero__title .t-thin {
-    padding-right: 0.08em;
-  }
-
-  .hero__row {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    gap: var(--space-3);
-    padding-bottom: clamp(1.5rem, 3vw, 2.25rem);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.7);
-  }
-
-  .hero__pills {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    margin: 0;
-    padding: 0;
-  }
-
-  .hero__pill {
-    display: inline-flex;
-    align-items: center;
-    min-height: 48px;
-    padding: 0.55em 1.9em;
-    border-radius: var(--radius-pill);
-    color: #fff;
-    text-decoration: none;
-    font-size: clamp(0.95rem, 1.4vw, 1.15rem);
-    font-weight: 500;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    transition:
-      transform 0.25s var(--ease-out),
-      background-color 0.25s;
-  }
-
-  .hero__pill:hover {
-    transform: translateY(-2px);
-  }
-
-  .hero__pill--a {
-    background: rgba(98, 98, 108, 0.85);
-  }
-
-  .hero__pill--b {
-    background: rgba(140, 66, 118, 0.85);
-  }
-
-  .hero__pill--c {
-    background: rgba(164, 58, 140, 0.9);
-  }
-
-  .hero__pill--d {
-    background: rgba(118, 44, 160, 0.9);
-  }
-
-  .hero__all {
-    font-size: clamp(0.95rem, 1.4vw, 1.15rem);
-  }
-
-  .hero__intro {
     display: grid;
-    gap: var(--space-4);
-    justify-items: start;
-    padding-block: clamp(2rem, 5vw, 3.5rem) clamp(2.5rem, 6vw, 4.5rem);
+    font-size: clamp(3rem, 10.5vw, 9.5rem);
+    line-height: 0.9;
+    letter-spacing: -0.055em;
+    text-transform: uppercase;
+  }
+
+  .hero__line {
+    display: block;
+    animation: rise 1s var(--ease-out) both;
+  }
+
+  .hero__line--accent {
+    color: var(--lime);
+    animation-delay: 0.12s;
+  }
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(0.35em);
+    }
   }
 
   .hero__lede {
-    font-size: clamp(1.25rem, 2.2vw, 1.75rem);
-    line-height: 1.45;
-    letter-spacing: -0.015em;
-    max-width: 26em;
+    max-width: 36rem;
+    font-size: clamp(1rem, 1.5vw, 1.15rem);
+    color: #d3e2da;
   }
 
-  .hero__concept {
+  .hero__actions {
     display: flex;
-    align-items: center;
-    gap: 0.6em;
-    font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.8);
-    margin-bottom: var(--space-3);
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
   }
 
-  .hero__concept span {
-    width: 0.5em;
-    height: 0.5em;
-    border-radius: 50%;
-    background: #ff6fd8;
-  }
-
-  .hero__grid {
+  .hero__stage {
+    position: relative;
     display: grid;
-    gap: clamp(0.75rem, 2vw, 1.75rem);
+    grid-template-columns: 1fr;
+    align-items: end;
+    margin-top: clamp(3rem, 7vw, 5rem);
+    padding-bottom: clamp(3rem, 6vw, 4.5rem);
   }
 
-  @media (min-width: 48rem) {
-    .hero__grid {
-      grid-template-columns: 1fr 1fr;
+  .hero__cards {
+    display: grid;
+    grid-template-columns: 0.8fr 1.5fr 0.8fr;
+    align-items: end;
+    gap: clamp(0.5rem, 1.6vw, 1.25rem);
+  }
+
+  .hero__card {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    animation: float 7s ease-in-out infinite;
+  }
+
+  .hero__card :global(.tile) {
+    border-radius: var(--radius-md);
+  }
+
+  .hero__card--1 {
+    transform: rotate(-4deg);
+    animation-delay: -2s;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero__card--3 {
+    transform: rotate(4deg);
+    animation-delay: -4s;
+    margin-bottom: 2.5rem;
+  }
+
+  @keyframes float {
+    0%,
+    100% {
+      translate: 0 0;
+    }
+    50% {
+      translate: 0 -14px;
+    }
+  }
+
+  .hero__side {
+    display: none;
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .hero__side:hover {
+    color: var(--forest-600);
+  }
+
+  .hero__down {
+    display: inline-grid;
+    place-items: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    margin-left: 0.6rem;
+    border-radius: 50%;
+    background: var(--ink);
+    color: #fff;
+    vertical-align: middle;
+    animation: nudge 2.4s ease-in-out infinite;
+  }
+
+  .hero__down svg {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  @keyframes nudge {
+    50% {
+      transform: translateY(4px);
+    }
+  }
+
+  @media (min-width: 60rem) {
+    .hero__stage {
+      grid-template-columns: 9rem 1fr 9rem;
     }
 
-    .hero__intro {
-      padding-left: 30%;
+    .hero__side {
+      display: block;
+      padding-bottom: 1rem;
+    }
+
+    .hero__side--right {
+      text-align: right;
+    }
+  }
+
+  @media (max-width: 40rem) {
+    .hero__cards {
+      grid-template-columns: 1fr;
+    }
+
+    .hero__card--1,
+    .hero__card--3 {
+      display: none;
     }
   }
 </style>

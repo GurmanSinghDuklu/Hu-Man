@@ -40,3 +40,24 @@ and care panels → assistant demo in a phone → how it works → pricing cards
 Lighthouse 97/100/100/100. axe 0 violations on home, privacy, 404 (renders included, no
 exclusions). No horizontal overflow at 360/390/768/1280. Keyboard order checked; reduced motion
 stops the marquee and badge.
+
+## Revision 2 (same day): own identity, Webelix structure
+Gurman liked the structure and content but did not want a like-for-like LUME copy. New reference:
+a Webelix agency concept (green hero, centred uppercase "DESIGN.DEVELOP.DELIVER.", floating work
+cards, client-logo row, centred about heading, big uppercase services list) plus codex-soft.com's
+"hook" elements. Changes:
+- **Palette**: deep emerald (`#072219` → `#17664b`) fading into warm white `#f4f5f0`, electric lime
+  `#d4f25a` as the single accent. **Font**: Plus Jakarta Sans (Inter removed).
+- **Hero**: sticky header with dot-separated uppercase nav; availability pill with pulsing dot;
+  "DESIGN. BUILD. GROW."; three floating concept cards with "Concept work" and "Scroll down" labels.
+- **Tools strip** replaces the client-logo row: tools and platforms from docs/01–02 as plain text,
+  headed "Built with tools you and your customers already use" (never presented as clients).
+- **Studio intro with count-up facts**, all from docs/02 or the site itself: £1,125 from, 2 revision
+  rounds, 30-day quotes, 0 tracking cookies. No client statistics.
+- **Services**: big uppercase list; on desktop the active row swaps a concept render in a sticky
+  preview and auto-cycles while on screen.
+- **Concept work**: filterable bento grid (All, Websites, Apps, Dashboards, AI) of nine renders.
+- **Motion**: scroll reveals (JS-gated, so content shows without JS), floating cards, marquees,
+  count-ups, scroll-driven process line, rotating audit badge, hover lifts. All off under reduced
+  motion.
+Lighthouse 99/100/100/100; axe 0 violations on all three pages with every reveal forced visible.

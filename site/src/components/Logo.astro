@@ -1,0 +1,38 @@
+---
+import { site } from '../config/site';
+---
+
+<span class="logo">
+  <span class="logo__mark" aria-hidden="true">
+    <svg viewBox="0 0 32 32">
+      <rect width="32" height="32" rx="9"></rect>
+      <path d="M19.5 7 12.5 25"></path>
+    </svg>
+  </span>
+  <span class="logo__word">{site.wordmark}</span>
+</span>
+
+<style>
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55em;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+
+  .logo__mark svg {
+    width: 1.7em;
+    height: 1.7em;
+  }
+
+  .logo__mark rect {
+    fill: var(--lime);
+  }
+
+  .logo__mark path {
+    stroke: var(--ink);
+    stroke-width: 3.2;
+    stroke-linecap: round;
+  }
+</style>

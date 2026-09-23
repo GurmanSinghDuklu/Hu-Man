@@ -1,77 +1,161 @@
 ---
 import { realProjects } from '../data/content';
+import Arrow from './Arrow.astro';
 import RenderPhysioSite from './renders/RenderPhysioSite.astro';
 import RenderRestaurant from './renders/RenderRestaurant.astro';
 import RenderOwnerDigest from './renders/RenderOwnerDigest.astro';
 import RenderFlorist from './renders/RenderFlorist.astro';
 import RenderWalks from './renders/RenderWalks.astro';
 import RenderAssistant from './renders/RenderAssistant.astro';
+import RenderBarberApp from './renders/RenderBarberApp.astro';
+import RenderSalonSite from './renders/RenderSalonSite.astro';
+import RenderTradesDashboard from './renders/RenderTradesDashboard.astro';
+
+type Category = 'websites' | 'apps' | 'dashboards' | 'ai';
+const filters: { id: 'all' | Category; label: string }[] = [
+  { id: 'all', label: 'All' },
+  { id: 'websites', label: 'Websites' },
+  { id: 'apps', label: 'Apps' },
+  { id: 'dashboards', label: 'Dashboards' },
+  { id: 'ai', label: 'AI' },
+];
+
+const work = [
+  {
+    Render: RenderPhysioSite,
+    title: 'Physio clinic website',
+    tags: 'Design · Development · Booking',
+    cat: 'websites',
+    size: 'wide',
+    ratio: '16 / 10',
+  },
+  {
+    Render: RenderRestaurant,
+    title: 'Restaurant ordering app',
+    tags: 'Design · Online ordering',
+    cat: 'apps',
+    size: 'tall',
+    ratio: '4 / 5',
+  },
+  {
+    Render: RenderBarberApp,
+    title: 'Barber booking app',
+    tags: 'Booking · Deposits',
+    cat: 'apps',
+    size: 'std',
+    ratio: '4 / 3',
+  },
+  {
+    Render: RenderOwnerDigest,
+    title: 'Owner digest dashboard',
+    tags: 'Automation · Reporting',
+    cat: 'dashboards',
+    size: 'std',
+    ratio: '4 / 3',
+  },
+  {
+    Render: RenderFlorist,
+    title: 'Florist website and shop',
+    tags: 'Design · Payments',
+    cat: 'websites',
+    size: 'std',
+    ratio: '4 / 3',
+  },
+  {
+    Render: RenderAssistant,
+    title: 'AI enquiry assistant',
+    tags: 'AI · Testing · Handover',
+    cat: 'ai',
+    size: 'wide',
+    ratio: '16 / 10',
+  },
+  {
+    Render: RenderWalks,
+    title: 'Guided walks booking app',
+    tags: 'Booking · Payments',
+    cat: 'apps',
+    size: 'std',
+    ratio: '4 / 3',
+  },
+  {
+    Render: RenderTradesDashboard,
+    title: 'Electrician quotes dashboard',
+    tags: 'Quotes · Follow-ups',
+    cat: 'dashboards',
+    size: 'std',
+    ratio: '4 / 3',
+  },
+  {
+    Render: RenderSalonSite,
+    title: 'Salon website',
+    tags: 'Design · Booking',
+    cat: 'websites',
+    size: 'std',
+    ratio: '4 / 3',
+  },
+] as const;
 ---
 
-<section class="work" id="work" aria-labelledby="work-title">
+<section class="work" id="work" aria-labelledby="work-title" data-work>
   <div class="wrap">
     <div class="work__head">
-      <h2 id="work-title" class="section-title">
-        <span class="t-thin">Concept</span> <span class="t-bold">work</span>
-      </h2>
-      <p class="work__note">
+      <div class="work__titles">
+        <p class="eyebrow" data-reveal>
+          Portfolio
+        </p>
+        <h2 id="work-title" class="section-title" data-reveal>
+          Concept <span class="hl">work</span>
+        </h2>
+      </div>
+      <p class="work__note" data-reveal>
         These are concept designs for fictional businesses. They show what I would build, not past
         client work.
       </p>
     </div>
 
-    <div class="work__feature">
-      <figure class="work__item">
-        <RenderPhysioSite ratio="4 / 3" />
-      </figure>
-      <div class="work__feature-cap">
-        <h3>Physio clinic website</h3>
-        <p>Concept · Design, development, online booking</p>
-      </div>
+    <div class="work__filters" role="group" aria-label="Filter concept work" data-reveal>
+      {filters.map((f, i) => (
+        <button
+          type="button"
+          class="work__filter"
+          data-filter={f.id}
+          aria-pressed={i === 0 ? 'true' : 'false'}
+        >
+          {f.label}
+        </button>
+      ))}
     </div>
 
-    <div class="work__row work__row--2">
-      <figure class="work__item">
-        <RenderRestaurant ratio="1 / 1.02" />
-        <figcaption>
-          <b>Restaurant ordering app</b>
-          <span>Concept · Design, online ordering</span>
-        </figcaption>
-      </figure>
-      <figure class="work__item">
-        <RenderOwnerDigest ratio="4 / 3" />
-        <figcaption>
-          <b>Owner digest dashboard</b>
-          <span>Concept · Automation, reporting</span>
-        </figcaption>
-      </figure>
-    </div>
+    <ul class="work__grid">
+      {work.map(({ Render, title, tags, cat, size, ratio }, i) => (
+        <li
+          class={`work__card work__card--${size}`}
+          data-cat={cat}
+          data-reveal
+          style={`--reveal-delay:${(i % 3) * 0.08}s`}
+        >
+          <figure>
+            <div class="work__media">
+              <Render ratio={ratio} />
+            </div>
+            <figcaption>
+              <span>
+                <b>{title}</b>
+                <span class="work__tags">Concept · {tags}</span>
+              </span>
+              <span class="work__go" aria-hidden="true">
+                <Arrow />
+              </span>
+            </figcaption>
+          </figure>
+        </li>
+      ))}
+    </ul>
+    <p class="work__empty" hidden data-work-empty>
+      No concepts in this category yet.
+    </p>
 
-    <div class="work__row work__row--3">
-      <figure class="work__item">
-        <RenderFlorist ratio="1 / 1" />
-        <figcaption>
-          <b>Florist website and shop</b>
-          <span>Concept · Design, payments</span>
-        </figcaption>
-      </figure>
-      <figure class="work__item">
-        <RenderWalks ratio="1 / 1" />
-        <figcaption>
-          <b>Guided walks booking app</b>
-          <span>Concept · Booking, payments</span>
-        </figcaption>
-      </figure>
-      <figure class="work__item">
-        <RenderAssistant ratio="1 / 1" />
-        <figcaption>
-          <b>AI enquiry assistant</b>
-          <span>Concept · AI, testing, handover</span>
-        </figcaption>
-      </figure>
-    </div>
-
-    <div class="work__real">
+    <div class="work__real" data-reveal>
       <h3>Real projects</h3>
       <ul>
         {realProjects.map((project) => (
@@ -80,15 +164,7 @@ import RenderAssistant from './renders/RenderAssistant.astro';
               {project.href ? (
                 <a href={project.href} rel="noopener">
                   {project.name}
-                  <svg
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.6"
-                  >
-                    <path d="M7 17 17 7M9 7h8v8" />
-                  </svg>
+                  <Arrow class="work__real-arrow" />
                 </a>
               ) : (
                 project.name
@@ -102,70 +178,164 @@ import RenderAssistant from './renders/RenderAssistant.astro';
   </div>
 </section>
 
+<script>
+  import '../scripts/work-filter.ts';
+</script>
+
 <style>
   .work {
-    background: var(--paper);
-    color: var(--paper-text);
     padding-block: clamp(4rem, 9vw, 7rem);
   }
 
   .work__head {
     display: grid;
+    gap: var(--space-4);
+    margin-bottom: var(--space-4);
+  }
+
+  .work__titles {
+    display: grid;
     gap: var(--space-3);
-    margin-bottom: clamp(2rem, 4vw, 3rem);
   }
 
   .work__note {
-    color: var(--paper-muted);
-    max-width: 36rem;
+    color: var(--color-text-muted);
+    max-width: 26rem;
   }
 
-  .work__feature {
-    display: grid;
-    gap: var(--space-4);
-    margin-bottom: clamp(1rem, 2vw, 1.5rem);
+  .work__filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
   }
 
-  .work__feature-cap h3 {
-    font-size: clamp(1.75rem, 3.2vw, 2.6rem);
-    font-weight: 500;
-    letter-spacing: -0.035em;
-    line-height: 1.08;
-    max-width: 10em;
+  .work__filter {
+    min-height: 44px;
+    padding: 0.5em 1.3em;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--color-line);
+    background: var(--paper);
+    color: var(--ink);
+    font: 600 0.85rem var(--font-sans);
+    cursor: pointer;
+    transition:
+      background-color 0.2s,
+      color 0.2s,
+      border-color 0.2s;
   }
 
-  .work__feature-cap p,
-  .work__item figcaption span {
-    color: var(--paper-muted);
-    font-size: 0.85rem;
-    margin-top: 0.6rem;
+  .work__filter:hover {
+    border-color: var(--ink);
   }
 
-  .work__item {
+  .work__filter[aria-pressed='true'] {
+    background: var(--ink);
+    color: #fff;
+    border-color: var(--ink);
+  }
+
+  .work__grid {
+    list-style: none;
     margin: 0;
-  }
-
-  .work__item figcaption {
-    display: grid;
-    gap: 0.2rem;
-    padding-top: 1rem;
-  }
-
-  .work__item figcaption b {
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.01em;
-    font-size: 0.95rem;
-  }
-
-  .work__item figcaption span {
-    margin-top: 0;
-  }
-
-  .work__row {
+    padding: 0;
     display: grid;
     gap: clamp(1rem, 2vw, 1.5rem);
-    margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  .work__card[hidden] {
+    display: none;
+  }
+
+  .work__card figure {
+    margin: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--radius-lg);
+    background: var(--paper);
+    padding: 0.6rem;
+    box-shadow: 0 1px 0 var(--color-line);
+    transition:
+      transform 0.45s var(--ease-out),
+      box-shadow 0.45s var(--ease-out);
+  }
+
+  .work__card:hover figure {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-card);
+  }
+
+  .work__media {
+    border-radius: calc(var(--radius-lg) - 0.6rem);
+    overflow: hidden;
+    flex: 1;
+    display: grid;
+  }
+
+  .work__media :global(.tile) {
+    border-radius: 0;
+    height: 100%;
+    transition: transform 0.8s var(--ease-out);
+  }
+
+  .work__media :global(.tile__stage) {
+    height: 100%;
+  }
+
+  .work__card:hover .work__media :global(.tile) {
+    transform: scale(1.03);
+  }
+
+  .work__card figcaption {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 0.6rem 0.5rem;
+  }
+
+  .work__card figcaption > span:first-child {
+    display: grid;
+    gap: 0.15rem;
+  }
+
+  .work__card b {
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .work__tags {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+  }
+
+  .work__go {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 50%;
+    background: var(--paper-2);
+    transition:
+      background-color 0.3s,
+      transform 0.4s var(--ease-out);
+  }
+
+  .work__go :global(svg) {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .work__card:hover .work__go {
+    background: var(--lime);
+    transform: rotate(45deg);
+  }
+
+  .work__empty {
+    color: var(--color-text-muted);
   }
 
   .work__real {
@@ -175,28 +345,28 @@ import RenderAssistant from './renders/RenderAssistant.astro';
   }
 
   .work__real h3 {
-    font-size: clamp(1.75rem, 3vw, 2.4rem);
-    font-weight: 500;
-    letter-spacing: -0.035em;
+    font-size: clamp(1.5rem, 2.6vw, 2rem);
+    text-transform: uppercase;
+    letter-spacing: -0.03em;
   }
 
   .work__real ul {
     list-style: none;
     margin: 0;
     padding: 0;
-    border-top: 1px solid var(--paper-line);
+    border-top: 1px solid var(--ink);
   }
 
   .work__real li {
     display: grid;
     gap: 0.25rem;
     padding-block: 1.25rem;
-    border-bottom: 1px solid var(--paper-line);
+    border-bottom: 1px solid var(--color-line);
   }
 
   .work__real-name {
-    font-size: 1.25rem;
-    font-weight: 600;
+    font-size: 1.2rem;
+    font-weight: 700;
     letter-spacing: -0.02em;
   }
 
@@ -209,17 +379,16 @@ import RenderAssistant from './renders/RenderAssistant.astro';
   }
 
   .work__real-name a:hover {
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
+    color: var(--forest-600);
   }
 
-  .work__real-name svg {
+  .work__real-name :global(.work__real-arrow) {
     width: 0.9em;
     height: 0.9em;
   }
 
   .work__real-desc {
-    color: var(--paper-muted);
+    color: var(--color-text-muted);
   }
 
   @media (min-width: 48rem) {
@@ -229,21 +398,15 @@ import RenderAssistant from './renders/RenderAssistant.astro';
     }
 
     .work__note {
-      max-width: 22rem;
       text-align: right;
     }
 
-    .work__feature {
-      grid-template-columns: 1.55fr 1fr;
+    .work__grid {
+      grid-template-columns: repeat(2, 1fr);
     }
 
-    .work__row--2 {
-      grid-template-columns: 1fr 1.36fr;
-      margin-left: 18%;
-    }
-
-    .work__row--3 {
-      grid-template-columns: repeat(3, 1fr);
+    .work__card--wide {
+      grid-column: span 2;
     }
 
     .work__real {
@@ -255,6 +418,16 @@ import RenderAssistant from './renders/RenderAssistant.astro';
       grid-template-columns: 1fr 1.4fr;
       gap: var(--space-4);
       align-items: baseline;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .work__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .work__card--tall {
+      grid-row: span 2;
     }
   }
 </style>

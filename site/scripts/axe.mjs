@@ -19,6 +19,12 @@ async function run() {
       const page = await context.newPage();
       for (const path of PAGES) {
         await page.goto(SITE_URL + path, { waitUntil: 'networkidle' });
+        // Scroll-reveal content starts at opacity 0 and axe skips invisible
+        // elements, so force every reveal on before scanning.
+        await page.evaluate(() =>
+          document.querySelectorAll('[data-reveal]').forEach((el) => el.classList.add('is-in')),
+        );
+        await page.waitForTimeout(1000);
 
         const results = await new AxeBuilder({ page })
           .withTags(['wcag2a', 'wcag2aa', 'wcag22aa'])

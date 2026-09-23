@@ -1,0 +1,123 @@
+---
+/**
+ * Stands in for the "trusted clients" logo row common on agency sites.
+ * These are tools and platforms I build with (docs/02 and docs/01), shown as
+ * plain text, never as client logos or endorsements.
+ */
+const tools = [
+  'Stripe',
+  'Square',
+  'SumUp',
+  'Google Business Profile',
+  'WhatsApp',
+  'React',
+  'TypeScript',
+  'Astro',
+  'Claude',
+  'Docker',
+];
+---
+
+<section class="tools" id="tools" aria-labelledby="tools-title">
+  <h2 id="tools-title" class="tools__title">
+    Built with tools you and your customers already use
+  </h2>
+  <div class="tools__track">
+    <ul class="tools__list">
+      {tools.map((t) => (
+        <li>{t}</li>
+      ))}
+    </ul>
+    <ul class="tools__list" aria-hidden="true">
+      {tools.map((t) => (
+        <li>{t}</li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .tools {
+    padding-block: clamp(2rem, 5vw, 3.5rem);
+  }
+
+  .tools__title {
+    text-align: center;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-4);
+    padding-inline: var(--gutter);
+    line-height: 1.5;
+  }
+
+  .tools__track {
+    display: flex;
+    overflow: hidden;
+    mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  }
+
+  .tools__track:hover .tools__list {
+    animation-play-state: paused;
+  }
+
+  .tools__list {
+    list-style: none;
+    display: flex;
+    flex: none;
+    gap: clamp(2.5rem, 5vw, 4.5rem);
+    margin: 0;
+    padding: 0 clamp(1.25rem, 2.5vw, 2.25rem);
+    animation: tools 36s linear infinite;
+  }
+
+  .tools__list li {
+    display: flex;
+    align-items: center;
+    gap: 0.6em;
+    white-space: nowrap;
+    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: #59635d;
+    transition: color 0.2s;
+  }
+
+  .tools__list li::before {
+    content: '';
+    width: 0.45em;
+    height: 0.45em;
+    border-radius: 50%;
+    background: var(--forest-400);
+  }
+
+  .tools__list li:hover {
+    color: var(--ink);
+  }
+
+  @keyframes tools {
+    to {
+      transform: translateX(-100%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tools__list {
+      animation: none;
+      flex-wrap: wrap;
+      flex: 1;
+      justify-content: center;
+      row-gap: 1rem;
+    }
+
+    .tools__list[aria-hidden='true'] {
+      display: none;
+    }
+
+    .tools__track {
+      mask-image: none;
+    }
+  }
+</style>

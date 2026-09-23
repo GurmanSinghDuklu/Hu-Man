@@ -4,9 +4,14 @@ import { faqItems } from '../data/content';
 
 <section class="faq" id="faq" aria-labelledby="faq-title">
   <div class="wrap faq__inner">
-    <h2 id="faq-title" class="section-title">
-      <span class="t-thin">Questions</span>
-    </h2>
+    <div class="faq__head">
+      <p class="eyebrow" data-reveal>
+        FAQ
+      </p>
+      <h2 id="faq-title" class="section-title" data-reveal>
+        Good <span class="hl">questions</span>
+      </h2>
+    </div>
     <ul class="faq__list">
       {faqItems.map((item) => (
         <li>
@@ -25,9 +30,16 @@ import { faqItems } from '../data/content';
 
 <style>
   .faq {
+    margin-inline: clamp(0.5rem, 1.5vw, 1.25rem);
+    border-radius: var(--radius-xl);
     background: var(--paper);
-    color: var(--paper-text);
     padding-block: clamp(4rem, 9vw, 7rem);
+  }
+
+  .faq__head {
+    display: grid;
+    gap: var(--space-3);
+    align-content: start;
   }
 
   .faq__inner {
@@ -39,11 +51,11 @@ import { faqItems } from '../data/content';
     list-style: none;
     margin: 0;
     padding: 0;
-    border-top: 1px solid var(--paper-text);
+    border-top: 1px solid var(--ink);
   }
 
   .faq__list li {
-    border-bottom: 1px solid var(--paper-line);
+    border-bottom: 1px solid var(--color-line);
   }
 
   .faq__list summary {
@@ -69,7 +81,7 @@ import { faqItems } from '../data/content';
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    border: 1px solid var(--paper-line);
+    border: 1px solid var(--color-line);
     transition: background-color 0.2s;
   }
 
@@ -90,9 +102,11 @@ import { faqItems } from '../data/content';
     transform: translate(-50%, -50%) rotate(90deg);
   }
 
-  details[open] .faq__plus {
-    background: var(--paper-text);
-    color: var(--paper);
+  details[open] .faq__plus,
+  summary:hover .faq__plus {
+    background: var(--lime);
+    border-color: var(--lime);
+    color: var(--ink);
   }
 
   details[open] .faq__plus::after {
@@ -102,7 +116,7 @@ import { faqItems } from '../data/content';
   .faq__list details p {
     padding-bottom: 1.5rem;
     max-width: 44rem;
-    color: var(--paper-muted);
+    color: var(--color-text-muted);
   }
 
   @media (min-width: 60rem) {

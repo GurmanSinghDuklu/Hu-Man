@@ -1,6 +1,7 @@
 ---
 import { pricingTiers } from '../data/pricing';
 import { site } from '../config/site';
+import Arrow from './Arrow.astro';
 
 function mailtoFor(tierName: string): string {
   const subject = encodeURIComponent(`${tierName} enquiry`);
@@ -12,12 +13,16 @@ function mailtoFor(tierName: string): string {
 ---
 
 <section class="pricing" id="pricing" aria-labelledby="pricing-title">
-  <div class="pricing__glow" aria-hidden="true"></div>
   <div class="wrap pricing__inner">
     <div class="pricing__head">
-      <h2 id="pricing-title" class="section-title">
-        <span class="t-bold t-silver">Pricing</span>
-      </h2>
+      <div class="pricing__titles">
+        <p class="eyebrow" data-reveal>
+          Pricing
+        </p>
+        <h2 id="pricing-title" class="section-title" data-reveal>
+          Simple <span class="hl">pricing</span>
+        </h2>
+      </div>
       <p>
         Introductory pricing while I build my portfolio in Bradford. Prices rise as my diary fills,
         so quotes are valid for 30 days. Monthly plans stay the same.
@@ -26,7 +31,7 @@ function mailtoFor(tierName: string): string {
 
     <ul class="pricing__cards">
       {pricingTiers.map((tier) => (
-        <li class:list={['tier', { 'tier--featured': tier.id === 'growth' }]}>
+        <li class:list={['tier', { 'tier--featured on-dark': tier.id === 'growth' }]} data-reveal>
           <div class="tier__top">
             <h3>{tier.name}</h3>
             <span class="tier__tag">Introductory</span>
@@ -42,10 +47,13 @@ function mailtoFor(tierName: string): string {
             ))}
           </ul>
           <a
-            class:list={['pill-btn', { 'pill-btn--solid': tier.id === 'growth' }]}
+            class:list={['btn', tier.id === 'growth' ? 'btn--lime' : 'btn--dark']}
             href={mailtoFor(tier.name)}
           >
             Ask about {tier.name}
+            <span class="btn__icon">
+              <Arrow />
+            </span>
           </a>
         </li>
       ))}
@@ -60,35 +68,22 @@ function mailtoFor(tierName: string): string {
 
 <style>
   .pricing {
-    position: relative;
     padding-block: clamp(4rem, 9vw, 7rem);
-    overflow: hidden;
-  }
-
-  .pricing__glow {
-    position: absolute;
-    left: 50%;
-    top: 30%;
-    width: 90%;
-    height: 80%;
-    transform: translateX(-50%);
-    background: radial-gradient(closest-side, rgba(156, 13, 124, 0.55), transparent);
-    filter: blur(30px);
-    pointer-events: none;
-  }
-
-  .pricing__inner {
-    position: relative;
   }
 
   .pricing__head {
     display: grid;
-    gap: var(--space-3);
+    gap: var(--space-4);
     margin-bottom: clamp(2rem, 5vw, 3.5rem);
   }
 
-  .pricing__head p {
-    color: rgba(255, 255, 255, 0.86);
+  .pricing__titles {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .pricing__head > p {
+    color: var(--color-text-muted);
     max-width: 30rem;
   }
 
@@ -106,14 +101,23 @@ function mailtoFor(tierName: string): string {
     gap: 0.75rem;
     padding: clamp(1.5rem, 2.6vw, 2.25rem);
     border-radius: var(--radius-lg);
-    background: rgba(18, 23, 38, 0.75);
+    background: var(--paper);
     border: 1px solid var(--color-line);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    transition:
+      transform 0.4s var(--ease-out),
+      box-shadow 0.4s var(--ease-out);
+  }
+
+  .tier:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-card);
   }
 
   .tier--featured {
-    background: linear-gradient(160deg, #b0137e 0%, #7a0a62 55%, #3e0a4f 100%);
+    background:
+      radial-gradient(80% 60% at 100% 0%, rgba(182, 217, 59, 0.22), transparent 70%),
+      var(--forest-900);
+    color: var(--on-dark);
     border-color: transparent;
   }
 
@@ -125,44 +129,54 @@ function mailtoFor(tierName: string): string {
   }
 
   .tier h3 {
-    font-size: 1.5rem;
-    font-weight: 600;
-    letter-spacing: -0.03em;
+    font-size: 1.4rem;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
   }
 
   .tier__tag {
     padding: 0.3em 0.9em;
     border-radius: var(--radius-pill);
-    background: #fff;
-    color: var(--paper-text);
-    font-size: 0.75rem;
-    font-weight: 600;
+    background: var(--lime);
+    color: var(--ink);
+    font-size: 0.72rem;
+    font-weight: 700;
   }
 
   .tier__price {
-    font-size: clamp(3rem, 5vw, 4.25rem);
-    font-weight: 700;
-    letter-spacing: -0.055em;
+    font-size: clamp(2.8rem, 4.6vw, 4rem);
+    font-weight: 800;
+    letter-spacing: -0.05em;
     line-height: 1;
     margin-top: var(--space-3);
   }
 
   .tier__from {
     font-size: 0.3em;
-    font-weight: 300;
-    font-style: italic;
+    font-weight: 600;
     letter-spacing: 0;
-    vertical-align: 0.5em;
+    text-transform: uppercase;
+    vertical-align: 0.6em;
+    color: var(--color-text-muted);
+  }
+
+  .tier--featured .tier__from,
+  .tier--featured .tier__monthly {
+    color: var(--on-dark-muted);
   }
 
   .tier__monthly {
-    color: rgba(255, 255, 255, 0.86);
+    color: var(--color-text-muted);
   }
 
   .tier__for {
     padding-block: var(--space-3);
-    border-block: 1px solid rgba(255, 255, 255, 0.2);
+    border-block: 1px solid var(--color-line);
     font-size: 0.95rem;
+  }
+
+  .tier--featured .tier__for {
+    border-color: var(--on-dark-line);
   }
 
   .tier__includes {
@@ -184,16 +198,22 @@ function mailtoFor(tierName: string): string {
   .tier__includes li::before {
     content: '';
     flex: none;
-    width: 0.45em;
-    height: 0.45em;
-    margin-top: 0.55em;
+    width: 1.1em;
+    height: 1.1em;
+    margin-top: 0.2em;
     border-radius: 50%;
-    background: currentColor;
-    opacity: 0.8;
+    background: var(--forest-600)
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.5l2.5 2.5L12 5.5' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+      center / 80% no-repeat;
   }
 
-  .tier .pill-btn {
-    justify-content: center;
+  .tier--featured .tier__includes li::before {
+    background-color: var(--lime);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.5l2.5 2.5L12 5.5' fill='none' stroke='%230b100d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  }
+
+  .tier .btn {
+    justify-content: space-between;
   }
 
   .pricing__terms {

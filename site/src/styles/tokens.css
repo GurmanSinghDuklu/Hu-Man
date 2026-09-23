@@ -1,42 +1,48 @@
 /**
- * Hu/man design tokens. One fixed art direction: near-black canvas with a
- * magenta glow, electric blue as the second accent, and white "paper" bands
- * for the work gallery. Palette from the approved reference (see
- * docs/superpowers/specs/2026-09-23-hu-man-rebrand.md).
+ * Hu/man design tokens (v2, 2026-09-23): deep emerald hero fading into a
+ * warm white page, electric lime as the single accent. Structure inspired by
+ * the Webelix agency concept and codex-soft.com; see
+ * docs/superpowers/specs/2026-09-23-hu-man-rebrand.md.
  */
 :root {
-  --ink-950: #050810;
-  --ink-900: #0a0e1a;
-  --ink-800: #121726;
-  --ink-700: #1d2335;
-  --magenta: #9c0d7c;
-  --magenta-bright: #c21a9c;
-  --magenta-deep: #5e0a4d;
-  --blue: #1c6cdc;
-  --blue-bright: #4d8ef0;
+  --forest-950: #04140e;
+  --forest-900: #072219;
+  --forest-800: #0b3326;
+  --forest-700: #0f4a36;
+  --forest-600: #17664b;
+  --forest-400: #4f9c7d;
+  --lime: #d4f25a;
+  --lime-deep: #b6d93b;
   --paper: #ffffff;
-  --paper-2: #f4f4f6;
+  --paper-2: #f4f5f0;
+  --paper-3: #e9ebe3;
+  --ink: #0b100d;
+  --ink-2: #1c2420;
 
-  --color-bg: var(--ink-950);
-  --color-text: #ffffff;
-  --color-text-muted: #a9adbd;
-  --color-line: rgba(255, 255, 255, 0.16);
-  --color-line-strong: rgba(255, 255, 255, 0.55);
-  --color-focus-ring: #ff6fd8;
+  --color-bg: var(--paper-2);
+  --color-text: var(--ink);
+  --color-text-muted: #525c56;
+  --color-line: #dcdfd6;
+  --color-line-strong: #0b100d;
+  --color-focus-ring: #0f7a52;
 
-  --paper-text: #0b0b0f;
-  --paper-muted: #5d6070;
-  --paper-line: #e3e3e8;
+  /* On dark (forest) surfaces */
+  --on-dark: #ffffff;
+  --on-dark-muted: #b9cbc2;
+  --on-dark-line: rgba(255, 255, 255, 0.16);
 
-  --font-sans: 'Inter Variable', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-sans:
+    'Plus Jakarta Sans Variable', 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI',
+    sans-serif;
   --font-serif: 'Newsreader Variable', Georgia, serif;
 
   --content-max: 1320px;
   --gutter: clamp(1rem, 3.5vw, 2.5rem);
 
-  --radius-sm: 8px;
-  --radius-md: 16px;
+  --radius-sm: 10px;
+  --radius-md: 18px;
   --radius-lg: 28px;
+  --radius-xl: 40px;
   --radius-pill: 999px;
 
   --space-1: 0.25rem;
@@ -48,6 +54,7 @@
   --space-7: 7rem;
 
   --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --shadow-card: 0 30px 60px -30px rgba(4, 20, 14, 0.45);
 
-  color-scheme: dark;
+  color-scheme: light;
 }

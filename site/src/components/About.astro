@@ -4,14 +4,17 @@ import { credentials } from '../data/content';
 
 <section class="about" id="about" aria-labelledby="about-title">
   <div class="wrap about__inner">
-    <div class="about__photo" role="img" aria-label="Photo of Gurman not yet added">
+    <div class="about__photo" data-reveal role="img" aria-label="Photo of Gurman not yet added">
       <div class="about__photo-glow" aria-hidden="true"></div>
       <span class="about__photo-label">Photo to follow</span>
     </div>
 
     <div class="about__copy">
-      <h2 id="about-title" class="section-title">
-        <span class="t-bold t-silver">About</span>
+      <p class="eyebrow" data-reveal>
+        About
+      </p>
+      <h2 id="about-title" class="section-title" data-reveal>
+        Hi, I'm <span class="hl">Gurman</span>
       </h2>
       <p class="about__intro">
         I'm Gurman, a developer based in Bradford. I've shipped live customer pages inside a major
@@ -52,17 +55,24 @@ import { credentials } from '../data/content';
     max-width: 30rem;
     border-radius: var(--radius-lg);
     overflow: hidden;
-    background: var(--ink-800);
-    border: 1px dashed rgba(255, 255, 255, 0.3);
+    background: var(--forest-900);
+    border: 2px dashed var(--forest-400);
   }
 
   .about__photo-glow {
     position: absolute;
-    inset: 15%;
-    border-radius: 30%;
-    background: radial-gradient(circle, var(--magenta-bright), var(--blue) 60%, transparent 75%);
+    inset: 18%;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--lime), var(--forest-600) 55%, transparent 72%);
     filter: blur(40px);
-    opacity: 0.7;
+    opacity: 0.6;
+    animation: breathe 8s ease-in-out infinite alternate;
+  }
+
+  @keyframes breathe {
+    to {
+      transform: scale(1.15) translate(4%, -3%);
+    }
   }
 
   .about__photo-label {
@@ -71,8 +81,10 @@ import { credentials } from '../data/content';
     bottom: 1rem;
     padding: 0.4em 1em;
     border-radius: var(--radius-pill);
-    background: rgba(5, 8, 16, 0.75);
+    background: var(--paper);
+    color: var(--ink);
     font-size: 0.8rem;
+    font-weight: 600;
   }
 
   .about__copy {
@@ -81,15 +93,16 @@ import { credentials } from '../data/content';
   }
 
   .about__intro {
-    font-size: clamp(1.1rem, 1.6vw, 1.3rem);
-    line-height: 1.55;
-    max-width: 38rem;
+    font-size: clamp(1.05rem, 1.5vw, 1.2rem);
+    line-height: 1.65;
+    max-width: 40rem;
   }
 
   .about__sub {
-    font-size: 1.1rem;
-    font-weight: 600;
-    letter-spacing: -0.01em;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     margin-top: var(--space-3);
   }
 
@@ -97,7 +110,7 @@ import { credentials } from '../data/content';
     list-style: none;
     margin: 0;
     padding: 0;
-    border-top: 1px solid var(--color-line);
+    border-top: 1px solid var(--ink);
   }
 
   .about__creds li {
@@ -108,16 +121,16 @@ import { credentials } from '../data/content';
     padding-block: 0.8rem;
     border-bottom: 1px solid var(--color-line);
     font-size: 0.925rem;
-    color: rgba(255, 255, 255, 0.88);
   }
 
   .about__badge {
     flex: none;
     padding: 0.2em 0.8em;
     border-radius: var(--radius-pill);
-    border: 1px solid #ff9ae3;
-    color: #ffc2ee;
+    background: var(--lime);
+    color: var(--ink);
     font-size: 0.72rem;
+    font-weight: 700;
   }
 
   @media (min-width: 60rem) {
@@ -127,7 +140,7 @@ import { credentials } from '../data/content';
 
     .about__photo {
       position: sticky;
-      top: 2rem;
+      top: 100px;
     }
   }
 </style>

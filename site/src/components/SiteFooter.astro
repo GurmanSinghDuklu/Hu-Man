@@ -1,16 +1,17 @@
 ---
 import { site } from '../config/site';
+import Logo from './Logo.astro';
 
 const currentYear = new Date().getFullYear();
 const isHome = Astro.url.pathname === '/';
 const prefix = isHome ? '' : '/';
 ---
 
-<footer class="site-footer">
+<footer class="site-footer on-dark">
   <div class="wrap">
     <div class="site-footer__grid">
-      <div>
-        <p class="site-footer__label">Studio</p>
+      <div class="site-footer__brand">
+        <Logo />
         <p>
           {site.location.town}, {site.location.region}
         </p>
@@ -24,6 +25,28 @@ const prefix = isHome ? '' : '/';
           </li>
           <li>
             <a href={`tel:${site.contact.phone.replace(/\s+/g, '')}`}>{site.contact.phone}</a>
+          </li>
+          <li>
+            <a href={site.contact.whatsapp} rel="noopener">
+              WhatsApp
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <p class="site-footer__label">Explore</p>
+        <ul>
+          <li>
+            <a href={`${prefix}#services`}>Services</a>
+          </li>
+          <li>
+            <a href={`${prefix}#work`}>Concept work</a>
+          </li>
+          <li>
+            <a href={`${prefix}#pricing`}>Pricing</a>
+          </li>
+          <li>
+            <a href={`${prefix}#faq`}>FAQ</a>
           </li>
         </ul>
       </div>
@@ -45,20 +68,6 @@ const prefix = isHome ? '' : '/';
           </li>
         </ul>
       </div>
-      <div>
-        <p class="site-footer__label">Explore</p>
-        <ul>
-          <li>
-            <a href={`${prefix}#work`}>Work</a>
-          </li>
-          <li>
-            <a href={`${prefix}#services`}>Services</a>
-          </li>
-          <li>
-            <a href={`${prefix}#pricing`}>Pricing</a>
-          </li>
-        </ul>
-      </div>
     </div>
 
     <p class="site-footer__wordmark" aria-hidden="true">
@@ -76,8 +85,10 @@ const prefix = isHome ? '' : '/';
 
 <style>
   .site-footer {
-    padding-top: clamp(3rem, 6vw, 5rem);
-    border-top: 1px solid var(--color-line);
+    margin-top: clamp(0.5rem, 1.5vw, 1.25rem);
+    background: var(--forest-950);
+    color: var(--on-dark);
+    padding-top: clamp(3.5rem, 7vw, 5.5rem);
     overflow: hidden;
   }
 
@@ -85,6 +96,13 @@ const prefix = isHome ? '' : '/';
     display: grid;
     gap: var(--space-5);
     grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  }
+
+  .site-footer__brand {
+    display: grid;
+    gap: 0.6rem;
+    align-content: start;
+    font-size: 1.1rem;
   }
 
   .site-footer p,
@@ -97,39 +115,44 @@ const prefix = isHome ? '' : '/';
     margin: 0;
     padding: 0;
     display: grid;
-    gap: 0.2rem;
+    gap: 0.1rem;
   }
 
   .site-footer a {
     text-decoration: none;
     display: inline-block;
     padding-block: 0.3rem;
-    opacity: 0.9;
+    transition: color 0.2s;
   }
 
   .site-footer a:hover {
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
+    color: var(--lime);
   }
 
   .site-footer__label {
-    color: var(--color-text-muted);
+    color: var(--on-dark-muted);
     margin-bottom: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .site-footer .site-footer__label {
+    font-size: 0.75rem;
   }
 
   .site-footer__muted {
-    color: var(--color-text-muted);
-    margin-top: 0.4rem;
+    color: var(--on-dark-muted);
     max-width: 22rem;
   }
 
   .site-footer .site-footer__wordmark {
     font-weight: 800;
-    font-size: clamp(4rem, 23vw, 22rem);
+    font-size: clamp(4rem, 22vw, 21rem);
     letter-spacing: -0.07em;
     line-height: 0.8;
     margin: clamp(3rem, 6vw, 5rem) 0 0;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(156, 13, 124, 0.25));
+    background: linear-gradient(180deg, var(--lime) 0%, rgba(212, 242, 90, 0.08) 95%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -143,7 +166,7 @@ const prefix = isHome ? '' : '/';
     justify-content: space-between;
     gap: var(--space-3);
     padding-block: var(--space-4);
-    border-top: 1px solid var(--color-line);
-    color: var(--color-text-muted);
+    border-top: 1px solid var(--on-dark-line);
+    color: var(--on-dark-muted);
   }
 </style>

@@ -1,7 +1,7 @@
 ---
 import '../styles/base.css';
 import Seo from '../components/Seo.astro';
-import interLatin from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
+import jakartaLatin from '@fontsource-variable/plus-jakarta-sans/files/plus-jakarta-sans-latin-wght-normal.woff2?url';
 
 interface Props {
   title: string;
@@ -25,8 +25,11 @@ const { title, description, index = true, structuredData = false } = Astro.props
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta name="generator" content={Astro.generator} />
     <Seo title={title} description={description} index={index} structuredData={structuredData} />
-    <meta name="theme-color" content="#050810" />
-    <link rel="preload" href={interLatin} as="font" type="font/woff2" crossorigin />
+    <meta name="theme-color" content="#072219" />
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
+    <link rel="preload" href={jakartaLatin} as="font" type="font/woff2" crossorigin />
   </head>
   <body>
     <a href="#main" class="skip-link">
@@ -37,5 +40,8 @@ const { title, description, index = true, structuredData = false } = Astro.props
       <slot />
     </main>
     <slot name="footer" />
+    <script>
+      import '../scripts/motion.ts';
+    </script>
   </body>
 </html>

@@ -3,13 +3,15 @@ import { chatExchanges, chatGreeting } from '../data/chat-demo';
 import Phone from './devices/Phone.astro';
 ---
 
-<section class="chat" aria-labelledby="chat-title" data-chat-demo>
+<section class="chat on-dark" aria-labelledby="chat-title" data-chat-demo>
   <div class="chat__glow" aria-hidden="true"></div>
   <div class="wrap chat__inner">
     <div class="chat__copy">
-      <h2 id="chat-title" class="section-title">
-        <span class="t-bold t-silver">Try the</span>
-        <span class="t-thin t-silver">assistant</span>
+      <p class="eyebrow" data-reveal>
+        Live demo
+      </p>
+      <h2 id="chat-title" class="section-title" data-reveal>
+        Try the <span class="hl">assistant</span>
       </h2>
       <p>
         This is a scripted demo for a fictional barbershop. A real assistant answers from your own
@@ -62,7 +64,11 @@ import Phone from './devices/Phone.astro';
 <style is:global>
   .chat {
     position: relative;
-    padding-block: clamp(4rem, 10vw, 8rem);
+    margin-inline: clamp(0.5rem, 1.5vw, 1.25rem);
+    border-radius: var(--radius-xl);
+    background: var(--forest-900);
+    color: var(--on-dark);
+    padding-block: clamp(4rem, 9vw, 7rem);
     overflow: hidden;
   }
 
@@ -95,12 +101,8 @@ import Phone from './devices/Phone.astro';
     max-width: 34rem;
   }
 
-  .chat__copy .section-title {
-    display: grid;
-  }
-
-  .chat__copy > p {
-    color: rgba(255, 255, 255, 0.86);
+  .chat__copy > p:not(.eyebrow) {
+    color: #d3e2da;
   }
 
   .chat__chips {
@@ -113,7 +115,7 @@ import Phone from './devices/Phone.astro';
     min-height: 44px;
     padding: 0.6em 1.3em;
     border-radius: var(--radius-pill);
-    border: 1px solid var(--color-line-strong);
+    border: 1px solid rgba(255, 255, 255, 0.45);
     background: rgba(255, 255, 255, 0.04);
     color: #fff;
     font: 500 0.95rem var(--font-sans);
@@ -124,8 +126,9 @@ import Phone from './devices/Phone.astro';
   }
 
   .chat__chip:hover {
-    background: #fff;
-    color: var(--paper-text);
+    background: var(--lime);
+    border-color: var(--lime);
+    color: var(--ink);
   }
 
   .chat__phone {

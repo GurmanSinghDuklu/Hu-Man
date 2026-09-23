@@ -21,9 +21,9 @@ Build the studio's own marketing website: high-end, fast, local-SEO-ready, with 
 
 ## Stack (decided)
 - Astro + TypeScript, static output.
-- Plain CSS with design tokens (custom properties). Single dark art direction since the Hu/man redesign (no theme toggle).
-- Self-hosted fonts (`@fontsource`: Inter for UI/display, Newsreader for serif type inside renders), no Google Fonts requests.
-- Small vanilla TypeScript islands only where needed: chat demo, header menu close.
+- Plain CSS with design tokens (custom properties). Single art direction since the Hu/man redesign: emerald hero and panels, warm white page, lime accent (no theme toggle).
+- Self-hosted fonts (`@fontsource`: Plus Jakarta Sans for UI/display, Newsreader for serif type inside renders), no Google Fonts requests.
+- Small vanilla TypeScript islands only where needed: motion (reveals, count-ups, header state), services preview, gallery filter, chat demo, header menu close.
 - No tracking, no cookies, no third-party scripts. Ask before adding any other dependency.
 - Project lives in `site/` (Astro app root). Astro 7, TypeScript 6, Node 24.
 - Commands (run from `site/`):
@@ -177,7 +177,15 @@ browser, tablet). Things worth knowing:
 5. **CSS is inlined** (`build.inlineStylesheets: 'always'`) and the Inter latin woff2 is preloaded,
    for first paint. `scripts/serve.mjs` now gzips text like a real host, so Lighthouse measures
    realistic transfer sizes. `scripts/axe.mjs` now scans home, privacy and 404.
-Lighthouse 97/100/100/100, axe 0 violations on all three pages.
+Revision 2 (same day) swapped the LUME look for an own identity on a Webelix-style structure:
+emerald/lime, Plus Jakarta Sans, tools strip instead of client logos, count-up facts, swapping
+services preview, filterable bento gallery, scroll reveals. Two more gotchas:
+6. **Scroll reveals hide content at opacity 0, and axe skips invisible elements.** `scripts/axe.mjs`
+   forces every `[data-reveal]` visible before scanning; keep it that way. The hidden state is gated
+   on the `.js` class so content shows without JS.
+7. **After deleting components, restart `astro dev`.** It kept serving a stale module graph (all
+   hero styles missing) until restarted; the production build was fine.
+Lighthouse 99/100/100/100, axe 0 violations on all three pages.
 
 ## Working agreements
 - Plan first with `/plan-site`, get approval, then build one phase at a time with `/build-phase N`.
