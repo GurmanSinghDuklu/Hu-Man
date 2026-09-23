@@ -19,7 +19,8 @@ import { realProjects } from '../data/content';
             <MockSite sector={sector} mode="after" />
           </div>
           <figcaption>
-            {sector.typeLabel} — concept design for a fictional business. {sector.galleryIncludes}.
+            <span class="concept-work__tile-tag">{sector.typeLabel}</span>
+            concept design for a fictional business. {sector.galleryIncludes}.
           </figcaption>
         </figure>
       </li>
@@ -76,6 +77,19 @@ import { realProjects } from '../data/content';
     font-size: 0.85rem;
     color: var(--color-text-muted);
     margin-top: var(--space-2);
+  }
+
+  .concept-work__tile-tag {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.7rem;
+    letter-spacing: 0.02em;
+    color: var(--color-accent-ink);
+    background: var(--color-accent);
+    padding: 0.15em 0.55em;
+    border-radius: 999px;
+    margin-right: var(--space-2);
   }
 
   .concept-work__real {
