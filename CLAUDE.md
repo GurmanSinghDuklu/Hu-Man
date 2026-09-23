@@ -140,12 +140,14 @@ domain, Search Console, first real content) needs decisions from Gurman and is n
 Re-skinned the site to the palette in `docs/superpowers/specs/2026-09-22-light-redesign-
 design.md`: warm off-white/terracotta/sage replacing the original chalk/klein/highlighter tokens,
 kept light-first (dark stays the toggle option, not the default — Gurman's choice after
-reviewing a two-direction comparison artifact). Services, the concept gallery captions and the
-credentials list moved from hairline-separated rows to a shared-seam rounded-card grid; pricing
-table/mobile-cards, the compare slider and the concept-renderer sector mocks were already
-token-driven so they picked up the new palette without structural changes. No copy changed — the
-one data addition is a `tag` field on each `Service` entry naming its pricing tier, sourced
-directly from docs/02's own "Includes" column.
+reviewing a two-direction comparison artifact). Services and the credentials list moved from
+hairline-separated rows to a shared-seam rounded-card grid (`gap: 1px` plus a border-colour
+background, so cards appear to share a hairline seam). The concept gallery only picked up the
+pill-tag treatment on its sector-label caption, not the shared-seam grid — its tiles were already
+`border-radius`-rounded from an earlier phase. Pricing table/mobile-cards, the compare slider and
+the concept-renderer sector mocks were already token-driven so they picked up the new palette
+without structural changes. No copy changed — the one data addition is a `tag` field on each
+`Service` entry naming its pricing tier, sourced directly from docs/02's own "Includes" column.
 
 Found and fixed one real bug while migrating: `Pricing.astro`'s "Introductory" tag used a
 hardcoded `var(--color-ink)` for its text colour, which isn't redefined in dark mode — it would
