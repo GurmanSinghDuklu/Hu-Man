@@ -91,3 +91,9 @@ Layout, renders and copy unchanged. Lighthouse 99/100/100/100; axe 0 violations 
   Essence stays "built for a family business". He also asked for AI-generated designs presented
   as work "for X company"; any generated designs must be labelled as concepts for fictional brands.
   Higgsfield MCP tools were not available in the session, so no images were generated.
+
+## Revision 5 (2026-09-27): About section removed
+Gurman: "We are a software agency so no need to get personal." The About section (intro paragraph,
+photo slot, credentials list) is gone, along with its nav link; the intro's "More about me" button
+now reads "Explore services". The `credentials` data is kept in `src/data/content.ts` for reuse.
+This supersedes docs/03's About and credentials section and the open photo question in docs/09.

@@ -164,6 +164,7 @@ export interface Credential {
   inProgress?: boolean;
 }
 
+/** Not shown on the site since the About section was removed (2026-09-27); kept for reuse. */
 export const credentials: Credential[] = [
   { text: 'T Level in Digital Production, Design and Development (Pass), Calderdale College' },
   {

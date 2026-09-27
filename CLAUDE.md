@@ -196,6 +196,8 @@ Live and Concept tiles) and added a Real work section for The Calculator App and
 case-study images live in `src/assets/` and go through `astro:assets` `<Image format="webp">`: as
 plain JPEGs in `public/` they cost 1.4 MB and dropped Lighthouse performance to 77 (the wall image
 became the LCP). Do not add outcome claims ("more sales") to case studies without evidence.
+Revision 5 (2026-09-27) removed the About section at Gurman's request (no personal section on an
+agency site). Credentials no longer appear on the site; the data stays in `content.ts`.
 Lighthouse 96/100/100/100, axe 0 violations on all three pages.
 
 ## Working agreements
