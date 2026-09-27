@@ -14,7 +14,9 @@
     "axe": "node scripts/axe.mjs",
     "screenshots": "node scripts/screenshots.mjs",
     "og-image": "node scripts/generate-og-image.mjs",
-    "check": "npm run typecheck && npm run lint && npm run build"
+    "check": "npm run typecheck && npm run lint && npm run build",
+    "concept-images": "node scripts/generate-concept-images.mjs",
+    "capture-sites": "node scripts/capture-live-sites.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.10",

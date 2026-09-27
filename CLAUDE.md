@@ -38,7 +38,10 @@ Build the studio's own marketing website: high-end, fast, local-SEO-ready, with 
   - `npm run axe` — same static-server approach, runs `@axe-core/playwright` against `dist/`, tags `wcag2a wcag2aa wcag22aa`.
   - `npm run screenshots` — Playwright screenshots of `dist/` at 360/768/1280px in light and dark (`colorScheme` emulation), saved to `reports/screenshots/`.
   - `npm run og-image` — rasterises `public/og-image.svg` to `public/og-image.png` (1200×630) via Playwright Chromium. Re-run and commit the PNG whenever the SVG changes; the PNG is what ships (most platforms don't render SVG for `og:image`).
+  - `npm run concept-images` — rasterises every concept render on the internal `/render-sheet/` page to `src/assets/concepts/*.jpg` for the hero wall. Needs a fresh `dist/`: run `build`, then this, then `build` again.
+  - `npm run capture-sites` — screenshots the two live projects (The Calculator App, Essence) into `src/assets/work/`. Re-run when either site changes.
   - Run `npm run build` before `lighthouse`, `axe` or `screenshots` — they all serve the built `dist/`, not the dev server.
+  - Never put files in `dist/`: every build deletes it. Reference images go in `reference/`.
 
 ## Phase 1 status (done)
 Static home page built: header/nav (with mobile `<details>` menu), hero with a labelled
@@ -188,7 +191,12 @@ services preview, filterable bento gallery, scroll reveals. Two more gotchas:
 Revision 3 recoloured to neon on near-black from Gurman's references (`reference/colour/`, colours
 sampled from the pixels). Neon text only on dark; on `.light` bands `.hl` becomes a highlighter swipe.
 Lighthouse's mobile run treats ~17px bold as normal text, so greys in marquees need 4.5:1.
-Lighthouse 99/100/100/100, axe 0 violations on all three pages.
+Revision 4 (2026-09-27) rebuilt the hero ("The software agency of the future." + a moving 3D wall of
+Live and Concept tiles) and added a Real work section for The Calculator App and Essence. Wall and
+case-study images live in `src/assets/` and go through `astro:assets` `<Image format="webp">`: as
+plain JPEGs in `public/` they cost 1.4 MB and dropped Lighthouse performance to 77 (the wall image
+became the LCP). Do not add outcome claims ("more sales") to case studies without evidence.
+Lighthouse 96/100/100/100, axe 0 violations on all three pages.
 
 ## Working agreements
 - Plan first with `/plan-site`, get approval, then build one phase at a time with `/build-phase N`.

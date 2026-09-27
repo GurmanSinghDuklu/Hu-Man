@@ -76,3 +76,18 @@ an arrow-mark brand. Colours sampled from the images' pixels:
 - **White bands** for concept work and FAQ (`.light`), where highlights become a neon highlighter
   swipe behind black text (neon text on white would fail contrast).
 Layout, renders and copy unchanged. Lighthouse 99/100/100/100; axe 0 violations on all pages.
+
+## Revision 4 (2026-09-27): "see, don't explain" hero and real work
+- **Hero**: "The software agency of the future." (Gurman's slogan) beside a tilted 3D wall of work
+  that scrolls in three columns in alternating directions. Real sites are tagged neon "Live"; all
+  other tiles are tagged "Concept". Wall images are rasterised from the concept renders
+  (`npm run concept-images`) and captured from the live sites (`npm run capture-sites`), then
+  served as resized WebP by `astro:assets`.
+- **Real work** section (`#real-work`), placed straight after the tools strip: The Calculator App
+  and Essence Hair Treatment, each with a laptop whose screen auto-scrolls the live site, a phone
+  with the mobile view, the brief, what was built and a link to the live site.
+- **Honesty**: Gurman asked for copy saying the redesigns "helped generate more sales and use".
+  That is an outcome claim that needs evidence under the CAP Code, so it is not on the site yet.
+  Essence stays "built for a family business". He also asked for AI-generated designs presented
+  as work "for X company"; any generated designs must be labelled as concepts for fictional brands.
+  Higgsfield MCP tools were not available in the session, so no images were generated.

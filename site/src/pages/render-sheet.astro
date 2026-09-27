@@ -1,0 +1,57 @@
+---
+/**
+ * Internal render sheet: every concept render at a fixed size, used by
+ * scripts/generate-concept-images.mjs to produce public/concepts/*.jpg for
+ * the hero wall. Not linked anywhere, noindex, excluded from the sitemap.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import RenderBarberApp from '../components/renders/RenderBarberApp.astro';
+import RenderSalonSite from '../components/renders/RenderSalonSite.astro';
+import RenderTradesDashboard from '../components/renders/RenderTradesDashboard.astro';
+import RenderCeramicsShop from '../components/renders/RenderCeramicsShop.astro';
+import RenderPhysioSite from '../components/renders/RenderPhysioSite.astro';
+import RenderRestaurant from '../components/renders/RenderRestaurant.astro';
+import RenderOwnerDigest from '../components/renders/RenderOwnerDigest.astro';
+import RenderFlorist from '../components/renders/RenderFlorist.astro';
+import RenderWalks from '../components/renders/RenderWalks.astro';
+import RenderAssistant from '../components/renders/RenderAssistant.astro';
+
+const renders = [
+  ['barber', RenderBarberApp],
+  ['salon', RenderSalonSite],
+  ['trades', RenderTradesDashboard],
+  ['ceramics', RenderCeramicsShop],
+  ['physio', RenderPhysioSite],
+  ['restaurant', RenderRestaurant],
+  ['digest', RenderOwnerDigest],
+  ['florist', RenderFlorist],
+  ['walks', RenderWalks],
+  ['assistant', RenderAssistant],
+] as const;
+---
+
+<BaseLayout title="Render sheet" description="Internal render sheet." index={false}>
+  <div class="sheet">
+    {renders.map(([id, Render]) => (
+      <div class="sheet__item" data-sheet={id}>
+        <Render ratio="4 / 3" />
+      </div>
+    ))}
+  </div>
+</BaseLayout>
+
+<style>
+  .sheet {
+    display: grid;
+    gap: 40px;
+    padding: 40px;
+  }
+
+  .sheet__item {
+    width: 720px;
+  }
+
+  .sheet__item :global(.tile) {
+    border-radius: 0;
+  }
+</style>

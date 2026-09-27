@@ -9,5 +9,10 @@ export default defineConfig({
   compressHTML: true,
   // Inline the (small) CSS so first paint doesn't wait on stylesheet requests.
   build: { inlineStylesheets: 'always' },
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      // Internal pages that must not be indexed.
+      filter: (page) => !page.includes('/render-sheet'),
+    }),
+  ],
 });

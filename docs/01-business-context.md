@@ -39,6 +39,7 @@ Competition: specialist vendors already sell AI call answering to some sectors (
 - FinBERT financial sentiment analysis (2025): fine-tuned a BERT-based model with Hugging Face and PyTorch, tracked with Weights & Biases.
 - Spring Boot REST API test-automation project (2026): CRUD service with MongoDB, Docker, automated API tests, CI in Azure DevOps and GitHub Actions.
 - Essence Hair Treatment website (2026): live React website (essencehairtreatment.com per the CV) built unpaid for his aunt's business. Describe as "built for a family business".
+- The Calculator App (2026): live site at thecalculatorapp.org, 130+ free UK and US calculators and unit converters. Gurman confirmed on 2026-09-27 that he made it and redesigned it from a basic, functional site. Relationship (own product or client) not yet stated: the site calls it a "Redesign" and does not say "client".
 - In progress (label as such): Claude Certified Architect (tier not confirmed), AWS Cloud Practitioner Essentials (self-study), Azure DevOps for CI/CD (self-study).
 - Also completed: C++ Foundations (Udemy), COBOL Basics (IBM, 2026).
 - Testimonials: none yet. Do not invent any.

@@ -139,6 +139,12 @@ export interface RealProject {
 
 export const realProjects: RealProject[] = [
   {
+    name: 'The Calculator App',
+    description:
+      'Live site with 130+ free UK and US calculators and unit converters, redesigned by me.',
+    href: 'https://www.thecalculatorapp.org',
+  },
+  {
     name: 'Essence Hair Treatment',
     description: 'Live React website, built for a family business.',
     href: 'https://essencehairtreatment.com',
@@ -180,4 +186,45 @@ export const credentials: Credential[] = [
   { text: 'Azure DevOps for CI/CD (self-study)', inProgress: true },
   { text: 'C++ Foundations (Udemy)' },
   { text: 'COBOL Basics (IBM, 2026)' },
+];
+
+/**
+ * Real, live projects shown as case studies. Confirmed by Gurman 2026-09-27.
+ * Copy states the brief and what was built. Do not add outcome claims (more
+ * sales, more users) without evidence Gurman can show, per docs/05.
+ * Essence was built unpaid for his aunt's business: never call it a client.
+ */
+export interface CaseStudy {
+  id: 'calculator' | 'essence';
+  name: string;
+  href: string;
+  relationship: string;
+  tags: string[];
+  brief: string;
+  built: string;
+}
+
+export const caseStudies: CaseStudy[] = [
+  {
+    id: 'calculator',
+    name: 'The Calculator App',
+    href: 'https://www.thecalculatorapp.org',
+    relationship: 'Redesign',
+    tags: ['Web app', 'UI/UX', 'Development', 'SEO'],
+    brief:
+      'Take a basic, functional calculator site and turn it into something that catches people and keeps them using it.',
+    built:
+      'A bold dark interface with instant search across 130+ UK and US calculators, featured tools, category hubs and answers to the money questions people search for most.',
+  },
+  {
+    id: 'essence',
+    name: 'Essence Hair Treatment',
+    href: 'https://www.essencehairtreatment.com',
+    relationship: 'Built for a family business',
+    tags: ['Salon website', 'Design', 'Development', 'Booking'],
+    brief:
+      'Turn a basic, functional salon website into one that draws people in and gets them booking.',
+    built:
+      'An editorial, photo-led design with clear services, top tips, a gallery, FAQs and an academy page, with booking one tap away on every screen.',
+  },
 ];
