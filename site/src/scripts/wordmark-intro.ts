@@ -1,14 +1,14 @@
 /**
  * Hero wordmark loop: show each separator variant (Hu.Man, Hu*Man, Hu_Man...)
- * for ~2 s, then settle on the brand form: the separator becomes "/", the gap
+ * for ~1 s, then settle on the brand form: the separator becomes "/", the gap
  * tightens and the word turns bold green (HU/MAN). Hold, reopen on the
  * starting separator and go again. Reduced motion: static green HU/MAN.
  */
 const SEPARATORS = ['.', '*', '_', '-', '+', '&', ':', '×', '~', '|', '#', '•'];
 const FINAL = '/';
-const HOLD_MS = 2000; // each separator
+const HOLD_MS = 1000; // each separator
 const SWAP_MS = 260; // slide out before the glyph changes
-const MERGED_HOLD_MS = 3200; // green HUMAN on screen
+const MERGED_HOLD_MS = 3200; // green HU/MAN on screen
 const MERGE_MS = 1200; // matches the CSS merge transition
 
 const root = document.querySelector<HTMLElement>('[data-wordmark]');
