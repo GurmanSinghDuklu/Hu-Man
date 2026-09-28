@@ -104,3 +104,9 @@ headline strip, filter chips (All, Live projects, Websites, Apps, Dashboards, AI
 edge-to-edge justified collage filling the rest of the first screen. Live site screenshots pan
 like screen recordings; concept tiles drift and zoom. Every tile is tagged "Live" or "Concept",
 with a key beside the chips. Filtering switches to an even grid. Tiles accept video later.
+
+## Revision 7 (2026-09-28): no text on collage tiles
+Gurman asked for no text over the images. Tile captions are now screen-reader only; live sites
+carry a small neon dot, explained by a key beside the filter chips ("Live sites I've built.
+Everything else is a concept for a fictional brand."). That key is the concept label for the
+wall and must stay while the wall mixes real and concept work.

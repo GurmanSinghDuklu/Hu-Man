@@ -171,8 +171,8 @@ let n = 0;
       ))}
     </div>
     <p class="hero__key">
-      <span class="hero__key-live">Live</span> real sites I've built
-      <span class="hero__key-concept">Concept</span> designs for fictional brands
+      <span class="hero__key-dot" aria-hidden="true"></span>
+      Live sites I've built. Everything else is a concept for a fictional brand.
     </p>
   </div>
 
@@ -200,7 +200,7 @@ let n = 0;
                 decoding="async"
                 style={tile.pos ? `object-position:${tile.pos}` : undefined}
               />
-              <figcaption class="hero__tag">
+              <figcaption class="visually-hidden">
                 <span>{tile.live ? 'Live' : 'Concept'}</span>
                 {tile.label}
               </figcaption>
@@ -209,20 +209,7 @@ let n = 0;
         })}
       </div>
     ))}
-    <div class="hero__fade">
-      <a href="#real-work" class="hero__more">
-        See the live projects
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          aria-hidden="true"
-        >
-          <path d="M12 5v14M6 13l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"></path>
-        </svg>
-      </a>
-    </div>
+    <div class="hero__fade" aria-hidden="true"></div>
   </div>
 </section>
 
@@ -390,25 +377,6 @@ let n = 0;
     color: var(--on-dark-muted);
   }
 
-  .hero__key-live,
-  .hero__key-concept {
-    padding: 0.15em 0.6em;
-    border-radius: 6px;
-    font-weight: 700;
-    font-size: 0.7rem;
-  }
-
-  .hero__key-live {
-    background: var(--neon);
-    color: var(--ink);
-  }
-
-  .hero__key-concept {
-    margin-left: 0.5rem;
-    background: rgba(255, 255, 255, 0.12);
-    color: #fff;
-  }
-
   /* ---------- collage ---------- */
   .hero__collage {
     position: relative;
@@ -509,53 +477,31 @@ let n = 0;
     }
   }
 
-  .hero__tile.is-live {
-    box-shadow: inset 0 0 0 1px rgba(0, 255, 48, 0.5);
-  }
-
-  .hero__tag {
-    position: absolute;
-    left: 8px;
-    bottom: 8px;
-    max-width: calc(100% - 16px);
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5em;
-    padding: 0.25em 0.7em 0.25em 0.25em;
-    border-radius: 8px;
-    background: rgba(7, 8, 10, 0.82);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    font-size: 0.72rem;
-    font-weight: 600;
-    color: #fff;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    pointer-events: none;
-    transform: translateY(0);
-    transition: transform 0.4s var(--ease-out);
-  }
-
-  .hero__tag span {
-    flex: none;
-    padding: 0.15em 0.55em;
-    border-radius: 5px;
-    background: rgba(255, 255, 255, 0.14);
-  }
-
-  .is-live .hero__tag span {
-    background: var(--neon);
-    color: var(--ink);
-    box-shadow: 0 0 16px -2px rgba(0, 255, 48, 0.8);
-  }
-
-  .hero__tile::after {
+  .hero__tile.is-live::before {
     content: '';
     position: absolute;
-    inset: 55% 0 0;
-    background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.55));
-    pointer-events: none;
+    top: 10px;
+    right: 10px;
+    z-index: 2;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--neon);
+    box-shadow:
+      0 0 0 3px rgba(0, 0, 0, 0.55),
+      0 0 14px var(--neon);
+  }
+
+  .hero__key-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--neon);
+    box-shadow: 0 0 10px var(--neon);
+  }
+
+  .hero__tile.is-live {
+    box-shadow: inset 0 0 0 1px rgba(0, 255, 48, 0.5);
   }
 
   .hero__fade {
@@ -569,36 +515,6 @@ let n = 0;
     padding-bottom: clamp(1.25rem, 3vw, 2rem);
     background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.7) 45%, #07080a 100%);
     pointer-events: none;
-  }
-
-  .hero__more {
-    pointer-events: auto;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6em;
-    min-height: 44px;
-    padding: 0.5em 1.2em;
-    border-radius: var(--radius-pill);
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid var(--on-dark-line);
-    color: #fff;
-    text-decoration: none;
-    font-size: 0.85rem;
-    font-weight: 600;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-  }
-
-  .hero__more svg {
-    width: 1rem;
-    height: 1rem;
-    animation: nudge 2.2s ease-in-out infinite;
-  }
-
-  @keyframes nudge {
-    50% {
-      transform: translateY(3px);
-    }
   }
 
   /* Filtered: an even grid of uniform tiles, so a lone tile never balloons. */
@@ -630,8 +546,7 @@ let n = 0;
       justify-self: end;
     }
 
-    /* Desktop: justified rows. Each tile's width follows its ratio, so every
-         tile in a row shares one height, like a masonry wall. */
+    /* Desktop: justified rows; width follows each tile's ratio so a row shares one height. */
     .hero__collage {
       display: grid;
       grid-template-columns: 1fr;
@@ -667,8 +582,7 @@ let n = 0;
 
   @media (prefers-reduced-motion: reduce) {
     .hero__tile.is-zoom :global(img),
-    .hero__tile.is-scroll :global(img),
-    .hero__more svg {
+    .hero__tile.is-scroll :global(img) {
       animation: none;
     }
   }
