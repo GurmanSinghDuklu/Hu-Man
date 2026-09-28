@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import Arrow from './Arrow.astro';
+import WordmarkIntro from './WordmarkIntro.astro';
 
 // "See, don't explain": a Higgsfield-style collage of work filling the first
 // screen. Real sites are tagged "Live"; everything else is "Concept"
@@ -128,6 +129,10 @@ let n = 0;
 ---
 
 <section class="hero on-dark" aria-labelledby="hero-title" data-collage>
+  <div class="wrap">
+    <WordmarkIntro />
+  </div>
+
   <div class="wrap hero__top">
     <div class="hero__copy">
       <p class="hero__status">
@@ -222,7 +227,7 @@ let n = 0;
     position: relative;
     isolation: isolate;
     margin-top: -76px;
-    padding-top: calc(76px + clamp(1.5rem, 4vw, 2.75rem));
+    padding-top: calc(76px + clamp(0.5rem, 2vw, 1.25rem));
     color: var(--on-dark);
     background:
       radial-gradient(40% 50% at 85% 0%, rgba(0, 255, 48, 0.12), transparent 70%),
@@ -280,7 +285,7 @@ let n = 0;
   }
 
   .hero__title {
-    font-size: clamp(2.2rem, 4.2vw, 3.9rem);
+    font-size: clamp(1.8rem, 3.3vw, 3rem);
     line-height: 0.95;
     letter-spacing: -0.05em;
     text-transform: uppercase;

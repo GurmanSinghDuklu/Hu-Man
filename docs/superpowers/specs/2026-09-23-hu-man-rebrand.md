@@ -110,3 +110,11 @@ Gurman asked for no text over the images. Tile captions are now screen-reader on
 carry a small neon dot, explained by a key beside the filter chips ("Live sites I've built.
 Everything else is a concept for a fictional brand."). That key is the concept label for the
 wall and must stay while the wall mixes real and concept work.
+
+## Revision 8 (2026-09-28): animated wordmark intro
+A full-width "HU?MAN" wordmark tops the hero (`WordmarkIntro.astro`, `scripts/wordmark-intro.ts`).
+The neon separator cycles slot-machine style through / . * _ - + & : × ~ | # • (22 steps, easing
+from 55 ms to ~475 ms), lands on a random one with a glow flash, then disappears while HU and MAN
+close up and the weight animates 560 → 800, ending on "HUMAN". Built in CSS/JS rather than a
+video file so it stays sharp and weighs ~1 kB. Runs once per load; reduced motion shows the
+final HUMAN immediately; without JS it stays HU/MAN. The slogan h1 sits below it.
