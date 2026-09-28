@@ -124,3 +124,9 @@ Each separator now holds ~2 s and they run in a fixed order starting with "/". A
 the word merges, turns bold and sweeps from white to neon green (a two-tone gradient whose
 background-position slides), holds ~3 s, then reopens on "/" in white and loops (~31 s cycle).
 Reduced motion: static green HUMAN.
+
+## Revision 10 (2026-09-28): wordmark ends on HU/MAN
+"/" is no longer in the cycle (. * _ - + & : × ~ | # •). The final state keeps the slash: the last
+separator swaps to "/", the slot tightens to the slash's natural width (0.46em at weight 800) and
+the whole word, slash included, turns bold green, matching the footer wordmark. Loops back to ".".
+Reduced motion: static green HU/MAN.

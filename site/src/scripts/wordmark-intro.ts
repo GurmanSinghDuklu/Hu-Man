@@ -1,9 +1,11 @@
 /**
- * Hero wordmark loop: show each separator variant (Hu/Man, Hu.Man, Hu*Man...)
- * for ~2 s, then close the gap into a bold green HUMAN, hold, reopen on the
- * starting separator and go again. Reduced motion: static green HUMAN.
+ * Hero wordmark loop: show each separator variant (Hu.Man, Hu*Man, Hu_Man...)
+ * for ~2 s, then settle on the brand form: the separator becomes "/", the gap
+ * tightens and the word turns bold green (HU/MAN). Hold, reopen on the
+ * starting separator and go again. Reduced motion: static green HU/MAN.
  */
-const SEPARATORS = ['/', '.', '*', '_', '-', '+', '&', ':', '×', '~', '|', '#', '•'];
+const SEPARATORS = ['.', '*', '_', '-', '+', '&', ':', '×', '~', '|', '#', '•'];
+const FINAL = '/';
 const HOLD_MS = 2000; // each separator
 const SWAP_MS = 260; // slide out before the glyph changes
 const MERGED_HOLD_MS = 3200; // green HUMAN on screen
@@ -23,6 +25,7 @@ async function swapTo(glyph: HTMLElement, text: string): Promise<void> {
 
 async function loop(el: HTMLElement, glyph: HTMLElement): Promise<void> {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    glyph.textContent = FINAL;
     el.classList.add('is-merged');
     return;
   }
@@ -37,13 +40,14 @@ async function loop(el: HTMLElement, glyph: HTMLElement): Promise<void> {
       await wait(HOLD_MS - SWAP_MS);
     }
 
+    await swapTo(glyph, FINAL);
     el.classList.add('is-merged');
     await wait(MERGE_MS + MERGED_HOLD_MS);
 
-    // Reopen on the starting separator (swap while it is invisible).
-    glyph.textContent = SEPARATORS[0]!;
+    // Reopen in white on the starting separator.
     el.classList.remove('is-merged');
-    await wait(MERGE_MS);
+    await swapTo(glyph, SEPARATORS[0]!);
+    await wait(MERGE_MS - SWAP_MS);
   }
 }
 

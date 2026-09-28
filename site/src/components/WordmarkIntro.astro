@@ -1,9 +1,9 @@
 ---
 /**
  * Hero wordmark loop. The separator between HU and MAN steps through brand
- * variants (Hu/Man, Hu.Man, Hu*Man...), ~2 s each, then vanishes as HU and
- * MAN close up, turn extra bold and sweep from white to neon green; then it
- * reopens on the first separator and repeats.
+ * variants (Hu.Man, Hu*Man, Hu_Man...), ~2 s each, then settles on "/" as the
+ * gap tightens and the word turns extra bold and sweeps from white to neon
+ * green (HU/MAN); then it reopens on the first separator and repeats.
  * Pure CSS/JS (no video file): sharp at any size, ~1 kB. Decorative:
  * the heading below carries the meaning. Driven by scripts/wordmark-intro.ts.
  */
@@ -99,14 +99,17 @@
   }
 
   /* Final state: separator gone, gap closed, extra bold. */
+  /* Final state: "/" tightens into the word, bold, same green as the letters. */
   .wm.is-merged .wm__slot {
-    width: 0;
-    margin-inline: -0.01em;
+    width: 0.46em;
   }
 
   .wm.is-merged .wm__sep {
-    transform: scale(0.1) rotate(90deg);
-    opacity: 0;
+    color: transparent;
+    background-image: linear-gradient(180deg, var(--acid), var(--neon));
+    -webkit-background-clip: text;
+    background-clip: text;
+    filter: drop-shadow(0 0 0.3em rgba(0, 255, 48, 0.3));
   }
 
   .wm.is-merged .wm__word {
