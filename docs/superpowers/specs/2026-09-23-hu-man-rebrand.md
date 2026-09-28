@@ -97,3 +97,10 @@ Gurman: "We are a software agency so no need to get personal." The About section
 photo slot, credentials list) is gone, along with its nav link; the intro's "More about me" button
 now reads "Explore services". The `credentials` data is kept in `src/data/content.ts` for reuse.
 This supersedes docs/03's About and credentials section and the open photo question in docs/09.
+
+## Revision 6 (2026-09-28): Higgsfield-style collage hero
+Reference: higgsfield.ai/marketing-studio "Explore templates" wall. The hero is now a compact
+headline strip, filter chips (All, Live projects, Websites, Apps, Dashboards, AI) and a dense,
+edge-to-edge justified collage filling the rest of the first screen. Live site screenshots pan
+like screen recordings; concept tiles drift and zoom. Every tile is tagged "Live" or "Concept",
+with a key beside the chips. Filtering switches to an even grid. Tiles accept video later.

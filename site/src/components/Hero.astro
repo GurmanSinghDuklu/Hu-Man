@@ -3,65 +3,146 @@ import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import Arrow from './Arrow.astro';
 
-// "See, don't explain": a moving wall of real and concept work. Real projects
-// are tagged "Live"; everything else is tagged "Concept" (fictional brands).
-// Images live in src/assets so Astro serves them as resized WebP.
+// "See, don't explain": a Higgsfield-style collage of work filling the first
+// screen. Real sites are tagged "Live"; everything else is "Concept"
+// (fictional brands). Images live in src/assets and ship as resized WebP.
 const images = import.meta.glob<{ default: ImageMetadata }>('../assets/{concepts,work}/*.jpg', {
   eager: true,
 });
 const img = (path: string) => {
-  const found = images[`../assets/${path}`];
-  if (!found) throw new Error(`Missing wall image: ${path}`);
+  const found = images[`../assets/${path}.jpg`];
+  if (!found) throw new Error(`Missing collage image: ${path}`);
   return found.default;
 };
-type Tile = { src: string; label: string; live?: boolean; tall?: boolean };
-const t = (id: string, label: string): Tile => ({ src: `concepts/${id}.jpg`, label });
-const columns: Tile[][] = [
+
+type Cat = 'live' | 'websites' | 'apps' | 'dashboards' | 'ai';
+interface Tile {
+  src: string;
+  label: string;
+  cats: Cat[];
+  /** width / height of the tile; rows share a height, so this sets its width */
+  r: number;
+  live?: boolean;
+  /** "scroll" pans a tall screenshot like a screen recording */
+  motion?: 'scroll' | 'zoom';
+  pos?: string;
+}
+
+const rows: Tile[][] = [
   [
-    t('salon', 'Salon website'),
-    { src: 'work/calculator-thumb.jpg', label: 'The Calculator App', live: true },
-    t('barber', 'Barber booking app'),
-    t('physio', 'Physio clinic website'),
+    {
+      src: 'work/essence-mobile',
+      label: 'Essence Hair Treatment',
+      cats: ['live', 'websites'],
+      r: 0.62,
+      live: true,
+      pos: 'top',
+    },
+    { src: 'concepts/salon', label: 'Salon website', cats: ['websites'], r: 1.05, motion: 'zoom' },
+    {
+      src: 'work/calculator-scroll',
+      label: 'The Calculator App',
+      cats: ['live', 'websites'],
+      r: 1.15,
+      live: true,
+      motion: 'scroll',
+    },
+    { src: 'concepts/barber', label: 'Barber booking app', cats: ['apps'], r: 0.9, motion: 'zoom' },
+    { src: 'concepts/restaurant', label: 'Restaurant ordering app', cats: ['apps'], r: 0.78 },
+    {
+      src: 'concepts/physio',
+      label: 'Physio clinic website',
+      cats: ['websites'],
+      r: 1.2,
+      motion: 'zoom',
+    },
   ],
   [
-    { src: 'work/essence-mobile.jpg', label: 'Essence Hair Treatment', live: true, tall: true },
-    t('restaurant', 'Restaurant ordering app'),
-    t('digest', 'Owner dashboard'),
-    t('florist', 'Florist shop'),
+    {
+      src: 'concepts/ceramics',
+      label: 'Ceramics shop app',
+      cats: ['apps'],
+      r: 0.85,
+      motion: 'zoom',
+    },
+    { src: 'concepts/assistant', label: 'AI enquiry assistant', cats: ['ai', 'apps'], r: 1.2 },
+    {
+      src: 'work/essence-scroll',
+      label: 'Essence Hair Treatment',
+      cats: ['live', 'websites'],
+      r: 1.15,
+      live: true,
+      motion: 'scroll',
+    },
+    { src: 'concepts/walks', label: 'Walks booking app', cats: ['apps'], r: 0.8, motion: 'zoom' },
+    {
+      src: 'work/calculator-mobile',
+      label: 'The Calculator App',
+      cats: ['live', 'websites'],
+      r: 0.62,
+      live: true,
+      pos: 'top',
+    },
+    { src: 'concepts/florist', label: 'Florist shop', cats: ['websites'], r: 1.0, motion: 'zoom' },
   ],
   [
-    t('ceramics', 'Ceramics shop app'),
-    { src: 'work/essence-thumb.jpg', label: 'Essence Hair Treatment', live: true },
-    t('assistant', 'AI enquiry assistant'),
-    { src: 'work/calculator-mobile.jpg', label: 'The Calculator App', live: true, tall: true },
-    t('walks', 'Walks booking app'),
+    { src: 'concepts/digest', label: 'Owner dashboard', cats: ['dashboards', 'ai'], r: 1.3 },
+    {
+      src: 'work/essence-thumb',
+      label: 'Essence Hair Treatment',
+      cats: ['live', 'websites'],
+      r: 1.1,
+      live: true,
+    },
+    {
+      src: 'concepts/trades',
+      label: 'Electrician quotes dashboard',
+      cats: ['dashboards'],
+      r: 1.3,
+      motion: 'zoom',
+    },
+    {
+      src: 'work/calculator-thumb',
+      label: 'The Calculator App',
+      cats: ['live', 'websites'],
+      r: 1.1,
+      live: true,
+    },
   ],
 ];
+
+const filters: { id: 'all' | Cat; label: string }[] = [
+  { id: 'all', label: 'All' },
+  { id: 'live', label: 'Live projects' },
+  { id: 'websites', label: 'Websites' },
+  { id: 'apps', label: 'Apps' },
+  { id: 'dashboards', label: 'Dashboards' },
+  { id: 'ai', label: 'AI' },
+];
+
+// Scroll tiles: the screenshot is 1440x4200. Pan from the top to the bottom
+// of the image, as a percentage of its own height, for the tile's ratio.
+const SCROLL_RATIO = 4200 / 1440;
+const scrollEnd = (r: number) => `-${((1 - 1 / r / SCROLL_RATIO) * 100).toFixed(1)}%`;
+let n = 0;
 ---
 
-<section class="hero on-dark" aria-labelledby="hero-title">
-  <div class="hero__bg" aria-hidden="true">
-    <span class="hero__orb hero__orb--1"></span>
-    <span class="hero__orb hero__orb--2"></span>
-  </div>
-
-  <div class="wrap hero__grid">
+<section class="hero on-dark" aria-labelledby="hero-title" data-collage>
+  <div class="wrap hero__top">
     <div class="hero__copy">
       <p class="hero__status">
         <span class="hero__pulse" aria-hidden="true"></span>
         Taking on new projects across West Yorkshire
       </p>
-
       <h1 id="hero-title" class="hero__title">
-        <span class="hero__line">The software agency</span>
-        <span class="hero__line hero__line--accent">of the future.</span>
+        The software agency <span class="hero__accent">of the future.</span>
       </h1>
-
+    </div>
+    <div class="hero__side">
       <p class="hero__lede">
         Websites, booking apps and AI assistants that turn local searches into bookings. Designed,
         built and looked after in Bradford.
       </p>
-
       <div class="hero__actions">
         <a href="#real-work" class="btn btn--lime">
           See the work
@@ -70,128 +151,119 @@ const columns: Tile[][] = [
           </span>
         </a>
         <a href="#audit" class="btn btn--ghost">
-          Get your free presence audit
+          Free presence audit
         </a>
-      </div>
-
-      <p class="hero__live">
-        <span>Live now</span>
-        <a href="https://www.thecalculatorapp.org" rel="noopener">
-          The Calculator App <Arrow />
-        </a>
-        <a href="https://www.essencehairtreatment.com" rel="noopener">
-          Essence Hair Treatment <Arrow />
-        </a>
-      </p>
-    </div>
-
-    <div class="hero__wall" aria-hidden="true">
-      <div class="hero__plane">
-        {columns.map((col, c) => (
-          <div class={`hero__col hero__col--${c + 1}`}>
-            <div class="hero__track">
-              {[...col, ...col].map((tile, i) => (
-                <figure class:list={['hero__tile', { 'hero__tile--tall': tile.tall }]}>
-                  <Image
-                    src={img(tile.src)}
-                    alt=""
-                    width={tile.tall ? 260 : 440}
-                    format="webp"
-                    quality={62}
-                    loading={i < 2 ? 'eager' : 'lazy'}
-                    decoding="async"
-                  />
-                  <figcaption class:list={['hero__tag', { 'hero__tag--live': tile.live }]}>
-                    {tile.live ? 'Live' : 'Concept'} · {tile.label}
-                  </figcaption>
-                </figure>
-              ))}
-            </div>
-          </div>
-        ))}
       </div>
     </div>
   </div>
+
+  <div class="wrap hero__bar">
+    <div class="hero__chips" role="group" aria-label="Filter the work below">
+      {filters.map((f, i) => (
+        <button
+          type="button"
+          class="hero__chip"
+          data-collage-filter={f.id}
+          aria-pressed={i === 0 ? 'true' : 'false'}
+        >
+          {f.label}
+        </button>
+      ))}
+    </div>
+    <p class="hero__key">
+      <span class="hero__key-live">Live</span> real sites I've built
+      <span class="hero__key-concept">Concept</span> designs for fictional brands
+    </p>
+  </div>
+
+  <div class="hero__collage">
+    {rows.map((row) => (
+      <div class="hero__row">
+        {row.map((tile) => {
+          const i = n++;
+          return (
+            <figure
+              class:list={[
+                'hero__tile',
+                { 'is-live': tile.live, [`is-${tile.motion}`]: tile.motion },
+              ]}
+              style={`--r:${tile.r};--scroll-end:${scrollEnd(tile.r)};--scroll-end-m:${scrollEnd(0.75)};--delay:${(i % 5) * -2.3}s`}
+              data-cats={tile.cats.join(' ')}
+            >
+              <Image
+                src={img(tile.src)}
+                alt=""
+                width={tile.motion === 'scroll' ? 520 : 480}
+                format="webp"
+                quality={64}
+                loading={i < 6 ? 'eager' : 'lazy'}
+                decoding="async"
+                style={tile.pos ? `object-position:${tile.pos}` : undefined}
+              />
+              <figcaption class="hero__tag">
+                <span>{tile.live ? 'Live' : 'Concept'}</span>
+                {tile.label}
+              </figcaption>
+            </figure>
+          );
+        })}
+      </div>
+    ))}
+    <div class="hero__fade">
+      <a href="#real-work" class="hero__more">
+        See the live projects
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          aria-hidden="true"
+        >
+          <path d="M12 5v14M6 13l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </a>
+    </div>
+  </div>
 </section>
+
+<script>
+  import '../scripts/hero-collage.ts';
+</script>
 
 <style>
   .hero {
     position: relative;
     isolation: isolate;
-    overflow: clip;
     margin-top: -76px;
-    padding-top: 76px;
+    padding-top: calc(76px + clamp(1.5rem, 4vw, 2.75rem));
     color: var(--on-dark);
-  }
-
-  .hero__bg {
-    position: absolute;
-    inset: 0;
-    z-index: -1;
     background:
-      repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.03) 0 1px, transparent 1px 88px),
-      radial-gradient(45% 55% at 78% 50%, rgba(0, 255, 48, 0.14), transparent 70%),
-      radial-gradient(35% 40% at 10% 20%, rgba(173, 255, 0, 0.08), transparent 70%),
-      linear-gradient(180deg, #000 0%, var(--black) 100%);
+      radial-gradient(40% 50% at 85% 0%, rgba(0, 255, 48, 0.12), transparent 70%),
+      radial-gradient(35% 45% at 0% 10%, rgba(173, 255, 0, 0.07), transparent 70%), #000;
   }
 
-  .hero__orb {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(80px);
-    animation: orb 18s ease-in-out infinite alternate;
-  }
-
-  .hero__orb--1 {
-    width: 40vw;
-    height: 40vw;
-    left: -14vw;
-    top: 10%;
-    background: var(--neon);
-    opacity: 0.1;
-  }
-
-  .hero__orb--2 {
-    width: 30vw;
-    height: 30vw;
-    right: 10vw;
-    bottom: -10vw;
-    background: var(--acid);
-    opacity: 0.1;
-    animation-duration: 22s;
-    animation-direction: alternate-reverse;
-  }
-
-  @keyframes orb {
-    to {
-      transform: translate(6vw, 5vh) scale(1.12);
-    }
-  }
-
-  .hero__grid {
+  /* ---------- top strip ---------- */
+  .hero__top {
     display: grid;
-    gap: clamp(2.5rem, 5vw, 3rem);
-    padding-top: clamp(2.5rem, 7vw, 4rem);
+    gap: var(--space-4);
+    align-items: end;
   }
 
   .hero__copy {
     display: grid;
+    gap: var(--space-3);
     justify-items: start;
-    align-content: center;
-    gap: clamp(1.25rem, 2.4vw, 1.75rem);
-    position: relative;
-    z-index: 2;
   }
 
   .hero__status {
     display: inline-flex;
     align-items: center;
     gap: 0.6em;
-    padding: 0.45em 1.1em;
+    padding: 0.4em 1em;
     border-radius: var(--radius-pill);
     background: rgba(255, 255, 255, 0.06);
     border: 1px solid var(--on-dark-line);
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     font-weight: 500;
   }
 
@@ -221,210 +293,382 @@ const columns: Tile[][] = [
   }
 
   .hero__title {
-    display: grid;
-    font-size: clamp(2.6rem, 5.4vw, 5.25rem);
-    line-height: 0.92;
-    letter-spacing: -0.055em;
+    font-size: clamp(2.2rem, 4.2vw, 3.9rem);
+    line-height: 0.95;
+    letter-spacing: -0.05em;
     text-transform: uppercase;
+    max-width: 17em;
+    animation: rise 0.9s var(--ease-out) both;
   }
 
-  .hero__line {
-    display: block;
-    animation: rise 1s var(--ease-out) both;
-  }
-
-  .hero__line--accent {
+  .hero__accent {
     background: var(--neon-gradient);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    filter: drop-shadow(0 0 40px rgba(0, 255, 48, 0.25));
-    animation-delay: 0.12s;
-    padding-bottom: 0.05em;
   }
 
   @keyframes rise {
     from {
       opacity: 0;
-      transform: translateY(0.35em);
+      transform: translateY(0.3em);
     }
   }
 
+  .hero__side {
+    display: grid;
+    gap: var(--space-3);
+    max-width: 30rem;
+  }
+
   .hero__lede {
-    max-width: 34rem;
-    font-size: clamp(1rem, 1.4vw, 1.15rem);
     color: #b3b9c1;
+    font-size: 0.98rem;
   }
 
   .hero__actions {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.75rem;
+    gap: 0.6rem;
   }
 
-  .hero__live {
+  /* ---------- chips ---------- */
+  .hero__bar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem 1.5rem;
+    margin-top: clamp(1.5rem, 3.5vw, 2.5rem);
+    margin-bottom: 0.75rem;
+  }
+
+  .hero__chips {
+    display: flex;
+    gap: 0.4rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    max-width: 100%;
+  }
+
+  .hero__chips::-webkit-scrollbar {
+    display: none;
+  }
+
+  .hero__chip {
+    flex: none;
+    min-height: 40px;
+    padding: 0.45em 1.1em;
+    border-radius: var(--radius-sm);
+    border: 1px solid transparent;
+    background: rgba(255, 255, 255, 0.07);
+    color: #d6d9de;
+    font: 600 0.85rem var(--font-sans);
+    cursor: pointer;
+    transition:
+      background-color 0.2s,
+      color 0.2s;
+  }
+
+  .hero__chip:hover {
+    background: rgba(255, 255, 255, 0.14);
+    color: #fff;
+  }
+
+  .hero__chip[aria-pressed='true'] {
+    background: var(--neon);
+    color: var(--ink);
+    box-shadow: 0 6px 20px -8px rgba(0, 255, 48, 0.9);
+  }
+
+  .hero__key {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 0.5rem 1rem;
-    font-size: 0.85rem;
+    gap: 0.4rem 0.5rem;
+    font-size: 0.78rem;
     color: var(--on-dark-muted);
   }
 
-  .hero__live > span {
+  .hero__key-live,
+  .hero__key-concept {
+    padding: 0.15em 0.6em;
+    border-radius: 6px;
     font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    font-size: 0.72rem;
+    font-size: 0.7rem;
   }
 
-  .hero__live a {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35em;
-    min-height: 32px;
+  .hero__key-live {
+    background: var(--neon);
+    color: var(--ink);
+  }
+
+  .hero__key-concept {
+    margin-left: 0.5rem;
+    background: rgba(255, 255, 255, 0.12);
     color: #fff;
-    text-decoration: none;
-    border-bottom: 1px solid rgba(0, 255, 48, 0.5);
-    transition: color 0.2s;
   }
 
-  .hero__live a:hover {
-    color: var(--neon);
-  }
-
-  .hero__live :global(svg) {
-    width: 0.9em;
-    height: 0.9em;
-  }
-
-  /* ---------- the wall ---------- */
-  .hero__wall {
+  /* ---------- collage ---------- */
+  .hero__collage {
     position: relative;
-    height: clamp(26rem, 70vw, 34rem);
-    margin-inline: calc(var(--gutter) * -1);
-    overflow: hidden;
-    mask-image: linear-gradient(180deg, transparent 0%, #000 14%, #000 86%, transparent 100%);
-    perspective: 1600px;
-  }
-
-  .hero__plane {
-    position: absolute;
-    inset: -20% -10%;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: clamp(0.75rem, 1.5vw, 1.25rem);
-    transform: rotateX(18deg) rotateY(-16deg) rotateZ(-8deg);
-    transform-style: preserve-3d;
-  }
-
-  .hero__col {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+    padding-inline: 6px;
+    max-height: 150vw;
     overflow: hidden;
   }
 
-  .hero__track {
-    display: grid;
-    gap: clamp(0.75rem, 1.5vw, 1.25rem);
-    animation: wall-up 48s linear infinite;
-  }
-
-  .hero__col--2 .hero__track {
-    animation-name: wall-down;
-    animation-duration: 56s;
-  }
-
-  .hero__col--3 .hero__track {
-    animation-duration: 62s;
-  }
-
-  .hero__wall:hover .hero__track {
-    animation-play-state: paused;
-  }
-
-  @keyframes wall-up {
-    from {
-      transform: translateY(0);
-    }
-    to {
-      transform: translateY(calc(-50% - clamp(0.375rem, 0.75vw, 0.625rem)));
-    }
-  }
-
-  @keyframes wall-down {
-    from {
-      transform: translateY(calc(-50% - clamp(0.375rem, 0.75vw, 0.625rem)));
-    }
-    to {
-      transform: translateY(0);
-    }
+  /* Mobile: rows dissolve into a two-column grid. */
+  .hero__row {
+    display: contents;
   }
 
   .hero__tile {
     position: relative;
     margin: 0;
-    border-radius: var(--radius-md);
     overflow: hidden;
+    border-radius: 4px;
     background: var(--graphite-2);
-    box-shadow:
-      0 0 0 1px rgba(255, 255, 255, 0.08),
-      0 30px 60px -30px rgba(0, 0, 0, 0.9);
+    aspect-ratio: 3 / 4;
+    cursor: pointer;
+  }
+
+  .hero__tile[hidden] {
+    display: none;
   }
 
   .hero__tile :global(img) {
     display: block;
     width: 100%;
-    height: auto;
-    aspect-ratio: 4 / 3;
+    height: 100%;
     object-fit: cover;
-    object-position: top;
+    transition:
+      transform 0.9s var(--ease-out),
+      filter 0.5s;
   }
 
-  .hero__tile--tall :global(img) {
-    aspect-ratio: 390 / 700;
+  .hero__tile:hover :global(img) {
+    transform: scale(1.06);
+  }
+
+  /* Slow drift so the wall is never still. */
+  .hero__tile.is-zoom :global(img) {
+    animation: drift 14s ease-in-out infinite alternate;
+    animation-delay: var(--delay);
+  }
+
+  @keyframes drift {
+    from {
+      transform: scale(1.02) translate(0, 0);
+    }
+    to {
+      transform: scale(1.12) translate(-2%, -1.5%);
+    }
+  }
+
+  /* Screen-recording style pan through a full live homepage. */
+  .hero__tile.is-scroll :global(img) {
+    height: auto;
+    object-fit: initial;
+    animation: pan 20s ease-in-out infinite;
+    animation-delay: var(--delay);
+  }
+
+  .hero__tile.is-scroll:hover :global(img) {
+    animation-play-state: paused;
+    transform: none;
+  }
+
+  @keyframes pan {
+    0%,
+    10% {
+      transform: translateY(0);
+    }
+    50%,
+    60% {
+      transform: translateY(var(--scroll-end-m));
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes pan-desktop {
+    0%,
+    10% {
+      transform: translateY(0);
+    }
+    50%,
+    60% {
+      transform: translateY(var(--scroll-end));
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+  .hero__tile.is-live {
+    box-shadow: inset 0 0 0 1px rgba(0, 255, 48, 0.5);
   }
 
   .hero__tag {
     position: absolute;
-    left: 0.6rem;
-    bottom: 0.6rem;
-    padding: 0.3em 0.8em;
-    border-radius: var(--radius-pill);
-    background: rgba(7, 8, 10, 0.78);
+    left: 8px;
+    bottom: 8px;
+    max-width: calc(100% - 16px);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    padding: 0.25em 0.7em 0.25em 0.25em;
+    border-radius: 8px;
+    background: rgba(7, 8, 10, 0.82);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    color: #fff;
-    font-size: 0.68rem;
+    font-size: 0.72rem;
     font-weight: 600;
+    color: #fff;
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    pointer-events: none;
+    transform: translateY(0);
+    transition: transform 0.4s var(--ease-out);
   }
 
-  .hero__tag--live {
+  .hero__tag span {
+    flex: none;
+    padding: 0.15em 0.55em;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.14);
+  }
+
+  .is-live .hero__tag span {
     background: var(--neon);
     color: var(--ink);
-    box-shadow: 0 0 18px -2px rgba(0, 255, 48, 0.8);
+    box-shadow: 0 0 16px -2px rgba(0, 255, 48, 0.8);
   }
 
-  @media (min-width: 64rem) {
-    .hero__grid {
-      grid-template-columns: 1fr 1.05fr;
-      align-items: center;
-      min-height: calc(100svh - 76px);
-      padding-top: 0;
+  .hero__tile::after {
+    content: '';
+    position: absolute;
+    inset: 55% 0 0;
+    background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.55));
+    pointer-events: none;
+  }
+
+  .hero__fade {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 42%;
+    display: grid;
+    place-items: end center;
+    padding-bottom: clamp(1.25rem, 3vw, 2rem);
+    background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.7) 45%, #07080a 100%);
+    pointer-events: none;
+  }
+
+  .hero__more {
+    pointer-events: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6em;
+    min-height: 44px;
+    padding: 0.5em 1.2em;
+    border-radius: var(--radius-pill);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--on-dark-line);
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .hero__more svg {
+    width: 1rem;
+    height: 1rem;
+    animation: nudge 2.2s ease-in-out infinite;
+  }
+
+  @keyframes nudge {
+    50% {
+      transform: translateY(3px);
+    }
+  }
+
+  /* Filtered: an even grid of uniform tiles, so a lone tile never balloons. */
+  .hero__collage.is-filtered {
+    grid-template-columns: repeat(auto-fill, minmax(min(46%, 15rem), 1fr));
+    max-height: none;
+    padding-bottom: 6px;
+  }
+
+  .hero__collage.is-filtered .hero__row {
+    display: contents;
+  }
+
+  .hero__collage.is-filtered .hero__tile {
+    flex: none;
+    aspect-ratio: 3 / 4;
+  }
+
+  .hero__collage.is-filtered .hero__fade {
+    display: none;
+  }
+
+  @media (min-width: 48rem) {
+    .hero__top {
+      grid-template-columns: 1.3fr 1fr;
     }
 
-    .hero__wall {
-      height: min(100svh, 56rem);
-      margin: 0 calc(var(--gutter) * -1 - max(0px, (100vw - var(--content-max)) / 2)) 0 0;
-      mask-image:
-        linear-gradient(90deg, transparent 0%, #000 16%),
-        linear-gradient(180deg, transparent 0%, #000 12%, #000 88%, transparent 100%);
-      mask-composite: intersect;
-      -webkit-mask-composite: source-in;
+    .hero__side {
+      justify-self: end;
+    }
+
+    /* Desktop: justified rows. Each tile's width follows its ratio, so every
+         tile in a row shares one height, like a masonry wall. */
+    .hero__collage {
+      display: grid;
+      grid-template-columns: 1fr;
+      max-height: min(78vh, 60vw);
+    }
+
+    .hero__row {
+      display: flex;
+      gap: 6px;
+    }
+
+    .hero__tile {
+      flex: var(--r) 1 0;
+      aspect-ratio: var(--r);
+    }
+
+    .hero__tile.is-scroll :global(img) {
+      animation-name: pan-desktop;
+    }
+
+    .hero__collage.is-filtered .hero__tile.is-scroll :global(img) {
+      animation-name: pan;
+    }
+
+    .hero__collage.is-filtered {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .hero__collage.is-filtered .hero__tile {
+      aspect-ratio: 4 / 3;
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .hero__track {
+    .hero__tile.is-zoom :global(img),
+    .hero__tile.is-scroll :global(img),
+    .hero__more svg {
       animation: none;
     }
   }

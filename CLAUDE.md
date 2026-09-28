@@ -198,7 +198,9 @@ plain JPEGs in `public/` they cost 1.4 MB and dropped Lighthouse performance to 
 became the LCP). Do not add outcome claims ("more sales") to case studies without evidence.
 Revision 5 (2026-09-27) removed the About section at Gurman's request (no personal section on an
 agency site). Credentials no longer appear on the site; the data stays in `content.ts`.
-Lighthouse 96/100/100/100, axe 0 violations on all three pages.
+Revision 6 (2026-09-28) made the hero a Higgsfield-style collage wall with filter chips
+(`src/scripts/hero-collage.ts`). Keep the Live/Concept tag on every tile.
+Lighthouse 95/100/100/100, axe 0 violations on all three pages.
 
 ## Working agreements
 - Plan first with `/plan-site`, get approval, then build one phase at a time with `/build-phase N`.
