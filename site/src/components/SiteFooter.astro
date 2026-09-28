@@ -73,9 +73,9 @@ const prefix = isHome ? '' : '/';
       </div>
     </div>
 
-    <p class="site-footer__wordmark" aria-hidden="true">
-      {site.wordmark}
-    </p>
+    <div class="site-footer__wordmark-box" aria-hidden="true">
+      <p class="site-footer__wordmark">{site.wordmark}</p>
+    </div>
 
     <div class="site-footer__base">
       <p>
@@ -150,12 +150,20 @@ const prefix = isHome ? '' : '/';
     max-width: 22rem;
   }
 
+  /* Size container: the wordmark (~3.95x its font-size wide) scales to fill it exactly. */
+  .site-footer__wordmark-box {
+    container-type: inline-size;
+    margin-top: clamp(3rem, 6vw, 5rem);
+  }
+
   .site-footer .site-footer__wordmark {
     font-weight: 800;
-    font-size: clamp(4rem, 22vw, 21rem);
+    font-size: 24.6cqw;
     letter-spacing: -0.07em;
-    line-height: 0.8;
-    margin: clamp(3rem, 6vw, 5rem) 0 0;
+    /* Trailing tracking would clip the fill on the final N; give that space back. */
+    padding-right: 0.07em;
+    line-height: 0.86;
+    margin: 0;
     background: linear-gradient(
       180deg,
       var(--acid) 0%,
