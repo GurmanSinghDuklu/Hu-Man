@@ -1,8 +1,9 @@
 ---
 /**
- * Hero wordmark animation. The separator between HU and MAN cycles through
- * brand variants (Hu/Man, Hu.Man, Hu*Man...), slows like a slot machine,
- * lands on one, then vanishes as HU and MAN close up and turn extra bold.
+ * Hero wordmark loop. The separator between HU and MAN steps through brand
+ * variants (Hu/Man, Hu.Man, Hu*Man...), ~2 s each, then vanishes as HU and
+ * MAN close up, turn extra bold and sweep from white to neon green; then it
+ * reopens on the first separator and repeats.
  * Pure CSS/JS (no video file): sharp at any size, ~1 kB. Decorative:
  * the heading below carries the meaning. Driven by scripts/wordmark-intro.ts.
  */
@@ -43,18 +44,29 @@
     color: #fff;
     white-space: nowrap;
     transition:
-      font-weight 1.1s var(--ease-out),
-      letter-spacing 1.1s var(--ease-out);
+      font-weight 1.2s var(--ease-out),
+      letter-spacing 1.2s var(--ease-out);
   }
 
+  /* Top half white, bottom half neon; sliding the background swaps colour. */
   .wm__part {
     display: inline-block;
-    background: linear-gradient(180deg, #ffffff 30%, #c9cdd3 100%);
+    background-image: linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #c9cdd3 50%,
+      var(--acid) 50%,
+      var(--neon) 100%
+    );
+    background-size: 100% 200%;
+    background-position: 0 0;
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
     padding-right: 0.05em;
-    transition: filter 1.1s var(--ease-out);
+    transition:
+      background-position 1.2s var(--ease-out),
+      filter 1.2s var(--ease-out);
   }
 
   /* Fixed-width slot so the word never jitters while glyphs change. */
@@ -79,19 +91,11 @@
       filter 0.4s var(--ease-out);
   }
 
-  .wm__sep.is-tick {
-    animation: tick 0.18s var(--ease-out);
-  }
-
-  @keyframes tick {
-    from {
-      transform: translateY(-0.18em) scale(0.8);
-      opacity: 0.4;
-    }
-  }
-
-  .wm.is-landed .wm__sep {
-    filter: drop-shadow(0 0 0.3em rgba(0, 255, 48, 0.95));
+  /* Separator swap: slide up and out, new glyph drops back in. */
+  .wm__sep.is-out {
+    transform: translateY(-0.25em);
+    opacity: 0;
+    transition-duration: 0.26s;
   }
 
   /* Final state: separator gone, gap closed, extra bold. */
@@ -111,7 +115,8 @@
   }
 
   .wm.is-merged .wm__part {
-    filter: drop-shadow(0 0 0.35em rgba(0, 255, 48, 0.18));
+    background-position: 0 100%;
+    filter: drop-shadow(0 0 0.3em rgba(0, 255, 48, 0.3));
   }
 
   @media (prefers-reduced-motion: reduce) {

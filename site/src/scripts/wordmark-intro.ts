@@ -1,45 +1,52 @@
 /**
- * Slot-machine cycle through separator variants, land on a random one,
- * pause, then merge into HUMAN. Reduced motion: jump straight to the end.
+ * Hero wordmark loop: show each separator variant (Hu/Man, Hu.Man, Hu*Man...)
+ * for ~2 s, then close the gap into a bold green HUMAN, hold, reopen on the
+ * starting separator and go again. Reduced motion: static green HUMAN.
  */
 const SEPARATORS = ['/', '.', '*', '_', '-', '+', '&', ':', '×', '~', '|', '#', '•'];
-const STEPS = 22;
+const HOLD_MS = 2000; // each separator
+const SWAP_MS = 260; // slide out before the glyph changes
+const MERGED_HOLD_MS = 3200; // green HUMAN on screen
+const MERGE_MS = 1200; // matches the CSS merge transition
 
 const root = document.querySelector<HTMLElement>('[data-wordmark]');
 const sep = root?.querySelector<HTMLElement>('[data-wordmark-sep]');
 
-function wait(ms: number): Promise<void> {
-  return new Promise((resolve) => window.setTimeout(resolve, ms));
+const wait = (ms: number) => new Promise<void>((resolve) => window.setTimeout(resolve, ms));
+
+async function swapTo(glyph: HTMLElement, text: string): Promise<void> {
+  glyph.classList.add('is-out');
+  await wait(SWAP_MS);
+  glyph.textContent = text;
+  glyph.classList.remove('is-out');
 }
 
-async function run(el: HTMLElement, glyph: HTMLElement): Promise<void> {
+async function loop(el: HTMLElement, glyph: HTMLElement): Promise<void> {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     el.classList.add('is-merged');
     return;
   }
   await document.fonts?.ready;
-  await wait(500);
+  glyph.textContent = SEPARATORS[0]!;
 
-  let last = glyph.textContent ?? '/';
-  for (let i = 0; i < STEPS; i++) {
-    let next = last;
-    while (next === last) next = SEPARATORS[Math.floor(Math.random() * SEPARATORS.length)]!;
-    last = next;
-    glyph.textContent = next;
-    glyph.classList.remove('is-tick');
-    void glyph.offsetWidth; // restart the tick animation
-    glyph.classList.add('is-tick');
-    // Ease out: fast at first, slowing like a reel coming to rest.
-    const t = i / (STEPS - 1);
-    await wait(55 + Math.pow(t, 3) * 420);
+  for (;;) {
+    // Starting separator is already showing; hold it, then step through the rest.
+    await wait(HOLD_MS);
+    for (const s of SEPARATORS.slice(1)) {
+      await swapTo(glyph, s);
+      await wait(HOLD_MS - SWAP_MS);
+    }
+
+    el.classList.add('is-merged');
+    await wait(MERGE_MS + MERGED_HOLD_MS);
+
+    // Reopen on the starting separator (swap while it is invisible).
+    glyph.textContent = SEPARATORS[0]!;
+    el.classList.remove('is-merged');
+    await wait(MERGE_MS);
   }
-
-  el.classList.add('is-landed');
-  await wait(900);
-  el.classList.remove('is-landed');
-  el.classList.add('is-merged');
 }
 
-if (root && sep) void run(root, sep);
+if (root && sep) void loop(root, sep);
 
 export {};

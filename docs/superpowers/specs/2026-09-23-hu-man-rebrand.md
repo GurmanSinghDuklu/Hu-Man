@@ -118,3 +118,9 @@ from 55 ms to ~475 ms), lands on a random one with a glow flash, then disappears
 close up and the weight animates 560 → 800, ending on "HUMAN". Built in CSS/JS rather than a
 video file so it stays sharp and weighs ~1 kB. Runs once per load; reduced motion shows the
 final HUMAN immediately; without JS it stays HU/MAN. The slogan h1 sits below it.
+
+## Revision 9 (2026-09-28): slower, green, looping wordmark
+Each separator now holds ~2 s and they run in a fixed order starting with "/". After the last one
+the word merges, turns bold and sweeps from white to neon green (a two-tone gradient whose
+background-position slides), holds ~3 s, then reopens on "/" in white and loops (~31 s cycle).
+Reduced motion: static green HUMAN.
