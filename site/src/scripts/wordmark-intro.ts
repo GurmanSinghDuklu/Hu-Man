@@ -1,38 +1,59 @@
 /**
- * Hero wordmark loop, Spider-Verse misprint style: hold white HU?MAN on an
- * alternate separator, glitch (plates slip, strips tear, separators flicker
- * through variants at ~12 fps), snap to bold green HU/MAN, hold, glitch back
- * to white on the next separator. Pauses while off screen or in a hidden tab.
- * Reduced motion: static green HU/MAN.
+ * Hero wordmark loop, Spider-Verse misprint style: every 2 s HU/MAN glitches
+ * into the next alternate typeface (plates slip, strips tear, ~12 fps stutter).
+ * After the last one it glitches back to the brand logo and holds it, clean,
+ * for 30 s, then runs again. Pauses while off screen or in a hidden tab.
+ * Reduced motion: the static brand logo only.
  *
- * Flash safety (WCAG 2.3.1): the white/green swap happens at most twice per
- * glitch, never more than three times in any second. Per-frame changes are
- * position only.
+ * Flash safety (WCAG 2.3.1): each glitch swaps the style at most three times,
+ * and glitches are 2 s apart, so never more than three flashes in a second.
  */
-const SEPARATORS = ['.', '*', '_', '-', '+', '&', ':', '×', '~', '|', '#', '•'];
-const FINAL = '/';
+const STEP_MS = 2000; // one alternate style, glitch included
 const FRAME_MS = 83; // ~12 fps, animated "on twos"
-const WHITE_HOLD_MS = 2200;
-const GREEN_HOLD_MS = 3400;
-const BIG_GLITCH_FRAMES = 14;
-const SMALL_GLITCH_FRAMES = 6;
+const GLITCH_FRAMES = 6;
+const FINAL_GLITCH_FRAMES = 10;
+const INTRO_HOLD_MS = 1500; // brand logo before the first glitch
+const LOGO_HOLD_MS = 30000; // clean brand logo after the run
+const FIT_WIDTH = 0.86; // share of the column the word may fill
+const FIT_HEIGHT = 1.3; // multiple of the stage height a glyph line may fill
 
 const root = document.querySelector<HTMLElement>('[data-wordmark]');
 
 const wait = (ms: number) => new Promise<void>((resolve) => window.setTimeout(resolve, ms));
 const rand = (min: number, max: number) => min + Math.random() * (max - min);
-const pick = <T>(list: readonly T[]): T => list[Math.floor(Math.random() * list.length)]!;
 const em = (n: number) => `${n.toFixed(3)}em`;
 
 function run(el: HTMLElement): void {
-  const seps = [...el.querySelectorAll<HTMLElement>('[data-wordmark-sep]')];
+  const count = Number(el.dataset.styles) || 0;
+  const stage = el.querySelector<HTMLElement>('.wm__stage');
+  const measure = el.querySelector<HTMLElement>('[data-wordmark-measure]');
   const strips = [...el.querySelectorAll<HTMLElement>('[data-wordmark-strip]')];
+  if (!stage || !measure) return;
 
-  const setSep = (glyph: string) => seps.forEach((s) => (s.textContent = glyph));
+  // Scale the current style so every typeface fills the column about equally.
+  const fit = () => {
+    const w = measure.offsetWidth;
+    const h =
+      measure.offsetHeight * Number(getComputedStyle(el).getPropertyValue('--stretch') || 1);
+    if (!w || !h) return;
+    const scale = Math.min(
+      (stage.clientWidth * FIT_WIDTH) / w,
+      (stage.clientHeight * FIT_HEIGHT) / h,
+    );
+    el.style.setProperty('--fit', scale.toFixed(3));
+  };
+
+  // 0 = brand logo, 1..count = alternate styles.
+  const setStyle = (n: number) => {
+    if (n === 0) delete el.dataset.style;
+    else el.dataset.style = String(n);
+    fit();
+  };
+
+  new ResizeObserver(fit).observe(stage);
 
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    setSep(FINAL);
-    el.classList.add('is-merged');
+    void document.fonts?.ready.then(fit);
     return;
   }
 
@@ -53,25 +74,17 @@ function run(el: HTMLElement): void {
   document.addEventListener('visibilitychange', resumeIfActive);
   const whenActive = () =>
     active() ? Promise.resolve() : new Promise<void>((resolve) => (wake = resolve));
-
   const pause = async (ms: number) => {
     await wait(ms);
     await whenActive();
   };
 
-  // Plate register at rest: a faint misprint that never fully lines up.
   const settle = () => {
-    const s = el.style;
-    s.setProperty('--jx', '0em');
-    s.setProperty('--jy', '0em');
-    s.setProperty('--sk', '0deg');
-    s.setProperty('--sy', '1');
-    s.setProperty('--cx', em(0.012));
-    s.setProperty('--cy', '0em');
-    s.setProperty('--mx', em(-0.012));
-    s.setProperty('--my', em(0.006));
-    s.setProperty('--yx', '0em');
-    s.setProperty('--yy', em(-0.008));
+    for (const v of ['--jx', '--jy', '--cx', '--cy', '--mx', '--my', '--yx', '--yy']) {
+      el.style.setProperty(v, '0em');
+    }
+    el.style.setProperty('--sk', '0deg');
+    el.style.setProperty('--sy', '1');
     strips.forEach((strip) => (strip.style.transform = ''));
   };
 
@@ -93,53 +106,37 @@ function run(el: HTMLElement): void {
       strip.style.transform =
         Math.random() < 0.4 ? `translateX(${em(rand(-0.14, 0.14) * power)})` : '';
     });
-    if (Math.random() < 0.6) setSep(pick(SEPARATORS.concat(FINAL)));
   };
 
-  // A glitch burst that lands on `merged` (green HU/MAN) or white with `endSep`.
-  // The colour flips once mid-burst (and once early on big bursts), so it never
-  // flashes faster than WCAG allows.
-  const glitch = async (frames: number, merged: boolean, endSep: string) => {
+  // Glitch from style `from` to style `to`: a flicker of the new style early
+  // on, back to the old one, then the real swap, settling into place.
+  const glitch = async (from: number, to: number, frames: number) => {
     el.classList.add('is-glitch');
-    const flipAt = Math.floor(frames * 0.6);
-    const earlyAt = frames > 10 ? 2 : -1;
     for (let i = 0; i < frames; i++) {
-      const power = i < frames - 2 ? 1 : 0.35; // ease into the snap
-      frame(power);
-      if (i === earlyAt) el.classList.toggle('is-merged', merged);
-      if (i === earlyAt + 4 && earlyAt >= 0) el.classList.toggle('is-merged', !merged);
-      if (i === flipAt) el.classList.toggle('is-merged', merged);
+      frame(i < frames - 2 ? 1 : 0.35);
+      if (i === 1) setStyle(to);
+      if (i === 2) setStyle(from);
+      if (i === Math.floor(frames / 2)) setStyle(to);
       await wait(FRAME_MS);
     }
-    setSep(endSep);
-    settle();
-    el.classList.remove('is-glitch');
-  };
-
-  // Tiny blip while holding: two frames of plate slip, no colour change.
-  const blip = async () => {
-    el.classList.add('is-glitch');
-    frame(0.4);
-    await wait(FRAME_MS);
-    frame(0.25);
-    await wait(FRAME_MS);
     settle();
     el.classList.remove('is-glitch');
   };
 
   const loop = async () => {
     await document.fonts?.ready;
-    let i = 0;
-    setSep(SEPARATORS[i]!);
+    setStyle(0);
     settle();
+    await pause(INTRO_HOLD_MS);
     for (;;) {
-      await pause(WHITE_HOLD_MS * 0.55);
-      await blip();
-      await pause(WHITE_HOLD_MS * 0.45);
-      await glitch(BIG_GLITCH_FRAMES, true, FINAL);
-      await pause(GREEN_HOLD_MS);
-      i = (i + 1) % SEPARATORS.length;
-      await glitch(SMALL_GLITCH_FRAMES, false, SEPARATORS[i]!);
+      let current = 0;
+      for (let n = 1; n <= count; n++) {
+        await glitch(current, n, GLITCH_FRAMES);
+        current = n;
+        await pause(STEP_MS - GLITCH_FRAMES * FRAME_MS);
+      }
+      await glitch(current, 0, FINAL_GLITCH_FRAMES);
+      await pause(LOGO_HOLD_MS);
     }
   };
 

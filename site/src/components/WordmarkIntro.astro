@@ -1,16 +1,196 @@
 ---
 /**
- * Hero wordmark, Spider-Verse misprint style. HU?MAN sits in white with an
- * alternate separator (Hu.Man, Hu*Man...), then glitches: halftone colour
- * plates (cyan, magenta, acid) slip out of register, horizontal strips tear
- * sideways and the frame stutters at ~12 fps, before it snaps into the bold
- * green brand form HU/MAN. A short glitch takes it back to white on the next
- * separator, and it repeats.
+ * Hero wordmark, Spider-Verse misprint style. HU/MAN glitches every 2 s into a
+ * different typeface and treatment (20 "alternate universe" versions), then
+ * glitches back to the brand logo and holds it, clean, for ~30 s. Each glitch:
+ * halftone colour plates slip out of register, horizontal strips tear sideways
+ * and the frame stutters at ~12 fps.
  *
- * Pure CSS/JS (no video file): sharp at any size, ~2 kB. Only transforms and
- * opacity change per frame; every clip-path is static. Decorative: the heading
- * below carries the meaning. Driven by scripts/wordmark-intro.ts.
+ * Fonts are self-hosted (Plus Jakarta Sans, Newsreader) or common system faces
+ * with generic fallbacks, so no extra downloads. Each style also differs in
+ * fill, stroke or case, so it still reads as a new version if a system font is
+ * missing. The script scales each version to fit the column.
+ *
+ * Only transforms and opacity change per frame; every clip-path is static.
+ * Decorative: the heading below carries the meaning. Driven by
+ * scripts/wordmark-intro.ts.
  */
+
+interface WordStyle {
+  font: string;
+  weight?: number;
+  italic?: boolean;
+  tracking?: string;
+  case?: 'uppercase' | 'lowercase' | 'none';
+  fill: string; // CSS background, clipped to the text
+  stroke?: string; // -webkit-text-stroke
+  sep?: string; // separate colour for the slash
+  effect?: string; // filter
+  stretch?: number; // vertical stretch
+}
+
+const JAKARTA = "'Plus Jakarta Sans Variable', system-ui, sans-serif";
+const WHITE = 'linear-gradient(#fff, #fff)';
+const NEON = 'linear-gradient(#00ff30, #00ff30)';
+const ACID = 'linear-gradient(#adff00, #adff00)';
+const BRAND = 'linear-gradient(180deg, #adff00, #00ff30)';
+
+const STYLES: WordStyle[] = [
+  {
+    font: "'Newsreader Variable', Georgia, serif",
+    weight: 300,
+    italic: true,
+    tracking: '-0.03em',
+    case: 'none',
+    fill: WHITE,
+    sep: '#00ff30',
+  },
+  {
+    font: "Menlo, Consolas, 'Courier New', monospace",
+    weight: 700,
+    tracking: '-0.02em',
+    case: 'lowercase',
+    fill: NEON,
+    effect: 'drop-shadow(0 0 0.12em rgba(0, 255, 48, 0.6))',
+  },
+  {
+    font: "'Helvetica Neue', Arial, sans-serif",
+    weight: 700,
+    fill: 'none',
+    stroke: '0.012em #fff',
+  },
+  {
+    font: "Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif",
+    weight: 400,
+    tracking: '0',
+    fill: ACID,
+  },
+  {
+    font: "Didot, 'Bodoni 72', 'Bodoni MT', 'Times New Roman', serif",
+    weight: 400,
+    tracking: '0.06em',
+    fill: WHITE,
+    sep: '#00ff30',
+  },
+  {
+    font: "'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive",
+    weight: 700,
+    tracking: '-0.02em',
+    case: 'none',
+    fill: 'linear-gradient(#ffe600, #ffe600)',
+    stroke: '0.008em #07080a',
+    effect: 'drop-shadow(0.05em 0.05em 0 #ff2bd6)',
+  },
+  {
+    font: "'American Typewriter', 'Courier New', Courier, monospace",
+    weight: 400,
+    tracking: '-0.02em',
+    case: 'none',
+    fill: 'linear-gradient(#f2ebdd, #f2ebdd)',
+    sep: '#00ff30',
+  },
+  {
+    font: "'Snell Roundhand', 'Brush Script MT', 'Segoe Script', cursive",
+    weight: 700,
+    tracking: '0',
+    case: 'none',
+    fill: BRAND,
+    sep: '#fff',
+  },
+  {
+    font: "Copperplate, 'Copperplate Gothic Bold', 'Engravers MT', serif",
+    weight: 700,
+    tracking: '0.08em',
+    fill: WHITE,
+    sep: '#adff00',
+  },
+  {
+    font: "Futura, 'Century Gothic', 'Avenir Next', sans-serif",
+    weight: 500,
+    tracking: '-0.04em',
+    case: 'lowercase',
+    fill: NEON,
+  },
+  { font: JAKARTA, weight: 200, tracking: '0.18em', fill: WHITE, sep: '#00ff30' },
+  {
+    font: JAKARTA,
+    weight: 800,
+    italic: true,
+    tracking: '-0.05em',
+    fill: 'linear-gradient(180deg, #fff 0%, #9aa3ad 45%, #2b3138 50%, #e6eaee 56%, #7d8690 100%)',
+  },
+  {
+    font: "'Arial Black', 'Helvetica Neue', Arial, sans-serif",
+    weight: 900,
+    tracking: '-0.04em',
+    fill: 'radial-gradient(circle, #00ff30 0 45%, transparent 50%) 0 0 / 0.06em 0.06em',
+  },
+  {
+    font: "Rockwell, 'Rockwell Extra Bold', 'Roboto Slab', serif",
+    weight: 700,
+    tracking: '-0.01em',
+    fill: WHITE,
+  },
+  {
+    font: "'Arial Rounded MT Bold', ui-rounded, Nunito, sans-serif",
+    weight: 700,
+    tracking: '-0.03em',
+    case: 'lowercase',
+    fill: BRAND,
+  },
+  {
+    font: 'Menlo, Consolas, monospace',
+    weight: 700,
+    tracking: '0.04em',
+    fill: 'repeating-linear-gradient(180deg, #00ff30 0 0.03em, transparent 0.03em 0.05em)',
+  },
+  {
+    font: 'Georgia, serif',
+    weight: 700,
+    italic: true,
+    tracking: '-0.03em',
+    case: 'none',
+    fill: WHITE,
+    sep: '#00ff30',
+  },
+  {
+    font: "'Avenir Next Condensed', 'Arial Narrow', sans-serif-condensed, sans-serif",
+    weight: 800,
+    tracking: '-0.02em',
+    fill: ACID,
+    stretch: 1.3,
+  },
+  {
+    font: "'Marker Felt', 'Permanent Marker', 'Segoe Print', fantasy",
+    weight: 700,
+    tracking: '-0.02em',
+    case: 'none',
+    fill: NEON,
+  },
+  {
+    font: "'Times New Roman', Times, serif",
+    weight: 700,
+    italic: true,
+    tracking: '-0.02em',
+    fill: 'linear-gradient(90deg, #00e5ff, #ff2bd6, #ffe600, #00ff30)',
+  },
+];
+
+const styleCss = STYLES.map((s, i) => {
+  const vars = [
+    `--ff: ${s.font}`,
+    `--fw: ${s.weight ?? 800}`,
+    `--fs: ${s.italic ? 'italic' : 'normal'}`,
+    `--tr: ${s.tracking ?? '-0.04em'}`,
+    `--tt: ${s.case ?? 'uppercase'}`,
+    `--fill: ${s.fill}`,
+    `--stroke: ${s.stroke ?? '0 transparent'}`,
+    `--sep: ${s.sep ?? 'transparent'}`,
+    `--fx: ${s.effect ?? 'none'}`,
+    `--stretch: ${s.stretch ?? 1}`,
+  ];
+  return `.wm[data-style='${i + 1}'] { ${vars.join('; ')}; }`;
+}).join('\n');
 
 // Horizontal strips (top %, bottom %) that tile the word. During a glitch the
 // clean base layer hides and these strips shift independently.
@@ -26,27 +206,19 @@ const STRIPS: [number, number][] = [
 const PLATES = ['c', 'm', 'y'] as const;
 ---
 
-<div class="wm" aria-hidden="true" data-wordmark>
+<div class="wm" aria-hidden="true" data-wordmark data-styles={STYLES.length}>
   <div class="wm__stage">
     {PLATES.map((p) => (
-      <p class={`wm__word wm__plate wm__plate--${p}`} data-wordmark-plate>
-        <span class="wm__part">HU</span>
-        <span class="wm__slot">
-          <span class="wm__sep" data-wordmark-sep>
-            /
-          </span>
+      <p class={`wm__word wm__plate wm__plate--${p}`}>
+        <span class="wm__inner">
+          Hu<span class="wm__sep">/</span>Man
         </span>
-        <span class="wm__part">MAN</span>
       </p>
     ))}
     <p class="wm__word wm__base">
-      <span class="wm__part">HU</span>
-      <span class="wm__slot">
-        <span class="wm__sep" data-wordmark-sep>
-          /
-        </span>
+      <span class="wm__inner" data-wordmark-measure>
+        Hu<span class="wm__sep">/</span>Man
       </span>
-      <span class="wm__part">MAN</span>
     </p>
     {STRIPS.map(([top, bottom]) => (
       <p
@@ -54,17 +226,15 @@ const PLATES = ['c', 'm', 'y'] as const;
         style={`clip-path: inset(${top}% 0 ${100 - bottom}% 0)`}
         data-wordmark-strip
       >
-        <span class="wm__part">HU</span>
-        <span class="wm__slot">
-          <span class="wm__sep" data-wordmark-sep>
-            /
-          </span>
+        <span class="wm__inner">
+          Hu<span class="wm__sep">/</span>Man
         </span>
-        <span class="wm__part">MAN</span>
       </p>
     ))}
   </div>
 </div>
+
+<style is:global set:html={styleCss}></style>
 
 <script>
   import '../scripts/wordmark-intro.ts';
@@ -75,22 +245,36 @@ const PLATES = ['c', 'm', 'y'] as const;
   .wm {
     container-type: inline-size;
     margin-block: clamp(0.5rem, 2vw, 1.25rem) clamp(1.75rem, 3.5vw, 2.5rem);
-    /* Per-frame offsets, written by the script. */
+    /* Brand logo (no data-style): bold green HU/MAN. */
+    --ff: 'Plus Jakarta Sans Variable', system-ui, sans-serif;
+    --fw: 800;
+    --fs: normal;
+    --tr: -0.065em;
+    --tt: uppercase;
+    --fill: linear-gradient(180deg, var(--acid), var(--neon));
+    --stroke: 0 transparent;
+    --sep: transparent;
+    --fx: drop-shadow(0 0 0.3em rgba(0, 255, 48, 0.3));
+    --stretch: 1;
+    --fit: 1;
+    /* Per-frame glitch offsets, written by the script. */
     --jx: 0em;
     --jy: 0em;
     --sk: 0deg;
     --sy: 1;
-    --cx: 0.012em;
+    --cx: 0em;
     --cy: 0em;
-    --mx: -0.012em;
-    --my: 0.006em;
+    --mx: 0em;
+    --my: 0em;
     --yx: 0em;
-    --yy: -0.008em;
+    --yy: 0em;
   }
 
+  /* Fixed height, so swapping typefaces never shifts the page below. */
   .wm__stage {
     position: relative;
     isolation: isolate;
+    height: 0.82em;
     font-size: min(22cqw, 30svh);
     transform: translate(var(--jx), var(--jy)) skewX(var(--sk)) scaleY(var(--sy));
   }
@@ -105,69 +289,66 @@ const PLATES = ['c', 'm', 'y'] as const;
     pointer-events: none;
   }
 
+  /* Every layer is the same word, centred in a box taller than the stage so
+     strip clipping never cuts off tall or low glyphs. */
   .wm__word {
+    position: absolute;
+    inset: -0.3em 0;
     margin: 0;
     display: flex;
     justify-content: center;
-    align-items: baseline;
-    font-size: 1em;
-    line-height: 0.82;
-    font-weight: 560;
-    letter-spacing: -0.05em;
+    align-items: center;
     white-space: nowrap;
   }
 
-  /* Clean layer: white over a faint Ben-Day dot texture. */
+  .wm__inner {
+    display: inline-block;
+    padding-inline: 0.04em;
+    font-family: var(--ff);
+    font-weight: var(--fw);
+    font-style: var(--fs);
+    letter-spacing: var(--tr);
+    text-transform: var(--tt);
+    line-height: 1;
+    background: var(--fill);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-stroke: var(--stroke);
+    filter: var(--fx);
+    transform: scale(var(--fit), calc(var(--fit) * var(--stretch)));
+  }
+
+  .wm__sep {
+    color: var(--sep);
+  }
+
   .wm__base,
   .wm__strip {
-    position: relative;
     z-index: 2;
   }
 
-  .wm__base .wm__part,
-  .wm__strip .wm__part {
-    display: inline-block;
-    background-image:
-      radial-gradient(circle, rgba(7, 8, 10, 0.22) 0 28%, transparent 33%),
-      linear-gradient(180deg, #ffffff 0%, #c9cdd3 100%);
-    background-size:
-      0.045em 0.045em,
-      100% 100%;
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    padding-right: 0.05em;
-  }
-
-  .wm__base .wm__sep,
-  .wm__strip .wm__sep {
-    color: var(--neon);
-  }
-
   .wm__strip {
-    position: absolute;
-    inset: 0;
     opacity: 0;
   }
 
-  /* Colour plates: halftone dots in one ink each, slightly off register. */
+  /* Colour plates: halftone dots in one ink each, only seen while glitching. */
   .wm__plate {
-    position: absolute;
-    inset: 0;
     z-index: 1;
     mix-blend-mode: screen;
-    opacity: 0.55;
+    opacity: 0;
   }
 
-  .wm__plate .wm__part,
-  .wm__plate .wm__sep {
-    display: inline-block;
-    background-image: radial-gradient(circle, var(--ink) 0 46%, transparent 52%);
-    background-size: 0.04em 0.04em;
+  .wm__plate .wm__inner {
+    background: radial-gradient(circle, var(--ink) 0 46%, transparent 52%) 0 0 / 0.04em 0.04em;
     -webkit-background-clip: text;
     background-clip: text;
+    -webkit-text-stroke: 0 transparent;
+    filter: none;
+  }
+
+  .wm__plate .wm__sep {
     color: transparent;
-    padding-right: 0.05em;
   }
 
   .wm__plate--c {
@@ -185,17 +366,6 @@ const PLATES = ['c', 'm', 'y'] as const;
     transform: translate(var(--yx), var(--yy));
   }
 
-  /* Fixed-width slot so the word never jitters while glyphs change. */
-  .wm__slot {
-    display: inline-flex;
-    justify-content: center;
-    width: 0.62em;
-  }
-
-  .wm__sep {
-    display: inline-block;
-  }
-
   /* Glitching: strips replace the clean layer, plates fully inked. */
   .wm.is-glitch .wm__base {
     opacity: 0;
@@ -205,44 +375,5 @@ const PLATES = ['c', 'm', 'y'] as const;
   .wm.is-glitch .wm__plate,
   .wm.is-glitch .wm__stage::after {
     opacity: 1;
-  }
-
-  /* Brand state: bold green HU/MAN, slash tightened into the word. */
-  .wm.is-merged .wm__word {
-    font-weight: 800;
-    letter-spacing: -0.065em;
-  }
-
-  .wm.is-merged .wm__slot {
-    width: 0.46em;
-  }
-
-  .wm.is-merged .wm__base .wm__part,
-  .wm.is-merged .wm__strip .wm__part,
-  .wm.is-merged .wm__base .wm__sep,
-  .wm.is-merged .wm__strip .wm__sep {
-    background-image:
-      radial-gradient(circle, rgba(7, 8, 10, 0.18) 0 28%, transparent 33%),
-      linear-gradient(180deg, var(--acid), var(--neon));
-    background-size:
-      0.045em 0.045em,
-      100% 100%;
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-
-  .wm.is-merged .wm__base {
-    filter: drop-shadow(0 0 0.3em rgba(0, 255, 48, 0.3));
-  }
-
-  .wm.is-merged:not(.is-glitch) .wm__plate {
-    opacity: 0.35;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .wm__plate {
-      display: none;
-    }
   }
 </style>

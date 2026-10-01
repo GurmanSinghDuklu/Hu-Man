@@ -141,3 +141,15 @@ then a short burst returns it to white on the next separator. Only transforms an
 per frame (strip clip-paths are static). The white/green swap happens at most three times per
 burst, inside WCAG 2.3.1's three-flashes-a-second limit. Pauses off screen and in hidden tabs.
 Reduced motion: static green HU/MAN without plates.
+
+## Revision 12 (2026-10-01): alternate-universe typefaces
+No more separator symbols: the word is always HU/MAN (or Hu/Man / hu/man). Every 2 s it glitches
+into the next of 20 typeface treatments (Newsreader italic, mono, outline, Impact, Didot, comic,
+typewriter, script, Copperplate, Futura, hairline, chrome, halftone, Rockwell, rounded, LCD,
+Georgia, condensed, marker, WordArt), then glitches back to the bold green brand logo and holds it
+with no effect for 30 s (~72 s cycle). Styles live as data in `WordmarkIntro.astro`; fonts are
+self-hosted or system faces with generic fallbacks (no new downloads), and each style also differs
+in fill, stroke or case so a missing system font still reads as a new version. The script scales
+each style to fill the column and the stage has a fixed height, so nothing below shifts. Use
+`data-styles`, not `data-count`, on the wordmark: `motion.ts` turns any `[data-count]` element into
+a number count-up.
