@@ -1,24 +1,69 @@
 ---
 /**
- * Hero wordmark loop. The separator between HU and MAN steps through brand
- * variants (Hu.Man, Hu*Man, Hu_Man...), ~1 s each, then settles on "/" as the
- * gap tightens and the word turns extra bold and sweeps from white to neon
- * green (HU/MAN); then it reopens on the first separator and repeats.
- * Pure CSS/JS (no video file): sharp at any size, ~1 kB. Decorative:
- * the heading below carries the meaning. Driven by scripts/wordmark-intro.ts.
+ * Hero wordmark, Spider-Verse misprint style. HU?MAN sits in white with an
+ * alternate separator (Hu.Man, Hu*Man...), then glitches: halftone colour
+ * plates (cyan, magenta, acid) slip out of register, horizontal strips tear
+ * sideways and the frame stutters at ~12 fps, before it snaps into the bold
+ * green brand form HU/MAN. A short glitch takes it back to white on the next
+ * separator, and it repeats.
+ *
+ * Pure CSS/JS (no video file): sharp at any size, ~2 kB. Only transforms and
+ * opacity change per frame; every clip-path is static. Decorative: the heading
+ * below carries the meaning. Driven by scripts/wordmark-intro.ts.
  */
+
+// Horizontal strips (top %, bottom %) that tile the word. During a glitch the
+// clean base layer hides and these strips shift independently.
+const STRIPS: [number, number][] = [
+  [0, 16],
+  [16, 29],
+  [29, 47],
+  [47, 58],
+  [58, 76],
+  [76, 88],
+  [88, 100],
+];
+const PLATES = ['c', 'm', 'y'] as const;
 ---
 
 <div class="wm" aria-hidden="true" data-wordmark>
-  <p class="wm__word">
-    <span class="wm__part">HU</span>
-    <span class="wm__slot">
-      <span class="wm__sep" data-wordmark-sep>
-        /
+  <div class="wm__stage">
+    {PLATES.map((p) => (
+      <p class={`wm__word wm__plate wm__plate--${p}`} data-wordmark-plate>
+        <span class="wm__part">HU</span>
+        <span class="wm__slot">
+          <span class="wm__sep" data-wordmark-sep>
+            /
+          </span>
+        </span>
+        <span class="wm__part">MAN</span>
+      </p>
+    ))}
+    <p class="wm__word wm__base">
+      <span class="wm__part">HU</span>
+      <span class="wm__slot">
+        <span class="wm__sep" data-wordmark-sep>
+          /
+        </span>
       </span>
-    </span>
-    <span class="wm__part">MAN</span>
-  </p>
+      <span class="wm__part">MAN</span>
+    </p>
+    {STRIPS.map(([top, bottom]) => (
+      <p
+        class="wm__word wm__strip"
+        style={`clip-path: inset(${top}% 0 ${100 - bottom}% 0)`}
+        data-wordmark-strip
+      >
+        <span class="wm__part">HU</span>
+        <span class="wm__slot">
+          <span class="wm__sep" data-wordmark-sep>
+            /
+          </span>
+        </span>
+        <span class="wm__part">MAN</span>
+      </p>
+    ))}
+  </div>
 </div>
 
 <script>
@@ -30,6 +75,34 @@
   .wm {
     container-type: inline-size;
     margin-block: clamp(0.5rem, 2vw, 1.25rem) clamp(1.75rem, 3.5vw, 2.5rem);
+    /* Per-frame offsets, written by the script. */
+    --jx: 0em;
+    --jy: 0em;
+    --sk: 0deg;
+    --sy: 1;
+    --cx: 0.012em;
+    --cy: 0em;
+    --mx: -0.012em;
+    --my: 0.006em;
+    --yx: 0em;
+    --yy: -0.008em;
+  }
+
+  .wm__stage {
+    position: relative;
+    isolation: isolate;
+    font-size: min(22cqw, 30svh);
+    transform: translate(var(--jx), var(--jy)) skewX(var(--sk)) scaleY(var(--sy));
+  }
+
+  /* Print scanlines over the stage, only during a glitch. */
+  .wm__stage::after {
+    content: '';
+    position: absolute;
+    inset: -0.05em -0.1em;
+    background: repeating-linear-gradient(180deg, rgba(7, 8, 10, 0.55) 0 2px, transparent 2px 5px);
+    opacity: 0;
+    pointer-events: none;
   }
 
   .wm__word {
@@ -37,36 +110,79 @@
     display: flex;
     justify-content: center;
     align-items: baseline;
-    font-size: min(22cqw, 30svh);
+    font-size: 1em;
     line-height: 0.82;
     font-weight: 560;
     letter-spacing: -0.05em;
-    color: #fff;
     white-space: nowrap;
-    transition:
-      font-weight 1.2s var(--ease-out),
-      letter-spacing 1.2s var(--ease-out);
   }
 
-  /* Top half white, bottom half neon; sliding the background swaps colour. */
-  .wm__part {
+  /* Clean layer: white over a faint Ben-Day dot texture. */
+  .wm__base,
+  .wm__strip {
+    position: relative;
+    z-index: 2;
+  }
+
+  .wm__base .wm__part,
+  .wm__strip .wm__part {
     display: inline-block;
-    background-image: linear-gradient(
-      180deg,
-      #ffffff 0%,
-      #c9cdd3 50%,
-      var(--acid) 50%,
-      var(--neon) 100%
-    );
-    background-size: 100% 200%;
-    background-position: 0 0;
+    background-image:
+      radial-gradient(circle, rgba(7, 8, 10, 0.22) 0 28%, transparent 33%),
+      linear-gradient(180deg, #ffffff 0%, #c9cdd3 100%);
+    background-size:
+      0.045em 0.045em,
+      100% 100%;
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
     padding-right: 0.05em;
-    transition:
-      background-position 1.2s var(--ease-out),
-      filter 1.2s var(--ease-out);
+  }
+
+  .wm__base .wm__sep,
+  .wm__strip .wm__sep {
+    color: var(--neon);
+  }
+
+  .wm__strip {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+  }
+
+  /* Colour plates: halftone dots in one ink each, slightly off register. */
+  .wm__plate {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    mix-blend-mode: screen;
+    opacity: 0.55;
+  }
+
+  .wm__plate .wm__part,
+  .wm__plate .wm__sep {
+    display: inline-block;
+    background-image: radial-gradient(circle, var(--ink) 0 46%, transparent 52%);
+    background-size: 0.04em 0.04em;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    padding-right: 0.05em;
+  }
+
+  .wm__plate--c {
+    --ink: #00e5ff;
+    transform: translate(var(--cx), var(--cy));
+  }
+
+  .wm__plate--m {
+    --ink: #ff2bd6;
+    transform: translate(var(--mx), var(--my));
+  }
+
+  .wm__plate--y {
+    --ink: var(--acid);
+    transform: translate(var(--yx), var(--yy));
   }
 
   /* Fixed-width slot so the word never jitters while glyphs change. */
@@ -74,60 +190,59 @@
     display: inline-flex;
     justify-content: center;
     width: 0.62em;
-    overflow: visible;
-    transition:
-      width 0.9s var(--ease-out) 0.15s,
-      margin 0.9s var(--ease-out) 0.15s;
   }
 
   .wm__sep {
     display: inline-block;
-    color: var(--neon);
-    font-weight: inherit;
-    filter: drop-shadow(0 0 0.12em rgba(0, 255, 48, 0.55));
-    transition:
-      transform 0.5s var(--ease-out),
-      opacity 0.4s var(--ease-out),
-      filter 0.4s var(--ease-out);
   }
 
-  /* Separator swap: slide up and out, new glyph drops back in. */
-  .wm__sep.is-out {
-    transform: translateY(-0.25em);
+  /* Glitching: strips replace the clean layer, plates fully inked. */
+  .wm.is-glitch .wm__base {
     opacity: 0;
-    transition-duration: 0.26s;
   }
 
-  /* Final state: separator gone, gap closed, extra bold. */
-  /* Final state: "/" tightens into the word, bold, same green as the letters. */
-  .wm.is-merged .wm__slot {
-    width: 0.46em;
+  .wm.is-glitch .wm__strip,
+  .wm.is-glitch .wm__plate,
+  .wm.is-glitch .wm__stage::after {
+    opacity: 1;
   }
 
-  .wm.is-merged .wm__sep {
-    color: transparent;
-    background-image: linear-gradient(180deg, var(--acid), var(--neon));
-    -webkit-background-clip: text;
-    background-clip: text;
-    filter: drop-shadow(0 0 0.3em rgba(0, 255, 48, 0.3));
-  }
-
+  /* Brand state: bold green HU/MAN, slash tightened into the word. */
   .wm.is-merged .wm__word {
     font-weight: 800;
     letter-spacing: -0.065em;
   }
 
-  .wm.is-merged .wm__part {
-    background-position: 0 100%;
+  .wm.is-merged .wm__slot {
+    width: 0.46em;
+  }
+
+  .wm.is-merged .wm__base .wm__part,
+  .wm.is-merged .wm__strip .wm__part,
+  .wm.is-merged .wm__base .wm__sep,
+  .wm.is-merged .wm__strip .wm__sep {
+    background-image:
+      radial-gradient(circle, rgba(7, 8, 10, 0.18) 0 28%, transparent 33%),
+      linear-gradient(180deg, var(--acid), var(--neon));
+    background-size:
+      0.045em 0.045em,
+      100% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .wm.is-merged .wm__base {
     filter: drop-shadow(0 0 0.3em rgba(0, 255, 48, 0.3));
   }
 
+  .wm.is-merged:not(.is-glitch) .wm__plate {
+    opacity: 0.35;
+  }
+
   @media (prefers-reduced-motion: reduce) {
-    .wm__word,
-    .wm__slot,
-    .wm__sep,
-    .wm__part {
-      transition: none;
+    .wm__plate {
+      display: none;
     }
   }
 </style>

@@ -130,3 +130,14 @@ Reduced motion: static green HUMAN.
 separator swaps to "/", the slot tightens to the slash's natural width (0.46em at weight 800) and
 the whole word, slash included, turns bold green, matching the footer wordmark. Loops back to ".".
 Reduced motion: static green HU/MAN.
+
+## Revision 11 (2026-10-01): Spider-Verse misprint glitch
+Replaces the separator slide-swap with a glitch modelled on the studio-logo opening of *Spider-Man:
+Into the Spider-Verse*. White HU?MAN (faint Ben-Day dot texture, plates slightly off register)
+holds ~2 s with one small blip, then a ~1.2 s burst at ~12 fps: cyan, magenta and acid halftone
+plates slip apart, seven horizontal strips tear sideways, the word jolts and skews, and the
+separator flickers through the variants before snapping to the bold green HU/MAN. Holds ~3.4 s,
+then a short burst returns it to white on the next separator. Only transforms and opacity change
+per frame (strip clip-paths are static). The white/green swap happens at most three times per
+burst, inside WCAG 2.3.1's three-flashes-a-second limit. Pauses off screen and in hidden tabs.
+Reduced motion: static green HU/MAN without plates.
