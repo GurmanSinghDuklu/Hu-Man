@@ -184,3 +184,7 @@ AVFoundation and cropped below the browser chrome (no tabs, address bar or menu 
 chips are now All, Live sites, Concepts and one per project. The key line spells out what each
 concept is and that the Tesla site is not affiliated with Tesla, Inc. The render JPEGs in
 `src/assets/concepts/` are no longer used on the site.
+
+Revision 15 (2026-10-01): universes reverted at Gurman's request. Back to Revision 12c (font changes
+with the nine glitch transitions, no backgrounds, no camera zooms), plus `overflow-x: clip` on the
+wordmark so glitch frames never widen the page.

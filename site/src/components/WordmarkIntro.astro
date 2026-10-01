@@ -1,25 +1,22 @@
 ---
 /**
- * Hero wordmark, modelled on the Spider-Verse opening logos. HU/MAN jumps
- * through 20 "alternate universes", one a second: each has its own typeface,
- * treatment, background world (comic dots, Marvel-red rays, paper, lens flare,
- * neon grid...) and camera (close-up crops, tilts). Between them it glitches:
- * halftone plates slip, strips tear, colour bars datamosh across the frame, a
- * light streak smears it, all stuttering at ~12 fps. Then it glitches back to
- * the brand logo on the plain hero and holds it, clean, for ~30 s.
+ * Hero wordmark, Spider-Verse misprint style. HU/MAN glitches every 2 s into a
+ * different typeface and treatment (20 "alternate universe" versions), then
+ * glitches back to the brand logo and holds it, clean, for ~30 s. Each glitch:
+ * halftone colour plates slip out of register, horizontal strips tear sideways
+ * and the frame stutters at ~12 fps.
  *
- * The background bleeds to the edges of the hero as a full-width band. Fonts
- * are self-hosted (Plus Jakarta Sans, Newsreader) or common system faces with
- * generic fallbacks, so no extra downloads; each universe also differs in
- * fill, background and framing, so it still reads as new if a font is missing.
- * The script scales each version to fit the column.
+ * Fonts are self-hosted (Plus Jakarta Sans, Newsreader) or common system faces
+ * with generic fallbacks, so no extra downloads. Each style also differs in
+ * fill, stroke or case, so it still reads as a new version if a system font is
+ * missing. The script scales each version to fit the column.
  *
  * Only transforms and opacity change per frame; every clip-path is static.
  * Decorative: the heading below carries the meaning. Driven by
  * scripts/wordmark-intro.ts.
  */
 
-interface Universe {
+interface WordStyle {
   font: string;
   weight?: number;
   italic?: boolean;
@@ -30,43 +27,15 @@ interface Universe {
   sep?: string; // separate colour for the slash
   effect?: string; // filter
   stretch?: number; // vertical stretch
-  bg?: string; // background of the full-width band
-  cam?: { zoom?: number; x?: string; y?: string; tilt?: string }; // framing
-  echo?: boolean; // outlined copies stacked out of register
 }
 
 const JAKARTA = "'Plus Jakarta Sans Variable', system-ui, sans-serif";
-const solid = (c: string) => `linear-gradient(${c}, ${c})`;
-const WHITE = solid('#fff');
-const INK = solid('#07080a');
-const NEON = solid('#00ff30');
-const ACID = solid('#adff00');
+const WHITE = 'linear-gradient(#fff, #fff)';
+const NEON = 'linear-gradient(#00ff30, #00ff30)';
+const ACID = 'linear-gradient(#adff00, #adff00)';
 const BRAND = 'linear-gradient(180deg, #adff00, #00ff30)';
 
-// Background worlds, all drawn in CSS.
-const BG = {
-  black: '#07080a',
-  sunset: 'linear-gradient(180deg, #2c2f7a 0%, #7c5aa6 45%, #e0896b 80%, #f3c48f 100%)',
-  grid: 'linear-gradient(rgba(0, 255, 48, 0.16) 1px, transparent 1px) 0 0 / 28px 28px, linear-gradient(90deg, rgba(0, 255, 48, 0.16) 1px, transparent 1px) 0 0 / 28px 28px, #07080a',
-  rays: 'repeating-conic-gradient(from 0deg at 50% 50%, #d0142f 0 5deg, #a80f26 5deg 10deg)',
-  comic:
-    'radial-gradient(circle, #ff4d1a 0 32%, transparent 36%) 0 0 / 16px 16px, linear-gradient(135deg, #ffb000, #ff7a00)',
-  paper:
-    'radial-gradient(circle, rgba(90, 50, 20, 0.12) 0 20%, transparent 24%) 0 0 / 7px 7px, radial-gradient(ellipse at 50% 50%, #f5e6cc 0%, #dcbc8c 70%, #a97a4b 100%)',
-  violet: 'linear-gradient(120deg, #5b21b6, #db2777)',
-  storm:
-    'radial-gradient(circle, rgba(255, 255, 255, 0.22) 0 30%, transparent 34%) 0 0 / 9px 9px, linear-gradient(180deg, #16181c, #4b4f57)',
-  flare:
-    'linear-gradient(180deg, transparent 48.5%, rgba(255, 255, 255, 0.95) 50%, transparent 51.5%), radial-gradient(ellipse 70% 120% at 50% 50%, #e3f1ff 0%, #6a9be0 35%, #0d1d40 80%)',
-  teal: '#2de2d0',
-  disc: 'radial-gradient(circle closest-side at 50% 50%, #ffe600 0 45%, #1d4ed8 46% 99%, transparent 100%), radial-gradient(circle, #00ff30 0 26%, transparent 30%) 0 0 / 22px 22px, #07080a',
-  cmy: 'radial-gradient(circle, #00e5ff 0 26%, transparent 30%) 0 0 / 18px 18px, radial-gradient(circle, #ff2bd6 0 26%, transparent 30%) 6px 6px / 18px 18px, radial-gradient(circle, #ffe600 0 26%, transparent 30%) 12px 12px / 18px 18px, #f6f2ea',
-  graffiti:
-    'linear-gradient(160deg, transparent 0 55%, rgba(139, 92, 246, 0.55) 55% 57%, transparent 57%), linear-gradient(20deg, transparent 0 30%, rgba(0, 229, 255, 0.35) 30% 31%, transparent 31%), radial-gradient(circle, rgba(255, 255, 255, 0.06) 0 25%, transparent 30%) 0 0 / 5px 5px, #1c1c22',
-  acid: '#adff00',
-};
-
-const UNIVERSES: Universe[] = [
+const STYLES: WordStyle[] = [
   {
     font: "'Newsreader Variable', Georgia, serif",
     weight: 300,
@@ -74,9 +43,7 @@ const UNIVERSES: Universe[] = [
     tracking: '-0.03em',
     case: 'none',
     fill: WHITE,
-    sep: '#adff00',
-    effect: 'drop-shadow(0 0.03em 0 rgba(20, 10, 40, 0.45))',
-    bg: BG.sunset,
+    sep: '#00ff30',
   },
   {
     font: "Menlo, Consolas, 'Courier New', monospace",
@@ -85,23 +52,18 @@ const UNIVERSES: Universe[] = [
     case: 'lowercase',
     fill: NEON,
     effect: 'drop-shadow(0 0 0.12em rgba(0, 255, 48, 0.6))',
-    bg: BG.grid,
   },
   {
     font: "'Helvetica Neue', Arial, sans-serif",
     weight: 700,
     fill: 'none',
     stroke: '0.012em #fff',
-    bg: BG.black,
-    echo: true,
   },
   {
     font: "Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif",
     weight: 400,
     tracking: '0',
-    fill: WHITE,
-    bg: BG.rays,
-    cam: { zoom: 1.12 },
+    fill: ACID,
   },
   {
     font: "Didot, 'Bodoni 72', 'Bodoni MT', 'Times New Roman', serif",
@@ -109,29 +71,23 @@ const UNIVERSES: Universe[] = [
     tracking: '0.06em',
     fill: WHITE,
     sep: '#00ff30',
-    bg: BG.black,
-    cam: { zoom: 2.3, x: '1.5em', y: '0.04em' },
   },
   {
     font: "'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive",
     weight: 700,
     tracking: '-0.02em',
     case: 'none',
-    fill: WHITE,
-    stroke: '0.012em #07080a',
+    fill: 'linear-gradient(#ffe600, #ffe600)',
+    stroke: '0.008em #07080a',
     effect: 'drop-shadow(0.05em 0.05em 0 #ff2bd6)',
-    bg: BG.comic,
-    cam: { tilt: '-5deg' },
   },
   {
     font: "'American Typewriter', 'Courier New', Courier, monospace",
     weight: 400,
     tracking: '-0.02em',
     case: 'none',
-    fill: solid('#2b1a10'),
-    sep: '#d62828',
-    bg: BG.paper,
-    cam: { tilt: '3deg', zoom: 1.05 },
+    fill: 'linear-gradient(#f2ebdd, #f2ebdd)',
+    sep: '#00ff30',
   },
   {
     font: "'Snell Roundhand', 'Brush Script MT', 'Segoe Script', cursive",
@@ -140,74 +96,53 @@ const UNIVERSES: Universe[] = [
     case: 'none',
     fill: BRAND,
     sep: '#fff',
-    bg: BG.violet,
   },
   {
     font: "Copperplate, 'Copperplate Gothic Bold', 'Engravers MT', serif",
     weight: 700,
     tracking: '0.08em',
-    fill: 'linear-gradient(180deg, #ffffff, #b9c0c8)',
-    stroke: '0.004em #16181c',
+    fill: WHITE,
     sep: '#adff00',
-    bg: BG.storm,
   },
   {
     font: "Futura, 'Century Gothic', 'Avenir Next', sans-serif",
     weight: 500,
     tracking: '-0.04em',
     case: 'lowercase',
-    fill: INK,
-    bg: BG.flare,
+    fill: NEON,
   },
-  {
-    font: JAKARTA,
-    weight: 200,
-    tracking: '0.18em',
-    fill: WHITE,
-    sep: '#00ff30',
-    bg: BG.black,
-    cam: { zoom: 2.2, x: '-1.6em', y: '-0.03em' },
-  },
+  { font: JAKARTA, weight: 200, tracking: '0.18em', fill: WHITE, sep: '#00ff30' },
   {
     font: JAKARTA,
     weight: 800,
     italic: true,
     tracking: '-0.05em',
     fill: 'linear-gradient(180deg, #fff 0%, #9aa3ad 45%, #2b3138 50%, #e6eaee 56%, #7d8690 100%)',
-    bg: BG.black,
-    cam: { tilt: '-4deg' },
   },
   {
     font: "'Arial Black', 'Helvetica Neue', Arial, sans-serif",
     weight: 900,
     tracking: '-0.04em',
-    fill: 'radial-gradient(circle, #d9d9d9 0 45%, transparent 50%) 0 0 / 0.05em 0.05em',
-    bg: BG.black,
-    cam: { zoom: 1.6, x: '0.6em' },
+    fill: 'radial-gradient(circle, #00ff30 0 45%, transparent 50%) 0 0 / 0.06em 0.06em',
   },
   {
     font: "Rockwell, 'Rockwell Extra Bold', 'Roboto Slab', serif",
     weight: 700,
     tracking: '-0.01em',
-    fill: INK,
-    bg: BG.teal,
+    fill: WHITE,
   },
   {
     font: "'Arial Rounded MT Bold', ui-rounded, Nunito, sans-serif",
     weight: 700,
     tracking: '-0.03em',
     case: 'lowercase',
-    fill: solid('#ff2a2a'),
-    stroke: '0.01em #fff',
-    bg: BG.disc,
+    fill: BRAND,
   },
   {
     font: 'Menlo, Consolas, monospace',
     weight: 700,
     tracking: '0.04em',
     fill: 'repeating-linear-gradient(180deg, #00ff30 0 0.03em, transparent 0.03em 0.05em)',
-    bg: BG.black,
-    cam: { zoom: 1.9, x: '-0.9em', tilt: '2deg' },
   },
   {
     font: 'Georgia, serif',
@@ -215,27 +150,22 @@ const UNIVERSES: Universe[] = [
     italic: true,
     tracking: '-0.03em',
     case: 'none',
-    fill: INK,
-    sep: '#ff2bd6',
-    bg: BG.cmy,
+    fill: WHITE,
+    sep: '#00ff30',
   },
   {
     font: "'Avenir Next Condensed', 'Arial Narrow', sans-serif-condensed, sans-serif",
     weight: 800,
     tracking: '-0.02em',
     fill: ACID,
-    stroke: '0.008em #8b5cf6',
     stretch: 1.3,
-    bg: BG.graffiti,
   },
   {
     font: "'Marker Felt', 'Permanent Marker', 'Segoe Print', fantasy",
     weight: 700,
     tracking: '-0.02em',
     case: 'none',
-    fill: INK,
-    bg: BG.acid,
-    cam: { tilt: '-3deg' },
+    fill: NEON,
   },
   {
     font: "'Times New Roman', Times, serif",
@@ -243,39 +173,23 @@ const UNIVERSES: Universe[] = [
     italic: true,
     tracking: '-0.02em',
     fill: 'linear-gradient(90deg, #00e5ff, #ff2bd6, #ffe600, #00ff30)',
-    bg: BG.black,
-    echo: true,
-    cam: { zoom: 1.15, tilt: '3deg' },
   },
 ];
 
-const universeCss = UNIVERSES.map((u, i) => {
-  const sel = `.wm[data-style='${i + 1}']`;
+const styleCss = STYLES.map((s, i) => {
   const vars = [
-    `--ff: ${u.font}`,
-    `--fw: ${u.weight ?? 800}`,
-    `--fs: ${u.italic ? 'italic' : 'normal'}`,
-    `--tr: ${u.tracking ?? '-0.04em'}`,
-    `--tt: ${u.case ?? 'uppercase'}`,
-    `--fill: ${u.fill}`,
-    `--stroke: ${u.stroke ?? '0 transparent'}`,
-    `--sep: ${u.sep ?? 'transparent'}`,
-    `--fx: ${u.effect ?? 'none'}`,
-    `--stretch: ${u.stretch ?? 1}`,
-    `--bg: ${u.bg ?? 'transparent'}`,
-    `--cam: ${u.cam?.zoom ?? 1}`,
-    `--camx: ${u.cam?.x ?? '0em'}`,
-    `--camy: ${u.cam?.y ?? '0em'}`,
-    `--tilt: ${u.cam?.tilt ?? '0deg'}`,
+    `--ff: ${s.font}`,
+    `--fw: ${s.weight ?? 800}`,
+    `--fs: ${s.italic ? 'italic' : 'normal'}`,
+    `--tr: ${s.tracking ?? '-0.04em'}`,
+    `--tt: ${s.case ?? 'uppercase'}`,
+    `--fill: ${s.fill}`,
+    `--stroke: ${s.stroke ?? '0 transparent'}`,
+    `--sep: ${s.sep ?? 'transparent'}`,
+    `--fx: ${s.effect ?? 'none'}`,
+    `--stretch: ${s.stretch ?? 1}`,
   ];
-  const echo = u.echo
-    ? `${sel}:not(.is-glitch) .wm__plate { opacity: 1; mix-blend-mode: normal; }
-${sel} .wm__plate .wm__inner { background: none; -webkit-text-stroke: 0.008em var(--ink); }
-${sel} .wm__plate--c { translate: -0.05em -0.09em; }
-${sel} .wm__plate--m { translate: 0.05em 0.09em; }
-${sel} .wm__plate--y { translate: 0.1em 0.18em; }`
-    : '';
-  return `${sel} { ${vars.join('; ')}; }\n${echo}`;
+  return `.wm[data-style='${i + 1}'] { ${vars.join('; ')}; }`;
 }).join('\n');
 
 // Horizontal strips (top %, bottom %) that tile the word. During a glitch the
@@ -292,8 +206,7 @@ const STRIPS: [number, number][] = [
 const PLATES = ['c', 'm', 'y'] as const;
 ---
 
-<div class="wm" aria-hidden="true" data-wordmark data-styles={UNIVERSES.length}>
-  <div class="wm__bg"></div>
+<div class="wm" aria-hidden="true" data-wordmark data-styles={STYLES.length}>
   <div class="wm__stage">
     {PLATES.map((p) => (
       <p class={`wm__word wm__plate wm__plate--${p}`}>
@@ -319,28 +232,22 @@ const PLATES = ['c', 'm', 'y'] as const;
       </p>
     ))}
   </div>
-  <div class="wm__bars" data-wordmark-bars></div>
-  <div class="wm__streak"></div>
 </div>
 
-<style is:global set:html={universeCss}></style>
+<style is:global set:html={styleCss}></style>
 
 <script>
   import '../scripts/wordmark-intro.ts';
 </script>
 
 <style>
-  /* A full-width band (the "screen") that clips close-up crops. Negative
-     margins pull it to the viewport edges and matching padding keeps its
-     content box, and so the word size, at the hero column width. */
+  /* Size container: the word scales to the width of the hero column. */
   .wm {
-    position: relative;
-    isolation: isolate;
     container-type: inline-size;
-    margin: 0 calc(50% - 50vw) clamp(0.75rem, 2vw, 1.25rem);
-    padding: clamp(1.25rem, 4vw, 2.75rem) calc(50vw - 50%);
-    overflow: clip;
-    /* Brand logo (no data-style): bold green HU/MAN on the plain hero. */
+    /* Glitch frames (stretches, torn strips) must never widen the page. */
+    overflow-x: clip;
+    margin-block: clamp(0.5rem, 2vw, 1.25rem) clamp(1.75rem, 3.5vw, 2.5rem);
+    /* Brand logo (no data-style): bold green HU/MAN. */
     --ff: 'Plus Jakarta Sans Variable', system-ui, sans-serif;
     --fw: 800;
     --fs: normal;
@@ -351,11 +258,6 @@ const PLATES = ['c', 'm', 'y'] as const;
     --sep: transparent;
     --fx: drop-shadow(0 0 0.3em rgba(0, 255, 48, 0.3));
     --stretch: 1;
-    --bg: transparent;
-    --cam: 1;
-    --camx: 0em;
-    --camy: 0em;
-    --tilt: 0deg;
     --fit: 1;
     /* Per-frame glitch offsets, written by the script. */
     --jx: 0em;
@@ -363,7 +265,6 @@ const PLATES = ['c', 'm', 'y'] as const;
     --sk: 0deg;
     --sx: 1;
     --sy: 1;
-    --zp: 1;
     --ps: 1;
     --cx: 0em;
     --cy: 0em;
@@ -373,32 +274,16 @@ const PLATES = ['c', 'm', 'y'] as const;
     --yy: 0em;
   }
 
-  .wm__bg,
-  .wm__bars,
-  .wm__streak {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-  }
-
-  .wm__bg {
-    z-index: 0;
-    background: var(--bg);
-  }
-
-  /* Fixed height, so swapping universes never shifts the page below. */
+  /* Fixed height, so swapping typefaces never shifts the page below. */
   .wm__stage {
     position: relative;
-    z-index: 1;
     isolation: isolate;
     height: 0.82em;
     font-size: min(22cqw, 30svh);
-    transform: translate(calc(var(--jx) + var(--camx)), calc(var(--jy) + var(--camy)))
-      rotate(var(--tilt)) skewX(var(--sk))
-      scale(calc(var(--sx) * var(--cam) * var(--zp)), calc(var(--sy) * var(--cam) * var(--zp)));
+    transform: translate(var(--jx), var(--jy)) skewX(var(--sk)) scale(var(--sx), var(--sy));
   }
 
-  /* Print scanlines over the word, only during a glitch. */
+  /* Print scanlines over the stage, only during a glitch. */
   .wm__stage::after {
     content: '';
     position: absolute;
@@ -406,34 +291,6 @@ const PLATES = ['c', 'm', 'y'] as const;
     background: repeating-linear-gradient(180deg, rgba(7, 8, 10, 0.55) 0 2px, transparent 2px 5px);
     opacity: 0;
     pointer-events: none;
-  }
-
-  /* Datamosh: vertical colour bars smeared across the frame. */
-  .wm__bars {
-    z-index: 2;
-    background: repeating-linear-gradient(
-      90deg,
-      #ff2bd6 0 2.5%,
-      transparent 2.5% 4%,
-      #00e5ff 4% 5.5%,
-      #ffe600 5.5% 8%,
-      transparent 8% 11%,
-      #00ff30 11% 12.5%,
-      transparent 12.5% 17%,
-      #ffffff 17% 17.6%,
-      transparent 17.6% 21%
-    );
-    mix-blend-mode: screen;
-    opacity: 0;
-  }
-
-  /* Lens streak: a hot horizontal line through the middle of the band. */
-  .wm__streak {
-    z-index: 2;
-    background:
-      linear-gradient(180deg, transparent 47%, #fff 50%, transparent 53%),
-      radial-gradient(ellipse 60% 18% at 50% 50%, rgba(160, 220, 255, 0.85), transparent 70%);
-    opacity: 0;
   }
 
   /* Every layer is the same word, centred in a box taller than the stage so
@@ -479,8 +336,7 @@ const PLATES = ['c', 'm', 'y'] as const;
     opacity: 0;
   }
 
-  /* Colour plates: halftone dots in one ink each, only seen while glitching
-     (or as outlined echoes in some universes). */
+  /* Colour plates: halftone dots in one ink each, only seen while glitching. */
   .wm__plate {
     z-index: 1;
     mix-blend-mode: screen;
@@ -525,30 +381,12 @@ const PLATES = ['c', 'm', 'y'] as const;
     opacity: 1;
   }
 
-  /* Effect variants: dots only, tears without the plates, outlined echoes,
-     colour bars, light streak. */
+  /* Effect variants: dots only, or tears without the colour plates. */
   .wm[data-fx='plates'].is-glitch .wm__strip {
     opacity: 0;
   }
 
   .wm[data-fx='clean'].is-glitch .wm__plate {
     opacity: 0;
-  }
-
-  .wm[data-fx='echo'].is-glitch .wm__plate {
-    mix-blend-mode: normal;
-  }
-
-  .wm[data-fx='echo'].is-glitch .wm__plate .wm__inner {
-    background: none;
-    -webkit-text-stroke: 0.008em var(--ink);
-  }
-
-  .wm[data-bars] .wm__bars {
-    opacity: 0.85;
-  }
-
-  .wm[data-fx='streak'].is-glitch .wm__streak {
-    opacity: 1;
   }
 </style>
