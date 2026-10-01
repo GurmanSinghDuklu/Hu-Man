@@ -4,7 +4,8 @@
 // Run: swiftc -O -o /tmp/make-clip scripts/make-clip.swift
 //      /tmp/make-clip <recording.mov> public/video/<name>.mp4 <start s> <end s> 720
 // Check frames for tabs, cursor or mock reviews before committing a clip.
-// scrollbar, scales down, drops audio, encodes H.264 MP4 at 30 fps.
+import AVFoundation
+
 let a = CommandLine.arguments
 let src = AVURLAsset(url: URL(fileURLWithPath: a[1]))
 let out = URL(fileURLWithPath: a[2])
