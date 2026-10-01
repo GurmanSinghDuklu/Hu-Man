@@ -30,10 +30,12 @@ interface WordStyle {
 }
 
 const JAKARTA = "'Plus Jakarta Sans Variable', system-ui, sans-serif";
-const WHITE = 'linear-gradient(#fff, #fff)';
+// Every version stays green: neon plus lighter and deeper shades of it.
 const NEON = 'linear-gradient(#00ff30, #00ff30)';
-const ACID = 'linear-gradient(#adff00, #adff00)';
-const BRAND = 'linear-gradient(180deg, #adff00, #00ff30)';
+const MINT = 'linear-gradient(#9dffb0, #9dffb0)';
+const PALE = 'linear-gradient(#6dff8a, #6dff8a)';
+const FADE = 'linear-gradient(180deg, #c8ffd2, #00ff30)';
+const DEEP = 'linear-gradient(180deg, #00ff30, #00a01e)';
 
 const STYLES: WordStyle[] = [
   {
@@ -42,7 +44,7 @@ const STYLES: WordStyle[] = [
     italic: true,
     tracking: '-0.03em',
     case: 'none',
-    fill: WHITE,
+    fill: MINT,
     sep: '#00ff30',
   },
   {
@@ -57,19 +59,19 @@ const STYLES: WordStyle[] = [
     font: "'Helvetica Neue', Arial, sans-serif",
     weight: 700,
     fill: 'none',
-    stroke: '0.012em #fff',
+    stroke: '0.012em #00ff30',
   },
   {
     font: "Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif",
     weight: 400,
     tracking: '0',
-    fill: ACID,
+    fill: FADE,
   },
   {
     font: "Didot, 'Bodoni 72', 'Bodoni MT', 'Times New Roman', serif",
     weight: 400,
     tracking: '0.06em',
-    fill: WHITE,
+    fill: MINT,
     sep: '#00ff30',
   },
   {
@@ -77,16 +79,16 @@ const STYLES: WordStyle[] = [
     weight: 700,
     tracking: '-0.02em',
     case: 'none',
-    fill: 'linear-gradient(#ffe600, #ffe600)',
+    fill: NEON,
     stroke: '0.008em #07080a',
-    effect: 'drop-shadow(0.05em 0.05em 0 #ff2bd6)',
+    effect: 'drop-shadow(0.05em 0.05em 0 #0a7a20)',
   },
   {
     font: "'American Typewriter', 'Courier New', Courier, monospace",
     weight: 400,
     tracking: '-0.02em',
     case: 'none',
-    fill: 'linear-gradient(#f2ebdd, #f2ebdd)',
+    fill: PALE,
     sep: '#00ff30',
   },
   {
@@ -94,15 +96,15 @@ const STYLES: WordStyle[] = [
     weight: 700,
     tracking: '0',
     case: 'none',
-    fill: BRAND,
-    sep: '#fff',
+    fill: DEEP,
+    sep: '#c8ffd2',
   },
   {
     font: "Copperplate, 'Copperplate Gothic Bold', 'Engravers MT', serif",
     weight: 700,
     tracking: '0.08em',
-    fill: WHITE,
-    sep: '#adff00',
+    fill: 'linear-gradient(180deg, #b6ffc4, #3dff63)',
+    sep: '#00ff30',
   },
   {
     font: "Futura, 'Century Gothic', 'Avenir Next', sans-serif",
@@ -111,13 +113,13 @@ const STYLES: WordStyle[] = [
     case: 'lowercase',
     fill: NEON,
   },
-  { font: JAKARTA, weight: 200, tracking: '0.18em', fill: WHITE, sep: '#00ff30' },
+  { font: JAKARTA, weight: 200, tracking: '0.18em', fill: MINT, sep: '#00ff30' },
   {
     font: JAKARTA,
     weight: 800,
     italic: true,
     tracking: '-0.05em',
-    fill: 'linear-gradient(180deg, #fff 0%, #9aa3ad 45%, #2b3138 50%, #e6eaee 56%, #7d8690 100%)',
+    fill: 'linear-gradient(180deg, #eafff0 0%, #6fe08a 45%, #0b3d17 50%, #c8ffd2 56%, #2fa84a 100%)',
   },
   {
     font: "'Arial Black', 'Helvetica Neue', Arial, sans-serif",
@@ -129,14 +131,14 @@ const STYLES: WordStyle[] = [
     font: "Rockwell, 'Rockwell Extra Bold', 'Roboto Slab', serif",
     weight: 700,
     tracking: '-0.01em',
-    fill: WHITE,
+    fill: DEEP,
   },
   {
     font: "'Arial Rounded MT Bold', ui-rounded, Nunito, sans-serif",
     weight: 700,
     tracking: '-0.03em',
     case: 'lowercase',
-    fill: BRAND,
+    fill: FADE,
   },
   {
     font: 'Menlo, Consolas, monospace',
@@ -150,14 +152,14 @@ const STYLES: WordStyle[] = [
     italic: true,
     tracking: '-0.03em',
     case: 'none',
-    fill: WHITE,
+    fill: MINT,
     sep: '#00ff30',
   },
   {
     font: "'Avenir Next Condensed', 'Arial Narrow', sans-serif-condensed, sans-serif",
     weight: 800,
     tracking: '-0.02em',
-    fill: ACID,
+    fill: NEON,
     stretch: 1.3,
   },
   {
@@ -165,14 +167,14 @@ const STYLES: WordStyle[] = [
     weight: 700,
     tracking: '-0.02em',
     case: 'none',
-    fill: NEON,
+    fill: MINT,
   },
   {
     font: "'Times New Roman', Times, serif",
     weight: 700,
     italic: true,
     tracking: '-0.02em',
-    fill: 'linear-gradient(90deg, #00e5ff, #ff2bd6, #ffe600, #00ff30)',
+    fill: 'linear-gradient(90deg, #c8ffd2, #00ff30, #00a01e, #00ff30)',
   },
 ];
 
@@ -336,7 +338,7 @@ const PLATES = ['c', 'm', 'y'] as const;
     opacity: 0;
   }
 
-  /* Colour plates: halftone dots in one ink each, only seen while glitching. */
+  /* Colour plates: halftone dots in one green each, only seen while glitching. */
   .wm__plate {
     z-index: 1;
     mix-blend-mode: screen;
@@ -356,17 +358,17 @@ const PLATES = ['c', 'm', 'y'] as const;
   }
 
   .wm__plate--c {
-    --ink: #00e5ff;
+    --ink: #00ff30;
     transform: translate(var(--cx), var(--cy)) scale(var(--ps));
   }
 
   .wm__plate--m {
-    --ink: #ff2bd6;
+    --ink: #00a01e;
     transform: translate(var(--mx), var(--my)) scale(var(--ps));
   }
 
   .wm__plate--y {
-    --ink: var(--acid);
+    --ink: #b6ffc4;
     transform: translate(var(--yx), var(--yy)) scale(var(--ps));
   }
 
