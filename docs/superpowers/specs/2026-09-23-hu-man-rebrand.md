@@ -173,3 +173,14 @@ camera (close-up crops, tilts); two use outlined echo copies. New glitch effects
 datamosh (max two frames), light streak, echo burst and camera punch, alongside the earlier nine.
 The brand-logo hold has a transparent band, so it sits on the plain hero with no effects for 30 s.
 Flash safety: one universe swap per glitch, no flicker, colour bars at most two frames.
+
+## Revision 14 (2026-10-01): real work only in the collage
+Gurman asked to remove the fictional-brand concept tiles from the hero collage and use his own
+projects. The 24 tiles now come from four projects: The Calculator App (two new pages, compound
+interest and retirement, from his screenshots) and Essence, both Live; Eldeva (a mock-up for a
+family member's real candle business, not live) and an unofficial Tesla fan site, both tagged
+Concept on the tile. Eldeva and Tesla frames were extracted from his screen recordings with
+AVFoundation and cropped below the browser chrome (no tabs, address bar or menu bar). Filter
+chips are now All, Live sites, Concepts and one per project. The key line spells out what each
+concept is and that the Tesla site is not affiliated with Tesla, Inc. The render JPEGs in
+`src/assets/concepts/` are no longer used on the site.

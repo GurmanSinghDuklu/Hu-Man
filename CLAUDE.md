@@ -200,6 +200,13 @@ Revision 5 (2026-09-27) removed the About section at Gurman's request (no person
 agency site). Credentials no longer appear on the site; the data stays in `content.ts`.
 Revision 6 (2026-09-28) made the hero a Higgsfield-style collage wall with filter chips
 (`src/scripts/hero-collage.ts`). Keep the Live/Concept tag on every tile.
+Revision 7 (2026-10-01) replaced every fictional-brand tile in the hero collage with real work
+only (`src/assets/projects/`, frames cropped from Gurman's screen recordings, browser chrome
+removed): The Calculator App and Essence (Live, green dot) plus two Concepts with a visible tag.
+Eldeva is a mock-up for a family member's real business, not live: tag "Concept", never "Live".
+The Tesla fan site is Gurman's unofficial redesign of a real brand (his decision to show it): tag
+"Unofficial concept" and keep "not affiliated with Tesla, Inc." in the key line. Never use Eldeva
+frames showing its mock reviews or star ratings. Filters are by project, not service type.
 Lighthouse 95/100/100/100, axe 0 violations on all three pages.
 
 ## Working agreements
