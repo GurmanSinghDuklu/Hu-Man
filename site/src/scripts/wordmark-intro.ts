@@ -6,18 +6,19 @@
  * Reduced motion: the static brand logo only.
  *
  * Each glitch uses a random transition effect (tear, misprint, wave,
- * interlace, CRT, shake, dropout, roll, burst), never the same twice in a row.
+ * interlace, CRT, shake, dropout, roll, burst, datamosh, streak, echo, punch),
+ * never the same twice in a row.
  *
- * Flash safety (WCAG 2.3.1): the 1 s glitches swap the style once; only the
- * final glitch back to the logo flickers (three swaps), so never more than
- * three flashes in a second.
+ * Flash safety (WCAG 2.3.1): each glitch swaps the universe (and its
+ * background) once, and the colour bars show for at most two frames, so no
+ * more than three flashes in any second.
  */
 const STEP_MS = 1000; // one alternate style, glitch included
 const FRAME_MS = 83; // ~12 fps, animated "on twos"
 const INTRO_HOLD_MS = 1500; // brand logo before the first glitch
 const LOGO_HOLD_MS = 30000; // clean brand logo after the run
 const FIT_WIDTH = 0.86; // share of the column the word may fill
-const FIT_HEIGHT = 1.3; // multiple of the stage height a glyph line may fill
+const FIT_HEIGHT = 1.2; // multiple of the stage height a glyph line may fill
 
 const root = document.querySelector<HTMLElement>('[data-wordmark]');
 
@@ -30,6 +31,7 @@ function run(el: HTMLElement): void {
   const stage = el.querySelector<HTMLElement>('.wm__stage');
   const measure = el.querySelector<HTMLElement>('[data-wordmark-measure]');
   const strips = [...el.querySelectorAll<HTMLElement>('[data-wordmark-strip]')];
+  const bars = el.querySelector<HTMLElement>('[data-wordmark-bars]');
   if (!stage || !measure) return;
 
   // Scale the current style so every typeface fills the column about equally.
@@ -102,6 +104,9 @@ function run(el: HTMLElement): void {
     set('--sx', '1');
     set('--sy', '1');
     set('--ps', '1');
+    set('--zp', '1');
+    delete el.dataset.bars;
+    if (bars) bars.style.transform = '';
     strips.forEach((strip) => {
       strip.style.transform = '';
       strip.style.opacity = '';
@@ -116,7 +121,7 @@ function run(el: HTMLElement): void {
    * "plates" shows only the halftone dots, "clean" hides them.
    */
   interface Effect {
-    fx?: 'plates' | 'clean';
+    fx?: 'plates' | 'clean' | 'echo' | 'streak';
     frames: [number, number]; // min/max frame count for a 1 s step
     swapAt?: number; // share of the way through to change style (default 0.5)
     draw: (t: number, p: number, d: number, i: number) => void;
@@ -224,6 +229,48 @@ function run(el: HTMLElement): void {
         plates(0.015, 0, -0.015, 0.01, 0, -0.01);
       },
     },
+    // Datamosh: colour bars smear across the whole frame for two frames.
+    {
+      frames: [4, 5],
+      draw: (_t, p, d, i) => {
+        const on = i === 1 || i === 2;
+        if (on) el.dataset.bars = '';
+        else delete el.dataset.bars;
+        if (bars && on) {
+          bars.style.transform = `translateX(${rand(-25, 25).toFixed(1)}%) scaleX(${rand(0.6, 2.6).toFixed(2)})`;
+        }
+        strips.forEach((_, k) => shiftStrip(k, Math.random() < 0.5 ? rand(-0.2, 0.2) * p : 0));
+        plates(0.05 * d * p, 0, -0.05 * d * p, 0, 0, 0.02 * p);
+      },
+    },
+    // Streak: the word squashes into a hot line of light, then opens out.
+    {
+      fx: 'streak',
+      frames: [4, 4],
+      swapAt: 0.34,
+      draw: (_t, _p, _d, i) => {
+        set('--sy', ([0.25, 0.04, 1.12, 1][i] ?? 1).toFixed(3));
+        set('--sx', ([1.4, 2.2, 0.97, 1][i] ?? 1).toFixed(3));
+      },
+    },
+    // Echo: outlined copies spring apart vertically and stack back up.
+    {
+      fx: 'echo',
+      frames: [4, 5],
+      draw: (t, p, d) => {
+        const o = (1 - t) * 0.22 * p + 0.02;
+        plates(-0.03 * d, -o, 0.03 * d, o, 0.06 * d, o * 2);
+      },
+    },
+    // Punch: the camera slams in on the word and pulls back.
+    {
+      frames: [3, 4],
+      draw: (t, p, d) => {
+        set('--zp', (1 + (1 - t) * 1.6 * p).toFixed(3));
+        set('--jx', em((1 - t) * 0.3 * d * p));
+        plates(0.03, 0, -0.03, 0, 0, 0.02);
+      },
+    },
   ];
 
   let lastEffect = -1;
@@ -234,12 +281,11 @@ function run(el: HTMLElement): void {
     return EFFECTS[n]!;
   };
 
-  // Glitch from style `from` to style `to` with a random effect. Returns its
-  // length so the step can keep to 1 s. The final glitch chains effects and
-  // first flickers the new style and back.
-  const glitch = async (from: number, to: number, final = false): Promise<number> => {
+  // Glitch into style `to` with a random effect. Returns its
+  // length so the step can keep to 1 s. The final glitch chains two effects.
+  const glitch = async (to: number, final = false): Promise<number> => {
     el.classList.add('is-glitch');
-    const chain = final ? [pickEffect(), pickEffect(), pickEffect()] : [pickEffect()];
+    const chain = final ? [pickEffect(), pickEffect()] : [pickEffect()];
     let elapsed = 0;
     for (const [c, effect] of chain.entries()) {
       const [lo, hi] = effect.frames;
@@ -251,9 +297,7 @@ function run(el: HTMLElement): void {
       for (let i = 0; i < frames; i++) {
         const t = frames > 1 ? i / (frames - 1) : 1;
         effect.draw(t, i < frames - 1 ? 1 : 0.35, d, i);
-        if (final && c === 0 && i === 1) setStyle(to);
-        if (final && c === 0 && i === 2) setStyle(from);
-        if (i === swap && (!final || c === 1)) setStyle(to);
+        if (i === swap && c === chain.length - 1) setStyle(to);
         await wait(FRAME_MS);
         elapsed += FRAME_MS;
       }
@@ -269,13 +313,11 @@ function run(el: HTMLElement): void {
     settle();
     await pause(INTRO_HOLD_MS);
     for (;;) {
-      let current = 0;
       for (let n = 1; n <= count; n++) {
-        const took = await glitch(current, n);
-        current = n;
+        const took = await glitch(n);
         await pause(STEP_MS - took);
       }
-      await glitch(current, 0, true);
+      await glitch(0, true);
       await pause(LOGO_HOLD_MS);
     }
   };

@@ -161,3 +161,15 @@ Revision 12c (same day): each glitch picks one of nine transition effects at ran
 misprint, wave, interlace, CRT collapse, shake, dropout, vertical roll, plate burst), never the same
 twice running; the final glitch back to the logo chains three. Effects live in `EFFECTS` in
 `wordmark-intro.ts`.
+
+## Revision 13 (2026-10-01): Spider-Verse universes
+Reference: the *Into/Across the Spider-Verse* opening logos (YouTube SyIVY7Hl46E), where every logo
+cut changes the whole frame, not just the type. The wordmark is now a full-width band (negative
+margins out to the viewport, matching padding so the word keeps the column size, `overflow: clip`
+so crops never cause sideways scroll). Each of the 20 "universes" in `WordmarkIntro.astro` sets a
+typeface and treatment plus a CSS-drawn background world (sunset, neon grid, Marvel-red rays, comic
+dots, paper, violet, halftone storm, lens flare, teal, blue disc, CMY dots, graffiti, acid) and a
+camera (close-up crops, tilts); two use outlined echo copies. New glitch effects: colour-bar
+datamosh (max two frames), light streak, echo burst and camera punch, alongside the earlier nine.
+The brand-logo hold has a transparent band, so it sits on the plain hero with no effects for 30 s.
+Flash safety: one universe swap per glitch, no flicker, colour bars at most two frames.
