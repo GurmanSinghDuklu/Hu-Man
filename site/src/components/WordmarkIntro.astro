@@ -261,7 +261,9 @@ const PLATES = ['c', 'm', 'y'] as const;
     --jx: 0em;
     --jy: 0em;
     --sk: 0deg;
+    --sx: 1;
     --sy: 1;
+    --ps: 1;
     --cx: 0em;
     --cy: 0em;
     --mx: 0em;
@@ -276,7 +278,7 @@ const PLATES = ['c', 'm', 'y'] as const;
     isolation: isolate;
     height: 0.82em;
     font-size: min(22cqw, 30svh);
-    transform: translate(var(--jx), var(--jy)) skewX(var(--sk)) scaleY(var(--sy));
+    transform: translate(var(--jx), var(--jy)) skewX(var(--sk)) scale(var(--sx), var(--sy));
   }
 
   /* Print scanlines over the stage, only during a glitch. */
@@ -353,17 +355,17 @@ const PLATES = ['c', 'm', 'y'] as const;
 
   .wm__plate--c {
     --ink: #00e5ff;
-    transform: translate(var(--cx), var(--cy));
+    transform: translate(var(--cx), var(--cy)) scale(var(--ps));
   }
 
   .wm__plate--m {
     --ink: #ff2bd6;
-    transform: translate(var(--mx), var(--my));
+    transform: translate(var(--mx), var(--my)) scale(var(--ps));
   }
 
   .wm__plate--y {
     --ink: var(--acid);
-    transform: translate(var(--yx), var(--yy));
+    transform: translate(var(--yx), var(--yy)) scale(var(--ps));
   }
 
   /* Glitching: strips replace the clean layer, plates fully inked. */
@@ -375,5 +377,14 @@ const PLATES = ['c', 'm', 'y'] as const;
   .wm.is-glitch .wm__plate,
   .wm.is-glitch .wm__stage::after {
     opacity: 1;
+  }
+
+  /* Effect variants: dots only, or tears without the colour plates. */
+  .wm[data-fx='plates'].is-glitch .wm__strip {
+    opacity: 0;
+  }
+
+  .wm[data-fx='clean'].is-glitch .wm__plate {
+    opacity: 0;
   }
 </style>

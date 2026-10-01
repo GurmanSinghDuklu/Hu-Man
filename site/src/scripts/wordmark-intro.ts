@@ -5,14 +5,15 @@
  * for 30 s, then runs again. Pauses while off screen or in a hidden tab.
  * Reduced motion: the static brand logo only.
  *
+ * Each glitch uses a random transition effect (tear, misprint, wave,
+ * interlace, CRT, shake, dropout, roll, burst), never the same twice in a row.
+ *
  * Flash safety (WCAG 2.3.1): the 1 s glitches swap the style once; only the
  * final glitch back to the logo flickers (three swaps), so never more than
  * three flashes in a second.
  */
 const STEP_MS = 1000; // one alternate style, glitch included
 const FRAME_MS = 83; // ~12 fps, animated "on twos"
-const GLITCH_FRAMES = 4;
-const FINAL_GLITCH_FRAMES = 10;
 const INTRO_HOLD_MS = 1500; // brand logo before the first glitch
 const LOGO_HOLD_MS = 30000; // clean brand logo after the run
 const FIT_WIDTH = 0.86; // share of the column the word may fill
@@ -80,49 +81,186 @@ function run(el: HTMLElement): void {
     await whenActive();
   };
 
+  const VARS = ['--jx', '--jy', '--cx', '--cy', '--mx', '--my', '--yx', '--yy'];
+  const set = (name: string, value: string) => el.style.setProperty(name, value);
+  const plates = (cx: number, cy: number, mx: number, my: number, yx: number, yy: number) => {
+    set('--cx', em(cx));
+    set('--cy', em(cy));
+    set('--mx', em(mx));
+    set('--my', em(my));
+    set('--yx', em(yx));
+    set('--yy', em(yy));
+  };
+  const shiftStrip = (i: number, x: number, y = 0) => {
+    const strip = strips[i];
+    if (strip) strip.style.transform = x || y ? `translate(${em(x)}, ${em(y)})` : '';
+  };
+
   const settle = () => {
-    for (const v of ['--jx', '--jy', '--cx', '--cy', '--mx', '--my', '--yx', '--yy']) {
-      el.style.setProperty(v, '0em');
-    }
-    el.style.setProperty('--sk', '0deg');
-    el.style.setProperty('--sy', '1');
-    strips.forEach((strip) => (strip.style.transform = ''));
-  };
-
-  // One stuttered frame: random plate slip, torn strips, jolt of the whole word.
-  const frame = (power: number) => {
-    const s = el.style;
-    const p = (n: number) => em(rand(-n, n) * power);
-    s.setProperty('--cx', p(0.06));
-    s.setProperty('--cy', p(0.02));
-    s.setProperty('--mx', p(0.06));
-    s.setProperty('--my', p(0.02));
-    s.setProperty('--yx', p(0.04));
-    s.setProperty('--yy', p(0.03));
-    s.setProperty('--jx', p(0.02));
-    s.setProperty('--jy', p(0.01));
-    s.setProperty('--sk', `${(rand(-4, 4) * power).toFixed(2)}deg`);
-    s.setProperty('--sy', Math.random() < 0.2 ? (1 + rand(-0.06, 0.08) * power).toFixed(3) : '1');
+    VARS.forEach((v) => set(v, '0em'));
+    set('--sk', '0deg');
+    set('--sx', '1');
+    set('--sy', '1');
+    set('--ps', '1');
     strips.forEach((strip) => {
-      strip.style.transform =
-        Math.random() < 0.4 ? `translateX(${em(rand(-0.14, 0.14) * power)})` : '';
+      strip.style.transform = '';
+      strip.style.opacity = '';
     });
+    delete el.dataset.fx;
   };
 
-  // Glitch from style `from` to style `to`, swapping halfway and settling into
-  // place. Long glitches first flicker the new style and back.
-  const glitch = async (from: number, to: number, frames: number) => {
-    const flicker = frames > 6;
+  /*
+   * Transition effects. Each draws one stuttered frame from `t` (0 to 1 through
+   * the glitch), `p` (strength, eased down for the last frames) and `d` (a
+   * random direction, fixed for the whole glitch). `fx` picks CSS variants:
+   * "plates" shows only the halftone dots, "clean" hides them.
+   */
+  interface Effect {
+    fx?: 'plates' | 'clean';
+    frames: [number, number]; // min/max frame count for a 1 s step
+    swapAt?: number; // share of the way through to change style (default 0.5)
+    draw: (t: number, p: number, d: number, i: number) => void;
+  }
+
+  const EFFECTS: Effect[] = [
+    // Tear: random strips rip sideways, plates slip.
+    {
+      frames: [4, 5],
+      draw: (_t, p) => {
+        const r = (n: number) => rand(-n, n) * p;
+        plates(r(0.06), r(0.02), r(0.06), r(0.02), r(0.04), r(0.03));
+        set('--jx', em(r(0.02)));
+        set('--sk', `${r(4).toFixed(2)}deg`);
+        strips.forEach((_, i) => shiftStrip(i, Math.random() < 0.4 ? r(0.14) : 0));
+      },
+    },
+    // Misprint: only the dot plates, sliding together from far out of register.
+    {
+      fx: 'plates',
+      frames: [4, 5],
+      draw: (t, p, d) => {
+        const o = (1 - t) * 0.16 * p + 0.01;
+        plates(
+          o * d,
+          rand(-0.01, 0.01),
+          -o * d,
+          rand(-0.01, 0.01),
+          rand(-0.03, 0.03) * p,
+          -o * 0.3,
+        );
+      },
+    },
+    // Wave: strips ripple like a warped tape, no colour.
+    {
+      fx: 'clean',
+      frames: [4, 5],
+      draw: (t, p, d, i) => {
+        strips.forEach((_, k) => shiftStrip(k, Math.sin(k * 0.9 + i * 1.4 * d) * 0.12 * p));
+        set('--jy', em(Math.sin(t * 6) * 0.015 * p));
+      },
+    },
+    // Interlace: alternate strips slide in from opposite sides.
+    {
+      frames: [3, 4],
+      draw: (t, p, d) => {
+        const o = (1 - t) * 0.4 * p;
+        strips.forEach((_, k) => shiftStrip(k, (k % 2 ? o : -o) * d));
+        plates(0.02 * d, 0, -0.02 * d, 0, 0, 0.01);
+      },
+    },
+    // CRT: the word collapses to a line, then springs back as the new style.
+    {
+      fx: 'clean',
+      frames: [4, 4],
+      swapAt: 0.34,
+      draw: (_t, _p, _d, i) => {
+        const sy = [0.12, 0.02, 1.18, 0.96][i] ?? 1;
+        const sx = [1.12, 1.35, 0.94, 1.01][i] ?? 1;
+        set('--sy', sy.toFixed(3));
+        set('--sx', sx.toFixed(3));
+      },
+    },
+    // Shake: the whole word judders and skews hard.
+    {
+      frames: [3, 5],
+      draw: (_t, p, d, i) => {
+        const side = i % 2 ? 1 : -1;
+        set('--jx', em(side * 0.045 * p));
+        set('--sk', `${(side * d * 10 * p).toFixed(2)}deg`);
+        plates(-side * 0.03 * p, 0, side * 0.03 * p, 0, 0, 0);
+      },
+    },
+    // Dropout: chunks of the word blink out while the plates bloom.
+    {
+      frames: [4, 5],
+      draw: (_t, p) => {
+        strips.forEach((strip, k) => {
+          strip.style.opacity = Math.random() < 0.35 * p ? '0' : '';
+          shiftStrip(k, Math.random() < 0.25 ? rand(-0.05, 0.05) * p : 0);
+        });
+        set('--ps', (1 + rand(0.04, 0.14) * p).toFixed(3));
+        plates(rand(-0.02, 0.02), 0, rand(-0.02, 0.02), 0, 0, 0);
+      },
+    },
+    // Roll: the picture loses vertical hold and jumps up and down.
+    {
+      frames: [4, 5],
+      draw: (t, p, d) => {
+        set('--jy', em(Math.cos(t * 9) * 0.12 * (1 - t) * p * d));
+        plates(0, 0.05 * p, 0, -0.05 * p, 0.02 * p, 0);
+        strips.forEach((_, k) =>
+          shiftStrip(k, 0, k === 0 || k === strips.length - 1 ? 0 : rand(-0.04, 0.04) * p),
+        );
+      },
+    },
+    // Burst: plates blow out from the centre and snap back in.
+    {
+      fx: 'plates',
+      frames: [3, 4],
+      draw: (t, p) => {
+        set('--ps', (1 + (1 - t) * 0.3 * p).toFixed(3));
+        set('--sx', (1 + (1 - t) * 0.04 * p).toFixed(3));
+        set('--sy', (1 + (1 - t) * 0.04 * p).toFixed(3));
+        plates(0.015, 0, -0.015, 0.01, 0, -0.01);
+      },
+    },
+  ];
+
+  let lastEffect = -1;
+  const pickEffect = () => {
+    let n = Math.floor(Math.random() * EFFECTS.length);
+    if (n === lastEffect) n = (n + 1) % EFFECTS.length;
+    lastEffect = n;
+    return EFFECTS[n]!;
+  };
+
+  // Glitch from style `from` to style `to` with a random effect. Returns its
+  // length so the step can keep to 1 s. The final glitch chains effects and
+  // first flickers the new style and back.
+  const glitch = async (from: number, to: number, final = false): Promise<number> => {
     el.classList.add('is-glitch');
-    for (let i = 0; i < frames; i++) {
-      frame(i < frames - 2 ? 1 : 0.35);
-      if (flicker && i === 1) setStyle(to);
-      if (flicker && i === 2) setStyle(from);
-      if (i === Math.floor(frames / 2)) setStyle(to);
-      await wait(FRAME_MS);
+    const chain = final ? [pickEffect(), pickEffect(), pickEffect()] : [pickEffect()];
+    let elapsed = 0;
+    for (const [c, effect] of chain.entries()) {
+      const [lo, hi] = effect.frames;
+      const frames = lo + Math.floor(Math.random() * (hi - lo + 1));
+      const swap = Math.round((frames - 1) * (effect.swapAt ?? 0.5));
+      const d = Math.random() < 0.5 ? -1 : 1;
+      settle();
+      if (effect.fx) el.dataset.fx = effect.fx;
+      for (let i = 0; i < frames; i++) {
+        const t = frames > 1 ? i / (frames - 1) : 1;
+        effect.draw(t, i < frames - 1 ? 1 : 0.35, d, i);
+        if (final && c === 0 && i === 1) setStyle(to);
+        if (final && c === 0 && i === 2) setStyle(from);
+        if (i === swap && (!final || c === 1)) setStyle(to);
+        await wait(FRAME_MS);
+        elapsed += FRAME_MS;
+      }
     }
     settle();
     el.classList.remove('is-glitch');
+    return elapsed;
   };
 
   const loop = async () => {
@@ -133,11 +271,11 @@ function run(el: HTMLElement): void {
     for (;;) {
       let current = 0;
       for (let n = 1; n <= count; n++) {
-        await glitch(current, n, GLITCH_FRAMES);
+        const took = await glitch(current, n);
         current = n;
-        await pause(STEP_MS - GLITCH_FRAMES * FRAME_MS);
+        await pause(STEP_MS - took);
       }
-      await glitch(current, 0, FINAL_GLITCH_FRAMES);
+      await glitch(current, 0, true);
       await pause(LOGO_HOLD_MS);
     }
   };

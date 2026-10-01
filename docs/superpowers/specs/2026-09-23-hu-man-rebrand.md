@@ -156,3 +156,8 @@ a number count-up.
 
 Revision 12b (same day): 1 s per style (4-frame glitch, ~0.67 s readable). Only the final glitch
 back to the logo flickers, keeping colour swaps under three flashes a second. Cycle ~52 s.
+
+Revision 12c (same day): each glitch picks one of nine transition effects at random (tear, dots-only
+misprint, wave, interlace, CRT collapse, shake, dropout, vertical roll, plate burst), never the same
+twice running; the final glitch back to the logo chains three. Effects live in `EFFECTS` in
+`wordmark-intro.ts`.
