@@ -19,6 +19,8 @@ const MIME = {
   '.woff2': 'font/woff2',
   '.json': 'application/json',
   '.xml': 'application/xml',
+  '.mp4': 'video/mp4',
+  '.webp': 'image/webp',
 };
 
 export function startServer(distDir, port) {
@@ -57,7 +59,22 @@ export function startServer(distDir, port) {
         res.end(gzipSync(body));
         return;
       }
-      res.writeHead(200, { 'Content-Type': type });
+      // Byte ranges, as real hosts serve them: Safari will not play video without them.
+      const range = /^bytes=(\d*)-(\d*)$/.exec(req.headers.range ?? '');
+      if (range) {
+        const start = range[1] ? Number(range[1]) : Math.max(0, body.length - Number(range[2]));
+        const end =
+          range[1] && range[2] ? Math.min(Number(range[2]), body.length - 1) : body.length - 1;
+        res.writeHead(206, {
+          'Content-Type': type,
+          'Accept-Ranges': 'bytes',
+          'Content-Range': `bytes ${start}-${end}/${body.length}`,
+          'Content-Length': end - start + 1,
+        });
+        res.end(body.subarray(start, end + 1));
+        return;
+      }
+      res.writeHead(200, { 'Content-Type': type, 'Accept-Ranges': 'bytes' });
       res.end(body);
     } catch {
       res.writeHead(500);

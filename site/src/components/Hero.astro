@@ -49,6 +49,8 @@ interface Tile {
   motion?: 'scroll' | 'zoom';
   /** scroll tiles: the screenshot's height / width */
   tall?: number;
+  /** a muted walkthrough clip in public/video/ that plays over the still */
+  video?: string;
   pos?: string;
 }
 
@@ -57,8 +59,20 @@ const rows: Tile[][] = [
     { src: 'work/essence-mobile', project: 'essence', r: 0.62, pos: 'top' },
     { src: 'projects/eldeva-hero', project: 'eldeva', r: 1.2, motion: 'zoom' },
     { src: 'work/calculator-scroll', project: 'calculator', r: 1.15, motion: 'scroll' },
-    { src: 'projects/tesla-model-s', project: 'tesla', r: 1.1, motion: 'zoom', pos: '62% 50%' },
-    { src: 'projects/eldeva-velvet-peony', project: 'eldeva', r: 0.9, pos: '62% 50%' },
+    {
+      src: 'projects/tesla-model-s',
+      project: 'tesla',
+      r: 1.1,
+      video: 'tesla-models',
+      pos: '62% 50%',
+    },
+    {
+      src: 'projects/eldeva-velvet-peony',
+      project: 'eldeva',
+      r: 0.9,
+      video: 'eldeva-products',
+      pos: '62% 50%',
+    },
     { src: 'work/calculator-compound', project: 'calculator', r: 1.1, pos: 'top' },
   ],
   [
@@ -72,11 +86,23 @@ const rows: Tile[][] = [
     },
     { src: 'projects/eldeva-light-it-slowly', project: 'eldeva', r: 1.1, motion: 'zoom' },
     { src: 'work/essence-scroll', project: 'essence', r: 1.15, motion: 'scroll' },
-    { src: 'projects/tesla-semi', project: 'tesla', r: 1.0, pos: '68% 50%' },
+    {
+      src: 'projects/tesla-timeline',
+      project: 'tesla',
+      r: 1.0,
+      video: 'tesla-timeline',
+      pos: 'left',
+    },
     { src: 'projects/eldeva-sweet-plum', project: 'eldeva', r: 0.85, pos: '62% 50%' },
   ],
   [
-    { src: 'projects/eldeva-scents', project: 'eldeva', r: 1.0, pos: 'left' },
+    {
+      src: 'projects/eldeva-scents',
+      project: 'eldeva',
+      r: 1.0,
+      video: 'eldeva-scents',
+      pos: 'left',
+    },
     { src: 'projects/tesla-under-the-skin', project: 'tesla', r: 1.2, motion: 'zoom' },
     { src: 'work/essence-thumb', project: 'essence', r: 1.1 },
     { src: 'projects/eldeva-white-sands', project: 'eldeva', r: 0.85, pos: '52% 50%' },
@@ -87,7 +113,7 @@ const rows: Tile[][] = [
     { src: 'projects/tesla-network', project: 'tesla', r: 1.2, pos: 'left' },
     { src: 'projects/eldeva-ritual', project: 'eldeva', r: 1.1, motion: 'zoom' },
     { src: 'work/calculator-thumb', project: 'calculator', r: 1.1 },
-    { src: 'projects/tesla-timeline', project: 'tesla', r: 1.0, pos: 'left' },
+    { src: 'projects/tesla-semi', project: 'tesla', r: 1.0, pos: '68% 50%' },
     { src: 'projects/eldeva-linen-breeze', project: 'eldeva', r: 0.9, pos: '62% 50%' },
     { src: 'projects/eldeva-footer', project: 'eldeva', r: 1.0, motion: 'zoom' },
   ],
@@ -190,6 +216,19 @@ let n = 0;
                 decoding="async"
                 style={tile.pos ? `object-position:${tile.pos}` : undefined}
               />
+              {tile.video && (
+                <video
+                  class="hero__video"
+                  data-src={`/video/${tile.video}.mp4`}
+                  muted
+                  loop
+                  playsinline
+                  disablepictureinpicture
+                  preload="none"
+                  aria-hidden="true"
+                  style={tile.pos ? `object-position:${tile.pos}` : undefined}
+                />
+              )}
               {project.tag && (
                 <span class="hero__tag" aria-hidden="true">
                   {project.tag}
@@ -483,6 +522,22 @@ let n = 0;
       0 0 14px var(--neon);
   }
 
+  /* Walkthrough clips fade in over their still once they are playing. */
+  .hero__video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.6s var(--ease-out);
+    pointer-events: none;
+  }
+
+  .hero__video.is-playing {
+    opacity: 1;
+  }
+
   /* Visible label on design work that isn't live. */
   .hero__tag {
     position: absolute;
@@ -591,6 +646,10 @@ let n = 0;
   }
 
   @media (prefers-reduced-motion: reduce) {
+    .hero__video {
+      display: none;
+    }
+
     .hero__tile.is-zoom :global(img),
     .hero__tile.is-scroll :global(img) {
       animation: none;

@@ -188,3 +188,11 @@ concept is and that the Tesla site is not affiliated with Tesla, Inc. The render
 Revision 15 (2026-10-01): universes reverted at Gurman's request. Back to Revision 12c (font changes
 with the nine glitch transitions, no backgrounds, no camera zooms), plus `overflow-x: clip` on the
 wordmark so glitch frames never widen the page.
+
+## Revision 16 (2026-10-01): walkthrough clips in the collage
+Four collage tiles play short muted loops from Gurman's screen recordings: the Tesla model
+carousel, the Tesla timeline, the Eldeva product carousel and the Eldeva scent picker (cut to
+avoid the mock reviews). Each is cropped below the browser chrome, 720 px wide, H.264 MP4,
+4.7 MB in total. The still image stays underneath as the poster and the clip fades in once
+playing; clips load after the page is idle, pause off screen or when filtered out, and are
+skipped under reduced motion and Data Saver. Lighthouse page weight is unchanged.

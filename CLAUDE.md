@@ -207,6 +207,11 @@ Eldeva is a mock-up for a family member's real business, not live: tag "Concept"
 The Tesla fan site is Gurman's unofficial redesign of a real brand (his decision to show it): tag
 "Unofficial concept" and keep "not affiliated with Tesla, Inc." in the key line. Never use Eldeva
 frames showing its mock reviews or star ratings. Filters are by project, not service type.
+Four tiles also play muted walkthrough clips cut from those recordings (`public/video/*.mp4`,
+~0.6-1.5 MB each, made with `scripts/make-clip.swift`). The still stays as the poster; a clip
+loads only after the page is idle, plays only while its tile is on screen, and never under
+reduced motion or Data Saver. `scripts/serve.mjs` now answers byte-range requests: Safari will
+not play video without them, so test video in WebKit through it, not by opening files.
 Lighthouse 95/100/100/100, axe 0 violations on all three pages.
 
 ## Working agreements
