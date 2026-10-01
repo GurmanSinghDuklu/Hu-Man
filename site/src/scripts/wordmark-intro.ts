@@ -1,16 +1,17 @@
 /**
- * Hero wordmark loop, Spider-Verse misprint style: every 2 s HU/MAN glitches
+ * Hero wordmark loop, Spider-Verse misprint style: every 1 s HU/MAN glitches
  * into the next alternate typeface (plates slip, strips tear, ~12 fps stutter).
  * After the last one it glitches back to the brand logo and holds it, clean,
  * for 30 s, then runs again. Pauses while off screen or in a hidden tab.
  * Reduced motion: the static brand logo only.
  *
- * Flash safety (WCAG 2.3.1): each glitch swaps the style at most three times,
- * and glitches are 2 s apart, so never more than three flashes in a second.
+ * Flash safety (WCAG 2.3.1): the 1 s glitches swap the style once; only the
+ * final glitch back to the logo flickers (three swaps), so never more than
+ * three flashes in a second.
  */
-const STEP_MS = 2000; // one alternate style, glitch included
+const STEP_MS = 1000; // one alternate style, glitch included
 const FRAME_MS = 83; // ~12 fps, animated "on twos"
-const GLITCH_FRAMES = 6;
+const GLITCH_FRAMES = 4;
 const FINAL_GLITCH_FRAMES = 10;
 const INTRO_HOLD_MS = 1500; // brand logo before the first glitch
 const LOGO_HOLD_MS = 30000; // clean brand logo after the run
@@ -108,14 +109,15 @@ function run(el: HTMLElement): void {
     });
   };
 
-  // Glitch from style `from` to style `to`: a flicker of the new style early
-  // on, back to the old one, then the real swap, settling into place.
+  // Glitch from style `from` to style `to`, swapping halfway and settling into
+  // place. Long glitches first flicker the new style and back.
   const glitch = async (from: number, to: number, frames: number) => {
+    const flicker = frames > 6;
     el.classList.add('is-glitch');
     for (let i = 0; i < frames; i++) {
       frame(i < frames - 2 ? 1 : 0.35);
-      if (i === 1) setStyle(to);
-      if (i === 2) setStyle(from);
+      if (flicker && i === 1) setStyle(to);
+      if (flicker && i === 2) setStyle(from);
       if (i === Math.floor(frames / 2)) setStyle(to);
       await wait(FRAME_MS);
     }

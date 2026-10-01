@@ -143,7 +143,7 @@ burst, inside WCAG 2.3.1's three-flashes-a-second limit. Pauses off screen and i
 Reduced motion: static green HU/MAN without plates.
 
 ## Revision 12 (2026-10-01): alternate-universe typefaces
-No more separator symbols: the word is always HU/MAN (or Hu/Man / hu/man). Every 2 s it glitches
+No more separator symbols: the word is always HU/MAN (or Hu/Man / hu/man). Every 2 s (now 1 s, see below) it glitches
 into the next of 20 typeface treatments (Newsreader italic, mono, outline, Impact, Didot, comic,
 typewriter, script, Copperplate, Futura, hairline, chrome, halftone, Rockwell, rounded, LCD,
 Georgia, condensed, marker, WordArt), then glitches back to the bold green brand logo and holds it
@@ -153,3 +153,6 @@ in fill, stroke or case so a missing system font still reads as a new version. T
 each style to fill the column and the stage has a fixed height, so nothing below shifts. Use
 `data-styles`, not `data-count`, on the wordmark: `motion.ts` turns any `[data-count]` element into
 a number count-up.
+
+Revision 12b (same day): 1 s per style (4-frame glitch, ~0.67 s readable). Only the final glitch
+back to the logo flickers, keeping colour swaps under three flashes a second. Cycle ~52 s.
