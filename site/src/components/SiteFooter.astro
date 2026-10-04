@@ -1,10 +1,11 @@
 ---
 import { site } from '../config/site';
+import { isHomePath, withBase } from '../config/paths';
 import Logo from './Logo.astro';
 
 const currentYear = new Date().getFullYear();
-const isHome = Astro.url.pathname === '/';
-const prefix = isHome ? '' : '/';
+const isHome = isHomePath(Astro.url.pathname);
+const prefix = isHome ? '' : withBase('/');
 ---
 
 <footer class="site-footer on-dark">
@@ -67,7 +68,7 @@ const prefix = isHome ? '' : '/';
             </a>
           </li>
           <li>
-            <a href="/privacy">Privacy notice</a>
+            <a href={withBase('/privacy')}>Privacy notice</a>
           </li>
         </ul>
       </div>

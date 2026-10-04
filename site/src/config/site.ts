@@ -40,8 +40,9 @@ export const site = {
     github: 'https://github.com/GurmanSinghDuklu',
     linkedin: 'https://www.linkedin.com/in/gurman-singh-duklu',
   },
-  // Set to the real domain before deploying (docs/09 item 8).
-  url: 'https://example.com',
+  // Set to the real domain before deploying (docs/09 item 8). Follows
+  // astro.config.mjs `site`, which a preview build can override via SITE_URL.
+  url: import.meta.env.SITE ?? 'https://example.com',
 } as const;
 
 export type Site = typeof site;

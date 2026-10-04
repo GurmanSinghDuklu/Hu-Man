@@ -1,6 +1,7 @@
 ---
 import '../styles/base.css';
 import Seo from '../components/Seo.astro';
+import { withBase } from '../config/paths';
 import jakartaLatin from '@fontsource-variable/plus-jakarta-sans/files/plus-jakarta-sans-latin-wght-normal.woff2?url';
 
 interface Props {
@@ -22,7 +23,7 @@ const { title, description, index = true, structuredData = false } = Astro.props
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href={withBase('/favicon.svg')} type="image/svg+xml" />
     <meta name="generator" content={Astro.generator} />
     <Seo title={title} description={description} index={index} structuredData={structuredData} />
     <meta name="theme-color" content="#072219" />

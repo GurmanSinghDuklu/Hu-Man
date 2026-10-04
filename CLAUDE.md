@@ -214,6 +214,15 @@ reduced motion or Data Saver. `scripts/serve.mjs` now answers byte-range request
 not play video without them, so test video in WebKit through it, not by opening files.
 Lighthouse 95/100/100/100, axe 0 violations on all three pages.
 
+## GitHub and preview deploy
+Repo: github.com/GurmanSinghDuklu/Hu-Man (public; default branch `hu-man-rebrand`). Every push to
+`hu-man-rebrand` deploys a preview to https://gurmansinghduklu.github.io/Hu-Man/ via
+`.github/workflows/pages.yml`. It builds with `SITE_URL`, `SITE_BASE=/Hu-Man` and `PUBLIC_NOINDEX`
+(noindex on every page, no canonical) because the site lives under a sub-path and isn't launched.
+Any hardcoded root path (`/privacy`, `/video/...`, `/favicon.svg`) must go through
+`withBase()` from `src/config/paths.ts`, and homepage checks through `isHomePath()`, or it breaks on
+Pages. A plain `npm run build` is unchanged (base `/`, example.com).
+
 ## Working agreements
 - Plan first with `/plan-site`, get approval, then build one phase at a time with `/build-phase N`.
 - After each phase: build, typecheck, Lighthouse (aim for 95+ on all four scores), an axe accessibility check, a keyboard test, a reduced-motion test, and screenshots at 360, 768 and 1280px. Critique the screenshots and fix problems before reporting.

@@ -1,5 +1,6 @@
 ---
 import { site } from '../config/site';
+import { withBase } from '../config/paths';
 
 interface Props {
   title: string;
@@ -13,12 +14,15 @@ interface Props {
 const {
   title,
   description,
-  index = true,
+  index: indexProp = true,
   structuredData: includeStructuredData = false,
 } = Astro.props;
+// Preview builds (e.g. GitHub Pages) set PUBLIC_NOINDEX so the unlaunched
+// site isn't indexed under a temporary address.
+const index = indexProp && !import.meta.env.PUBLIC_NOINDEX;
 
 const canonicalUrl = new URL(Astro.url.pathname, site.url).toString();
-const ogImageUrl = new URL('/og-image.png', site.url).toString();
+const ogImageUrl = new URL(withBase('/og-image.png'), site.url).toString();
 
 const structuredData = {
   '@context': 'https://schema.org',

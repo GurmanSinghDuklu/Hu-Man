@@ -1,13 +1,14 @@
 ---
 import { site } from '../config/site';
+import { isHomePath, withBase } from '../config/paths';
 import Logo from './Logo.astro';
 import Arrow from './Arrow.astro';
 
 // Section anchors only exist on the homepage. From any other page (privacy,
 // 404), link back to "/" plus the anchor so the link actually goes
 // somewhere, instead of a dead "#services" with no matching element.
-const isHome = Astro.url.pathname === '/';
-const prefix = isHome ? '' : '/';
+const isHome = isHomePath(Astro.url.pathname);
+const prefix = isHome ? '' : withBase('/');
 
 const navLinks = [
   { href: `${prefix}#services`, label: 'Services' },
@@ -21,7 +22,7 @@ const auditHref = `${prefix}#audit`;
 
 <header class:list={['site-header on-dark', { 'site-header--solid': !isHome }]}>
   <div class="wrap site-header__inner">
-    <a href="/" class="site-header__home" aria-label={`${site.name} home`}>
+    <a href={withBase('/')} class="site-header__home" aria-label={`${site.name} home`}>
       <Logo />
     </a>
 

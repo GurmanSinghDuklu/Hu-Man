@@ -3,6 +3,7 @@ import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import Arrow from './Arrow.astro';
 import WordmarkIntro from './WordmarkIntro.astro';
+import { withBase } from '../config/paths';
 
 // "See, don't explain": a Higgsfield-style collage of real work filling the
 // first screen. Live sites are tagged "Live"; design work that isn't live is
@@ -219,7 +220,7 @@ let n = 0;
               {tile.video && (
                 <video
                   class="hero__video"
-                  data-src={`/video/${tile.video}.mp4`}
+                  data-src={withBase(`/video/${tile.video}.mp4`)}
                   muted
                   loop
                   playsinline
