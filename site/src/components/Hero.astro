@@ -7,8 +7,9 @@ import { withBase } from '../config/paths';
 
 // "See, don't explain": a Higgsfield-style collage of real work filling the
 // first screen. Live sites are tagged "Live"; design work that isn't live is
-// tagged "Concept" (Eldeva, a mock-up for a family business, and an unofficial
-// Tesla fan site, not affiliated with Tesla). No fictional-brand tiles. Images
+// tagged "Concept" (Eldeva, a mock-up for a family business, and unofficial
+// Tesla and Spider-Man: Miles Morales fan sites, not affiliated with those
+// brands). No fictional-brand tiles. Images
 // live in src/assets and ship as resized WebP.
 const images = import.meta.glob<{ default: ImageMetadata }>('../assets/{work,projects}/*.jpg', {
   eager: true,
@@ -19,7 +20,7 @@ const img = (path: string) => {
   return found.default;
 };
 
-type Project = 'calculator' | 'essence' | 'eldeva' | 'tesla';
+type Project = 'calculator' | 'essence' | 'eldeva' | 'tesla' | 'spiderman';
 const PROJECTS: Record<Project, { name: string; live: boolean; caption: string; tag?: string }> = {
   calculator: { name: 'The Calculator App', live: true, caption: 'Live: The Calculator App' },
   essence: {
@@ -37,6 +38,13 @@ const PROJECTS: Record<Project, { name: string; live: boolean; caption: string; 
     name: 'Tesla (unofficial)',
     live: false,
     caption: 'Concept: unofficial Tesla fan site, not affiliated with Tesla, Inc.',
+    tag: 'Unofficial concept',
+  },
+  spiderman: {
+    name: 'Spider-Man (unofficial)',
+    live: false,
+    caption:
+      'Concept: unofficial Spider-Man: Miles Morales fan site, not affiliated with Marvel, Insomniac Games or Sony',
     tag: 'Unofficial concept',
   },
 };
@@ -59,6 +67,13 @@ const rows: Tile[][] = [
   [
     { src: 'work/essence-mobile', project: 'essence', r: 0.62, pos: 'top' },
     { src: 'projects/eldeva-hero', project: 'eldeva', r: 1.2, motion: 'zoom' },
+    {
+      src: 'projects/spiderman-hero',
+      project: 'spiderman',
+      r: 1.2,
+      video: 'spiderman-intro',
+      pos: 'left',
+    },
     { src: 'work/calculator-scroll', project: 'calculator', r: 1.15, motion: 'scroll' },
     {
       src: 'projects/tesla-model-s',
@@ -75,6 +90,7 @@ const rows: Tile[][] = [
       pos: '62% 50%',
     },
     { src: 'work/calculator-compound', project: 'calculator', r: 1.1, pos: 'top' },
+    { src: 'projects/spiderman-rogues', project: 'spiderman', r: 1.1, motion: 'zoom' },
   ],
   [
     { src: 'projects/tesla-hero', project: 'tesla', r: 1.2, motion: 'zoom', pos: 'left' },
@@ -95,6 +111,14 @@ const rows: Tile[][] = [
       pos: 'left',
     },
     { src: 'projects/eldeva-sweet-plum', project: 'eldeva', r: 0.85, pos: '62% 50%' },
+    {
+      src: 'projects/spiderman-venom',
+      project: 'spiderman',
+      r: 1.1,
+      video: 'spiderman-venom',
+      pos: 'left',
+    },
+    { src: 'projects/spiderman-winter', project: 'spiderman', r: 1.0, pos: 'left' },
   ],
   [
     {
@@ -109,6 +133,13 @@ const rows: Tile[][] = [
     { src: 'projects/eldeva-white-sands', project: 'eldeva', r: 0.85, pos: '52% 50%' },
     { src: 'work/calculator-mobile', project: 'calculator', r: 0.62, pos: 'top' },
     { src: 'projects/tesla-master-plan', project: 'tesla', r: 1.2, motion: 'zoom' },
+    {
+      src: 'projects/spiderman-gallery',
+      project: 'spiderman',
+      r: 1.2,
+      video: 'spiderman-gallery',
+    },
+    { src: 'projects/spiderman-tinkerer', project: 'spiderman', r: 1.1, motion: 'zoom' },
   ],
   [
     { src: 'projects/tesla-network', project: 'tesla', r: 1.2, pos: 'left' },
@@ -117,6 +148,8 @@ const rows: Tile[][] = [
     { src: 'projects/tesla-semi', project: 'tesla', r: 1.0, pos: '68% 50%' },
     { src: 'projects/eldeva-linen-breeze', project: 'eldeva', r: 0.9, pos: '62% 50%' },
     { src: 'projects/eldeva-footer', project: 'eldeva', r: 1.0, motion: 'zoom' },
+    { src: 'projects/spiderman-rooftop', project: 'spiderman', r: 1.1, pos: '50% 40%' },
+    { src: 'projects/spiderman-outro', project: 'spiderman', r: 1.1, motion: 'zoom' },
   ],
 ];
 
@@ -187,8 +220,8 @@ let n = 0;
     <p class="hero__key">
       <span class="hero__key-dot" aria-hidden="true"></span>
       Live sites I've built and launched. Tiles marked Concept are design work that isn't live:
-      Eldeva is a mock-up for a family business, and the Tesla fan site is an unofficial redesign,
-      not affiliated with Tesla, Inc.
+      Eldeva is a mock-up for a family business. The Tesla and Spider-Man: Miles Morales fan sites
+      are unofficial redesigns, not affiliated with Tesla, Inc., Marvel, Insomniac Games or Sony.
     </p>
   </div>
 

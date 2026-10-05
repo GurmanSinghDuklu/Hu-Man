@@ -213,6 +213,9 @@ loads only after the page is idle, plays only while its tile is on screen, and n
 reduced motion or Data Saver. `scripts/serve.mjs` now answers byte-range requests: Safari will
 not play video without them, so test video in WebKit through it, not by opening files.
 Lighthouse 95/100/100/100, axe 0 violations on all three pages.
+Revision 8 (2026-10-05) added Gurman's unofficial Spider-Man: Miles Morales fan site (8 stills +
+3 clips, `spiderman-*`), handled like Tesla: tag "Unofficial concept", key line says not affiliated
+with Marvel, Insomniac Games or Sony. It uses game imagery from PlayStation.com, not his own.
 
 ## GitHub and preview deploy
 Repo: github.com/GurmanSinghDuklu/Hu-Man (public; default branch `hu-man-rebrand`). Every push to
