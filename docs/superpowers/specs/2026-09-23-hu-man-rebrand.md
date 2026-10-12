@@ -196,3 +196,9 @@ avoid the mock reviews). Each is cropped below the browser chrome, 720 px wide, 
 4.7 MB in total. The still image stays underneath as the poster and the clip fades in once
 playing; clips load after the page is idle, pause off screen or when filtered out, and are
 skipped under reduced motion and Data Saver. Lighthouse page weight is unchanged.
+
+## Revision 18 (2026-10-12): back to the separator cycle
+At Gurman's request the font-change glitch is gone and the wordmark is back to Revision 10 (1 s per
+separator): HU?MAN steps through . * _ - + & : × ~ | # •, then the separator becomes "/", the gap
+tightens and the word turns bold green (HU/MAN). Holds ~3 s, reopens in white on "." and repeats.
+Restored from commit 8abba13.
