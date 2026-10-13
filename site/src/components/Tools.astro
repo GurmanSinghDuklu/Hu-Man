@@ -37,26 +37,26 @@ const tools = [
 </section>
 
 <style>
+  /* A ruled strip: hairlines above and below, names in Montserrat capitals. No fade masks. */
   .tools {
-    padding-block: clamp(2rem, 5vw, 3.5rem);
+    padding-block: clamp(2.5rem, 6vw, 4rem);
   }
 
   .tools__title {
-    text-align: center;
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 0.06em;
+    font: 500 0.75rem/1.4 var(--font-mono);
+    letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--color-text-muted);
-    margin-bottom: var(--space-4);
+    margin-bottom: var(--space-3);
     padding-inline: var(--gutter);
-    line-height: 1.5;
+    max-width: var(--content-max);
+    margin-inline: auto;
   }
 
   .tools__track {
     display: flex;
     overflow: hidden;
-    mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+    border-block: var(--border-hairline) solid var(--line);
   }
 
   .tools__track:hover .tools__list {
@@ -67,35 +67,29 @@ const tools = [
     list-style: none;
     display: flex;
     flex: none;
-    gap: clamp(2.5rem, 5vw, 4.5rem);
     margin: 0;
-    padding: 0 clamp(1.25rem, 2.5vw, 2.25rem);
-    animation: tools 36s linear infinite;
+    padding: 0;
+    animation: tools 40s linear infinite;
   }
 
   .tools__list li {
     display: flex;
     align-items: center;
-    gap: 0.6em;
+    gap: 1.25rem;
+    padding: 1.1rem 1.25rem 1.1rem 0;
     white-space: nowrap;
-    font-size: clamp(1.1rem, 2vw, 1.5rem);
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    color: #878d96;
-    transition: color 0.2s;
+    font: 800 clamp(1.1rem, 2vw, 1.5rem) / 1 var(--font-display);
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    color: var(--ink-text);
   }
 
+  /* A small Signal square between names. */
   .tools__list li::before {
     content: '';
-    width: 0.45em;
-    height: 0.45em;
-    border-radius: 50%;
-    background: var(--neon);
-    box-shadow: 0 0 8px var(--neon);
-  }
-
-  .tools__list li:hover {
-    color: #ffffff;
+    width: 0.4em;
+    height: 0.4em;
+    background: var(--signal);
   }
 
   @keyframes tools {
@@ -110,15 +104,11 @@ const tools = [
       flex-wrap: wrap;
       flex: 1;
       justify-content: center;
-      row-gap: 1rem;
+      column-gap: 1.25rem;
     }
 
     .tools__list[aria-hidden='true'] {
       display: none;
-    }
-
-    .tools__track {
-      mask-image: none;
     }
   }
 </style>

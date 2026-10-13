@@ -96,7 +96,7 @@ const work = [
 ] as const;
 ---
 
-<section class="work" id="work" aria-labelledby="work-title" data-work>
+<section class="work light" id="work" aria-labelledby="work-title" data-work>
   <div class="wrap">
     <div class="work__head">
       <div class="work__titles">
@@ -143,9 +143,6 @@ const work = [
                 <b>{title}</b>
                 <span class="work__tags">Concept · {tags}</span>
               </span>
-              <span class="work__go" aria-hidden="true">
-                <Arrow />
-              </span>
             </figcaption>
           </figure>
         </li>
@@ -183,13 +180,8 @@ const work = [
 </script>
 
 <style>
+  /* A Paper band: the brand's document theme. Cards sit in a flush, hairline-ruled grid. */
   .work {
-    margin: clamp(2rem, 5vw, 4rem) clamp(0.5rem, 1.5vw, 1.25rem) 0;
-    border-radius: var(--radius-xl);
-    background:
-      radial-gradient(55% 45% at 92% 0%, rgba(173, 255, 0, 0.08), transparent 70%),
-      radial-gradient(60% 55% at 0% 100%, rgba(0, 255, 48, 0.1), transparent 70%), var(--graphite-1);
-    border: 1px solid var(--color-line);
     padding-block: clamp(4rem, 9vw, 7rem);
   }
 
@@ -202,6 +194,7 @@ const work = [
   .work__titles {
     display: grid;
     gap: var(--space-3);
+    justify-items: start;
   }
 
   .work__note {
@@ -212,35 +205,35 @@ const work = [
   .work__filters {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: 0.4rem;
     margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
   }
 
   .work__filter {
     min-height: 44px;
-    padding: 0.5em 1.3em;
-    border-radius: var(--radius-pill);
-    border: 1px solid var(--color-line);
+    padding: 0.4em 1em;
+    border: var(--border-hairline) solid var(--line-strong);
+    border-radius: 0;
     background: transparent;
-    color: var(--color-text);
-    font: 600 0.85rem var(--font-sans);
+    color: var(--ink-text);
+    font: 500 0.75rem var(--font-mono);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
     cursor: pointer;
     transition:
-      background-color 0.2s,
-      color 0.2s,
-      border-color 0.2s;
+      background-color 0.15s linear,
+      color 0.15s linear,
+      border-color 0.15s linear;
   }
 
   .work__filter:hover {
-    border-color: var(--neon);
-    color: var(--neon);
+    border-color: var(--ink-text);
   }
 
   .work__filter[aria-pressed='true'] {
-    background: var(--neon);
-    color: var(--ink);
-    border-color: var(--neon);
-    box-shadow: 0 8px 24px -10px rgba(0, 255, 48, 0.9);
+    background: var(--brand-ink);
+    color: var(--brand-paper);
+    border-color: var(--brand-ink);
   }
 
   .work__grid {
@@ -248,7 +241,13 @@ const work = [
     margin: 0;
     padding: 0;
     display: grid;
-    gap: clamp(1rem, 2vw, 1.5rem);
+    gap: var(--border-hairline);
+    background: var(--line);
+    border: var(--border-hairline) solid var(--line);
+  }
+
+  .work__card {
+    background: var(--surface);
   }
 
   .work__card[hidden] {
@@ -260,25 +259,9 @@ const work = [
     height: 100%;
     display: flex;
     flex-direction: column;
-    border-radius: var(--radius-lg);
-    background: var(--graphite-2);
-    border: 1px solid var(--color-line);
-    padding: 0.6rem;
-    box-shadow: 0 1px 0 var(--color-line);
-    transition:
-      transform 0.45s var(--ease-out),
-      box-shadow 0.45s var(--ease-out);
-  }
-
-  .work__card:hover figure {
-    transform: translateY(-6px);
-    box-shadow:
-      var(--shadow-card),
-      0 0 0 1px rgba(0, 255, 48, 0.35);
   }
 
   .work__media {
-    border-radius: calc(var(--radius-lg) - 0.6rem);
     overflow: hidden;
     flex: 1;
     display: grid;
@@ -303,47 +286,26 @@ const work = [
     justify-content: space-between;
     align-items: center;
     gap: 1rem;
-    padding: 1rem 0.6rem 0.5rem;
+    padding: 1rem 1.25rem 1.25rem;
+    border-top: var(--border-hairline) solid var(--line);
   }
 
   .work__card figcaption > span:first-child {
     display: grid;
-    gap: 0.15rem;
+    gap: 0.35rem;
   }
 
   .work__card b {
-    font-size: 1.05rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
+    font: 800 1.0625rem/1.1 var(--font-display);
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
   }
 
   .work__tags {
-    font-size: 0.8rem;
+    font: 500 0.6875rem/1.4 var(--font-mono);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
     color: var(--color-text-muted);
-  }
-
-  .work__go {
-    flex: none;
-    display: grid;
-    place-items: center;
-    width: 2.6rem;
-    height: 2.6rem;
-    border-radius: 50%;
-    background: var(--graphite-3);
-    transition:
-      background-color 0.3s,
-      transform 0.4s var(--ease-out);
-  }
-
-  .work__go :global(svg) {
-    width: 1rem;
-    height: 1rem;
-  }
-
-  .work__card:hover .work__go {
-    background: var(--neon);
-    color: var(--ink);
-    transform: rotate(45deg);
   }
 
   .work__empty {
@@ -358,28 +320,24 @@ const work = [
 
   .work__real h3 {
     font-size: clamp(1.5rem, 2.6vw, 2rem);
-    text-transform: uppercase;
-    letter-spacing: -0.03em;
   }
 
   .work__real ul {
     list-style: none;
     margin: 0;
     padding: 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.5);
+    border-top: var(--border-rule) solid var(--brand-ink);
   }
 
   .work__real li {
     display: grid;
     gap: 0.25rem;
     padding-block: 1.25rem;
-    border-bottom: 1px solid var(--color-line);
+    border-bottom: var(--border-hairline) solid var(--line);
   }
 
   .work__real-name {
-    font-size: 1.2rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
+    font: 700 1.2rem/1.3 var(--font-text);
   }
 
   .work__real-name a {
@@ -392,8 +350,7 @@ const work = [
 
   .work__real-name a:hover {
     text-decoration: underline;
-    text-decoration-color: var(--neon);
-    text-decoration-thickness: 3px;
+    text-decoration-thickness: 2px;
     text-underline-offset: 0.2em;
   }
 
@@ -410,10 +367,6 @@ const work = [
     .work__head {
       grid-template-columns: 1fr auto;
       align-items: end;
-    }
-
-    .work__note {
-      text-align: right;
     }
 
     .work__grid {

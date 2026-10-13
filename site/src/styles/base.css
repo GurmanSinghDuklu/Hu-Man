@@ -1,7 +1,9 @@
+/* Concept renders only (fictional brands keep their own type). */
 @import '@fontsource-variable/plus-jakarta-sans/wght.css';
 @import '@fontsource-variable/plus-jakarta-sans/wght-italic.css';
 @import '@fontsource-variable/newsreader/wght.css';
 @import '@fontsource-variable/newsreader/wght-italic.css';
+@import './fonts.css';
 @import './tokens.css';
 @import './renders.css';
 
@@ -22,9 +24,9 @@ body {
   margin: 0;
   background: var(--color-bg);
   color: var(--color-text);
-  font-family: var(--font-sans);
+  font-family: var(--font-text);
   font-size: 1rem;
-  line-height: 1.6;
+  line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: clip;
@@ -36,19 +38,23 @@ svg {
   display: block;
 }
 
+/* Display type: Montserrat capitals, tight tracking, leading under 1 (docs/brand/2-identity.md). */
 h1,
 h2,
 h3,
 h4 {
-  font-family: var(--font-sans);
+  font-family: var(--font-display);
   font-weight: 800;
-  line-height: 1.02;
-  letter-spacing: -0.035em;
+  line-height: 0.95;
+  letter-spacing: -0.015em;
+  text-transform: uppercase;
+  text-wrap: balance;
   margin: 0;
 }
 
 p {
   margin: 0;
+  text-wrap: pretty;
 }
 
 a {
@@ -56,24 +62,20 @@ a {
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-focus-ring);
-  outline-offset: 3px;
-  border-radius: 6px;
-}
-
-.light :focus-visible {
-  outline-color: #0a0a0b;
+  outline: var(--border-rule) solid var(--focus-ring);
+  outline-offset: 2px;
 }
 
 .skip-link {
   position: absolute;
   left: var(--space-3);
   top: -100%;
-  background: var(--neon);
-  color: var(--ink);
+  background: var(--signal);
+  color: var(--on-signal);
   padding: var(--space-2) var(--space-3);
-  border-radius: var(--radius-pill);
-  font-weight: 700;
+  font: 700 0.875rem var(--font-display);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   text-decoration: none;
   z-index: 100;
 }
@@ -101,160 +103,194 @@ a {
 }
 
 /* ---------- type helpers ---------- */
+
+/* Mono capital label (the brand's `label` style). `.eyebrow` is the legacy name. */
+.label,
 .eyebrow {
   display: inline-flex;
   align-items: center;
-  gap: 0.6em;
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
+  gap: 0.75em;
+  font: 500 0.75rem/1.35 var(--font-mono);
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--color-text-muted);
 }
 
+/* A short Signal rule leads each section label. */
 .eyebrow::before {
   content: '';
-  width: 0.5em;
-  height: 0.5em;
-  border-radius: 50%;
-  background: var(--neon);
-  box-shadow: 0 0 10px var(--neon);
-}
-
-.light .eyebrow::before {
-  box-shadow: none;
-  background: #0a0a0b;
+  width: 1.5em;
+  height: var(--border-rule);
+  background: var(--signal-text);
 }
 
 .section-title {
-  font-size: clamp(2.4rem, 5.6vw, 4.5rem);
-  text-transform: uppercase;
-  letter-spacing: -0.04em;
+  font-size: clamp(2.5rem, 6.4vw, 4.5rem);
+  letter-spacing: -0.02em;
 }
 
-/* Highlight: neon text on dark; a neon highlighter swipe behind black text on white. */
+/* Highlight: Signal text on Ink; on Paper, a filled Signal block behind Ink text
+   (neon text and thin neon lines never go on Paper). */
 .hl {
-  color: var(--neon);
+  color: var(--signal);
 }
 
 .light .hl {
-  color: #0a0a0b;
-  background: linear-gradient(transparent 58%, var(--neon) 58%, var(--neon) 92%, transparent 92%);
-  padding-inline: 0.06em;
+  color: var(--brand-ink);
+  background: var(--signal);
+  padding-inline: 0.12em;
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
 }
 
-/* ---------- buttons ---------- */
+/* ---------- buttons: square, Montserrat capitals (docs/brand Button) ---------- */
 .btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.75em;
+  justify-content: center;
+  gap: 0.6em;
   min-height: 48px;
-  padding: 0.45em 0.5em 0.45em 1.5em;
-  border-radius: var(--radius-pill);
-  border: 1px solid transparent;
-  font: 700 0.9rem/1.2 var(--font-sans);
-  letter-spacing: 0.02em;
+  padding: 0.75rem 1.5rem;
+  border: var(--border-rule) solid transparent;
+  border-radius: 0;
+  background: none;
+  color: var(--color-text);
+  font: 700 0.875rem/1.25 var(--font-display);
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   text-decoration: none;
   cursor: pointer;
   transition:
-    background-color 0.25s var(--ease-out),
-    color 0.25s var(--ease-out),
-    border-color 0.25s var(--ease-out),
-    transform 0.25s var(--ease-out);
+    background-color 0.15s linear,
+    color 0.15s linear,
+    border-color 0.15s linear;
 }
 
+/* The only arrow is ↗, and only on links that leave the page. */
 .btn__icon {
-  display: grid;
+  display: inline-grid;
   place-items: center;
-  width: 2.3em;
-  height: 2.3em;
-  border-radius: 50%;
   flex: none;
-  transition: transform 0.35s var(--ease-out);
 }
 
 .btn__icon svg {
-  width: 1.05em;
-  height: 1.05em;
+  width: 0.95em;
+  height: 0.95em;
 }
 
-.btn:hover .btn__icon {
-  transform: rotate(45deg);
-}
-
-/* "Dark" = the contrasting solid: white on the black page, black on white bands. */
-.btn--dark {
-  background: #ffffff;
-  color: var(--ink);
-}
-
-.btn--dark .btn__icon {
-  background: var(--ink);
-  color: var(--neon);
-}
-
-.light .btn--dark {
-  background: var(--ink);
-  color: #ffffff;
-}
-
-.light .btn--dark .btn__icon {
-  background: var(--neon);
-  color: var(--ink);
-}
-
+/* Primary: one per screen. Legacy name `.btn--lime`. */
+.btn--primary,
 .btn--lime {
-  background: var(--acid);
-  color: var(--ink);
-  box-shadow: 0 0 0 0 rgba(173, 255, 0, 0);
+  background: var(--signal);
+  border-color: var(--signal);
+  color: var(--on-signal);
 }
 
+.btn--primary:hover,
 .btn--lime:hover {
-  box-shadow: 0 0 32px -6px rgba(173, 255, 0, 0.65);
+  background: var(--brand-paper);
+  border-color: var(--brand-paper);
+  color: var(--brand-ink);
 }
 
-.btn--lime .btn__icon {
-  background: var(--ink);
-  color: var(--acid);
+.light .btn--primary:hover,
+.light .btn--lime:hover {
+  background: var(--brand-ink);
+  border-color: var(--brand-ink);
+  color: var(--brand-paper);
 }
 
-.btn--ghost {
-  border-color: currentColor;
-  padding-right: 1.5em;
+/* Secondary: a hairline box. Legacy names `.btn--ghost`, `.btn--dark`. */
+.btn--secondary,
+.btn--ghost,
+.btn--dark {
+  border-color: var(--color-line-strong);
+  color: var(--color-text);
 }
 
-.btn--ghost:hover {
-  background: #fff;
-  color: var(--ink);
-  border-color: #fff;
+.btn--secondary:hover,
+.btn--ghost:hover,
+.btn--dark:hover {
+  border-color: var(--color-text);
 }
 
-.light .btn--ghost:hover {
-  background: var(--ink);
-  color: #fff;
-  border-color: var(--ink);
+/* Pulse: offers only. */
+.btn--pulse {
+  background: var(--pulse);
+  border-color: var(--pulse);
+  color: var(--on-pulse);
+}
+
+/* Text action: Signal text, no box. */
+.btn--text {
+  min-height: 44px;
+  padding-inline: 0;
+  color: var(--signal-text);
+}
+
+.btn--text:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.3em;
 }
 
 .btn:active {
-  transform: scale(0.98);
+  transform: translateY(1px);
 }
 
-/* ---------- scroll reveal (only hides content when JS is running) ---------- */
+/* ---------- tags (mono capitals; the pill is reserved for status) ---------- */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  padding: 0.25rem 0.5rem;
+  border: var(--border-hairline) solid var(--color-line-strong);
+  font: 500 0.75rem/1.35 var(--font-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text);
+}
+
+.tag--signal {
+  background: var(--signal);
+  border-color: var(--signal);
+  color: var(--on-signal);
+}
+
+.tag--pulse {
+  background: var(--pulse);
+  border-color: var(--pulse);
+  color: var(--on-pulse);
+}
+
+.tag--scan {
+  background: var(--scan);
+  border-color: var(--scan);
+  color: var(--on-scan);
+}
+
+.tag--status {
+  border-radius: var(--radius-pill);
+}
+
+/* ---------- motion: things snap on, they don't float ---------- */
 .js [data-reveal] {
   opacity: 0;
-  transform: translateY(28px);
-  transition:
-    opacity 0.8s var(--ease-out),
-    transform 0.8s var(--ease-out);
+  transition: opacity 0.18s linear;
   transition-delay: var(--reveal-delay, 0s);
 }
 
 .js [data-reveal].is-in {
   opacity: 1;
-  transform: none;
+}
+
+/* Module grids: cells cut on one after another, ~100 ms per cell. motion.ts sets --i. */
+.js [data-cells] > * {
+  opacity: 0;
+}
+
+.js [data-cells].is-in > * {
+  opacity: 1;
+  transition: opacity 0s linear calc(var(--i, 0) * var(--cell-step));
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -262,9 +298,9 @@ a {
     scroll-behavior: auto;
   }
 
-  .js [data-reveal] {
+  .js [data-reveal],
+  .js [data-cells] > * {
     opacity: 1;
-    transform: none;
   }
 
   *,
@@ -273,5 +309,6 @@ a {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
   }
 }

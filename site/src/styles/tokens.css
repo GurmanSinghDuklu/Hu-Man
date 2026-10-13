@@ -1,67 +1,59 @@
 /**
- * Hu/man design tokens (v3, 2026-09-23): near-black canvas with two neons
- * sampled from Gurman's references (reference/colour/):
- *   --neon  #00FF30  pure electric green  (reference2: arrow-mark brand)
- *   --acid  #ADFF00  acid yellow-green    (reference1: Botanica identity)
- * Neon green is the brand colour (logo, highlights, active states); acid is
- * the energy colour (primary buttons, banners, tags). They meet only as a
- * gradient in rare hero moments. White is used for two "gallery" bands.
+ * Hu/man design tokens (v4, 2026-10-13), from the brand system in docs/brand/
+ * (tokens.json / tokens.css there are the source; edit them together).
  *
- * Legacy names (--forest-*, --lime, --paper*) are kept as aliases so the
- * v2 components map onto the new palette without layout changes.
+ * Ink and Paper carry every layout. Signal green is in every layout. Pulse
+ * (offers), Flare (dates) and Volt (sparks) appear as one block each at most,
+ * and two neons never touch. Scan is for data only. Text on every neon is Ink.
+ * Corners are square; no gradients except the logo's own, no shadows.
+ *
+ * Legacy names (--neon, --acid, --graphite-*, --on-dark*, --color-*) are kept
+ * as aliases onto the brand palette so older component CSS keeps working.
  */
 :root {
-  --neon: #00ff30;
-  --acid: #adff00;
-  --neon-gradient: linear-gradient(100deg, var(--acid) 0%, var(--neon) 100%);
+  /* ---------- brand palette (never flips) ---------- */
+  --brand-ink: #0b0d0a;
+  --brand-paper: #f2f2ec;
+  --signal: #39ff14;
+  --signal-hi: #b2ff58;
+  --signal-lo: #6dff5a;
+  --pulse: #df00ff;
+  --flare: #ff5f1f;
+  --volt: #e7ff00;
+  --scan: #14dcb2;
+  --concrete: #8e908a;
+  --on-signal: var(--brand-ink);
+  --on-pulse: var(--brand-ink);
+  --on-flare: var(--brand-ink);
+  --on-volt: var(--brand-ink);
+  --on-scan: var(--brand-ink);
 
-  --black: #07080a;
-  --graphite-1: #0e1013;
-  --graphite-2: #15181c;
-  --graphite-3: #1e2227;
+  /* ---------- theme roles (Ink ground) ---------- */
+  --surface: #0b0d0a;
+  --surface-raised: #161a14;
+  --line: #2c3229;
+  --line-strong: #6b7064;
+  --ink-text: #f2f2ec;
+  --ink-muted: #a3a89c;
+  --signal-text: #39ff14;
+  --pulse-text: #df00ff;
+  --flare-text: #ff5f1f;
+  --focus-ring: #39ff14;
 
-  /* aliases used by components */
-  --forest-950: #000000;
-  --forest-900: var(--graphite-1);
-  --forest-800: var(--graphite-2);
-  --forest-700: var(--graphite-3);
-  --forest-600: var(--neon);
-  --forest-400: var(--neon);
-  --lime: var(--acid);
-  --lime-deep: #8fd400;
-  --paper: #ffffff;
-  --paper-2: var(--black);
-  --paper-3: var(--graphite-2);
-  --ink: #0a0a0b;
-  --ink-2: #16181b;
+  /* ---------- type ---------- */
+  --font-display: 'Montserrat', 'Arial Black', Arial, sans-serif;
+  --font-text: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+  /* Concept renders keep their own fonts: they are designs for fictional brands, not Hu/man.
+     They start on Archivo/Georgia and switch once the page has loaded (BaseLayout adds
+     .render-fonts), so those downloads never compete with first paint. */
+  --font-render: 'Archivo', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-serif: Georgia, serif;
+  --font-sans: var(--font-text);
 
-  --surface: var(--graphite-1);
-  --surface-2: var(--graphite-2);
-
-  --color-bg: var(--black);
-  --color-text: #f2f3f5;
-  --color-text-muted: #9ca2ab;
-  --color-line: rgba(255, 255, 255, 0.1);
-  --color-line-strong: #ffffff;
-  --color-focus-ring: var(--neon);
-
-  --on-dark: #ffffff;
-  --on-dark-muted: #a3a9b2;
-  --on-dark-line: rgba(255, 255, 255, 0.12);
-
-  --font-sans:
-    'Plus Jakarta Sans Variable', 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI',
-    sans-serif;
-  --font-serif: 'Newsreader Variable', Georgia, serif;
-
+  /* ---------- space, borders ---------- */
   --content-max: 1320px;
   --gutter: clamp(1rem, 3.5vw, 2.5rem);
-
-  --radius-sm: 10px;
-  --radius-md: 18px;
-  --radius-lg: 28px;
-  --radius-xl: 40px;
-  --radius-pill: 999px;
 
   --space-1: 0.25rem;
   --space-2: 0.5rem;
@@ -69,24 +61,96 @@
   --space-4: 1.5rem;
   --space-5: 2.5rem;
   --space-6: 4rem;
-  --space-7: 7rem;
+  --space-7: 6rem;
 
+  --radius-0: 0;
+  --radius-1: 2px;
+  --radius-pill: 999px;
+  /* Legacy radius names: all square now. Pills stay only for status tags. */
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-lg: 0;
+  --radius-xl: 0;
+
+  --border-hairline: 1px;
+  --border-rule: 2px;
+
+  /* Modules snap; they don't float (docs/brand/3-graphic-language.md, Motion). */
   --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --shadow-card: 0 30px 60px -30px rgba(0, 0, 0, 0.85);
+  --ease-snap: steps(1, end);
+  --cell-step: 100ms;
+
+  /* ---------- legacy aliases ---------- */
+  --neon: var(--signal);
+  --acid: var(--signal);
+  --lime: var(--signal);
+  --neon-gradient: linear-gradient(180deg, var(--signal-hi), var(--signal-lo));
+  --black: var(--brand-ink);
+  --graphite-1: var(--surface);
+  --graphite-2: var(--surface-raised);
+  --graphite-3: #20251d;
+  --forest-900: var(--surface);
+  --forest-600: var(--signal);
+  --paper: var(--brand-paper);
+  --ink: var(--brand-ink);
+  --surface-2: var(--surface-raised);
+  --shadow-card: none;
+
+  --color-bg: var(--surface);
+  --color-text: var(--ink-text);
+  --color-text-muted: var(--ink-muted);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-focus-ring: var(--focus-ring);
+
+  --on-dark: var(--ink-text);
+  --on-dark-muted: var(--ink-muted);
+  --on-dark-line: var(--line);
 
   color-scheme: dark;
 }
 
-/* White "gallery" bands (concept work, FAQ). */
+:root.render-fonts {
+  --font-render:
+    'Plus Jakarta Sans Variable', 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI',
+    sans-serif;
+  --font-serif: 'Newsreader Variable', Georgia, serif;
+}
+
+/* Paper bands (concept work, FAQ): the brand's Paper theme. Neons appear here only as
+   filled blocks with Ink text; green text switches to the darker --signal-text. */
 .light {
-  --color-text: #0a0a0b;
-  --color-text-muted: #5a5f67;
-  --color-line: #e4e6ea;
-  --color-line-strong: #0a0a0b;
-  --color-focus-ring: #0a0a0b;
-  --paper: #ffffff;
-  --paper-2: #f3f4f6;
-  --shadow-card: 0 30px 60px -30px rgba(10, 10, 11, 0.35);
-  color: var(--color-text);
+  --surface: #f2f2ec;
+  --surface-raised: #fafaf6;
+  --line: #d3d5cc;
+  --line-strong: #565b51;
+  --ink-text: #0b0d0a;
+  --ink-muted: #565b51;
+  --signal-text: #1f7a0a;
+  --pulse-text: #a100b8;
+  --flare-text: #b83a12;
+  --focus-ring: #0b0d0a;
+  --graphite-2: var(--surface-raised);
+  --graphite-3: #e4e5dd;
+  /* Aliases resolve where they're declared, so redeclare them for this scope. */
+  --color-bg: var(--surface);
+  --color-text: var(--ink-text);
+  --color-text-muted: var(--ink-muted);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-focus-ring: var(--focus-ring);
+  background: var(--surface);
+  color: var(--ink-text);
   color-scheme: light;
+}
+
+/* Wide-gamut screens get Display P3 neons, beyond what sRGB can show (from the brand pack).
+   sRGB screens keep the hex values above. Edit both together. */
+@media (color-gamut: p3) {
+  :root {
+    --signal: color(display-p3 0.28 1 0.1);
+    --pulse: color(display-p3 0.86 0 1);
+    --flare: color(display-p3 1 0.36 0.06);
+    --volt: color(display-p3 0.92 1 0);
+  }
 }

@@ -21,8 +21,8 @@ Build the studio's own marketing website: high-end, fast, local-SEO-ready, with 
 
 ## Stack (decided)
 - Astro + TypeScript, static output.
-- Plain CSS with design tokens (custom properties). Single art direction: near-black `#07080A` page, neon green `#00FF30` (brand) and acid yellow `#ADFF00` (CTAs, banners, tags), two white `.light` bands (concept work, FAQ). No theme toggle. Legacy token names (`--forest-*`, `--lime`, `--paper*`) are aliases onto this palette in `tokens.css`.
-- Self-hosted fonts (`@fontsource`: Plus Jakarta Sans for UI/display, Newsreader for serif type inside renders), no Google Fonts requests.
+- Plain CSS with design tokens (custom properties), from the Hu/man brand system in `docs/brand/` (since 2026-10-13). Ink `#0B0D0A` page, Signal green `#39FF14` in every layout; Pulse `#DF00FF` (offers), Flare `#FF5F1F` (dates), Volt `#E7FF00` (sparks) one block each at most; Scan `#14DCB2` data only; Paper `#F2F2EC` for the `.light` bands (concept work, FAQ). Square corners, no shadows or glows, no gradients except the logo's own. No theme toggle. Legacy token names (`--neon`, `--acid`, `--graphite-*`, `--color-*`) are aliases in `tokens.css`.
+- Self-hosted fonts from the brand pack in `src/fonts/` (Montserrat 700/800 display capitals, Archivo 400/700 text, IBM Plex Mono 500 labels). Concept renders keep `@fontsource` Plus Jakarta Sans and Newsreader via `--font-render`/`--font-serif`, swapped in only after page load (`.render-fonts`). No Google Fonts requests.
 - Small vanilla TypeScript islands only where needed: motion (reveals, count-ups, header state), services preview, gallery filter, chat demo, header menu close.
 - No tracking, no cookies, no third-party scripts. Ask before adding any other dependency.
 - Project lives in `site/` (Astro app root). Astro 7, TypeScript 6, Node 24.
@@ -216,6 +216,25 @@ Lighthouse 95/100/100/100, axe 0 violations on all three pages.
 Revision 8 (2026-10-05) added Gurman's unofficial Spider-Man: Miles Morales fan site (8 stills +
 3 clips, `spiderman-*`), handled like Tesla: tag "Unofficial concept", key line says not affiliated
 with Marvel, Insomniac Games or Sony. It uses game imagery from PlayStation.com, not his own.
+
+## Brand system rebuild (2026-10-13, branch `brand-system`)
+Site restyled to the Hu/man brand pack (copied to `docs/brand/`: identity, graphic language,
+applications, tokens). Logo is fixed artwork (`src/assets/brand/logo-*.svg`, inlined by `Logo.astro`),
+never retyped: the separator-cycle wordmark animation was removed for that reason. `Module.astro` is a
+build-time port of the pack's `HuMan.module()` (16 square modules; the Ridge kinds use the fingerprint
+SVGs as CSS masks, so one file takes any colour). Hero is a module band (logo, Paper headline block,
+Ridge field and print, hex, Volt spark). Motion snaps: `[data-cells]` grids cut on cell by cell
+(`motion.ts`), no floats, no scroll-scrubbed effects. Things worth knowing:
+1. **Hero LCP must not animate.** An opacity animation on the headline cell stops Chrome counting it as
+   LCP and dropped performance to ~90. Only the pattern cells and status cell stagger.
+2. **Render fonts are deferred on purpose** (see Stack). Loading Jakarta/Newsreader up front put ~250 kB
+   before first paint (performance 88). Don't use `content-visibility` to fix that: it made Lighthouse
+   and axe read wrong backgrounds (false contrast failures).
+3. **Collage images are all `loading="lazy"`**: below the band they're off-screen on mobile, and eager
+   ones landed in the first-paint graph.
+4. Brand voice copy rewrite is approved in principle but not built: draft in `docs/brand/copy-draft.md`
+   needs Gurman's sign-off before `docs/03` and the components change.
+Lighthouse 100/100/100/100, axe 0 violations on all three pages.
 
 ## GitHub and preview deploy
 Repo: github.com/GurmanSinghDuklu/Hu-Man (public; default branch `hu-man-rebrand`). Every push to

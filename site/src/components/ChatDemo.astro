@@ -4,7 +4,6 @@ import Phone from './devices/Phone.astro';
 ---
 
 <section class="chat on-dark" aria-labelledby="chat-title" data-chat-demo>
-  <div class="chat__glow" aria-hidden="true"></div>
   <div class="wrap chat__inner">
     <div class="chat__copy">
       <p class="eyebrow" data-reveal>
@@ -31,29 +30,31 @@ import Phone from './devices/Phone.astro';
       </div>
     </div>
 
-    <Phone class="chat__phone" bg="#f7f4ee" fg="#141414">
-      <div class="chat__head">
-        <span class="chat__avatar" aria-hidden="true">
-          N
-        </span>
-        <span>
-          <b>Northgate Barbers</b>
-          <span>Demo assistant</span>
-        </span>
-      </div>
-      <div class="chat__log" data-chat-log aria-live="polite" aria-label="Chat conversation">
-        <p class="chat__msg chat__msg--assistant">{chatGreeting}</p>
-      </div>
-      <p class="chat__typing" data-chat-typing hidden aria-hidden="true">
-        <span></span>
-        <span></span>
-        <span></span>
-      </p>
-      <div class="chat__input" aria-hidden="true">
-        <span>Message</span>
-        <i>↑</i>
-      </div>
-    </Phone>
+    <div class="chat__stage">
+      <Phone class="chat__phone" bg="#f7f4ee" fg="#141414">
+        <div class="chat__head">
+          <span class="chat__avatar" aria-hidden="true">
+            N
+          </span>
+          <span>
+            <b>Northgate Barbers</b>
+            <span>Demo assistant</span>
+          </span>
+        </div>
+        <div class="chat__log" data-chat-log aria-live="polite" aria-label="Chat conversation">
+          <p class="chat__msg chat__msg--assistant">{chatGreeting}</p>
+        </div>
+        <p class="chat__typing" data-chat-typing hidden aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </p>
+        <div class="chat__input" aria-hidden="true">
+          <span>Message</span>
+          <i>↑</i>
+        </div>
+      </Phone>
+    </div>
   </div>
 </section>
 
@@ -62,82 +63,73 @@ import Phone from './devices/Phone.astro';
 </script>
 
 <style is:global>
+  /* The phone is the fictional barbershop's own UI; only the section around it is Hu/man. */
   .chat {
     position: relative;
-    margin-inline: clamp(0.5rem, 1.5vw, 1.25rem);
-    border-radius: var(--radius-xl);
-    background:
-      radial-gradient(50% 60% at 100% 50%, rgba(0, 255, 48, 0.08), transparent 70%),
-      var(--graphite-1);
-    border: 1px solid var(--color-line);
+    background: var(--brand-ink);
+    border-top: var(--border-hairline) solid var(--line);
     color: var(--on-dark);
     padding-block: clamp(4rem, 9vw, 7rem);
-    overflow: hidden;
-  }
-
-  .chat__glow {
-    position: absolute;
-    right: -10%;
-    top: 10%;
-    width: 70%;
-    height: 90%;
-    background: radial-gradient(
-      closest-side,
-      rgba(0, 255, 48, 0.28),
-      rgba(173, 255, 0, 0.1) 55%,
-      transparent
-    );
-    filter: blur(30px);
-    pointer-events: none;
   }
 
   .chat__inner {
     position: relative;
     display: grid;
-    gap: var(--space-6);
+    gap: var(--space-5);
     align-items: center;
   }
 
   .chat__copy {
     display: grid;
     gap: var(--space-4);
+    justify-items: start;
     max-width: 34rem;
   }
 
   .chat__copy > p:not(.eyebrow) {
-    color: #b3b9c1;
+    color: var(--ink-text);
+    font-size: 1.0625rem;
   }
 
   .chat__chips {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.6rem;
+    gap: 0.5rem;
   }
 
   .chat__chip {
     min-height: 44px;
-    padding: 0.6em 1.3em;
-    border-radius: var(--radius-pill);
-    border: 1px solid rgba(255, 255, 255, 0.45);
-    background: rgba(255, 255, 255, 0.04);
-    color: #fff;
-    font: 500 0.95rem var(--font-sans);
+    padding: 0.6em 1.1em;
+    border: var(--border-hairline) solid var(--line-strong);
+    border-radius: 0;
+    background: none;
+    color: var(--ink-text);
+    font: 400 0.9375rem var(--font-text);
     cursor: pointer;
     transition:
-      background-color 0.2s,
-      color 0.2s;
+      background-color 0.15s linear,
+      color 0.15s linear,
+      border-color 0.15s linear;
   }
 
   .chat__chip:hover {
-    background: var(--neon);
-    border-color: var(--neon);
-    color: var(--ink);
+    background: var(--signal);
+    border-color: var(--signal);
+    color: var(--on-signal);
+  }
+
+  /* The phone stands in a Signal block, poster style. */
+  .chat__stage {
+    display: grid;
+    place-items: center;
+    padding: clamp(2rem, 5vw, 3.5rem) 1rem;
+    background: var(--signal);
   }
 
   .chat__phone {
-    width: min(340px, 86vw);
-    justify-self: center;
+    width: min(320px, 78vw);
     position: relative;
+    font-family: var(--font-render);
   }
 
   .chat__head {

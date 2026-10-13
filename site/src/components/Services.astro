@@ -1,6 +1,5 @@
 ---
 import { services } from '../data/content';
-import Arrow from './Arrow.astro';
 import RenderPhysioSite from './renders/RenderPhysioSite.astro';
 import RenderBarberApp from './renders/RenderBarberApp.astro';
 import RenderAssistant from './renders/RenderAssistant.astro';
@@ -45,7 +44,7 @@ const previews = [
               <h3>{service.title}</h3>
               <p>{service.description}</p>
             </div>
-            <span class="services__tag">{service.tag}</span>
+            <span class="tag services__tag">{service.tag}</span>
           </li>
         ))}
       </ol>
@@ -59,11 +58,8 @@ const previews = [
           ))}
         </div>
         <p class="services__caption">Concept render · fictional business</p>
-        <a href="#work" class="btn btn--lime services__cta" tabindex="-1">
+        <a href="#work" class="btn btn--secondary services__cta" tabindex="-1">
           See concept work
-          <span class="btn__icon">
-            <Arrow />
-          </span>
         </a>
       </div>
     </div>
@@ -77,21 +73,16 @@ const previews = [
 <style>
   .services {
     position: relative;
-    margin-inline: clamp(0.5rem, 1.5vw, 1.25rem);
-    border-radius: var(--radius-xl);
-    background:
-      radial-gradient(55% 45% at 92% 0%, rgba(173, 255, 0, 0.1), transparent 70%),
-      radial-gradient(60% 55% at 0% 100%, rgba(0, 255, 48, 0.12), transparent 70%),
-      var(--graphite-1);
-    border: 1px solid var(--color-line);
+    background: var(--brand-ink);
+    border-top: var(--border-hairline) solid var(--line);
     color: var(--on-dark);
     padding-block: clamp(4rem, 9vw, 7rem);
-    overflow: hidden;
   }
 
   .services__head {
     display: grid;
     gap: var(--space-3);
+    justify-items: start;
     margin-bottom: clamp(2rem, 5vw, 3.5rem);
   }
 
@@ -105,68 +96,75 @@ const previews = [
     list-style: none;
     margin: 0;
     padding: 0;
-    border-top: 1px solid var(--on-dark-line);
+    border-top: var(--border-hairline) solid var(--line);
   }
 
   .services__item {
+    position: relative;
     display: grid;
-    grid-template-columns: 2.5rem 1fr;
-    gap: 0.5rem 1rem;
+    grid-template-columns: 2.75rem 1fr;
+    gap: 0.6rem 1rem;
     padding-block: clamp(1.25rem, 2.4vw, 1.75rem);
-    border-bottom: 1px solid var(--on-dark-line);
-    transition:
-      padding 0.4s var(--ease-out),
-      background-color 0.3s;
+    border-bottom: var(--border-hairline) solid var(--line);
     cursor: default;
   }
 
+  /* The active row gets a Signal bar on its left edge. */
+  .services__item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: -1px;
+    bottom: -1px;
+    width: 4px;
+    background: var(--signal);
+    opacity: 0;
+  }
+
   .services__num {
-    font-size: 0.8rem;
-    font-weight: 600;
+    font: 500 0.75rem var(--font-mono);
+    letter-spacing: 0.1em;
     color: var(--on-dark-muted);
-    padding-top: 0.55em;
+    padding: 0.7em 0 0 0.9rem;
   }
 
   .services__body h3 {
     font-size: clamp(1.4rem, 2.8vw, 2.25rem);
-    text-transform: uppercase;
-    letter-spacing: -0.035em;
-    font-weight: 800;
-    color: rgba(255, 255, 255, 0.55);
-    transition: color 0.3s;
+    color: var(--ink-muted);
+    transition: color 0.15s linear;
   }
 
   .services__body p {
     margin-top: 0.6rem;
     max-width: 34rem;
-    color: var(--on-dark-muted);
-    font-size: 0.95rem;
+    color: var(--ink-text);
+    font-size: 1rem;
   }
 
   .services__tag {
     grid-column: 2;
     justify-self: start;
-    font-size: 0.72rem;
-    font-weight: 600;
-    padding: 0.3em 0.9em;
-    border-radius: var(--radius-pill);
-    border: 1px solid var(--on-dark-line);
     color: var(--on-dark-muted);
+    border-color: var(--line);
+  }
+
+  .services__item.is-active::before {
+    opacity: 1;
   }
 
   .services__item.is-active .services__body h3,
   .services__item:hover .services__body h3 {
-    color: #fff;
+    color: var(--ink-text);
   }
 
   .services__item.is-active .services__num {
-    color: var(--neon);
+    color: var(--signal);
   }
 
   .services__item.is-active .services__tag {
-    background: var(--neon);
-    color: var(--ink);
-    border-color: var(--neon);
+    background: var(--signal);
+    color: var(--on-signal);
+    border-color: var(--signal);
   }
 
   .services__preview {
@@ -190,38 +188,29 @@ const previews = [
       margin: 0;
     }
 
-    .services__item.is-active .services__body p {
-      animation: fadeUp 0.45s var(--ease-out);
-    }
-
     .services__preview {
       display: grid;
       gap: var(--space-3);
       position: sticky;
-      top: 110px;
+      top: 100px;
     }
 
     .services__frame {
       position: relative;
-      border-radius: var(--radius-lg);
       overflow: hidden;
-      box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.7);
       aspect-ratio: 4 / 3.2;
+      border: var(--border-hairline) solid var(--line);
     }
 
+    /* Slides cut, they don't cross-fade or scale. */
     .services__slide {
       position: absolute;
       inset: 0;
-      opacity: 0;
-      transform: scale(1.04);
-      transition:
-        opacity 0.6s var(--ease-out),
-        transform 0.9s var(--ease-out);
+      visibility: hidden;
     }
 
     .services__slide.is-active {
-      opacity: 1;
-      transform: none;
+      visibility: visible;
     }
 
     .services__slide :global(.tile) {
@@ -229,19 +218,14 @@ const previews = [
     }
 
     .services__caption {
-      font-size: 0.8rem;
+      font: 500 0.75rem var(--font-mono);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
       color: var(--on-dark-muted);
     }
 
     .services__cta {
       justify-self: start;
-    }
-  }
-
-  @keyframes fadeUp {
-    from {
-      opacity: 0;
-      transform: translateY(8px);
     }
   }
 </style>

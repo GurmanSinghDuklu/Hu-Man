@@ -34,7 +34,9 @@ function mailtoFor(tierName: string): string {
         <li class:list={['tier', { 'tier--featured': tier.id === 'growth' }]} data-reveal>
           <div class="tier__top">
             <h3>{tier.name}</h3>
-            <span class="tier__tag">Introductory</span>
+            <span class:list={['tag', tier.id === 'growth' ? 'tier__tag--ink' : 'tag--pulse']}>
+              Introductory
+            </span>
           </div>
           <p class="tier__price">
             <span class="tier__from">from</span> {tier.introFrom}
@@ -47,7 +49,7 @@ function mailtoFor(tierName: string): string {
             ))}
           </ul>
           <a
-            class:list={['btn', tier.id === 'growth' ? 'btn--lime' : 'btn--dark']}
+            class:list={['btn', tier.id === 'growth' ? 'tier__btn--ink' : 'btn--secondary']}
             href={mailtoFor(tier.name)}
           >
             Ask about {tier.name}
@@ -69,6 +71,7 @@ function mailtoFor(tierName: string): string {
 <style>
   .pricing {
     padding-block: clamp(4rem, 9vw, 7rem);
+    border-top: var(--border-hairline) solid var(--line);
   }
 
   .pricing__head {
@@ -80,6 +83,7 @@ function mailtoFor(tierName: string): string {
   .pricing__titles {
     display: grid;
     gap: var(--space-3);
+    justify-items: start;
   }
 
   .pricing__head > p {
@@ -87,12 +91,16 @@ function mailtoFor(tierName: string): string {
     max-width: 30rem;
   }
 
+  /* Flush, hairline-ruled tiers. Growth is the Signal block; the Introductory tag is Pulse
+     (offers), except inside the Signal block, where it turns Ink so two neons never touch. */
   .pricing__cards {
     list-style: none;
     margin: 0;
     padding: 0;
     display: grid;
-    gap: clamp(0.75rem, 1.5vw, 1.25rem);
+    gap: var(--border-hairline);
+    background: var(--line);
+    border: var(--border-hairline) solid var(--line);
   }
 
   .tier {
@@ -100,43 +108,12 @@ function mailtoFor(tierName: string): string {
     flex-direction: column;
     gap: 0.75rem;
     padding: clamp(1.5rem, 2.6vw, 2.25rem);
-    border-radius: var(--radius-lg);
-    background: var(--surface);
-    border: 1px solid var(--color-line);
-    transition:
-      transform 0.4s var(--ease-out),
-      box-shadow 0.4s var(--ease-out);
-  }
-
-  .tier:hover {
-    transform: translateY(-6px);
-    box-shadow: var(--shadow-card);
+    background: var(--brand-ink);
   }
 
   .tier--featured {
-    background:
-      radial-gradient(90% 70% at 100% 0%, rgba(173, 255, 0, 0.9), transparent 70%), var(--neon);
-    color: var(--ink);
-    border-color: transparent;
-  }
-
-  .tier--featured:hover {
-    box-shadow: 0 40px 90px -40px rgba(0, 255, 48, 0.8);
-  }
-
-  .tier--featured .tier__tag {
-    background: var(--ink);
-    color: var(--acid);
-  }
-
-  .tier--featured .btn {
-    background: var(--ink);
-    color: #ffffff;
-  }
-
-  .tier--featured .btn .btn__icon {
-    background: var(--neon);
-    color: var(--ink);
+    background: var(--signal);
+    color: var(--on-signal);
   }
 
   .tier__top {
@@ -147,54 +124,49 @@ function mailtoFor(tierName: string): string {
   }
 
   .tier h3 {
-    font-size: 1.4rem;
-    text-transform: uppercase;
-    letter-spacing: -0.02em;
+    font-size: 1.5rem;
   }
 
-  .tier__tag {
-    padding: 0.3em 0.9em;
-    border-radius: var(--radius-pill);
-    background: var(--lime);
-    color: var(--ink);
-    font-size: 0.72rem;
-    font-weight: 700;
+  .tier__tag--ink {
+    background: var(--brand-ink);
+    border-color: var(--brand-ink);
+    color: var(--brand-paper);
   }
 
   .tier__price {
-    font-size: clamp(2.8rem, 4.6vw, 4rem);
-    font-weight: 800;
-    letter-spacing: -0.05em;
-    line-height: 1;
+    font: 800 clamp(3rem, 5vw, 4.5rem) / 0.9 var(--font-display);
+    letter-spacing: -0.04em;
     margin-top: var(--space-3);
+    font-variant-numeric: tabular-nums;
   }
 
   .tier__from {
-    font-size: 0.3em;
-    font-weight: 600;
-    letter-spacing: 0;
+    font: 500 0.75rem var(--font-mono);
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-    vertical-align: 0.6em;
+    vertical-align: 1.6em;
+    color: var(--color-text-muted);
+  }
+
+  .tier__monthly {
+    font: 500 0.8125rem var(--font-mono);
+    letter-spacing: 0.06em;
     color: var(--color-text-muted);
   }
 
   .tier--featured .tier__from,
   .tier--featured .tier__monthly {
-    color: rgba(10, 10, 11, 0.7);
-  }
-
-  .tier__monthly {
-    color: var(--color-text-muted);
+    color: var(--on-signal);
   }
 
   .tier__for {
     padding-block: var(--space-3);
-    border-block: 1px solid var(--color-line);
-    font-size: 0.95rem;
+    border-block: var(--border-hairline) solid var(--line);
+    font-size: 0.975rem;
   }
 
   .tier--featured .tier__for {
-    border-color: rgba(10, 10, 11, 0.18);
+    border-color: var(--brand-ink);
   }
 
   .tier__includes {
@@ -203,35 +175,43 @@ function mailtoFor(tierName: string): string {
     padding: 0;
     display: grid;
     gap: 0.5rem;
-    font-size: 0.925rem;
+    font-size: 0.9375rem;
     flex: 1;
     align-content: start;
   }
 
   .tier__includes li {
     display: flex;
-    gap: 0.6em;
+    gap: 0.75em;
   }
 
   .tier__includes li::before {
     content: '';
     flex: none;
-    width: 1.1em;
-    height: 1.1em;
-    margin-top: 0.2em;
-    border-radius: 50%;
-    background: var(--forest-600)
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.5l2.5 2.5L12 5.5' fill='none' stroke='%230a0a0b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
-      center / 80% no-repeat;
+    width: 0.5em;
+    height: 0.5em;
+    margin-top: 0.5em;
+    background: var(--signal);
   }
 
   .tier--featured .tier__includes li::before {
-    background-color: var(--ink);
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.5l2.5 2.5L12 5.5' fill='none' stroke='%2300ff30' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background: var(--brand-ink);
   }
 
   .tier .btn {
     justify-content: space-between;
+  }
+
+  .tier__btn--ink {
+    background: var(--brand-ink);
+    border-color: var(--brand-ink);
+    color: var(--brand-paper);
+  }
+
+  .tier__btn--ink:hover {
+    background: var(--brand-paper);
+    border-color: var(--brand-ink);
+    color: var(--brand-ink);
   }
 
   .pricing__terms {

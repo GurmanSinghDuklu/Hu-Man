@@ -1,0 +1,205 @@
+---
+/**
+ * One square graphic module from the Hu/man brand system (docs/brand/3-graphic-language.md).
+ * A build-time port of the brand pack's HuMan.module(kind, {fg, bg, alt}): it ships as inline
+ * SVG, so there is no runtime JS. The Ridge kinds use the fingerprint artwork as a CSS mask,
+ * so one file takes any brand colour.
+ *
+ * Rules from the pack: two colours per module (only `arc` takes a third), never a neon on a
+ * neon, never text on top of a module, and diagonals only at the logo's 68 degrees.
+ */
+import ridgePrint from '../assets/brand/ridge-print-signal.svg?url';
+import ridgeField from '../assets/brand/ridge-field-signal.svg?url';
+
+export type ModuleKind =
+  | 'rings'
+  | 'squares'
+  | 'hex'
+  | 'half'
+  | 'hourglass'
+  | 'checker'
+  | 'stripes'
+  | 'slash'
+  | 'arc'
+  | 'burst'
+  | 'sparkle'
+  | 'arrow'
+  | 'linearcs'
+  | 'dots'
+  | 'ridge'
+  | 'field';
+
+/** Brand colour names, mapped to tokens. */
+export type ModuleColour = 'ink' | 'paper' | 'signal' | 'pulse' | 'flare' | 'volt' | 'concrete';
+
+interface Props {
+  kind: ModuleKind;
+  fg?: ModuleColour;
+  bg?: ModuleColour;
+  alt?: ModuleColour;
+  /** Slow rotation (one turn in 40 s) for rings, squares, hex and burst. Off under reduced motion. */
+  spin?: boolean;
+  class?: string;
+}
+
+const { kind, fg = 'ink', bg = 'paper', alt, spin = false, class: className } = Astro.props;
+
+const colour = (c: ModuleColour) =>
+  ({
+    ink: 'var(--brand-ink)',
+    paper: 'var(--brand-paper)',
+    signal: 'var(--signal)',
+    pulse: 'var(--pulse)',
+    flare: 'var(--flare)',
+    volt: 'var(--volt)',
+    concrete: 'var(--concrete)',
+  })[c];
+
+const F = colour(fg);
+const B = colour(bg);
+const A = alt ? colour(alt) : B;
+const f = (c: string) => ` style="fill:${c}"`;
+const n2 = (v: number) => v.toFixed(2);
+
+function draw(): string {
+  let s = '';
+  switch (kind) {
+    case 'rings':
+      for (let i = 0; i < 6; i++)
+        s += `<circle cx="50" cy="50" r="${46 - i * 8}"${f(i % 2 ? B : F)}/>`;
+      return s;
+    case 'squares':
+      for (let i = 0; i < 6; i++) {
+        const d = 6 + i * 7.5;
+        s += `<rect x="${d}" y="${d}" width="${100 - 2 * d}" height="${100 - 2 * d}"${f(i % 2 ? B : F)}/>`;
+      }
+      return s;
+    case 'hex':
+      for (let i = 0; i < 6; i++) {
+        const r = 48 - i * 8;
+        const pts = Array.from({ length: 6 }, (_, k) => {
+          const a = Math.PI / 6 + (k * Math.PI) / 3;
+          return `${n2(50 + r * Math.cos(a))},${n2(50 + r * Math.sin(a))}`;
+        });
+        s += `<polygon points="${pts.join(' ')}"${f(i % 2 ? B : F)}/>`;
+      }
+      return s;
+    case 'half':
+      return `<rect width="100" height="50"${f(F)}/><path d="M8 50 A42 42 0 0 1 92 50 Z"${f(B)}/><path d="M8 50 A42 42 0 0 0 92 50 Z"${f(F)}/>`;
+    case 'hourglass':
+      return `<polygon points="0,0 100,0 50,50"${f(F)}/><polygon points="0,100 100,100 50,50"${f(F)}/>`;
+    case 'checker': {
+      const w = 100 / 6;
+      for (let y = 0; y < 6; y++)
+        for (let x = 0; x < 6; x++)
+          if ((x + y) % 2)
+            s += `<rect x="${n2(x * w)}" y="${n2(y * w)}" width="${n2(w)}" height="${n2(w)}"${f(F)}/>`;
+      return s;
+    }
+    case 'stripes':
+      // Bands at the logo's slash angle, 68 degrees from horizontal.
+      for (let i = -6; i < 14; i++)
+        s += `<polygon points="${i * 12},100 ${i * 12 + 6},100 ${n2(i * 12 + 46.4)},0 ${n2(i * 12 + 40.4)},0"${f(F)}/>`;
+      return s;
+    case 'slash':
+      return `<polygon points="0,100 60,100 100,0 40,0"${f(F)}/>`;
+    case 'arc':
+      return `<path d="M0 100 L0 0 A100 100 0 0 1 100 100 Z"${f(F)}/><path d="M0 100 L0 40 A60 60 0 0 1 60 100 Z"${f(A)}/>`;
+    case 'burst':
+      for (let i = 0; i < 48; i++) {
+        const a = (i * 2 * Math.PI) / 48;
+        s += `<line x1="50" y1="50" x2="${n2(50 + 48 * Math.cos(a))}" y2="${n2(50 + 48 * Math.sin(a))}" style="stroke:${F};stroke-width:1.1"/>`;
+      }
+      return s + `<circle cx="50" cy="50" r="9"${f(B)}/><circle cx="50" cy="50" r="5"${f(F)}/>`;
+    case 'sparkle':
+      return `<path d="M50 6 C53 40 60 47 94 50 C60 53 53 60 50 94 C47 60 40 53 6 50 C40 47 47 40 50 6 Z"${f(F)}/>`;
+    case 'arrow': {
+      const st = `stroke:${F};stroke-width:9;stroke-linecap:square;fill:none`;
+      return `<path d="M32 90 L62 16" style="${st}"/><path d="M38 30 L62 16 L72 42" style="${st};stroke-linejoin:miter"/>`;
+    }
+    case 'linearcs':
+      for (let r = 10; r <= 140; r += 9)
+        s += `<path d="M0 ${100 - r} A${r} ${r} 0 0 1 ${r} 100" style="fill:none;stroke:${F};stroke-width:3"/>`;
+      return s;
+    case 'dots': {
+      const w = 100 / 7;
+      for (let y = 0; y < 7; y++)
+        for (let x = 0; x < 7; x++)
+          s += `<circle cx="${n2(x * w + w / 2)}" cy="${n2(y * w + w / 2)}" r="${n2((w * 0.46 * (y + 1)) / 7)}"${f(F)}/>`;
+      return s;
+    }
+    default:
+      return '';
+  }
+}
+
+const isRidge = kind === 'ridge' || kind === 'field';
+const svg = isRidge
+  ? ''
+  : `<svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><rect width="100" height="100"${f(B)}/><g class="${spin ? 'mod__spin' : ''}">${draw()}</g></svg>`;
+---
+
+{isRidge ? (
+  <span
+    class:list={['mod', `mod--${kind}`, className]}
+    style={`--mod-bg:${B};--mod-fg:${F};--mask:url(${kind === 'ridge' ? ridgePrint : ridgeField})`}
+    aria-hidden="true"
+  >
+    <span class="mod__ridge" />
+  </span>
+) : (
+  <span class:list={['mod', `mod--${kind}`, className]} aria-hidden="true" set:html={svg} />
+)}
+
+<style>
+  .mod {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    aspect-ratio: 1;
+    background: var(--mod-bg, transparent);
+  }
+
+  .mod :global(svg) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .mod__ridge {
+    position: absolute;
+    inset: 0;
+    background: var(--mod-fg);
+    -webkit-mask: var(--mask) center / contain no-repeat;
+    mask: var(--mask) center / contain no-repeat;
+  }
+
+  /* A single fingertip sits inside the cell with breathing room. */
+  .mod--ridge .mod__ridge {
+    inset: 8% 10%;
+  }
+
+  /* The field runs edge to edge and is cropped, never stretched. */
+  .mod--field .mod__ridge {
+    -webkit-mask-size: cover;
+    mask-size: cover;
+  }
+
+  .mod :global(.mod__spin) {
+    transform-origin: 50px 50px;
+    animation: mod-spin 40s linear infinite;
+  }
+
+  @keyframes mod-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mod :global(.mod__spin) {
+      animation: none;
+    }
+  }
+</style>

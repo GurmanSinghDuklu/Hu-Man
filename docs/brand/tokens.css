@@ -1,0 +1,24 @@
+/* Hu/man — generated from tokens.json */
+:root, [data-theme="dark"] { --surface: #0B0D0A; --surface-raised: #161A14; --surface-inverse: #F2F2EC; --line: #2C3229; --line-strong: #6B7064; --ink: #F2F2EC; --ink-muted: #A3A89C; --ink-inverse: #0B0D0A; --signal: #39FF14; --signal-hi: #B2FF58; --signal-lo: #6DFF5A; --signal-text: #39FF14; --on-signal: #0B0D0A; --pulse: #DF00FF; --pulse-text: #DF00FF; --on-pulse: #0B0D0A; --flare: #FF5F1F; --flare-text: #FF5F1F; --on-flare: #0B0D0A; --volt: #E7FF00; --volt-text: #E7FF00; --on-volt: #0B0D0A; --scan: #14DCB2; --on-scan: #0B0D0A; --concrete: #8E908A; --brand-ink: #0B0D0A; --brand-paper: #F2F2EC; --focus-ring: #39FF14; }
+[data-theme="light"] { --surface: #F2F2EC; --surface-raised: #FAFAF6; --surface-inverse: #0B0D0A; --line: #D3D5CC; --ink: #0B0D0A; --ink-muted: #565B51; --ink-inverse: #F2F2EC; --signal-text: #1F7A0A; --pulse-text: #A100B8; --flare-text: #B83A12; --volt-text: #5E6400; --focus-ring: #0B0D0A; }
+:root { --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-6: 24px; --space-8: 32px; --space-12: 48px; --space-16: 64px; --space-24: 96px; --radius-0: 0px; --radius-1: 2px; --radius-pill: 999px; --border-hairline: 1px; --border-rule: 2px; --border-heavy: 8px; --font-display: Montserrat, "Arial Black", Arial, sans-serif; --font-text: Archivo, "Helvetica Neue", Arial, sans-serif; --font-mono: "IBM Plex Mono", "Courier New", monospace; }
+.numeral { font-family: var(--font-display); font-size: 200px; line-height: 0.82; font-weight: 800; letter-spacing: -0.04em; }
+.display-xl { font-family: var(--font-display); font-size: 120px; line-height: 0.9; font-weight: 800; letter-spacing: -0.02em; }
+.display-l { font-family: var(--font-display); font-size: 72px; line-height: 0.95; font-weight: 800; letter-spacing: -0.015em; }
+.display-m { font-family: var(--font-display); font-size: 44px; line-height: 1; font-weight: 700; letter-spacing: -0.01em; }
+.headline { font-family: var(--font-text); font-size: 28px; line-height: 34px; font-weight: 700; }
+.title { font-family: var(--font-text); font-size: 20px; line-height: 26px; font-weight: 600; }
+.body-l { font-family: var(--font-text); font-size: 18px; line-height: 28px; font-weight: 400; }
+.body { font-family: var(--font-text); font-size: 16px; line-height: 24px; font-weight: 400; }
+.small { font-family: var(--font-text); font-size: 14px; line-height: 20px; font-weight: 400; }
+.label { font-family: var(--font-mono); font-size: 12px; line-height: 16px; font-weight: 500; letter-spacing: 0.14em; }
+.data { font-family: var(--font-mono); font-size: 14px; line-height: 20px; font-weight: 400; }
+@font-face { font-family: "Montserrat"; src: url("fonts/montserrat-latin-600-normal.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: "Montserrat"; src: url("fonts/montserrat-latin-700-normal.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "Montserrat"; src: url("fonts/montserrat-latin-800-normal.woff2") format("woff2"); font-weight: 800; font-style: normal; font-display: swap; }
+@font-face { font-family: "Archivo"; src: url("fonts/archivo-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Archivo"; src: url("fonts/archivo-latin-500-normal.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: "Archivo"; src: url("fonts/archivo-latin-600-normal.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: "Archivo"; src: url("fonts/archivo-latin-700-normal.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "IBM Plex Mono"; src: url("fonts/ibm-plex-mono-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "IBM Plex Mono"; src: url("fonts/ibm-plex-mono-latin-500-normal.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }

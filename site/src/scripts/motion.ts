@@ -1,6 +1,6 @@
 /**
- * Site-wide motion: scroll reveals, number count-ups and the header's
- * scrolled state. Everything is progressive: content is visible without JS
+ * Site-wide motion: scroll reveals, module-grid cell sequences, number
+ * count-ups and the header's scrolled state. Everything is progressive: content is visible without JS
  * (the `.js` class gates the hidden state) and reduced motion skips it all.
  */
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -23,6 +23,32 @@ function reveal(): void {
     { rootMargin: '0px 0px -8% 0px', threshold: 0.08 },
   );
   items.forEach((el) => io.observe(el));
+}
+
+/** Module grids: cells snap on one after another (the brand's 80-120 ms per cell). */
+function cells(): void {
+  const grids = document.querySelectorAll<HTMLElement>('[data-cells]');
+  grids.forEach((grid) =>
+    Array.from(grid.children).forEach((cell, i) =>
+      (cell as HTMLElement).style.setProperty('--i', String(i)),
+    ),
+  );
+  if (reduceMotion || !('IntersectionObserver' in window)) {
+    grids.forEach((el) => el.classList.add('is-in'));
+    return;
+  }
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-in');
+          io.unobserve(entry.target);
+        }
+      }
+    },
+    { threshold: 0.15 },
+  );
+  grids.forEach((el) => io.observe(el));
 }
 
 function countUp(): void {
@@ -63,5 +89,6 @@ function header(): void {
 }
 
 reveal();
+cells();
 countUp();
 header();

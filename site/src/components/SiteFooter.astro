@@ -12,7 +12,7 @@ const prefix = isHome ? '' : withBase('/');
   <div class="wrap">
     <div class="site-footer__grid">
       <div class="site-footer__brand">
-        <Logo />
+        <p class="site-footer__label">{site.name}</p>
         <p>
           {site.location.town}, {site.location.region}
         </p>
@@ -74,8 +74,8 @@ const prefix = isHome ? '' : withBase('/');
       </div>
     </div>
 
-    <div class="site-footer__wordmark-box" aria-hidden="true">
-      <p class="site-footer__wordmark">{site.wordmark}</p>
+    <div class="site-footer__wordmark-box">
+      <Logo label="" class="site-footer__logo" />
     </div>
 
     <div class="site-footer__base">
@@ -89,9 +89,8 @@ const prefix = isHome ? '' : withBase('/');
 
 <style>
   .site-footer {
-    margin-top: clamp(0.5rem, 1.5vw, 1.25rem);
-    background: #000000;
-    border-top: 1px solid var(--color-line);
+    background: var(--brand-ink);
+    border-top: var(--border-hairline) solid var(--line);
     color: var(--on-dark);
     padding-top: clamp(3.5rem, 7vw, 5.5rem);
     overflow: hidden;
@@ -107,12 +106,11 @@ const prefix = isHome ? '' : withBase('/');
     display: grid;
     gap: 0.6rem;
     align-content: start;
-    font-size: 1.1rem;
   }
 
   .site-footer p,
   .site-footer li {
-    font-size: 0.925rem;
+    font-size: 0.9375rem;
   }
 
   .site-footer ul {
@@ -127,23 +125,19 @@ const prefix = isHome ? '' : withBase('/');
     text-decoration: none;
     display: inline-block;
     padding-block: 0.3rem;
-    transition: color 0.2s;
+    transition: color 0.15s linear;
   }
 
   .site-footer a:hover {
-    color: var(--neon);
-  }
-
-  .site-footer__label {
-    color: var(--on-dark-muted);
-    margin-bottom: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
+    color: var(--signal);
   }
 
   .site-footer .site-footer__label {
-    font-size: 0.75rem;
+    color: var(--on-dark-muted);
+    margin-bottom: 0.75rem;
+    font: 500 0.75rem var(--font-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
   }
 
   .site-footer__muted {
@@ -151,31 +145,14 @@ const prefix = isHome ? '' : withBase('/');
     max-width: 22rem;
   }
 
-  /* Size container: the wordmark (~3.95x its font-size wide) scales to fill it exactly. */
+  /* The logo artwork, full width, as the sign-off. Never retyped. */
   .site-footer__wordmark-box {
-    container-type: inline-size;
     margin-top: clamp(3rem, 6vw, 5rem);
+    padding-bottom: clamp(1.5rem, 3vw, 2.5rem);
   }
 
-  .site-footer .site-footer__wordmark {
-    font-weight: 800;
-    font-size: 24.6cqw;
-    letter-spacing: -0.07em;
-    /* Trailing tracking would clip the fill on the final N; give that space back. */
-    padding-right: 0.07em;
-    line-height: 0.86;
-    margin: 0;
-    background: linear-gradient(
-      180deg,
-      var(--acid) 0%,
-      var(--neon) 40%,
-      rgba(0, 255, 48, 0.04) 96%
-    );
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    white-space: nowrap;
-    text-align: center;
+  .site-footer__wordmark-box :global(.site-footer__logo) {
+    width: 100%;
   }
 
   .site-footer__base {
@@ -184,7 +161,13 @@ const prefix = isHome ? '' : withBase('/');
     justify-content: space-between;
     gap: var(--space-3);
     padding-block: var(--space-4);
-    border-top: 1px solid var(--on-dark-line);
+    border-top: var(--border-hairline) solid var(--line);
     color: var(--on-dark-muted);
+  }
+
+  .site-footer__base p {
+    font: 500 0.75rem var(--font-mono);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
   }
 </style>
