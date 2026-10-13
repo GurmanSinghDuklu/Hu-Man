@@ -221,8 +221,11 @@ with Marvel, Insomniac Games or Sony. It uses game imagery from PlayStation.com,
 Site restyled to the Hu/man brand pack (copied to `docs/brand/`: identity, graphic language,
 applications, tokens). Logo is fixed artwork (`src/assets/brand/logo-*.svg`, inlined by `Logo.astro`),
 never retyped: the separator-cycle wordmark animation was removed for that reason. `Module.astro` is a
-build-time port of the pack's `HuMan.module()` (16 square modules; the Ridge kinds use the fingerprint
-SVGs as CSS masks, so one file takes any colour). Hero is a module band (logo, Paper headline block,
+build-time port of the pack's `HuMan.module()` (16 square modules). The Ridge kinds (`ridge`, `field`)
+use the real fingerprint scan from the Brand Builder PDF (`src/assets/brand/fingerprint.webp`, 480px
+greyscale, ~58 kB) as a CSS luminance mask, so one file takes any colourway. Keep `luminance` inside the
+`mask` shorthand: a separate `mask-mode` line was dropped by the minifier and the cells went solid.
+The favicon keeps the older line-drawn print, since the scan turns to mush at 16px. Hero is a module band (logo, Paper headline block,
 Ridge field and print, hex, Volt spark). Motion snaps: `[data-cells]` grids cut on cell by cell
 (`motion.ts`), no floats, no scroll-scrubbed effects. Things worth knowing:
 1. **Hero LCP must not animate.** An opacity animation on the headline cell stops Chrome counting it as

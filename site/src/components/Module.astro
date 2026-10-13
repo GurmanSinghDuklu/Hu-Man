@@ -2,14 +2,13 @@
 /**
  * One square graphic module from the Hu/man brand system (docs/brand/3-graphic-language.md).
  * A build-time port of the brand pack's HuMan.module(kind, {fg, bg, alt}): it ships as inline
- * SVG, so there is no runtime JS. The Ridge kinds use the fingerprint artwork as a CSS mask,
- * so one file takes any brand colour.
+ * SVG, so there is no runtime JS. The Ridge kinds use the fingerprint (from the Brand Builder
+ * PDF, a greyscale scan) as a luminance mask, so one small file takes any brand colour.
  *
  * Rules from the pack: two colours per module (only `arc` takes a third), never a neon on a
  * neon, never text on top of a module, and diagonals only at the logo's 68 degrees.
  */
-import ridgePrint from '../assets/brand/ridge-print-signal.svg?url';
-import ridgeField from '../assets/brand/ridge-field-signal.svg?url';
+import fingerprint from '../assets/brand/fingerprint.webp?url';
 
 export type ModuleKind =
   | 'rings'
@@ -142,7 +141,7 @@ const svg = isRidge
 {isRidge ? (
   <span
     class:list={['mod', `mod--${kind}`, className]}
-    style={`--mod-bg:${B};--mod-fg:${F};--mask:url(${kind === 'ridge' ? ridgePrint : ridgeField})`}
+    style={`--mod-bg:${B};--mod-fg:${F};--mask:url(${fingerprint})`}
     aria-hidden="true"
   >
     <span class="mod__ridge" />
@@ -172,18 +171,19 @@ const svg = isRidge
     inset: 0;
     background: var(--mod-fg);
     -webkit-mask: var(--mask) center / contain no-repeat;
-    mask: var(--mask) center / contain no-repeat;
+    /* Luminance mode lives in the shorthand: a separate mask-mode was dropped by the minifier. */
+    mask: var(--mask) center / contain no-repeat luminance;
   }
 
   /* A single fingertip sits inside the cell with breathing room. */
   .mod--ridge .mod__ridge {
-    inset: 8% 10%;
+    inset: 4% 6%;
   }
 
-  /* The field runs edge to edge and is cropped, never stretched. */
+  /* The field: the same print, zoomed in so ridges run edge to edge. Cropped, never stretched. */
   .mod--field .mod__ridge {
-    -webkit-mask-size: cover;
-    mask-size: cover;
+    -webkit-mask-size: 190% auto;
+    mask-size: 190% auto;
   }
 
   .mod :global(.mod__spin) {
