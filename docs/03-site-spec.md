@@ -60,7 +60,7 @@ Mobile: single column, slider keeps 16:10 and scales, tabs scroll horizontally, 
 Use this copy unless Gurman changes it. Do not invent extra claims.
 
 **Meta**
-- Title: Web designer in Bradford | Website redesign, AI chatbots and local SEO
+- Title: Hu/man Software Agency | Your human in the loop. (changed 2026-10-13 at Gurman's request; was "Web designer in Bradford | Website redesign, AI chatbots and local SEO")
 - Description: Bradford web designer for small businesses: high-end website redesigns, online booking and payments, AI enquiry assistants and local SEO. Free presence audit.
 
 **Hero**
