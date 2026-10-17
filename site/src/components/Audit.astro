@@ -5,7 +5,7 @@ import Module from './Module.astro';
 
 const auditMailto = (() => {
   const subject = encodeURIComponent('Free presence audit');
-  const body = encodeURIComponent('Hi Gurman,\n\nBusiness name:\nWebsite:\nMain service:\n\n');
+  const body = encodeURIComponent('Hi,\n\nBusiness name:\nWebsite:\nMain service:\n\n');
   return `mailto:${site.contact.email}?subject=${subject}&body=${body}`;
 })();
 
@@ -13,7 +13,7 @@ const auditTel = `tel:${site.contact.phone.replace(/\s+/g, '')}`;
 const ticker = ['Free presence audit', 'Short video', 'Written list of fixes', 'No obligation'];
 ---
 
-<section class="audit on-dark" id="audit" aria-labelledby="audit-title">
+<section class="audit plum" id="audit" aria-labelledby="audit-title">
   <div class="audit__ticker" aria-hidden="true">
     <div class="audit__ticker-row">
       {[...ticker, ...ticker, ...ticker].map((t) => (
@@ -29,24 +29,22 @@ const ticker = ['Free presence audit', 'Short video', 'Written list of fixes', '
     <div class="audit__main">
       <div class="audit__top">
         <div>
-          <p class="eyebrow" data-reveal>
-            Start here
-          </p>
           <h2 id="audit-title" class="audit__title" data-reveal>
-            Get your free <span class="hl">presence audit</span>
+            Get your free presence audit
           </h2>
         </div>
       </div>
 
       <p class="audit__text" data-reveal>
-        Send me your website address and I'll review it on a phone, check your speed and your Google
-        Business Profile, and see whether Google and ChatGPT recommend you for your main search. You
-        get a short video and a written list of fixes. It's free and there's no obligation.
+        Send us your website address and we'll review it on a phone, check your speed and your
+        Google Business Profile, and see whether Google and ChatGPT recommend you for your main
+        search. You get a short video and a written list of fixes. It's free and there's no
+        obligation.
       </p>
 
       <div class="audit__actions" data-reveal>
         <a class="btn btn--primary" href={auditMailto}>
-          Email me your website
+          Email us your website
           <span class="btn__icon">
             <Arrow />
           </span>
@@ -73,19 +71,16 @@ const ticker = ['Free presence audit', 'Short video', 'Written list of fixes', '
   .audit {
     position: relative;
     overflow: hidden;
-    color: var(--on-dark);
-    background: var(--brand-ink);
-    border-top: var(--border-hairline) solid var(--line);
     padding-bottom: clamp(3.5rem, 8vw, 6rem);
   }
 
-  /* A Volt label strip: the brand's spark colour, Ink mono capitals. */
+  /* A Signal label strip, Ink mono capitals. */
   .audit__ticker {
     display: flex;
     overflow: hidden;
     padding-block: 0.9rem;
-    background: var(--volt);
-    color: var(--on-volt);
+    background: var(--signal);
+    color: var(--on-signal);
     margin-bottom: clamp(3rem, 7vw, 5rem);
   }
 

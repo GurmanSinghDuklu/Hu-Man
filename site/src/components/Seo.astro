@@ -40,7 +40,6 @@ const structuredData = {
   },
   areaServed: site.areasServed.map((name) => ({ '@type': 'City', name })),
   founder: { '@type': 'Person', name: site.founder },
-  sameAs: [site.contact.github, site.contact.linkedin],
   // Placeholder domain — replace once docs/09-open-questions.md item 8 is decided.
   url: site.url,
 };

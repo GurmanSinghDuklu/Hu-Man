@@ -1,16 +1,28 @@
 ---
 import { chatExchanges, chatGreeting } from '../data/chat-demo';
 import Phone from './devices/Phone.astro';
+
+// Pixel fragments around the phone (the "glitch between two hands" reference): Ink and Paper
+// squares only, since Pulse on the Signal block would put two neons together. [x%, y%, size px]
+const fragments: [number, number, number, boolean?][] = [
+  [8, 12, 18],
+  [14, 26, 10, true],
+  [6, 58, 22],
+  [17, 74, 12],
+  [10, 88, 8, true],
+  [86, 10, 12],
+  [91, 30, 20, true],
+  [82, 52, 10],
+  [90, 70, 16],
+  [84, 90, 22, true],
+];
 ---
 
-<section class="chat on-dark" aria-labelledby="chat-title" data-chat-demo>
+<section class="chat plum" aria-labelledby="chat-title" data-chat-demo>
   <div class="wrap chat__inner">
     <div class="chat__copy">
-      <p class="eyebrow" data-reveal>
-        Live demo
-      </p>
       <h2 id="chat-title" class="section-title" data-reveal>
-        Try the <span class="hl">assistant</span>
+        Try the enquiry assistant
       </h2>
       <p>
         This is a scripted demo for a fictional barbershop. A real assistant answers from your own
@@ -31,6 +43,13 @@ import Phone from './devices/Phone.astro';
     </div>
 
     <div class="chat__stage">
+      {fragments.map(([x, y, size, blink], i) => (
+        <i
+          class:list={['chat__frag', { 'is-blink': blink, 'is-paper': i % 3 === 0 }]}
+          style={`left:${x}%;top:${y}%;--s:${size}px;--d:${i * 0.9}s`}
+          aria-hidden="true"
+        />
+      ))}
       <Phone class="chat__phone" bg="#f7f4ee" fg="#141414">
         <div class="chat__head">
           <span class="chat__avatar" aria-hidden="true">
@@ -66,9 +85,6 @@ import Phone from './devices/Phone.astro';
   /* The phone is the fictional barbershop's own UI; only the section around it is Hu/man. */
   .chat {
     position: relative;
-    background: var(--brand-ink);
-    border-top: var(--border-hairline) solid var(--line);
-    color: var(--on-dark);
     padding-block: clamp(4rem, 9vw, 7rem);
   }
 
@@ -86,7 +102,7 @@ import Phone from './devices/Phone.astro';
     max-width: 34rem;
   }
 
-  .chat__copy > p:not(.eyebrow) {
+  .chat__copy > p {
     color: var(--ink-text);
     font-size: 1.0625rem;
   }
@@ -120,10 +136,42 @@ import Phone from './devices/Phone.astro';
 
   /* The phone stands in a Signal block, poster style. */
   .chat__stage {
+    position: relative;
+    overflow: hidden;
     display: grid;
     place-items: center;
     padding: clamp(2rem, 5vw, 3.5rem) 1rem;
     background: var(--signal);
+  }
+
+  .chat__frag {
+    position: absolute;
+    width: var(--s);
+    height: var(--s);
+    background: var(--brand-ink);
+  }
+
+  .chat__frag.is-paper {
+    background: var(--brand-paper);
+  }
+
+  .chat__frag.is-blink {
+    animation: chat-frag 6s steps(1, end) infinite var(--d);
+  }
+
+  @keyframes chat-frag {
+    0%,
+    100% {
+      opacity: 1;
+      transform: none;
+    }
+    80% {
+      opacity: 0;
+    }
+    86% {
+      opacity: 1;
+      transform: translate(calc(var(--s) * -1), var(--s));
+    }
   }
 
   .chat__phone {

@@ -41,10 +41,13 @@ const prefix = isHome ? '' : withBase('/');
             <a href={`${prefix}#services`}>Services</a>
           </li>
           <li>
-            <a href={`${prefix}#real-work`}>Real work</a>
+            <a href={withBase('/work/')}>Work</a>
           </li>
           <li>
-            <a href={`${prefix}#work`}>Concept work</a>
+            <a href={`${prefix}#concepts`}>Concept lab</a>
+          </li>
+          <li>
+            <a href={`${prefix}#process`}>Process</a>
           </li>
           <li>
             <a href={`${prefix}#pricing`}>Pricing</a>
@@ -55,18 +58,8 @@ const prefix = isHome ? '' : withBase('/');
         </ul>
       </div>
       <div>
-        <p class="site-footer__label">Elsewhere</p>
+        <p class="site-footer__label">Legal</p>
         <ul>
-          <li>
-            <a href={site.contact.github} rel="noopener">
-              GitHub
-            </a>
-          </li>
-          <li>
-            <a href={site.contact.linkedin} rel="noopener">
-              LinkedIn
-            </a>
-          </li>
           <li>
             <a href={withBase('/privacy')}>Privacy notice</a>
           </li>

@@ -6,7 +6,7 @@ import Arrow from './Arrow.astro';
 function mailtoFor(tierName: string): string {
   const subject = encodeURIComponent(`${tierName} enquiry`);
   const body = encodeURIComponent(
-    `Hi Gurman,\n\nI'm interested in the ${tierName} package. My business is...\n\n`,
+    `Hi,\n\nI'm interested in the ${tierName} package. My business is...\n\n`,
   );
   return `mailto:${site.contact.email}?subject=${subject}&body=${body}`;
 }
@@ -15,17 +15,12 @@ function mailtoFor(tierName: string): string {
 <section class="pricing" id="pricing" aria-labelledby="pricing-title">
   <div class="wrap pricing__inner">
     <div class="pricing__head">
-      <div class="pricing__titles">
-        <p class="eyebrow" data-reveal>
-          Pricing
-        </p>
-        <h2 id="pricing-title" class="section-title" data-reveal>
-          Simple <span class="hl">pricing</span>
-        </h2>
-      </div>
+      <h2 id="pricing-title" class="section-title" data-reveal>
+        Pricing
+      </h2>
       <p>
-        Introductory pricing while I build my portfolio in Bradford. Prices rise as my diary fills,
-        so quotes are valid for 30 days. Monthly plans stay the same.
+        Introductory pricing while we build our portfolio in Bradford. Prices rise as the diary
+        fills, so quotes are valid for 30 days. Monthly plans stay the same.
       </p>
     </div>
 
@@ -71,19 +66,13 @@ function mailtoFor(tierName: string): string {
 <style>
   .pricing {
     padding-block: clamp(4rem, 9vw, 7rem);
-    border-top: var(--border-hairline) solid var(--line);
+    background: var(--brand-ink);
   }
 
   .pricing__head {
     display: grid;
     gap: var(--space-4);
     margin-bottom: clamp(2rem, 5vw, 3.5rem);
-  }
-
-  .pricing__titles {
-    display: grid;
-    gap: var(--space-3);
-    justify-items: start;
   }
 
   .pricing__head > p {

@@ -29,7 +29,18 @@ export type ModuleKind =
   | 'field';
 
 /** Brand colour names, mapped to tokens. */
-export type ModuleColour = 'ink' | 'paper' | 'signal' | 'pulse' | 'flare' | 'volt' | 'concrete';
+export type ModuleColour =
+  | 'ink'
+  | 'paper'
+  | 'signal'
+  | 'pulse'
+  | 'flare'
+  | 'volt'
+  | 'concrete'
+  | 'night'
+  | 'plum'
+  /** See-through: the shape sits over whatever is behind the module (a photo, say). */
+  | 'none';
 
 interface Props {
   kind: ModuleKind;
@@ -52,6 +63,9 @@ const colour = (c: ModuleColour) =>
     flare: 'var(--flare)',
     volt: 'var(--volt)',
     concrete: 'var(--concrete)',
+    night: 'var(--night)',
+    plum: 'var(--plum)',
+    none: 'transparent',
   })[c];
 
 const F = colour(fg);

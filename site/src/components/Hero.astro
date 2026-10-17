@@ -1,364 +1,225 @@
 ---
 import { Image } from 'astro:assets';
-import type { ImageMetadata } from 'astro';
-import Logo from './Logo.astro';
-import Module from './Module.astro';
-import { withBase } from '../config/paths';
-import { site } from '../config/site';
+import fingerprint from '../assets/brand/fingerprint.webp?url';
+import { projectImage } from '../data/projects';
 
-// "See, don't explain": a Higgsfield-style collage of real work filling the
-// first screen. Live sites are tagged "Live"; design work that isn't live is
-// tagged "Concept" (Eldeva, a mock-up for a family business, and unofficial
-// Tesla and Spider-Man: Miles Morales fan sites, not affiliated with those
-// brands). No fictional-brand tiles. Images
-// live in src/assets and ship as resized WebP.
-const images = import.meta.glob<{ default: ImageMetadata }>('../assets/{work,projects}/*.jpg', {
-  eager: true,
-});
-const img = (path: string) => {
-  const found = images[`../assets/${path}.jpg`];
-  if (!found) throw new Error(`Missing collage image: ${path}`);
-  return found.default;
+// The hero mosaic (2026-10-17 agency redesign, refs in reference/agency-redesign/): the brand's
+// fingerprint scan in Paper, cut into square cells. Signal blocks sit over it like the pixel
+// posters, a few cells drop out to Ink, and real project frames fill some edge cells: the
+// human and the work, in pieces. Only live projects appear here: the frames carry no label, so
+// unofficial or concept work (Tesla, Spider-Man, Eldeva) stays in the labelled work grid. Decorative only (aria-hidden); the headline is the content.
+//
+// Grid: 9 columns by 8 rows of square cells. Each cell is [column, row, width, height].
+type Cell = {
+  at: [number, number, number?, number?];
+  kind: 'signal' | 'ink' | 'paper' | 'frame';
+  src?: string;
+  blink?: boolean;
 };
 
-type Project = 'calculator' | 'essence' | 'eldeva' | 'tesla' | 'spiderman';
-const PROJECTS: Record<Project, { name: string; live: boolean; caption: string; tag?: string }> = {
-  calculator: { name: 'The Calculator App', live: true, caption: 'Live: The Calculator App' },
-  essence: {
-    name: 'Essence',
-    live: true,
-    caption: 'Live: Essence Hair Treatment, built for a family business',
-  },
-  eldeva: {
-    name: 'Eldeva',
-    live: false,
-    caption: 'Concept: Eldeva, a mock-up for a family business (not live)',
-    tag: 'Concept',
-  },
-  tesla: {
-    name: 'Tesla (unofficial)',
-    live: false,
-    caption: 'Concept: unofficial Tesla fan site, not affiliated with Tesla, Inc.',
-    tag: 'Unofficial concept',
-  },
-  spiderman: {
-    name: 'Spider-Man (unofficial)',
-    live: false,
-    caption:
-      'Concept: unofficial Spider-Man: Miles Morales fan site, not affiliated with Marvel, Insomniac Games or Sony',
-    tag: 'Unofficial concept',
-  },
-};
-
-interface Tile {
-  src: string;
-  project: Project;
-  /** width / height of the tile; rows share a height, so this sets its width */
-  r: number;
-  /** "scroll" pans a tall screenshot like a screen recording */
-  motion?: 'scroll' | 'zoom';
-  /** scroll tiles: the screenshot's height / width */
-  tall?: number;
-  /** a muted walkthrough clip in public/video/ that plays over the still */
-  video?: string;
-  pos?: string;
-}
-
-const rows: Tile[][] = [
-  [
-    { src: 'work/essence-mobile', project: 'essence', r: 0.62, pos: 'top' },
-    { src: 'projects/eldeva-hero', project: 'eldeva', r: 1.2, motion: 'zoom' },
-    {
-      src: 'projects/spiderman-hero',
-      project: 'spiderman',
-      r: 1.2,
-      video: 'spiderman-intro',
-      pos: 'left',
-    },
-    { src: 'work/calculator-scroll', project: 'calculator', r: 1.15, motion: 'scroll' },
-    {
-      src: 'projects/tesla-model-s',
-      project: 'tesla',
-      r: 1.1,
-      video: 'tesla-models',
-      pos: '62% 50%',
-    },
-    {
-      src: 'projects/eldeva-velvet-peony',
-      project: 'eldeva',
-      r: 0.9,
-      video: 'eldeva-products',
-      pos: '62% 50%',
-    },
-    { src: 'work/calculator-compound', project: 'calculator', r: 1.1, pos: 'top' },
-    { src: 'projects/spiderman-rogues', project: 'spiderman', r: 1.1, motion: 'zoom' },
-  ],
-  [
-    { src: 'projects/tesla-hero', project: 'tesla', r: 1.2, motion: 'zoom', pos: 'left' },
-    {
-      src: 'work/calculator-retirement',
-      project: 'calculator',
-      r: 0.62,
-      motion: 'scroll',
-      tall: 1712 / 1000,
-    },
-    { src: 'projects/eldeva-light-it-slowly', project: 'eldeva', r: 1.1, motion: 'zoom' },
-    { src: 'work/essence-scroll', project: 'essence', r: 1.15, motion: 'scroll' },
-    {
-      src: 'projects/tesla-timeline',
-      project: 'tesla',
-      r: 1.0,
-      video: 'tesla-timeline',
-      pos: 'left',
-    },
-    { src: 'projects/eldeva-sweet-plum', project: 'eldeva', r: 0.85, pos: '62% 50%' },
-    {
-      src: 'projects/spiderman-venom',
-      project: 'spiderman',
-      r: 1.1,
-      video: 'spiderman-venom',
-      pos: 'left',
-    },
-    { src: 'projects/spiderman-winter', project: 'spiderman', r: 1.0, pos: 'left' },
-  ],
-  [
-    {
-      src: 'projects/eldeva-scents',
-      project: 'eldeva',
-      r: 1.0,
-      video: 'eldeva-scents',
-      pos: 'left',
-    },
-    { src: 'projects/tesla-under-the-skin', project: 'tesla', r: 1.2, motion: 'zoom' },
-    { src: 'work/essence-thumb', project: 'essence', r: 1.1 },
-    { src: 'projects/eldeva-white-sands', project: 'eldeva', r: 0.85, pos: '52% 50%' },
-    { src: 'work/calculator-mobile', project: 'calculator', r: 0.62, pos: 'top' },
-    { src: 'projects/tesla-master-plan', project: 'tesla', r: 1.2, motion: 'zoom' },
-    {
-      src: 'projects/spiderman-gallery',
-      project: 'spiderman',
-      r: 1.2,
-      video: 'spiderman-gallery',
-    },
-    { src: 'projects/spiderman-tinkerer', project: 'spiderman', r: 1.1, motion: 'zoom' },
-  ],
-  [
-    { src: 'projects/tesla-network', project: 'tesla', r: 1.2, pos: 'left' },
-    { src: 'projects/eldeva-ritual', project: 'eldeva', r: 1.1, motion: 'zoom' },
-    { src: 'work/calculator-thumb', project: 'calculator', r: 1.1 },
-    { src: 'projects/tesla-semi', project: 'tesla', r: 1.0, pos: '68% 50%' },
-    { src: 'projects/eldeva-linen-breeze', project: 'eldeva', r: 0.9, pos: '62% 50%' },
-    { src: 'projects/eldeva-footer', project: 'eldeva', r: 1.0, motion: 'zoom' },
-    { src: 'projects/spiderman-rooftop', project: 'spiderman', r: 1.1, pos: '50% 40%' },
-    { src: 'projects/spiderman-outro', project: 'spiderman', r: 1.1, motion: 'zoom' },
-  ],
+const cells: Cell[] = [
+  { at: [8, 1, 2, 2], kind: 'frame', src: 'work/calculator-desktop' },
+  { at: [1, 6, 2, 2], kind: 'frame', src: 'work/essence-thumb' },
+  { at: [9, 5, 1, 2], kind: 'frame', src: 'work/essence-mobile' },
+  { at: [1, 2, 1, 1], kind: 'frame', src: 'work/calculator-compound' },
+  { at: [3, 1], kind: 'signal' },
+  { at: [5, 1], kind: 'signal', blink: true },
+  { at: [4, 2], kind: 'signal' },
+  { at: [5, 2], kind: 'signal' },
+  { at: [6, 2], kind: 'signal', blink: true },
+  { at: [7, 2], kind: 'paper' },
+  { at: [3, 3], kind: 'signal' },
+  { at: [5, 3], kind: 'ink' },
+  { at: [6, 3], kind: 'signal' },
+  { at: [7, 3], kind: 'signal' },
+  { at: [2, 4], kind: 'signal', blink: true },
+  { at: [4, 4], kind: 'signal' },
+  { at: [5, 4], kind: 'signal' },
+  { at: [3, 5], kind: 'ink' },
+  { at: [5, 5], kind: 'signal' },
+  { at: [6, 5], kind: 'signal' },
+  { at: [8, 5], kind: 'signal' },
+  { at: [3, 6], kind: 'signal' },
+  { at: [4, 6], kind: 'signal', blink: true },
+  { at: [7, 6], kind: 'signal' },
+  { at: [3, 7], kind: 'ink' },
+  { at: [5, 7], kind: 'signal' },
+  { at: [6, 7], kind: 'signal' },
+  { at: [2, 8], kind: 'paper' },
+  { at: [4, 8], kind: 'signal' },
+  { at: [7, 8], kind: 'signal', blink: true },
 ];
 
-type Filter = 'all' | 'live' | 'concept' | Project;
-const filters: { id: Filter; label: string }[] = [
-  { id: 'all', label: 'All' },
-  { id: 'live', label: 'Live sites' },
-  { id: 'concept', label: 'Concepts' },
-  ...(Object.keys(PROJECTS) as Project[]).map((id) => ({ id, label: PROJECTS[id].name })),
-];
-
-// Scroll tiles pan from the top to the bottom of a tall screenshot, as a
-// percentage of its own height, for the tile's ratio. Homepage captures are
-// 1440x4200 unless the tile says otherwise.
-const SCROLL_RATIO = 4200 / 1440;
-const scrollEnd = (r: number, tall = SCROLL_RATIO) =>
-  `-${Math.max(0, (1 - 1 / r / tall) * 100).toFixed(1)}%`;
-let n = 0;
+// A scattered (but fixed) order for the cells to cut on in.
+const order = (c: Cell) => (c.at[0] * 7 + c.at[1] * 3) % 11;
+const area = ([x, y, w = 1, h = 1]: Cell['at']) => `${y} / ${x} / span ${h} / span ${w}`;
 ---
 
-<section class="hero on-dark" aria-labelledby="hero-title" data-collage>
-  <!-- The module band (docs/brand/4-applications.md, Website): logo and headline each in
-       their own block, the Ridge field and pattern modules beside them. One thing per cell. -->
-  <div class="wrap">
-    <div class="hero__band">
-      <div class="hero__cell hero__cell--logo">
-        <Logo label={`${site.name}`} class="hero__logo" />
+<section class="hero" aria-labelledby="hero-title">
+  <div class="wrap hero__grid">
+    <div class="hero__copy">
+      <p class="label hero__label">Your human in the loop</p>
+      <h1 id="hero-title" class="hero__title">
+        Your site, rebuilt and found.
+      </h1>
+      <p class="hero__lede">
+        We rebuild websites for local businesses, add booking, payments and AI enquiry assistants,
+        and help you get found on Google and in AI search. Built in Bradford, and we stay to look
+        after it.
+      </p>
+      <div class="hero__actions">
+        <a href="#audit" class="btn btn--primary">
+          Get your free audit
+        </a>
+        <a href="#work" class="btn btn--secondary">
+          See the work
+        </a>
       </div>
-      <div class="hero__cell hero__cell--title">
-        <h1 id="hero-title" class="hero__title">
-          The software agency of the future.
-        </h1>
-      </div>
-      <Module kind="field" fg="signal" bg="ink" class="hero__cell hero__cell--field" />
-      <Module kind="ridge" fg="ink" bg="signal" class="hero__cell hero__cell--ridge" />
-      <Module kind="hex" fg="paper" bg="ink" spin class="hero__cell hero__cell--hex" />
-      <div class="hero__cell hero__cell--status">
-        <p class="hero__status">
-          <span class="tag tag--signal tag--status">
-            <span aria-hidden="true">●</span> Open
-          </span>
-          <span class="label">Taking on new projects across West Yorkshire</span>
-        </p>
-      </div>
-      <Module kind="sparkle" fg="volt" bg="ink" class="hero__cell hero__cell--spark" />
+      <p class="hero__status">
+        <span class="tag tag--signal tag--status">
+          <span aria-hidden="true">●</span> Open
+        </span>
+        <span class="label">Taking on new projects across West Yorkshire</span>
+      </p>
     </div>
-  </div>
 
-  <div class="wrap hero__top">
-    <p class="hero__lede">
-      Websites, booking apps and AI assistants that turn local searches into bookings. Designed,
-      built and looked after in Bradford.
-    </p>
-    <div class="hero__actions">
-      <a href="#audit" class="btn btn--primary">
-        Free presence audit
-      </a>
-      <a href="#real-work" class="btn btn--secondary">
-        See the work
-      </a>
-    </div>
-  </div>
-
-  <div class="wrap hero__bar">
-    <div class="hero__chips" role="group" aria-label="Filter the work below">
-      {filters.map((f, i) => (
-        <button
-          type="button"
-          class="hero__chip"
-          data-collage-filter={f.id}
-          aria-pressed={i === 0 ? 'true' : 'false'}
+    <div class="hero__mosaic" aria-hidden="true" style={`--print:url(${fingerprint})`}>
+      <span class="hero__print"></span>
+      {cells.map((c) => (
+        <span
+          class:list={['hero__cell', `hero__cell--${c.kind}`, { 'is-blink': c.blink }]}
+          style={`grid-area:${area(c.at)};--i:${order(c)}`}
         >
-          {f.label}
-        </button>
+          {c.src && (
+            <Image
+              src={projectImage(c.src)}
+              alt=""
+              width={320}
+              format="webp"
+              quality={60}
+              loading="lazy"
+              decoding="async"
+            />
+          )}
+        </span>
       ))}
     </div>
-    <p class="hero__key">
-      <span class="hero__key-dot" aria-hidden="true">
-        ●
-      </span>
-      Live sites I've built and launched. Tiles marked Concept are design work that isn't live:
-      Eldeva is a mock-up for a family business. The Tesla and Spider-Man: Miles Morales fan sites
-      are unofficial redesigns, not affiliated with Tesla, Inc., Marvel, Insomniac Games or Sony.
-    </p>
-  </div>
-
-  <div class="hero__collage">
-    {rows.map((row) => (
-      <div class="hero__row">
-        {row.map((tile) => {
-          const i = n++;
-          const project = PROJECTS[tile.project];
-          return (
-            <figure
-              class:list={[
-                'hero__tile',
-                { 'is-live': project.live, [`is-${tile.motion}`]: tile.motion },
-              ]}
-              style={`--r:${tile.r};--scroll-end:${scrollEnd(tile.r, tile.tall)};--scroll-end-m:${scrollEnd(0.75, tile.tall)};--delay:${(i % 5) * -2.3}s`}
-              data-cats={`${project.live ? 'live' : 'concept'} ${tile.project}`}
-            >
-              <Image
-                src={img(tile.src)}
-                alt=""
-                width={tile.motion === 'scroll' ? 520 : 480}
-                format="webp"
-                quality={64}
-                loading="lazy"
-                decoding="async"
-                style={tile.pos ? `object-position:${tile.pos}` : undefined}
-              />
-              {tile.video && (
-                <video
-                  class="hero__video"
-                  data-src={withBase(`/video/${tile.video}.mp4`)}
-                  muted
-                  loop
-                  playsinline
-                  disablepictureinpicture
-                  preload="none"
-                  aria-hidden="true"
-                  style={tile.pos ? `object-position:${tile.pos}` : undefined}
-                />
-              )}
-              {project.tag ? (
-                <span class="hero__tag" aria-hidden="true">
-                  {project.tag}
-                </span>
-              ) : (
-                <span class="hero__tag hero__tag--live" aria-hidden="true">
-                  ● Live
-                </span>
-              )}
-              <figcaption class="visually-hidden">{project.caption}</figcaption>
-            </figure>
-          );
-        })}
-      </div>
-    ))}
   </div>
 </section>
-
-<script>
-  import '../scripts/hero-collage.ts';
-</script>
 
 <style>
   .hero {
     position: relative;
     isolation: isolate;
     margin-top: -73px;
-    padding-top: calc(73px + clamp(0.75rem, 2vw, 1.5rem));
-    color: var(--on-dark);
+    padding-top: calc(73px + clamp(1.5rem, 4vw, 3.5rem));
+    padding-bottom: clamp(3rem, 7vw, 6rem);
     background: var(--brand-ink);
+    color: var(--ink-text);
   }
 
-  /* ---------- module band ---------- */
-  /* Square cells sized from the band's width (container units), flush, no gutters. */
-  .hero__band {
-    container-type: inline-size;
+  .hero__grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-auto-rows: 50cqw;
-    grid-template-areas:
-      'logo logo'
-      'title title'
-      'title title'
-      'field ridge'
-      'field hex'
-      'status spark';
+    gap: clamp(2.5rem, 6vw, 4rem);
+    align-items: center;
+  }
+
+  .hero__copy {
+    display: grid;
+    gap: var(--space-4);
+    justify-items: start;
+  }
+
+  .hero__label {
+    color: var(--signal-text);
+  }
+
+  .hero__title {
+    font-size: clamp(2.75rem, 9.5vw, 5.75rem);
+    line-height: 0.92;
+    letter-spacing: -0.025em;
+  }
+
+  .hero__lede {
+    max-width: 34rem;
+    font-size: 1.125rem;
+    line-height: 1.55;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .hero__status {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 0.75rem;
+  }
+
+  .hero__status .label {
+    color: var(--ink-text);
+  }
+
+  /* ---------- mosaic ---------- */
+  .hero__mosaic {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    aspect-ratio: 9 / 8;
+    width: 100%;
     border: var(--border-hairline) solid var(--line);
+  }
+
+  /* The scan is white ridges on black, used as a luminance mask, so it paints in Paper. */
+  .hero__print {
+    grid-area: 1 / 1 / -1 / -1;
+    background: var(--brand-paper);
+    -webkit-mask: var(--print) center / auto 100% no-repeat;
+    mask: var(--print) center / auto 100% no-repeat luminance;
   }
 
   .hero__cell {
     position: relative;
-    min-width: 0;
     overflow: hidden;
-  }
-
-  .hero__band > :global(.mod) {
-    aspect-ratio: auto;
-  }
-
-  /* Pattern cells cut on in sequence at first paint, ~100 ms apart (pure CSS). The logo and
-     headline cells paint at once: they are the first and largest content. */
-  .hero__band > :global(.mod),
-  .hero__cell--status {
     animation: cell-on 1ms steps(1, end) both;
+    animation-delay: calc(150ms + var(--i) * 90ms);
   }
 
-  .hero__band > :global(.hero__cell--field) {
-    animation-delay: 100ms;
+  .hero__cell--signal {
+    background: var(--signal);
   }
 
-  .hero__band > :global(.hero__cell--ridge) {
-    animation-delay: 200ms;
+  .hero__cell--ink {
+    background: var(--brand-ink);
   }
 
-  .hero__band > :global(.hero__cell--hex) {
-    animation-delay: 300ms;
+  .hero__cell--paper {
+    background: var(--brand-paper);
   }
 
-  .hero__cell--status {
-    animation-delay: 400ms;
+  .hero__cell--frame {
+    background: var(--surface-raised);
+    box-shadow: inset 0 0 0 1px var(--brand-ink);
   }
 
-  .hero__band > :global(.hero__cell--spark) {
-    animation-delay: 500ms;
+  /* Frames stay black and white: colour enters through the blocks (graphic language). */
+  .hero__cell :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: left top;
+    filter: grayscale(1) contrast(1.1);
+  }
+
+  /* After the cut-on, a few blocks drop out for a beat now and then: a quiet glitch. */
+  .hero__cell.is-blink {
+    animation:
+      cell-on 1ms steps(1, end) both calc(150ms + var(--i) * 90ms),
+      blink 9s steps(1, end) infinite calc(2.5s + var(--i) * 0.7s);
   }
 
   @keyframes cell-on {
@@ -370,394 +231,38 @@ let n = 0;
     }
   }
 
-  .hero__cell--logo {
-    grid-area: logo;
-    display: grid;
-    place-items: center;
-    padding: 6%;
-    /* The one glow the brand allows: soft Signal behind the logo on Ink. */
-    background: radial-gradient(ellipse at 55% 50%, #16260f 0%, var(--brand-ink) 70%);
-  }
-
-  .hero__cell--logo :global(.hero__logo) {
-    width: 86%;
-  }
-
-  .hero__cell--title {
-    grid-area: title;
-    display: flex;
-    align-items: flex-end;
-    padding: 6cqw;
-    background: var(--brand-paper);
-    color: var(--brand-ink);
-  }
-
-  .hero__title {
-    font-size: 11.5cqw;
-    line-height: 0.92;
-    letter-spacing: -0.02em;
-  }
-
-  .hero__band > :global(.hero__cell--field) {
-    grid-area: field;
-  }
-
-  .hero__band > :global(.hero__cell--ridge) {
-    grid-area: ridge;
-  }
-
-  .hero__band > :global(.hero__cell--hex) {
-    grid-area: hex;
-  }
-
-  .hero__band > :global(.hero__cell--spark) {
-    grid-area: spark;
-  }
-
-  .hero__cell--status {
-    grid-area: status;
-    display: flex;
-    align-items: flex-end;
-    padding: 1rem;
-    background: var(--brand-ink);
-    border-top: var(--border-hairline) solid var(--line);
-  }
-
-  .hero__status {
-    display: grid;
-    justify-items: start;
-    gap: 0.75rem;
-  }
-
-  .hero__status .label {
-    color: var(--brand-paper);
-  }
-
-  /* ---------- copy row ---------- */
-  .hero__top {
-    display: grid;
-    gap: var(--space-4);
-    align-items: end;
-    padding-block: clamp(1.5rem, 3.5vw, 2.5rem);
-  }
-
-  .hero__lede {
-    max-width: 34rem;
-    font-size: 1.125rem;
-    line-height: 1.55;
-    color: var(--ink-text);
-  }
-
-  .hero__actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-  }
-
-  /* ---------- filter chips: square mono tags ---------- */
-  .hero__bar {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    gap: 0.75rem 1.5rem;
-    padding-top: var(--space-4);
-    margin-bottom: 0.75rem;
-    border-top: var(--border-hairline) solid var(--line);
-  }
-
-  .hero__chips {
-    display: flex;
-    gap: 0.4rem;
-    overflow-x: auto;
-    scrollbar-width: none;
-    max-width: 100%;
-  }
-
-  .hero__chips::-webkit-scrollbar {
-    display: none;
-  }
-
-  .hero__chip {
-    flex: none;
-    min-height: 40px;
-    padding: 0.4em 0.9em;
-    border: var(--border-hairline) solid var(--line-strong);
-    border-radius: 0;
-    background: none;
-    color: var(--ink-text);
-    font: 500 0.75rem var(--font-mono);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition:
-      background-color 0.15s linear,
-      color 0.15s linear,
-      border-color 0.15s linear;
-  }
-
-  .hero__chip:hover {
-    border-color: var(--ink-text);
-  }
-
-  .hero__chip[aria-pressed='true'] {
-    background: var(--signal);
-    border-color: var(--signal);
-    color: var(--on-signal);
-  }
-
-  .hero__key {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.4rem 0.5rem;
-    max-width: 62rem;
-    font-size: 0.8125rem;
-    color: var(--on-dark-muted);
-  }
-
-  .hero__key-dot {
-    flex: none;
-    color: var(--signal);
-  }
-
-  /* ---------- collage ---------- */
-  .hero__collage {
-    position: relative;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2px;
-    max-height: 150vw;
-    overflow: hidden;
-    border-bottom: var(--border-hairline) solid var(--line);
-  }
-
-  /* Mobile: rows dissolve into a two-column grid. */
-  .hero__row {
-    display: contents;
-  }
-
-  .hero__tile {
-    position: relative;
-    margin: 0;
-    overflow: hidden;
-    background: var(--surface-raised);
-    aspect-ratio: 3 / 4;
-    cursor: pointer;
-  }
-
-  .hero__tile[hidden] {
-    display: none;
-  }
-
-  .hero__tile :global(img) {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.9s var(--ease-out);
-  }
-
-  .hero__tile:hover :global(img) {
-    transform: scale(1.04);
-  }
-
-  /* Slow drift so the wall is never still. */
-  .hero__tile.is-zoom :global(img) {
-    animation: drift 14s ease-in-out infinite alternate;
-    animation-delay: var(--delay);
-  }
-
-  @keyframes drift {
-    from {
-      transform: scale(1.02) translate(0, 0);
-    }
-    to {
-      transform: scale(1.12) translate(-2%, -1.5%);
-    }
-  }
-
-  /* Screen-recording style pan through a full live homepage. */
-  .hero__tile.is-scroll :global(img) {
-    height: auto;
-    object-fit: initial;
-    animation: pan 20s ease-in-out infinite;
-    animation-delay: var(--delay);
-  }
-
-  .hero__tile.is-scroll:hover :global(img) {
-    animation-play-state: paused;
-    transform: none;
-  }
-
-  @keyframes pan {
+  @keyframes blink {
     0%,
-    10% {
-      transform: translateY(0);
-    }
-    50%,
-    60% {
-      transform: translateY(var(--scroll-end-m));
-    }
     100% {
-      transform: translateY(0);
+      opacity: 1;
     }
-  }
-
-  @keyframes pan-desktop {
-    0%,
-    10% {
-      transform: translateY(0);
+    90% {
+      opacity: 0;
     }
-    50%,
-    60% {
-      transform: translateY(var(--scroll-end));
+    93% {
+      opacity: 1;
     }
-    100% {
-      transform: translateY(0);
+    95% {
+      opacity: 0;
     }
-  }
-
-  /* Walkthrough clips fade in over their still once they are playing. */
-  .hero__video {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0;
-    transition: opacity 0.6s var(--ease-out);
-    pointer-events: none;
-  }
-
-  .hero__video.is-playing {
-    opacity: 1;
-  }
-
-  /* Every tile says what it is: Live (status pill, the brand's one pill shape) or Concept. */
-  .hero__tag {
-    position: absolute;
-    left: 8px;
-    bottom: 8px;
-    z-index: 2;
-    padding: 0.3em 0.55em;
-    background: var(--brand-ink);
-    color: var(--brand-paper);
-    font: 500 0.625rem/1.3 var(--font-mono);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-  }
-
-  .hero__tag--live {
-    background: var(--signal);
-    color: var(--on-signal);
-    border-radius: var(--radius-pill);
-  }
-
-  /* Filtered: an even grid of uniform tiles, so a lone tile never balloons. */
-  .hero__collage.is-filtered {
-    grid-template-columns: repeat(auto-fill, minmax(min(46%, 15rem), 1fr));
-    max-height: none;
-  }
-
-  .hero__collage.is-filtered .hero__row {
-    display: contents;
-  }
-
-  .hero__collage.is-filtered .hero__tile {
-    flex: none;
-    aspect-ratio: 3 / 4;
-  }
-
-  @media (min-width: 40rem) {
-    .hero__band {
-      grid-template-columns: repeat(4, 1fr);
-      grid-auto-rows: 25cqw;
-      grid-template-areas:
-        'logo logo field ridge'
-        'title title field hex'
-        'title title status spark';
-    }
-
-    .hero__cell--title {
-      padding: 3cqw;
-    }
-
-    .hero__title {
-      font-size: 5.6cqw;
-    }
-
-    .hero__cell--status {
-      border-top: 0;
+    97% {
+      opacity: 1;
     }
   }
 
   @media (min-width: 64rem) {
-    .hero__band {
-      grid-template-columns: repeat(6, 1fr);
-      grid-auto-rows: calc(100cqw / 6);
-      grid-template-areas:
-        'logo logo field title title ridge'
-        'status hex field title title spark';
-    }
-
-    .hero__cell--title {
-      padding: 2cqw;
+    .hero__grid {
+      grid-template-columns: 5fr 6fr;
     }
 
     .hero__title {
-      font-size: 3.7cqw;
-    }
-
-    .hero__top {
-      grid-template-columns: 1fr auto;
-    }
-
-    /* Desktop: justified rows; width follows each tile's ratio so a row shares one height. */
-    .hero__collage {
-      display: grid;
-      grid-template-columns: 1fr;
-      max-height: min(78vh, 60vw);
-    }
-
-    .hero__row {
-      display: flex;
-      gap: 2px;
-    }
-
-    .hero__tile {
-      flex: var(--r) 1 0;
-      aspect-ratio: var(--r);
-    }
-
-    .hero__tile.is-scroll :global(img) {
-      animation-name: pan-desktop;
-    }
-
-    .hero__collage.is-filtered .hero__tile.is-scroll :global(img) {
-      animation-name: pan;
-    }
-
-    .hero__collage.is-filtered {
-      grid-template-columns: repeat(3, 1fr);
-    }
-
-    .hero__collage.is-filtered .hero__tile {
-      aspect-ratio: 4 / 3;
+      font-size: clamp(3.5rem, 5.6vw, 5.75rem);
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .hero__band > :global(.mod),
-    .hero__cell--status {
-      animation: none;
-    }
-
-    .hero__video {
-      display: none;
-    }
-
-    .hero__tile.is-zoom :global(img),
-    .hero__tile.is-scroll :global(img) {
+    .hero__cell,
+    .hero__cell.is-blink {
       animation: none;
     }
   }
