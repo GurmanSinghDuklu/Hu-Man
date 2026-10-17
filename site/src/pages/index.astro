@@ -11,6 +11,7 @@ import HowItWorks from '../components/HowItWorks.astro';
 import Pricing from '../components/Pricing.astro';
 import Faq from '../components/Faq.astro';
 import Audit from '../components/Audit.astro';
+import ModuleBand from '../components/ModuleBand.astro';
 ---
 
 <BaseLayout
@@ -21,12 +22,15 @@ import Audit from '../components/Audit.astro';
   <SiteHeader slot="header" />
 
   <Hero />
+  <ModuleBand preset="kit" />
   <Services />
   <Work />
+  <ModuleBand preset="poster" />
   <ConceptWork />
   <ChatDemo />
   <HowItWorks />
   <Pricing />
+  <ModuleBand preset="signal" />
   <Faq />
   <Audit />
 

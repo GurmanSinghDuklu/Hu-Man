@@ -46,6 +46,9 @@ const areas: Area[] = [
   },
 ];
 
+// Each frame glitches in its own colour now and then.
+const glitchColours = ['pulse', 'flare', 'scan'];
+
 const byArea = (id: Area['id']) => services.filter((s) => s.group === id && s.tag !== 'Care plan');
 ---
 
@@ -78,6 +81,10 @@ const byArea = (id: Area['id']) => services.filter((s) => s.group === id && s.ta
             <svg class="area__shape" viewBox="0 0 100 100" preserveAspectRatio="none">
               <path d={area.shape} />
             </svg>
+            <span
+              class="area__glitch"
+              style={`--g:var(--${glitchColours[i]});--d:${(i * 1.9).toFixed(1)}s`}
+            />
             <span class="area__code">{area.code}</span>
           </figure>
           {area.note && <p class="area__note">{area.note}</p>}
@@ -157,6 +164,46 @@ const byArea = (id: Area['id']) => services.filter((s) => s.group === id && s.ta
     inset: 0;
     width: 100%;
     height: 100%;
+  }
+
+  /* A band of colour flashes across the photo and jumps sideways, twice, every few seconds. */
+  .area__glitch {
+    position: absolute;
+    inset: 0;
+    background: var(--g);
+    clip-path: inset(38% 0 48% 0);
+    opacity: 0;
+    pointer-events: none;
+    animation: area-glitch 5.5s steps(1, end) infinite var(--d);
+  }
+
+  @keyframes area-glitch {
+    0%,
+    100% {
+      opacity: 0;
+      transform: none;
+    }
+    86% {
+      opacity: 1;
+      transform: translateX(-5%);
+    }
+    89% {
+      opacity: 0;
+    }
+    91% {
+      opacity: 1;
+      transform: translate(4%, 160%);
+    }
+    94% {
+      opacity: 0;
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .area__glitch {
+      animation: none;
+    }
   }
 
   .area__code {

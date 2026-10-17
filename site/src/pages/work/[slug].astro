@@ -4,6 +4,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
 import Arrow from '../../components/Arrow.astro';
+import ModuleBand from '../../components/ModuleBand.astro';
 import { projects, projectImage, metaLine, statusLabel, type Project } from '../../data/projects';
 import { withBase } from '../../config/paths';
 
@@ -110,6 +111,8 @@ const posters = await Promise.all(
         </div>
       </div>
     </section>
+
+    <ModuleBand preset={(['kit', 'poster', 'signal'] as const)[projects.indexOf(p) % 3]} />
 
     <section class="cs-shots" aria-labelledby="shots-title">
       <div class="wrap">

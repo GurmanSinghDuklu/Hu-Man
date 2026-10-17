@@ -253,7 +253,11 @@ Plum `#1B0A2E` are new section grounds (`.night`, `.plum` in `tokens.css`). Thin
    Shapes over photos in What we do are single-layer SVG paths in `Services.astro` instead.
 4. **Video posters download with the page** even with `preload="none"`: ship them through `getImage()`
    as WebP. As JPEGs they cost 250 kB and dropped a case page to 91.
-5. `npm run screenshots` now covers home, /work/ and two case pages, and forces reveals on first (the old
+5. **Glitches run everywhere in all the neons** (Gurman's call, 2026-10-17): hero mosaic, `ModuleBand.astro`
+   strips between sections, work tiles, What we do photos, navbar logo. Opacity/transform in hard
+   steps; reduced motion stops all of them. Module bands use kit patterns only, never the brand
+   posters' sample wording (false offices, scores, offers).
+6. `npm run screenshots` now covers home, /work/ and two case pages, and forces reveals on first (the old
    full-page shots were mostly blank). `npm run lighthouse -- work/tesla/` tests one page.
 Lighthouse home 99/100/100/100, case pages 98-100 performance. axe 0 violations on all 9 pages.
 

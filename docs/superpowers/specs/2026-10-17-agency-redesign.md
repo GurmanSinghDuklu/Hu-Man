@@ -31,6 +31,25 @@ Removed: the stat tiles (Intro), the tools marquee, the hero collage and its lon
 the services preview, the eyebrow labels and the one-highlighted-word headlines (`.eyebrow`, `.hl`),
 GitHub and LinkedIn links in the footer (personal profiles), "Hi Gurman" in mailto bodies.
 
+## Colour glitches and module bands (same day, second round)
+
+Gurman: remove the Essence frames beside the fingerprint; the picture should keep glitching in
+different colours, not just green, across the site; use the brand pack's module kit all over the site
+(patterns from the Hu/man design-system artifact), with the real fingerprint scan, not the drawn ones.
+
+- Hero mosaic: Essence frames replaced by kit modules (checker, hex, stripes, burst, half disc,
+  halftone). Every Signal block flashes Pulse, Flare, Volt, Scan or Paper on its own 2 to 5 s clock;
+  every fourth block steps through all the colours continuously; Pulse, Scan and Flare copies of the
+  print jump sideways (an RGB split in brand colours); Volt and Paper scan bars flash across.
+- `ModuleBand.astro`: a 12-module strip from the kit (3 presets) with neon flashes, placed under the
+  hero, between Selected work and the Concept lab, between Pricing and the FAQ, and on every case page.
+  Patterns only: the posters' sample wording (offices in London, Toronto and Sydney, "AI score 82",
+  "05 rounds of changes", the Gift) isn't true of the business, so none of it is used.
+- Work tiles: each has its own block colour and glitch colours, and glitches by itself now and then.
+- What we do: each photo flashes a Pulse, Flare or Scan band.
+- All of it is opacity and transform in hard steps (one exception: the cycling blocks step their
+  background colour). Reduced motion stops every one.
+
 ## Navbar logo glitch
 
 Hovering or focusing the header logo glitches it every 2 s: two extra copies of the real artwork (the
