@@ -1,53 +1,57 @@
 ---
-import { Image } from 'astro:assets';
 import { services, type Service } from '../data/content';
-import { projectImage } from '../data/projects';
+import Module, { type ModuleKind, type ModuleColour } from './Module.astro';
 
-// Three focus areas instead of a six-row list. Care plans are a monthly add-on, so they
-// live with pricing, not here. Each area opens with a black-and-white frame cut by a
-// see-through brand shape (the Swiss shape-over-photo reference).
+// Three focus areas instead of a six-row list. Care plans are a monthly add-on, so they live
+// with pricing, not here. Each area opens with a small modular poster from the brand's module
+// kit: the area's name in a solid block, kit patterns around it (2026-10-17, replacing photos
+// cut by shapes, which read as odd crops).
+type PosterCell =
+  | { text: string; bg: 'signal' | 'paper' | 'pulse'; wide?: boolean }
+  | { mod: [ModuleKind, ModuleColour, ModuleColour]; flash?: string };
+
 interface Area {
   id: Service['group'];
-  code: string;
   title: string;
-  /** SVG path(s) on a 100 x 100 square, filled with the band colour over the photo. */
-  shape: string;
-  image: string;
-  /** Shown under the frame when the image is a concept render, not a real project. */
-  note?: string;
+  /** Six slots on a 3 x 2 grid; a wide text cell takes two. */
+  poster: PosterCell[];
 }
 
 const areas: Area[] = [
   {
     id: 'development',
-    code: 'Web',
     title: 'Websites, booking and payments',
-    // Two corner arcs, opposite each other.
-    shape: 'M0 0H56A56 56 0 0 1 0 56Z M100 100H58A42 42 0 0 1 100 58Z',
-    image: 'work/essence-desktop',
+    poster: [
+      { mod: ['rings', 'pulse', 'ink'] },
+      { mod: ['checker', 'ink', 'paper'], flash: 'flare' },
+      { mod: ['stripes', 'flare', 'ink'] },
+      { text: 'Web', bg: 'signal', wide: true },
+      { mod: ['half', 'paper', 'ink'] },
+    ],
   },
   {
     id: 'ai',
-    code: 'AI',
     title: 'AI assistants and automations',
-    // Four corner quarter-circles: the photo shows through a concave star.
-    shape:
-      'M0 0H48A48 48 0 0 1 0 48Z M100 0V48A48 48 0 0 1 52 0Z M100 100H52A48 48 0 0 1 100 52Z M0 100V52A48 48 0 0 1 48 100Z',
-    image: 'concepts/assistant',
-    note: 'Concept render, fictional business',
+    poster: [
+      { mod: ['ridge', 'ink', 'signal'] },
+      { text: 'AI', bg: 'paper', wide: true },
+      { mod: ['hex', 'scan', 'ink'], flash: 'pulse' },
+      { mod: ['burst', 'volt', 'ink'] },
+      { mod: ['squares', 'ink', 'paper'] },
+    ],
   },
   {
     id: 'visibility',
-    code: 'Search',
     title: 'Local and AI-search visibility',
-    // A half-disc hanging from the top edge, and a small quarter in the corner.
-    shape: 'M100 0A50 50 0 0 1 0 0Z M0 100V68A32 32 0 0 1 32 100Z',
-    image: 'work/calculator-desktop',
+    poster: [
+      { mod: ['dots', 'signal', 'ink'] },
+      { mod: ['arc', 'paper', 'ink'] },
+      { mod: ['hourglass', 'ink', 'paper'], flash: 'scan' },
+      { mod: ['linearcs', 'flare', 'ink'] },
+      { text: 'Search', bg: 'pulse', wide: true },
+    ],
   },
 ];
-
-// Each frame glitches in its own colour now and then.
-const glitchColours = ['pulse', 'flare', 'scan'];
 
 const byArea = (id: Area['id']) => services.filter((s) => s.group === id && s.tag !== 'Care plan');
 ---
@@ -68,26 +72,33 @@ const byArea = (id: Area['id']) => services.filter((s) => s.group === id && s.ta
     <ol class="services__areas">
       {areas.map((area, i) => (
         <li class="area" data-reveal style={`--reveal-delay:${i * 0.1}s`}>
-          <figure class="area__frame" aria-hidden="true">
-            <Image
-              src={projectImage(area.image)}
-              alt=""
-              width={560}
-              format="webp"
-              quality={60}
-              loading="lazy"
-              decoding="async"
-            />
-            <svg class="area__shape" viewBox="0 0 100 100" preserveAspectRatio="none">
-              <path d={area.shape} />
-            </svg>
-            <span
-              class="area__glitch"
-              style={`--g:var(--${glitchColours[i]});--d:${(i * 1.9).toFixed(1)}s`}
-            />
-            <span class="area__code">{area.code}</span>
-          </figure>
-          {area.note && <p class="area__note">{area.note}</p>}
+          <div class="area__poster" aria-hidden="true" data-cells>
+            {area.poster.map((cell, k) =>
+              'text' in cell ? (
+                <span
+                  class:list={[
+                    'area__cell',
+                    'area__word',
+                    `area__word--${cell.bg}`,
+                    { 'is-wide': cell.wide },
+                  ]}
+                >
+                  {cell.text}
+                </span>
+              ) : (
+                <span
+                  class:list={['area__cell', { 'is-flash': cell.flash }]}
+                  style={
+                    cell.flash
+                      ? `--g:var(--${cell.flash});--d:${(i * 1.9 + k * 0.4).toFixed(1)}s`
+                      : undefined
+                  }
+                >
+                  <Module kind={cell.mod[0]} fg={cell.mod[1]} bg={cell.mod[2]} />
+                </span>
+              ),
+            )}
+          </div>
           <h3>{area.title}</h3>
           <ul class="area__list">
             {byArea(area.id).map((service) => (
@@ -135,95 +146,85 @@ const byArea = (id: Area['id']) => services.filter((s) => s.group === id && s.ta
     gap: var(--space-4);
   }
 
-  /* A square photo cell with a brand shape laid over it in the band's own colour, so the
-     photo shows only through the gaps in the shape. */
-  .area__frame {
+  /* A small modular poster: a flush 3 x 2 grid of square cells, one wide name block. */
+  .area__poster {
+    container-type: inline-size;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border: var(--border-hairline) solid var(--line);
+    background: var(--brand-ink);
+  }
+
+  .area__cell {
     position: relative;
-    margin: 0;
-    aspect-ratio: 1;
     overflow: hidden;
-    background: var(--surface-raised);
+    aspect-ratio: 1;
   }
 
-  .area__frame :global(img) {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: left top;
-    filter: grayscale(1) contrast(1.1);
+  .area__cell.is-wide {
+    grid-column: span 2;
+    aspect-ratio: 2 / 1;
   }
 
-  .area__shape {
-    fill: var(--surface);
+  .area__word {
+    display: flex;
+    align-items: flex-end;
+    padding: 4cqw;
+    color: var(--brand-ink);
+    font: 800 14cqw / 0.85 var(--font-display);
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
   }
 
-  .area__frame .area__shape {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
+  .area__word--signal {
+    background: var(--signal);
   }
 
-  /* A band of colour flashes across the photo and jumps sideways, twice, every few seconds. */
-  .area__glitch {
+  .area__word--paper {
+    background: var(--brand-paper);
+  }
+
+  .area__word--pulse {
+    background: var(--pulse);
+  }
+
+  /* One cell per poster glitches: a block of another colour flashes over it, twice. */
+  .area__cell.is-flash::after {
+    content: '';
     position: absolute;
     inset: 0;
     background: var(--g);
-    clip-path: inset(38% 0 48% 0);
     opacity: 0;
-    pointer-events: none;
-    animation: area-glitch 5.5s steps(1, end) infinite var(--d);
+    animation: area-flash 4.5s steps(1, end) infinite var(--d);
   }
 
-  @keyframes area-glitch {
+  @keyframes area-flash {
     0%,
     100% {
       opacity: 0;
       transform: none;
     }
-    86% {
+    80% {
       opacity: 1;
-      transform: translateX(-5%);
+      transform: translateX(-8%);
     }
-    89% {
+    84% {
       opacity: 0;
     }
-    91% {
+    88% {
       opacity: 1;
-      transform: translate(4%, 160%);
+      transform: translateX(6%) scaleY(0.4);
     }
-    94% {
+    91% {
       opacity: 0;
       transform: none;
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .area__glitch {
+    .area__cell.is-flash::after {
       animation: none;
     }
-  }
-
-  .area__code {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    padding: 0.55rem 0.8rem 0.45rem;
-    background: var(--signal);
-    color: var(--on-signal);
-    font: 800 clamp(1.5rem, 3vw, 2.25rem) / 1 var(--font-display);
-    letter-spacing: -0.02em;
-    text-transform: uppercase;
-  }
-
-  .area__note {
-    margin-top: calc(var(--space-3) * -1);
-    font: 500 0.75rem/1.35 var(--font-mono);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--ink-muted);
   }
 
   .area h3 {

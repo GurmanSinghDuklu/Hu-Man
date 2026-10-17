@@ -18,7 +18,7 @@ Approved decisions (all three "yes"):
 | # | Section | Ground | Notes |
 |---|---|---|---|
 | 1 | Hero | Ink | Label "Your human in the loop", H1, lede, two buttons, Open status. Right: 9 x 8 cell mosaic of the fingerprint scan in Paper, Signal blocks over it, three Ink cells dropped out, four black-and-white project frames. Cells cut on at load; four blink now and then. |
-| 2 | What we do (`#services`) | Night | Three focus areas (Web, AI, Search), each opened by a photo cut with a Night shape. Care plans moved out (they are in the monthly plans in pricing). |
+| 2 | What we do (`#services`) | Night | Three focus areas (Web, AI, Search), each opened by a modular poster from the kit. Care plans moved out (they are in the monthly plans in pricing). |
 | 3 | Selected work (`#work`) | Ink | `WorkGrid`: five project tiles linking to `/work/<slug>/`, filter All / Live / Concepts. Tiles are black and white with Signal blocks at rest; on hover or focus, colour snaps in and a Pulse/Signal glitch slice runs for 0.36 s. |
 | 4 | Concept lab (`#concepts`) | Paper | The ten concept renders, labelled as concept designs for fictional businesses. The old "Real projects" list (Lloyds, Arm) is gone. |
 | 5 | Try the enquiry assistant | Plum | Chat demo unchanged; Ink and Paper pixel fragments around the phone. |
@@ -46,7 +46,9 @@ different colours, not just green, across the site; use the brand pack's module 
   Patterns only: the posters' sample wording (offices in London, Toronto and Sydney, "AI score 82",
   "05 rounds of changes", the Gift) isn't true of the business, so none of it is used.
 - Work tiles: each has its own block colour and glitch colours, and glitches by itself now and then.
-- What we do: each photo flashes a Pulse, Flare or Scan band.
+- What we do: the photos cut by shapes looked odd (Gurman), so each area now opens with a small
+  modular poster from the kit: a 3 x 2 grid with the area name (Web, AI, Search) in a solid Signal,
+  Paper or Pulse block and kit patterns around it, one cell glitching in another colour.
 - All of it is opacity and transform in hard steps (one exception: the cycling blocks step their
   background colour). Reduced motion stops every one.
 

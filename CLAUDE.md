@@ -249,8 +249,9 @@ Plum `#1B0A2E` are new section grounds (`.night`, `.plum` in `tokens.css`). Thin
    and the case pages `/work/<slug>/`. Add a project there, never in a component.
 2. **The hero mosaic shows live projects only**: its frames carry no label, so concept and unofficial
    work stays in the labelled grid.
-3. **Transparent `Module` fills can't cut holes**: nested shapes (rings, hex) just paint over each other.
-   Shapes over photos in What we do are single-layer SVG paths in `Services.astro` instead.
+3. **Transparent `Module` fills can't cut holes**: nested shapes (rings, hex) just paint over each other,
+   so don't lay modules over photos. What we do opens each area with a modular poster instead (photos
+   cut by shapes were tried and rejected as odd crops).
 4. **Video posters download with the page** even with `preload="none"`: ship them through `getImage()`
    as WebP. As JPEGs they cost 250 kB and dropped a case page to 91.
 5. **Glitches run everywhere in all the neons** (Gurman's call, 2026-10-17): hero mosaic, `ModuleBand.astro`
