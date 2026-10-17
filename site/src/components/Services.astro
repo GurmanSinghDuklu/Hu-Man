@@ -3,15 +3,17 @@ import { services, type Service } from '../data/content';
 import Module, { type ModuleKind, type ModuleColour } from './Module.astro';
 
 // Three focus areas instead of a six-row list. Care plans are a monthly add-on, so they live
-// with pricing, not here. Each area is marked by one small square from the brand's module kit,
-// which glitches in another colour now and then. (Photos cut by shapes, then 3 x 2 posters,
-// were both tried on 2026-10-17 and rejected: too odd, then too big.)
+// with pricing, not here. Each area is marked by one square, the width of its column, that
+// glitches from one module-kit image to the next (2026-10-17; photos cut by shapes and 3 x 2
+// posters were tried first and rejected).
+type Mark = [ModuleKind, ModuleColour, ModuleColour];
+
 interface Area {
   id: Service['group'];
   code: string;
   title: string;
-  mark: [ModuleKind, ModuleColour, ModuleColour];
-  flash: string;
+  /** The images the square glitches through, in order. */
+  marks: Mark[];
 }
 
 const areas: Area[] = [
@@ -19,24 +21,43 @@ const areas: Area[] = [
     id: 'development',
     code: 'Web',
     title: 'Websites, booking and payments',
-    mark: ['rings', 'pulse', 'ink'],
-    flash: 'flare',
+    marks: [
+      ['rings', 'pulse', 'ink'],
+      ['checker', 'ink', 'paper'],
+      ['stripes', 'flare', 'ink'],
+      ['half', 'paper', 'ink'],
+      ['squares', 'signal', 'ink'],
+    ],
   },
   {
     id: 'ai',
     code: 'AI',
     title: 'AI assistants and automations',
-    mark: ['ridge', 'ink', 'signal'],
-    flash: 'pulse',
+    marks: [
+      ['ridge', 'ink', 'signal'],
+      ['burst', 'volt', 'ink'],
+      ['dots', 'scan', 'ink'],
+      ['sparkle', 'paper', 'ink'],
+      ['linearcs', 'pulse', 'ink'],
+    ],
   },
   {
     id: 'visibility',
     code: 'Search',
     title: 'Local and AI-search visibility',
-    mark: ['hex', 'scan', 'ink'],
-    flash: 'volt',
+    marks: [
+      ['hex', 'scan', 'ink'],
+      ['arc', 'paper', 'ink'],
+      ['hourglass', 'ink', 'signal'],
+      ['field', 'paper', 'ink'],
+      ['slash', 'flare', 'ink'],
+    ],
   },
 ];
+
+// Each image holds for this long; the three squares are offset so they never change together.
+const SLOT = 2.4;
+const COUNT = 5;
 
 const byArea = (id: Area['id']) => services.filter((s) => s.group === id && s.tag !== 'Care plan');
 ---
@@ -61,9 +82,15 @@ const byArea = (id: Area['id']) => services.filter((s) => s.group === id && s.ta
             <span
               class="area__mark"
               aria-hidden="true"
-              style={`--g:var(--${area.flash});--d:${(i * 1.6).toFixed(1)}s`}
+              style={`--slot:${SLOT}s;--cycle:${SLOT * COUNT}s;--off:${(i * 0.8).toFixed(1)}s`}
             >
-              <Module kind={area.mark[0]} fg={area.mark[1]} bg={area.mark[2]} />
+              {area.marks.map(([kind, fg, bg], k) => (
+                <span class="area__layer" style={`--k:${(COUNT - k) % COUNT}`}>
+                  <Module kind={kind} fg={fg} bg={bg} spin={kind === 'rings' || kind === 'hex'} />
+                </span>
+              ))}
+              <span class="area__slice area__slice--a" />
+              <span class="area__slice area__slice--b" />
             </span>
             <span class="area__code">{`0${i + 1} · ${area.code}`}</span>
           </div>
@@ -115,24 +142,91 @@ const byArea = (id: Area['id']) => services.filter((s) => s.group === id && s.ta
   }
 
   .area__top {
-    display: flex;
-    align-items: flex-end;
-    gap: var(--space-3);
+    display: grid;
+    gap: 0.75rem;
   }
 
-  /* One small square module per area. */
+  /* One square, the width of the column, holding a stack of module-kit images. */
   .area__mark {
     position: relative;
-    flex: none;
-    width: 4.5rem;
+    display: block;
     aspect-ratio: 1;
     overflow: hidden;
     border: var(--border-hairline) solid var(--line);
+    background: var(--brand-ink);
   }
 
-  .area__mark :global(.mod) {
+  .area__layer {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    animation: area-swap var(--cycle) steps(1, end) infinite;
+    /* Always negative, so every layer is mid-cycle from the first frame (no empty square). */
+    animation-delay: calc(var(--off) - var(--k) * var(--slot) - var(--cycle));
+  }
+
+  .area__layer :global(.mod) {
     width: 100%;
     height: 100%;
+  }
+
+  /* Each image shows for one slot in five, then cuts straight to the next. */
+  @keyframes area-swap {
+    0% {
+      opacity: 1;
+      transform: none;
+    }
+    1% {
+      transform: translateX(-6%);
+    }
+    2% {
+      transform: translateX(4%);
+    }
+    3% {
+      transform: none;
+    }
+    20%,
+    100% {
+      opacity: 0;
+    }
+  }
+
+  /* The glitch on every change: two colour bands jump across the square for a moment. */
+  .area__slice {
+    position: absolute;
+    left: 0;
+    right: 0;
+    opacity: 0;
+    pointer-events: none;
+    animation: area-slice var(--slot) steps(1, end) infinite var(--off);
+  }
+
+  .area__slice--a {
+    top: 22%;
+    height: 14%;
+    background: var(--pulse);
+  }
+
+  .area__slice--b {
+    top: 61%;
+    height: 9%;
+    background: var(--scan);
+    animation-delay: calc(var(--off) + 0.05s);
+  }
+
+  @keyframes area-slice {
+    0% {
+      opacity: 1;
+      transform: translateX(-12%);
+    }
+    3% {
+      transform: translateX(9%);
+    }
+    6%,
+    100% {
+      opacity: 0;
+      transform: none;
+    }
   }
 
   .area__code {
@@ -142,42 +236,15 @@ const byArea = (id: Area['id']) => services.filter((s) => s.group === id && s.ta
     color: var(--ink-muted);
   }
 
-  /* The glitch: a block of another colour flashes over the square, twice. */
-  .area__mark::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: var(--g);
-    opacity: 0;
-    animation: area-flash 4.5s steps(1, end) infinite var(--d);
-  }
-
-  @keyframes area-flash {
-    0%,
-    100% {
-      opacity: 0;
-      transform: none;
-    }
-    80% {
-      opacity: 1;
-      transform: translateX(-8%);
-    }
-    84% {
-      opacity: 0;
-    }
-    88% {
-      opacity: 1;
-      transform: translateX(6%) scaleY(0.4);
-    }
-    91% {
-      opacity: 0;
-      transform: none;
-    }
-  }
-
+  /* Reduced motion: the first image only, still. */
   @media (prefers-reduced-motion: reduce) {
-    .area__mark::after {
+    .area__layer,
+    .area__slice {
       animation: none;
+    }
+
+    .area__layer:first-child {
+      opacity: 1;
     }
   }
 

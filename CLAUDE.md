@@ -186,7 +186,8 @@ services preview, filterable bento gallery, scroll reveals. Two more gotchas:
 6. **Scroll reveals hide content at opacity 0, and axe skips invisible elements.** `scripts/axe.mjs`
    forces every `[data-reveal]` visible before scanning; keep it that way. The hidden state is gated
    on the `.js` class so content shows without JS.
-7. **After deleting components, restart `astro dev`.** It kept serving a stale module graph (all
+7. **After deleting components, restart `astro dev`.** (Bit again 2026-10-17: Gurman reviewed a stale dev
+   server with new scoped styles missing, so judge layouts from a fresh server or `npm run build`.) It kept serving a stale module graph (all
    hero styles missing) until restarted; the production build was fine.
 Revision 3 recoloured to neon on near-black from Gurman's references (`reference/colour/`, colours
 sampled from the pixels). Neon text only on dark; on `.light` bands `.hl` becomes a highlighter swipe.
@@ -250,8 +251,8 @@ Plum `#1B0A2E` are new section grounds (`.night`, `.plum` in `tokens.css`). Thin
 2. **The hero mosaic shows live projects only**: its frames carry no label, so concept and unofficial
    work stays in the labelled grid.
 3. **Transparent `Module` fills can't cut holes**: nested shapes (rings, hex) just paint over each other,
-   so don't lay modules over photos. What we do marks each area with one small square module (photos cut by
-   shapes, then 3 x 2 posters, were tried and rejected: odd crops, then too big).
+   so don't lay modules over photos. What we do marks each area with one column-wide square that glitches
+   through five kit images (photos cut by shapes, then 3 x 2 posters, were tried and rejected).
 4. **Video posters download with the page** even with `preload="none"`: ship them through `getImage()`
    as WebP. As JPEGs they cost 250 kB and dropped a case page to 91.
 5. **Glitches run everywhere in all the neons** (Gurman's call, 2026-10-17): hero mosaic, `ModuleBand.astro`
