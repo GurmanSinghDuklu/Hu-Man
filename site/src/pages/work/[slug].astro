@@ -1,0 +1,517 @@
+---
+import { Image, getImage } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import Arrow from '../../components/Arrow.astro';
+import { projects, projectImage, metaLine, statusLabel, type Project } from '../../data/projects';
+import { withBase } from '../../config/paths';
+
+export function getStaticPaths() {
+  return projects.map((project, i) => ({
+    params: { slug: project.slug },
+    props: { project, next: projects[(i + 1) % projects.length] },
+  }));
+}
+
+interface Props {
+  project: Project;
+  next: Project;
+}
+
+const { project: p, next } = Astro.props;
+const isLive = p.status === 'live';
+const title = `${p.name} | ${statusLabel[p.status]} | Hu/man`;
+const description = [p.summary, p.disclaimer].filter(Boolean).join(' ');
+const wide = p.shots.filter((s) => !s.kind || s.kind === 'wide');
+const tall = p.shots.find((s) => s.kind === 'tall');
+const phone = p.shots.find((s) => s.kind === 'phone');
+// Posters download with the page even when the clip doesn't, so they ship small, as WebP.
+const posters = await Promise.all(
+  (p.videos ?? []).map((v) =>
+    getImage({ src: projectImage(v.poster), width: 800, format: 'webp', quality: 60 }),
+  ),
+);
+---
+
+<BaseLayout title={title} description={description}>
+  <SiteHeader slot="header" />
+
+  <article class="cs">
+    <header class="cs-hero">
+      <div class="wrap">
+        <p class="cs-hero__crumb">
+          <a href={withBase('/work/')}>All work</a>
+        </p>
+        <p class="cs-hero__line">{metaLine(p)}</p>
+        <h1 class="cs-hero__title">{p.name}</h1>
+        <div class="cs-hero__intro">
+          <p class="cs-hero__lede">{p.summary}</p>
+          <div class="cs-hero__facts">
+            {isLive && (
+              <p>
+                <span class="tag tag--signal tag--status">
+                  <span aria-hidden="true">●</span> Live
+                </span>
+              </p>
+            )}
+            <p>{p.relationship}</p>
+            {p.disclaimer && <p class="cs-hero__disclaimer">{p.disclaimer}</p>}
+            {p.href && (
+              <a class="btn btn--primary" href={p.href} rel="noopener">
+                Visit the live site
+                <span class="btn__icon">
+                  <Arrow />
+                </span>
+              </a>
+            )}
+          </div>
+        </div>
+      </div>
+      <div class="wrap">
+        <div class="cs-hero__cover">
+          <Image
+            src={projectImage(p.cover)}
+            alt={`${p.name}: opening screen`}
+            widths={[640, 960, 1320]}
+            sizes="(min-width: 1320px) 1240px, 94vw"
+            format="webp"
+            quality={68}
+            loading="eager"
+            fetchpriority="high"
+            style={`object-position:${p.coverPos ?? 'center'}`}
+          />
+          <span class="cs-hero__blocks" aria-hidden="true">
+            <i></i>
+            <i></i>
+            <i></i>
+          </span>
+        </div>
+      </div>
+    </header>
+
+    <section class="cs-story night" aria-labelledby="brief-title">
+      <div class="wrap cs-story__grid">
+        <div>
+          <h2 id="brief-title">The brief</h2>
+          <p>{p.brief}</p>
+        </div>
+        <div>
+          <h2>What we built</h2>
+          <p>{p.built}</p>
+        </div>
+        <div>
+          <h2>Scope</h2>
+          <ul class="cs-story__scope">
+            {p.scope.map((s) => (
+              <li class="tag">{s}</li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="cs-shots" aria-labelledby="shots-title">
+      <div class="wrap">
+        <h2 id="shots-title" class="section-title">
+          Screens
+        </h2>
+
+        {(tall || phone) && (
+          <div class="cs-shots__pair">
+            {tall && (
+              <figure class="cs-shots__tall">
+                <div
+                  class="cs-shots__scroller"
+                  tabindex="0"
+                  role="region"
+                  aria-label={`${tall.alt} (scrollable)`}
+                >
+                  <Image
+                    src={projectImage(tall.src)}
+                    alt={tall.alt}
+                    width={1100}
+                    format="webp"
+                    quality={64}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                <figcaption>Full home page. Scroll inside the frame.</figcaption>
+              </figure>
+            )}
+            {phone && (
+              <figure class="cs-shots__phone">
+                <Image
+                  src={projectImage(phone.src)}
+                  alt={phone.alt}
+                  width={420}
+                  format="webp"
+                  quality={70}
+                  loading="lazy"
+                  decoding="async"
+                />
+                <figcaption>On a phone</figcaption>
+              </figure>
+            )}
+          </div>
+        )}
+
+        {p.videos && (
+          <div class="cs-shots__clips">
+            {p.videos.map((v, i) => (
+              <figure>
+                <video
+                  data-clip
+                  src={withBase(`/video/${v.src}.mp4`)}
+                  poster={posters[i].src}
+                  preload="none"
+                  muted
+                  loop
+                  playsinline
+                  controls
+                  aria-label={v.label}
+                />
+                <figcaption>{v.label}</figcaption>
+              </figure>
+            ))}
+          </div>
+        )}
+
+        {wide.length > 0 && (
+          <ul class="cs-shots__grid">
+            {wide.map((s) => (
+              <li>
+                <figure>
+                  <Image
+                    src={projectImage(s.src)}
+                    alt={s.alt}
+                    width={960}
+                    format="webp"
+                    quality={64}
+                    loading="lazy"
+                    decoding="async"
+                    style={s.pos ? `object-position:${s.pos}` : undefined}
+                  />
+                  <figcaption>{s.alt}</figcaption>
+                </figure>
+              </li>
+            ))}
+          </ul>
+        )}
+
+        {p.disclaimer && <p class="cs-shots__disclaimer">{p.disclaimer}</p>}
+      </div>
+    </section>
+
+    <nav class="cs-next plum" aria-label="More work">
+      <div class="wrap cs-next__grid">
+        <a class="cs-next__link" href={withBase(`/work/${next.slug}/`)}>
+          <span class="cs-next__label">Next project</span>
+          <span class="cs-next__name">{next.name}</span>
+          <span class="cs-next__line">{metaLine(next)}</span>
+        </a>
+        <div class="cs-next__cta">
+          <p>Want something like this for your business?</p>
+          <a class="btn btn--primary" href={`${withBase('/')}#audit`}>
+            Get your free audit
+          </a>
+        </div>
+      </div>
+    </nav>
+  </article>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<script>
+  import '../../scripts/clips.ts';
+</script>
+
+<style>
+  .cs-hero {
+    padding-block: clamp(2.5rem, 6vw, 4.5rem) clamp(3rem, 7vw, 5rem);
+    background: var(--brand-ink);
+  }
+
+  .cs-hero__crumb a {
+    font: 500 0.75rem var(--font-mono);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    text-decoration: none;
+    display: inline-block;
+    padding-block: 0.75rem;
+  }
+
+  .cs-hero__crumb a::before {
+    content: '← ';
+  }
+
+  .cs-hero__crumb a:hover {
+    color: var(--signal-text);
+  }
+
+  .cs-hero__line {
+    margin-top: var(--space-4);
+    font: 500 0.75rem/1.35 var(--font-mono);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--signal-text);
+  }
+
+  .cs-hero__title {
+    margin-top: var(--space-3);
+    font-size: clamp(2.5rem, 8vw, 6rem);
+    line-height: 0.92;
+    letter-spacing: -0.025em;
+  }
+
+  .cs-hero__intro {
+    display: grid;
+    gap: var(--space-4);
+    margin-block: var(--space-5);
+  }
+
+  .cs-hero__lede {
+    max-width: 38rem;
+    font-size: 1.25rem;
+    line-height: 1.5;
+  }
+
+  .cs-hero__facts {
+    display: grid;
+    gap: 0.75rem;
+    justify-items: start;
+    color: var(--ink-muted);
+  }
+
+  .cs-hero__disclaimer {
+    color: var(--ink-text);
+  }
+
+  .cs-hero__cover {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: var(--surface-raised);
+    border: var(--border-hairline) solid var(--line);
+  }
+
+  .cs-hero__cover :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Three Signal cells cut into the cover's corner: the mosaic, quietly. */
+  .cs-hero__blocks {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    display: grid;
+    grid-template-columns: repeat(2, clamp(1.5rem, 5vw, 4rem));
+    grid-template-rows: repeat(2, clamp(1.5rem, 5vw, 4rem));
+  }
+
+  .cs-hero__blocks i {
+    background: var(--signal);
+  }
+
+  .cs-hero__blocks i:first-child {
+    grid-area: 1 / 2;
+  }
+
+  .cs-hero__blocks i:nth-child(2) {
+    grid-area: 2 / 1;
+  }
+
+  .cs-hero__blocks i:nth-child(3) {
+    grid-area: 2 / 2;
+    background: var(--brand-ink);
+  }
+
+  .cs-story {
+    padding-block: clamp(3.5rem, 8vw, 6rem);
+  }
+
+  .cs-story__grid {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .cs-story h2 {
+    font-size: clamp(1.5rem, 2.6vw, 2rem);
+    margin-bottom: var(--space-3);
+  }
+
+  .cs-story p {
+    max-width: 34rem;
+    font-size: 1.0625rem;
+    color: var(--ink-text);
+  }
+
+  .cs-story__scope {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .cs-shots {
+    padding-block: clamp(3.5rem, 8vw, 6rem);
+    background: var(--brand-ink);
+  }
+
+  .cs-shots .section-title {
+    margin-bottom: clamp(2rem, 5vw, 3rem);
+  }
+
+  .cs-shots figure {
+    margin: 0;
+    display: grid;
+    gap: 0.6rem;
+  }
+
+  .cs-shots figcaption {
+    font: 500 0.75rem/1.35 var(--font-mono);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+
+  .cs-shots__pair {
+    display: grid;
+    gap: var(--space-4);
+    margin-bottom: var(--space-5);
+  }
+
+  .cs-shots__scroller {
+    max-height: min(80vh, 46rem);
+    overflow-y: auto;
+    border: var(--border-hairline) solid var(--line);
+    background: var(--surface-raised);
+  }
+
+  .cs-shots__scroller :global(img) {
+    width: 100%;
+    height: auto;
+  }
+
+  .cs-shots__phone {
+    max-width: 14rem;
+  }
+
+  .cs-shots__phone :global(img) {
+    width: 100%;
+    height: auto;
+    border: var(--border-hairline) solid var(--line);
+  }
+
+  .cs-shots__clips {
+    display: grid;
+    gap: var(--space-4);
+    margin-bottom: var(--space-5);
+  }
+
+  .cs-shots__clips video {
+    width: 100%;
+    aspect-ratio: 1200 / 685;
+    object-fit: cover;
+    background: var(--surface-raised);
+    border: var(--border-hairline) solid var(--line);
+  }
+
+  .cs-shots__grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .cs-shots__grid :global(img) {
+    width: 100%;
+    aspect-ratio: 1200 / 685;
+    height: auto;
+    object-fit: cover;
+    border: var(--border-hairline) solid var(--line);
+  }
+
+  .cs-shots__disclaimer {
+    margin-top: var(--space-5);
+    color: var(--ink-muted);
+  }
+
+  .cs-next {
+    padding-block: clamp(3rem, 7vw, 5rem);
+  }
+
+  .cs-next__grid {
+    display: grid;
+    gap: var(--space-5);
+    align-items: end;
+  }
+
+  .cs-next__link {
+    display: grid;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .cs-next__label,
+  .cs-next__line {
+    font: 500 0.75rem/1.35 var(--font-mono);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+
+  .cs-next__name {
+    font: 800 clamp(2rem, 5vw, 3.75rem) / 0.95 var(--font-display);
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+
+  .cs-next__link:hover .cs-next__name {
+    color: var(--signal-text);
+  }
+
+  .cs-next__cta {
+    display: grid;
+    gap: var(--space-3);
+    justify-items: start;
+  }
+
+  @media (min-width: 48rem) {
+    .cs-hero__intro {
+      grid-template-columns: 3fr 2fr;
+      align-items: start;
+    }
+
+    .cs-story__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .cs-shots__pair {
+      grid-template-columns: 1fr auto;
+      align-items: start;
+    }
+
+    .cs-shots__phone {
+      width: 16rem;
+    }
+
+    .cs-shots__clips,
+    .cs-shots__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .cs-next__grid {
+      grid-template-columns: 1fr auto;
+    }
+  }
+</style>
