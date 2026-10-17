@@ -31,6 +31,12 @@ Removed: the stat tiles (Intro), the tools marquee, the hero collage and its lon
 the services preview, the eyebrow labels and the one-highlighted-word headlines (`.eyebrow`, `.hl`),
 GitHub and LinkedIn links in the footer (personal profiles), "Hi Gurman" in mailto bodies.
 
+## Navbar logo glitch
+
+Hovering or focusing the header logo glitches it every 2 s: two extra copies of the real artwork (the
+Paper logo, recoloured Pulse and Paper by CSS) show as clipped bands that jump sideways while the logo
+shakes, in hard steps. Transform and opacity only; off under reduced motion. The logo is never retyped.
+
 ## Case-study pages
 
 `src/pages/work/[slug].astro` from `src/data/projects.ts` (the single source for every project label),

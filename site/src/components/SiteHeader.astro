@@ -22,7 +22,12 @@ const auditHref = `${prefix}#audit`;
 <header class:list={['site-header on-dark', { 'site-header--solid': !isHome }]}>
   <div class="wrap site-header__inner">
     <a href={withBase('/')} class="site-header__home" aria-label={`${site.name} home`}>
-      <Logo label="" />
+      <!-- Two extra copies of the real artwork are the glitch bands (the logo is never retyped). -->
+      <span class="site-header__logo">
+        <Logo label="" />
+        <Logo variant="paper" label="" class="site-header__band site-header__band--a" />
+        <Logo variant="paper" label="" class="site-header__band site-header__band--b" />
+      </span>
     </a>
 
     <nav class="site-header__nav" aria-label="Primary">
@@ -109,6 +114,111 @@ const auditHref = `${prefix}#audit`;
 
   .site-header__home :global(.logo) {
     width: 7rem;
+  }
+
+  /* Hover or focus glitches the logo: a Pulse band and a Paper band of the same artwork jump
+     sideways while the logo itself shakes, in hard steps. Clips are fixed; only transform and
+     opacity animate. It repeats every 2 s while the pointer stays on it. */
+  .site-header__logo {
+    position: relative;
+    display: block;
+    line-height: 0;
+  }
+
+  .site-header__logo :global(.site-header__band) {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .site-header__logo :global(.site-header__band--a) {
+    clip-path: inset(12% 0 55% 0);
+  }
+
+  .site-header__logo :global(.site-header__band--a path) {
+    fill: var(--pulse);
+  }
+
+  .site-header__logo :global(.site-header__band--b) {
+    clip-path: inset(58% 0 14% 0);
+  }
+
+  .site-header__logo :global(.site-header__band--b path) {
+    fill: var(--brand-paper);
+  }
+
+  .site-header__home:hover .site-header__logo > :global(.logo:first-child),
+  .site-header__home:focus-visible .site-header__logo > :global(.logo:first-child) {
+    animation: logo-shake 2s steps(1, end) infinite;
+  }
+
+  .site-header__home:hover :global(.site-header__band--a),
+  .site-header__home:focus-visible :global(.site-header__band--a) {
+    animation: logo-band-a 2s steps(1, end) infinite;
+  }
+
+  .site-header__home:hover :global(.site-header__band--b),
+  .site-header__home:focus-visible :global(.site-header__band--b) {
+    animation: logo-band-b 2s steps(1, end) infinite;
+  }
+
+  @keyframes logo-shake {
+    0% {
+      transform: translateX(2px);
+    }
+    5% {
+      transform: translateX(-2px);
+    }
+    10% {
+      transform: translateX(1px);
+    }
+    15%,
+    100% {
+      transform: none;
+    }
+  }
+
+  @keyframes logo-band-a {
+    0% {
+      opacity: 1;
+      transform: translateX(-6px);
+    }
+    5% {
+      transform: translateX(5px);
+    }
+    10% {
+      transform: translateX(-3px);
+    }
+    15%,
+    100% {
+      opacity: 0;
+      transform: none;
+    }
+  }
+
+  @keyframes logo-band-b {
+    0% {
+      opacity: 1;
+      transform: translateX(5px);
+    }
+    6% {
+      transform: translateX(-7px);
+    }
+    11% {
+      transform: translateX(3px);
+    }
+    15%,
+    100% {
+      opacity: 0;
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .site-header__home :global(.logo) {
+      animation: none !important;
+    }
   }
 
   .site-header__nav {
