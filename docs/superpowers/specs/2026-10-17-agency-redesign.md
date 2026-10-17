@@ -57,6 +57,12 @@ Hovering or focusing the header logo glitches it every 2 s: two extra copies of 
 Paper logo, recoloured Pulse and Paper by CSS) show as clipped bands that jump sideways while the logo
 shakes, in hard steps. Transform and opacity only; off under reduced motion. The logo is never retyped.
 
+## Footer wordmark glitch
+
+The full-width footer wordmark glitches by itself: four copies of the real artwork, recoloured Pulse,
+Scan, Flare and Volt by CSS and clipped to bands, jump sideways on 2.3 to 3.7 s clocks while the
+logo shakes slightly. Off under reduced motion.
+
 ## Case-study pages
 
 `src/pages/work/[slug].astro` from `src/data/projects.ts` (the single source for every project label),

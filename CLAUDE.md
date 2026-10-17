@@ -256,7 +256,7 @@ Plum `#1B0A2E` are new section grounds (`.night`, `.plum` in `tokens.css`). Thin
 4. **Video posters download with the page** even with `preload="none"`: ship them through `getImage()`
    as WebP. As JPEGs they cost 250 kB and dropped a case page to 91.
 5. **Glitches run everywhere in all the neons** (Gurman's call, 2026-10-17): hero mosaic, `ModuleBand.astro`
-   strips between sections, work tiles, What we do photos, navbar logo. Opacity/transform in hard
+   strips between sections, work tiles, What we do squares, navbar logo (on hover), footer wordmark. Opacity/transform in hard
    steps; reduced motion stops all of them. Module bands use kit patterns only, never the brand
    posters' sample wording (false offices, scores, offers).
 6. `npm run screenshots` now covers home, /work/ and two case pages, and forces reveals on first (the old

@@ -6,6 +6,9 @@ import Logo from './Logo.astro';
 const currentYear = new Date().getFullYear();
 const isHome = isHomePath(Astro.url.pathname);
 const prefix = isHome ? '' : withBase('/');
+
+// Glitch bands over the footer wordmark, one per colour.
+const bands = ['pulse', 'scan', 'flare', 'volt'];
 ---
 
 <footer class="site-footer on-dark">
@@ -67,8 +70,19 @@ const prefix = isHome ? '' : withBase('/');
       </div>
     </div>
 
+    <!-- The sign-off glitches by itself: copies of the real artwork, recoloured by CSS and clipped
+         to bands, jump sideways on their own clocks. The logo is never retyped. -->
     <div class="site-footer__wordmark-box">
-      <Logo label="" class="site-footer__logo" />
+      <div class="site-footer__glitch">
+        <Logo label="" class="site-footer__logo" />
+        {bands.map((band) => (
+          <Logo
+            variant="paper"
+            label=""
+            class={`site-footer__logo site-footer__band site-footer__band--${band}`}
+          />
+        ))}
+      </div>
     </div>
 
     <div class="site-footer__base">
@@ -146,6 +160,102 @@ const prefix = isHome ? '' : withBase('/');
 
   .site-footer__wordmark-box :global(.site-footer__logo) {
     width: 100%;
+  }
+
+  .site-footer__glitch {
+    position: relative;
+    line-height: 0;
+  }
+
+  .site-footer__glitch > :global(.site-footer__logo:first-child) {
+    animation: footer-shake 3.2s steps(1, end) infinite 1s;
+  }
+
+  .site-footer__glitch :global(.site-footer__band) {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .site-footer__glitch :global(.site-footer__band--pulse) {
+    clip-path: inset(4% 0 68% 0);
+    animation: footer-band 2.3s steps(1, end) infinite 0.6s;
+  }
+
+  .site-footer__glitch :global(.site-footer__band--pulse path) {
+    fill: var(--pulse);
+  }
+
+  .site-footer__glitch :global(.site-footer__band--scan) {
+    clip-path: inset(34% 0 44% 0);
+    animation: footer-band 3.1s steps(1, end) infinite 1.4s;
+  }
+
+  .site-footer__glitch :global(.site-footer__band--scan path) {
+    fill: var(--scan);
+  }
+
+  .site-footer__glitch :global(.site-footer__band--flare) {
+    clip-path: inset(58% 0 20% 0);
+    animation: footer-band 3.7s steps(1, end) infinite 2.1s;
+  }
+
+  .site-footer__glitch :global(.site-footer__band--flare path) {
+    fill: var(--flare);
+  }
+
+  .site-footer__glitch :global(.site-footer__band--volt) {
+    clip-path: inset(80% 0 0 0);
+    animation: footer-band 2.9s steps(1, end) infinite 0.2s;
+  }
+
+  .site-footer__glitch :global(.site-footer__band--volt path) {
+    fill: var(--volt);
+  }
+
+  @keyframes footer-band {
+    0%,
+    100% {
+      opacity: 0;
+      transform: none;
+    }
+    78% {
+      opacity: 1;
+      transform: translateX(-3%);
+    }
+    82% {
+      transform: translateX(2.5%);
+    }
+    86% {
+      transform: translateX(-1%);
+    }
+    90% {
+      opacity: 0;
+      transform: none;
+    }
+  }
+
+  @keyframes footer-shake {
+    0%,
+    100% {
+      transform: none;
+    }
+    84% {
+      transform: translateX(0.6%);
+    }
+    87% {
+      transform: translateX(-0.6%);
+    }
+    90% {
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .site-footer__glitch :global(.site-footer__logo) {
+      animation: none !important;
+    }
   }
 
   .site-footer__base {
