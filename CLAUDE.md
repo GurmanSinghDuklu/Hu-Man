@@ -239,6 +239,24 @@ Ridge field and print, hex, Volt spark). Motion snaps: `[data-cells]` grids cut 
    needs Gurman's sign-off before `docs/03` and the components change.
 Lighthouse 100/100/100/100, axe 0 violations on all three pages.
 
+## Agency redesign (2026-10-17, branch `agency-redesign`)
+Restructured from a one-person CV into an agency site (spec: `docs/superpowers/specs/2026-10-17-agency-redesign.md`).
+"We" voice from the approved `docs/brand/copy-draft.md`; nothing personal on the pages (no About, no
+credentials, no GitHub/LinkedIn). Order: hero mosaic, What we do (Night), Selected work, Concept lab
+(Paper), chat demo (Plum), How it works (Night), Pricing, FAQ (Paper), audit (Plum). Night `#0A1033` and
+Plum `#1B0A2E` are new section grounds (`.night`, `.plum` in `tokens.css`). Things worth knowing:
+1. **Every project label comes from `src/data/projects.ts`**: the home grid (`WorkGrid.astro`), `/work/`
+   and the case pages `/work/<slug>/`. Add a project there, never in a component.
+2. **The hero mosaic shows live projects only**: its frames carry no label, so concept and unofficial
+   work stays in the labelled grid.
+3. **Transparent `Module` fills can't cut holes**: nested shapes (rings, hex) just paint over each other.
+   Shapes over photos in What we do are single-layer SVG paths in `Services.astro` instead.
+4. **Video posters download with the page** even with `preload="none"`: ship them through `getImage()`
+   as WebP. As JPEGs they cost 250 kB and dropped a case page to 91.
+5. `npm run screenshots` now covers home, /work/ and two case pages, and forces reveals on first (the old
+   full-page shots were mostly blank). `npm run lighthouse -- work/tesla/` tests one page.
+Lighthouse home 99/100/100/100, case pages 98-100 performance. axe 0 violations on all 9 pages.
+
 ## GitHub and preview deploy
 Repo: github.com/GurmanSinghDuklu/Hu-Man (public; default branch `hu-man-rebrand`). Every push to
 `hu-man-rebrand` deploys a preview to https://gurmansinghduklu.github.io/Hu-Man/ via

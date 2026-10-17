@@ -57,6 +57,12 @@ Free presence audit (contact)  ->  footer with areas served
 Mobile: single column, slider keeps 16:10 and scales, tabs scroll horizontally, pricing table becomes stacked rows with each tier's price first.
 
 ## Page sections and copy (British English, sentence case)
+
+> **Since 2026-10-17 the page structure and voice follow
+> `docs/superpowers/specs/2026-10-17-agency-redesign.md`** (agency structure, "we" voice from
+> `docs/brand/copy-draft.md`, case-study pages, no About or credentials section). Prices, FAQ answers,
+> concept labels and the chat script below are still the source; where a section or heading below
+> disagrees with that spec, the spec wins.
 Use this copy unless Gurman changes it. Do not invent extra claims.
 
 **Meta**
