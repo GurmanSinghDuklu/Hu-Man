@@ -18,6 +18,8 @@ Four neons on near-black. Ink and Paper carry the layout; the neons are the ligh
 | Volt, neon yellow | `volt` | #E7FF00 | sparks only, under 5% |
 | Scan, teal | `scan` | #14DCB2 | data only, under 5% |
 | Concrete | `concrete` | #8E908A | photo mid-tones, the odd neutral block |
+| Night, dark blue | `night` | #0A1033 | website section grounds, alternating with Ink (added 2026-10-17) |
+| Plum, dark purple | `plum` | #1B0A2E | website section grounds, alternating with Ink (added 2026-10-17) |
 
 The logo's own gradient runs `signal-hi` #B2FF58 to `signal-lo` #6DFF5A, top to bottom.
 
@@ -25,7 +27,8 @@ The logo's own gradient runs `signal-hi` #B2FF58 to `signal-lo` #6DFF5A, top to 
 
 **Combining them**
 - Ink and Paper carry every layout. Signal appears in every layout. Add up to two more neons per layout, one block each.
-- **Two neons never touch.** Ink or Paper always sits between them. Side by side they blur into each other (green and yellow are only 1.2:1; purple and orange 1.2:1).
+- **Night and Plum** (website only, added 2026-10-17 at Gurman's request) are dark grounds that alternate with Ink so a long page isn't one black slab. Treat them like Ink: Paper text, Signal in every band, neons allowed on them. Every pair checked for AA.
+- **Two neons never touch.** Ink or Paper always sits between them. One exception (2026-10-17): the website's hover glitch on project tiles flashes a Pulse band and a Signal band over the same image for a third of a second. Side by side they blur into each other (green and yellow are only 1.2:1; purple and orange 1.2:1).
 - Neons live on Ink. On Paper they lose their glow (green and yellow drop to about 1:1), so on Paper use a neon only as a filled block with Ink text on it.
 
 **Making them pop on every screen**

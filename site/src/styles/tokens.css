@@ -22,6 +22,8 @@
   --volt: #e7ff00;
   --scan: #14dcb2;
   --concrete: #8e908a;
+  --night: #0a1033;
+  --plum: #1b0a2e;
   --on-signal: var(--brand-ink);
   --on-pulse: var(--brand-ink);
   --on-flare: var(--brand-ink);
@@ -142,6 +144,41 @@
   background: var(--surface);
   color: var(--ink-text);
   color-scheme: light;
+}
+
+/* Night and Plum bands (added 2026-10-17 for the agency redesign): dark blue and dark purple
+   grounds that alternate with Ink, so the page isn't one black slab. Same rules as Ink: Paper
+   text, Signal in every band, neon text allowed. Checked with scripts/check-contrast.mjs. */
+.night,
+.plum {
+  --line: #263066;
+  --line-strong: #6a73a6;
+  --ink-text: #f2f2ec;
+  --ink-muted: #a9b0d6;
+  --color-bg: var(--surface);
+  --color-text: var(--ink-text);
+  --color-text-muted: var(--ink-muted);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --on-dark-muted: var(--ink-muted);
+  --on-dark-line: var(--line);
+  background: var(--surface);
+  color: var(--ink-text);
+}
+
+.night {
+  --surface: #0a1033;
+  --surface-raised: #121a45;
+  --graphite-2: var(--surface-raised);
+}
+
+.plum {
+  --surface: #1b0a2e;
+  --surface-raised: #26113e;
+  --line: #3a2356;
+  --line-strong: #80709a;
+  --ink-muted: #bbaacf;
+  --graphite-2: var(--surface-raised);
 }
 
 /* Wide-gamut screens get Display P3 neons, beyond what sRGB can show (from the brand pack).

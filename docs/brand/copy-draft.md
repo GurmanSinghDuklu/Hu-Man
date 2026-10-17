@@ -1,10 +1,10 @@
 # Brand-voice copy draft (for sign-off)
 
-Status: draft, 2026-10-13. Nothing here is on the site yet. Once Gurman approves (or edits) it,
+ttatus: draft, 2026-10-13. Nothing here is on the site yet. Once Gurman approves (or edits) it,
 `docs/03-site-spec.md` is updated first, then the components and `src/data/content.ts`.
 
 Rules applied (docs/brand/1-brand.md plus the project's hard rules): "we" and "you"; headlines 3 to
-8 words (set in capitals by CSS, written in sentence case); the slash once per piece at most; no hype,
+8 words (set in capitals by CtS, written in sentence case); the slash once per piece at most; no hype,
 no exclamation marks, no guarantees; prices, credentials and facts unchanged. The chat demo replies stay
 as they are, because they speak for the fictional barbershop, not for Hu/man.
 
