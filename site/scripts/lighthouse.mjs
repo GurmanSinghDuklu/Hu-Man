@@ -6,6 +6,8 @@ import { startServer } from './serve.mjs';
 
 const PORT = 4331;
 const SITE_URL = `http://localhost:${PORT}/`;
+// Optional page path, e.g. `npm run lighthouse -- work/tesla/`. Defaults to the home page.
+const PAGE = process.argv[2] ?? '';
 const distDir = fileURLToPath(new URL('../dist/', import.meta.url));
 const reportsDir = new URL('../reports/lighthouse/', import.meta.url);
 
@@ -18,7 +20,7 @@ async function run() {
     const chrome = await chromeLauncher.launch({ chromeFlags: ['--headless=new'] });
     try {
       const result = await lighthouse(
-        SITE_URL,
+        SITE_URL + PAGE,
         { port: chrome.port, output: ['json', 'html'], logLevel: 'error' },
         undefined,
       );

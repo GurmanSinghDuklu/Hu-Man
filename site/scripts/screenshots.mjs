@@ -9,6 +9,13 @@ const distDir = fileURLToPath(new URL('../dist/', import.meta.url));
 const outDir = fileURLToPath(new URL('../reports/screenshots/', import.meta.url));
 
 const widths = [360, 768, 1280];
+// Home, the work index and two case studies (one live, one unofficial concept).
+const pages = [
+  ['home', ''],
+  ['work', 'work/'],
+  ['work-calculator', 'work/calculator-app/'],
+  ['work-tesla', 'work/tesla/'],
+];
 // The Hu/man design is a single dark art direction, so one colour scheme.
 const themes = ['dark'];
 
@@ -26,10 +33,25 @@ async function run() {
             colorScheme: theme,
           });
           const page = await context.newPage();
-          await page.goto(SITE_URL, { waitUntil: 'networkidle' });
-          const path = `${outDir}home-${theme}-${width}.png`;
-          await page.screenshot({ path, fullPage: true });
-          console.log(`saved ${path}`);
+          for (const [name, path] of pages) {
+            await page.goto(SITE_URL + path, { waitUntil: 'networkidle' });
+            // Walk down the page so lazy images load, then force every scroll reveal on:
+            // a full-page capture never scrolls, so reveals would otherwise stay hidden.
+            await page.evaluate(async () => {
+              for (let y = 0; y < document.body.scrollHeight; y += 600) {
+                window.scrollTo(0, y);
+                await new Promise((r) => setTimeout(r, 60));
+              }
+              window.scrollTo(0, 0);
+              document
+                .querySelectorAll('[data-reveal], [data-cells]')
+                .forEach((el) => el.classList.add('is-in'));
+            });
+            await page.waitForTimeout(1500);
+            const file = `${outDir}${name}-${theme}-${width}.png`;
+            await page.screenshot({ path: file, fullPage: true });
+            console.log(`saved ${file}`);
+          }
           await context.close();
         }
       }
