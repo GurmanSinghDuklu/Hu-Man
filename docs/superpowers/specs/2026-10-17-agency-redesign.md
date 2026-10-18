@@ -37,7 +37,8 @@ Gurman: remove the Essence frames beside the fingerprint; the picture should kee
 different colours, not just green, across the site; use the brand pack's module kit all over the site
 (patterns from the Hu/man design-system artifact), with the real fingerprint scan, not the drawn ones.
 
-- Hero mosaic: Essence frames replaced by kit modules (checker, hex, stripes, burst, half disc,
+- Hero mosaic: Essence frames replaced by kit modules (the Calculator frames went too on 2026-10-18,
+  at Gurman's request: no screenshots in the mosaic) (checker, hex, stripes, burst, half disc,
   halftone). Every Signal block flashes Pulse, Flare, Volt, Scan or Paper on its own 2 to 5 s clock;
   every fourth block steps through all the colours continuously; Pulse, Scan and Flare copies of the
   print jump sideways (an RGB split in brand colours); Volt and Paper scan bars flash across.

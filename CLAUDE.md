@@ -248,8 +248,8 @@ credentials, no GitHub/LinkedIn). Order: hero mosaic, What we do (Night), Select
 Plum `#1B0A2E` are new section grounds (`.night`, `.plum` in `tokens.css`). Things worth knowing:
 1. **Every project label comes from `src/data/projects.ts`**: the home grid (`WorkGrid.astro`), `/work/`
    and the case pages `/work/<slug>/`. Add a project there, never in a component.
-2. **The hero mosaic shows live projects only**: its frames carry no label, so concept and unofficial
-   work stays in the labelled grid.
+2. **The hero mosaic has no project screenshots** (Gurman removed them, 2026-10-18): fingerprint, colour
+   blocks and kit modules only. Projects live in the labelled work grid.
 3. **Transparent `Module` fills can't cut holes**: nested shapes (rings, hex) just paint over each other,
    so don't lay modules over photos. What we do marks each area with one column-wide square that glitches
    through five kit images (photos cut by shapes, then 3 x 2 posters, were tried and rejected).

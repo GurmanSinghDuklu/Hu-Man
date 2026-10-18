@@ -1,14 +1,12 @@
 ---
-import { Image } from 'astro:assets';
 import fingerprint from '../assets/brand/fingerprint.webp?url';
-import { projectImage } from '../data/projects';
 import Module, { type ModuleKind, type ModuleColour } from './Module.astro';
 
 // The hero mosaic (2026-10-17 agency redesign, refs in reference/agency-redesign/): the brand's
 // fingerprint scan in Paper, cut into square cells. Signal blocks sit over it like the pixel
-// posters, a few cells drop out to Ink, kit modules fill the edges and two live-project frames
-// sit in the corners. Only live projects appear here: the frames carry no label, so concept and
-// unofficial work stays in the labelled work grid. Decorative only (aria-hidden).
+// posters, a few cells drop out to Ink and kit modules fill the edges. No project screenshots:
+// Gurman removed them (2026-10-18); the work grid below shows the projects. Decorative only
+// (aria-hidden).
 //
 // It never quite settles: every block flashes another brand colour now and then, and coloured
 // copies of the print jump sideways (an RGB split in the brand's own colours).
@@ -16,14 +14,11 @@ import Module, { type ModuleKind, type ModuleColour } from './Module.astro';
 // Grid: 9 columns by 8 rows of square cells. Each cell is [column, row, width, height].
 type Cell = {
   at: [number, number, number?, number?];
-  kind: 'signal' | 'ink' | 'paper' | 'frame' | 'module';
-  src?: string;
+  kind: 'signal' | 'ink' | 'paper' | 'module';
   mod?: [ModuleKind, ModuleColour, ModuleColour];
 };
 
 const cells: Cell[] = [
-  { at: [8, 1, 2, 2], kind: 'frame', src: 'work/calculator-desktop' },
-  { at: [1, 2, 1, 1], kind: 'frame', src: 'work/calculator-compound' },
   { at: [1, 6], kind: 'module', mod: ['checker', 'ink', 'paper'] },
   { at: [2, 6], kind: 'module', mod: ['hex', 'pulse', 'ink'] },
   { at: [1, 7], kind: 'module', mod: ['stripes', 'flare', 'ink'] },
@@ -109,17 +104,6 @@ const flash = (c: Cell, i: number) =>
           ]}
           style={`grid-area:${area(c.at)};--i:${order(c)}${flash(c, i)}`}
         >
-          {c.src && (
-            <Image
-              src={projectImage(c.src)}
-              alt=""
-              width={320}
-              format="webp"
-              quality={60}
-              loading="lazy"
-              decoding="async"
-            />
-          )}
           {c.mod && <Module kind={c.mod[0]} fg={c.mod[1]} bg={c.mod[2]} />}
         </span>
       ))}
@@ -224,20 +208,6 @@ const flash = (c: Cell, i: number) =>
 
   .hero__cell--paper {
     background: var(--brand-paper);
-  }
-
-  .hero__cell--frame {
-    background: var(--surface-raised);
-    box-shadow: inset 0 0 0 1px var(--brand-ink);
-  }
-
-  /* Frames stay black and white: colour enters through the blocks (graphic language). */
-  .hero__cell :global(img) {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: left top;
-    filter: grayscale(1) contrast(1.1);
   }
 
   .hero__cell--module :global(.mod) {
