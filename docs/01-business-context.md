@@ -45,12 +45,12 @@ Competition: specialist vendors already sell AI call answering to some sectors (
 - Testimonials: none yet. Do not invent any.
 
 ## Public contact details (from his CV; confirm before publishing)
-- Email: gurmanduklu@gmail.com
+- Email: humansoftwareagency@gmail.com (business address since 2026-10-19; was gurmanduklu@gmail.com)
 - Phone: +44 7988 450280
 - GitHub: github.com/GurmanSinghDuklu
 - LinkedIn: linkedin.com/in/gurman-singh-duklu
 - Location: Bradford, West Yorkshire (service-area business; do not publish a street address)
-Consider a dedicated business email and number before launch, because a public page invites spam.
+Consider a dedicated business number before launch too, because a public page invites spam.
 
 ## Parked admin (do not nag; raise before the first paid work)
 Sole-trader registration with HMRC and related steps are parked until nearer launch. Details are in `05-compliance-and-claims.md`.

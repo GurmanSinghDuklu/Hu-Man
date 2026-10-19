@@ -169,7 +169,7 @@ Slider tabs use barber, electrician and dental. The gallery uses all six. Verify
   "@type": "ProfessionalService",
   "name": "Duklu Digital",
   "description": "Website redesign, online booking and payments, AI enquiry assistants and local SEO for small businesses in Bradford and West Yorkshire.",
-  "email": "gurmanduklu@gmail.com",
+  "email": "humansoftwareagency@gmail.com",
   "telephone": "+447988450280",
   "address": { "@type": "PostalAddress", "addressLocality": "Bradford", "addressRegion": "West Yorkshire", "addressCountry": "GB" },
   "areaServed": [
