@@ -1,0 +1,290 @@
+---
+import { site } from '../../config/site';
+
+const pains = [
+  { n: '01', text: 'Ask ChatGPT for a plumber in Leeds. Are you in the answer?', style: 'lilac' },
+  { n: '02', text: 'Paid for a site that looks fine but never gets found?', style: 'dusk' },
+  { n: '03', text: 'Need a tiny change and waiting days for someone to reply?', style: 'rose' },
+];
+
+// An example of what the free check reports. Labelled "Sample result · Example only".
+const sample = [
+  { q: 'Mentioned by ChatGPT?', a: 'Not found', tone: 'rose' },
+  { q: 'Google AI Overview?', a: 'Not found', tone: 'rose' },
+  { q: 'Mobile speed', a: 'Slow', tone: 'peach' },
+  { q: 'Business facts readable?', a: 'Partly', tone: 'teal' },
+];
+
+// No form backend: the check form opens an email with the address filled in (scripts/check-site.ts).
+const checkMailto = `mailto:${site.contact.email}?subject=${encodeURIComponent('Free AI check')}`;
+---
+
+<section class="band band--ink honest" aria-labelledby="honest-title">
+  <div class="grid grid--ink honest__grid">
+    <div class="sheet">
+      <p class="label" data-reveal>
+        02 / Be honest
+      </p>
+      <h2 id="honest-title" class="display honest__title" data-reveal>
+        Let down by AI?
+        <br />
+        Stuck on a website builder?
+      </h2>
+
+      <ul class="honest__cards">
+        {pains.map((p, i) => (
+          <li
+            class:list={['pain', `pain--${p.style}`]}
+            data-reveal
+            style={`--reveal-delay:${i * 0.08}s`}
+          >
+            <span class="pain__n">{p.n}</span>
+            <p class="pain__text">{p.text}</p>
+          </li>
+        ))}
+      </ul>
+
+      <div class="check" id="check" data-reveal>
+        <div class="check__main">
+          <p class="label">Free · 48 hours · A human reviews it</p>
+          <h3 class="check__title">
+            Are you being overlooked by AI
+            <br />
+            Overviews? Check your site.
+          </h3>
+          <form
+            class="check__form"
+            action={checkMailto}
+            method="post"
+            enctype="text/plain"
+            data-check-form
+          >
+            <label class="visually-hidden" for="check-site">
+              Your website address
+            </label>
+            <input
+              id="check-site"
+              name="website"
+              type="text"
+              inputmode="url"
+              autocomplete="url"
+              placeholder="yourbusiness.co.uk"
+              required
+            />
+            <button type="submit">Check my site</button>
+          </form>
+          <p class="check__note">
+            Opens an email to us with your address in it. We reply within 48 hours.
+          </p>
+        </div>
+        <div class="check__sample">
+          <ul>
+            {sample.map((row) => (
+              <li>
+                <span>{row.q}</span>
+                <span class:list={['check__tag', `check__tag--${row.tone}`]}>{row.a}</span>
+              </li>
+            ))}
+          </ul>
+          <p class="label check__sample-note">Sample result · Example only</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import '../../scripts/check-site.ts';
+</script>
+
+<style>
+  .honest__grid {
+    padding-block: clamp(3.5rem, calc(var(--u) * 1.1), 6rem) clamp(3rem, calc(var(--u) * 0.9), 5rem);
+  }
+
+  .honest .label {
+    color: var(--paper);
+  }
+
+  .honest__title {
+    margin-top: 0.4rem;
+    color: var(--paper);
+  }
+
+  .honest__cards {
+    display: grid;
+    gap: var(--space-4);
+    margin-top: clamp(2.5rem, calc(var(--u) * 0.9), 5rem);
+  }
+
+  .pain {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    min-height: 15rem;
+    padding: clamp(1.25rem, calc(var(--u) * 0.33), 2rem);
+    color: var(--ink);
+  }
+
+  .pain--lilac {
+    background: var(--grad-lilac);
+    border-top-left-radius: calc(var(--u) * 1.35);
+  }
+
+  .pain--dusk {
+    background: var(--grad-dusk);
+    border-radius: calc(var(--u) * 1.4) calc(var(--u) * 1.4) 0 0;
+  }
+
+  .pain--rose {
+    background: var(--grad-rose);
+    border-top-right-radius: calc(var(--u) * 1.35);
+  }
+
+  .pain__n {
+    font: 400 0.75rem var(--font-mono);
+    letter-spacing: 0.14em;
+  }
+
+  .pain__text {
+    font: 800 clamp(1.3rem, calc(var(--u) * 0.312), 1.9rem) / 0.98 var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: -0.005em;
+  }
+
+  /* ---------- the free check card ---------- */
+  .check {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-5);
+    margin-top: clamp(3rem, calc(var(--u) * 1), 6rem);
+    padding: clamp(1.5rem, calc(var(--u) * 0.66), 3.5rem);
+    border-radius: calc(var(--u) * 0.36);
+    background: var(--ink-2);
+    color: var(--paper);
+  }
+
+  .check__main {
+    display: grid;
+    gap: 0.75rem;
+    align-content: start;
+  }
+
+  .check__title {
+    font-size: clamp(1.6rem, calc(var(--u) * 0.41), 2.6rem);
+    line-height: 0.92;
+  }
+
+  .check__form {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: clamp(0.75rem, calc(var(--u) * 0.25), 1.5rem);
+    padding: 0.4rem 0.4rem 0.4rem 1.5rem;
+    border-radius: 999px;
+    background: var(--paper);
+  }
+
+  .check__form input {
+    flex: 1;
+    min-width: 0;
+    min-height: 44px;
+    border: 0;
+    background: transparent;
+    color: var(--ink);
+    font: 400 clamp(1rem, calc(var(--u) * 0.2), 1.2rem) var(--font-text);
+  }
+
+  .check__form input::placeholder {
+    color: #6c6e69;
+  }
+
+  .check__form input:focus {
+    outline: none;
+  }
+
+  .check__form:focus-within {
+    outline: 2px solid var(--lilac);
+    outline-offset: 3px;
+  }
+
+  .check__form button {
+    flex: none;
+    min-height: 48px;
+    padding: 0 clamp(0.9rem, calc(var(--u) * 0.3), 1.75rem);
+    border: 0;
+    border-radius: 999px;
+    background: var(--grad-lilac);
+    color: var(--ink);
+    font: 500 0.8125rem var(--font-mono);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  .check__note {
+    font-size: 0.8125rem;
+    color: var(--muted-on-ink);
+  }
+
+  .check__sample ul li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding-block: 0.75rem;
+    border-bottom: 1px solid #2a2c2f;
+  }
+
+  .check__tag {
+    padding: 0.3em 0.8em;
+    border-radius: 999px;
+    color: var(--ink);
+    font: 400 0.6875rem var(--font-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .check__tag--rose {
+    background: linear-gradient(90deg, #e85e8f, #d8a7eb);
+  }
+
+  .check__tag--peach {
+    background: var(--peach);
+  }
+
+  .check__tag--teal {
+    background: var(--teal);
+  }
+
+  .check__sample-note {
+    margin-top: 1rem;
+    font-size: 0.6875rem;
+    color: var(--muted-on-ink) !important;
+  }
+
+  @media (min-width: 48rem) {
+    .honest__cards {
+      grid-template-columns: repeat(3, 1fr);
+      gap: calc(var(--u) * 0.33);
+    }
+
+    .pain {
+      min-height: calc(var(--u) * 3.33);
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .check {
+      grid-template-columns: minmax(0, 1.9fr) minmax(0, 1fr);
+      gap: calc(var(--u) * 0.75);
+    }
+
+    .check__sample {
+      padding-top: calc(var(--u) * 0.05);
+    }
+  }
+</style>

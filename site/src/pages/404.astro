@@ -20,11 +20,11 @@ import { withBase } from '../config/paths';
       get in touch if you followed a broken link.
     </p>
     <div class="not-found__actions">
-      <a href={withBase('/')} class="btn btn--dark">
+      <a href={withBase('/')} class="btn">
         Back to the homepage
       </a>
-      <a href={withBase('/#audit')} class="btn btn--ghost">
-        Get your free presence audit
+      <a href={withBase('/#check')} class="btn btn--outline">
+        Check my site free
       </a>
     </div>
   </section>
@@ -39,7 +39,7 @@ import { withBase } from '../config/paths';
   }
 
   .not-found h1 {
-    font-size: clamp(3rem, 9vw, 6.5rem);
+    font-size: clamp(3rem, 9vw, 6rem);
     margin-bottom: var(--space-4);
   }
 

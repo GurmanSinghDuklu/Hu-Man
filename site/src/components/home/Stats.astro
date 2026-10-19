@@ -1,0 +1,84 @@
+---
+import { fromPrice } from '../../data/pricing';
+
+// The facts strip under the hero. Each one is something we do, not a result we claim.
+const stats = [
+  { big: `From ${fromPrice}`, small: 'Websites' },
+  { big: '1 person', small: 'Start to finish' },
+  { big: '48H', small: 'Free AI check' },
+  { big: 'Your own', small: 'Edit dashboard' },
+  { big: 'You own it', small: 'Code + domain' },
+  { big: 'Agent-ready', small: 'AI-readable sites' },
+];
+---
+
+<section class="band band--paper-2 stats" aria-label="At a glance">
+  <ul class="sheet stats__list">
+    {stats.map((s) => (
+      <li>
+        <span class="stats__big">{s.big}</span>
+        <span class="stats__small">{s.small}</span>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .stats {
+    padding-block: 1.5rem;
+  }
+
+  .stats__list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem 1rem;
+  }
+
+  .stats li {
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .stats__big {
+    font: 800 1.35rem/1 var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+  }
+
+  .stats__small {
+    font: 400 0.6875rem/1.2 var(--font-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  @media (min-width: 40rem) {
+    .stats__list {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .stats {
+      padding-block: 0;
+    }
+
+    .stats__list {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: calc(var(--u) * 1.34);
+    }
+
+    .stats li {
+      gap: calc(var(--u) * 0.06);
+    }
+
+    .stats__big {
+      font-size: calc(var(--u) * 0.322);
+    }
+
+    .stats__small {
+      font-size: calc(var(--u) * 0.105);
+    }
+  }
+</style>

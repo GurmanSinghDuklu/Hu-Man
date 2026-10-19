@@ -1,0 +1,109 @@
+---
+/** "Talk to a human": the free-audit banner that closes every page (id="audit"). */
+import { site } from '../config/site';
+import Sparkle from './Sparkle.astro';
+
+const auditMailto = (() => {
+  const subject = encodeURIComponent('Free presence audit');
+  const body = encodeURIComponent('Hi,\n\nBusiness name:\nWebsite:\nMain service:\n\n');
+  return `mailto:${site.contact.email}?subject=${subject}&body=${body}`;
+})();
+---
+
+<section class="band talk-band" id="audit" aria-labelledby="audit-title">
+  <div class="sheet">
+    <div class="talk" data-reveal>
+      <span class="talk__orb" aria-hidden="true">
+        <Sparkle class="talk__star" color="var(--ink)" />
+      </span>
+      <div class="talk__copy">
+        <p class="label">Free audit · No obligation</p>
+        <h2 id="audit-title" class="talk__title">
+          Talk to a human
+        </h2>
+        <p class="talk__text">
+          Send your web address or just say hello. You get a reply from a real person, not a bot.
+        </p>
+        <div class="talk__actions">
+          <a class="pill-btn" href={auditMailto}>
+            Email me your website
+          </a>
+          <a class="pill-btn pill-btn--outline" href={site.contact.whatsapp} rel="noopener">
+            WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .talk-band {
+    padding-block: clamp(3rem, var(--u), 6rem);
+  }
+
+  .talk {
+    position: relative;
+    display: grid;
+    gap: var(--space-4);
+    padding: clamp(2rem, calc(var(--u) * 0.75), 4rem) clamp(1.5rem, calc(var(--u) * 0.6), 3rem);
+    border-bottom-left-radius: calc(var(--u) * 3.2);
+    background: var(--grad-talk);
+    color: var(--ink);
+    overflow: hidden;
+  }
+
+  .talk__orb {
+    display: grid;
+    place-items: center;
+    width: clamp(7rem, calc(var(--u) * 2.66), 16rem);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--paper);
+  }
+
+  .talk__orb :global(.talk__star) {
+    width: 30%;
+  }
+
+  .talk__copy {
+    display: grid;
+    gap: clamp(0.75rem, calc(var(--u) * 0.22), 1.4rem);
+    justify-items: start;
+  }
+
+  .talk__title {
+    font-size: clamp(2.4rem, calc(var(--u) * 0.946), 6rem);
+    line-height: 0.9;
+    letter-spacing: -0.01em;
+  }
+
+  .talk__text {
+    font-size: clamp(1rem, calc(var(--u) * 0.19), 1.15rem);
+  }
+
+  .talk__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .talk .pill-btn--outline {
+    border-color: rgba(11, 13, 10, 0.6);
+  }
+
+  @media (min-width: 64rem) {
+    .talk {
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      gap: calc(var(--u) * 0.5);
+      min-height: calc(var(--u) * 5);
+      padding: calc(var(--u) * 0.75) calc(var(--u) * 0.5) calc(var(--u) * 1.4) calc(var(--u) * 0.85);
+    }
+
+    .talk__orb {
+      align-self: start;
+      margin-top: calc(var(--u) * 0.15);
+    }
+  }
+</style>

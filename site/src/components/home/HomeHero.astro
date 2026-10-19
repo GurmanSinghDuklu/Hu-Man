@@ -1,0 +1,154 @@
+---
+import Collage from '../Collage.astro';
+
+// What we make, top right of the hero (from the design).
+const offer = [
+  'Agent-ready websites',
+  'Owner dashboards',
+  'AI assistants',
+  'Booking + payments',
+  'Support that stays',
+];
+---
+
+<section class="band grid hero" aria-labelledby="hero-title">
+  <div class="sheet hero__sheet">
+    <h1 id="hero-title" class="hero__title">
+      Made by hand. Built by machine.
+    </h1>
+
+    <ul class="hero__offer" aria-label="What we make">
+      {offer.map((item) => (
+        <li>{item}</li>
+      ))}
+    </ul>
+
+    <div class="hero__collage">
+      <Collage variant="home" lens="Lens 01 / Human in the loop" />
+    </div>
+
+    <div class="hero__intro">
+      <p class="label">Human in the loop</p>
+      <p class="hero__serif">One person, from the first call to the aftercare.</p>
+      <p class="hero__body">
+        Agentic AI-ready websites with your own dashboard, and a real person with you before, during
+        and long after launch.
+      </p>
+    </div>
+
+    <div class="hero__actions">
+      <a href="#work" class="btn btn--outline btn--display">
+        See the work
+      </a>
+      <a href="#check" class="btn btn--display">
+        Check my site free
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero__sheet {
+    display: grid;
+    gap: var(--space-5);
+    padding-block: var(--space-5) var(--space-6);
+  }
+
+  .hero__title {
+    font-size: clamp(3rem, 13vw, 8.6rem);
+    line-height: 0.83;
+    letter-spacing: -0.015em;
+  }
+
+  .hero__offer {
+    font: 400 0.75rem/1.25 var(--font-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .hero__intro {
+    display: grid;
+    gap: 0.6rem;
+    max-width: 26rem;
+  }
+
+  .hero__serif {
+    font: italic 400 clamp(1.5rem, calc(var(--u) * 0.36), 2.2rem) / 1.12 var(--font-serif);
+    letter-spacing: -0.01em;
+  }
+
+  .hero__body {
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  /* Desktop: everything sits on the grid, positioned in grid units from the design. */
+  @media (min-width: 64rem) {
+    .hero__sheet {
+      display: block;
+      height: calc(var(--u) * 9);
+      padding: 0;
+    }
+
+    .hero__title {
+      position: absolute;
+      left: var(--pad);
+      top: calc(var(--u) * 0.16);
+      max-width: calc(var(--u) * 12.6);
+      font-size: calc(var(--u) * 1.372);
+    }
+
+    .hero__offer {
+      position: absolute;
+      right: var(--pad);
+      top: calc(var(--u) * 0.32);
+      text-align: right;
+      font-size: calc(var(--u) * 0.15);
+    }
+
+    .hero__collage {
+      position: absolute;
+      left: calc(var(--u) * 6);
+      top: var(--u);
+    }
+
+    .hero__intro {
+      position: absolute;
+      left: var(--pad);
+      top: calc(var(--u) * 6.7);
+      max-width: calc(var(--u) * 4.2);
+      gap: calc(var(--u) * 0.1);
+    }
+
+    .hero__intro .label {
+      font-size: calc(var(--u) * 0.15);
+    }
+
+    .hero__serif {
+      font-size: calc(var(--u) * 0.35);
+    }
+
+    .hero__body {
+      font-size: calc(var(--u) * 0.19);
+    }
+
+    .hero__actions {
+      position: absolute;
+      right: var(--pad);
+      top: calc(var(--u) * 8.02);
+      gap: calc(var(--u) * 0.2);
+    }
+
+    .hero__actions .btn {
+      min-height: calc(var(--u) * 0.6);
+      padding: 0 calc(var(--u) * 0.27);
+      font-size: calc(var(--u) * 0.17);
+    }
+  }
+</style>

@@ -1,0 +1,152 @@
+---
+import Sparkle from '../Sparkle.astro';
+
+const cards = [
+  {
+    title: 'Clear facts AI can quote',
+    text: 'Prices, hours, areas and services in plain, structured form.',
+    style: 'lilac',
+  },
+  {
+    title: 'Structured data',
+    text: 'Schema markup so search engines and AI tools understand you.',
+    style: 'dusk',
+  },
+  {
+    title: 'Ready for AI agents',
+    text: 'Clear actions agents can complete: book, quote, enquire. Fast, clean pages they can move through.',
+    style: 'ink',
+  },
+  {
+    title: 'An assistant that books',
+    text: 'An AI agent on your site that answers and books, then hands over to you.',
+    style: 'rose',
+  },
+];
+---
+
+<section class="band grid agent" aria-labelledby="agent-title">
+  <div class="sheet">
+    <p class="label" data-reveal>
+      05 / Agentic AI-ready
+    </p>
+    <h2 id="agent-title" class="display display--m agent__title" data-reveal>
+      Built to be read by
+      <br />
+      people and by agentic AI.
+    </h2>
+    <p class="agent__text" data-reveal>
+      AI agents are starting to search, compare and book on people’s behalf. We build sites they can
+      read, understand and act on.
+    </p>
+
+    <ul class="agent__cards">
+      {cards.map((c, i) => (
+        <li
+          class:list={['agent__card', `agent__card--${c.style}`]}
+          data-reveal
+          style={`--reveal-delay:${i * 0.08}s`}
+        >
+          <Sparkle class="agent__star" />
+          <h3>{c.title}</h3>
+          <p>{c.text}</p>
+        </li>
+      ))}
+    </ul>
+
+    <p class="agent__note">
+      No one can guarantee a place in AI answers. We do the groundwork properly and check every
+      month.
+    </p>
+  </div>
+</section>
+
+<style>
+  .agent {
+    padding-block: clamp(3.5rem, calc(var(--u) * 0.5), 5rem) clamp(3rem, calc(var(--u) * 0.6), 5rem);
+  }
+
+  .agent__title {
+    margin-top: 0.3rem;
+  }
+
+  .agent__text {
+    max-width: 38rem;
+    margin-top: 1rem;
+    font-size: clamp(1rem, calc(var(--u) * 0.2), 1.2rem);
+    line-height: 1.5;
+  }
+
+  .agent__cards {
+    display: grid;
+    gap: var(--space-4);
+    margin-top: clamp(2.5rem, calc(var(--u) * 0.7), 4.5rem);
+  }
+
+  .agent__card {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 0.6rem;
+    min-height: 15rem;
+    padding: clamp(1.25rem, calc(var(--u) * 0.28), 1.75rem);
+  }
+
+  .agent__card h3 {
+    font-size: clamp(1.15rem, calc(var(--u) * 0.245), 1.5rem);
+    line-height: 0.95;
+  }
+
+  .agent__card p {
+    font-size: clamp(0.875rem, calc(var(--u) * 0.165), 1rem);
+    line-height: 1.45;
+  }
+
+  .agent__card :global(.agent__star) {
+    width: clamp(1.1rem, calc(var(--u) * 0.28), 1.6rem);
+    margin-bottom: 0.4rem;
+  }
+
+  .agent__card--lilac {
+    background: var(--grad-lilac);
+    border-bottom-left-radius: calc(var(--u) * 1.4);
+  }
+
+  .agent__card--dusk {
+    background: var(--grad-dusk);
+    border-radius: calc(var(--u) * 1.4) calc(var(--u) * 1.4) 0 0;
+  }
+
+  .agent__card--ink {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .agent__card--rose {
+    background: var(--grad-rose);
+    border-top-right-radius: calc(var(--u) * 1.4);
+  }
+
+  .agent__note {
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+
+  @media (min-width: 40rem) {
+    .agent__cards {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .agent__cards {
+      grid-template-columns: repeat(4, 1fr);
+      gap: calc(var(--u) * 0.33);
+    }
+
+    .agent__card {
+      min-height: calc(var(--u) * 3.44);
+    }
+  }
+</style>

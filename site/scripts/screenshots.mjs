@@ -12,9 +12,8 @@ const widths = [360, 768, 1280];
 // Home, the work index and two case studies (one live, one unofficial concept).
 const pages = [
   ['home', ''],
-  ['work', 'work/'],
-  ['work-calculator', 'work/calculator-app/'],
-  ['work-tesla', 'work/tesla/'],
+  ['services', 'services/'],
+  ['pricing', 'pricing/'],
 ];
 // The Hu/man design is a single dark art direction, so one colour scheme.
 const themes = ['dark'];

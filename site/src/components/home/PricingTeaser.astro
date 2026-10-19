@@ -1,0 +1,54 @@
+---
+import PriceArches from '../PriceArches.astro';
+import { withBase } from '../../config/paths';
+---
+
+<section class="band teaser" aria-labelledby="teaser-title">
+  <div class="sheet">
+    <p class="label" data-reveal>
+      07 / Pricing
+    </p>
+    <h2 id="teaser-title" class="display display--m teaser__title" data-reveal>
+      Start small. Add
+      <br />
+      as you grow.
+    </h2>
+    <div class="teaser__arches" data-reveal>
+      <PriceArches variant="home" />
+    </div>
+    <a class="teaser__link" href={withBase('/pricing/')}>
+      See every tier <span aria-hidden="true">↗</span>
+    </a>
+  </div>
+</section>
+
+<style>
+  .teaser {
+    padding-block: clamp(3rem, calc(var(--u) * 1.2), 7rem) clamp(3rem, calc(var(--u) * 0.75), 5rem);
+  }
+
+  .teaser__title {
+    margin-top: 0.3rem;
+  }
+
+  .teaser__arches {
+    margin-top: clamp(2rem, calc(var(--u) * 0.15), 3rem);
+  }
+
+  .teaser__link {
+    display: inline-block;
+    margin-top: clamp(1.5rem, calc(var(--u) * 0.4), 2.5rem);
+    padding-bottom: 0.3rem;
+    border-bottom: 2px solid var(--ink);
+    font: 400 0.8125rem var(--font-mono);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+
+  @media (min-width: 64rem) {
+    .teaser__link {
+      font-size: calc(var(--u) * 0.15);
+    }
+  }
+</style>

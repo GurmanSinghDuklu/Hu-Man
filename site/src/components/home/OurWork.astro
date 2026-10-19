@@ -1,0 +1,333 @@
+---
+/**
+ * "Our work": two live sites and one concept, each as a gradient bar and four windows cut from
+ * the real sites (scripts/crop-work.mjs). Eldeva is a concept for a family business, never live.
+ */
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+const images = import.meta.glob<{ default: ImageMetadata }>('../../assets/our-work/*.jpg', {
+  eager: true,
+});
+const img = (name: string) => {
+  const found = images[`../../assets/our-work/${name}.jpg`];
+  if (!found) throw new Error(`Missing work image: ${name}`);
+  return found.default;
+};
+
+interface Win {
+  src: string;
+  alt: string;
+  caption: string;
+}
+
+interface Project {
+  n: string;
+  name: string;
+  tags: string;
+  bar: 'essence' | 'eldeva' | 'calculator';
+  /** Tall window, wide window, two circles, narrow window. */
+  windows: [Win, Win, Win, Win, Win];
+}
+
+const projects: Project[] = [
+  {
+    n: '01',
+    name: 'Essence Hair',
+    tags: 'Salon · Design · Booking · Live',
+    bar: 'essence',
+    windows: [
+      { src: 'essence-hair', alt: 'Essence Hair: the hair photography', caption: 'The hair' },
+      { src: 'essence-headline', alt: 'Essence Hair: the home page headline', caption: 'Headline' },
+      { src: 'essence-studio', alt: 'Essence Hair: the studio', caption: 'The studio' },
+      { src: 'essence-services', alt: 'Essence Hair: the services section', caption: 'Services' },
+      {
+        src: 'essence-copy',
+        alt: 'Essence Hair: the cosy studio section',
+        caption: 'Cosy studio copy',
+      },
+    ],
+  },
+  {
+    n: '02',
+    name: 'Eldeva Candles',
+    tags: 'Ecommerce · Design · Concept',
+    bar: 'eldeva',
+    windows: [
+      { src: 'eldeva-candle', alt: 'Eldeva concept: a candle on its stand', caption: 'The candle' },
+      { src: 'eldeva-hero', alt: 'Eldeva concept: the home page hero', caption: 'Hero' },
+      { src: 'eldeva-product', alt: 'Eldeva concept: a product shot', caption: 'Product' },
+      { src: 'eldeva-scents', alt: 'Eldeva concept: the scent finder', caption: 'Scent finder' },
+      { src: 'eldeva-ritual', alt: 'Eldeva concept: the ritual set', caption: 'Ritual set' },
+    ],
+  },
+  {
+    n: '03',
+    name: 'The Calculator App',
+    tags: 'Web app · UI/UX · SEO · Live',
+    bar: 'calculator',
+    windows: [
+      {
+        src: 'calculator-mobile',
+        alt: 'The Calculator App: the mobile header',
+        caption: 'Mobile header',
+      },
+      {
+        src: 'calculator-projection',
+        alt: 'The Calculator App: a compound interest projection',
+        caption: 'Compound projection',
+      },
+      {
+        src: 'calculator-breakdown',
+        alt: 'The Calculator App: a retirement breakdown chart',
+        caption: 'Retirement breakdown',
+      },
+      {
+        src: 'calculator-headline',
+        alt: 'The Calculator App: the retirement calculator headline',
+        caption: 'Retirement headline',
+      },
+      {
+        src: 'calculator-inputs',
+        alt: 'The Calculator App: calculator inputs and results',
+        caption: 'Inputs + results',
+      },
+    ],
+  },
+];
+
+const pic = (w: Win, width: number) => ({
+  src: img(w.src),
+  alt: w.alt,
+  width,
+  format: 'webp' as const,
+  quality: 70,
+  loading: 'lazy' as const,
+  decoding: 'async' as const,
+});
+---
+
+<section class="band work" id="work" aria-labelledby="work-title">
+  <div class="sheet work__head">
+    <div>
+      <p class="label" data-reveal>
+        06 / Our work
+      </p>
+      <h2 id="work-title" class="work__title" data-reveal>
+        Our work
+      </h2>
+    </div>
+    <p class="work__intro" data-reveal>
+      Two live sites and one concept. Each window shows the part that does the selling.
+    </p>
+  </div>
+
+  {projects.map((p) => {
+    const [tall, wide, c1, c2, narrow] = p.windows;
+    return (
+      <article class="project" aria-labelledby={`project-${p.n}`}>
+        <div class:list={['project__bar', `project__bar--${p.bar}`]}>
+          <div class="sheet project__bar-inner">
+            <h3 id={`project-${p.n}`} class="label">
+              {p.n} / {p.name}
+            </h3>
+            <p class="label">{p.tags}</p>
+          </div>
+        </div>
+        <div class="sheet project__windows">
+          <figure class="win win--tall" data-reveal>
+            <Image {...pic(tall, 520)} />
+            <figcaption>{tall.caption}</figcaption>
+          </figure>
+          <figure class="win win--wide" data-reveal style="--reveal-delay:0.06s">
+            <Image {...pic(wide, 780)} />
+            <figcaption>{wide.caption}</figcaption>
+          </figure>
+          <div class="win win--circles" data-reveal style="--reveal-delay:0.12s">
+            <div class="win__stack">
+              <Image {...pic(c1, 420)} class="win__circle" />
+              <p class="win__cap">{c1.caption}</p>
+              <Image {...pic(c2, 420)} class="win__circle" />
+            </div>
+            <p class="win__cap">{c2.caption}</p>
+          </div>
+          <figure class="win win--narrow" data-reveal style="--reveal-delay:0.18s">
+            <Image {...pic(narrow, 480)} />
+            <figcaption>{narrow.caption}</figcaption>
+          </figure>
+        </div>
+      </article>
+    );
+  })}
+</section>
+
+<style>
+  .work {
+    padding-block: clamp(3.5rem, calc(var(--u) * 1), 6rem) clamp(2rem, calc(var(--u) * 0.4), 3rem);
+  }
+
+  .work__head {
+    display: grid;
+    gap: 1.25rem;
+    margin-bottom: clamp(2rem, calc(var(--u) * 0.6), 3.5rem);
+  }
+
+  .work__title {
+    margin-top: 0.3rem;
+    font-size: clamp(3.5rem, calc(var(--u) * 1.04), 6.5rem);
+    line-height: 0.82;
+  }
+
+  .work__intro {
+    max-width: 27rem;
+    font-size: clamp(1rem, calc(var(--u) * 0.2), 1.2rem);
+    line-height: 1.5;
+  }
+
+  .project + .project {
+    margin-top: clamp(1rem, calc(var(--u) * 0.3), 2rem);
+  }
+
+  .project__bar {
+    color: var(--ink);
+  }
+
+  .project__bar--essence {
+    background: var(--grad-essence);
+  }
+
+  .project__bar--eldeva {
+    background: var(--grad-eldeva);
+    color: var(--paper);
+  }
+
+  .project__bar--calculator {
+    background: var(--grad-calculator);
+    color: var(--paper);
+  }
+
+  .project__bar-inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.4rem 1rem;
+    min-height: var(--u);
+    padding-block: 1rem;
+  }
+
+  .project__bar .label {
+    font-size: 0.75rem;
+    font-weight: 400;
+    font-family: var(--font-mono);
+    line-height: 1.3;
+    letter-spacing: 0.16em;
+  }
+
+  .project__windows {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem 1rem;
+    padding-block: clamp(1.75rem, calc(var(--u) * 0.66), 3.5rem)
+      clamp(1.5rem, calc(var(--u) * 0.5), 3rem);
+  }
+
+  .win {
+    margin: 0;
+  }
+
+  .win :global(img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .win figcaption,
+  .win__cap {
+    margin-top: 0.75rem;
+    font: 400 0.6875rem/1.2 var(--font-mono);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .win--tall :global(img) {
+    aspect-ratio: 258 / 388;
+    border-radius: 999px 999px 0 0;
+  }
+
+  .win--wide :global(img) {
+    aspect-ratio: 1;
+    border-bottom-left-radius: 50%;
+  }
+
+  .win--narrow :global(img) {
+    aspect-ratio: 233 / 388;
+    border-top-right-radius: 45% 27%;
+  }
+
+  .win--circles {
+    display: grid;
+    align-content: start;
+  }
+
+  .win__stack {
+    display: grid;
+  }
+
+  .win :global(.win__circle) {
+    aspect-ratio: 1;
+    height: auto;
+    border-radius: 50%;
+  }
+
+  .win__stack .win__cap {
+    margin-bottom: 0.75rem;
+  }
+
+  @media (min-width: 64rem) {
+    .work__head {
+      grid-template-columns: 1fr calc(var(--u) * 5.6);
+      align-items: end;
+    }
+
+    .project__bar-inner {
+      padding-block: 0;
+    }
+
+    .project__bar .label {
+      font-size: calc(var(--u) * 0.135);
+    }
+
+    .project__windows {
+      grid-template-columns: calc(var(--u) * 3.32) calc(var(--u) * 5) calc(var(--u) * 2.66) calc(
+          var(--u) * 3
+        );
+      justify-content: space-between;
+      gap: 0;
+    }
+
+    .win--tall :global(img),
+    .win--wide :global(img),
+    .win--narrow :global(img) {
+      height: calc(var(--u) * 5);
+      aspect-ratio: auto;
+    }
+
+    /* Circle, caption, then a second circle that runs off the row; its caption sits on the caption line. */
+    .win__stack {
+      height: calc(var(--u) * 5);
+      overflow: hidden;
+      align-content: start;
+    }
+
+    .win__stack .win__cap {
+      margin: calc(var(--u) * 0.2) 0 calc(var(--u) * 0.05);
+    }
+
+    .win figcaption,
+    .win__cap {
+      font-size: calc(var(--u) * 0.12);
+    }
+  }
+</style>

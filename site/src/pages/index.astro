@@ -2,37 +2,35 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
-import Hero from '../components/Hero.astro';
-import Services from '../components/Services.astro';
-import Work from '../components/Work.astro';
-import ConceptWork from '../components/ConceptWork.astro';
-import ChatDemo from '../components/ChatDemo.astro';
-import HowItWorks from '../components/HowItWorks.astro';
-import Pricing from '../components/Pricing.astro';
-import Faq from '../components/Faq.astro';
-import Audit from '../components/Audit.astro';
-import ModuleBand from '../components/ModuleBand.astro';
+import HomeHero from '../components/home/HomeHero.astro';
+import Stats from '../components/home/Stats.astro';
+import Honest from '../components/home/Honest.astro';
+import Loop from '../components/home/Loop.astro';
+import Dashboard from '../components/home/Dashboard.astro';
+import AgentReady from '../components/home/AgentReady.astro';
+import OurWork from '../components/home/OurWork.astro';
+import PricingTeaser from '../components/home/PricingTeaser.astro';
+import YourMove from '../components/home/YourMove.astro';
+import TalkBanner from '../components/TalkBanner.astro';
 ---
 
 <BaseLayout
   title="Hu/man Software Agency | Your human in the loop."
-  description="Bradford web designer for small businesses: high-end website redesigns, online booking and payments, AI enquiry assistants and local SEO. Free presence audit."
+  description="Leeds web studio for small businesses: agent-ready websites, your own owner dashboard, booking and payments, AI enquiry assistants and support that stays. Free AI check."
   structuredData
 >
   <SiteHeader slot="header" />
 
-  <Hero />
-  <ModuleBand preset="kit" />
-  <Services />
-  <Work />
-  <ModuleBand preset="poster" />
-  <ConceptWork />
-  <ChatDemo />
-  <HowItWorks />
-  <Pricing />
-  <ModuleBand preset="signal" />
-  <Faq />
-  <Audit />
+  <HomeHero />
+  <Stats />
+  <Honest />
+  <Loop />
+  <Dashboard />
+  <AgentReady />
+  <OurWork />
+  <PricingTeaser />
+  <YourMove />
+  <TalkBanner />
 
   <SiteFooter slot="footer" />
 </BaseLayout>

@@ -1,0 +1,348 @@
+---
+import Logo from '../Logo.astro';
+import Sparkle from '../Sparkle.astro';
+import { tiers } from '../../data/pricing';
+
+const dashTier = tiers.find((t) => t.id === 'launch-dashboard')!;
+const menu = ['Overview', 'Prices', 'Opening hours', 'Photos', 'Offers', 'Messages'];
+// Sample content for a fictional barbershop; the mock-up is labelled as such.
+const prices = [
+  ['Skin fade', '£18'],
+  ['Beard trim', '£10'],
+  ['Kids cut', '£12'],
+  ['Hot towel shave', '£22'],
+];
+const points = [
+  'No platform lock-in',
+  'Made only for what you need to change',
+  'A human on hand when you get stuck',
+];
+---
+
+<section class="band band--paper-2 dash" aria-labelledby="dash-title">
+  <div class="sheet dash__sheet">
+    <div class="dash__copy">
+      <p class="label" data-reveal>
+        04 / Your own dashboard
+      </p>
+      <h2 id="dash-title" class="dash__title" data-reveal>
+        Your personal
+        <br />
+        dashboard.
+        <br />
+        Update and
+        <br />
+        amend any time.
+      </h2>
+      <p class="dash__text" data-reveal>
+        You are in full control. Edit text, prices, opening hours, photos and offers yourself,
+        whenever you like. No need to contact anyone.
+      </p>
+      <p class="pill dash__tier" data-reveal>
+        Included from the {dashTier.name} tier · {dashTier.price}
+      </p>
+      <ul class="dash__points" data-reveal>
+        {points.map((p) => (
+          <li>
+            <Sparkle class="dash__point-star" />
+            {p}
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <figure class="dash__figure" data-reveal>
+      <div class="mock" aria-hidden="true">
+        <div class="mock__side">
+          <Logo variant="ink" label="" class="mock__logo" />
+          <ul>
+            {menu.map((m) => (
+              <li class:list={{ 'is-on': m === 'Prices' }}>{m}</li>
+            ))}
+          </ul>
+        </div>
+        <div class="mock__main">
+          <div class="mock__bar">
+            <span class="mock__label">Prices</span>
+            <span class="mock__publish">Publish changes</span>
+          </div>
+          <p class="mock__heading">Your services</p>
+          <ul class="mock__rows">
+            {prices.map(([name, price]) => (
+              <li>
+                <span>{name}</span>
+                <span class="mock__price">{price}</span>
+                <span class="mock__edit">Edit</span>
+              </li>
+            ))}
+          </ul>
+          <span class="mock__add">+ Add a service</span>
+        </div>
+      </div>
+      <span class="dash__orb" aria-hidden="true">
+        <Sparkle color="var(--paper)" />
+      </span>
+      <figcaption class="pill dash__caption">Mock-up · Example barbershop</figcaption>
+    </figure>
+  </div>
+</section>
+
+<style>
+  .dash {
+    padding-block: clamp(3.5rem, calc(var(--u) * 1), 6rem) clamp(4rem, calc(var(--u) * 1.2), 7rem);
+  }
+
+  .dash__sheet {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  .dash__copy {
+    display: grid;
+    gap: 1.25rem;
+    align-content: start;
+    justify-items: start;
+  }
+
+  .dash__title {
+    margin-top: -0.6rem;
+    font-size: clamp(2rem, calc(var(--u) * 0.695), 4.4rem);
+    line-height: 0.92;
+  }
+
+  .dash__text {
+    max-width: 30rem;
+    font-size: clamp(1rem, calc(var(--u) * 0.2), 1.2rem);
+    line-height: 1.5;
+  }
+
+  .dash__tier {
+    white-space: normal;
+  }
+
+  .dash__points {
+    display: grid;
+    gap: 0.6rem;
+    margin-top: 0.75rem;
+  }
+
+  .dash__points li {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-size: clamp(1rem, calc(var(--u) * 0.2), 1.15rem);
+  }
+
+  .dash__points :global(.dash__point-star) {
+    flex: none;
+    width: 0.9rem;
+  }
+
+  /* ---------- the mock dashboard ---------- */
+  .dash__figure {
+    position: relative;
+    margin: 0;
+    padding-bottom: 3rem;
+  }
+
+  .mock {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    min-height: 22rem;
+    border: 1px solid var(--ink);
+    border-radius: 1.5rem 5rem 1.5rem 1.5rem;
+    background: var(--paper);
+    overflow: hidden;
+  }
+
+  .mock__side {
+    padding: 1.4rem 1rem;
+    border-right: 1px solid var(--ink);
+  }
+
+  .mock__side :global(.mock__logo) {
+    width: 5.5rem;
+    min-width: 0;
+    margin: 0 0 1.75rem 0.5rem;
+  }
+
+  .mock__side li,
+  .mock__label,
+  .mock__edit,
+  .mock__add {
+    font: 400 0.6875rem/1 var(--font-mono);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .mock__side li {
+    padding: 0.8rem 0.9rem;
+    border-radius: 999px;
+  }
+
+  .mock__side li.is-on {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .mock__main {
+    padding: 1.4rem 1.6rem;
+  }
+
+  .mock__bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .mock__publish {
+    padding: 0.65em 1.2em;
+    border-radius: 999px;
+    background: var(--grad-lilac);
+    font: 400 0.6875rem var(--font-mono);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .mock__heading {
+    margin: 1rem 0 0.5rem;
+    font: 800 clamp(1.3rem, calc(var(--u) * 0.4), 2.4rem) / 1 var(--font-display);
+    text-transform: uppercase;
+  }
+
+  .mock__rows li {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+    gap: 0.75rem;
+    padding-block: 0.7rem;
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  .mock__price {
+    min-width: 5.5rem;
+    padding: 0.4rem 0.75rem;
+    border: 1px solid var(--ink);
+    border-radius: 0.5rem;
+    text-align: right;
+  }
+
+  .mock__add {
+    display: block;
+    margin-top: 1.2rem;
+  }
+
+  .dash__orb {
+    position: absolute;
+    left: -1.5rem;
+    bottom: 0;
+    display: grid;
+    place-items: center;
+    width: 6.5rem;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: linear-gradient(180deg, #2c4377 0%, #4a9bb0 55%, #fad5a8 100%);
+  }
+
+  .dash__orb :global(.sparkle) {
+    width: 38%;
+  }
+
+  .dash__caption {
+    position: absolute;
+    left: 3.5rem;
+    bottom: 0.35rem;
+  }
+
+  @media (max-width: 39.99rem) {
+    .mock {
+      grid-template-columns: 1fr;
+      border-radius: 1.25rem 3rem 1.25rem 1.25rem;
+    }
+
+    .mock__side {
+      border-right: 0;
+      border-bottom: 1px solid var(--ink);
+    }
+
+    .mock__side ul {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .dash__orb {
+      left: 0;
+      width: 4.5rem;
+    }
+
+    .dash__caption {
+      left: 4.75rem;
+      font-size: 0.625rem;
+      letter-spacing: 0.1em;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .dash__sheet {
+      grid-template-columns: 7fr 7.5fr;
+      gap: calc(var(--u) * 0.85);
+    }
+
+    .dash__copy {
+      gap: calc(var(--u) * 0.25);
+    }
+
+    .dash__title {
+      margin-top: calc(var(--u) * -0.1);
+    }
+
+    .dash__figure {
+      padding: 0 0 calc(var(--u) * 0.5);
+    }
+
+    .mock {
+      min-height: calc(var(--u) * 6.2);
+      grid-template-columns: calc(var(--u) * 2.5) 1fr;
+      border-radius: calc(var(--u) * 0.36) calc(var(--u) * 1.3) calc(var(--u) * 0.36)
+        calc(var(--u) * 0.36);
+    }
+
+    .mock__side {
+      padding: calc(var(--u) * 0.3) calc(var(--u) * 0.2);
+    }
+
+    .mock__side li,
+    .mock__label,
+    .mock__edit,
+    .mock__add,
+    .mock__publish {
+      font-size: calc(var(--u) * 0.135);
+    }
+
+    .mock__side li {
+      padding: calc(var(--u) * 0.11) calc(var(--u) * 0.18);
+      margin-bottom: calc(var(--u) * 0.05);
+    }
+
+    .mock__main {
+      padding: calc(var(--u) * 0.36) calc(var(--u) * 0.4);
+      font-size: calc(var(--u) * 0.19);
+    }
+
+    .mock__rows li {
+      padding-block: calc(var(--u) * 0.12);
+    }
+
+    .dash__orb {
+      left: calc(var(--u) * -0.7);
+      bottom: calc(var(--u) * -0.2);
+      width: calc(var(--u) * 1.33);
+    }
+
+    .dash__caption {
+      left: calc(var(--u) * 0.2);
+      bottom: calc(var(--u) * 0.1);
+      font-size: calc(var(--u) * 0.12);
+    }
+  }
+</style>

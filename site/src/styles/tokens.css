@@ -1,61 +1,65 @@
 /**
- * Hu/man design tokens (v4, 2026-10-13), from the brand system in docs/brand/
- * (tokens.json / tokens.css there are the source; edit them together).
+ * Hu/man design tokens, from the final designs (2026-10-19, reference/final-designs/): a light
+ * Paper page on a fine grid, Ink type, and soft gradient shapes. Colours were sampled from the
+ * design images. This replaces the neon-on-Ink brand system for the website.
  *
- * Ink and Paper carry every layout. Signal green is in every layout. Pulse
- * (offers), Flare (dates) and Volt (sparks) appear as one block each at most,
- * and two neons never touch. Scan is for data only. Text on every neon is Ink.
- * Corners are square; no gradients except the logo's own, no shadows.
- *
- * Legacy names (--neon, --acid, --graphite-*, --on-dark*, --color-*) are kept
- * as aliases onto the brand palette so older component CSS keeps working.
+ * The grid unit --u is a sixteenth of the page (90px at 1440), capped at 100px; layouts, shapes
+ * and the big headlines are sized from it, so the page keeps the design's proportions.
  */
 :root {
-  /* ---------- brand palette (never flips) ---------- */
-  --brand-ink: #0b0d0a;
-  --brand-paper: #f2f2ec;
-  --signal: #39ff14;
-  --signal-hi: #b2ff58;
-  --signal-lo: #6dff5a;
-  --pulse: #df00ff;
-  --flare: #ff5f1f;
-  --volt: #e7ff00;
-  --scan: #14dcb2;
-  --concrete: #8e908a;
-  --night: #0a1033;
-  --plum: #1b0a2e;
-  --on-signal: var(--brand-ink);
-  --on-pulse: var(--brand-ink);
-  --on-flare: var(--brand-ink);
-  --on-volt: var(--brand-ink);
-  --on-scan: var(--brand-ink);
+  /* ---------- grounds and type ---------- */
+  --paper: #f1f2ec;
+  --paper-2: #e4e4dc;
+  --grid-line: #e2e3dc;
+  --ink: #0b0d0a;
+  --ink-2: #16171b;
+  --ink-grid: #1b1d1a;
+  --ink-text: #0b0d0a;
+  --muted: #4f514c;
+  --muted-on-ink: #a3a5a2;
+  --line: #0b0d0a;
+  --line-soft: #cfd0c8;
+  --mist: #c9cac2;
 
-  /* ---------- theme roles (Ink ground) ---------- */
-  --surface: #0b0d0a;
-  --surface-raised: #161a14;
-  --line: #2c3229;
-  --line-strong: #6b7064;
-  --ink-text: #f2f2ec;
-  --ink-muted: #a3a89c;
-  --signal-text: #39ff14;
-  --pulse-text: #df00ff;
-  --flare-text: #ff5f1f;
-  --focus-ring: #39ff14;
+  /* ---------- colour ---------- */
+  --pink: #e85e8f;
+  --indigo: #4e28df;
+  --lilac: #cea4ee;
+  --sky: #93aee0;
+  --teal: #4a9bb0;
+  --navy: #2c4477;
+  --sand: #edd1a8;
+  --peach: #fad5a8;
+  --crimson: #d2133c;
+  --orchid: #db92db;
+  --orange: #ce3d10;
+
+  /* ---------- gradients (as drawn in the designs) ---------- */
+  --grad-lilac:
+    radial-gradient(90% 90% at 18% 12%, #d8a2ef 0%, rgba(216, 162, 239, 0) 60%),
+    linear-gradient(140deg, #c7a5ee 0%, #93aee0 48%, #4a9bb0 100%);
+  --grad-dusk: linear-gradient(180deg, #2c4377 0%, #3f7fa3 38%, #4a9bb0 62%, #edd1a8 100%);
+  --grad-rose: linear-gradient(195deg, #db92db 0%, #e85e8f 48%, #d2133c 100%);
+  --grad-indigo: radial-gradient(circle at 32% 30%, #8f93e4 0%, #4e28df 55%, #2d3682 100%);
+  --grad-talk:
+    radial-gradient(28% 42% at 22% 16%, #f8cea2 0%, rgba(248, 206, 162, 0) 100%),
+    radial-gradient(34% 48% at 42% 104%, #5029da 0%, rgba(80, 41, 218, 0) 100%),
+    radial-gradient(30% 50% at 74% 38%, #e3296a 0%, rgba(227, 41, 106, 0) 100%),
+    linear-gradient(100deg, #e79569 0%, #d9545a 42%, #d73533 72%, #ce3d10 100%);
+  --grad-essence: linear-gradient(90deg, #d31942 0%, #e85d8e 50%, #d798df 100%);
+  --grad-eldeva: linear-gradient(180deg, #2f4f7e 0%, #4591a8 58%, #edd1a8 100%);
+  --grad-calculator: linear-gradient(90deg, #5944dd 0%, #90aadd 30%, #512fde 70%, #2a3974 100%);
 
   /* ---------- type ---------- */
   --font-display: 'Montserrat', 'Arial Black', Arial, sans-serif;
   --font-text: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
   --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
-  /* Concept renders keep their own fonts: they are designs for fictional brands, not Hu/man.
-     They start on Archivo/Georgia and switch once the page has loaded (BaseLayout adds
-     .render-fonts), so those downloads never compete with first paint. */
-  --font-render: 'Archivo', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-serif: Georgia, serif;
-  --font-sans: var(--font-text);
+  --font-serif: 'Newsreader', Georgia, serif;
 
-  /* ---------- space, borders ---------- */
-  --content-max: 1320px;
-  --gutter: clamp(1rem, 3.5vw, 2.5rem);
+  /* ---------- grid ---------- */
+  --u: min(100vw / 16, 100px);
+  --pad: calc(var(--u) / 2);
+  --sheet: calc(var(--u) * 16);
 
   --space-1: 0.25rem;
   --space-2: 0.5rem;
@@ -63,131 +67,34 @@
   --space-4: 1.5rem;
   --space-5: 2.5rem;
   --space-6: 4rem;
-  --space-7: 6rem;
+  --gutter: var(--pad);
 
-  --radius-0: 0;
-  --radius-1: 2px;
-  --radius-pill: 999px;
-  /* Legacy radius names: all square now. Pills stay only for status tags. */
-  --radius-sm: 0;
-  --radius-md: 0;
-  --radius-lg: 0;
-  --radius-xl: 0;
-
-  --border-hairline: 1px;
-  --border-rule: 2px;
-
-  /* Modules snap; they don't float (docs/brand/3-graphic-language.md, Motion). */
   --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --ease-snap: steps(1, end);
-  --cell-step: 100ms;
+  --focus-ring: var(--indigo);
 
-  /* ---------- legacy aliases ---------- */
-  --neon: var(--signal);
-  --acid: var(--signal);
-  --lime: var(--signal);
-  --neon-gradient: linear-gradient(180deg, var(--signal-hi), var(--signal-lo));
-  --black: var(--brand-ink);
-  --graphite-1: var(--surface);
-  --graphite-2: var(--surface-raised);
-  --graphite-3: #20251d;
-  --forest-900: var(--surface);
-  --forest-600: var(--signal);
-  --paper: var(--brand-paper);
-  --ink: var(--brand-ink);
-  --surface-2: var(--surface-raised);
-  --shadow-card: none;
-
-  --color-bg: var(--surface);
+  /* Legacy names still used by the privacy notice and 404. */
+  --surface: var(--paper);
+  --color-bg: var(--paper);
   --color-text: var(--ink-text);
-  --color-text-muted: var(--ink-muted);
-  --color-line: var(--line);
-  --color-line-strong: var(--line-strong);
-  --color-focus-ring: var(--focus-ring);
+  --color-text-muted: var(--muted);
+  --color-line: var(--line-soft);
+  --forest-600: var(--ink);
+  --radius-md: 0;
 
-  --on-dark: var(--ink-text);
-  --on-dark-muted: var(--ink-muted);
-  --on-dark-line: var(--line);
-
-  color-scheme: dark;
-}
-
-:root.render-fonts {
-  --font-render:
-    'Plus Jakarta Sans Variable', 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI',
-    sans-serif;
-  --font-serif: 'Newsreader Variable', Georgia, serif;
-}
-
-/* Paper bands (concept work, FAQ): the brand's Paper theme. Neons appear here only as
-   filled blocks with Ink text; green text switches to the darker --signal-text. */
-.light {
-  --surface: #f2f2ec;
-  --surface-raised: #fafaf6;
-  --line: #d3d5cc;
-  --line-strong: #565b51;
-  --ink-text: #0b0d0a;
-  --ink-muted: #565b51;
-  --signal-text: #1f7a0a;
-  --pulse-text: #a100b8;
-  --flare-text: #b83a12;
-  --focus-ring: #0b0d0a;
-  --graphite-2: var(--surface-raised);
-  --graphite-3: #e4e5dd;
-  /* Aliases resolve where they're declared, so redeclare them for this scope. */
-  --color-bg: var(--surface);
-  --color-text: var(--ink-text);
-  --color-text-muted: var(--ink-muted);
-  --color-line: var(--line);
-  --color-line-strong: var(--line-strong);
-  --color-focus-ring: var(--focus-ring);
-  background: var(--surface);
-  color: var(--ink-text);
   color-scheme: light;
 }
 
-/* Night and Plum bands (added 2026-10-17 for the agency redesign): dark blue and dark purple
-   grounds that alternate with Ink, so the page isn't one black slab. Same rules as Ink: Paper
-   text, Signal in every band, neon text allowed. Checked with scripts/check-contrast.mjs. */
-.night,
-.plum {
-  --line: #263066;
-  --line-strong: #6a73a6;
-  --ink-text: #f2f2ec;
-  --ink-muted: #a9b0d6;
-  --color-bg: var(--surface);
-  --color-text: var(--ink-text);
-  --color-text-muted: var(--ink-muted);
-  --color-line: var(--line);
-  --color-line-strong: var(--line-strong);
-  --on-dark-muted: var(--ink-muted);
-  --on-dark-line: var(--line);
-  background: var(--surface);
-  color: var(--ink-text);
-}
-
-.night {
-  --surface: #0a1033;
-  --surface-raised: #121a45;
-  --graphite-2: var(--surface-raised);
-}
-
-.plum {
-  --surface: #1b0a2e;
-  --surface-raised: #26113e;
-  --line: #3a2356;
-  --line-strong: #80709a;
-  --ink-muted: #bbaacf;
-  --graphite-2: var(--surface-raised);
-}
-
-/* Wide-gamut screens get Display P3 neons, beyond what sRGB can show (from the brand pack).
-   sRGB screens keep the hex values above. Edit both together. */
-@media (color-gamut: p3) {
+/* Phones and tablets: a coarser grid, so cells stay a usable size. */
+@media (max-width: 63.99rem) {
   :root {
-    --signal: color(display-p3 0.28 1 0.1);
-    --pulse: color(display-p3 0.86 0 1);
-    --flare: color(display-p3 1 0.36 0.06);
-    --volt: color(display-p3 0.92 1 0);
+    --u: calc(100vw / 8);
+    --pad: max(20px, calc(var(--u) / 2));
+  }
+}
+
+@media (max-width: 39.99rem) {
+  :root {
+    --u: calc(100vw / 6);
+    --pad: 20px;
   }
 }

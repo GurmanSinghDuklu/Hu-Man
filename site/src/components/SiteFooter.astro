@@ -1,276 +1,132 @@
 ---
 import { site } from '../config/site';
-import { isHomePath, withBase } from '../config/paths';
+import { withBase } from '../config/paths';
 import Logo from './Logo.astro';
 
 const currentYear = new Date().getFullYear();
-const isHome = isHomePath(Astro.url.pathname);
-const prefix = isHome ? '' : withBase('/');
-
-// Glitch bands over the footer wordmark, one per colour.
-const bands = ['pulse', 'scan', 'flare', 'volt'];
+const tel = `tel:${site.contact.phone.replace(/\s+/g, '')}`;
+// Areas after the base town, set on two lines as in the design.
+const [, ...areas] = site.areasServed;
 ---
 
-<footer class="site-footer on-dark">
-  <div class="wrap">
-    <div class="site-footer__grid">
-      <div class="site-footer__brand">
-        <p class="site-footer__label">{site.name}</p>
-        <p>
-          {site.location.town}, {site.location.region}
-        </p>
-        <p class="site-footer__muted">Areas served: {site.areasServed.join(', ')}</p>
-      </div>
-      <div>
-        <p class="site-footer__label">Contact</p>
-        <ul>
-          <li>
-            <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
-          </li>
-          <li>
-            <a href={`tel:${site.contact.phone.replace(/\s+/g, '')}`}>{site.contact.phone}</a>
-          </li>
-          <li>
-            <a href={site.contact.whatsapp} rel="noopener">
-              WhatsApp
-            </a>
-          </li>
-        </ul>
-      </div>
-      <div>
-        <p class="site-footer__label">Explore</p>
-        <ul>
-          <li>
-            <a href={`${prefix}#services`}>Services</a>
-          </li>
-          <li>
-            <a href={withBase('/work/')}>Work</a>
-          </li>
-          <li>
-            <a href={`${prefix}#concepts`}>Concept lab</a>
-          </li>
-          <li>
-            <a href={`${prefix}#process`}>Process</a>
-          </li>
-          <li>
-            <a href={`${prefix}#pricing`}>Pricing</a>
-          </li>
-          <li>
-            <a href={`${prefix}#faq`}>FAQ</a>
-          </li>
-        </ul>
-      </div>
-      <div>
-        <p class="site-footer__label">Legal</p>
-        <ul>
-          <li>
-            <a href={withBase('/privacy')}>Privacy notice</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- The sign-off glitches by itself: copies of the real artwork, recoloured by CSS and clipped
-         to bands, jump sideways on their own clocks. The logo is never retyped. -->
-    <div class="site-footer__wordmark-box">
-      <div class="site-footer__glitch">
-        <Logo label="" class="site-footer__logo" />
-        {bands.map((band) => (
-          <Logo
-            variant="paper"
-            label=""
-            class={`site-footer__logo site-footer__band site-footer__band--${band}`}
-          />
-        ))}
-      </div>
-    </div>
-
-    <div class="site-footer__base">
+<footer class="site-footer">
+  <div class="sheet site-footer__grid">
+    <div class="site-footer__brand">
+      <Logo variant="paper" label={site.name} class="site-footer__logo" />
       <p>
-        © {currentYear} {site.founder}.
+        {site.location.town}, {site.location.region}
+        <br />
+        {areas.slice(0, 2).join(' · ')}
+        <br />
+        {areas.slice(2).join(' · ')}
       </p>
-      <p>This site uses no tracking cookies.</p>
     </div>
+    <div>
+      <p class="site-footer__label">Contact</p>
+      <ul>
+        <li>
+          <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
+        </li>
+        <li>
+          <a href={tel}>{site.contact.phone}</a>
+        </li>
+        <li>
+          <a href={site.contact.whatsapp} rel="noopener">
+            WhatsApp
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <p class="site-footer__label">Explore</p>
+      <ul>
+        <li>
+          <a href={withBase('/services/')}>Services</a>
+        </li>
+        <li>
+          <a href={`${withBase('/')}#work`}>Real work</a>
+        </li>
+        <li>
+          <a href={withBase('/pricing/')}>Pricing</a>
+        </li>
+        <li>
+          <a href={`${withBase('/pricing/')}#faq`}>FAQ</a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <p class="site-footer__label">Elsewhere</p>
+      <ul>
+        <li>
+          <a href={withBase('/privacy/')}>Privacy notice</a>
+        </li>
+      </ul>
+    </div>
+    <p class="site-footer__base">
+      © {currentYear} {site.name} · No tracking cookies
+    </p>
   </div>
 </footer>
 
 <style>
   .site-footer {
-    background: var(--brand-ink);
-    border-top: var(--border-hairline) solid var(--line);
-    color: var(--on-dark);
-    padding-top: clamp(3.5rem, 7vw, 5.5rem);
-    overflow: hidden;
+    background: var(--ink);
+    color: var(--paper);
+    padding-block: clamp(3rem, calc(var(--u) * 0.6), 4rem) clamp(1.5rem, calc(var(--u) * 0.3), 2rem);
   }
 
   .site-footer__grid {
     display: grid;
-    gap: var(--space-5);
-    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    gap: var(--space-5) var(--space-4);
   }
 
-  .site-footer__brand {
-    display: grid;
-    gap: 0.6rem;
-    align-content: start;
+  .site-footer :global(.site-footer__logo) {
+    width: clamp(96px, calc(var(--u) * 1.2), 120px);
+    margin-bottom: 1.5rem;
   }
 
-  .site-footer p,
+  .site-footer__brand p {
+    color: #c9cac4;
+    line-height: 1.6;
+  }
+
+  .site-footer__label {
+    margin-bottom: 1rem;
+    font: 400 0.75rem var(--font-mono);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted-on-ink);
+  }
+
   .site-footer li {
-    font-size: 0.9375rem;
-  }
-
-  .site-footer ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    gap: 0.1rem;
+    line-height: 1.6;
   }
 
   .site-footer a {
     text-decoration: none;
-    display: inline-block;
-    padding-block: 0.3rem;
-    transition: color 0.15s linear;
   }
 
   .site-footer a:hover {
-    color: var(--signal);
-  }
-
-  .site-footer .site-footer__label {
-    color: var(--on-dark-muted);
-    margin-bottom: 0.75rem;
-    font: 500 0.75rem var(--font-mono);
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-  }
-
-  .site-footer__muted {
-    color: var(--on-dark-muted);
-    max-width: 22rem;
-  }
-
-  /* The logo artwork, full width, as the sign-off. Never retyped. */
-  .site-footer__wordmark-box {
-    margin-top: clamp(3rem, 6vw, 5rem);
-    padding-bottom: clamp(1.5rem, 3vw, 2.5rem);
-  }
-
-  .site-footer__wordmark-box :global(.site-footer__logo) {
-    width: 100%;
-  }
-
-  .site-footer__glitch {
-    position: relative;
-    line-height: 0;
-  }
-
-  .site-footer__glitch > :global(.site-footer__logo:first-child) {
-    animation: footer-shake 3.2s steps(1, end) infinite 1s;
-  }
-
-  .site-footer__glitch :global(.site-footer__band) {
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    pointer-events: none;
-  }
-
-  .site-footer__glitch :global(.site-footer__band--pulse) {
-    clip-path: inset(4% 0 68% 0);
-    animation: footer-band 2.3s steps(1, end) infinite 0.6s;
-  }
-
-  .site-footer__glitch :global(.site-footer__band--pulse path) {
-    fill: var(--pulse);
-  }
-
-  .site-footer__glitch :global(.site-footer__band--scan) {
-    clip-path: inset(34% 0 44% 0);
-    animation: footer-band 3.1s steps(1, end) infinite 1.4s;
-  }
-
-  .site-footer__glitch :global(.site-footer__band--scan path) {
-    fill: var(--scan);
-  }
-
-  .site-footer__glitch :global(.site-footer__band--flare) {
-    clip-path: inset(58% 0 20% 0);
-    animation: footer-band 3.7s steps(1, end) infinite 2.1s;
-  }
-
-  .site-footer__glitch :global(.site-footer__band--flare path) {
-    fill: var(--flare);
-  }
-
-  .site-footer__glitch :global(.site-footer__band--volt) {
-    clip-path: inset(80% 0 0 0);
-    animation: footer-band 2.9s steps(1, end) infinite 0.2s;
-  }
-
-  .site-footer__glitch :global(.site-footer__band--volt path) {
-    fill: var(--volt);
-  }
-
-  @keyframes footer-band {
-    0%,
-    100% {
-      opacity: 0;
-      transform: none;
-    }
-    78% {
-      opacity: 1;
-      transform: translateX(-3%);
-    }
-    82% {
-      transform: translateX(2.5%);
-    }
-    86% {
-      transform: translateX(-1%);
-    }
-    90% {
-      opacity: 0;
-      transform: none;
-    }
-  }
-
-  @keyframes footer-shake {
-    0%,
-    100% {
-      transform: none;
-    }
-    84% {
-      transform: translateX(0.6%);
-    }
-    87% {
-      transform: translateX(-0.6%);
-    }
-    90% {
-      transform: none;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .site-footer__glitch :global(.site-footer__logo) {
-      animation: none !important;
-    }
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
   }
 
   .site-footer__base {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: var(--space-3);
-    padding-block: var(--space-4);
-    border-top: var(--border-hairline) solid var(--line);
-    color: var(--on-dark-muted);
+    grid-column: 1 / -1;
+    margin-top: var(--space-4);
+    font-size: 0.8125rem;
+    color: var(--muted-on-ink);
   }
 
-  .site-footer__base p {
-    font: 500 0.75rem var(--font-mono);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+  @media (min-width: 40rem) {
+    .site-footer__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .site-footer__grid {
+      grid-template-columns: 6.5fr 3fr 3fr 2.5fr;
+    }
   }
 </style>

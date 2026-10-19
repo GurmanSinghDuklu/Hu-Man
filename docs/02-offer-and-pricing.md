@@ -1,5 +1,31 @@
 # Offer and pricing (source of truth)
 
+## Draft pricing (2026-10-19, on the site)
+From Gurman's final designs. Still being decided and may change; the site reads them from
+`site/src/data/pricing.ts`, so edit here, then there.
+
+| Tier | Price | Includes |
+|---|---|---|
+| Spark | £395 | 1 page · mobile-first · contact form · Business Profile setup · AI-readable basics |
+| Starter | £595 | Up to 3 pages · everything in Spark · on-page SEO |
+| Launch | £895 | Up to 5 pages · move off Wix or Squarespace · redirects · speed work |
+| Launch + Dashboard | £1,195 | Everything in Launch · your own owner dashboard |
+| Booking | £1,595 | Everything above · booking · Stripe, Square or SumUp |
+| Growth | £2,195 | Everything above · AI enquiry agent · reviews · service pages |
+| Full presence | £3,375 | Everything above · WhatsApp + call answering · follow-ups · owner digest |
+| Custom | POA | Web apps, client portals, marketplaces |
+
+Care plans (shown with a "Draft · being researched and reworked" badge): Basic £29/mo (hosting,
+security, backups); Care £59/mo (+ updates, 30 min edits a month); Grow £119/mo (+ monthly AI
+visibility check, 2 hrs work); Partner £249/mo (+ priority replies, monthly report, 5 hrs work).
+
+Add-ons: extra page £75; logo + brand pack £195; copywriting £95/page; photo shoot (Leeds) £195;
+Google Ads setup £245; extra AI check £49.
+
+Terms on the site: pay once, three revision rounds, full ownership, move up a tier and only pay the
+difference. The tables below are the earlier pricing, kept for reference.
+
+
 Prices were reduced by 25% from the earlier starter figures at Gurman's request. Monthly fees are unchanged. These are my planning estimates based on UK 2026 price guides, which put typical small-business sites at about £1,500 to £5,000 and freelancer-built WordPress projects at roughly £1,100 to £4,600, with junior freelance day rates around £240 to £360. Confirm with real projects.
 
 ## Packages

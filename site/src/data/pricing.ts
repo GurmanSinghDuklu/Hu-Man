@@ -1,59 +1,130 @@
 /**
- * Prices come only from docs/02-offer-and-pricing.md. Do not invent, round
- * or add prices here — edit that doc first, then mirror the change here.
+ * Prices come only from docs/02-offer-and-pricing.md ("Draft pricing, 2026-10-19"). Do not invent,
+ * round or add prices here: edit that doc first, then mirror the change here.
+ *
+ * These are the prices from the final designs. Gurman is still deciding (2026-10-19), so they
+ * are drafts: every page reads them from this one file, so a change is a single edit.
  */
-export interface PricingTier {
-  id: 'launch' | 'growth' | 'full-presence';
+
+/** How a tier's arch and row marker are filled (the colours in the designs). */
+export type TierStyle = 'outline' | 'peach' | 'lilac' | 'dusk' | 'ink' | 'rose';
+
+export interface Tier {
+  id: string;
   name: string;
-  for: string;
-  includes: string[];
-  introFrom: string;
-  monthly: string;
+  price: string;
+  /** Short line under the price on the arches. */
+  short: string;
+  /** The "Tier by tier" line. */
+  includes: string;
+  style: TierStyle;
+  /** The pill on the arch, if any. */
+  tag?: string;
 }
 
-export const pricingTiers: PricingTier[] = [
+export const tiers: Tier[] = [
+  {
+    id: 'spark',
+    name: 'Spark',
+    price: '£395',
+    short: 'One-page site',
+    includes: '1 page · mobile-first · contact form · Business Profile setup · AI-readable basics',
+    style: 'outline',
+    tag: 'Start here',
+  },
+  {
+    id: 'starter',
+    name: 'Starter',
+    price: '£595',
+    short: 'Small business basics',
+    includes: 'Up to 3 pages · everything in Spark · on-page SEO',
+    style: 'outline',
+  },
   {
     id: 'launch',
     name: 'Launch',
-    for: 'Outdated site that needs a modern, mobile-first, enquiry-ready rebuild',
-    includes: [
-      '5-page redesign',
-      'Migration with redirects',
-      'Speed and on-page SEO',
-      'Google Business Profile tune-up',
-      'Enquiry form and FAQ chatbot',
-    ],
-    introFrom: '£1,125',
-    monthly: '£99',
+    price: '£895',
+    short: 'Replace an old site',
+    includes: 'Up to 5 pages · move off Wix or Squarespace · redirects · speed work',
+    style: 'peach',
+  },
+  {
+    id: 'launch-dashboard',
+    name: 'Launch + Dashboard',
+    price: '£1,195',
+    short: 'Edit it yourself',
+    includes: 'Everything in Launch · your own owner dashboard',
+    style: 'lilac',
+    // The design said "Most picked"; nobody has bought yet, so that would be invented proof.
+    tag: 'Our pick',
+  },
+  {
+    id: 'booking',
+    name: 'Booking',
+    price: '£1,595',
+    short: 'Take bookings and deposits',
+    includes: 'Everything above · booking · Stripe, Square or SumUp',
+    style: 'outline',
   },
   {
     id: 'growth',
     name: 'Growth',
-    for: 'Wants bookings or orders and more enquiries handled automatically',
-    includes: [
-      'Everything in Launch',
-      'Online booking or ordering',
-      'Payments through hosted checkout (Stripe, Square, SumUp)',
-      'AI enquiry assistant',
-      'Social feed',
-      'Review collection',
-      'Structured data and service pages',
-      'Analytics',
-    ],
-    introFrom: '£2,100',
-    monthly: '£199',
+    price: '£2,195',
+    short: 'Answer enquiries 24/7',
+    includes: 'Everything above · AI enquiry agent · reviews · service pages',
+    style: 'dusk',
   },
   {
     id: 'full-presence',
     name: 'Full presence',
-    for: 'Wants the site to handle enquiries, follow-up and reporting',
-    includes: [
-      'Everything in Growth',
-      'AI call and WhatsApp answering',
-      'Quote and invoice follow-up automation',
-      'Monthly owner digest',
-    ],
-    introFrom: '£3,375',
-    monthly: '£349 and up',
+    price: '£3,375',
+    short: 'Hands-off growth',
+    includes: 'Everything above · WhatsApp + call answering · follow-ups · owner digest',
+    style: 'ink',
+  },
+  {
+    id: 'custom',
+    name: 'Custom',
+    price: 'POA',
+    short: 'Apps and portals',
+    includes: 'Web apps, client portals, marketplaces',
+    style: 'rose',
   },
 ];
+
+export interface CarePlan {
+  name: string;
+  price: string;
+  includes: string;
+  style: 'outline' | 'peach' | 'lilac' | 'ink';
+}
+
+/** Marked "Draft · being researched and reworked" on the site, as in the design. */
+export const carePlans: CarePlan[] = [
+  { name: 'Basic', price: '£29', includes: 'Hosting, security, backups', style: 'outline' },
+  { name: 'Care', price: '£59', includes: '+ updates, 30 min edits a month', style: 'peach' },
+  {
+    name: 'Grow',
+    price: '£119',
+    includes: '+ monthly AI visibility check, 2 hrs work',
+    style: 'lilac',
+  },
+  {
+    name: 'Partner',
+    price: '£249',
+    includes: '+ priority replies, monthly report, 5 hrs work',
+    style: 'ink',
+  },
+];
+
+export const addOns = [
+  'Extra page £75',
+  'Logo + brand pack £195',
+  'Copywriting £95/page',
+  'Photo shoot (Leeds) £195',
+  'Google Ads setup £245',
+  'Extra AI check £49',
+];
+
+/** Lowest and highest fixed prices, for copy such as "From £395". */
+export const fromPrice = tiers[0].price;

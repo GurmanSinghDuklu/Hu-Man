@@ -27,15 +27,9 @@ const { title, description, index = true, structuredData = false } = Astro.props
     <link rel="icon" href={withBase('/favicon.svg')} type="image/svg+xml" />
     <meta name="generator" content={Astro.generator} />
     <Seo title={title} description={description} index={index} structuredData={structuredData} />
-    <meta name="theme-color" content="#0B0D0A" />
+    <meta name="theme-color" content="#F1F2EC" />
     <script is:inline>
       document.documentElement.classList.add('js');
-      // Concept renders switch to their own fonts once the page is idle (see tokens.css).
-      addEventListener('load', function () {
-        (window.requestIdleCallback || setTimeout)(function () {
-          document.documentElement.classList.add('render-fonts');
-        });
-      });
     </script>
     <link rel="preload" href={montserrat800} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={archivo400} as="font" type="font/woff2" crossorigin />

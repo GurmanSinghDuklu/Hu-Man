@@ -1,0 +1,526 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import InnerHero from '../components/InnerHero.astro';
+import PriceArches from '../components/PriceArches.astro';
+import TalkBanner from '../components/TalkBanner.astro';
+import { tiers, carePlans, addOns, fromPrice } from '../data/pricing';
+import { site } from '../config/site';
+
+const choose = (name: string) =>
+  `mailto:${site.contact.email}?subject=${encodeURIComponent(`${name} enquiry`)}&body=${encodeURIComponent(`Hi,\n\nI'm interested in the ${name} tier. My business is...\n\n`)}`;
+
+const top = tiers.find((t) => t.id === 'full-presence')!.price;
+
+const faq = [
+  {
+    q: 'How much does a website cost?',
+    a: `Sites start from ${fromPrice} and go up in tiers to ${top}, with custom work priced on request.`,
+    link: true,
+  },
+  {
+    q: 'Will I lose my Google rankings?',
+    a: 'We keep page addresses where we can and set up redirects. No one can guarantee rankings.',
+  },
+  {
+    q: 'Can you get me into AI answers?',
+    a: 'No one can guarantee it. We run a thorough, extensive check and work to get you found and cited across ChatGPT, Perplexity, Claude, Gemini, Grok and Google AI Overviews.',
+  },
+  { q: 'How long does it take?', a: 'About 2 to 3 weeks for Launch, 4 to 6 for Growth.' },
+  {
+    q: 'Do I own my website?',
+    a: 'Yes, after final payment. Domain and accounts stay in your name.',
+  },
+  {
+    q: 'Where do you work?',
+    a: 'Leeds. In person across West Yorkshire, remote across the UK and worldwide.',
+  },
+];
+---
+
+<BaseLayout
+  title="Pricing | Hu/man Software Agency"
+  description={`Websites from ${fromPrice}, in eight tiers up to custom apps and portals. Pay once, add a care plan if you want one.`}
+>
+  <SiteHeader slot="header" />
+
+  <InnerHero label="Pricing" lens="Lens 03 / Pricing">
+    <Fragment slot="title">
+      Start at
+      <br />
+      {fromPrice}. Grow
+      <br />
+      from there.
+    </Fragment>
+    <Fragment slot="lede">
+      Pick the tier you need today. Move up any time and only pay the difference.
+    </Fragment>
+  </InnerHero>
+
+  <section class="band grid tiers" aria-labelledby="tiers-title">
+    <div class="sheet">
+      <h2 id="tiers-title" class="label">
+        8 tiers · Pay once · Add a care plan if you want one
+      </h2>
+      <p class="tiers__text">
+        Every tier includes a human from first call to launch, three revision rounds and full
+        ownership.
+      </p>
+      <div class="tiers__arches" data-reveal>
+        <PriceArches variant="pricing" />
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--paper-2 rows" aria-labelledby="rows-title">
+    <div class="sheet">
+      <p class="label" data-reveal>
+        What is in each
+      </p>
+      <h2 id="rows-title" class="display rows__title" data-reveal>
+        Tier by tier
+      </h2>
+      <ul class="rows__list">
+        {tiers.map((t) => (
+          <li class:list={['row', `row--${t.style}`, `row--${t.id}`]} data-reveal>
+            <h3 class="row__name">{t.name}</h3>
+            <p class="row__price">{t.price}</p>
+            <p class="row__includes">{t.includes}</p>
+            <a class="pill-btn row__btn" href={choose(t.name)}>
+              Choose<span class="visually-hidden"> {t.name}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="band grid care" aria-labelledby="care-title">
+    <div class="sheet">
+      <p class="label" data-reveal>
+        Support that stays
+      </p>
+      <div class="care__head" data-reveal>
+        <h2 id="care-title" class="display care__title">
+          Care plans
+        </h2>
+        <span class="pill care__draft">Draft · Being researched and reworked</span>
+      </div>
+      <ul class="care__cards">
+        {carePlans.map((c, i) => (
+          <li
+            class:list={['care__card', `care__card--${c.style}`]}
+            data-reveal
+            style={`--reveal-delay:${i * 0.06}s`}
+          >
+            <span class="care__name">{c.name}</span>
+            <span class="care__price">
+              {c.price}
+              <small>/mo</small>
+            </span>
+            <span>{c.includes}</span>
+          </li>
+        ))}
+      </ul>
+      <h3 class="label care__addons-title">Add-ons</h3>
+      <ul class="care__addons">
+        {addOns.map((a) => (
+          <li class="pill">{a}</li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="band band--paper-2 faq" id="faq" aria-labelledby="faq-title">
+    <div class="sheet">
+      <p class="label" data-reveal>
+        Pricing questions
+      </p>
+      <h2 id="faq-title" class="display faq__title" data-reveal>
+        FAQ
+      </h2>
+      <ul class="faq__list">
+        {faq.map((item) => (
+          <li>
+            <details class="faq__item" open>
+              <summary>
+                <span class="faq__q">{item.q}</span>
+                <span class="faq__toggle" aria-hidden="true" />
+              </summary>
+              <p class="faq__a">
+                {item.a}
+                {item.link && (
+                  <>
+                    <br />
+                    <a href="#tiers-title">
+                      See every tier <span aria-hidden="true">↗</span>
+                    </a>
+                  </>
+                )}
+              </p>
+            </details>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <TalkBanner />
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+  /* ---------- arches ---------- */
+  .tiers {
+    padding-block: clamp(2.5rem, calc(var(--u) * 0.6), 3.5rem)
+      clamp(3rem, calc(var(--u) * 0.66), 4rem);
+    border-top: 1px solid var(--grid-line);
+  }
+
+  .tiers__text {
+    max-width: 38rem;
+    margin-top: 0.5rem;
+    font-size: clamp(1rem, calc(var(--u) * 0.18), 1.1rem);
+  }
+
+  .tiers__arches {
+    margin-top: clamp(2rem, calc(var(--u) * 0.6), 3.5rem);
+  }
+
+  /* ---------- tier by tier ---------- */
+  .rows {
+    padding-block: clamp(3.5rem, calc(var(--u) * 0.9), 5.5rem) clamp(3rem, calc(var(--u) * 1), 6rem);
+  }
+
+  .rows__title {
+    margin-top: 0.3rem;
+  }
+
+  .rows__list {
+    display: grid;
+    gap: calc(var(--u) * 0.13);
+    margin-top: clamp(2rem, calc(var(--u) * 0.6), 3rem);
+  }
+
+  .row {
+    --mark: var(--mist);
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.5rem 1rem;
+    align-items: center;
+    padding: 1.1rem 1.25rem 1.1rem 1.75rem;
+    border: 1px solid var(--ink);
+    border-left: 0;
+    border-radius: 0 999px 999px 0;
+    background: var(--paper);
+  }
+
+  /* The coloured marker on the left edge of each row. */
+  .row::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: -1px;
+    bottom: -1px;
+    width: calc(var(--u) * 0.17);
+    min-width: 10px;
+    background: var(--mark);
+    border-radius: 999px 0 0 999px;
+  }
+
+  .row--peach {
+    --mark: var(--peach);
+  }
+
+  .row--lilac {
+    --mark: var(--grad-lilac);
+  }
+
+  .row--dusk {
+    --mark: var(--grad-dusk);
+  }
+
+  .row--ink {
+    --mark: var(--ink);
+  }
+
+  .row--rose {
+    --mark: var(--grad-rose);
+  }
+
+  /* In the design, the first marker of each colour group is square, the rest round. */
+  .row--starter::before,
+  .row--launch-dashboard::before,
+  .row--growth::before,
+  .row--custom::before {
+    border-radius: 0;
+  }
+
+  .row__name {
+    font-size: clamp(1rem, calc(var(--u) * 0.225), 1.4rem);
+    line-height: 1;
+  }
+
+  .row__price {
+    font: 800 clamp(1.2rem, calc(var(--u) * 0.29), 1.8rem) / 1 var(--font-display);
+    letter-spacing: -0.02em;
+  }
+
+  .row__includes {
+    grid-column: 1 / -1;
+    font-size: clamp(0.9rem, calc(var(--u) * 0.165), 1rem);
+  }
+
+  .row__btn {
+    grid-column: 1 / -1;
+    justify-self: start;
+    min-width: 9rem;
+  }
+
+  /* ---------- care plans ---------- */
+  .care {
+    padding-block: clamp(3.5rem, calc(var(--u) * 0.66), 4rem)
+      clamp(3rem, calc(var(--u) * 0.66), 4rem);
+  }
+
+  .care__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem calc(var(--u) * 0.45);
+    margin-top: 0.3rem;
+  }
+
+  .care__draft {
+    background: var(--peach);
+    white-space: normal;
+  }
+
+  .care__cards {
+    display: grid;
+    gap: 1rem;
+    margin-top: clamp(2rem, calc(var(--u) * 0.6), 3.5rem);
+  }
+
+  .care__card {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 0.4rem;
+    min-height: 13rem;
+    padding: clamp(1.25rem, calc(var(--u) * 0.32), 2rem);
+    border: 1px solid var(--ink);
+    font-size: clamp(0.95rem, calc(var(--u) * 0.165), 1.05rem);
+  }
+
+  .care__card--outline {
+    background: var(--paper);
+  }
+
+  .care__card--peach {
+    border-top-right-radius: calc(var(--u) * 0.9);
+    background: var(--peach);
+  }
+
+  .care__card--lilac {
+    border-radius: 999px 999px 0 0;
+    background: var(--grad-lilac);
+  }
+
+  .care__card--ink {
+    border-top-right-radius: calc(var(--u) * 1.6);
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .care__name {
+    font: 400 0.75rem var(--font-mono);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .care__price {
+    display: flex;
+    align-items: baseline;
+    font: 800 clamp(2.6rem, calc(var(--u) * 0.66), 4rem) / 1 var(--font-display);
+    letter-spacing: -0.03em;
+  }
+
+  .care__price small {
+    font-size: 0.3em;
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+
+  .care__addons-title {
+    margin-top: clamp(2rem, calc(var(--u) * 0.5), 3rem);
+  }
+
+  .care__addons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  .care__addons .pill {
+    padding: 0.65rem 1rem;
+    background: transparent;
+    font-size: 0.75rem;
+  }
+
+  /* ---------- FAQ ---------- */
+  .faq {
+    padding-block: clamp(3.5rem, calc(var(--u) * 0.9), 5.5rem)
+      clamp(3rem, calc(var(--u) * 0.8), 5rem);
+  }
+
+  .faq__title {
+    margin-top: 0.3rem;
+  }
+
+  .faq__list {
+    display: grid;
+    gap: 1rem;
+    margin-top: clamp(2rem, calc(var(--u) * 0.6), 3.5rem);
+  }
+
+  .faq__item {
+    position: relative;
+    min-height: 100%;
+    padding: clamp(1.25rem, calc(var(--u) * 0.38), 2.25rem);
+    border: 1px solid var(--ink);
+    border-radius: 0 calc(var(--u) * 0.72) calc(var(--u) * 0.72) 0;
+    background: var(--paper);
+  }
+
+  .faq__item summary {
+    display: block;
+    padding-right: 3.5rem;
+    list-style: none;
+    cursor: pointer;
+  }
+
+  .faq__item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq__q {
+    font: 800 clamp(1.05rem, calc(var(--u) * 0.225), 1.4rem) / 1.05 var(--font-display);
+    text-transform: uppercase;
+  }
+
+  /* The toggle sits centred on the card's right, as in the design. */
+  .faq__toggle {
+    position: absolute;
+    right: clamp(1.25rem, calc(var(--u) * 0.34), 2.25rem);
+    top: 50%;
+    translate: 0 -50%;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--ink);
+  }
+
+  .faq__toggle::before,
+  .faq__toggle::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 12px;
+    height: 1.5px;
+    background: var(--paper);
+    transform: translate(-50%, -50%);
+  }
+
+  .faq__toggle::after {
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+
+  .faq__item:not([open]) .faq__toggle {
+    top: clamp(1.25rem, calc(var(--u) * 0.38), 2.25rem);
+    translate: none;
+  }
+
+  /* Open shows the minus; the first card is pink, as in the design. */
+  .faq__item[open] .faq__toggle::after {
+    display: none;
+  }
+
+  .faq__list li:first-child .faq__toggle {
+    background: var(--pink);
+  }
+
+  .faq__a {
+    max-width: 36rem;
+    margin-top: 0.5rem;
+    padding-right: 3.5rem;
+    font-size: clamp(0.9rem, calc(var(--u) * 0.165), 1rem);
+    line-height: 1.5;
+  }
+
+  .faq__a a {
+    font-weight: 600;
+  }
+
+  @media (min-width: 48rem) {
+    .care__cards {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .faq__list {
+      grid-template-columns: repeat(2, 1fr);
+      gap: calc(var(--u) * 0.22) calc(var(--u) * 0.33);
+    }
+
+    .faq__list li:nth-child(odd) .faq__item {
+      border-radius: calc(var(--u) * 0.72) calc(var(--u) * 0.72) calc(var(--u) * 0.72) 0;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .row {
+      grid-template-columns: calc(var(--u) * 3.11) calc(var(--u) * 1.67) 1fr auto;
+      height: calc(var(--u) * 0.93);
+      padding: 0 calc(var(--u) * 0.34) 0 calc(var(--u) * 0.35);
+    }
+
+    .row__includes,
+    .row__btn {
+      grid-column: auto;
+    }
+
+    .row__btn {
+      min-width: calc(var(--u) * 2);
+      min-height: calc(var(--u) * 0.41);
+      font-size: calc(var(--u) * 0.11);
+    }
+
+    .care__cards {
+      grid-template-columns: repeat(4, 1fr);
+      gap: calc(var(--u) * 0.33);
+    }
+
+    .care__card {
+      min-height: calc(var(--u) * 3.66);
+    }
+
+    .care__name,
+    .care__addons .pill {
+      font-size: calc(var(--u) * 0.13);
+    }
+
+    .faq__item {
+      min-height: calc(var(--u) * 1.44);
+    }
+
+    .faq__toggle {
+      width: calc(var(--u) * 0.49);
+      height: calc(var(--u) * 0.49);
+    }
+  }
+</style>

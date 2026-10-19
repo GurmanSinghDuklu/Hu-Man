@@ -1,0 +1,150 @@
+---
+/**
+ * The rising row of eight price arches. "home" shows price and name; "pricing" adds the short
+ * line and the tags (Start here, Our pick), as in the pricing design.
+ */
+import { tiers } from '../data/pricing';
+
+interface Props {
+  variant: 'home' | 'pricing';
+}
+
+const { variant } = Astro.props;
+---
+
+<ol class:list={['arches', `arches--${variant}`]}>
+  {tiers.map((tier, i) => (
+    <li class:list={['arch', `arch--${tier.style}`]} style={`--i:${i}`}>
+      {variant === 'pricing' && <span class="arch__name arch__name--top">{tier.name}</span>}
+      <span class="arch__price">{tier.price}</span>
+      {variant === 'home' && <span class="arch__name">{tier.name}</span>}
+      {variant === 'pricing' && <span class="arch__short">{tier.short}</span>}
+      {variant === 'pricing' && tier.tag && <span class="arch__tag">{tier.tag}</span>}
+    </li>
+  ))}
+</ol>
+
+<style>
+  .arches {
+    --w: calc(var(--u) * 1.72);
+    --base: calc(var(--u) * 1.65);
+    --step: calc(var(--u) * 0.5);
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    align-items: end;
+    gap: calc(var(--u) * 0.15);
+  }
+
+  .arches--pricing {
+    --base: calc(var(--u) * 2.44);
+    --step: calc(var(--u) * 0.61);
+    gap: calc(var(--u) * 0.11);
+  }
+
+  .arch {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: calc(var(--base) + var(--i) * var(--step));
+    padding: calc(var(--u) * 0.45) calc(var(--u) * 0.1) calc(var(--u) * 0.2);
+    border: 1px solid var(--ink);
+    border-radius: 999px 999px 0 0;
+    text-align: center;
+  }
+
+  .arches--pricing .arch {
+    padding-top: calc(var(--u) * 0.58);
+  }
+
+  .arch--outline {
+    background: var(--paper);
+  }
+
+  .arch--peach {
+    background: var(--peach);
+  }
+
+  .arch--lilac {
+    background: var(--grad-lilac);
+  }
+
+  .arch--dusk {
+    background: var(--grad-dusk);
+    color: var(--paper);
+  }
+
+  .arch--ink {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .arch--rose {
+    background: var(--grad-rose);
+  }
+
+  .arch__price {
+    font: 800 clamp(1.1rem, calc(var(--u) * 0.283), 2rem) / 1 var(--font-display);
+    letter-spacing: -0.02em;
+  }
+
+  .arch__name {
+    margin-top: calc(var(--u) * 0.1);
+    font: 400 clamp(0.55rem, calc(var(--u) * 0.105), 0.75rem) / 1.2 var(--font-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .arch__name--top {
+    margin: 0 0 calc(var(--u) * 0.1);
+  }
+
+  .arch__short {
+    margin-top: calc(var(--u) * 0.1);
+    font-size: clamp(0.7rem, calc(var(--u) * 0.135), 0.9rem);
+    line-height: 1.25;
+  }
+
+  .arch__tag {
+    margin-top: auto;
+    padding: 0.55em 1.3em;
+    border-radius: 999px;
+    background: var(--ink);
+    color: var(--paper);
+    font: 500 clamp(0.55rem, calc(var(--u) * 0.105), 0.75rem) / 1.2 var(--font-mono);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  /* Phones: two rows of four, still rising. */
+  @media (max-width: 39.99rem) {
+    .arches {
+      grid-template-columns: repeat(4, 1fr);
+      --base: calc(var(--u) * 2.2);
+      --step: calc(var(--u) * 0.25);
+      gap: 8px;
+    }
+
+    .arch {
+      padding-top: calc(var(--u) * 0.5);
+    }
+
+    .arch__price {
+      font-size: 1.05rem;
+    }
+
+    .arch__name,
+    .arch__tag {
+      font-size: 0.55rem;
+    }
+
+    .arch__tag {
+      padding: 0.5em 0.8em;
+    }
+
+    .arch__short {
+      font-size: 0.7rem;
+    }
+  }
+</style>

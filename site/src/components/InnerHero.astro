@@ -1,0 +1,87 @@
+---
+/** Hero for the Services and Pricing pages: label, headline, lede and the "inner" collage. */
+import Collage from './Collage.astro';
+
+interface Props {
+  label: string;
+  lens: string;
+}
+
+const { label, lens } = Astro.props;
+---
+
+<section class="band grid ihero" aria-labelledby="ihero-title">
+  <div class="sheet ihero__sheet">
+    <div class="ihero__copy">
+      <p class="label">{label}</p>
+      <h1 id="ihero-title" class="ihero__title">
+        <slot name="title" />
+      </h1>
+      <p class="ihero__lede">
+        <slot name="lede" />
+      </p>
+    </div>
+    <div class="ihero__collage">
+      <Collage variant="inner" lens={lens} />
+    </div>
+  </div>
+</section>
+
+<style>
+  .ihero__sheet {
+    display: grid;
+    gap: var(--space-5);
+    padding-block: var(--space-5) var(--space-6);
+  }
+
+  .ihero__copy {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .ihero__title {
+    font-size: clamp(2.6rem, 11vw, 5.4rem);
+    line-height: 0.88;
+  }
+
+  .ihero__lede {
+    max-width: 34rem;
+    font-size: clamp(1rem, calc(var(--u) * 0.21), 1.3rem);
+    line-height: 1.5;
+  }
+
+  @media (min-width: 64rem) {
+    .ihero__sheet {
+      display: block;
+      height: calc(var(--u) * 7.9);
+      padding: 0;
+    }
+
+    .ihero__copy {
+      position: absolute;
+      left: var(--pad);
+      top: calc(var(--u) * 0.92);
+      width: calc(var(--u) * 7.6);
+      gap: calc(var(--u) * 0.2);
+    }
+
+    .ihero__copy .label {
+      font-size: calc(var(--u) * 0.135);
+    }
+
+    .ihero__title {
+      font-size: calc(var(--u) * 0.9);
+    }
+
+    .ihero__lede {
+      max-width: calc(var(--u) * 5.9);
+      font-size: calc(var(--u) * 0.2);
+    }
+
+    .ihero__collage {
+      position: absolute;
+      left: calc(var(--u) * 9);
+      top: 0;
+    }
+  }
+</style>

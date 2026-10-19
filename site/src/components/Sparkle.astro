@@ -1,0 +1,20 @@
+---
+/** The four-point star used across the designs (arches, circles, the talk banner). */
+interface Props {
+  class?: string;
+  /** Fill colour; defaults to the current text colour. */
+  color?: string;
+}
+
+const { class: className, color = 'currentColor' } = Astro.props;
+---
+
+<svg
+  class:list={['sparkle', className]}
+  viewBox="0 0 100 100"
+  aria-hidden="true"
+  focusable="false"
+  style={`fill:${color}`}
+>
+  <path d="M50 0C53.5 37 63 46.5 100 50C63 53.5 53.5 63 50 100C46.5 63 37 53.5 0 50C37 46.5 46.5 37 50 0Z"></path>
+</svg>

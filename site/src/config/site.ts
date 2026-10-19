@@ -15,23 +15,17 @@ export const site = {
   wordmark: 'HU/MAN',
   descriptor: 'Studio',
   nameIsPlaceholder: true,
-  tagline: 'Websites that turn local searches into bookings',
+  tagline: 'Made by hand. Built by machine.',
   founder: 'Gurman Singh Duklu',
+  // Leeds became the base on 2026-10-19 (final designs). The name stays off the pages at
+  // Gurman's request; `founder` is used only by the privacy notice, which must name the
+  // person responsible for the data.
   location: {
-    town: 'Bradford',
+    town: 'Leeds',
     region: 'West Yorkshire',
     country: 'GB',
   },
-  areasServed: [
-    'Bradford',
-    'Leeds',
-    'Halifax',
-    'Huddersfield',
-    'Keighley',
-    'Shipley',
-    'Bingley',
-    'Ilkley',
-  ],
+  areasServed: ['Leeds', 'Halifax', 'Huddersfield', 'Keighley', 'Shipley', 'Bingley', 'Ilkley'],
   contact: {
     email: 'gurmanduklu@gmail.com',
     phone: '+44 7988 450280',

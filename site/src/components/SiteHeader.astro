@@ -1,32 +1,26 @@
 ---
 import { site } from '../config/site';
-import { isHomePath, withBase } from '../config/paths';
+import { withBase } from '../config/paths';
 import Logo from './Logo.astro';
 
-// Section anchors only exist on the homepage. From any other page (privacy,
-// 404), link back to "/" plus the anchor so the link actually goes
-// somewhere, instead of a dead "#services" with no matching element.
-const isHome = isHomePath(Astro.url.pathname);
-const prefix = isHome ? '' : withBase('/');
-
+// Pages: home, services, pricing. "Work" is a home section and the FAQ lives on the pricing page,
+// so those links carry the page path and work from anywhere.
 const navLinks = [
-  { href: `${prefix}#services`, label: 'Services' },
-  { href: withBase('/work/'), label: 'Work' },
-  { href: `${prefix}#process`, label: 'Process' },
-  { href: `${prefix}#pricing`, label: 'Pricing' },
-  { href: `${prefix}#faq`, label: 'FAQ' },
+  { href: withBase('/services/'), label: 'Services' },
+  { href: `${withBase('/')}#work`, label: 'Work' },
+  { href: withBase('/pricing/'), label: 'Pricing' },
+  { href: `${withBase('/pricing/')}#faq`, label: 'FAQ' },
 ];
-const auditHref = `${prefix}#audit`;
 ---
 
-<header class:list={['site-header on-dark', { 'site-header--solid': !isHome }]}>
-  <div class="wrap site-header__inner">
+<header class="site-header">
+  <div class="sheet site-header__inner">
     <a href={withBase('/')} class="site-header__home" aria-label={`${site.name} home`}>
-      <!-- Two extra copies of the real artwork are the glitch bands (the logo is never retyped). -->
+      <!-- Two extra copies of the real artwork are the hover glitch bands (never retyped). -->
       <span class="site-header__logo">
-        <Logo label="" />
-        <Logo variant="paper" label="" class="site-header__band site-header__band--a" />
-        <Logo variant="paper" label="" class="site-header__band site-header__band--b" />
+        <Logo variant="ink" label="" />
+        <Logo variant="ink" label="" class="site-header__band site-header__band--a" />
+        <Logo variant="ink" label="" class="site-header__band site-header__band--b" />
       </span>
     </a>
 
@@ -40,37 +34,36 @@ const auditHref = `${prefix}#audit`;
       </ul>
     </nav>
 
-    <div class="site-header__actions">
-      <a href={auditHref} class="btn btn--primary site-header__cta">
-        Free audit
-      </a>
-      <details class="site-header__menu">
-        <summary aria-label="Menu">
-          <span class="site-header__burger" aria-hidden="true">
-            <i></i>
-            <i></i>
-          </span>
-        </summary>
-        <div class="site-header__panel">
-          <ul>
-            {navLinks.map((link) => (
-              <li>
-                <a href={link.href}>{link.label}</a>
-              </li>
-            ))}
-          </ul>
-          <a href={auditHref} class="btn btn--primary">
-            Get your free presence audit
-          </a>
-        </div>
-      </details>
-    </div>
+    <a href="#audit" class="btn site-header__cta">
+      Free audit
+    </a>
+
+    <details class="site-header__menu">
+      <summary aria-label="Menu">
+        <span class="site-header__burger" aria-hidden="true">
+          <i></i>
+          <i></i>
+        </span>
+      </summary>
+      <div class="site-header__panel">
+        <ul>
+          {navLinks.map((link) => (
+            <li>
+              <a href={link.href}>{link.label}</a>
+            </li>
+          ))}
+        </ul>
+        <a href="#audit" class="btn">
+          Free audit
+        </a>
+      </div>
+    </details>
   </div>
 </header>
 
 <script>
-  // Close the menu after following one of its links (same-page anchors
-  // would otherwise leave the panel open over the section).
+  // Close the menu after following one of its links (same-page anchors would otherwise leave
+  // the panel open over the section).
   document.querySelectorAll<HTMLDetailsElement>('.site-header__menu').forEach((menu) => {
     menu.addEventListener('click', (event) => {
       if ((event.target as HTMLElement).closest('a')) menu.open = false;
@@ -83,23 +76,12 @@ const auditHref = `${prefix}#audit`;
     position: sticky;
     top: 0;
     z-index: 50;
-    color: var(--on-dark);
-    border-bottom: var(--border-hairline) solid transparent;
-    transition:
-      background-color 0.15s linear,
-      border-color 0.15s linear;
-  }
-
-  /* Solid Ink with a hairline once the page scrolls: no blur, no shadow. */
-  .site-header:global(.is-scrolled),
-  .site-header--solid {
-    background: var(--brand-ink);
-    border-bottom-color: var(--line);
+    background: var(--paper);
+    border-bottom: 1px solid var(--grid-line);
   }
 
   .site-header__inner {
-    display: grid;
-    grid-template-columns: 1fr auto;
+    display: flex;
     align-items: center;
     gap: var(--space-4);
     min-height: 72px;
@@ -107,24 +89,49 @@ const auditHref = `${prefix}#audit`;
 
   .site-header__home {
     display: flex;
-    align-items: center;
-    justify-self: start;
+    margin-right: auto;
     padding-block: 0.75rem;
   }
 
-  .site-header__home :global(.logo) {
-    width: 7rem;
-  }
-
-  /* Hover or focus glitches the logo: a Pulse band and a Paper band of the same artwork jump
-     sideways while the logo itself shakes, in hard steps. Clips are fixed; only transform and
-     opacity animate. It repeats every 2 s while the pointer stays on it. */
   .site-header__logo {
     position: relative;
     display: block;
     line-height: 0;
   }
 
+  .site-header__logo :global(.logo) {
+    width: clamp(96px, calc(var(--u) * 1.25), 120px);
+    min-width: 0;
+  }
+
+  .site-header__nav {
+    display: none;
+  }
+
+  .site-header__nav ul {
+    display: flex;
+    gap: clamp(1.25rem, calc(var(--u) * 0.3), 1.75rem);
+  }
+
+  .site-header__nav a {
+    display: inline-block;
+    padding-block: 0.75rem;
+    font: 400 0.8125rem var(--font-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+
+  .site-header__nav a:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.4em;
+  }
+
+  .site-header__cta {
+    display: none;
+  }
+
+  /* Hover glitch: Pink and Indigo bands of the artwork jump sideways for a beat, every 2 s. */
   .site-header__logo :global(.site-header__band) {
     position: absolute;
     inset: 0;
@@ -137,7 +144,7 @@ const auditHref = `${prefix}#audit`;
   }
 
   .site-header__logo :global(.site-header__band--a path) {
-    fill: var(--pulse);
+    fill: var(--pink);
   }
 
   .site-header__logo :global(.site-header__band--b) {
@@ -145,12 +152,7 @@ const auditHref = `${prefix}#audit`;
   }
 
   .site-header__logo :global(.site-header__band--b path) {
-    fill: var(--brand-paper);
-  }
-
-  .site-header__home:hover .site-header__logo > :global(.logo:first-child),
-  .site-header__home:focus-visible .site-header__logo > :global(.logo:first-child) {
-    animation: logo-shake 2s steps(1, end) infinite;
+    fill: var(--indigo);
   }
 
   .site-header__home:hover :global(.site-header__band--a),
@@ -163,32 +165,13 @@ const auditHref = `${prefix}#audit`;
     animation: logo-band-b 2s steps(1, end) infinite;
   }
 
-  @keyframes logo-shake {
-    0% {
-      transform: translateX(2px);
-    }
-    5% {
-      transform: translateX(-2px);
-    }
-    10% {
-      transform: translateX(1px);
-    }
-    15%,
-    100% {
-      transform: none;
-    }
-  }
-
   @keyframes logo-band-a {
     0% {
       opacity: 1;
-      transform: translateX(-6px);
+      transform: translateX(-5px);
     }
     5% {
-      transform: translateX(5px);
-    }
-    10% {
-      transform: translateX(-3px);
+      transform: translateX(4px);
     }
     15%,
     100% {
@@ -200,13 +183,10 @@ const auditHref = `${prefix}#audit`;
   @keyframes logo-band-b {
     0% {
       opacity: 1;
-      transform: translateX(5px);
+      transform: translateX(4px);
     }
     6% {
-      transform: translateX(-7px);
-    }
-    11% {
-      transform: translateX(3px);
+      transform: translateX(-6px);
     }
     15%,
     100% {
@@ -215,73 +195,28 @@ const auditHref = `${prefix}#audit`;
     }
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .site-header__home :global(.logo) {
-      animation: none !important;
-    }
-  }
-
-  .site-header__nav {
-    display: none;
-  }
-
-  .site-header__nav ul {
-    list-style: none;
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-    margin: 0;
-    padding: 0;
-  }
-
-  .site-header__nav a {
-    display: inline-block;
-    color: var(--on-dark);
-    text-decoration: none;
-    font: 500 0.75rem var(--font-mono);
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    padding-block: 0.9rem;
-    transition: color 0.15s linear;
-  }
-
-  .site-header__nav a:hover {
-    color: var(--signal);
-  }
-
-  .site-header__actions {
-    display: flex;
-    align-items: center;
-    gap: var(--space-3);
-    justify-self: end;
-  }
-
-  .site-header__cta {
-    display: none;
-  }
-
+  /* ---------- mobile menu ---------- */
   .site-header__menu {
     position: relative;
   }
 
   .site-header__menu summary {
     list-style: none;
-    width: 48px;
-    height: 48px;
-    border: var(--border-hairline) solid var(--line-strong);
     display: grid;
     place-items: center;
+    width: 48px;
+    height: 48px;
+    border: 1px solid var(--ink);
     cursor: pointer;
-  }
-
-  .site-header__menu[open] summary {
-    background: var(--signal);
-    border-color: var(--signal);
-    color: var(--on-signal);
   }
 
   .site-header__menu summary::-webkit-details-marker {
     display: none;
+  }
+
+  .site-header__menu[open] summary {
+    background: var(--ink);
+    color: var(--paper);
   }
 
   .site-header__burger {
@@ -308,51 +243,56 @@ const auditHref = `${prefix}#audit`;
     position: absolute;
     right: 0;
     top: calc(100% + 0.75rem);
-    width: min(21rem, calc(100vw - 2rem));
+    width: min(20rem, calc(100vw - 2.5rem));
     padding: var(--space-4);
-    background: var(--brand-ink);
-    border: var(--border-hairline) solid var(--line-strong);
-  }
-
-  .site-header__panel ul {
-    list-style: none;
-    margin: 0 0 var(--space-4);
-    padding: 0;
+    background: var(--paper);
+    border: 1px solid var(--ink);
   }
 
   .site-header__panel li a {
     display: block;
     padding: 0.7rem 0;
+    border-bottom: 1px solid var(--line-soft);
     font: 800 1.5rem/1.1 var(--font-display);
-    letter-spacing: -0.01em;
     text-transform: uppercase;
     text-decoration: none;
-    border-bottom: var(--border-hairline) solid var(--line);
-  }
-
-  .site-header__panel li a:hover {
-    color: var(--signal);
   }
 
   .site-header__panel .btn {
     width: 100%;
+    margin-top: var(--space-4);
   }
 
-  @media (min-width: 68rem) {
+  @media (min-width: 64rem) {
     .site-header__inner {
-      grid-template-columns: 1fr auto 1fr;
+      min-height: var(--u);
+      gap: calc(var(--u) * 0.3);
     }
 
-    .site-header__nav {
+    .site-header__nav,
+    .site-header__cta {
       display: block;
     }
 
     .site-header__cta {
       display: inline-flex;
+      min-height: max(36px, calc(var(--u) * 0.48));
+      padding: 0 calc(var(--u) * 0.2);
+      font-size: calc(var(--u) * 0.135);
+    }
+
+    .site-header__nav a {
+      font-size: calc(var(--u) * 0.133);
     }
 
     .site-header__menu {
       display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .site-header__logo :global(.site-header__band) {
+      animation: none !important;
     }
   }
 </style>

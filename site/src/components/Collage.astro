@@ -1,0 +1,246 @@
+---
+/**
+ * The hero collage from the final designs: one portrait seen through grid cells (some cells show
+ * the face, some are blocks of Ink, Pink, Indigo or gradient), a ringed close-up of one eye, a
+ * gradient arch with the star, and a "Lens" pill. Positions are in grid units, measured from
+ * reference/final-designs/ (home.jpg for "home", services.jpg and pricing.jpg for "inner").
+ *
+ * On desktop the collage sits on the page grid; on narrow screens it scales into its own box.
+ * Decorative (aria-hidden); the portrait is used with Gurman's permission (2026-10-19).
+ */
+import { getImage } from 'astro:assets';
+import face from '../assets/portrait/source.jpg';
+import eye from '../assets/portrait/eye.jpg';
+import Sparkle from './Sparkle.astro';
+
+interface Props {
+  variant: 'home' | 'inner';
+  lens: string;
+}
+
+const { variant, lens } = Astro.props;
+
+type Kind = 'face' | 'ink' | 'pink' | 'indigo' | 'orb';
+// [kind, column, row] on the page grid (column 0 is the page's left edge, row 0 its top).
+type Cell = [Kind, number, number];
+
+interface Layout {
+  /** The collage box on the page grid: first column and row, and its size in cells. */
+  box: [number, number, number, number];
+  /** The face image: left, top and width in grid units, on the page grid. */
+  face: [number, number, number];
+  cells: Cell[];
+  /** The gradient arch: column, first row, height in cells. */
+  arch: [number, number, number];
+  /** The ringed eye: centre column, centre row, ring radius, photo radius (grid units). */
+  ring: [number, number, number, number];
+  /** The pill's left edge and top, in grid units. */
+  pill: [number, number];
+}
+
+const layouts: Record<Props['variant'], Layout> = {
+  home: {
+    box: [6, 2, 9.7, 7],
+    face: [7.68, -0.31, 8.71],
+    cells: [
+      ['face', 8, 3],
+      ['face', 9, 3],
+      ['face', 9, 4],
+      ['ink', 10, 4],
+      ['ink', 6, 5],
+      ['orb', 7, 5],
+      ['pink', 9, 5],
+      ['face', 10, 5],
+      ['face', 11, 5],
+      ['face', 8, 6],
+      ['face', 10, 6],
+      ['face', 11, 6],
+      ['ink', 12, 6],
+      ['ink', 8, 7],
+      ['face', 11, 7],
+      ['ink', 7, 8],
+      ['face', 10, 8],
+      ['face', 11, 8],
+      ['face', 12, 8],
+      ['indigo', 13, 8],
+    ],
+    arch: [14, 6, 3],
+    ring: [13, 4, 1.62, 1.5],
+    pill: [11.1, 6.2],
+  },
+  inner: {
+    box: [9, 1, 6.6, 7],
+    face: [8.62, -1.51, 9.2],
+    cells: [
+      ['face', 10, 2],
+      ['ink', 11, 2],
+      ['pink', 10, 3],
+      ['face', 11, 3],
+      ['face', 12, 4],
+      ['ink', 10, 5],
+      ['face', 11, 5],
+      ['face', 12, 5],
+      ['orb', 13, 5],
+      ['ink', 11, 6],
+      ['face', 12, 6],
+      ['indigo', 9, 7],
+      ['face', 11, 7],
+      ['face', 12, 7],
+      ['face', 13, 7],
+    ],
+    arch: [14, 5, 3],
+    ring: [14, 2.5, 1.49, 1.33],
+    pill: [11.2, 4],
+  },
+};
+
+const L = layouts[variant];
+const [bc, br, bw, bh] = L.box;
+const faceImg = await getImage({ src: face, width: 1000, format: 'webp', quality: 72 });
+const eyeImg = await getImage({ src: eye, width: 330, format: 'webp', quality: 72 });
+
+const px = (n: number) => `calc(${n.toFixed(3)} * var(--cu))`;
+---
+
+<div
+  class:list={['collage', `collage--${variant}`]}
+  aria-hidden="true"
+  style={`--bw:${bw};--bh:${bh};--bc:${bc};--br:${br};--face:url(${faceImg.src});--fx:${L.face[0] - bc};--fy:${L.face[1] - br};--fw:${L.face[2]}`}
+>
+  {L.cells.map(([kind, c, r]) => (
+    <span
+      class:list={['collage__cell', `collage__cell--${kind}`]}
+      style={`--c:${c - bc};--r:${r - br}`}
+    />
+  ))}
+  <span
+    class="collage__arch"
+    style={`left:${px(L.arch[0] - bc)};top:${px(L.arch[1] - br)};height:${px(L.arch[2])}`}
+  >
+    <Sparkle class="collage__arch-star" color="var(--paper)" />
+    <span class="collage__est">Est. 2026</span>
+  </span>
+  <span
+    class="collage__ring"
+    style={`left:${px(L.ring[0] - bc - L.ring[2])};top:${px(L.ring[1] - br - L.ring[2])};width:${px(L.ring[2] * 2)}`}
+  >
+    <img
+      src={eyeImg.src}
+      alt=""
+      width="330"
+      height="330"
+      loading="eager"
+      decoding="async"
+      style={`width:${((L.ring[3] / L.ring[2]) * 100).toFixed(2)}%`}
+    />
+  </span>
+  <span class="pill collage__pill" style={`left:${px(L.pill[0] - bc)};top:${px(L.pill[1] - br)}`}>
+    {lens}
+  </span>
+</div>
+
+<style>
+  .collage {
+    --cu: var(--u);
+    position: relative;
+    width: calc(var(--bw) * var(--cu));
+    height: calc(var(--bh) * var(--cu));
+  }
+
+  .collage__cell {
+    position: absolute;
+    left: calc(var(--c) * var(--cu));
+    top: calc(var(--r) * var(--cu));
+    width: var(--cu);
+    height: var(--cu);
+  }
+
+  /* Face cells all show one portrait, placed once for the whole collage, so they line up. */
+  .collage__cell--face {
+    background-image: var(--face);
+    background-repeat: no-repeat;
+    background-size: calc(var(--fw) * var(--cu)) auto;
+    background-position: calc((var(--fx) - var(--c)) * var(--cu))
+      calc((var(--fy) - var(--r)) * var(--cu));
+  }
+
+  .collage__cell--ink {
+    background: var(--ink);
+  }
+
+  .collage__cell--pink {
+    background: var(--pink);
+  }
+
+  .collage__cell--indigo {
+    background: var(--indigo);
+  }
+
+  .collage__cell--orb {
+    border-radius: 50%;
+    background: var(--grad-lilac);
+  }
+
+  .collage__arch {
+    position: absolute;
+    width: var(--cu);
+    border-radius: calc(var(--cu) / 2) calc(var(--cu) / 2) 0 0;
+    background: var(--grad-dusk);
+  }
+
+  .collage__arch :global(.collage__arch-star) {
+    position: absolute;
+    left: 50%;
+    top: calc(var(--cu) * 0.32);
+    width: calc(var(--cu) * 0.36);
+    transform: translateX(-50%);
+  }
+
+  .collage__est {
+    position: absolute;
+    left: 50%;
+    bottom: calc(var(--cu) * 0.3);
+    transform: translateX(-50%) rotate(-90deg);
+    transform-origin: center;
+    font: 400 calc(var(--cu) * 0.11) / 1 var(--font-mono);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--paper);
+    white-space: nowrap;
+  }
+
+  .collage__ring {
+    position: absolute;
+    display: grid;
+    place-items: center;
+    aspect-ratio: 1;
+    border: 1px solid var(--ink);
+    border-radius: 50%;
+  }
+
+  .collage__ring img {
+    height: auto;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .collage__pill {
+    position: absolute;
+    font-size: calc(var(--cu) * 0.125);
+    padding: calc(var(--cu) * 0.07) calc(var(--cu) * 0.15);
+  }
+
+  /* Narrow screens: the collage scales into the content width. */
+  @media (max-width: 63.99rem) {
+    .collage {
+      --cu: calc((100vw - 2 * var(--pad)) / var(--bw));
+    }
+
+    .collage__pill {
+      font-size: max(8px, calc(var(--cu) * 0.11));
+      letter-spacing: 0.1em;
+      transform: translateX(-12%);
+    }
+  }
+</style>

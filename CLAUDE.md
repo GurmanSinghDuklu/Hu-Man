@@ -1,6 +1,6 @@
 # Duklu Digital: project memory
 
-Gurman Singh Duklu's solo web, AI and local-search studio (Bradford, UK). Working brand since 2026-09-23: **Hu/man** (wordmark "HU/MAN"), replacing "Duklu Digital". Still a working name: keep it in `src/config/site.ts` (`name`, `wordmark`, `descriptor`) so it is easy to change.
+Gurman Singh Duklu's solo web, AI and local-search studio (Leeds, UK; Bradford before 2026-10-19). Working brand since 2026-09-23: **Hu/man** (wordmark "HU/MAN"), replacing "Duklu Digital". Still a working name: keep it in `src/config/site.ts` (`name`, `wordmark`, `descriptor`) so it is easy to change.
 
 ## Current goal
 Build the studio's own marketing website: high-end, fast, local-SEO-ready, with concept before/after renders, services, pricing, credentials, FAQ and a free-audit contact path. Build it in the phases in `docs/08-roadmap.md`. Do not deploy, buy domains or publish anything without asking first.
@@ -262,6 +262,21 @@ Plum `#1B0A2E` are new section grounds (`.night`, `.plum` in `tokens.css`). Thin
 6. `npm run screenshots` now covers home, /work/ and two case pages, and forces reveals on first (the old
    full-page shots were mostly blank). `npm run lighthouse -- work/tesla/` tests one page.
 Lighthouse home 99/100/100/100, case pages 98-100 performance. axe 0 violations on all 9 pages.
+
+## Final designs build (2026-10-19, branch `agency-redesign`)
+The site now matches Gurman's three final designs (`reference/final-designs/`; spec
+`docs/superpowers/specs/2026-10-19-final-designs.md`). This replaces the 2026-10-17 neon/glitch look:
+light Paper page on a fine grid, Ink type, gradient arches, a portrait collage. Pages: `/`, `/services/`,
+`/pricing/`, `/privacy/`, 404. Leeds is the base; no personal name on the pages (privacy notice only).
+Prices are drafts in `site/src/data/pricing.ts` (mirrors docs/02 "Draft pricing"). Things worth knowing:
+1. **Grid unit `--u`** is 1/16 of the page (max 100px). Desktop layouts and headline sizes are in units,
+   measured from the designs; check changes side by side against the design at its own width.
+2. **Design measurements include the 1u header**, so subtract one row when placing hero content.
+3. **Our work images** are crops of the real captures (`node scripts/crop-work.mjs`). Never crop
+   Essence's "What our clients say" section.
+4. **Honesty swaps** from the design: "Most picked" is "Our pick"; the check form opens an email.
+5. **Full-page screenshots can show lazy images blank** before they decode; force `loading=eager` first.
+Lighthouse 98-100 / 100 / 100 / 100, axe 0 violations on all five pages.
 
 ## GitHub and preview deploy
 Repo: github.com/GurmanSinghDuklu/Hu-Man (public; default branch `hu-man-rebrand`). Every push to

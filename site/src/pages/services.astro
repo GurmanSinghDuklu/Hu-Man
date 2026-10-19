@@ -1,0 +1,605 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import InnerHero from '../components/InnerHero.astro';
+import TalkBanner from '../components/TalkBanner.astro';
+import Sparkle from '../components/Sparkle.astro';
+import { tiers, carePlans } from '../data/pricing';
+
+const price = (id: string) => tiers.find((t) => t.id === id)!.price;
+
+// The eight services, with the icon shape and colour from the design.
+const services = [
+  {
+    title: 'Move off Wix or Squarespace',
+    text: 'We rebuild, keep your addresses where we can and redirect the rest.',
+    tag: 'Included in Launch',
+    icon: 'teal',
+  },
+  {
+    title: 'Local + AI search',
+    text: 'Business Profile, service pages, reviews and monthly AI visibility checks.',
+    tag: 'Add-on or care plan',
+    icon: 'indigo',
+  },
+  {
+    title: 'AI-ready website',
+    text: 'Mobile-first site with clean structure, schema and plain facts AI can quote.',
+    tag: `From ${price('spark')}`,
+    icon: 'lilac',
+  },
+  {
+    title: 'Owner dashboard',
+    text: 'Your own back end to edit text, prices, hours, photos and offers.',
+    tag: `From ${price('launch-dashboard')}`,
+    icon: 'dusk',
+  },
+  {
+    title: 'Booking + payments',
+    text: 'Deposits and orders through Stripe, Square or SumUp.',
+    tag: `From ${price('booking')}`,
+    icon: 'peach',
+  },
+  {
+    title: 'AI enquiry agent',
+    text: 'Answers from your real info, books, hands over to you. Tested before launch.',
+    tag: `From ${price('growth')}`,
+    icon: 'rose',
+  },
+  {
+    title: 'Automations',
+    text: 'Missed-call text-back, quote follow-ups, reminders and a weekly digest.',
+    tag: `From ${price('full-presence')}`,
+    icon: 'orange',
+  },
+  {
+    title: 'Support that stays',
+    text: 'A real person when things break, on a plan that fits.',
+    tag: `From ${carePlans[0].price}/mo`,
+    icon: 'ink',
+  },
+];
+
+const compare = [
+  ['Who fixes it when it breaks', 'You, or a support queue', 'A real person you can name'],
+  ['Editing', 'The builder’s editor', 'Your own simple dashboard'],
+  ['AI-ready setup', 'Up to you to configure', 'Set up and checked monthly'],
+  ['Ownership', 'You rent the platform', 'You own the code and domain'],
+  ['Monthly cost', 'Platform subscription', `Care plan from ${carePlans[0].price}`],
+];
+
+const promise = [
+  { big: '1 day', small: 'Reply on working days', style: 'ink' },
+  { big: '3', small: 'Revision rounds included', style: 'outline' },
+  { big: 'Yours', small: 'Code, content and domain', style: 'outline' },
+  { big: 'Still here', small: 'Support after launch', style: 'lilac' },
+];
+
+const steps = [
+  {
+    title: 'Free presence audit',
+    text: 'Phone experience, speed, Business Profile, reviews and AI recommendations.',
+  },
+  { title: 'Concept', text: 'You see a mock-up before anything is built.' },
+  { title: 'Build + test', text: 'Built and tested on real phones.' },
+  { title: 'Launch', text: 'Old addresses redirected, plus a short handover video.' },
+  { title: 'Grow', text: 'Reviews, visibility and automations, month by month.' },
+];
+---
+
+<BaseLayout
+  title="Services | Hu/man Software Agency"
+  description="Agent-ready websites, owner dashboards, booking and payments, AI enquiry agents, automations and support that stays, from a Leeds studio."
+>
+  <SiteHeader slot="header" />
+
+  <InnerHero label="Services" lens="Lens 02 / What we do">
+    <Fragment slot="title">
+      Everything
+      <br />
+      you need.
+      <br />
+      Nothing you
+      <br />
+      don’t.
+    </Fragment>
+    <Fragment slot="lede">
+      Agentic AI-ready websites, your own dashboard, booking, AI agents and support that stays. Pick
+      one, or build up over time.
+    </Fragment>
+  </InnerHero>
+
+  <section class="band svc" aria-label="Our services">
+    <ul class="sheet svc__list">
+      {services.map((s, i) => (
+        <li class="svc__row" data-reveal style={`--reveal-delay:${(i % 4) * 0.05}s`}>
+          <span class:list={['svc__icon', `svc__icon--${s.icon}`]} aria-hidden="true">
+            <Sparkle />
+          </span>
+          <div class="svc__copy">
+            <h2>{s.title}</h2>
+            <p>{s.text}</p>
+          </div>
+          <span class="pill svc__tag">{s.tag}</span>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="band band--paper-2 cmp" aria-labelledby="cmp-title">
+    <div class="sheet">
+      <p class="label" data-reveal>
+        Switching?
+      </p>
+      <h2 id="cmp-title" class="display cmp__title" data-reveal>
+        Website builder vs Hu/man
+      </h2>
+      <table class="cmp__table">
+        <thead>
+          <tr>
+            <th scope="col">
+              <span class="visually-hidden">What</span>
+            </th>
+            <th scope="col">Typical website builder</th>
+            <th scope="col">Hu/man</th>
+          </tr>
+        </thead>
+        <tbody>
+          {compare.map(([what, builder, us]) => (
+            <tr data-reveal>
+              <th scope="row">{what}</th>
+              <td>{builder}</td>
+              <td>
+                <span class="cmp__us">{us}</span>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <p class="cmp__note">
+        General comparison. Builders like Wix and Squarespace suit many people. We suit people who
+        want a human doing it for them.
+      </p>
+    </div>
+  </section>
+
+  <section class="band grid promise" aria-labelledby="promise-title">
+    <div class="sheet">
+      <p class="label" data-reveal>
+        Our promise
+      </p>
+      <h2 id="promise-title" class="display promise__title" data-reveal>
+        A human, the whole way through.
+      </h2>
+      <ul class="promise__cards">
+        {promise.map((p, i) => (
+          <li
+            class:list={['promise__card', `promise__card--${p.style}`]}
+            data-reveal
+            style={`--reveal-delay:${i * 0.06}s`}
+          >
+            <span class="promise__big">{p.big}</span>
+            <span>{p.small}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="band steps" aria-labelledby="steps-title">
+    <div class="sheet">
+      <p class="label" data-reveal>
+        05 / How it works
+      </p>
+      <h2 id="steps-title" class="display steps__title" data-reveal>
+        Five steps
+      </h2>
+      <ol class="steps__list">
+        {steps.map((s, i) => (
+          <li data-reveal style={`--reveal-delay:${i * 0.06}s`}>
+            <span class:list={['steps__circle', { 'steps__circle--first': i === 0 }]}>
+              <span class="steps__n">Step {String(i + 1).padStart(2, '0')}</span>
+              <span class="steps__name">{s.title}</span>
+            </span>
+            <p>{s.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <TalkBanner />
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+  /* ---------- services list ---------- */
+  .svc {
+    padding-block: clamp(2rem, calc(var(--u) * 0.66), 4rem)
+      clamp(3rem, calc(var(--u) * 0.72), 4.5rem);
+  }
+
+  .svc__row {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.75rem 1.25rem;
+    align-items: center;
+    padding-block: 1rem;
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  .svc__icon {
+    display: grid;
+    place-items: center;
+    width: 4.5rem;
+    aspect-ratio: 1;
+    color: var(--paper);
+  }
+
+  .svc__icon :global(.sparkle) {
+    width: 24%;
+  }
+
+  .svc__icon--teal {
+    border-radius: 50%;
+    background: var(--teal);
+  }
+
+  .svc__icon--indigo {
+    background: var(--grad-indigo);
+  }
+
+  .svc__icon--lilac {
+    border-radius: 50% 50% 0 0;
+    background: var(--grad-lilac);
+    color: var(--ink);
+  }
+
+  .svc__icon--dusk {
+    border-bottom-right-radius: 100%;
+    background: var(--grad-dusk);
+  }
+
+  .svc__icon--peach {
+    border-radius: 28%;
+    background: var(--peach);
+    color: var(--ink);
+  }
+
+  .svc__icon--rose {
+    border-top-left-radius: 100%;
+    background: var(--grad-rose);
+    color: var(--ink);
+  }
+
+  .svc__icon--orange {
+    border-radius: 50%;
+    background: var(--orange);
+  }
+
+  .svc__icon--ink {
+    background: var(--ink);
+  }
+
+  .svc__copy {
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  .svc__copy h2 {
+    font-size: clamp(1.25rem, calc(var(--u) * 0.36), 2.2rem);
+    line-height: 0.95;
+  }
+
+  .svc__copy p {
+    color: #2f312d;
+    font-size: clamp(0.95rem, calc(var(--u) * 0.18), 1.1rem);
+  }
+
+  .svc__tag {
+    grid-column: 2;
+    justify-self: start;
+    background: transparent;
+  }
+
+  /* ---------- comparison ---------- */
+  .cmp {
+    padding-block: clamp(3.5rem, calc(var(--u) * 1.1), 6rem)
+      clamp(2.5rem, calc(var(--u) * 0.66), 4rem);
+  }
+
+  .cmp__title {
+    margin-top: 0.3rem;
+  }
+
+  .cmp__table {
+    width: 100%;
+    margin-top: clamp(2.5rem, calc(var(--u) * 1.1), 7rem);
+    border-collapse: separate;
+    border-spacing: 0 calc(var(--u) * 0.11);
+  }
+
+  .cmp__table thead th {
+    padding: 0 0 0.75rem;
+    font: 400 0.75rem var(--font-mono);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-align: left;
+  }
+
+  .cmp__table tbody th,
+  .cmp__table td {
+    padding: 0.5rem;
+    background: var(--paper);
+    border-block: 1px solid var(--ink);
+    text-align: left;
+    vertical-align: middle;
+  }
+
+  .cmp__table tbody th {
+    padding-left: clamp(1rem, calc(var(--u) * 0.34), 2rem);
+    border-left: 1px solid var(--ink);
+    border-radius: 999px 0 0 999px;
+    font: 800 clamp(0.85rem, calc(var(--u) * 0.2), 1.25rem) / 1.1 var(--font-display);
+    text-transform: uppercase;
+  }
+
+  .cmp__table td {
+    color: #3b3d39;
+    font-size: clamp(0.875rem, calc(var(--u) * 0.18), 1.1rem);
+  }
+
+  .cmp__table td:last-child {
+    padding-right: 0.45rem;
+    border-right: 1px solid var(--ink);
+    border-radius: 0 999px 999px 0;
+  }
+
+  .cmp__us {
+    display: block;
+    padding: 0.9rem 1.5rem;
+    border-radius: 999px;
+    background: var(--grad-lilac);
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .cmp__note {
+    margin-top: 1.5rem;
+    font-size: 0.875rem;
+    color: var(--muted);
+  }
+
+  /* ---------- promise ---------- */
+  .promise {
+    padding-block: clamp(3.5rem, calc(var(--u) * 1.05), 6rem)
+      clamp(3rem, calc(var(--u) * 0.66), 4rem);
+  }
+
+  .promise__title {
+    max-width: 15em;
+    margin-top: 0.3rem;
+  }
+
+  .promise__cards {
+    display: grid;
+    gap: 1rem;
+    margin-top: clamp(2rem, calc(var(--u) * 0.5), 3rem);
+  }
+
+  .promise__card {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 0.3rem;
+    min-height: 10rem;
+    padding: clamp(1.25rem, calc(var(--u) * 0.27), 1.75rem);
+    border: 1px solid var(--ink);
+    font-size: clamp(0.9rem, calc(var(--u) * 0.165), 1rem);
+  }
+
+  .promise__card--ink {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .promise__card--outline {
+    background: var(--paper);
+  }
+
+  .promise__card--lilac {
+    border-top-right-radius: calc(var(--u) * 1.1);
+    background: var(--grad-lilac);
+  }
+
+  .promise__big {
+    font: 800 clamp(2rem, calc(var(--u) * 0.5), 3rem) / 1 var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+  }
+
+  /* ---------- five steps ---------- */
+  .steps {
+    padding-block: clamp(3.5rem, calc(var(--u) * 1), 6rem) clamp(2rem, calc(var(--u) * 0.6), 4rem);
+  }
+
+  .steps__title {
+    margin-top: 0.3rem;
+  }
+
+  .steps__list {
+    display: grid;
+    gap: 2rem;
+    margin-top: clamp(2rem, calc(var(--u) * 0.15), 3rem);
+  }
+
+  .steps__list li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 1.25rem;
+  }
+
+  .steps__circle {
+    display: grid;
+    place-content: center;
+    gap: 0.4rem;
+    width: 9rem;
+    aspect-ratio: 1;
+    padding: 1rem;
+    border: 1px solid var(--ink);
+    border-radius: 50%;
+    text-align: center;
+  }
+
+  .steps__circle--first {
+    background: var(--grad-dusk);
+    color: var(--paper);
+  }
+
+  .steps__n {
+    font: 400 0.6875rem var(--font-mono);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .steps__name {
+    font: 800 1.15rem/0.95 var(--font-display);
+    text-transform: uppercase;
+  }
+
+  .steps__list p {
+    font-size: 1rem;
+    line-height: 1.45;
+  }
+
+  @media (min-width: 48rem) {
+    .promise__cards {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .svc__row {
+      grid-template-columns: calc(var(--u) * 1.22) 1fr calc(var(--u) * 3.28);
+      gap: calc(var(--u) * 0.39);
+      min-height: calc(var(--u) * 1.44);
+      padding-block: calc(var(--u) * 0.07);
+    }
+
+    .svc__icon {
+      width: calc(var(--u) * 1.22);
+    }
+
+    .svc__tag {
+      grid-column: auto;
+      font-size: calc(var(--u) * 0.135);
+    }
+
+    .cmp__table thead th {
+      font-size: calc(var(--u) * 0.12);
+    }
+
+    .cmp__table thead th:first-child {
+      width: calc(var(--u) * 5.1);
+    }
+
+    .cmp__table thead th:nth-child(2) {
+      width: calc(var(--u) * 4.8);
+    }
+
+    .cmp__table tbody th,
+    .cmp__table td {
+      height: calc(var(--u) * 0.88);
+    }
+
+    .cmp__us {
+      padding: calc(var(--u) * 0.17) calc(var(--u) * 0.27);
+    }
+
+    .promise__cards {
+      grid-template-columns: repeat(4, 1fr);
+      gap: calc(var(--u) * 0.33);
+    }
+
+    .promise__card {
+      min-height: calc(var(--u) * 2.22);
+    }
+
+    .steps__list {
+      grid-template-columns: repeat(5, 1fr);
+      gap: calc(var(--u) * 0.39);
+    }
+
+    .steps__list li {
+      grid-template-columns: 1fr;
+      justify-items: center;
+      gap: calc(var(--u) * 0.33);
+      text-align: center;
+    }
+
+    .steps__circle {
+      width: calc(var(--u) * 2.66);
+    }
+
+    .steps__n {
+      font-size: calc(var(--u) * 0.12);
+    }
+
+    .steps__name {
+      font-size: calc(var(--u) * 0.23);
+    }
+
+    .steps__list p {
+      max-width: calc(var(--u) * 2.5);
+      font-size: calc(var(--u) * 0.165);
+    }
+  }
+
+  /* Phones: the comparison stacks into cards. */
+  @media (max-width: 47.99rem) {
+    .cmp__table,
+    .cmp__table tbody,
+    .cmp__table tr,
+    .cmp__table th,
+    .cmp__table td {
+      display: block;
+    }
+
+    .cmp__table thead {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+    }
+
+    .cmp__table tr {
+      margin-bottom: 1rem;
+      padding: 1rem;
+      border: 1px solid var(--ink);
+      border-radius: 1.5rem;
+      background: var(--paper);
+    }
+
+    .cmp__table tbody th,
+    .cmp__table td,
+    .cmp__table td:last-child {
+      padding: 0.25rem 0;
+      border: 0;
+      border-radius: 0;
+      background: none;
+    }
+
+    .cmp__table td:nth-child(2)::before {
+      content: 'Website builder: ';
+      color: var(--muted);
+    }
+
+    .cmp__us {
+      margin-top: 0.5rem;
+    }
+  }
+</style>
