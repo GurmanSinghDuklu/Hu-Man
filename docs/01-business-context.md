@@ -49,6 +49,7 @@ Competition: specialist vendors already sell AI call answering to some sectors (
 - Phone: +44 7988 450280
 - GitHub: github.com/GurmanSinghDuklu
 - LinkedIn: linkedin.com/in/gurman-singh-duklu
+- Instagram: instagram.com/humansoftwareagency (confirmed 2026-10-25; account type not yet checked)
 - Location: Bradford, West Yorkshire (service-area business; do not publish a street address)
 Consider a dedicated business number before launch too, because a public page invites spam.
 
