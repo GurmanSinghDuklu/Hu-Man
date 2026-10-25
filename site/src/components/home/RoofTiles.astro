@@ -1,0 +1,108 @@
+---
+/** "Everything under one roof" (home 05): the six service areas as tiles, linking to /services/. */
+import { serviceAreas } from '../../data/services';
+import { withBase } from '../../config/paths';
+---
+
+<section class="band grid roof section" aria-labelledby="roof-title">
+  <div class="sheet">
+    <p class="label" data-reveal>
+      05 / What we do
+    </p>
+    <h2 id="roof-title" class="display display--m" data-reveal>
+      Everything under one roof.
+    </h2>
+
+    <ul class="roof__tiles">
+      {serviceAreas.map((s, i) => (
+        <li
+          class:list={['roof__tile', `fill--${s.style}`, `roof__tile--${s.style}`]}
+          data-reveal
+          style={`--reveal-delay:${(i % 3) * 0.08}s`}
+        >
+          <span class="roof__n">{String(i + 1).padStart(2, '0')}</span>
+          <h3>{s.title}</h3>
+        </li>
+      ))}
+    </ul>
+
+    <a class="more-link roof__link" href={withBase('/services/')}>
+      See everything we do <span aria-hidden="true">↗</span>
+    </a>
+  </div>
+</section>
+
+<style>
+  .roof__tiles {
+    display: grid;
+    gap: max(12px, calc(var(--u) * 0.33));
+    margin-top: clamp(2rem, calc(var(--u) * 0.6), 3.5rem);
+  }
+
+  .roof__tile {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 9.5rem;
+    padding: clamp(1.1rem, calc(var(--u) * 0.33), 1.75rem);
+    border: 1px solid var(--ink);
+  }
+
+  .roof__n {
+    font: 800 clamp(1.9rem, calc(var(--u) * 0.48), 2.9rem) / 1 var(--font-display);
+    letter-spacing: -0.02em;
+  }
+
+  .roof__tile h3 {
+    max-width: 12em;
+    font-size: clamp(1.05rem, calc(var(--u) * 0.28), 1.7rem);
+    line-height: 0.95;
+  }
+
+  /* The corner each tile rounds, and the paper type on the darker fills, as in the design. */
+  .roof__tile--lilac,
+  .roof__tile--peach,
+  .roof__tile--teal {
+    border-top-right-radius: calc(var(--u) * 1.1);
+  }
+
+  .roof__tile--indigo {
+    border-bottom-right-radius: calc(var(--u) * 1.1);
+    color: var(--paper);
+  }
+
+  .roof__tile--dusk .roof__n {
+    color: var(--paper);
+  }
+
+  .roof__link {
+    margin-top: clamp(2rem, calc(var(--u) * 0.66), 3.5rem);
+  }
+
+  @media (min-width: 40rem) {
+    .roof__tiles {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .roof {
+      padding-bottom: calc(var(--u) * 0.75);
+    }
+
+    .roof__tiles {
+      grid-template-columns: repeat(3, 1fr);
+      margin-top: calc(var(--u) * 0.6);
+    }
+
+    .roof__tile {
+      height: calc(var(--u) * 2.22);
+      min-height: 0;
+      padding: calc(var(--u) * 0.33) calc(var(--u) * 0.31) calc(var(--u) * 0.27);
+    }
+
+    .roof__link {
+      margin-top: calc(var(--u) * 0.66);
+    }
+  }
+</style>

@@ -1,0 +1,174 @@
+---
+/**
+ * "Pretty isn't enough" (home 02, services 01): the headline on the left, and on the right a
+ * dashed "Looks good" pill where a one-prompt site stops, then the three layers we add.
+ */
+interface Props {
+  /** Section number in the label, e.g. "02". */
+  n: string;
+}
+
+const { n } = Astro.props;
+
+const layers = [
+  { n: '02', title: 'Fast + secure', style: 'teal' },
+  { n: '03', title: 'Agentic AI-ready + future-proofed', style: 'lilac' },
+  { n: '04', title: 'A human who keeps it working', style: 'rose' },
+];
+---
+
+<section class="band band--ink pretty" aria-labelledby={`pretty-title-${n}`}>
+  <div class="grid grid--ink">
+    <div class="sheet pretty__sheet section">
+      <div class="pretty__copy">
+        <p class="label" data-reveal>
+          {n} / Be honest
+        </p>
+        <h2 id={`pretty-title-${n}`} class="display pretty__title" data-reveal>
+          Pretty isn’t
+          <br />
+          enough.
+        </h2>
+        <p class="pretty__text" data-reveal>
+          A nice-looking site from one prompt won’t move the needle. What gets a business where it
+          wants to be is everything underneath.
+        </p>
+      </div>
+
+      <ol class="pretty__layers">
+        <li class="pretty__looks" data-reveal>
+          <span class="pretty__looks-title">Looks good</span>
+          <span class="pretty__looks-note">One prompt stops here</span>
+        </li>
+        {layers.map((l, i) => (
+          <li
+            class:list={['pretty__layer', `pretty__layer--${l.style}`]}
+            data-reveal
+            style={`--reveal-delay:${(i + 1) * 0.08}s`}
+          >
+            <span class="pretty__n">{l.n}</span>
+            <span class="pretty__layer-title">{l.title}</span>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </div>
+</section>
+
+<style>
+  .pretty__sheet {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .pretty .label,
+  .pretty__title,
+  .pretty__text {
+    color: var(--paper);
+  }
+
+  .pretty__text {
+    max-width: 34rem;
+    margin-top: 1.25rem;
+    font-size: clamp(1rem, calc(var(--u) * 0.2), 1.2rem);
+    line-height: 1.5;
+  }
+
+  .pretty__layers {
+    display: grid;
+    gap: max(12px, calc(var(--u) * 0.18));
+    align-content: start;
+  }
+
+  .pretty__looks {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    min-height: max(56px, calc(var(--u) * 0.84));
+    padding: 0 clamp(1.25rem, calc(var(--u) * 0.41), 2.25rem);
+    border: 1px dashed #8b8d89;
+    border-radius: 999px;
+    color: #a3a5a2;
+  }
+
+  .pretty__looks-title {
+    font: 800 clamp(1rem, calc(var(--u) * 0.25), 1.4rem) / 1 var(--font-display);
+    text-transform: uppercase;
+  }
+
+  .pretty__looks-note {
+    font: 400 clamp(0.6rem, calc(var(--u) * 0.11), 0.75rem) / 1.2 var(--font-mono);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-align: right;
+  }
+
+  .pretty__layer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.3rem;
+    padding: 1.1rem clamp(1.25rem, calc(var(--u) * 0.41), 2.25rem);
+    color: var(--ink);
+  }
+
+  .pretty__n {
+    font: 400 0.6875rem var(--font-mono);
+    letter-spacing: 0.14em;
+  }
+
+  .pretty__layer-title {
+    max-width: 13em;
+    text-wrap: balance;
+    font: 800 clamp(1.2rem, calc(var(--u) * 0.33), 2rem) / 0.95 var(--font-display);
+    text-transform: uppercase;
+  }
+
+  .pretty__layer--teal {
+    min-height: max(76px, calc(var(--u) * 1.16));
+    border-radius: 999px;
+    background: var(--teal);
+  }
+
+  .pretty__layer--lilac {
+    min-height: max(100px, calc(var(--u) * 1.56));
+    border-radius: 999px;
+    background: var(--grad-lilac);
+  }
+
+  .pretty__layer--rose {
+    min-height: max(130px, calc(var(--u) * 2.1));
+    padding-top: clamp(1.5rem, calc(var(--u) * 0.5), 2.75rem);
+    border-top-right-radius: calc(var(--u) * 1.15);
+    background: var(--grad-rose);
+  }
+
+  .pretty__layer--rose .pretty__layer-title {
+    font-size: clamp(1.4rem, calc(var(--u) * 0.42), 2.6rem);
+  }
+
+  @media (min-width: 64rem) {
+    .pretty__sheet {
+      grid-template-columns: calc(var(--u) * 7.2) 1fr;
+      gap: calc(var(--u) * 0.5);
+    }
+
+    .pretty__copy {
+      align-self: start;
+    }
+
+    .pretty__text {
+      max-width: calc(var(--u) * 6.2);
+      font-size: calc(var(--u) * 0.2);
+    }
+
+    .pretty__layers {
+      margin-top: calc(var(--u) * 0.11);
+    }
+
+    .pretty__n {
+      font-size: calc(var(--u) * 0.12);
+    }
+  }
+</style>

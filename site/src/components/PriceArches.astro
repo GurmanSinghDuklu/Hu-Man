@@ -1,6 +1,6 @@
 ---
 /**
- * The rising row of eight price arches. "home" shows price and name; "pricing" adds the short
+ * The rising row of price arches, one per tier. "home" shows price and name; "pricing" adds the short
  * line and the tags (Start here, Our pick), as in the pricing design.
  */
 import { tiers } from '../data/pricing';
@@ -12,9 +12,9 @@ interface Props {
 const { variant } = Astro.props;
 ---
 
-<ol class:list={['arches', `arches--${variant}`]}>
+<ol class:list={['arches', `arches--${variant}`]} style={`--n:${tiers.length}`}>
   {tiers.map((tier, i) => (
-    <li class:list={['arch', `arch--${tier.style}`]} style={`--i:${i}`}>
+    <li class:list={['arch', `arch--${tier.style}`]} style={`--i:${i};--j:${i % 3}`}>
       {variant === 'pricing' && <span class="arch__name arch__name--top">{tier.name}</span>}
       <span class="arch__price">{tier.price}</span>
       {variant === 'home' && <span class="arch__name">{tier.name}</span>}
@@ -26,17 +26,16 @@ const { variant } = Astro.props;
 
 <style>
   .arches {
-    --w: calc(var(--u) * 1.72);
-    --base: calc(var(--u) * 1.65);
-    --step: calc(var(--u) * 0.5);
+    --base: calc(var(--u) * 1.67);
+    --step: calc(var(--u) * 0.42);
     display: grid;
-    grid-template-columns: repeat(8, 1fr);
+    grid-template-columns: repeat(var(--n), 1fr);
     align-items: end;
-    gap: calc(var(--u) * 0.15);
+    gap: calc(var(--u) * 0.145);
   }
 
   .arches--pricing {
-    --base: calc(var(--u) * 2.44);
+    --base: calc(var(--u) * 2.22);
     --step: calc(var(--u) * 0.61);
     gap: calc(var(--u) * 0.11);
   }
@@ -55,6 +54,10 @@ const { variant } = Astro.props;
 
   .arches--pricing .arch {
     padding-top: calc(var(--u) * 0.58);
+  }
+
+  .arch--stone {
+    background: var(--paper-2);
   }
 
   .arch--outline {
@@ -90,8 +93,9 @@ const { variant } = Astro.props;
 
   .arch__name {
     margin-top: calc(var(--u) * 0.1);
-    font: 400 clamp(0.55rem, calc(var(--u) * 0.105), 0.75rem) / 1.2 var(--font-mono);
-    letter-spacing: 0.14em;
+    font: 400 clamp(0.55rem, calc(var(--u) * 0.1), 0.75rem) / 1.2 var(--font-mono);
+    letter-spacing: 0.1em;
+    white-space: nowrap;
     text-transform: uppercase;
   }
 
@@ -117,16 +121,17 @@ const { variant } = Astro.props;
     white-space: nowrap;
   }
 
-  /* Phones: two rows of four, still rising. */
+  /* Phones: three rows of three, each row still rising. */
   @media (max-width: 39.99rem) {
     .arches {
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       --base: calc(var(--u) * 2.2);
-      --step: calc(var(--u) * 0.25);
-      gap: 8px;
+      --step: calc(var(--u) * 0.35);
+      gap: 10px 8px;
     }
 
     .arch {
+      height: calc(var(--base) + var(--j) * var(--step));
       padding-top: calc(var(--u) * 0.5);
     }
 

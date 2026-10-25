@@ -1,13 +1,13 @@
 /**
- * Prices come only from docs/02-offer-and-pricing.md ("Draft pricing, 2026-10-19"). Do not invent,
- * round or add prices here: edit that doc first, then mirror the change here.
+ * Prices come only from docs/02-offer-and-pricing.md ("Draft pricing"). Do not invent, round or
+ * add prices here: edit that doc first, then mirror the change here.
  *
- * These are the prices from the final designs. Gurman is still deciding (2026-10-19), so they
- * are drafts: every page reads them from this one file, so a change is a single edit.
+ * These are the prices from the final designs (2026-10-19, Essential added 2026-10-25). Gurman is
+ * still deciding, so they are drafts: every page reads them from this one file.
  */
 
 /** How a tier's arch and row marker are filled (the colours in the designs). */
-export type TierStyle = 'outline' | 'peach' | 'lilac' | 'dusk' | 'ink' | 'rose';
+export type TierStyle = 'stone' | 'outline' | 'peach' | 'lilac' | 'dusk' | 'ink' | 'rose';
 
 export interface Tier {
   id: string;
@@ -24,11 +24,20 @@ export interface Tier {
 
 export const tiers: Tier[] = [
   {
+    id: 'essential',
+    name: 'Essential',
+    price: '£295',
+    short: 'Standard website',
+    includes: '1 page · mobile-first · contact form · basic SEO · not agentic AI-ready',
+    style: 'stone',
+  },
+  {
     id: 'spark',
     name: 'Spark',
     price: '£395',
-    short: 'One-page site',
-    includes: '1 page · mobile-first · contact form · Business Profile setup · AI-readable basics',
+    short: 'AI-ready one-page site',
+    includes:
+      '1 page · mobile-first · contact form · Business Profile setup · agentic AI-ready setup',
     style: 'outline',
     tag: 'Start here',
   },
@@ -126,5 +135,12 @@ export const addOns = [
   'Extra AI check £49',
 ];
 
-/** Lowest and highest fixed prices, for copy such as "From £395". */
+/** A tier's price by id, for copy such as "from our £395 Spark tier up". */
+export const priceOf = (id: string): string => {
+  const tier = tiers.find((t) => t.id === id);
+  if (!tier) throw new Error(`Unknown tier: ${id}`);
+  return tier.price;
+};
+
+/** The lowest fixed price, for copy such as "Start at £295". */
 export const fromPrice = tiers[0].price;

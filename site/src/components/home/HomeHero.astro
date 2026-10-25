@@ -1,5 +1,6 @@
 ---
 import Collage from '../Collage.astro';
+import { ideaMailto } from '../../config/mailto';
 
 // What we make, top right of the hero (from the design).
 const offer = [
@@ -13,8 +14,13 @@ const offer = [
 
 <section class="band grid hero" aria-labelledby="hero-title">
   <div class="sheet hero__sheet">
+    <p class="label hero__kicker">Made by hand. Built by machine.</p>
     <h1 id="hero-title" class="hero__title">
-      Made by hand. Built by machine.
+      Got an idea?
+      <br />
+      Let’s
+      <br />
+      build it.
     </h1>
 
     <ul class="hero__offer" aria-label="What we make">
@@ -31,17 +37,17 @@ const offer = [
       <p class="label">Human in the loop</p>
       <p class="hero__serif">One person, from the first call to the aftercare.</p>
       <p class="hero__body">
-        Agentic AI-ready websites with your own dashboard, and a real person with you before, during
-        and long after launch.
+        Websites, apps and software built properly, agentic AI-ready as standard, with a real person
+        beside you from first call to long after launch.
       </p>
     </div>
 
     <div class="hero__actions">
-      <a href="#work" class="btn btn--outline btn--display">
-        See the work
-      </a>
-      <a href="#check" class="btn btn--display">
+      <a href="#check" class="btn btn--outline btn--display">
         Check my site free
+      </a>
+      <a href={ideaMailto} class="btn btn--display">
+        Tell us your idea
       </a>
     </div>
   </div>
@@ -55,8 +61,9 @@ const offer = [
   }
 
   .hero__title {
-    font-size: clamp(3rem, 13vw, 8.6rem);
-    line-height: 0.83;
+    margin-top: -1.5rem;
+    font-size: clamp(3rem, 13vw, 8.1rem);
+    line-height: 0.9;
     letter-spacing: -0.015em;
   }
 
@@ -96,12 +103,19 @@ const offer = [
       padding: 0;
     }
 
+    .hero__kicker {
+      position: absolute;
+      left: var(--pad);
+      top: calc(var(--u) * 0.05);
+      font-size: calc(var(--u) * 0.135);
+    }
+
     .hero__title {
       position: absolute;
       left: var(--pad);
-      top: calc(var(--u) * 0.16);
-      max-width: calc(var(--u) * 12.6);
-      font-size: calc(var(--u) * 1.372);
+      top: calc(var(--u) * 0.31);
+      margin: 0;
+      font-size: calc(var(--u) * 1.29);
     }
 
     .hero__offer {

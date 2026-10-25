@@ -6,7 +6,7 @@ import { withBase } from '../../config/paths';
 <section class="band teaser" aria-labelledby="teaser-title">
   <div class="sheet">
     <p class="label" data-reveal>
-      07 / Pricing
+      08 / Pricing
     </p>
     <h2 id="teaser-title" class="display display--m teaser__title" data-reveal>
       Start small. Add
@@ -16,7 +16,7 @@ import { withBase } from '../../config/paths';
     <div class="teaser__arches" data-reveal>
       <PriceArches variant="home" />
     </div>
-    <a class="teaser__link" href={withBase('/pricing/')}>
+    <a class="more-link teaser__link" href={withBase('/pricing/')}>
       See every tier <span aria-hidden="true">↗</span>
     </a>
   </div>
@@ -36,19 +36,6 @@ import { withBase } from '../../config/paths';
   }
 
   .teaser__link {
-    display: inline-block;
     margin-top: clamp(1.5rem, calc(var(--u) * 0.4), 2.5rem);
-    padding-bottom: 0.3rem;
-    border-bottom: 2px solid var(--ink);
-    font: 400 0.8125rem var(--font-mono);
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    text-decoration: none;
-  }
-
-  @media (min-width: 64rem) {
-    .teaser__link {
-      font-size: calc(var(--u) * 0.15);
-    }
   }
 </style>

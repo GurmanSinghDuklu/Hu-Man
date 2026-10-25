@@ -1,12 +1,13 @@
 # Offer and pricing (source of truth)
 
-## Draft pricing (2026-10-19, on the site)
+## Draft pricing (2026-10-19, on the site; Essential added 2026-10-25)
 From Gurman's final designs. Still being decided and may change; the site reads them from
 `site/src/data/pricing.ts`, so edit here, then there.
 
 | Tier | Price | Includes |
 |---|---|---|
-| Spark | £395 | 1 page · mobile-first · contact form · Business Profile setup · AI-readable basics |
+| Essential | £295 | 1 page · mobile-first · contact form · basic SEO · not agentic AI-ready |
+| Spark | £395 | 1 page · mobile-first · contact form · Business Profile setup · agentic AI-ready setup |
 | Starter | £595 | Up to 3 pages · everything in Spark · on-page SEO |
 | Launch | £895 | Up to 5 pages · move off Wix or Squarespace · redirects · speed work |
 | Launch + Dashboard | £1,195 | Everything in Launch · your own owner dashboard |

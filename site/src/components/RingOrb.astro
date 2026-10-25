@@ -1,0 +1,53 @@
+---
+/**
+ * A gradient sphere inside a thin ring, as in the designs (Agentic AI-ready, Ready for what's
+ * next, Care plans). The parent sets the width; the sphere fills 88% of the ring. Decorative.
+ */
+import Sparkle from './Sparkle.astro';
+
+interface Props {
+  tone: 'indigo' | 'lilac';
+  star?: boolean;
+  class?: string;
+}
+
+const { tone, star = false, class: className } = Astro.props;
+---
+
+<span class:list={['orb', className]} aria-hidden="true">
+  <span class:list={['orb__ball', `orb__ball--${tone}`]}>
+    {star && <Sparkle class="orb__star" color="var(--paper)" />}
+  </span>
+</span>
+
+<style>
+  .orb {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 1;
+    border: 1px solid var(--ink);
+    border-radius: 50%;
+  }
+
+  .orb__ball {
+    display: grid;
+    place-items: center;
+    width: 88%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+  }
+
+  .orb__ball--indigo {
+    background:
+      radial-gradient(circle at 28% 22%, #93aee0 0%, rgba(147, 174, 224, 0) 38%),
+      linear-gradient(160deg, #6a5fe0 0%, #4c29dd 55%, #3a35a6 100%);
+  }
+
+  .orb__ball--lilac {
+    background: linear-gradient(135deg, #d8a2ef 0%, #93aee0 45%, #4a9bb0 100%);
+  }
+
+  .orb__ball :global(.orb__star) {
+    width: 20%;
+  }
+</style>

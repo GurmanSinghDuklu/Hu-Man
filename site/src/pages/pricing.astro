@@ -5,18 +5,30 @@ import SiteFooter from '../components/SiteFooter.astro';
 import InnerHero from '../components/InnerHero.astro';
 import PriceArches from '../components/PriceArches.astro';
 import TalkBanner from '../components/TalkBanner.astro';
-import { tiers, carePlans, addOns, fromPrice } from '../data/pricing';
-import { site } from '../config/site';
+import { tiers, carePlans, addOns, fromPrice, priceOf } from '../data/pricing';
+import { mailto } from '../config/mailto';
 
 const choose = (name: string) =>
-  `mailto:${site.contact.email}?subject=${encodeURIComponent(`${name} enquiry`)}&body=${encodeURIComponent(`Hi,\n\nI'm interested in the ${name} tier. My business is...\n\n`)}`;
+  mailto(`${name} enquiry`, `Hi,\n\nI'm interested in the ${name} tier. My business is...\n\n`);
 
-const top = tiers.find((t) => t.id === 'full-presence')!.price;
+const words = [
+  'zero',
+  'one',
+  'two',
+  'three',
+  'four',
+  'five',
+  'six',
+  'seven',
+  'eight',
+  'nine',
+  'ten',
+];
 
 const faq = [
   {
     q: 'How much does a website cost?',
-    a: `Sites start from ${fromPrice} and go up in tiers to ${top}, with custom work priced on request.`,
+    a: `Sites start from ${fromPrice} (standard) or ${priceOf('spark')} (agentic AI-ready) and go up in tiers to ${priceOf('full-presence')}, with custom work priced on request.`,
     link: true,
   },
   {
@@ -41,7 +53,7 @@ const faq = [
 
 <BaseLayout
   title="Pricing | Hu/man Software Agency"
-  description={`Websites from ${fromPrice}, in eight tiers up to custom apps and portals. Pay once, add a care plan if you want one.`}
+  description={`Websites from ${fromPrice}, in ${words[tiers.length] ?? tiers.length} tiers up to custom apps and portals. Pay once, add a care plan if you want one.`}
 >
   <SiteHeader slot="header" />
 
@@ -61,7 +73,7 @@ const faq = [
   <section class="band grid tiers" aria-labelledby="tiers-title">
     <div class="sheet">
       <h2 id="tiers-title" class="label">
-        8 tiers · Pay once · Add a care plan if you want one
+        {tiers.length} tiers · Pay once · Add a care plan if you want one
       </h2>
       <p class="tiers__text">
         Every tier includes a human from first call to launch, three revision rounds and full
@@ -78,7 +90,7 @@ const faq = [
       <p class="label" data-reveal>
         What is in each
       </p>
-      <h2 id="rows-title" class="display rows__title" data-reveal>
+      <h2 id="rows-title" class="display display--s rows__title" data-reveal>
         Tier by tier
       </h2>
       <ul class="rows__list">
@@ -251,11 +263,8 @@ const faq = [
     --mark: var(--grad-rose);
   }
 
-  /* In the design, the first marker of each colour group is square, the rest round. */
-  .row--starter::before,
-  .row--launch-dashboard::before,
-  .row--growth::before,
-  .row--custom::before {
+  /* In the design, the markers alternate: round, square, round... */
+  .row:nth-child(even)::before {
     border-radius: 0;
   }
 

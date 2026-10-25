@@ -278,6 +278,17 @@ Prices are drafts in `site/src/data/pricing.ts` (mirrors docs/02 "Draft pricing"
 5. **Full-page screenshots can show lazy images blank** before they decode; force `loading=eager` first.
 Lighthouse 98-100 / 100 / 100 / 100, axe 0 violations on all five pages.
 
+## Final designs v2 (2026-10-25, branch `agency-redesign`)
+Seven new designs (`reference/final-designs-v2/`, spec `docs/superpowers/specs/2026-10-25-final-designs-v2.md`).
+New pages `/about/`, `/how-we-build/`, `/work/`; home and services rebuilt; Essential £295 tier added.
+1. **Shared sections take a number** (`components/sections/`, e.g. `<AgentReady n="04" />`), since the
+   same section is numbered differently on each page. Service areas live in `src/data/services.ts`.
+2. **Headlines on phones are capped by `vw`** in `base.css`: unit-based sizes let long words
+   ("recommending") overflow at 360px.
+3. **A child component's root isn't reached by a scoped `> *` rule**: position it with `:global()`
+   (the About shape group's `RingOrb` sat in the flow until fixed).
+Lighthouse 98-100 / 100 / 100 / 100 on all six content pages, axe 0 violations on all eight pages.
+
 ## GitHub and preview deploy
 Repo: github.com/GurmanSinghDuklu/Hu-Man (public; default branch `hu-man-rebrand`). Every push to
 `hu-man-rebrand` deploys a preview to https://gurmansinghduklu.github.io/Hu-Man/ via

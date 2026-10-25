@@ -1,0 +1,104 @@
+---
+/** "Agentic AI-ready, as standard" (home 04, services 05), with the ringed sphere and Ink square. */
+import { withBase } from '../../config/paths';
+import { priceOf } from '../../data/pricing';
+import RingOrb from '../RingOrb.astro';
+
+interface Props {
+  n: string;
+}
+
+const { n } = Astro.props;
+---
+
+<section class="band agent" aria-labelledby={`agent-title-${n}`}>
+  <div class="sheet agent__sheet section">
+    <div class="agent__copy">
+      <p class="label" data-reveal>
+        {n} / Future-proofed
+      </p>
+      <h2 id={`agent-title-${n}`} class="display display--m" data-reveal>
+        Agentic AI-ready,
+        <br />
+        as standard.
+      </h2>
+      <p class="agent__text" data-reveal>
+        Everything we build is fast, secure and structured so people, search engines and AI agents
+        can read it and act on it. It comes as standard from our {priceOf('spark')} Spark tier up.
+      </p>
+      <a class="more-link agent__link" href={withBase('/how-we-build/')}>
+        How we build <span aria-hidden="true">↗</span>
+      </a>
+    </div>
+
+    <div class="agent__art" aria-hidden="true">
+      <RingOrb tone="indigo" star class="agent__orb" />
+      <span class="agent__square"></span>
+    </div>
+  </div>
+</section>
+
+<style>
+  .agent__sheet {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .agent__text {
+    max-width: 40rem;
+    margin-top: 1.25rem;
+    font-size: clamp(1rem, calc(var(--u) * 0.19), 1.2rem);
+    line-height: 1.55;
+  }
+
+  .agent__link {
+    margin-top: clamp(2rem, calc(var(--u) * 1.05), 6rem);
+  }
+
+  .agent__art {
+    position: relative;
+    width: min(18rem, 70vw);
+    justify-self: end;
+  }
+
+  .agent__art :global(.agent__orb) {
+    width: 100%;
+  }
+
+  .agent__square {
+    position: absolute;
+    right: -8%;
+    bottom: -6%;
+    width: 33%;
+    aspect-ratio: 1;
+    background: var(--ink);
+  }
+
+  @media (min-width: 64rem) {
+    .agent__sheet {
+      grid-template-columns: 1fr calc(var(--u) * 3.95);
+      align-items: start;
+      gap: calc(var(--u) * 0.5);
+    }
+
+    .agent__copy .label {
+      font-size: calc(var(--u) * 0.135);
+    }
+
+    .agent__text {
+      max-width: calc(var(--u) * 7.6);
+    }
+
+    .agent__art {
+      width: calc(var(--u) * 3.53);
+      justify-self: start;
+      margin-top: calc(var(--u) * -0.2);
+    }
+
+    .agent__square {
+      right: calc(var(--u) * -0.42);
+      bottom: calc(var(--u) * -0.17);
+      width: calc(var(--u) * 1.17);
+    }
+  }
+</style>

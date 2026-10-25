@@ -5,7 +5,16 @@ import { startServer } from './serve.mjs';
 
 const PORT = 4332;
 const SITE_URL = `http://localhost:${PORT}/`;
-const PAGES = ['', 'services/', 'pricing/', 'privacy/', '404.html'];
+const PAGES = [
+  '',
+  'services/',
+  'pricing/',
+  'about/',
+  'how-we-build/',
+  'work/',
+  'privacy/',
+  '404.html',
+];
 
 const distDir = fileURLToPath(new URL('../dist/', import.meta.url));
 

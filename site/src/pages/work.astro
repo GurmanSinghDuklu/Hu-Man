@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import InnerHero from '../components/InnerHero.astro';
+import WorkShowcase from '../components/WorkShowcase.astro';
+import TalkBanner from '../components/TalkBanner.astro';
+---
+
+<BaseLayout
+  title="Our work | Hu/man Software Agency"
+  description="Two live sites and one concept: Essence Hair, Eldeva Candles (concept design, not live) and The Calculator App."
+>
+  <SiteHeader slot="header" />
+
+  <InnerHero label="Our work" lens="Lens 06 / Our work">
+    <Fragment slot="title">
+      Real
+      <br />
+      projects.
+      <br />
+      Real people.
+    </Fragment>
+    <Fragment slot="lede">
+      Two live sites and one concept. Each window shows the part that does the selling.
+    </Fragment>
+  </InnerHero>
+
+  <WorkShowcase />
+  <TalkBanner />
+
+  <SiteFooter slot="footer" />
+</BaseLayout>

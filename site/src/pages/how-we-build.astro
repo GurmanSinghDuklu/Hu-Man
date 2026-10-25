@@ -1,0 +1,651 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import InnerHero from '../components/InnerHero.astro';
+import TalkBanner from '../components/TalkBanner.astro';
+import Sparkle from '../components/Sparkle.astro';
+import RingOrb from '../components/RingOrb.astro';
+
+const compare = [
+  ['Words', 'Generic filler', 'Written for your business, checked by a person'],
+  ['Speed', 'Heavy and untested', 'Tested on real phones, built to load fast'],
+  ['Security', 'Whatever the default is', 'HTTPS, security headers, spam-protected forms'],
+  ['Email + domain', 'Often left unset', 'SPF, DKIM and DMARC so your emails land'],
+  ['AI + agents', 'Hard for AI to read', 'Structured data and agent-ready actions'],
+  ['When it breaks', 'You’re on your own', 'A person fixes it'],
+];
+
+const stages = [
+  {
+    title: 'Discovery call',
+    text: 'We learn your business, your customers and what the site needs to do.',
+    style: 'ink',
+  },
+  {
+    title: 'Design + concept',
+    text: 'You see the design before a line of code is written.',
+    style: 'arch',
+  },
+  {
+    title: 'Build',
+    text: 'AI speeds up the groundwork. A developer writes, reviews and tests every page.',
+    style: 'square',
+  },
+  {
+    title: 'Test',
+    text: 'Speed, security, accessibility and every device, checked before launch.',
+    style: 'square',
+  },
+  {
+    title: 'Launch',
+    text: 'Domain, certificates, redirects and search setup done for you.',
+    style: 'arch',
+  },
+  {
+    title: 'Still here',
+    text: 'After launch, you message a person when you need something.',
+    style: 'lilac',
+  },
+];
+
+const bonnet = [
+  {
+    title: 'Fast by default',
+    text: 'Lean code, compressed images and caching, so pages load quickly on mobile data.',
+    style: 'lilac',
+  },
+  {
+    title: 'Secure by default',
+    text: 'HTTPS certificates, security headers, protected forms and updates kept current.',
+    style: 'dusk',
+  },
+  {
+    title: 'Agentic AI-ready',
+    text: 'Structured data, clear facts and simple actions AI agents can read and complete.',
+    style: 'indigo',
+  },
+  {
+    title: 'Found in search',
+    text: 'Sitemaps, clean page structure and Business Profile setup.',
+    style: 'rose',
+  },
+  {
+    title: 'Accessible',
+    text: 'Readable contrast, keyboard friendly, image descriptions.',
+    style: 'paper',
+  },
+  {
+    title: 'Yours to keep',
+    text: 'You own the code and domain. No platform lock-in.',
+    style: 'teal',
+  },
+];
+
+const checklist = [
+  'HTTPS certificate active',
+  'Security headers set',
+  'Forms protected from spam',
+  'SPF, DKIM + DMARC on your domain',
+  'Images compressed',
+  'Mobile speed tested',
+  'Structured data validated',
+  'Sitemap submitted to Google',
+  'AI crawler rules set',
+  'Old links redirected',
+  'Accessibility checked',
+  'Backups in place',
+];
+---
+
+<BaseLayout
+  title="How we build | Hu/man Software Agency"
+  description="Not AI slop. Six stages a human signs off, what goes into every build, and the checklist every site passes before it goes live."
+>
+  <SiteHeader slot="header" />
+
+  <InnerHero label="How we build" lens="Lens 05 / The build">
+    <Fragment slot="title">Not AI slop.</Fragment>
+    <Fragment slot="lede">
+      Anyone can get a website from one prompt. It looks fine until it needs to load fast, stay
+      secure, or show up when customers ask AI. Here’s what goes into ours.
+    </Fragment>
+  </InnerHero>
+
+  <section class="band band--paper-2 cmp section" aria-labelledby="cmp-title">
+    <div class="sheet">
+      <p class="label" data-reveal>
+        01 / The difference
+      </p>
+      <h2 id="cmp-title" class="display display--s" data-reveal>
+        One-prompt site vs Hu/man build
+      </h2>
+      <table class="cmp__table">
+        <thead>
+          <tr>
+            <th scope="col">
+              <span class="visually-hidden">What</span>
+            </th>
+            <th scope="col">One-prompt AI site</th>
+            <th scope="col">Hu/man build</th>
+          </tr>
+        </thead>
+        <tbody>
+          {compare.map(([what, prompt, us]) => (
+            <tr data-reveal>
+              <th scope="row">{what}</th>
+              <td>{prompt}</td>
+              <td>
+                <span class="cmp__us">{us}</span>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <p class="cmp__note">
+        General comparison. AI tools are useful, and we use them too. The difference is the work
+        around them.
+      </p>
+    </div>
+  </section>
+
+  <section class="band grid stages section" aria-labelledby="stages-title">
+    <div class="sheet">
+      <p class="label" data-reveal>
+        02 / Every build
+      </p>
+      <h2 id="stages-title" class="display" data-reveal>
+        Six stages. A human signs
+        <br />
+        off each one.
+      </h2>
+      <ol class="stages__list">
+        {stages.map((s, i) => (
+          <li
+            class:list={['stage', `stage--${s.style}`]}
+            data-reveal
+            style={`--reveal-delay:${(i % 3) * 0.08}s`}
+          >
+            <Sparkle class="stage__star" />
+            <span class="stage__n">{String(i + 1).padStart(2, '0')}</span>
+            <h3>{s.title}</h3>
+            <p>{s.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="band band--ink bonnet" aria-labelledby="bonnet-title">
+    <div class="grid grid--ink">
+      <div class="sheet section">
+        <p class="label" data-reveal>
+          03 / Our technology
+        </p>
+        <h2 id="bonnet-title" class="display" data-reveal>
+          What’s under the bonnet.
+        </h2>
+        <ul class="bonnet__cards">
+          {bonnet.map((b, i) => (
+            <li
+              class:list={['bonnet__card', `fill--${b.style}`, `bonnet__card--${b.style}`]}
+              data-reveal
+              style={`--reveal-delay:${(i % 3) * 0.08}s`}
+            >
+              <Sparkle class="bonnet__star" />
+              <h3>{b.title}</h3>
+              <p>{b.text}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="band grid checklist section" aria-labelledby="checklist-title">
+    <div class="sheet">
+      <p class="label" data-reveal>
+        04 / Before go-live
+      </p>
+      <h2 id="checklist-title" class="display display--m" data-reveal>
+        Every site passes this
+        <br />
+        checklist.
+      </h2>
+      <p class="checklist__tag">
+        <span class="pill">Human-checked, not just automated</span>
+      </p>
+      <ul class="checklist__list">
+        {checklist.map((item) => (
+          <li data-reveal>
+            <span class="checklist__tick" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6">
+                <path d="m6 12.5 4 4 8-9" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </span>
+            {item}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="band band--paper-2 next" aria-labelledby="next-title">
+    <div class="sheet next__sheet">
+      <div>
+        <p class="label" data-reveal>
+          05 / Ready for what’s next
+        </p>
+        <h2 id="next-title" class="display display--s" data-reveal>
+          Ready for
+          <br />
+          what’s next.
+        </h2>
+        <p class="next__text" data-reveal>
+          AI agents are starting to search, compare and book for people. We do the back-end work
+          now, so your site is ready when they arrive.
+        </p>
+        <p class="next__note">
+          No one can guarantee a place in AI answers. We do the groundwork properly.
+        </p>
+      </div>
+      <div class="next__art" aria-hidden="true">
+        <RingOrb tone="indigo" star class="next__orb" />
+        <span class="next__arch"></span>
+      </div>
+    </div>
+  </section>
+
+  <TalkBanner />
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+  /* ---------- comparison ---------- */
+  .cmp__table {
+    width: 100%;
+    margin-top: clamp(2rem, calc(var(--u) * 0.9), 5.5rem);
+    border-collapse: separate;
+    border-spacing: 0 calc(var(--u) * 0.11);
+  }
+
+  .cmp__table thead th {
+    padding: 0 0 0.6rem;
+    font: 400 0.75rem var(--font-mono);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-align: left;
+  }
+
+  .cmp__table tbody th,
+  .cmp__table td {
+    padding: 0.5rem;
+    background: var(--paper);
+    border-block: 1px solid var(--ink);
+    text-align: left;
+    vertical-align: middle;
+  }
+
+  .cmp__table tbody th {
+    padding-left: clamp(1rem, calc(var(--u) * 0.34), 2rem);
+    border-left: 1px solid var(--ink);
+    border-radius: 999px 0 0 999px;
+    font: 800 clamp(0.85rem, calc(var(--u) * 0.21), 1.3rem) / 1.1 var(--font-display);
+    text-transform: uppercase;
+  }
+
+  .cmp__table td {
+    color: #555752;
+    font-size: clamp(0.875rem, calc(var(--u) * 0.18), 1.1rem);
+  }
+
+  .cmp__table td:last-child {
+    padding-right: 0.3rem;
+    border-right: 1px solid var(--ink);
+    border-radius: 0 999px 999px 0;
+  }
+
+  .cmp__us {
+    display: block;
+    padding: 0.85rem 1.5rem;
+    border-radius: 999px;
+    background: var(--grad-lilac);
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .cmp__note {
+    margin-top: 1.5rem;
+    font-size: 0.875rem;
+    color: var(--muted);
+  }
+
+  /* ---------- six stages ---------- */
+  .stages__list {
+    display: grid;
+    gap: max(16px, calc(var(--u) * 0.33));
+    margin-top: clamp(2rem, calc(var(--u) * 1.1), 6.5rem);
+  }
+
+  .stage {
+    --r: calc(var(--u) * 1.4);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 14rem;
+    padding: clamp(1.25rem, calc(var(--u) * 0.33), 2rem);
+    border: 1px solid var(--ink);
+    background: var(--paper);
+  }
+
+  .stage--ink {
+    border-top-right-radius: calc(var(--u) * 1.1);
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .stage--arch {
+    border-radius: var(--r) var(--r) 0 0;
+  }
+
+  .stage--lilac {
+    border-top-right-radius: calc(var(--u) * 1.1);
+    background: var(--grad-lilac);
+  }
+
+  .stage :global(.stage__star) {
+    position: absolute;
+    right: clamp(1.25rem, calc(var(--u) * 0.33), 2rem);
+    top: clamp(1.25rem, calc(var(--u) * 0.36), 2.25rem);
+    width: clamp(1.1rem, calc(var(--u) * 0.27), 1.6rem);
+    fill: currentColor;
+  }
+
+  .stage__n {
+    font: 800 clamp(2.4rem, calc(var(--u) * 0.7), 4.2rem) / 1 var(--font-display);
+    letter-spacing: -0.02em;
+  }
+
+  .stage h3 {
+    margin-top: auto;
+    padding-top: 1.5rem;
+    font-size: clamp(1.2rem, calc(var(--u) * 0.33), 2rem);
+    line-height: 1;
+  }
+
+  .stage p {
+    margin-top: 0.6rem;
+    min-height: 2.9em;
+    font-size: clamp(0.9rem, calc(var(--u) * 0.165), 1rem);
+    line-height: 1.45;
+  }
+
+  /* ---------- under the bonnet ---------- */
+  .bonnet .label,
+  .bonnet .display {
+    color: var(--paper);
+  }
+
+  .bonnet__cards {
+    display: grid;
+    gap: max(16px, calc(var(--u) * 0.22)) max(16px, calc(var(--u) * 0.33));
+    margin-top: clamp(2rem, calc(var(--u) * 1.2), 7rem);
+  }
+
+  .bonnet__card {
+    --r: calc(var(--u) * 1.4);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 14rem;
+    padding: clamp(1.25rem, calc(var(--u) * 0.33), 2rem);
+    color: var(--ink);
+  }
+
+  .bonnet__card--lilac,
+  .bonnet__card--rose {
+    border-top-left-radius: var(--r);
+  }
+
+  .bonnet__card--dusk,
+  .bonnet__card--teal {
+    border-top-right-radius: var(--r);
+  }
+
+  .bonnet__card--indigo {
+    border-radius: 999px;
+    color: var(--paper);
+  }
+
+  .bonnet__card--paper {
+    border-radius: calc(var(--u) * 1.5) calc(var(--u) * 1.5) 0 0;
+  }
+
+  .bonnet__card :global(.bonnet__star) {
+    width: clamp(1.1rem, calc(var(--u) * 0.27), 1.6rem);
+    margin-bottom: clamp(1rem, calc(var(--u) * 0.45), 2.5rem);
+    fill: currentColor;
+  }
+
+  .bonnet__card h3 {
+    font-size: clamp(1.2rem, calc(var(--u) * 0.33), 2rem);
+    line-height: 1;
+  }
+
+  .bonnet__card p {
+    max-width: 26rem;
+    font-size: clamp(0.9rem, calc(var(--u) * 0.165), 1rem);
+    line-height: 1.45;
+  }
+
+  /* ---------- checklist ---------- */
+  .checklist__tag {
+    margin-top: clamp(1.5rem, calc(var(--u) * 0.6), 3.5rem);
+  }
+
+  .checklist__tag .pill {
+    background: var(--ink);
+    color: var(--paper);
+    white-space: normal;
+  }
+
+  .checklist__list {
+    display: grid;
+    gap: 0 max(16px, calc(var(--u) * 0.33));
+    margin-top: clamp(1.5rem, calc(var(--u) * 0.75), 4.5rem);
+  }
+
+  .checklist__list li {
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+    min-height: max(56px, calc(var(--u) * 0.84));
+    border-bottom: 1px solid var(--line-soft);
+    font-size: clamp(1rem, calc(var(--u) * 0.2), 1.2rem);
+  }
+
+  .checklist__tick {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: max(34px, calc(var(--u) * 0.42));
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--grad-lilac);
+    color: var(--ink);
+  }
+
+  .checklist__tick svg {
+    width: 58%;
+  }
+
+  /* ---------- ready for what's next ---------- */
+  .next {
+    padding-block: clamp(3rem, calc(var(--u) * 0.6), 4rem);
+  }
+
+  .next__sheet {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .next__text {
+    max-width: 38rem;
+    margin-top: 1.5rem;
+    font-size: clamp(1rem, calc(var(--u) * 0.2), 1.2rem);
+    line-height: 1.5;
+  }
+
+  .next__note {
+    margin-top: 1.25rem;
+    font-size: 0.875rem;
+    color: var(--muted);
+  }
+
+  .next__art {
+    position: relative;
+    width: min(20rem, 72vw);
+    justify-self: end;
+  }
+
+  .next__art :global(.next__orb) {
+    width: 100%;
+    background: var(--paper-2);
+  }
+
+  .next__arch {
+    position: absolute;
+    right: 0;
+    bottom: -14%;
+    width: 43%;
+    aspect-ratio: 145 / 200;
+    border-radius: 999px 999px 0 0;
+    background: var(--ink);
+  }
+
+  @media (min-width: 48rem) {
+    .stages__list,
+    .bonnet__cards {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .cmp__table thead th {
+      font-size: calc(var(--u) * 0.12);
+    }
+
+    .cmp__table thead th:first-child {
+      width: calc(var(--u) * 2.9);
+    }
+
+    .cmp__table thead th:nth-child(2) {
+      width: calc(var(--u) * 4.2);
+    }
+
+    .cmp__table tbody th,
+    .cmp__table td {
+      height: calc(var(--u) * 0.94);
+    }
+
+    .cmp__us {
+      padding: calc(var(--u) * 0.14) calc(var(--u) * 0.29);
+    }
+
+    .stages__list {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .stage {
+      height: calc(var(--u) * 3.11);
+      min-height: 0;
+    }
+
+    .bonnet__cards {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .bonnet__card {
+      height: calc(var(--u) * 3.33);
+      min-height: 0;
+    }
+
+    .checklist__list {
+      grid-template-columns: repeat(3, 1fr);
+      grid-auto-flow: column;
+      grid-template-rows: repeat(4, auto);
+    }
+
+    .checklist__tag .pill {
+      font-size: calc(var(--u) * 0.11);
+    }
+
+    .next__sheet {
+      grid-template-columns: 1fr calc(var(--u) * 4.6);
+      align-items: start;
+      gap: calc(var(--u) * 0.5);
+    }
+
+    .next__text {
+      max-width: calc(var(--u) * 6.4);
+    }
+
+    .next__art {
+      width: calc(var(--u) * 3.73);
+      justify-self: start;
+    }
+
+    .next__arch {
+      right: calc(var(--u) * -0.87);
+      bottom: calc(var(--u) * -0.12);
+      width: calc(var(--u) * 1.61);
+    }
+  }
+
+  /* Phones: the comparison stacks into cards. */
+  @media (max-width: 47.99rem) {
+    .cmp__table,
+    .cmp__table tbody,
+    .cmp__table tr,
+    .cmp__table th,
+    .cmp__table td {
+      display: block;
+    }
+
+    .cmp__table thead {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+    }
+
+    .cmp__table tr {
+      margin-bottom: 1rem;
+      padding: 1rem 1.25rem;
+      border: 1px solid var(--ink);
+      border-radius: 1.5rem;
+      background: var(--paper);
+    }
+
+    .cmp__table tbody th,
+    .cmp__table td,
+    .cmp__table td:last-child {
+      padding: 0.25rem 0;
+      border: 0;
+      border-radius: 0;
+      background: none;
+    }
+
+    .cmp__table td:nth-child(2)::before {
+      content: 'One-prompt site: ';
+      color: var(--muted);
+    }
+
+    .cmp__us {
+      margin-top: 0.5rem;
+    }
+  }
+</style>

@@ -1,11 +1,9 @@
 ---
-import { site } from '../../config/site';
-
-const pains = [
-  { n: '01', text: 'Ask ChatGPT for a plumber in Leeds. Are you in the answer?', style: 'lilac' },
-  { n: '02', text: 'Paid for a site that looks fine but never gets found?', style: 'dusk' },
-  { n: '03', text: 'Need a tiny change and waiting days for someone to reply?', style: 'rose' },
-];
+/**
+ * "Is AI recommending your competitors?" (home 03): the free AI check. The form has no backend; it
+ * opens an email with the address filled in (scripts/check-site.ts), and says so.
+ */
+import { mailto } from '../../config/mailto';
 
 // An example of what the free check reports. Labelled "Sample result · Example only".
 const sample = [
@@ -15,42 +13,27 @@ const sample = [
   { q: 'Business facts readable?', a: 'Partly', tone: 'teal' },
 ];
 
-// No form backend: the check form opens an email with the address filled in (scripts/check-site.ts).
-const checkMailto = `mailto:${site.contact.email}?subject=${encodeURIComponent('Free AI check')}`;
+const checkMailto = mailto('Free AI check');
 ---
 
-<section class="band band--ink honest" aria-labelledby="honest-title">
+<section class="band band--ink honest" aria-labelledby="check-section-title">
   <div class="grid grid--ink honest__grid">
     <div class="sheet">
       <p class="label" data-reveal>
-        02 / Be honest
+        03 / Free AI check
       </p>
-      <h2 id="honest-title" class="display honest__title" data-reveal>
-        Let down by AI?
+      <h2 id="check-section-title" class="display display--m honest__title" data-reveal>
+        Is AI recommending
         <br />
-        Stuck on a website builder?
+        your competitors?
       </h2>
-
-      <ul class="honest__cards">
-        {pains.map((p, i) => (
-          <li
-            class:list={['pain', `pain--${p.style}`]}
-            data-reveal
-            style={`--reveal-delay:${i * 0.08}s`}
-          >
-            <span class="pain__n">{p.n}</span>
-            <p class="pain__text">{p.text}</p>
-          </li>
-        ))}
-      </ul>
 
       <div class="check" id="check" data-reveal>
         <div class="check__main">
           <p class="label">Free · 48 hours · A human reviews it</p>
           <h3 class="check__title">
-            Are you being overlooked by AI
-            <br />
-            Overviews? Check your site.
+            Check your site.
+            <br />A human reviews it.
           </h3>
           <form
             class="check__form"
@@ -99,7 +82,7 @@ const checkMailto = `mailto:${site.contact.email}?subject=${encodeURIComponent('
 
 <style>
   .honest__grid {
-    padding-block: clamp(3.5rem, calc(var(--u) * 1.1), 6rem) clamp(3rem, calc(var(--u) * 0.9), 5rem);
+    padding-block: clamp(3.5rem, calc(var(--u) * 1.1), 6rem) clamp(3rem, calc(var(--u) * 1), 5.5rem);
   }
 
   .honest .label {
@@ -111,54 +94,12 @@ const checkMailto = `mailto:${site.contact.email}?subject=${encodeURIComponent('
     color: var(--paper);
   }
 
-  .honest__cards {
-    display: grid;
-    gap: var(--space-4);
-    margin-top: clamp(2.5rem, calc(var(--u) * 0.9), 5rem);
-  }
-
-  .pain {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    gap: 0.75rem;
-    min-height: 15rem;
-    padding: clamp(1.25rem, calc(var(--u) * 0.33), 2rem);
-    color: var(--ink);
-  }
-
-  .pain--lilac {
-    background: var(--grad-lilac);
-    border-top-left-radius: calc(var(--u) * 1.35);
-  }
-
-  .pain--dusk {
-    background: var(--grad-dusk);
-    border-radius: calc(var(--u) * 1.4) calc(var(--u) * 1.4) 0 0;
-  }
-
-  .pain--rose {
-    background: var(--grad-rose);
-    border-top-right-radius: calc(var(--u) * 1.35);
-  }
-
-  .pain__n {
-    font: 400 0.75rem var(--font-mono);
-    letter-spacing: 0.14em;
-  }
-
-  .pain__text {
-    font: 800 clamp(1.3rem, calc(var(--u) * 0.312), 1.9rem) / 0.98 var(--font-display);
-    text-transform: uppercase;
-    letter-spacing: -0.005em;
-  }
-
   /* ---------- the free check card ---------- */
   .check {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     gap: var(--space-5);
-    margin-top: clamp(3rem, calc(var(--u) * 1), 6rem);
+    margin-top: clamp(2.5rem, calc(var(--u) * 1), 6rem);
     padding: clamp(1.5rem, calc(var(--u) * 0.66), 3.5rem);
     border-radius: calc(var(--u) * 0.36);
     background: var(--ink-2);
@@ -264,17 +205,6 @@ const checkMailto = `mailto:${site.contact.email}?subject=${encodeURIComponent('
     margin-top: 1rem;
     font-size: 0.6875rem;
     color: var(--muted-on-ink) !important;
-  }
-
-  @media (min-width: 48rem) {
-    .honest__cards {
-      grid-template-columns: repeat(3, 1fr);
-      gap: calc(var(--u) * 0.33);
-    }
-
-    .pain {
-      min-height: calc(var(--u) * 3.33);
-    }
   }
 
   @media (min-width: 64rem) {

@@ -9,11 +9,14 @@ const distDir = fileURLToPath(new URL('../dist/', import.meta.url));
 const outDir = fileURLToPath(new URL('../reports/screenshots/', import.meta.url));
 
 const widths = [360, 768, 1280];
-// Home, the work index and two case studies (one live, one unofficial concept).
+// Every content page.
 const pages = [
   ['home', ''],
   ['services', 'services/'],
   ['pricing', 'pricing/'],
+  ['about', 'about/'],
+  ['how-we-build', 'how-we-build/'],
+  ['work', 'work/'],
 ];
 // The Hu/man design is a single dark art direction, so one colour scheme.
 const themes = ['dark'];

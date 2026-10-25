@@ -1,0 +1,125 @@
+---
+/**
+ * "At the centre of it all, we're human" (home 07, services 06): copy on the left, and three
+ * overlapping rings (grounded, technical, creative) around a rose "human" circle.
+ */
+interface Props {
+  n: string;
+}
+
+const { n } = Astro.props;
+---
+
+<section class="band band--ink centre" aria-labelledby={`centre-title-${n}`}>
+  <div class="grid grid--ink">
+    <div class="sheet centre__sheet section">
+      <div>
+        <p class="label" data-reveal>
+          {n} / At the centre
+        </p>
+        <h2 id={`centre-title-${n}`} class="display display--m centre__title" data-reveal>
+          At the centre
+          <br />
+          of it all, we’re
+          <br />
+          human.
+        </h2>
+        <p class="centre__text" data-reveal>
+          We’re not a fee you pay and forget. We work through the problems with you, find the right
+          solution, and stay with you until you’re where you want to be, as a business and online.
+        </p>
+      </div>
+
+      <svg
+        class="centre__venn"
+        viewBox="0 0 532 508"
+        role="img"
+        aria-label="Grounded, technical and creative, with human at the centre"
+        data-reveal
+      >
+        <defs>
+          <linearGradient id={`centre-rose-${n}`} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#db92db"></stop>
+            <stop offset="0.5" stop-color="#e85e8f"></stop>
+            <stop offset="1" stop-color="#d2133c"></stop>
+          </linearGradient>
+        </defs>
+        <g fill="none" stroke="#f1f2ec" stroke-width="1.2">
+          <circle cx="171" cy="171" r="170"></circle>
+          <circle cx="361" cy="171" r="170"></circle>
+          <circle cx="266" cy="337" r="170"></circle>
+        </g>
+        <circle cx="266" cy="225" r="75" fill={`url(#centre-rose-${n})`}></circle>
+        <g class="centre__words" text-anchor="middle" dominant-baseline="central">
+          <text x="90" y="153">
+            Grounded
+          </text>
+          <text x="440" y="153">
+            Technical
+          </text>
+          <text x="266" y="438">
+            Creative
+          </text>
+          <text x="266" y="225" class="centre__human">
+            Human
+          </text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<style>
+  .centre .label,
+  .centre__title,
+  .centre__text {
+    color: var(--paper);
+  }
+
+  .centre__sheet {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .centre__text {
+    max-width: 38rem;
+    margin-top: 1.5rem;
+    font-size: clamp(1rem, calc(var(--u) * 0.19), 1.2rem);
+    line-height: 1.55;
+  }
+
+  .centre__venn {
+    width: min(100%, 33rem);
+    height: auto;
+    justify-self: center;
+    overflow: visible;
+  }
+
+  .centre__words {
+    fill: var(--paper);
+    font: 800 21px var(--font-display);
+    text-transform: uppercase;
+  }
+
+  .centre__human {
+    fill: var(--ink);
+  }
+
+  @media (min-width: 64rem) {
+    .centre__sheet {
+      grid-template-columns: 1fr calc(var(--u) * 6.56);
+      gap: calc(var(--u) * 0.5);
+      padding-bottom: calc(var(--u) * 0.93);
+    }
+
+    .centre__text {
+      max-width: calc(var(--u) * 6.8);
+    }
+
+    .centre__venn {
+      width: calc(var(--u) * 5.9);
+      justify-self: start;
+      margin-top: calc(var(--u) * 1.45);
+    }
+  }
+</style>

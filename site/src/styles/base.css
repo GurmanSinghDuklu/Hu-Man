@@ -167,9 +167,89 @@ ol {
   font-size: clamp(2rem, calc(var(--u) * 0.69), 4.4rem);
 }
 
+/* Phones: headlines follow the screen width, so long words ("recommending") never overflow. */
+@media (max-width: 39.99rem) {
+  .display {
+    font-size: min(11vw, 2.6rem);
+  }
+
+  .display--m {
+    font-size: min(10vw, 2.4rem);
+  }
+
+  .display--s {
+    font-size: min(9.4vw, 2.2rem);
+  }
+}
+
 .lede {
   font-size: clamp(1rem, calc(var(--u) * 0.2), 1.25rem);
   line-height: 1.6;
+}
+
+/* A label followed by its headline, the pattern that opens every section. */
+.label + .display {
+  margin-top: 0.3rem;
+}
+
+/* The standard section padding (about one grid unit above and below on desktop). */
+.section {
+  padding-block: clamp(3.5rem, calc(var(--u) * 1.05), 6.5rem) clamp(3rem, calc(var(--u) * 1), 6rem);
+}
+
+/* Underlined mono link closing a section ("See every tier ↗"). */
+.more-link {
+  display: inline-block;
+  padding-bottom: 0.3rem;
+  border-bottom: 2px solid currentColor;
+  font: 400 0.8125rem var(--font-mono);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+@media (min-width: 64rem) {
+  .more-link {
+    font-size: calc(var(--u) * 0.15);
+  }
+}
+
+/* ---------- fills: the shapes and gradients from the designs ---------- */
+.fill--lilac {
+  background: var(--grad-lilac);
+}
+
+.fill--dusk {
+  background: var(--grad-dusk);
+}
+
+.fill--rose {
+  background: var(--grad-rose);
+}
+
+.fill--indigo {
+  background: var(--grad-ideas);
+}
+
+.fill--peach {
+  background: var(--peach);
+}
+
+.fill--teal {
+  background: var(--teal);
+}
+
+.fill--ink {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.fill--stone {
+  background: var(--paper-2);
+}
+
+.fill--paper {
+  background: var(--paper);
 }
 
 /* ---------- buttons ---------- */

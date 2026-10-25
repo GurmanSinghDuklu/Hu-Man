@@ -1,0 +1,538 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import InnerHero from '../components/InnerHero.astro';
+import TalkBanner from '../components/TalkBanner.astro';
+import Sparkle from '../components/Sparkle.astro';
+import RingOrb from '../components/RingOrb.astro';
+import { withBase } from '../config/paths';
+
+const mission = [
+  {
+    title: 'For anyone',
+    text: 'Individuals, local businesses, charities and growing teams. Big-agency standards without the big-agency distance.',
+    style: 'lilac',
+  },
+  {
+    title: 'The human touch',
+    text: 'The person you speak to on day one knows your project inside out.',
+    style: 'dusk',
+  },
+  {
+    title: 'Care after launch',
+    text: 'Questions, fixes and changes handled by someone who picks up.',
+    style: 'rose',
+  },
+];
+
+const rules = [
+  {
+    title: 'Human first',
+    text: 'Technology serves people. Not the other way round.',
+    style: 'ink',
+  },
+  {
+    title: 'Built properly',
+    text: 'Fast, secure and tested. Never one prompt and done.',
+    style: 'arch',
+  },
+  {
+    title: 'Honest',
+    text: 'Straight answers, clear prices, no promises we can’t keep.',
+    style: 'lilac',
+  },
+  { title: 'Here after launch', text: 'We don’t take the money and disappear.', style: 'outline' },
+];
+
+// Commitments Gurman made in the design (2026-10-25). Confirm each one before launch.
+const promises = [
+  {
+    title: 'We fix our mistakes',
+    text: 'If something breaks because of our work, we fix it at no cost to you.',
+  },
+  {
+    title: 'A real person answers',
+    text: 'Message us and a person who knows your site replies. No ticket bots.',
+  },
+  {
+    title: 'No charge for every little thing',
+    text: 'Quick questions and small fixes are part of the service, not a new invoice.',
+  },
+  { title: 'We don’t disappear', text: 'Launch is the start. We are still here when you need us.' },
+  { title: 'You own it', text: 'Your code, your content, your domain. No lock-in.' },
+  {
+    title: 'Straight talk',
+    text: 'No one can guarantee a place in AI answers. We tell you what we can and can’t do.',
+  },
+];
+---
+
+<BaseLayout
+  title="About | Hu/man Software Agency"
+  description="Hu/man is a software studio in Leeds. We build fast, secure, agentic AI-ready websites and apps for individuals and businesses, and we stay with you long after launch."
+>
+  <SiteHeader slot="header" />
+
+  <InnerHero label="About" lens="Lens 04 / Who we are">
+    <Fragment slot="title">
+      Built by
+      <br />
+      humans.
+      <br />
+      Made to
+      <br />
+      last.
+    </Fragment>
+    <Fragment slot="lede">
+      Hu/man is a software studio in Leeds. We build fast, secure, agentic AI-ready websites and
+      apps for individuals and businesses, and we stay with you long after launch.
+    </Fragment>
+  </InnerHero>
+
+  <section class="band band--ink mission" aria-labelledby="mission-title">
+    <div class="grid grid--ink">
+      <div class="sheet section">
+        <p class="label" data-reveal>
+          01 / Our mission
+        </p>
+        <h2 id="mission-title" class="display" data-reveal>
+          Top software. With a
+          <br />
+          human behind it.
+        </h2>
+        <p class="mission__text" data-reveal>
+          Our mission is simple. Give everyone, from sole traders to growing businesses,
+          high-performing software and the kind of care you only get from a person who knows your
+          project. AI helps us build faster. People make sure it’s right.
+        </p>
+        <ul class="mission__cards">
+          {mission.map((m, i) => (
+            <li
+              class:list={['mission__card', `fill--${m.style}`, `mission__card--${m.style}`]}
+              data-reveal
+              style={`--reveal-delay:${i * 0.08}s`}
+            >
+              <span class="mission__n">{String(i + 1).padStart(2, '0')}</span>
+              <h3>{m.title}</h3>
+              <p>{m.text}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="band grid rules section" aria-labelledby="rules-title">
+    <div class="sheet">
+      <p class="label" data-reveal>
+        02 / What we believe
+      </p>
+      <h2 id="rules-title" class="display" data-reveal>
+        Four rules we build by.
+      </h2>
+      <ul class="rules__cards">
+        {rules.map((r, i) => (
+          <li
+            class:list={['rule', `rule--${r.style}`]}
+            data-reveal
+            style={`--reveal-delay:${i * 0.08}s`}
+          >
+            <Sparkle class="rule__star" />
+            <h3>{r.title}</h3>
+            <p>{r.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="band band--paper-2 promise section" aria-labelledby="promise-title">
+    <div class="sheet">
+      <p class="label" data-reveal>
+        03 / Our promise
+      </p>
+      <h2 id="promise-title" class="display" data-reveal>
+        If we get it wrong, we put
+        <br />
+        it right.
+      </h2>
+      <ol class="promise__list">
+        {promises.map((p, i) => (
+          <li class="promise__row" data-reveal>
+            <span class:list={['promise__icon', `promise__icon--${i + 1}`]} aria-hidden="true">
+              {i + 1}
+            </span>
+            <div>
+              <h3>{p.title}</h3>
+              <p>{p.text}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="band careway section" aria-labelledby="careway-title">
+    <div class="sheet careway__sheet">
+      <div>
+        <p class="label" data-reveal>
+          04 / Support that stays
+        </p>
+        <h2 id="careway-title" class="display display--m" data-reveal>
+          Care plans, made
+          <br />
+          the same way.
+        </h2>
+        <p class="careway__text" data-reveal>
+          Our care plans are being reworked. The rule doesn’t change: fair prices, real people, and
+          no surprise bills for small things.
+        </p>
+        <p class="careway__soon">
+          <span class="pill">Coming soon</span>
+        </p>
+        <a class="more-link careway__link" href={withBase('/pricing/')}>
+          See current pricing <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+
+      <div class="careway__art" aria-hidden="true">
+        <span class="careway__arch">
+          <Sparkle class="careway__star" color="var(--paper)" />
+        </span>
+        <RingOrb tone="lilac" class="careway__orb" />
+        <span class="careway__ink"></span>
+        <span class="careway__pink"></span>
+        <span class="careway__peach"></span>
+        <span class="careway__dot"></span>
+      </div>
+    </div>
+  </section>
+
+  <TalkBanner />
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+  /* ---------- mission ---------- */
+  .mission .label,
+  .mission .display,
+  .mission__text {
+    color: var(--paper);
+  }
+
+  .mission__text {
+    max-width: 42rem;
+    margin-top: 1.5rem;
+    font-size: clamp(1rem, calc(var(--u) * 0.2), 1.25rem);
+    line-height: 1.5;
+  }
+
+  .mission__cards {
+    display: grid;
+    gap: max(16px, calc(var(--u) * 0.33));
+    margin-top: clamp(2.5rem, calc(var(--u) * 1.3), 7.5rem);
+  }
+
+  .mission__card {
+    --r: calc(var(--u) * 1.4);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    min-height: 15rem;
+    padding: clamp(1.25rem, calc(var(--u) * 0.33), 2rem);
+    color: var(--ink);
+  }
+
+  .mission__card--lilac {
+    border-top-left-radius: var(--r);
+  }
+
+  .mission__card--dusk {
+    border-radius: var(--r) var(--r) 0 0;
+  }
+
+  .mission__card--rose {
+    border-top-right-radius: var(--r);
+  }
+
+  .mission__n {
+    font: 400 0.75rem var(--font-mono);
+    letter-spacing: 0.14em;
+  }
+
+  .mission__card h3 {
+    font-size: clamp(1.3rem, calc(var(--u) * 0.33), 2rem);
+    line-height: 0.95;
+  }
+
+  .mission__card p {
+    font-size: clamp(0.9rem, calc(var(--u) * 0.165), 1rem);
+    line-height: 1.45;
+  }
+
+  /* ---------- four rules ---------- */
+  .rules__cards {
+    display: grid;
+    gap: max(16px, calc(var(--u) * 0.33));
+    margin-top: clamp(2rem, calc(var(--u) * 0.9), 5.5rem);
+  }
+
+  .rule {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    min-height: 15rem;
+    padding: clamp(1.25rem, calc(var(--u) * 0.33), 2rem);
+    border: 1px solid var(--ink);
+    background: var(--paper);
+  }
+
+  .rule--ink {
+    border-top-left-radius: calc(var(--u) * 1.3);
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .rule--arch {
+    border-radius: 999px 999px 0 0;
+  }
+
+  .rule--lilac {
+    background: var(--grad-lilac);
+  }
+
+  .rule--outline {
+    border-top-right-radius: calc(var(--u) * 1.3);
+  }
+
+  .rule :global(.rule__star) {
+    width: clamp(1.1rem, calc(var(--u) * 0.27), 1.6rem);
+    margin-bottom: 0.4rem;
+    fill: currentColor;
+  }
+
+  .rule h3 {
+    max-width: 8em;
+    font-size: clamp(1.4rem, calc(var(--u) * 0.37), 2.2rem);
+    line-height: 0.95;
+  }
+
+  .rule p {
+    font-size: clamp(0.9rem, calc(var(--u) * 0.165), 1rem);
+    line-height: 1.45;
+  }
+
+  /* ---------- promise ---------- */
+  .promise__list {
+    margin-top: clamp(2rem, calc(var(--u) * 0.75), 4.5rem);
+  }
+
+  .promise__row {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 1.25rem;
+    padding-block: max(10px, calc(var(--u) * 0.12));
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  .promise__row h3 {
+    font-size: clamp(1.25rem, calc(var(--u) * 0.37), 2.2rem);
+    line-height: 1;
+  }
+
+  .promise__row p {
+    margin-top: 0.4rem;
+    color: #2f312d;
+    font-size: clamp(0.95rem, calc(var(--u) * 0.18), 1.1rem);
+  }
+
+  .promise__icon {
+    display: grid;
+    place-items: center;
+    width: clamp(4rem, calc(var(--u) * 1.11), 6.5rem);
+    aspect-ratio: 1;
+    font: 800 clamp(1.3rem, calc(var(--u) * 0.32), 1.9rem) / 1 var(--font-display);
+  }
+
+  .promise__icon--1 {
+    border-radius: 50%;
+    background: var(--grad-lilac);
+  }
+
+  .promise__icon--2 {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .promise__icon--3 {
+    border-radius: 999px 999px 0 0;
+    background: var(--peach);
+  }
+
+  .promise__icon--4 {
+    border-bottom-left-radius: 100%;
+    background: var(--grad-dusk);
+    color: var(--paper);
+  }
+
+  .promise__icon--5 {
+    border-radius: 42%;
+    background: var(--grad-rose);
+  }
+
+  .promise__icon--6 {
+    border-top-right-radius: 100%;
+    background: var(--teal);
+  }
+
+  /* ---------- care plans, made the same way ---------- */
+  .careway__sheet {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .careway__text {
+    max-width: 32rem;
+    margin-top: 1.5rem;
+    font-size: clamp(1rem, calc(var(--u) * 0.2), 1.25rem);
+    line-height: 1.5;
+  }
+
+  .careway__soon {
+    margin-top: 1.5rem;
+  }
+
+  .careway__soon .pill {
+    background: var(--peach);
+  }
+
+  .careway__link {
+    margin-top: 1.75rem;
+  }
+
+  /* The shape group, placed on a 5.35 x 5.15 unit box (from the design). */
+  .careway__art {
+    --cu: min(var(--u), calc((100vw - 2 * var(--pad)) / 5.4));
+    position: relative;
+    width: calc(var(--cu) * 5.35);
+    height: calc(var(--cu) * 5.15);
+    justify-self: end;
+  }
+
+  .careway__art > * {
+    position: absolute;
+  }
+
+  .careway__arch {
+    left: 0;
+    top: calc(var(--cu) * 0.17);
+    display: grid;
+    justify-items: center;
+    width: calc(var(--cu) * 3);
+    height: calc(var(--cu) * 3);
+    padding-top: calc(var(--cu) * 0.45);
+    border-radius: 999px 999px 0 0;
+    background: var(--grad-dusk);
+  }
+
+  .careway__arch :global(.careway__star) {
+    width: calc(var(--cu) * 0.36);
+  }
+
+  /* RingOrb is another component, so the scoped `> *` rule above doesn't reach it. */
+  .careway__art :global(.careway__orb) {
+    position: absolute;
+    left: calc(var(--cu) * 2.82);
+    top: 0;
+    width: calc(var(--cu) * 2.52);
+  }
+
+  .careway__ink {
+    left: calc(var(--cu) * 3);
+    top: calc(var(--cu) * 2.33);
+    width: var(--cu);
+    height: var(--cu);
+    background: var(--ink);
+  }
+
+  .careway__pink {
+    left: calc(var(--cu) * 4);
+    top: calc(var(--cu) * 2.33);
+    width: calc(var(--cu) * 1.17);
+    height: calc(var(--cu) * 1.17);
+    background: var(--pink);
+  }
+
+  .careway__peach {
+    left: 0;
+    top: calc(var(--cu) * 3.17);
+    width: calc(var(--cu) * 2);
+    height: calc(var(--cu) * 2);
+    border: 1px solid var(--ink);
+    border-top-right-radius: var(--cu);
+    background: var(--peach);
+  }
+
+  .careway__dot {
+    left: calc(var(--cu) * 2);
+    top: calc(var(--cu) * 4.17);
+    width: var(--cu);
+    height: var(--cu);
+    border-radius: 50%;
+    background: var(--ink);
+  }
+
+  @media (min-width: 48rem) {
+    .mission__cards {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .rules__cards {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .mission__text {
+      max-width: calc(var(--u) * 7.9);
+      font-size: calc(var(--u) * 0.2);
+    }
+
+    .mission__card {
+      min-height: calc(var(--u) * 3.67);
+    }
+
+    .rules__cards {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .rule {
+      min-height: calc(var(--u) * 4);
+    }
+
+    .promise__row {
+      gap: calc(var(--u) * 0.39);
+    }
+
+    .careway__sheet {
+      /* The group runs 0.18 units past the sheet edge, as in the design. */
+      grid-template-columns: 1fr calc(var(--u) * 5.17);
+      align-items: start;
+      gap: calc(var(--u) * 0.5);
+    }
+
+    .careway__text {
+      max-width: calc(var(--u) * 5.8);
+    }
+
+    .careway__art {
+      --cu: var(--u);
+      justify-self: start;
+    }
+  }
+</style>

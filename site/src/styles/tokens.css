@@ -41,6 +41,11 @@
   --grad-dusk: linear-gradient(180deg, #2c4377 0%, #3f7fa3 38%, #4a9bb0 62%, #edd1a8 100%);
   --grad-rose: linear-gradient(195deg, #db92db 0%, #e85e8f 48%, #d2133c 100%);
   --grad-indigo: radial-gradient(circle at 32% 30%, #8f93e4 0%, #4e28df 55%, #2d3682 100%);
+  /* The wide indigo blocks of 2026-10-25 (Bringing your ideas to life, Mobile apps): a soft sky
+     glow on the left, deepening to navy at the far edge. */
+  --grad-ideas:
+    radial-gradient(34% 52% at 28% 40%, rgba(176, 196, 228, 0.9) 0%, rgba(176, 196, 228, 0) 100%),
+    linear-gradient(115deg, #5c48dd 0%, #4c29dd 58%, #2a3875 100%);
   --grad-talk:
     radial-gradient(28% 42% at 22% 16%, #f8cea2 0%, rgba(248, 206, 162, 0) 100%),
     radial-gradient(34% 48% at 42% 104%, #5029da 0%, rgba(80, 41, 218, 0) 100%),

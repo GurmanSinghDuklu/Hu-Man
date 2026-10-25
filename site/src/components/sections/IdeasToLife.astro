@@ -1,0 +1,234 @@
+---
+/**
+ * "Bringing your ideas to life" (home 01, services 02): one wide indigo block with the ringed star,
+ * and the four steps from idea to launch as cards along its foot.
+ */
+import { ideaMailto } from '../../config/mailto';
+import Sparkle from '../Sparkle.astro';
+import Arrow from '../Arrow.astro';
+
+interface Props {
+  n: string;
+}
+
+const { n } = Astro.props;
+
+const steps = [
+  { title: 'Talk it through', text: 'Tell us the idea. No pitch deck needed.', shape: 'curve' },
+  { title: 'Shape it', text: 'We plan what to build first and what can wait.', shape: 'square' },
+  { title: 'Build it', text: 'Website, app or software, built properly.', shape: 'curve' },
+  { title: 'Launch + grow', text: 'We stay with you as it finds its feet.', shape: 'lilac' },
+];
+---
+
+<section class="band ideas" aria-labelledby={`ideas-title-${n}`}>
+  <div class="sheet">
+    <div class="ideas__block fill--indigo">
+      <span class="ideas__rings" aria-hidden="true">
+        <Sparkle class="ideas__star" color="var(--paper)" />
+      </span>
+      <div class="ideas__copy">
+        <p class="label" data-reveal>
+          {n} / Online business accelerator
+        </p>
+        <h2 id={`ideas-title-${n}`} class="ideas__title" data-reveal>
+          Bringing your
+          <br />
+          ideas to life.
+        </h2>
+        <p class="ideas__text" data-reveal>
+          That idea you’ve had on your mind for years? The one you can’t quite put together? Speak
+          to us. We specialise in turning ideas into real, working online businesses.
+        </p>
+        <a class="pill-btn ideas__btn" href={ideaMailto} data-reveal>
+          Tell us your idea <Arrow class="ideas__arrow" />
+        </a>
+      </div>
+
+      <ol class="ideas__steps">
+        {steps.map((s, i) => (
+          <li
+            class:list={['ideas__step', `ideas__step--${s.shape}`]}
+            data-reveal
+            style={`--reveal-delay:${i * 0.08}s`}
+          >
+            <span class="ideas__n">{String(i + 1).padStart(2, '0')}</span>
+            <h3>{s.title}</h3>
+            <p>{s.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ideas {
+    padding-block: clamp(3rem, calc(var(--u) * 0.89), 5.5rem);
+  }
+
+  .ideas__block {
+    position: relative;
+    display: grid;
+    gap: clamp(2rem, calc(var(--u) * 0.66), 4rem);
+    padding: clamp(1.75rem, calc(var(--u) * 0.66), 4rem) clamp(1.25rem, calc(var(--u) * 0.33), 2rem)
+      clamp(1.25rem, calc(var(--u) * 0.33), 2rem);
+    border-top-right-radius: calc(var(--u) * 2.56);
+    color: var(--paper);
+    overflow: hidden;
+  }
+
+  .ideas__copy {
+    position: relative;
+    min-width: 0;
+    display: grid;
+    justify-items: start;
+    gap: 1rem;
+  }
+
+  .ideas__title {
+    font-size: clamp(min(11vw, 2.5rem), calc(var(--u) * 1.07), 6.7rem);
+    line-height: 0.88;
+  }
+
+  .ideas__text {
+    max-width: 42rem;
+    font-size: clamp(1rem, calc(var(--u) * 0.21), 1.3rem);
+    line-height: 1.55;
+  }
+
+  .ideas__btn {
+    gap: 0.75rem;
+    margin-top: 0.75rem;
+    border-color: var(--paper);
+    background: var(--paper);
+    color: var(--ink);
+  }
+
+  .ideas__btn:hover {
+    background: transparent;
+    color: var(--paper);
+  }
+
+  .ideas__btn :global(.ideas__arrow) {
+    width: 0.9rem;
+  }
+
+  /* The two thin rings and the star, top right. */
+  .ideas__rings {
+    display: none;
+  }
+
+  .ideas__steps {
+    display: grid;
+    gap: max(12px, calc(var(--u) * 0.33));
+  }
+
+  .ideas__step {
+    display: grid;
+    align-content: start;
+    gap: 0.5rem;
+    min-height: 11rem;
+    padding: clamp(1.1rem, calc(var(--u) * 0.29), 1.75rem);
+    background: var(--paper);
+    color: var(--ink);
+  }
+
+  .ideas__step--curve {
+    border-top-right-radius: calc(var(--u) * 0.85);
+  }
+
+  .ideas__step--lilac {
+    background: var(--grad-lilac);
+  }
+
+  .ideas__n {
+    margin-bottom: clamp(0.5rem, calc(var(--u) * 0.3), 1.75rem);
+    font: 800 clamp(2rem, calc(var(--u) * 0.55), 3.3rem) / 1 var(--font-display);
+    letter-spacing: -0.02em;
+  }
+
+  .ideas__step h3 {
+    font-size: clamp(1.1rem, calc(var(--u) * 0.28), 1.7rem);
+    line-height: 0.95;
+  }
+
+  .ideas__step p {
+    font-size: clamp(0.9rem, calc(var(--u) * 0.165), 1rem);
+    line-height: 1.45;
+  }
+
+  @media (min-width: 40rem) {
+    .ideas__steps {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .ideas__block {
+      gap: calc(var(--u) * 0.66);
+      min-height: calc(var(--u) * 8.67);
+      padding: calc(var(--u) * 0.66) calc(var(--u) * 0.33) calc(var(--u) * 0.33);
+    }
+
+    .ideas__copy {
+      padding-left: calc(var(--u) * 0.33);
+      gap: calc(var(--u) * 0.2);
+    }
+
+    .ideas__copy .label {
+      font-size: calc(var(--u) * 0.135);
+    }
+
+    .ideas__text {
+      max-width: calc(var(--u) * 7.8);
+      margin-top: calc(var(--u) * 0.45);
+    }
+
+    .ideas__btn {
+      margin-top: 0;
+      min-height: calc(var(--u) * 0.56);
+      padding: 0 calc(var(--u) * 0.33);
+      font-size: calc(var(--u) * 0.135);
+    }
+
+    .ideas__rings {
+      display: grid;
+      place-items: center;
+      position: absolute;
+      left: calc(var(--u) * 10.78);
+      top: calc(var(--u) * 0.67);
+      width: calc(var(--u) * 4.22);
+      aspect-ratio: 1;
+      border: 1px solid rgba(241, 242, 236, 0.35);
+      border-radius: 50%;
+    }
+
+    .ideas__rings::before {
+      content: '';
+      position: absolute;
+      inset: 17%;
+      border: 1px solid rgba(241, 242, 236, 0.35);
+      border-radius: 50%;
+    }
+
+    .ideas__rings :global(.ideas__star) {
+      width: calc(var(--u) * 1.2);
+    }
+
+    .ideas__steps {
+      grid-template-columns: repeat(4, 1fr);
+      gap: calc(var(--u) * 0.33);
+    }
+
+    .ideas__step {
+      min-height: calc(var(--u) * 2.56);
+      gap: calc(var(--u) * 0.1);
+      padding: calc(var(--u) * 0.29);
+    }
+
+    .ideas__n {
+      margin-bottom: calc(var(--u) * 0.3);
+    }
+  }
+</style>

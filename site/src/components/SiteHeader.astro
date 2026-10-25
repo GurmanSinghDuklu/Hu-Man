@@ -3,12 +3,13 @@ import { site } from '../config/site';
 import { withBase } from '../config/paths';
 import Logo from './Logo.astro';
 
-// Pages: home, services, pricing. "Work" is a home section and the FAQ lives on the pricing page,
-// so those links carry the page path and work from anywhere.
+// The FAQ lives on the pricing page, so that link carries the page path and works from anywhere.
 const navLinks = [
   { href: withBase('/services/'), label: 'Services' },
-  { href: `${withBase('/')}#work`, label: 'Work' },
+  { href: withBase('/work/'), label: 'Work' },
   { href: withBase('/pricing/'), label: 'Pricing' },
+  { href: withBase('/about/'), label: 'About' },
+  { href: withBase('/how-we-build/'), label: 'How we build' },
   { href: `${withBase('/pricing/')}#faq`, label: 'FAQ' },
 ];
 ---
