@@ -65,22 +65,47 @@ const oneLine = (value) =>
     .replace(/[\r\n\t\u0000-\u001f\u007f]+/g, ' ')
     .trim();
 
-/** Reads JSON or form data into a plain object of strings. */
+/** The largest request body accepted: the form's limits add up to well under this. */
+export const MAX_BODY_BYTES = 16 * 1024;
+
+/** Thrown when a body is over MAX_BODY_BYTES, so the handler can answer 413. */
+export class TooLarge extends Error {}
+
+/**
+ * Reads JSON, URL-encoded or multipart form data into a plain object of strings, refusing bodies
+ * over MAX_BODY_BYTES before parsing them (the Content-Length header can't be trusted alone).
+ */
 export async function readFields(request) {
+  const declared = Number(request.headers.get('content-length') ?? 0);
+  if (declared > MAX_BODY_BYTES) throw new TooLarge();
+  const buffer = await request.arrayBuffer();
+  if (buffer.byteLength > MAX_BODY_BYTES) throw new TooLarge();
+
   const type = request.headers.get('content-type') ?? '';
+  const flat = (entries) =>
+    Object.fromEntries(
+      entries
+        .filter(([k]) => typeof k === 'string' && k.length <= 40)
+        .slice(0, 20)
+        .map(([k, v]) => [k, typeof v === 'string' || typeof v === 'number' ? String(v) : '']),
+    );
   if (type.includes('application/json')) {
-    const body = await request.json().catch(() => ({}));
-    return Object.fromEntries(
-      Object.entries(body && typeof body === 'object' ? body : {}).map(([k, v]) => [
-        k,
-        String(v ?? ''),
-      ]),
+    let body;
+    try {
+      body = JSON.parse(new TextDecoder().decode(buffer));
+    } catch {
+      body = {};
+    }
+    return flat(
+      Object.entries(body && typeof body === 'object' && !Array.isArray(body) ? body : {}),
     );
   }
-  const form = await request.formData();
-  return Object.fromEntries(
-    [...form.entries()].map(([k, v]) => [k, typeof v === 'string' ? v : '']),
-  );
+  const form = await new Request('https://form.invalid/', {
+    method: 'POST',
+    headers: { 'content-type': type },
+    body: buffer,
+  }).formData();
+  return flat([...form.entries()]);
 }
 
 /** Returns { data } when valid, { errors } when not. */
@@ -165,9 +190,26 @@ const json = (status, body, extra = {}) =>
     headers: {
       'Content-Type': 'application/json; charset=utf-8',
       'Cache-Control': 'no-store',
+      // A data endpoint: nothing in it may run, load or be framed, and it stays out of search.
+      'Content-Security-Policy': "default-src 'none'; frame-ancestors 'none'",
+      'X-Robots-Tag': 'noindex',
       ...extra,
     },
   });
+
+/**
+ * Rate limits (Cloudflare's rate limiting bindings, wrangler.toml): a few sends per minute from any
+ * one address, and a ceiling for the whole site, so a bot can't flood the inbox. Missing bindings
+ * (local tests) mean no limit.
+ */
+async function overLimit(env, ip) {
+  const checks = [
+    env.ENQUIRY_PER_IP?.limit({ key: ip }),
+    env.ENQUIRY_GLOBAL?.limit({ key: 'all' }),
+  ];
+  const results = await Promise.all(checks);
+  return results.some((r) => r && !r.success);
+}
 
 /** Handles /api/enquiry. `EmailMessage` is Cloudflare's class (injected for testing). */
 export async function handleEnquiry(request, env, EmailMessage) {
@@ -184,10 +226,21 @@ export async function handleEnquiry(request, env, EmailMessage) {
   const origin = request.headers.get('origin');
   if (!wantsJson && origin && origin !== url.origin) return json(403, { ok: false });
 
+  const ip = request.headers.get('cf-connecting-ip') ?? 'unknown';
+  if (await overLimit(env, ip)) {
+    const message = 'Too many messages in a short time. Please wait a minute and try again.';
+    if (wantsJson)
+      return json(429, { ok: false, errors: { form: message } }, { 'Retry-After': '60' });
+    return Response.redirect(`${url.origin}/contact/?error=busy`, 303);
+  }
+
   let raw;
   try {
     raw = await readFields(request);
-  } catch {
+  } catch (error) {
+    if (error instanceof TooLarge) {
+      return json(413, { ok: false, errors: { form: 'That message is too long.' } });
+    }
     return json(400, { ok: false, errors: { form: 'Could not read the form.' } });
   }
   const done = () =>

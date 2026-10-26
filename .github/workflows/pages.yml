@@ -34,6 +34,7 @@ jobs:
           cache: npm
           cache-dependency-path: site/package-lock.json
       - run: npm ci
+      # build runs the endpoint tests, the site build and the SEO/GEO check: any failure stops the deploy.
       - run: npm run build
         env:
           SITE_URL: https://gurmansinghduklu.github.io
@@ -41,9 +42,6 @@ jobs:
           PUBLIC_NOINDEX: '1'
           # GitHub Pages has no server for /api/enquiry, so forms open an email instead.
           PUBLIC_FORM_MODE: mailto
-      - run: npm run seo-check
-        env:
-          PUBLIC_NOINDEX: '1'
       - uses: actions/upload-pages-artifact@v4
         with:
           path: site/dist

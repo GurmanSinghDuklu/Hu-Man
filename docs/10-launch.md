@@ -152,6 +152,32 @@ Steps:
    Google (AI Overviews and AI Mode), ChatGPT, Perplexity, Gemini, Claude and Copilot. Note whether
    Hu/man appears and which sources are cited. Repeat monthly with the same list.
 
+## 5b. Security hardening (account side)
+The code side is done: TLS 1.2+ only (1.3 offered), HSTS, CSP with hashed scripts, no cookies, no
+third-party scripts, a rate-limited and size-capped form endpoint, 0 known dependency
+vulnerabilities, a build that refuses to deploy if tests or the SEO/GEO check fail, Dependabot.
+These need your logins:
+1. **Two-factor authentication** (an authenticator app or passkey, not SMS) on all four:
+   Cloudflare, Namecheap, GitHub, and the humansoftwareagency@gmail.com Google account. Whoever
+   gets into any one of these controls the site or the email. This is the most important item.
+2. **DNSSEC**: Cloudflare → DNS → Settings → Enable DNSSEC → copy the DS record it shows →
+   Namecheap → Domain List → Manage → Advanced DNS → DNSSEC → add it. Stops DNS answers being forged.
+3. **CAA records** (only these certificate authorities may issue for the domain). Cloudflare → DNS →
+   Add record, type CAA, name `@`: `0 issue "pki.goog"`, then `0 issue "letsencrypt.org"`, then
+   `0 issuewild "pki.goog"`, then `0 iodef "mailto:humansoftwareagency@gmail.com"`. Cloudflare
+   adds the other CAs it needs automatically.
+4. **GitHub**: Settings → Branches → add a rule for `hu-man-rebrand`: require the "checks"
+   status check to pass and require a pull request before merging. Settings → Code security →
+   turn on Dependabot alerts, Dependabot security updates and secret scanning (free for public repos).
+5. **Namecheap**: keep Domain Lock (already on: clientTransferProhibited) and WithheldforPrivacy on.
+6. **Cloudflare**: Security → Settings → leave "Block AI bots" off and Bot Fight Mode off (they
+   would hide the site from AI). Notifications → add alerts for "Universal SSL" and "Workers
+   deployment failures" to your email.
+7. **After 6 weeks with no problems**: HSTS preload (see "Keeping it right").
+8. Re-check any time: https://securityheaders.com/?q=humansoftwareagency.com (aim A+),
+   https://www.ssllabs.com/ssltest/analyze.html?d=humansoftwareagency.com (aim A+),
+   https://internet.nl/site/humansoftwareagency.com/ and https://internet.nl/mail/humansoftwareagency.com/.
+
 ## 6. Keeping it right
 - Change prices in `docs/02` then `site/src/data/pricing.ts`; titles, schema, llms.txt and the
   FAQ follow automatically.

@@ -94,9 +94,11 @@ function prefill(form: HTMLFormElement): void {
     const email = form.dataset.email ?? '';
     status(
       form,
-      error === 'send'
-        ? `Sorry, your message didn’t send. Please try again, or email <a href="mailto:${email}">${email}</a>.`
-        : 'Please add your name, an email to reply to, and a few words about what you need.',
+      error === 'busy'
+        ? 'Lots of messages just now. Please wait a minute and send it again.'
+        : error === 'send'
+          ? `Sorry, your message didn’t send. Please try again, or email <a href="mailto:${email}">${email}</a>.`
+          : 'Please add your name, an email to reply to, and a few words about what you need.',
       'warn',
     );
   }
@@ -141,6 +143,10 @@ document.querySelectorAll<HTMLFormElement>('[data-enquiry-form]').forEach((form)
       }
       if (res.status === 400 && body.errors) {
         setErrors(form, body.errors);
+        return;
+      }
+      if (res.status === 429) {
+        status(form, 'Lots of messages just now. Please wait a minute and send it again.', 'warn');
         return;
       }
       throw new Error(`HTTP ${res.status}`);

@@ -1,0 +1,16 @@
+# Weekly pull requests for security and version updates. Merge only when the Checks workflow is
+# green; every merge to hu-man-rebrand deploys.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /site
+    schedule:
+      interval: weekly
+    groups:
+      dependencies:
+        patterns: ['*']
+    open-pull-requests-limit: 5
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly

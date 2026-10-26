@@ -156,3 +156,69 @@ test('a failed send tells the sender to email instead', async () => {
   );
   assert.equal(res.status, 502);
 });
+
+test('an oversized body is refused before it is parsed', async () => {
+  const env = makeEnv();
+  const res = await handleEnquiry(
+    jsonPost({ name: 'Big', email: 'big@example.com', message: 'x'.repeat(20000) }),
+    env,
+    FakeEmailMessage,
+  );
+  assert.equal(res.status, 413);
+  assert.equal(env.sent.length, 0);
+});
+
+test('the rate limit answers 429 and sends nothing', async () => {
+  const env = { ...makeEnv(), ENQUIRY_PER_IP: { limit: async () => ({ success: false }) } };
+  const res = await handleEnquiry(
+    jsonPost({ name: 'Jo', email: 'jo@example.com', message: 'Hi' }),
+    env,
+    FakeEmailMessage,
+  );
+  assert.equal(res.status, 429);
+  assert.equal(res.headers.get('retry-after'), '60');
+  assert.equal(env.sent.length, 0);
+});
+
+test('a rate-limited form post goes back to the contact page with a message', async () => {
+  const env = { ...makeEnv(), ENQUIRY_GLOBAL: { limit: async () => ({ success: false }) } };
+  const res = await handleEnquiry(
+    formPost({ name: 'Jo', email: 'jo@example.com', message: 'Hi' }),
+    env,
+    FakeEmailMessage,
+  );
+  assert.equal(res.status, 303);
+  assert.match(res.headers.get('location'), /\/contact\/\?error=busy$/);
+});
+
+test('JSON that is not an object, and too many fields, are handled safely', async () => {
+  const env = makeEnv();
+  const arr = await handleEnquiry(
+    new Request('https://humansoftwareagency.com/api/enquiry', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: '[1,2,3]',
+    }),
+    env,
+    FakeEmailMessage,
+  );
+  assert.equal(arr.status, 400);
+  const many = Object.fromEntries(Array.from({ length: 200 }, (_, i) => [`f${i}`, 'x']));
+  const res = await handleEnquiry(
+    jsonPost({ ...many, name: 'A', email: 'a@b.co', message: 'hi' }),
+    env,
+    FakeEmailMessage,
+  );
+  assert.equal(res.status, 400);
+  assert.equal(env.sent.length, 0);
+});
+
+test('API responses carry a lock-down CSP and stay out of search', async () => {
+  const res = await handleEnquiry(
+    new Request('https://humansoftwareagency.com/api/enquiry'),
+    makeEnv(),
+    FakeEmailMessage,
+  );
+  assert.match(res.headers.get('content-security-policy'), /default-src 'none'/);
+  assert.equal(res.headers.get('x-robots-tag'), 'noindex');
+});

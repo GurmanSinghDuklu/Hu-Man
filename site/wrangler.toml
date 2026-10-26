@@ -25,3 +25,15 @@ destination_address = "humansoftwareagency@gmail.com"
 [vars]
 FROM_ADDRESS = "website@humansoftwareagency.com"
 TO_ADDRESS = "humansoftwareagency@gmail.com"
+
+# Rate limits for the enquiry form (worker/enquiry.js): 3 sends a minute from one address, 20 a
+# minute for the whole site. Stops a bot flooding the inbox; real people never hit them.
+[[ratelimits]]
+name = "ENQUIRY_PER_IP"
+namespace_id = "1001"
+simple = { limit = 3, period = 60 }
+
+[[ratelimits]]
+name = "ENQUIRY_GLOBAL"
+namespace_id = "1002"
+simple = { limit = 20, period = 60 }

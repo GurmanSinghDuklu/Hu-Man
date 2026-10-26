@@ -5,7 +5,7 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "node --test worker/enquiry.test.js && astro build && node scripts/seo-check.mjs",
     "preview": "astro preview",
     "typecheck": "astro check",
     "lint": "eslint . && prettier --check .",
@@ -19,7 +19,8 @@
     "icons": "node scripts/generate-icons.mjs",
     "indexnow": "node scripts/indexnow.mjs",
     "seo-check": "node scripts/seo-check.mjs",
-    "test": "node --test worker/enquiry.test.js"
+    "test": "node --test worker/enquiry.test.js",
+    "build:site": "astro build"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.10",
