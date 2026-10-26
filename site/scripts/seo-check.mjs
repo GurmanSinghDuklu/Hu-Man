@@ -172,6 +172,57 @@ for (const file of htmlFiles) {
   }
 }
 
+// GEO: everything a visitor can read must reach crawlers and AI tools that don't run JavaScript.
+const rawText = (doc) =>
+  decode(
+    doc.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/g, ' ').replace(/<[^>]+>/g, ' '),
+  ).replace(/\s+/g, ' ');
+for (const file of htmlFiles) {
+  const doc = html[file];
+  const where = `${basePath}${file.replace(/index\.html$/, '')}`;
+  if (/nosnippet|data-nosnippet|noarchive|noai|noimageai/.test(doc))
+    fail(where, 'limits snippets or AI use');
+  if (file === '404.html') continue;
+  // A Markdown copy of the page, linked from it.
+  const md = (doc.match(/<link rel="alternate" type="text\/markdown"[^>]*href="([^"]+)"/) ?? [])[1];
+  if (!md) fail(where, 'no Markdown alternate link');
+  else if (
+    !fileSet.has(`${file}.md`) ||
+    !md.endsWith(`${file.replace(/index\.html$/, '')}index.html.md`)
+  ) {
+    fail(where, `Markdown copy ${md} is missing`);
+  }
+  // Contact details in the raw HTML of every page.
+  for (const fact of ['humansoftwareagency@gmail.com', '+44 7988 450280']) {
+    if (!rawText(doc).includes(fact)) fail(where, `"${fact}" is not in the raw HTML`);
+  }
+}
+
+// The facts in llms-full.txt's tables and lists must be on the pages, as plain HTML text.
+const llmsFull = await readFile(`${dist}llms-full.txt`, 'utf8');
+const pricingText = rawText(html['pricing/index.html'] ?? '');
+for (const [, tier, price] of llmsFull.matchAll(/^\| ([^|]+) \| (£[\d,]+) \|/gm)) {
+  if (!pricingText.includes(tier.trim()) || !pricingText.includes(price)) {
+    fail('pricing', `tier "${tier.trim()} ${price}" is in llms-full.txt but not in the page text`);
+  }
+}
+const faqBlock = llmsFull.split('## Frequently asked questions')[1]?.split('\n## ')[0] ?? '';
+for (const [, q, a] of faqBlock.matchAll(/### (.+)\n\n(.+)/g)) {
+  if (!pricingText.includes(q) || !pricingText.includes(a))
+    fail('pricing', `FAQ "${q}" differs from llms-full.txt`);
+}
+if (!llmsFull.includes('# Every page, word for word')) fail('llms-full.txt', 'no full page text');
+for (const file of htmlFiles.filter((f) => f !== '404.html')) {
+  if (!llmsFull.includes(`Source: ${origin}${basePath}${file.replace(/index\.html$/, '')}\n`)) {
+    fail('llms-full.txt', `has no full text for ${file}`);
+  }
+}
+
+// Nothing may shut out a crawler: robots.txt rules, and the host's header file.
+const headersFile = await readFile(`${dist}_headers`, 'utf8').catch(() => '');
+if (/X-Robots-Tag/i.test(headersFile) && !noindexBuild)
+  fail('_headers', 'sets X-Robots-Tag on the live site');
+
 // Sitemap: exactly the indexable pages.
 if (!noindexBuild) {
   const sitemap = await readFile(`${dist}sitemap-0.xml`, 'utf8');
@@ -185,7 +236,20 @@ if (!noindexBuild) {
 const robots = await readFile(`${dist}robots.txt`, 'utf8');
 if (!robots.includes(`Sitemap: ${origin}${basePath}sitemap-index.xml`))
   fail('robots.txt', 'wrong or missing Sitemap line');
-if (/Disallow: \/\s*$/m.test(robots)) fail('robots.txt', 'disallows the whole site');
+if (/^Disallow:\s*\S/m.test(robots)) fail('robots.txt', 'disallows something');
+for (const agent of [
+  'GPTBot',
+  'OAI-SearchBot',
+  'ChatGPT-User',
+  'ClaudeBot',
+  'Claude-SearchBot',
+  'PerplexityBot',
+  'Google-Extended',
+  'Bingbot',
+  'Applebot-Extended',
+]) {
+  if (!robots.includes(`User-agent: ${agent}`)) fail('robots.txt', `does not name ${agent}`);
+}
 
 for (const name of ['llms.txt', 'llms-full.txt']) {
   const text = await readFile(`${dist}${name}`, 'utf8');

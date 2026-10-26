@@ -2,6 +2,7 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import { productionUrl } from './src/config/domain.ts';
 import { lastModified, pageFile } from './src/lib/lastModified.ts';
+import aiReadable from './src/integrations/ai-readable.mjs';
 
 const base = process.env.SITE_BASE ?? '/';
 
@@ -54,5 +55,7 @@ export default defineConfig({
         return lastmod ? { ...item, lastmod } : item;
       },
     }),
+    // After the sitemap: Markdown copies of every page, full llms-full.txt, image sitemap.
+    aiReadable(),
   ],
 });

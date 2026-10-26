@@ -42,7 +42,10 @@ export function llmsTxt(): string {
     '',
     '## Pages',
     '',
-    ...pageKeys.map((key) => `- ${link(key)}: ${pages[key].description}`),
+    ...pageKeys.map(
+      (key) =>
+        `- ${link(key)}: ${pages[key].description} Markdown: ${abs(`${pages[key].path}index.html.md`)}`,
+    ),
     '',
     '## Services',
     '',
@@ -50,7 +53,7 @@ export function llmsTxt(): string {
     '',
     '## Optional',
     '',
-    `- [Full details for AI tools](${abs('/llms-full.txt')}): every service, price, build stage and answer on the site in one file`,
+    `- [Full details for AI tools](${abs('/llms-full.txt')}): every service, price, build stage and answer, then the full text of every page, in one file`,
     `- ${link('privacy')}: no cookies and no tracking on this site`,
     '',
   ].join('\n');

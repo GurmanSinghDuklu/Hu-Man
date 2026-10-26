@@ -44,6 +44,28 @@ apex domain cleanly. (Netlify reads the same two files; Vercel would need a `ver
    template → 301, keep the path and query string. Every canonical tag uses the bare domain.
 5. SSL/TLS → Overview → Full (strict). Edge Certificates → Always Use HTTPS: on.
 
+### Let every crawler in (do this before anything else is switched on)
+**Cloudflare blocks AI crawlers by default on new domains** and can rewrite robots.txt to shut out
+AI training. Left on, ChatGPT, Claude and Perplexity would never see the site, whatever our own
+robots.txt says. In the Cloudflare dashboard for humansoftwareagency.com:
+1. **AI Crawl Control** (or Security → Settings → Bot traffic): set "Block AI bots" to **Do not block
+   (allow)**, and make sure no individual crawler shows as Blocked.
+2. **Managed robots.txt**: **off**. Our own `/robots.txt` already welcomes every crawler by name.
+3. **Bot Fight Mode**: **off**. It can serve challenges that crawlers can't solve.
+4. No "Pay per crawl", no WAF rules on user agents, no "Under Attack" mode.
+
+Then prove it from any terminal: every line should print `200`. A `403`, `503` or a challenge
+page means something above is still blocking.
+```sh
+for ua in Googlebot Bingbot GPTBot OAI-SearchBot ChatGPT-User ClaudeBot Claude-SearchBot \
+  Claude-User PerplexityBot Perplexity-User Google-Extended Applebot DuckAssistBot; do
+  printf '%-18s ' "$ua"
+  curl -s -o /dev/null -w '%{http_code}\n' -A "Mozilla/5.0 (compatible; $ua)" https://humansoftwareagency.com/
+done
+curl -s https://humansoftwareagency.com/robots.txt | head -20   # must be ours, with no Disallow
+```
+Re-check after any Cloudflare change, and in the monthly AI visibility check.
+
 ### Email records (our checklist promises SPF, DKIM and DMARC, so our own domain has them)
 The domain sends no email (the business address is Gmail), so lock it down against spoofing:
 
@@ -63,6 +85,8 @@ SPF and DKIM records and start DMARC at `p=none`, then `quarantine`, then `rejec
 - [ ] https://pagespeed.web.dev/ on mobile: 95+ everywhere.
 - [ ] https://search.google.com/test/rich-results and https://validator.schema.org/ on the home
       and pricing pages: no errors.
+- [ ] The crawler check above prints `200` for every crawler.
+- [ ] Each page's Markdown copy opens, e.g. `/index.html.md`, `/pricing/index.html.md`.
 - [ ] These open: `/robots.txt`, `/sitemap-index.xml`, `/llms.txt`, `/llms-full.txt`,
       `/.well-known/security.txt`, `/site.webmanifest`, `/cd99b05867c9de36c6aa606c39fb4593.txt`.
 - [ ] Share the home URL in a WhatsApp or LinkedIn draft: the new card image shows.

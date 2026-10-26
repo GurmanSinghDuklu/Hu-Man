@@ -307,6 +307,13 @@ the runbook for the account-side steps is `docs/10-launch.md`. Things worth know
    `npm run icons`. The favicon's print was a solid blob at stroke-width 14; it is 6 now.
 6. Sitemap lastmod and schema dateModified come from git (`src/lib/lastModified.ts`), so CI checks
    out full history.
+7. **Everything visible reaches AI tools**: `src/integrations/ai-readable.mjs` (after the sitemap)
+   writes a Markdown copy of each page's <main> to `<page>/index.html.md`, appends every page's full
+   text to llms-full.txt and adds an image sitemap. aria-hidden and empty-alt content is skipped.
+   `seo-check` fails if a price or FAQ answer in llms-full.txt differs from the page, robots.txt
+   disallows anything, or a page lacks its Markdown copy.
+8. **Cloudflare blocks AI crawlers by default**: the runbook's "Let every crawler in" step must be
+   done before launch, then verified with its curl loop.
 Lighthouse 98-100 / 100 / 100 / 100 on all six pages, axe 0 violations on all eight.
 
 ## GitHub and preview deploy

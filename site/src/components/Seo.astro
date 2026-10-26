@@ -30,10 +30,22 @@ const schema = key === '404' ? undefined : buildSchema(key, abs);
 {index && <link rel="canonical" href={canonicalUrl} />}
 <meta
   name="robots"
-  content={index ? 'index, follow, max-image-preview:large, max-snippet:-1' : 'noindex, follow'}
+  content={
+    index
+      ? 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
+      : 'noindex, follow'
+  }
 />
 <link rel="sitemap" type="application/xml" href={withBase('/sitemap-index.xml')} />
-<link rel="alternate" type="text/markdown" title="llms.txt" href={withBase('/llms.txt')} />
+{key !== '404' && (
+  <link
+    rel="alternate"
+    type="text/markdown"
+    title="This page as Markdown"
+    href={withBase(`${page.path}index.html.md`)}
+  />
+)}
+<link rel="alternate" type="text/plain" title="llms.txt" href={withBase('/llms.txt')} />
 <link rel="manifest" href={withBase('/site.webmanifest')} />
 <link rel="icon" href={withBase('/favicon.ico')} sizes="48x48" />
 <link rel="apple-touch-icon" href={withBase('/apple-touch-icon.png')} />
