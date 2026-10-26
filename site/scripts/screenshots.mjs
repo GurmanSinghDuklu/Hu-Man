@@ -17,6 +17,9 @@ const pages = [
   ['about', 'about/'],
   ['how-we-build', 'how-we-build/'],
   ['work', 'work/'],
+  ['agentic-ai-ready', 'agentic-ai-ready/'],
+  ['free-ai-check', 'free-ai-check/'],
+  ['contact', 'contact/'],
 ];
 // The Hu/man design is a single dark art direction, so one colour scheme.
 const themes = ['dark'];

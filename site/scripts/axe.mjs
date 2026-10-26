@@ -12,6 +12,10 @@ const PAGES = [
   'about/',
   'how-we-build/',
   'work/',
+  'agentic-ai-ready/',
+  'free-ai-check/',
+  'contact/',
+  'thanks/',
   'privacy/',
   '404.html',
 ];

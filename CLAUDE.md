@@ -316,6 +316,23 @@ the runbook for the account-side steps is `docs/10-launch.md`. Things worth know
    done before launch, then verified with its curl loop.
 Lighthouse 98-100 / 100 / 100 / 100 on all six pages, axe 0 violations on all eight.
 
+## Enquiry form and the two GEO pages (2026-10-26, branch `agency-redesign`)
+New pages `/agentic-ai-ready/` (the brand's term defined; DefinedTerm schema), `/free-ai-check/`,
+`/contact/` and `/thanks/` (noindex). Copy on all three is a draft awaiting Gurman's sign-off.
+1. **Hosting is now Cloudflare Workers, not Pages** (`site/wrangler.toml`): Pages can't send email.
+   Static files come from dist/; `site/worker/` only handles `/api/enquiry`.
+2. **Every contact button leads to a form** that posts to `/api/enquiry`, which emails the inbox via
+   Cloudflare's send_email binding (Email Routing must be set up: docs/10-launch.md). Nothing is
+   stored. The same endpoint takes JSON from AI agents; GET returns its field list; llms.txt and the
+   schema (`potentialAction`) document it. Links prefill the contact form: `contactPath({ tier })`
+   in `src/config/links.ts`.
+3. **Works without JavaScript** (plain post -> 303 to /thanks/, errors back to /contact/?error=1).
+   With JS it sends in place and offers a ready-written email if sending fails.
+4. **The GitHub Pages preview has no server**, so it builds with `PUBLIC_FORM_MODE=mailto`.
+5. `npm test` runs the endpoint's tests (worker/enquiry.test.js, Node's test runner, fake mailbox).
+   Noindex pages are flagged `noindex: true` in src/data/pages.ts.
+Lighthouse 98-100 / 100 / 100 / 100, axe 0 violations on all twelve pages.
+
 ## GitHub and preview deploy
 Repo: github.com/GurmanSinghDuklu/Hu-Man (public; default branch `hu-man-rebrand`). Every push to
 `hu-man-rebrand` deploys a preview to https://gurmansinghduklu.github.io/Hu-Man/ via

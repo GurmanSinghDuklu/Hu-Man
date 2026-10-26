@@ -1,0 +1,396 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import InnerHero from '../components/InnerHero.astro';
+import EnquiryForm from '../components/EnquiryForm.astro';
+import Sparkle from '../components/Sparkle.astro';
+import { checkFaq } from '../data/faq';
+import { withBase } from '../config/paths';
+
+// What the check covers (draft copy, 2026-10-26).
+const checks = [
+  {
+    title: 'AI answers',
+    text: 'We ask ChatGPT, Perplexity, Gemini, Claude, Copilot and Google’s AI Overviews for your main search, and note whether you come up.',
+    style: 'lilac',
+  },
+  {
+    title: 'Who they pick instead',
+    text: 'If AI recommends someone else, we look at what their sites and profiles have that yours doesn’t.',
+    style: 'rose',
+  },
+  {
+    title: 'Can AI reach you',
+    text: 'Whether your site lets AI crawlers in, and whether your pages can be read without running scripts.',
+    style: 'dusk',
+  },
+  {
+    title: 'Your facts',
+    text: 'Prices, services, areas and contact details: are they clear, consistent and machine-readable, on your site and your Business Profile?',
+    style: 'peach',
+  },
+  {
+    title: 'Mobile speed',
+    text: 'How quickly your site loads on a phone, where most customers find you.',
+    style: 'teal',
+  },
+  {
+    title: 'Security basics',
+    text: 'HTTPS, security headers and your domain’s email settings.',
+    style: 'ink',
+  },
+];
+
+// The same example the home page shows, labelled as an example.
+const sample = [
+  { q: 'Mentioned by ChatGPT?', a: 'Not found', tone: 'rose' },
+  { q: 'Google AI Overview?', a: 'Not found', tone: 'rose' },
+  { q: 'AI crawlers allowed?', a: 'Blocked', tone: 'rose' },
+  { q: 'Mobile speed', a: 'Slow', tone: 'peach' },
+  { q: 'Business facts readable?', a: 'Partly', tone: 'teal' },
+];
+---
+
+<BaseLayout page="free-ai-check">
+  <SiteHeader slot="header" />
+
+  <InnerHero label="Free AI check" lens="Lens 08 / Free AI check" longWords>
+    <Fragment slot="title">
+      Is AI
+      <br />
+      recommending
+      <br />
+      your
+      <br />
+      competitors?
+    </Fragment>
+    <Fragment slot="lede">
+      Find out whether AI assistants recommend your business when customers ask, and what to fix if
+      they don’t. Free, no obligation, and checked by a person.
+    </Fragment>
+  </InnerHero>
+
+  <section class="band band--ink checks" aria-labelledby="checks-title">
+    <div class="grid grid--ink">
+      <div class="sheet section">
+        <p class="label" data-reveal>
+          01 / What we check
+        </p>
+        <h2 id="checks-title" class="display display--m" data-reveal>
+          Six things AI looks at.
+        </h2>
+        <ul class="checks__cards">
+          {checks.map((c, i) => (
+            <li
+              class:list={['checks__card', `fill--${c.style}`, `checks__card--${c.style}`]}
+              data-reveal
+              style={`--reveal-delay:${(i % 3) * 0.08}s`}
+            >
+              <Sparkle class="checks__star" />
+              <h3>{c.title}</h3>
+              <p>{c.text}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="band grid get section" aria-labelledby="get-title">
+    <div class="sheet get__sheet">
+      <div>
+        <p class="label" data-reveal>
+          02 / What you get
+        </p>
+        <h2 id="get-title" class="display display--m" data-reveal>
+          A plain-English
+          <br />
+          list of fixes.
+        </h2>
+        <ol class="get__steps">
+          <li>
+            <strong>Send your website address.</strong> Use the form below. It takes a minute.
+          </li>
+          <li>
+            <strong>A person checks it.</strong> We run the AI searches and the checks above by
+            hand.
+          </li>
+          <li>
+            <strong>You get your findings within 48 hours.</strong> What we found, and what to fix
+            first, by email.
+          </li>
+          <li>
+            <strong>No obligation.</strong> Fix it yourself, ask us for a fixed quote, or do
+            nothing.
+          </li>
+        </ol>
+      </div>
+      <figure class="get__sample" aria-labelledby="sample-caption">
+        <ul>
+          {sample.map((row) => (
+            <li>
+              <span>{row.q}</span>
+              <span class:list={['get__tag', `get__tag--${row.tone}`]}>{row.a}</span>
+            </li>
+          ))}
+        </ul>
+        <figcaption id="sample-caption" class="label">
+          Sample result · Example only
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="band band--paper-2 ask section" id="check" aria-labelledby="ask-title">
+    <div class="sheet ask__sheet">
+      <div>
+        <p class="label">03 / Ask for yours</p>
+        <h2 id="ask-title" class="display display--m">
+          Check my site.
+        </h2>
+        <p class="ask__text">
+          Free, no obligation. We reply within 48 hours. Want to know what “agentic AI-ready” means
+          first? <a href={withBase('/agentic-ai-ready/')}>Read the short guide</a>.
+        </p>
+      </div>
+      <EnquiryForm variant="check" />
+    </div>
+  </section>
+
+  <section class="band grid faq section" aria-labelledby="faq-title">
+    <div class="sheet">
+      <p class="label">04 / Questions</p>
+      <h2 id="faq-title" class="display display--s">
+        About the free AI check
+      </h2>
+      <dl class="faq__list">
+        {checkFaq.map((item) => (
+          <div class="faq__item">
+            <dt>{item.q}</dt>
+            <dd>{item.a}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+  /* ---------- six checks ---------- */
+  .checks .label,
+  .checks .display {
+    color: var(--paper);
+  }
+
+  .checks__cards {
+    display: grid;
+    gap: max(16px, calc(var(--u) * 0.33));
+    margin-top: clamp(2rem, calc(var(--u) * 0.8), 4.5rem);
+  }
+
+  .checks__card {
+    --r: calc(var(--u) * 1.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    min-height: 13rem;
+    padding: clamp(1.25rem, calc(var(--u) * 0.33), 2rem);
+    color: var(--ink);
+  }
+
+  .checks__card--lilac,
+  .checks__card--teal {
+    border-top-left-radius: var(--r);
+  }
+
+  .checks__card--rose,
+  .checks__card--ink {
+    border-top-right-radius: var(--r);
+  }
+
+  .checks__card--dusk,
+  .checks__card--peach {
+    border-radius: var(--r) var(--r) 0 0;
+  }
+
+  .checks__card--ink {
+    border: 1px solid #3a3c39;
+    color: var(--paper);
+  }
+
+  .checks__card :global(.checks__star) {
+    width: clamp(1.1rem, calc(var(--u) * 0.27), 1.6rem);
+    margin-bottom: auto;
+    fill: currentColor;
+  }
+
+  .checks__card h3 {
+    font-size: clamp(1.2rem, calc(var(--u) * 0.31), 1.9rem);
+    line-height: 1;
+  }
+
+  .checks__card p {
+    font-size: clamp(0.9rem, calc(var(--u) * 0.165), 1rem);
+    line-height: 1.45;
+  }
+
+  /* ---------- what you get ---------- */
+  .get__sheet {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .get__steps {
+    display: grid;
+    gap: 1rem;
+    max-width: 38rem;
+    margin-top: clamp(1.5rem, calc(var(--u) * 0.5), 3rem);
+    counter-reset: step;
+  }
+
+  .get__steps li {
+    position: relative;
+    padding-left: 3.25rem;
+    font-size: clamp(1rem, calc(var(--u) * 0.19), 1.15rem);
+    line-height: 1.5;
+    counter-increment: step;
+  }
+
+  .get__steps li::before {
+    content: counter(step, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--ink);
+    color: var(--paper);
+    font: 500 0.75rem var(--font-mono);
+  }
+
+  .get__sample {
+    align-self: start;
+    margin: 0;
+    padding: clamp(1.5rem, calc(var(--u) * 0.45), 2.5rem);
+    border-radius: calc(var(--u) * 0.36);
+    background: var(--ink-2);
+    color: var(--paper);
+  }
+
+  .get__sample li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding-block: 0.75rem;
+    border-bottom: 1px solid #2a2c2f;
+  }
+
+  .get__tag {
+    padding: 0.3em 0.8em;
+    border-radius: 999px;
+    color: var(--ink);
+    font: 400 0.6875rem var(--font-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .get__tag--rose {
+    background: linear-gradient(90deg, #e85e8f, #d8a7eb);
+  }
+
+  .get__tag--peach {
+    background: var(--peach);
+  }
+
+  .get__tag--teal {
+    background: var(--teal);
+  }
+
+  .get__sample figcaption {
+    margin-top: 1rem;
+    font-size: 0.6875rem;
+    color: var(--muted-on-ink);
+  }
+
+  /* ---------- the form ---------- */
+  .ask__sheet {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .ask__text {
+    max-width: 30rem;
+    margin-top: 1.25rem;
+    font-size: clamp(1rem, calc(var(--u) * 0.19), 1.15rem);
+    line-height: 1.55;
+  }
+
+  .ask__text a {
+    font-weight: 600;
+  }
+
+  /* ---------- FAQ ---------- */
+  .faq__list {
+    display: grid;
+    gap: 1rem max(16px, calc(var(--u) * 0.33));
+    margin: clamp(2rem, calc(var(--u) * 0.6), 3.5rem) 0 0;
+  }
+
+  .faq__item {
+    padding: clamp(1.25rem, calc(var(--u) * 0.33), 2rem);
+    border: 1px solid var(--ink);
+    border-top-right-radius: calc(var(--u) * 0.72);
+    background: var(--paper);
+  }
+
+  .faq__item dt {
+    font: 800 clamp(1.05rem, calc(var(--u) * 0.22), 1.35rem) / 1.05 var(--font-display);
+    text-transform: uppercase;
+  }
+
+  .faq__item dd {
+    margin: 0.6rem 0 0;
+    font-size: clamp(0.95rem, calc(var(--u) * 0.17), 1.05rem);
+    line-height: 1.5;
+  }
+
+  @media (min-width: 48rem) {
+    .checks__cards,
+    .faq__list {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .checks__cards {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .checks__card {
+      min-height: calc(var(--u) * 3);
+    }
+
+    .get__sheet {
+      grid-template-columns: 1fr calc(var(--u) * 5.4);
+      gap: calc(var(--u) * 0.66);
+    }
+
+    .get__sample {
+      margin-top: calc(var(--u) * 0.6);
+    }
+
+    .ask__sheet {
+      grid-template-columns: calc(var(--u) * 5) 1fr;
+      gap: calc(var(--u) * 0.66);
+    }
+  }
+</style>

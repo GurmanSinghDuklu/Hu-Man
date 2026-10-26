@@ -1,13 +1,8 @@
 ---
-/** "Talk to a human": the free-audit banner that closes every page (id="audit"). */
+/** "Talk to a human": the banner that closes most pages (id="audit"). */
 import { site } from '../config/site';
+import { withBase } from '../config/paths';
 import Sparkle from './Sparkle.astro';
-
-const auditMailto = (() => {
-  const subject = encodeURIComponent('Free presence audit');
-  const body = encodeURIComponent('Hi,\n\nBusiness name:\nWebsite:\nMain service:\n\n');
-  return `mailto:${site.contact.email}?subject=${subject}&body=${body}`;
-})();
 ---
 
 <section class="band talk-band" id="audit" aria-labelledby="audit-title">
@@ -25,8 +20,11 @@ const auditMailto = (() => {
           Send your web address or just say hello. You get a reply from a real person, not a bot.
         </p>
         <div class="talk__actions">
-          <a class="pill-btn" href={auditMailto}>
-            Email me your website
+          <a class="pill-btn" href={withBase('/contact/')}>
+            Send us a message
+          </a>
+          <a class="pill-btn pill-btn--outline" href={withBase('/free-ai-check/')}>
+            Free AI check
           </a>
           <a class="pill-btn pill-btn--outline" href={site.contact.whatsapp} rel="noopener">
             WhatsApp

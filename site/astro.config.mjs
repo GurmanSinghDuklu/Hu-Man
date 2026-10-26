@@ -48,8 +48,8 @@ export default defineConfig({
   },
   integrations: [
     sitemap({
-      // The 404 page is noindex, so it stays out.
-      filter: (page) => !page.includes('/404'),
+      // Noindex pages (404, the form's thank-you page) stay out.
+      filter: (page) => !/\/(404|thanks)\/?$/.test(page),
       serialize(item) {
         const lastmod = lastModified(pageFile(pageKeyFor(item.url)));
         return lastmod ? { ...item, lastmod } : item;

@@ -4,6 +4,8 @@ Everything in the code is ready. These are the steps that need Gurman's accounts
 here has been done yet: no host, DNS or search-engine account has been touched.
 
 ## 0. Confirm before launch
+- [ ] **The new pages' wording** (drafts, 2026-10-26): `/agentic-ai-ready/` (the definition and the
+      eight points), `/free-ai-check/` (what we check, "within 48 hours"), `/contact/`.
 - [ ] **The domain**: humansoftwareagency.com (registered at Namecheap on 2026-10-11, linked from the
       Instagram bio). The code assumes it in one place: `site/src/config/domain.ts`.
 - [ ] **The About promises** ("we fix our mistakes at no cost", "a real person answers", "no charge for
@@ -19,30 +21,46 @@ here has been done yet: no host, DNS or search-engine account has been touched.
       (`docs/05-compliance-and-claims.md`).
 - [ ] **Merge** `agency-redesign` into `hu-man-rebrand` (the production branch).
 
-## 1. Hosting: Cloudflare Pages (recommended)
-Free, fast in the UK, reads `site/public/_headers` and `_redirects` as they are, and handles the
-apex domain cleanly. (Netlify reads the same two files; Vercel would need a `vercel.json`.)
+## 1. Hosting: Cloudflare Workers (recommended)
+Free, fast in the UK, and runs the enquiry form's endpoint (`site/worker/`) next to the static
+site. Everything is set in `site/wrangler.toml`; `public/_headers` and `_redirects` work as they are.
+(Cloudflare *Pages* can't send the form's email, so use Workers.)
 
-1. Cloudflare dashboard → Workers & Pages → Create → Pages → Connect to Git → `GurmanSinghDuklu/Hu-Man`.
-2. Production branch: `hu-man-rebrand`. Settings:
+1. Do section 2 (DNS) first, so the domain is on Cloudflare.
+2. Cloudflare dashboard → Workers & Pages → Create → Import a repository →
+   `GurmanSinghDuklu/Hu-Man`. Settings:
+   - Project name: `humansoftwareagency` (must match `name` in `site/wrangler.toml`)
+   - Production branch: `hu-man-rebrand`
    - Root directory: `site`
    - Build command: `npm run build`
-   - Output directory: `dist`
-   - Node version: read from `site/.node-version` (24). If not, set env `NODE_VERSION=24`.
-   - No other environment variables. (Do NOT set `PUBLIC_NOINDEX`: that hides the site from search.)
-3. Turn off automatic preview deployments for other branches if you don't want them
-   (Settings → Builds → Branch control). Cloudflare marks preview URLs noindex anyway.
+   - Deploy command: `npx wrangler deploy`
+   - Node: read from `site/.node-version` (24). If not, set build variable `NODE_VERSION=24`.
+   - No `PUBLIC_NOINDEX` or `PUBLIC_FORM_MODE` (those are for the GitHub preview only).
+3. `wrangler.toml` attaches the Worker to `humansoftwareagency.com` itself (Custom Domain), so no
+   separate custom-domain step is needed. Check Settings → Domains & Routes shows it.
 4. The GitHub "Checks" workflow (`.github/workflows/ci.yml`) runs on every push. Only merge to
    `hu-man-rebrand` when it is green.
+
+### The enquiry form's email (Email Routing)
+The form emails each enquiry to humansoftwareagency@gmail.com through Cloudflare. To allow that:
+1. Cloudflare → humansoftwareagency.com → Email → Email Routing → Get started. It adds its own MX
+   and SPF records: accept them.
+2. Destination addresses → add **humansoftwareagency@gmail.com** → click the link Cloudflare emails
+   to it. The form can only send to a verified address.
+3. Bonus: add a routing rule `hello@humansoftwareagency.com` → the Gmail address. That gives you a
+   professional address on the domain for free (put it on the site later in `site/src/config/site.ts`).
+4. Test after deploy: send yourself a message from `/contact/`, check it arrives, and press Reply
+   (it should reply to the address you typed in the form).
+5. If sending ever fails, visitors are offered a ready-written email instead, so no enquiry is lost.
 
 ## 2. DNS
 1. Add humansoftwareagency.com to Cloudflare (free plan). Cloudflare gives two nameservers.
 2. Namecheap → Domain List → Manage → Nameservers → Custom DNS → paste Cloudflare's two.
    (Takes minutes to a few hours.)
-3. Pages project → Custom domains → add `humansoftwareagency.com`, then `www.humansoftwareagency.com`.
-4. **One address only**: Cloudflare → Rules → Redirect Rules → "Redirect from WWW to root"
-   template → 301, keep the path and query string. Every canonical tag uses the bare domain.
-5. SSL/TLS → Overview → Full (strict). Edge Certificates → Always Use HTTPS: on.
+3. **One address only**: DNS → add record `AAAA`, name `www`, value `100::`, Proxied (orange cloud).
+   Then Rules → Redirect Rules → "Redirect from WWW to root" template → 301, keep the path and query
+   string. Every canonical tag uses the bare domain; the Worker only answers on it.
+4. SSL/TLS → Overview → Full (strict). Edge Certificates → Always Use HTTPS: on.
 
 ### Let every crawler in (do this before anything else is switched on)
 **Cloudflare blocks AI crawlers by default on new domains** and can rewrite robots.txt to shut out
@@ -67,16 +85,16 @@ curl -s https://humansoftwareagency.com/robots.txt | head -20   # must be ours, 
 Re-check after any Cloudflare change, and in the monthly AI visibility check.
 
 ### Email records (our checklist promises SPF, DKIM and DMARC, so our own domain has them)
-The domain sends no email (the business address is Gmail), so lock it down against spoofing:
+Email Routing (above) adds the MX records and an SPF record. Then add:
 
 | Type | Name | Value |
 |---|---|---|
-| TXT | `@` | `v=spf1 -all` |
-| TXT | `_dmarc` | `v=DMARC1; p=reject; adkim=s; aspf=s` |
-| MX | `@` | `0 .` (a "null MX": this domain receives no mail; Cloudflare may need priority 0, target `.`) |
+| TXT | `_dmarc` | `v=DMARC1; p=quarantine; adkim=r; aspf=r` |
 
-If you later move email onto the domain (e.g. Google Workspace), replace these with the provider's
-SPF and DKIM records and start DMARC at `p=none`, then `quarantine`, then `reject`.
+Check Email → Email Routing → Settings shows the DKIM and SPF records as "Configured". After a month
+of the form's emails arriving fine (not in spam), tighten DMARC to `p=reject`. If you later send
+email from the domain with another provider (e.g. Google Workspace), add their SPF include and DKIM
+record, and keep DMARC.
 
 ## 3. Check the live site (15 minutes)
 - [ ] `https://humansoftwareagency.com/` loads; `http://` and `www.` both redirect to it in one hop.
@@ -87,6 +105,9 @@ SPF and DKIM records and start DMARC at `p=none`, then `quarantine`, then `rejec
       and pricing pages: no errors.
 - [ ] The crawler check above prints `200` for every crawler.
 - [ ] Each page's Markdown copy opens, e.g. `/index.html.md`, `/pricing/index.html.md`.
+- [ ] `/api/enquiry` opens and shows the field list (that's what AI agents read).
+- [ ] A test message from `/contact/` and one from `/free-ai-check/` both reach the inbox, and
+      Reply goes to the address typed in the form. Try once with JavaScript off too.
 - [ ] These open: `/robots.txt`, `/sitemap-index.xml`, `/llms.txt`, `/llms-full.txt`,
       `/.well-known/security.txt`, `/site.webmanifest`, `/cd99b05867c9de36c6aa606c39fb4593.txt`.
 - [ ] Share the home URL in a WhatsApp or LinkedIn draft: the new card image shows.

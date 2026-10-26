@@ -9,7 +9,18 @@ import { fromPrice, priceOf, tiers } from './pricing';
 import { checklist } from './process';
 
 export type PageKey =
-  'index' | 'services' | 'pricing' | 'work' | 'about' | 'how-we-build' | 'privacy' | '404';
+  | 'index'
+  | 'services'
+  | 'pricing'
+  | 'work'
+  | 'about'
+  | 'how-we-build'
+  | 'agentic-ai-ready'
+  | 'free-ai-check'
+  | 'contact'
+  | 'thanks'
+  | 'privacy'
+  | '404';
 
 export interface PageInfo {
   key: PageKey;
@@ -22,7 +33,9 @@ export interface PageInfo {
   /** The headline on the page's social image. */
   ogHeadline: string;
   /** The schema.org type of the page itself. */
-  schemaType: 'WebPage' | 'AboutPage' | 'CollectionPage' | 'FAQPage';
+  schemaType: 'WebPage' | 'AboutPage' | 'CollectionPage' | 'FAQPage' | 'ContactPage';
+  /** Kept out of search results, the sitemap and llms.txt (404, the form's thank-you page). */
+  noindex?: boolean;
 }
 
 const words = [
@@ -100,6 +113,46 @@ export const pages: Record<PageKey, PageInfo> = {
     ogHeadline: 'Not AI slop.',
     schemaType: 'WebPage',
   },
+  'agentic-ai-ready': {
+    key: 'agentic-ai-ready',
+    path: '/agentic-ai-ready/',
+    title: 'What is an agentic AI-ready website? | Hu/man',
+    description:
+      'An agentic AI-ready website is one people, search engines and AI agents can read, trust and act on. What it means, what it takes, and how to check yours.',
+    label: 'Agentic AI-ready',
+    ogHeadline: 'What is an agentic AI-ready website?',
+    schemaType: 'FAQPage',
+  },
+  'free-ai-check': {
+    key: 'free-ai-check',
+    path: '/free-ai-check/',
+    title: 'Free AI check: is AI recommending you? | Hu/man',
+    description:
+      'Find out whether ChatGPT, Perplexity, Gemini and Google’s AI Overviews recommend your business, and what to fix. Free, no obligation, checked by a person.',
+    label: 'Free AI check',
+    ogHeadline: 'Is AI recommending your competitors?',
+    schemaType: 'FAQPage',
+  },
+  contact: {
+    key: 'contact',
+    path: '/contact/',
+    title: 'Contact Hu/man Software Agency, Leeds',
+    description:
+      'Tell us about your website, app or idea. A real person reads every message and replies by email. Or call or WhatsApp. Based in Leeds, working UK-wide.',
+    label: 'Contact',
+    ogHeadline: 'Talk to a human.',
+    schemaType: 'ContactPage',
+  },
+  thanks: {
+    key: 'thanks',
+    path: '/thanks/',
+    title: 'Thanks for your message | Hu/man',
+    description: 'Your message has been sent. A real person will reply by email.',
+    label: 'Thanks',
+    ogHeadline: 'Talk to a human.',
+    schemaType: 'WebPage',
+    noindex: true,
+  },
   privacy: {
     key: 'privacy',
     path: '/privacy/',
@@ -118,5 +171,6 @@ export const pages: Record<PageKey, PageInfo> = {
     label: 'Page not found',
     ogHeadline: 'Got an idea? Let’s build it.',
     schemaType: 'WebPage',
+    noindex: true,
   },
 };

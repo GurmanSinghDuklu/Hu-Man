@@ -39,6 +39,8 @@ jobs:
           SITE_URL: https://gurmansinghduklu.github.io
           SITE_BASE: /Hu-Man
           PUBLIC_NOINDEX: '1'
+          # GitHub Pages has no server for /api/enquiry, so forms open an email instead.
+          PUBLIC_FORM_MODE: mailto
       - run: npm run seo-check
         env:
           PUBLIC_NOINDEX: '1'

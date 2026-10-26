@@ -3,7 +3,8 @@
  * "Bringing your ideas to life" (home 01, services 02): one wide indigo block with the ringed star,
  * and the four steps from idea to launch as cards along its foot.
  */
-import { ideaMailto } from '../../config/mailto';
+import { contactPath } from '../../config/links';
+import { withBase } from '../../config/paths';
 import Sparkle from '../Sparkle.astro';
 import Arrow from '../Arrow.astro';
 
@@ -40,7 +41,7 @@ const steps = [
           That idea you’ve had on your mind for years? The one you can’t quite put together? Speak
           to us. We specialise in turning ideas into real, working online businesses.
         </p>
-        <a class="pill-btn ideas__btn" href={ideaMailto} data-reveal>
+        <a class="pill-btn ideas__btn" href={withBase(contactPath({ topic: 'idea' }))} data-reveal>
           Tell us your idea <Arrow class="ideas__arrow" />
         </a>
       </div>

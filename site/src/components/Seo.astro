@@ -17,14 +17,14 @@ const { page: key } = Astro.props;
 const page = pages[key];
 
 // Preview builds (e.g. GitHub Pages) set PUBLIC_NOINDEX so the unlaunched site isn't indexed under
-// a temporary address. The 404 page is never indexed.
-const index = key !== '404' && !import.meta.env.PUBLIC_NOINDEX;
+// a temporary address. Noindex pages (404, thanks) never are.
+const index = !page.noindex && !import.meta.env.PUBLIC_NOINDEX;
 
 const abs = (path: string) => new URL(withBase(path), site.url).toString();
 const canonicalUrl = abs(page.path);
-const ogImage = abs(`/og/${key === '404' ? 'index' : key}.png`);
+const ogImage = abs(`/og/${page.noindex ? 'index' : key}.png`);
 const ogAlt = `${page.ogHeadline} ${site.fullName}, Leeds.`;
-const schema = key === '404' ? undefined : buildSchema(key, abs);
+const schema = page.noindex ? undefined : buildSchema(key, abs);
 ---
 
 {index && <link rel="canonical" href={canonicalUrl} />}
@@ -37,7 +37,7 @@ const schema = key === '404' ? undefined : buildSchema(key, abs);
   }
 />
 <link rel="sitemap" type="application/xml" href={withBase('/sitemap-index.xml')} />
-{key !== '404' && (
+{!page.noindex && (
   <link
     rel="alternate"
     type="text/markdown"

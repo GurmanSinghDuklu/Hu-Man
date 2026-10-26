@@ -8,7 +8,8 @@ import { withBase } from '../config/paths';
 import { pages, tierCount, type PageKey } from '../data/pages';
 import { serviceAreas } from '../data/services';
 import { tiers, addOns, fromPrice, priceOf } from '../data/pricing';
-import { faq } from '../data/faq';
+import { faq, agenticFaq, checkFaq } from '../data/faq';
+import { definition, ingredients } from '../data/agentic';
 import { stages, checklist, compare, bonnet } from '../data/process';
 import { projects } from '../data/projects';
 import { mission, rules, promises } from '../data/about';
@@ -30,7 +31,24 @@ const keyFacts = [
   'Free offer: a free AI check of an existing website, reviewed by a person, with a reply within 48 hours',
 ];
 
-const pageKeys: PageKey[] = ['index', 'services', 'pricing', 'how-we-build', 'work', 'about'];
+const pageKeys: PageKey[] = [
+  'index',
+  'services',
+  'pricing',
+  'agentic-ai-ready',
+  'free-ai-check',
+  'how-we-build',
+  'work',
+  'about',
+  'contact',
+];
+
+/** How a person or an AI agent can make an enquiry without a mail app. */
+const actions = () => [
+  `- Send an enquiry: POST ${abs('/api/enquiry')} with JSON or form fields name, email and message (optional: topic, website, phone, tier). topic is one of ai-check, website, idea, tier, other; for ai-check, website is required and message is optional. A person reads every enquiry and replies by email. GET the same URL for the full field list.`,
+  `- Ask for a free AI check: the same endpoint with topic "ai-check" and website, or the form at ${abs('/free-ai-check/')}.`,
+  `- Contact page with a form, phone, WhatsApp and email: ${abs('/contact/')}`,
+];
 
 export function llmsTxt(): string {
   return [
@@ -50,6 +68,10 @@ export function llmsTxt(): string {
     '## Services',
     '',
     ...serviceAreas.map((area) => `- ${plus(area.title)}: ${area.short}`),
+    '',
+    '## Actions',
+    '',
+    ...actions(),
     '',
     '## Optional',
     '',
@@ -71,6 +93,26 @@ export function llmsFullTxt(): string {
     '',
     ...keyFacts.map((fact) => `- ${fact}`),
     '',
+    '## Actions',
+    '',
+    ...actions(),
+    '',
+    `## What is an agentic AI-ready website? (${link('agentic-ai-ready')})`,
+    '',
+    definition,
+    '',
+    'What it takes:',
+    '',
+    ...ingredients.map((item, i) => `${i + 1}. ${item.title}: ${item.text}`),
+    '',
+    `Every website from the ${priceOf('spark')} Spark tier up is agentic AI-ready as standard; the ${fromPrice} Essential tier is a standard website without it.`,
+    '',
+    ...agenticFaq.flatMap((item) => [`### ${item.q}`, '', item.a, '']),
+    `## Free AI check (${link('free-ai-check')})`,
+    '',
+    'A free, no-obligation check, done by a person, of whether ChatGPT, Perplexity, Gemini, Claude, Copilot and Google’s AI Overviews recommend a business for its main search, who they recommend instead, whether AI crawlers can reach the site, whether its facts are clear and machine-readable, mobile speed and security basics. The findings and what to fix first come back by email within 48 hours.',
+    '',
+    ...checkFaq.flatMap((item) => [`### ${item.q}`, '', item.a, '']),
     '## About',
     '',
     `Our mission: give everyone, from sole traders to growing businesses, high-performing software and the kind of care you only get from a person who knows the project. AI helps us build faster. People make sure it’s right. (${link('about')})`,

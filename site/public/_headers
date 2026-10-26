@@ -1,4 +1,5 @@
-# Response headers for the live site. Cloudflare Pages and Netlify both read this file as is.
+# Response headers for the live site. Cloudflare (Workers static assets or Pages) and Netlify read
+# this file as is.
 # Pair with the Content-Security-Policy <meta> Astro writes into every page (astro.config.mjs):
 # a <meta> can't set frame-ancestors, so that part lives here.
 # Check after launch: https://securityheaders.com/?q=humansoftwareagency.com

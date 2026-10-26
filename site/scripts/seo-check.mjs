@@ -17,6 +17,8 @@ const errors = [];
 const fail = (where, msg) => errors.push(`${where}: ${msg}`);
 
 const noindexBuild = Boolean(process.env.PUBLIC_NOINDEX);
+/** Pages that are never indexed (src/data/pages.ts `noindex`). */
+const NOINDEX_FILES = new Set(['404.html', 'thanks/index.html']);
 
 async function walk(dir, prefix = '') {
   const out = [];
@@ -44,6 +46,8 @@ const basePath = new URL(homeUrl).pathname; // "/" or "/Hu-Man/"
 /** "/about/" (site path, with base) -> "about/index.html" (dist file). */
 function fileFor(pathname) {
   let p = decodeURIComponent(pathname);
+  // The enquiry endpoint is served by the Worker (worker/), not a file in dist/.
+  if (p === `${basePath}api/enquiry`) return 'api/enquiry';
   if (!p.startsWith(basePath)) return undefined;
   p = p.slice(basePath.length);
   if (p === '' || p.endsWith('/')) p += 'index.html';
@@ -65,7 +69,7 @@ const indexable = [];
 
 for (const file of htmlFiles) {
   const doc = html[file];
-  const is404 = file === '404.html';
+  const is404 = NOINDEX_FILES.has(file);
   const pagePath = `${basePath}${file.replace(/index\.html$/, '')}`;
   const where = pagePath;
 
@@ -153,7 +157,8 @@ for (const file of htmlFiles) {
   }
 
   // Internal links and anchors.
-  for (const [, href] of doc.matchAll(/<a\s[^>]*?href="([^"]+)"/g)) {
+  const markup = doc.replace(/<script[\s\S]*?<\/script>/g, '');
+  for (const [, href] of markup.matchAll(/<a\s[^>]*?href="([^"]+)"/g)) {
     if (/^(mailto:|tel:|https?:\/\/(?!localhost))/.test(href) && !href.startsWith(origin)) continue;
     const url = new URL(decode(href), `${origin}${pagePath}`);
     if (url.origin !== origin) continue;
@@ -182,7 +187,7 @@ for (const file of htmlFiles) {
   const where = `${basePath}${file.replace(/index\.html$/, '')}`;
   if (/nosnippet|data-nosnippet|noarchive|noai|noimageai/.test(doc))
     fail(where, 'limits snippets or AI use');
-  if (file === '404.html') continue;
+  if (NOINDEX_FILES.has(file)) continue;
   // A Markdown copy of the page, linked from it.
   const md = (doc.match(/<link rel="alternate" type="text\/markdown"[^>]*href="([^"]+)"/) ?? [])[1];
   if (!md) fail(where, 'no Markdown alternate link');
@@ -212,7 +217,7 @@ for (const [, q, a] of faqBlock.matchAll(/### (.+)\n\n(.+)/g)) {
     fail('pricing', `FAQ "${q}" differs from llms-full.txt`);
 }
 if (!llmsFull.includes('# Every page, word for word')) fail('llms-full.txt', 'no full page text');
-for (const file of htmlFiles.filter((f) => f !== '404.html')) {
+for (const file of htmlFiles.filter((f) => !NOINDEX_FILES.has(f))) {
   if (!llmsFull.includes(`Source: ${origin}${basePath}${file.replace(/index\.html$/, '')}\n`)) {
     fail('llms-full.txt', `has no full text for ${file}`);
   }

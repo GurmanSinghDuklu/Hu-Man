@@ -5,16 +5,18 @@ import Collage from './Collage.astro';
 interface Props {
   label: string;
   lens: string;
+  /** The title has a very long word ("recommending"): set it smaller on phones so it fits. */
+  longWords?: boolean;
 }
 
-const { label, lens } = Astro.props;
+const { label, lens, longWords = false } = Astro.props;
 ---
 
 <section class="band grid ihero" aria-labelledby="ihero-title">
   <div class="sheet ihero__sheet">
     <div class="ihero__copy">
       <p class="label">{label}</p>
-      <h1 id="ihero-title" class="ihero__title">
+      <h1 id="ihero-title" class:list={['ihero__title', { 'ihero__title--long': longWords }]}>
         <slot name="title" />
       </h1>
       <p class="ihero__lede">
@@ -42,6 +44,12 @@ const { label, lens } = Astro.props;
   .ihero__title {
     font-size: clamp(2.6rem, 11vw, 5.4rem);
     line-height: 0.88;
+  }
+
+  @media (max-width: 39.99rem) {
+    .ihero__title--long {
+      font-size: min(8.8vw, 2.6rem);
+    }
   }
 
   .ihero__lede {

@@ -7,10 +7,10 @@ import PriceArches from '../components/PriceArches.astro';
 import TalkBanner from '../components/TalkBanner.astro';
 import { tiers, carePlans, addOns, fromPrice } from '../data/pricing';
 import { faq } from '../data/faq';
-import { mailto } from '../config/mailto';
+import { contactPath } from '../config/links';
+import { withBase } from '../config/paths';
 
-const choose = (name: string) =>
-  mailto(`${name} enquiry`, `Hi,\n\nI'm interested in the ${name} tier. My business is...\n\n`);
+const choose = (name: string) => withBase(contactPath({ tier: name }));
 ---
 
 <BaseLayout page="pricing">

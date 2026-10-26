@@ -1,9 +1,9 @@
 ---
 /**
- * "Is AI recommending your competitors?" (home 03): the free AI check. The form has no backend; it
- * opens an email with the address filled in (scripts/check-site.ts), and says so.
+ * "Is AI recommending your competitors?" (home 03): the free AI check. The address box takes you
+ * to /free-ai-check/ with the address filled in, where the full form asks where to reply.
  */
-import { mailto } from '../../config/mailto';
+import { withBase } from '../../config/paths';
 
 // An example of what the free check reports. Labelled "Sample result · Example only".
 const sample = [
@@ -12,8 +12,6 @@ const sample = [
   { q: 'Mobile speed', a: 'Slow', tone: 'peach' },
   { q: 'Business facts readable?', a: 'Partly', tone: 'teal' },
 ];
-
-const checkMailto = mailto('Free AI check');
 ---
 
 <section class="band band--ink honest" aria-labelledby="check-section-title">
@@ -35,13 +33,7 @@ const checkMailto = mailto('Free AI check');
             Check your site.
             <br />A human reviews it.
           </h3>
-          <form
-            class="check__form"
-            action={checkMailto}
-            method="post"
-            enctype="text/plain"
-            data-check-form
-          >
+          <form class="check__form" action={`${withBase('/free-ai-check/')}#check`} method="get">
             <label class="visually-hidden" for="check-site">
               Your website address
             </label>
@@ -57,7 +49,7 @@ const checkMailto = mailto('Free AI check');
             <button type="submit">Check my site</button>
           </form>
           <p class="check__note">
-            Opens an email to us with your address in it. We reply within 48 hours.
+            Next, tell us where to reply. A person checks it and replies within 48 hours.
           </p>
         </div>
         <div class="check__sample">
@@ -75,10 +67,6 @@ const checkMailto = mailto('Free AI check');
     </div>
   </div>
 </section>
-
-<script>
-  import '../../scripts/check-site.ts';
-</script>
 
 <style>
   .honest__grid {

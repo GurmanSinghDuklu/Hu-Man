@@ -18,7 +18,8 @@
     "og-images": "node scripts/generate-og-images.mjs",
     "icons": "node scripts/generate-icons.mjs",
     "indexnow": "node scripts/indexnow.mjs",
-    "seo-check": "node scripts/seo-check.mjs"
+    "seo-check": "node scripts/seo-check.mjs",
+    "test": "node --test worker/enquiry.test.js"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.10",

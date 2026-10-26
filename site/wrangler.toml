@@ -1,0 +1,27 @@
+# Cloudflare Workers deployment: the static site (dist/) plus the enquiry endpoint (worker/).
+# Build: `npm run build`. Deploy: `npx wrangler deploy` (Workers Builds runs both from Git).
+# Setup steps, including Email Routing for the form, are in docs/10-launch.md.
+name = "humansoftwareagency"
+main = "worker/index.js"
+compatibility_date = "2026-10-01"
+workers_dev = false
+
+# The bare domain only: www redirects to it with a Cloudflare Redirect Rule (docs/10-launch.md),
+# so the site never answers on two addresses.
+routes = [{ pattern = "humansoftwareagency.com", custom_domain = true }]
+
+[assets]
+directory = "./dist"
+binding = "ASSETS"
+# /about -> /about/, and unknown paths get the site's own 404 page.
+html_handling = "auto-trailing-slash"
+not_found_handling = "404-page"
+
+# Email for the enquiry form. The address must be verified in Cloudflare Email Routing first.
+[[send_email]]
+name = "SEND_EMAIL"
+destination_address = "humansoftwareagency@gmail.com"
+
+[vars]
+FROM_ADDRESS = "website@humansoftwareagency.com"
+TO_ADDRESS = "humansoftwareagency@gmail.com"

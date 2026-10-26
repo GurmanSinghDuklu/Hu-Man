@@ -1,0 +1,299 @@
+---
+/**
+ * The enquiry form (contact page and free AI check page). It posts to /api/enquiry (worker/), which
+ * emails the studio; without JavaScript it is a plain form post that lands on /thanks/. With
+ * JavaScript (scripts/enquiry-form.ts) it sends in place, shows field errors, and falls back to a
+ * ready-written email if sending fails.
+ *
+ * Every field has a visible label and a name an AI agent can understand: the same names the API
+ * documents in llms.txt. Preview builds with no server (GitHub Pages) set PUBLIC_FORM_MODE=mailto,
+ * so the form opens an email instead.
+ */
+import { site } from '../config/site';
+import { withBase } from '../config/paths';
+import { tiers } from '../data/pricing';
+
+interface Props {
+  variant: 'contact' | 'check';
+}
+
+const { variant } = Astro.props;
+const mailtoMode = import.meta.env.PUBLIC_FORM_MODE === 'mailto';
+const action = mailtoMode ? `mailto:${site.contact.email}` : withBase('/api/enquiry');
+const id = (name: string) => `${variant}-${name}`;
+const isCheck = variant === 'check';
+---
+
+<form
+  class="enquiry"
+  action={action}
+  method="post"
+  enctype={mailtoMode ? 'text/plain' : 'application/x-www-form-urlencoded'}
+  data-enquiry-form
+  data-mode={mailtoMode ? 'mailto' : 'api'}
+  data-email={site.contact.email}
+  novalidate
+>
+  <p class="enquiry__status" role="status" aria-live="polite" data-status></p>
+
+  <div class="enquiry__fields" data-fields>
+    {isCheck && <input type="hidden" name="topic" value="ai-check" />}
+
+    <div class="enquiry__field">
+      <label for={id('name')}>Your name</label>
+      <input id={id('name')} name="name" type="text" autocomplete="name" required maxlength="100" />
+      <p class="enquiry__error" data-error-for="name"></p>
+    </div>
+
+    <div class="enquiry__field">
+      <label for={id('email')}>Email to reply to</label>
+      <input
+        id={id('email')}
+        name="email"
+        type="email"
+        autocomplete="email"
+        inputmode="email"
+        required
+        maxlength="200"
+      />
+      <p class="enquiry__error" data-error-for="email"></p>
+    </div>
+
+    <div class="enquiry__field">
+      <label for={id('website')}>
+        {isCheck ? 'Your website address' : 'Your website, if you have one'}
+      </label>
+      <input
+        id={id('website')}
+        name="website"
+        type="text"
+        inputmode="url"
+        autocomplete="url"
+        placeholder="yourbusiness.co.uk"
+        maxlength="200"
+        required={isCheck}
+      />
+      <p class="enquiry__error" data-error-for="website"></p>
+    </div>
+
+    <div class="enquiry__field">
+      <label for={id('phone')}>
+        Phone <span>(optional)</span>
+      </label>
+      <input id={id('phone')} name="phone" type="tel" autocomplete="tel" maxlength="40" />
+    </div>
+
+    {!isCheck && (
+      <div class="enquiry__field enquiry__field--wide">
+        <label for={id('topic')}>What is it about?</label>
+        <select id={id('topic')} name="topic">
+          <option value="website">A new website or redesign</option>
+          <option value="idea">An idea: app, software or online business</option>
+          <option value="ai-check">A free AI check</option>
+          <option value="tier">One of the pricing tiers</option>
+          <option value="other">Something else</option>
+        </select>
+      </div>
+    )}
+
+    {!isCheck && (
+      <div class="enquiry__field enquiry__field--wide" data-tier-field>
+        <label for={id('tier')}>
+          Tier <span>(optional)</span>
+        </label>
+        <select id={id('tier')} name="tier">
+          <option value="">Not sure yet</option>
+          {tiers.map((t) => (
+            <option value={t.name}>
+              {t.name} ({t.price})
+            </option>
+          ))}
+        </select>
+      </div>
+    )}
+
+    <div class="enquiry__field enquiry__field--wide">
+      <label for={id('message')}>
+        {isCheck ? (
+          <>
+            What should customers find you for? <span>(optional)</span>
+          </>
+        ) : (
+          'What do you need?'
+        )}
+      </label>
+      <textarea
+        id={id('message')}
+        name="message"
+        rows={isCheck ? 3 : 6}
+        maxlength="4000"
+        required={!isCheck}
+        placeholder={
+          isCheck
+            ? 'For example: electrician in Leeds'
+            : 'A few lines is plenty. No pitch deck needed.'
+        }
+      ></textarea>
+      <p class="enquiry__error" data-error-for="message"></p>
+    </div>
+
+    <!-- Spam trap: hidden from people and screen readers; bots fill it in. -->
+    <div class="enquiry__trap" aria-hidden="true">
+      <label for={id('company')}>Leave this empty</label>
+      <input id={id('company')} name="company" type="text" tabindex="-1" autocomplete="off" />
+    </div>
+
+    <div class="enquiry__actions enquiry__field--wide">
+      <button class="pill-btn" type="submit" data-submit>
+        {isCheck ? 'Send for my free AI check' : 'Send my message'}
+      </button>
+      <p class="enquiry__note">
+        A person reads every message and replies by email. We only use your details to answer you.
+        <a href={withBase('/privacy/')}>Privacy notice</a>.
+      </p>
+    </div>
+  </div>
+</form>
+
+<script>
+  import '../scripts/enquiry-form.ts';
+</script>
+
+<style>
+  .enquiry {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .enquiry__fields {
+    display: grid;
+    gap: 1.1rem 1.25rem;
+  }
+
+  /* `hidden` loses to the display rule above without this (set after a successful send). */
+  .enquiry__fields[hidden] {
+    display: none;
+  }
+
+  .enquiry__field {
+    display: grid;
+    gap: 0.4rem;
+    align-content: start;
+  }
+
+  .enquiry__field label {
+    font: 500 0.75rem/1.3 var(--font-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .enquiry__field label span {
+    color: var(--muted);
+  }
+
+  .enquiry input,
+  .enquiry select,
+  .enquiry textarea {
+    width: 100%;
+    min-height: 48px;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--ink);
+    border-radius: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font: 400 1rem/1.4 var(--font-text);
+  }
+
+  .enquiry textarea {
+    resize: vertical;
+  }
+
+  .enquiry input::placeholder,
+  .enquiry textarea::placeholder {
+    color: #6c6e69;
+  }
+
+  .enquiry input:focus-visible,
+  .enquiry select:focus-visible,
+  .enquiry textarea:focus-visible {
+    outline: 2px solid var(--indigo);
+    outline-offset: 2px;
+  }
+
+  .enquiry [aria-invalid='true'] {
+    border-color: var(--crimson);
+    box-shadow: inset 0 0 0 1px var(--crimson);
+  }
+
+  .enquiry__error {
+    min-height: 0;
+    color: var(--crimson);
+    font-size: 0.875rem;
+  }
+
+  .enquiry__error:empty {
+    display: none;
+  }
+
+  .enquiry__status:empty {
+    display: none;
+  }
+
+  .enquiry__status {
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--ink);
+    background: var(--peach);
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  .enquiry__status[data-tone='ok'] {
+    background: var(--grad-lilac);
+  }
+
+  .enquiry__status a {
+    font-weight: 600;
+  }
+
+  .enquiry__trap {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .enquiry__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 1.5rem;
+    margin-top: 0.25rem;
+  }
+
+  .enquiry__actions .pill-btn {
+    min-height: 52px;
+    padding-inline: 1.75rem;
+  }
+
+  .enquiry__actions .pill-btn[disabled] {
+    opacity: 0.6;
+    cursor: progress;
+  }
+
+  .enquiry__note {
+    max-width: 30rem;
+    color: var(--muted);
+    font-size: 0.875rem;
+  }
+
+  @media (min-width: 48rem) {
+    .enquiry__fields {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .enquiry__field--wide {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

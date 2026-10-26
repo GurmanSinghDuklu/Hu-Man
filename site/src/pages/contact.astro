@@ -1,0 +1,127 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import InnerHero from '../components/InnerHero.astro';
+import EnquiryForm from '../components/EnquiryForm.astro';
+import { site } from '../config/site';
+
+const tel = `tel:${site.contact.phone.replace(/\s+/g, '')}`;
+---
+
+<BaseLayout page="contact">
+  <SiteHeader slot="header" />
+
+  <InnerHero label="Contact" lens="Lens 09 / Talk to a human">
+    <Fragment slot="title">
+      Talk to
+      <br />a human.
+    </Fragment>
+    <Fragment slot="lede">
+      Tell us about your website, app or idea. A real person reads every message and replies by
+      email. No sales team, no bots.
+    </Fragment>
+  </InnerHero>
+
+  <section class="band band--paper-2 contact section" aria-labelledby="contact-title">
+    <div class="sheet contact__sheet">
+      <div class="contact__form">
+        <h2 id="contact-title" class="display display--s">
+          Send us a message
+        </h2>
+        <EnquiryForm variant="contact" />
+      </div>
+
+      <aside class="contact__other" aria-labelledby="other-title">
+        <h2 id="other-title" class="label">
+          Or reach us directly
+        </h2>
+        <dl>
+          <div>
+            <dt>Email</dt>
+            <dd>
+              <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
+            </dd>
+          </div>
+          <div>
+            <dt>Phone</dt>
+            <dd>
+              <a href={tel}>{site.contact.phone}</a>
+            </dd>
+          </div>
+          <div>
+            <dt>WhatsApp</dt>
+            <dd>
+              <a href={site.contact.whatsapp} rel="noopener">
+                Message us on WhatsApp
+              </a>
+            </dd>
+          </div>
+          <div>
+            <dt>Instagram</dt>
+            <dd>
+              <a href={site.contact.instagram} rel="noopener">
+                @humansoftwareagency
+              </a>
+            </dd>
+          </div>
+          <div>
+            <dt>Where</dt>
+            <dd>
+              {site.location.town}, {site.location.region}. In person across West Yorkshire, remote
+              across the UK and worldwide.
+            </dd>
+          </div>
+        </dl>
+      </aside>
+    </div>
+  </section>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+  .contact__sheet {
+    display: grid;
+    gap: var(--space-6) var(--space-5);
+  }
+
+  .contact__form {
+    display: grid;
+    gap: clamp(1.5rem, calc(var(--u) * 0.4), 2.5rem);
+  }
+
+  .contact__other {
+    align-self: start;
+    padding: clamp(1.5rem, calc(var(--u) * 0.4), 2.5rem);
+    border: 1px solid var(--ink);
+    border-top-right-radius: calc(var(--u) * 1.1);
+    background: var(--paper);
+  }
+
+  .contact__other dl {
+    display: grid;
+    gap: 1.1rem;
+    margin: 1.25rem 0 0;
+  }
+
+  .contact__other dt {
+    font: 500 0.75rem/1.3 var(--font-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .contact__other dd {
+    margin: 0.25rem 0 0;
+    font-size: 1.05rem;
+    line-height: 1.45;
+  }
+
+  @media (min-width: 64rem) {
+    .contact__sheet {
+      grid-template-columns: 1fr calc(var(--u) * 4.6);
+      gap: calc(var(--u) * 0.66);
+    }
+  }
+</style>

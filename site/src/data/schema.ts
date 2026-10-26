@@ -11,7 +11,8 @@ import { site } from '../config/site';
 import { pages, type PageKey } from './pages';
 import { serviceAreas } from './services';
 import { tiers } from './pricing';
-import { faq } from './faq';
+import { faq, agenticFaq, checkFaq } from './faq';
+import { term, definition } from './agentic';
 import { stages } from './process';
 import { projects } from './projects';
 import { lastModified, pageFile } from '../lib/lastModified';
@@ -57,7 +58,7 @@ export function buildSchema(key: PageKey, abs: AbsUrl): Node {
     services: abs('/services/#services'),
     tiers: abs('/pricing/#tiers'),
   };
-  const image = abs(`/og/${key === '404' ? 'index' : key}.png`);
+  const image = abs(`/og/${page.noindex ? 'index' : key}.png`);
 
   const organization: Node = {
     '@type': 'ProfessionalService',
@@ -107,6 +108,20 @@ export function buildSchema(key: PageKey, abs: AbsUrl): Node {
     },
     sameAs: [site.contact.instagram],
     hasOfferCatalog: { '@id': ids.services },
+    // The enquiry form's endpoint, described so an AI agent can send an enquiry for someone.
+    potentialAction: {
+      '@type': 'CommunicateAction',
+      name: 'Send an enquiry',
+      description:
+        'POST name, email and message (and optionally topic, website, phone, tier) as JSON or form data. GET the same URL for the field list.',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: abs('/api/enquiry'),
+        httpMethod: 'POST',
+        contentType: ['application/json', 'application/x-www-form-urlencoded'],
+      },
+      recipient: { '@id': ids.org },
+    },
   };
 
   const website: Node = {
@@ -221,8 +236,50 @@ export function buildSchema(key: PageKey, abs: AbsUrl): Node {
     };
   }
 
-  if (key === 'about') {
+  if (key === 'about' || key === 'contact') {
     webPage.mainEntity = { '@id': ids.org };
+  }
+
+  const questions = (list: typeof faq) =>
+    list.map((item) => ({
+      '@type': 'Question',
+      name: item.q,
+      acceptedAnswer: { '@type': 'Answer', text: item.a },
+    }));
+
+  if (key === 'agentic-ai-ready') {
+    graph.push({
+      '@type': 'DefinedTerm',
+      '@id': `${url}#term`,
+      name: term,
+      alternateName: ['Agentic AI-ready', 'AI-ready website'],
+      description: definition,
+      url,
+      inDefinedTermSet: { '@type': 'DefinedTermSet', name: `${site.fullName} glossary`, url },
+    });
+    webPage.about = [{ '@id': `${url}#term` }, { '@id': ids.org }];
+    webPage.mainEntity = questions(agenticFaq);
+  }
+
+  if (key === 'free-ai-check') {
+    graph.push({
+      '@type': 'Service',
+      '@id': `${url}#service`,
+      name: 'Free AI check',
+      serviceType: 'AI visibility audit',
+      description:
+        'A free check, done by a person, of whether ChatGPT, Perplexity, Gemini, Claude, Copilot and Google’s AI Overviews recommend a business, with a list of what to fix. Reply within 48 hours.',
+      provider: { '@id': ids.org },
+      areaServed: { '@type': 'Country', name: 'United Kingdom' },
+      offers: {
+        '@type': 'Offer',
+        price: '0',
+        priceCurrency: 'GBP',
+        description: 'Free, no obligation.',
+        url,
+      },
+    });
+    webPage.mainEntity = questions(checkFaq);
   }
 
   if (key === 'work') {

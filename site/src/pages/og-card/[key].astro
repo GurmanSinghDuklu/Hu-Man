@@ -12,13 +12,16 @@ import Logo from '../../components/Logo.astro';
 
 export function getStaticPaths() {
   if (!process.env.OG_RENDER) return [];
-  const keys = (Object.keys(pages) as PageKey[]).filter((key) => key !== '404');
+  const keys = (Object.keys(pages) as PageKey[]).filter((key) => !pages[key].noindex);
   return keys.map((key) => ({ params: { key } }));
 }
 
 const key = Astro.params.key as PageKey;
 const page = pages[key];
 const domain = new URL(site.url).hostname;
+// Long words ("recommending") would run into the collage at full size.
+const longest = Math.max(...page.ogHeadline.split(/\s+/).map((w) => w.length));
+const headlineSize = longest > 10 ? 66 : 78;
 ---
 
 <!doctype html>
@@ -33,7 +36,9 @@ const domain = new URL(site.url).hostname;
       <p class="label card__kicker">
         {site.fullName} · {site.location.town}
       </p>
-      <p class="card__headline">{page.ogHeadline}</p>
+      <p class="card__headline" style={`font-size:${headlineSize}px`}>
+        {page.ogHeadline}
+      </p>
       <div class="card__foot">
         <Logo variant="ink" label="" class="card__logo" />
         <span class="label">{domain}</span>
