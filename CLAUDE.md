@@ -338,7 +338,7 @@ Repo: github.com/GurmanSinghDuklu/Hu-Man (public; default branch `hu-man-rebrand
 `hu-man-rebrand` deploys a preview to https://gurmansinghduklu.github.io/Hu-Man/ via
 `.github/workflows/pages.yml`. It builds with `SITE_URL`, `SITE_BASE=/Hu-Man` and `PUBLIC_NOINDEX`
 (noindex on every page, no canonical) because the site lives under a sub-path and isn't launched.
-Any hardcoded root path (`/privacy`, `/video/...`, `/favicon.svg`) must go through
+Any hardcoded root path (`/privacy`, `/video/...`, `/favicon-96.png`) must go through
 `withBase()` from `src/config/paths.ts`, and homepage checks through `isHomePath()`, or it breaks on
 Pages. A plain `npm run build` is unchanged (base `/`, example.com).
 

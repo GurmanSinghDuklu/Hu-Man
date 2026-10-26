@@ -1,13 +1,15 @@
 /**
  * Builds every icon the site and search engines ask for, from the brand artwork:
  *   public/favicon.ico          16, 32 and 48px (Google shows favicons in results; 48px multiples)
+ *   public/favicon-96.png       the browser-tab icon for high-density screens
  *   public/apple-touch-icon.png 180px, for iPhone home screens
  *   public/icon-192.png, public/icon-512.png        for the web manifest
- *   public/icon-maskable-512.png the print inside Android's safe zone
+ *   public/icon-maskable-512.png the whole artwork, so Android's circle crop keeps the head
  *   public/logo.png             512px square wordmark on Paper, the schema's logo (Google needs
  *                               a raster logo of at least 112px)
- * Sources: public/favicon.svg (the brand avatar) and src/assets/brand/logo-ink.svg (the wordmark,
- * never retyped). Re-run after either changes; commit the outputs.
+ * Sources: src/assets/brand/icon-source.png (the fingerprint head on the lilac gradient, 1080px,
+ * chosen 2026-10-26) and src/assets/brand/logo-ink.svg (the wordmark, never retyped). Re-run after
+ * either changes; commit the outputs.
  */
 import { readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
@@ -15,15 +17,16 @@ import sharp from 'sharp';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const pub = (name) => `${root}public/${name}`;
-const favicon = await readFile(pub('favicon.svg'));
+const artwork = await readFile(`${root}src/assets/brand/icon-source.png`);
 const wordmark = await readFile(`${root}src/assets/brand/logo-ink.svg`);
 const PAPER = '#F1F2EC';
-const SIGNAL = '#39FF14';
 
-const square = (size) =>
-  sharp(favicon, { density: 72 * (size / 64) * 2 })
-    .resize(size, size)
-    .png();
+// Small icons crop in on the head (it fills about a third of the artwork), so it still reads at
+// 16px; the maskable icon keeps the whole artwork because Android trims the edges itself.
+const CROP = { left: 200, top: 200, width: 680, height: 680 };
+const square = (size, crop = CROP) =>
+  sharp(artwork).extract(crop).resize(size, size, { kernel: 'lanczos3' }).png();
+const whole = { left: 0, top: 0, width: 1080, height: 1080 };
 
 // favicon.ico: an ICO header pointing at PNG-encoded images (supported everywhere since 2010).
 const sizes = [16, 32, 48];
@@ -47,16 +50,12 @@ sizes.forEach((size, i) => {
 });
 await writeFile(pub('favicon.ico'), Buffer.concat([header, ...pngs]));
 
+await square(96).toFile(pub('favicon-96.png'));
 await square(180).toFile(pub('apple-touch-icon.png'));
 await square(192).toFile(pub('icon-192.png'));
 await square(512).toFile(pub('icon-512.png'));
 
-// Maskable: Android crops to a circle, so the print sits in the middle 80% on Signal green.
-const inner = await square(410).toBuffer();
-await sharp({ create: { width: 512, height: 512, channels: 4, background: SIGNAL } })
-  .composite([{ input: inner, gravity: 'centre' }])
-  .png()
-  .toFile(pub('icon-maskable-512.png'));
+await square(512, whole).toFile(pub('icon-maskable-512.png'));
 
 // Schema logo: the Ink wordmark, 420px wide, centred on Paper.
 const mark = await sharp(wordmark, { density: 300 }).resize({ width: 420 }).png().toBuffer();
@@ -65,4 +64,4 @@ await sharp({ create: { width: 512, height: 512, channels: 4, background: PAPER 
   .png({ compressionLevel: 9 })
   .toFile(pub('logo.png'));
 
-console.log('Wrote favicon.ico, apple-touch-icon.png, icon-192/512, icon-maskable-512, logo.png');
+console.log('Wrote favicon.ico, favicon-96.png, apple-touch-icon.png, icon-192/512, icon-maskable-512, logo.png');
