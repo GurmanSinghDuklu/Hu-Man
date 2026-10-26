@@ -42,7 +42,7 @@ jobs:
           PUBLIC_NOINDEX: '1'
           # GitHub Pages has no server for /api/enquiry, so forms open an email instead.
           PUBLIC_FORM_MODE: mailto
-      - uses: actions/upload-pages-artifact@v4
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: site/dist
 
