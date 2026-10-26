@@ -64,4 +64,6 @@ await sharp({ create: { width: 512, height: 512, channels: 4, background: PAPER 
   .png({ compressionLevel: 9 })
   .toFile(pub('logo.png'));
 
-console.log('Wrote favicon.ico, favicon-96.png, apple-touch-icon.png, icon-192/512, icon-maskable-512, logo.png');
+console.log(
+  'Wrote favicon.ico, favicon-96.png, apple-touch-icon.png, icon-192/512, icon-maskable-512, logo.png',
+);
