@@ -1,69 +1,66 @@
 ---
+/**
+ * Search and sharing tags for one page, all from src/data/pages.ts: canonical, robots, Open Graph,
+ * Twitter card, the schema graph (src/data/schema.ts), and links to the sitemap, llms.txt and the
+ * web manifest so crawlers and AI tools find them from any page.
+ */
 import { site } from '../config/site';
 import { withBase } from '../config/paths';
+import { pages, type PageKey } from '../data/pages';
+import { buildSchema } from '../data/schema';
 
 interface Props {
-  title: string;
-  description: string;
-  /** Set to false to add a noindex robots meta tag (e.g. the 404 page). */
-  index?: boolean;
-  /** Emit the ProfessionalService JSON-LD. Only the homepage needs this — repeating identical business schema on every page is redundant, not wrong, but best practice is once per site. */
-  structuredData?: boolean;
+  page: PageKey;
 }
 
-const {
-  title,
-  description,
-  index: indexProp = true,
-  structuredData: includeStructuredData = false,
-} = Astro.props;
-// Preview builds (e.g. GitHub Pages) set PUBLIC_NOINDEX so the unlaunched
-// site isn't indexed under a temporary address.
-const index = indexProp && !import.meta.env.PUBLIC_NOINDEX;
+const { page: key } = Astro.props;
+const page = pages[key];
 
-const canonicalUrl = new URL(Astro.url.pathname, site.url).toString();
-const ogImageUrl = new URL(withBase('/og-image.png'), site.url).toString();
+// Preview builds (e.g. GitHub Pages) set PUBLIC_NOINDEX so the unlaunched site isn't indexed under
+// a temporary address. The 404 page is never indexed.
+const index = key !== '404' && !import.meta.env.PUBLIC_NOINDEX;
 
-const structuredData = {
-  '@context': 'https://schema.org',
-  '@type': 'ProfessionalService',
-  name: site.name,
-  description:
-    'Agent-ready websites, owner dashboards, booking and payments, AI enquiry assistants and support that stays, for small businesses in Leeds and West Yorkshire.',
-  email: site.contact.email,
-  telephone: `+${site.contact.phoneIntl}`,
-  address: {
-    '@type': 'PostalAddress',
-    addressLocality: site.location.town,
-    addressRegion: site.location.region,
-    addressCountry: site.location.country,
-  },
-  areaServed: site.areasServed.map((name) => ({ '@type': 'City', name })),
-  // Placeholder domain — replace once docs/09-open-questions.md item 8 is decided.
-  url: site.url,
-};
+const abs = (path: string) => new URL(withBase(path), site.url).toString();
+const canonicalUrl = abs(page.path);
+const ogImage = abs(`/og/${key === '404' ? 'index' : key}.png`);
+const ogAlt = `${page.ogHeadline} ${site.fullName}, Leeds.`;
+const schema = key === '404' ? undefined : buildSchema(key, abs);
 ---
 
 {index && <link rel="canonical" href={canonicalUrl} />}
-{!index && <meta name="robots" content="noindex, follow" />}
+<meta
+  name="robots"
+  content={index ? 'index, follow, max-image-preview:large, max-snippet:-1' : 'noindex, follow'}
+/>
+<link rel="sitemap" type="application/xml" href={withBase('/sitemap-index.xml')} />
+<link rel="alternate" type="text/markdown" title="llms.txt" href={withBase('/llms.txt')} />
+<link rel="manifest" href={withBase('/site.webmanifest')} />
+<link rel="icon" href={withBase('/favicon.ico')} sizes="48x48" />
+<link rel="apple-touch-icon" href={withBase('/apple-touch-icon.png')} />
 
 <!-- Open Graph -->
 <meta property="og:type" content="website" />
-<meta property="og:title" content={title} />
-<meta property="og:description" content={description} />
+<meta property="og:site_name" content={site.fullName} />
+<meta property="og:locale" content="en_GB" />
+<meta property="og:title" content={page.title} />
+<meta property="og:description" content={page.description} />
 <meta property="og:url" content={canonicalUrl} />
-<meta property="og:site_name" content={site.name} />
-<meta property="og:image" content={ogImageUrl} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:image:type" content="image/png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
-<meta property="og:locale" content="en_GB" />
+<meta property="og:image:alt" content={ogAlt} />
 
-<!-- Twitter -->
+<!-- Twitter / X -->
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content={title} />
-<meta name="twitter:description" content={description} />
-<meta name="twitter:image" content={ogImageUrl} />
+<meta name="twitter:title" content={page.title} />
+<meta name="twitter:description" content={page.description} />
+<meta name="twitter:image" content={ogImage} />
+<meta name="twitter:image:alt" content={ogAlt} />
 
-{includeStructuredData && (
-  <script type="application/ld+json" set:html={JSON.stringify(structuredData)}></script>
-)}
+<!-- Business details, the same everywhere they appear -->
+<meta name="geo.region" content="GB-LDS" />
+<meta name="geo.placename" content={`${site.location.town}, ${site.location.region}`} />
+<meta name="format-detection" content="telephone=no" />
+
+{schema && <script type="application/ld+json" set:html={JSON.stringify(schema)}></script>}

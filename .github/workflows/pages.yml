@@ -26,9 +26,11 @@ jobs:
         working-directory: site
     steps:
       - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v5
         with:
-          node-version: 24
+          node-version-file: site/.node-version
           cache: npm
           cache-dependency-path: site/package-lock.json
       - run: npm ci
@@ -36,6 +38,9 @@ jobs:
         env:
           SITE_URL: https://gurmansinghduklu.github.io
           SITE_BASE: /Hu-Man
+          PUBLIC_NOINDEX: '1'
+      - run: npm run seo-check
+        env:
           PUBLIC_NOINDEX: '1'
       - uses: actions/upload-pages-artifact@v4
         with:

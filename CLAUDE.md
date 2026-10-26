@@ -289,6 +289,26 @@ New pages `/about/`, `/how-we-build/`, `/work/`; home and services rebuilt; Esse
    (the About shape group's `RingOrb` sat in the flow until fixed).
 Lighthouse 98-100 / 100 / 100 / 100 on all six content pages, axe 0 violations on all eight pages.
 
+## Launch readiness: SEO and GEO (2026-10-26, branch `agency-redesign`)
+Deploy-ready for humansoftwareagency.com (`src/config/domain.ts`, the one place the domain lives);
+the runbook for the account-side steps is `docs/10-launch.md`. Things worth knowing:
+1. **Every page's title, description, OG headline and schema type live in `src/data/pages.ts`**;
+   pages pass only `page="key"` to BaseLayout. Content shared by pages, schema and llms.txt lives in
+   `src/data/` (faq, process, projects, about, services, pricing): never copy it into a component.
+2. **Schema is one linked @graph per page** (`src/data/schema.ts`): business, website, page and
+   breadcrumb on every page, plus the page's own subject. Only state what the page shows.
+3. **`/llms.txt` and `/llms-full.txt` are generated** (`src/lib/llms.ts`); robots.txt names and allows
+   the AI crawlers. **`npm run seo-check`** fails the build's CI on any SEO regression; it caught the
+   header "Free audit" link pointing at a missing #audit on privacy and 404.
+4. **CSP**: Astro's `security.csp` hashes every inline script and style into a meta tag; style
+   attributes are allowed via `style-src-attr`. `public/_headers` adds HSTS, frame-ancestors etc.
+   Any new inline `<script>` is hashed automatically; anything external must be added to the policy.
+5. Social cards: `npm run og-images` (renders `/og-card/<key>/` only while OG_RENDER=1); icons:
+   `npm run icons`. The favicon's print was a solid blob at stroke-width 14; it is 6 now.
+6. Sitemap lastmod and schema dateModified come from git (`src/lib/lastModified.ts`), so CI checks
+   out full history.
+Lighthouse 98-100 / 100 / 100 / 100 on all six pages, axe 0 violations on all eight.
+
 ## GitHub and preview deploy
 Repo: github.com/GurmanSinghDuklu/Hu-Man (public; default branch `hu-man-rebrand`). Every push to
 `hu-man-rebrand` deploys a preview to https://gurmansinghduklu.github.io/Hu-Man/ via

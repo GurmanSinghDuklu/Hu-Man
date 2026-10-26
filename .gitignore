@@ -7,3 +7,4 @@ site/reports/
 .env
 .env.*
 site/reports/
+site/.og-build/

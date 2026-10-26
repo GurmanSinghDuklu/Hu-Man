@@ -8,23 +8,23 @@ import { withBase } from '../../config/paths';
 import essence from '../../assets/work/essence-desktop.jpg';
 import eldeva from '../../assets/projects/eldeva-hero.jpg';
 import calculator from '../../assets/work/calculator-desktop.jpg';
+import { projects } from '../../data/projects';
+
+const project = (id: string) => projects.find((p) => p.id === id)!;
 
 const cards = [
   {
-    name: 'Essence Hair',
-    tags: 'Built for a family business · Live',
+    ...project('essence'),
     src: essence,
     alt: 'The Essence Hair home page: “More than hair, a place to relax, refresh and feel your best.”',
   },
   {
-    name: 'Eldeva Candles',
-    tags: 'Concept design · Not live',
+    ...project('eldeva'),
     src: eldeva,
     alt: 'The Eldeva concept home page: “Golden hour, bottled.”',
   },
   {
-    name: 'The Calculator App',
-    tags: 'Web app · Live',
+    ...project('calculator'),
     src: calculator,
     alt: 'The Calculator App home page, with featured calculators',
   },

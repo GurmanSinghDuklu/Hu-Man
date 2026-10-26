@@ -1,0 +1,41 @@
+# Response headers for the live site. Cloudflare Pages and Netlify both read this file as is.
+# Pair with the Content-Security-Policy <meta> Astro writes into every page (astro.config.mjs):
+# a <meta> can't set frame-ancestors, so that part lives here.
+# Check after launch: https://securityheaders.com/?q=humansoftwareagency.com
+
+/*
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Content-Security-Policy: frame-ancestors 'none'; base-uri 'self'; object-src 'none'
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()
+  Cross-Origin-Opener-Policy: same-origin
+
+# Fingerprinted build files never change under the same name: cache for a year.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Fonts, icons and social cards: cache for a week, then check.
+/og/*
+  Cache-Control: public, max-age=604800
+/*.png
+  Cache-Control: public, max-age=604800
+/favicon.*
+  Cache-Control: public, max-age=604800
+
+# Files for crawlers and AI tools: always fresh, readable from anywhere.
+/llms.txt
+  Content-Type: text/plain; charset=utf-8
+  Access-Control-Allow-Origin: *
+  Cache-Control: public, max-age=3600
+/llms-full.txt
+  Content-Type: text/plain; charset=utf-8
+  Access-Control-Allow-Origin: *
+  Cache-Control: public, max-age=3600
+/robots.txt
+  Cache-Control: public, max-age=3600
+/sitemap*
+  Cache-Control: public, max-age=3600
+/site.webmanifest
+  Content-Type: application/manifest+json

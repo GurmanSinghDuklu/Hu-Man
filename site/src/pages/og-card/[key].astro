@@ -1,0 +1,113 @@
+---
+/**
+ * The 1200x630 social-sharing card for each page, drawn with the site's own fonts, colours and
+ * collage. These pages only exist while `npm run og-images` builds them (OG_RENDER=1); a normal
+ * build has no /og-card/ pages at all. The script photographs each card to public/og/<key>.png.
+ */
+import '../../styles/base.css';
+import { site } from '../../config/site';
+import { pages, type PageKey } from '../../data/pages';
+import Collage from '../../components/Collage.astro';
+import Logo from '../../components/Logo.astro';
+
+export function getStaticPaths() {
+  if (!process.env.OG_RENDER) return [];
+  const keys = (Object.keys(pages) as PageKey[]).filter((key) => key !== '404');
+  return keys.map((key) => ({ params: { key } }));
+}
+
+const key = Astro.params.key as PageKey;
+const page = pages[key];
+const domain = new URL(site.url).hostname;
+---
+
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="noindex" />
+    <title>{page.ogHeadline}</title>
+  </head>
+  <body>
+    <div class="card grid">
+      <p class="label card__kicker">
+        {site.fullName} · {site.location.town}
+      </p>
+      <p class="card__headline">{page.ogHeadline}</p>
+      <div class="card__foot">
+        <Logo variant="ink" label="" class="card__logo" />
+        <span class="label">{domain}</span>
+      </div>
+      <div class="card__collage">
+        <Collage variant="inner" lens={`Lens / ${page.label}`} />
+      </div>
+    </div>
+  </body>
+</html>
+
+<style>
+  body {
+    margin: 0;
+    width: 1200px;
+    height: 630px;
+    overflow: hidden;
+  }
+
+  /* A 75px grid unit, so the collage sits on the same grid as the page. */
+  .card {
+    --u: 75px;
+    position: relative;
+    width: 1200px;
+    height: 630px;
+    overflow: hidden;
+    background-color: var(--paper);
+  }
+
+  .card__kicker {
+    position: absolute;
+    left: 56px;
+    top: 52px;
+    font-size: 16px;
+  }
+
+  .card__headline {
+    position: absolute;
+    left: 52px;
+    top: 96px;
+    width: 640px;
+    font: 800 78px/0.92 var(--font-display);
+    letter-spacing: -0.015em;
+    text-transform: uppercase;
+    text-wrap: balance;
+    color: var(--ink);
+  }
+
+  .card__foot {
+    position: absolute;
+    left: 56px;
+    bottom: 52px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .card__foot :global(.card__logo) {
+    width: 170px;
+  }
+
+  .card__foot .label {
+    font-size: 16px;
+  }
+
+  /* The inner collage spans columns 9-15.6 on its own 16-unit grid; shift it to the right edge. */
+  .card__collage {
+    position: absolute;
+    right: 20px;
+    top: 30px;
+  }
+
+  /* The arch's vertical "Est. 2026" runs past the card's foot at this size. */
+  .card__collage :global(.collage__est) {
+    display: none;
+  }
+</style>

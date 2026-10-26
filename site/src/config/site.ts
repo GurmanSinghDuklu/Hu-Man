@@ -10,8 +10,17 @@
  * Gurman's personal number until a business one is confirmed (docs/09 item 2). Swap them here
  * when that happens.
  */
+import { productionUrl } from './domain';
+
 export const site = {
   name: 'Hu/man',
+  /** The full name for titles, schema and llms.txt, so every source names the same entity. Not a
+   * legal name: the business is not registered yet. */
+  fullName: 'Hu/man Software Agency',
+  /** Other spellings people (and AI tools) may use, listed in the schema as alternate names. */
+  alternateNames: ['Human Software Agency', 'HU/MAN', 'Hu/man'],
+  /** "Est. 2026" in the hero collage. */
+  founded: '2026',
   wordmark: 'HU/MAN',
   descriptor: 'Studio',
   nameIsPlaceholder: true,
@@ -33,10 +42,12 @@ export const site = {
     whatsapp: 'https://wa.me/447988450280',
     github: 'https://github.com/GurmanSinghDuklu',
     linkedin: 'https://www.linkedin.com/in/gurman-singh-duklu',
+    // The studio's own profile (approved 2026-10-25). GitHub and LinkedIn are personal, so they
+    // stay off the pages and out of the schema.
+    instagram: 'https://www.instagram.com/humansoftwareagency/',
   },
-  // Set to the real domain before deploying (docs/09 item 8). Follows
-  // astro.config.mjs `site`, which a preview build can override via SITE_URL.
-  url: import.meta.env.SITE ?? 'https://example.com',
+  // Follows astro.config.mjs `site` (productionUrl unless a preview build sets SITE_URL).
+  url: import.meta.env.SITE ?? productionUrl,
 } as const;
 
 export type Site = typeof site;

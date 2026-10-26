@@ -1,0 +1,16 @@
+/* TEAM */
+Studio: Hu/man Software Agency
+Site: https://humansoftwareagency.com
+Contact: humansoftwareagency [at] gmail.com
+Instagram: @humansoftwareagency
+From: Leeds, West Yorkshire, UK
+
+/* THANKS */
+Everyone who tells us their idea.
+
+/* SITE */
+Standards: HTML, CSS, TypeScript, WCAG 2.2 AA
+Software: Astro, Sharp, Playwright
+Fonts: Montserrat, Archivo, IBM Plex Mono, Newsreader (self-hosted)
+Tracking: none. No cookies.
+Made by hand. Built by machine.

@@ -1,0 +1,12 @@
+# Short, guessable addresses people type or say out loud. Cloudflare Pages and Netlify syntax.
+# The www -> apex redirect is set at the host, not here (docs/10-launch.md).
+/contact      /#audit         301
+/audit        /#audit         301
+/free-audit   /#audit         301
+/faq          /pricing/#faq   301
+/faqs         /pricing/#faq   301
+/prices       /pricing/       301
+/portfolio    /work/          301
+/projects     /work/          301
+/process      /how-we-build/  301
+/about-us     /about/         301

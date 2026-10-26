@@ -13,9 +13,12 @@
     "lighthouse": "node scripts/lighthouse.mjs",
     "axe": "node scripts/axe.mjs",
     "screenshots": "node scripts/screenshots.mjs",
-    "og-image": "node scripts/generate-og-image.mjs",
     "check": "npm run typecheck && npm run lint && npm run build",
-    "capture-sites": "node scripts/capture-live-sites.mjs"
+    "capture-sites": "node scripts/capture-live-sites.mjs",
+    "og-images": "node scripts/generate-og-images.mjs",
+    "icons": "node scripts/generate-icons.mjs",
+    "indexnow": "node scripts/indexnow.mjs",
+    "seo-check": "node scripts/seo-check.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.10",
@@ -36,5 +39,8 @@
     "prettier": "^3.9.8",
     "prettier-plugin-astro": "^1.0.1",
     "typescript-eslint": "^8.70.0"
+  },
+  "engines": {
+    "node": ">=24"
   }
 }

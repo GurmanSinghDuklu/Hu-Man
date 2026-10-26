@@ -7,71 +7,10 @@ import TalkBanner from '../components/TalkBanner.astro';
 import Sparkle from '../components/Sparkle.astro';
 import RingOrb from '../components/RingOrb.astro';
 import { withBase } from '../config/paths';
-
-const mission = [
-  {
-    title: 'For anyone',
-    text: 'Individuals, local businesses, charities and growing teams. Big-agency standards without the big-agency distance.',
-    style: 'lilac',
-  },
-  {
-    title: 'The human touch',
-    text: 'The person you speak to on day one knows your project inside out.',
-    style: 'dusk',
-  },
-  {
-    title: 'Care after launch',
-    text: 'Questions, fixes and changes handled by someone who picks up.',
-    style: 'rose',
-  },
-];
-
-const rules = [
-  {
-    title: 'Human first',
-    text: 'Technology serves people. Not the other way round.',
-    style: 'ink',
-  },
-  {
-    title: 'Built properly',
-    text: 'Fast, secure and tested. Never one prompt and done.',
-    style: 'arch',
-  },
-  {
-    title: 'Honest',
-    text: 'Straight answers, clear prices, no promises we can’t keep.',
-    style: 'lilac',
-  },
-  { title: 'Here after launch', text: 'We don’t take the money and disappear.', style: 'outline' },
-];
-
-// Commitments Gurman made in the design (2026-10-25). Confirm each one before launch.
-const promises = [
-  {
-    title: 'We fix our mistakes',
-    text: 'If something breaks because of our work, we fix it at no cost to you.',
-  },
-  {
-    title: 'A real person answers',
-    text: 'Message us and a person who knows your site replies. No ticket bots.',
-  },
-  {
-    title: 'No charge for every little thing',
-    text: 'Quick questions and small fixes are part of the service, not a new invoice.',
-  },
-  { title: 'We don’t disappear', text: 'Launch is the start. We are still here when you need us.' },
-  { title: 'You own it', text: 'Your code, your content, your domain. No lock-in.' },
-  {
-    title: 'Straight talk',
-    text: 'No one can guarantee a place in AI answers. We tell you what we can and can’t do.',
-  },
-];
+import { mission, rules, promises } from '../data/about';
 ---
 
-<BaseLayout
-  title="About | Hu/man Software Agency"
-  description="Hu/man is a software studio in Leeds. We build fast, secure, agentic AI-ready websites and apps for individuals and businesses, and we stay with you long after launch."
->
+<BaseLayout page="about">
   <SiteHeader slot="header" />
 
   <InnerHero label="About" lens="Lens 04 / Who we are">

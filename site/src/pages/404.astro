@@ -2,15 +2,11 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
-import { site } from '../config/site';
+import TalkBanner from '../components/TalkBanner.astro';
 import { withBase } from '../config/paths';
 ---
 
-<BaseLayout
-  title={`Page not found | ${site.name}`}
-  description="This page could not be found."
-  index={false}
->
+<BaseLayout page="404">
   <SiteHeader slot="header" />
 
   <section class="wrap not-found">
@@ -28,6 +24,8 @@ import { withBase } from '../config/paths';
       </a>
     </div>
   </section>
+
+  <TalkBanner />
 
   <SiteFooter slot="footer" />
 </BaseLayout>

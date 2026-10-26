@@ -2,19 +2,17 @@
 import '../styles/base.css';
 import Seo from '../components/Seo.astro';
 import { withBase } from '../config/paths';
+import { pages, type PageKey } from '../data/pages';
 import montserrat800 from '../fonts/montserrat-latin-800-normal.woff2?url';
 import archivo400 from '../fonts/archivo-latin-400-normal.woff2?url';
 
 interface Props {
-  title: string;
-  description: string;
-  /** Set to false on utility pages (currently just the 404) to add noindex. */
-  index?: boolean;
-  /** Emit the ProfessionalService JSON-LD. The homepage sets this to true. */
-  structuredData?: boolean;
+  /** The page's key in src/data/pages.ts: its title, description and schema all come from there. */
+  page: PageKey;
 }
 
-const { title, description, index = true, structuredData = false } = Astro.props;
+const { page } = Astro.props;
+const { title, description } = pages[page];
 ---
 
 <!doctype html>
@@ -26,7 +24,7 @@ const { title, description, index = true, structuredData = false } = Astro.props
     <meta name="description" content={description} />
     <link rel="icon" href={withBase('/favicon.svg')} type="image/svg+xml" />
     <meta name="generator" content={Astro.generator} />
-    <Seo title={title} description={description} index={index} structuredData={structuredData} />
+    <Seo page={page} />
     <meta name="theme-color" content="#F1F2EC" />
     <script is:inline>
       document.documentElement.classList.add('js');

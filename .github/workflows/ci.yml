@@ -1,0 +1,33 @@
+# Quality gate on every push and pull request: types, lint, build, the SEO/GEO check and the axe
+# accessibility scan. The production host (docs/10-launch.md) should only deploy commits that
+# pass this. Nothing here deploys or publishes anything.
+name: Checks
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: site
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          # Full history, so the sitemap's lastmod dates come from real commit dates.
+          fetch-depth: 0
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: site/.node-version
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+      - run: npm ci
+      - run: npm run check
+      - run: npm run seo-check
+      - run: npx playwright install --with-deps chromium
+      - run: npm run axe

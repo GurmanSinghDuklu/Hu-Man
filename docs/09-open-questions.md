@@ -10,9 +10,9 @@ Blocking for Phase 0 or 1 — answered 2026-09-21:
 
 Can wait:
 7. Which one or two sectors first (after the discovery conversations)?
-8. Domain choice and hosting (Cloudflare Pages, Netlify or Vercel).
+8. Domain and hosting: **humansoftwareagency.com** (registered 2026-10-11, in the Instagram bio; Gurman to confirm), hosting recommended on Cloudflare Pages. Steps in `docs/10-launch.md`.
 9. Booking the audit: keep mailto, or add a booking tool or form service later?
 10. Analytics: none for now (no cookie banner needed). If added, choose a privacy-friendly option and update the privacy notice.
 11. Prices for standalone AI-only offers (see `02-offer-and-pricing.md`).
 12. Will he commit publicly to raising prices as the diary fills? The site's wording depends on it.
-13. Social handles and whether to show them on the site.
+13. Social handles: Instagram @humansoftwareagency approved 2026-10-25 (in the schema's sameAs). Add LinkedIn and Facebook company pages when they exist.

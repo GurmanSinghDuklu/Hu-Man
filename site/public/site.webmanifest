@@ -1,0 +1,21 @@
+{
+  "name": "Hu/man Software Agency",
+  "short_name": "Hu/man",
+  "description": "Websites, apps and software from Leeds: agentic AI-ready as standard, with a real person from first call to long after launch.",
+  "lang": "en-GB",
+  "start_url": "./",
+  "scope": "./",
+  "display": "browser",
+  "background_color": "#F1F2EC",
+  "theme_color": "#F1F2EC",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" },
+    {
+      "src": "icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
