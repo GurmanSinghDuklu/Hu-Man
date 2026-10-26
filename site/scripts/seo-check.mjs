@@ -235,7 +235,9 @@ if (!noindexBuild) {
   for (const u of indexable) if (!locs.includes(u)) fail('sitemap', `missing ${u}`);
   for (const u of locs)
     if (!indexable.includes(u)) fail('sitemap', `lists ${u}, which is not an indexable page`);
-  if (!/<lastmod>/.test(sitemap)) fail('sitemap', 'no lastmod dates');
+  // Dates come from git history; a build machine without it (Cloudflare's) leaves them out, which
+  // is harmless, so this warns rather than fails.
+  if (!/<lastmod>/.test(sitemap)) console.warn('SEO check: warning: sitemap has no lastmod dates');
 }
 
 const robots = await readFile(`${dist}robots.txt`, 'utf8');
