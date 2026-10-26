@@ -215,7 +215,13 @@ async function overLimit(env, ip) {
 export async function handleEnquiry(request, env, EmailMessage) {
   const url = new URL(request.url);
   if (request.method === 'GET' || request.method === 'HEAD') {
-    return json(200, { ...API_DESCRIPTION, endpoint: `${url.origin}/api/enquiry` });
+    // Says whether the spam limits are wired up, so a missing binding can't go unnoticed.
+    const limits = env.ENQUIRY_PER_IP && env.ENQUIRY_GLOBAL ? 'on' : 'off';
+    return json(
+      200,
+      { ...API_DESCRIPTION, endpoint: `${url.origin}/api/enquiry` },
+      { 'X-Enquiry-Limits': limits },
+    );
   }
   if (request.method !== 'POST') return json(405, { ok: false }, { Allow: 'GET, POST' });
 
