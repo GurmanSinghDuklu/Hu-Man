@@ -2,7 +2,7 @@
 /**
  * "What is an agentic AI-ready website?": the definition of the phrase the brand is built on,
  * written to be quoted. The answer comes first (people and AI tools both read the top), then what
- * it takes, then this site as working proof. Draft copy (2026-10-26) for Gurman's sign-off.
+ * it takes, Draft copy (2026-10-26) for Gurman's sign-off.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteHeader from '../components/SiteHeader.astro';
@@ -13,30 +13,6 @@ import { agenticFaq } from '../data/faq';
 import { definition, ingredients } from '../data/agentic';
 import { fromPrice, priceOf } from '../data/pricing';
 import { withBase } from '../config/paths';
-
-// Things anyone can open on this site to see the standard at work.
-const proof = [
-  {
-    href: withBase('/robots.txt'),
-    label: '/robots.txt',
-    text: 'Every AI crawler named and let in.',
-  },
-  {
-    href: withBase('/llms.txt'),
-    label: '/llms.txt',
-    text: 'A plain-text guide to the business for AI tools.',
-  },
-  {
-    href: withBase('/index.html.md'),
-    label: '/index.html.md',
-    text: 'This site’s home page as clean Markdown. Every page has one.',
-  },
-  {
-    href: withBase('/api/enquiry'),
-    label: '/api/enquiry',
-    text: 'The enquiry form, described so an AI agent can send it for someone.',
-  },
-];
 
 const selfCheck = [
   'Ask ChatGPT about your business. Does it get your prices, hours and area right?',
@@ -115,37 +91,11 @@ const selfCheck = [
     </div>
   </section>
 
-  <section class="band band--paper-2 proof section" aria-labelledby="proof-title">
-    <div class="sheet proof__sheet">
-      <div>
-        <p class="label" data-reveal>
-          03 / See it working
-        </p>
-        <h2 id="proof-title" class="display display--m" data-reveal>
-          This site is the proof.
-        </h2>
-        <p class="proof__text" data-reveal>
-          We build our own site to the same standard. Open any of these and see what AI tools see.
-        </p>
-      </div>
-      <ul class="proof__list">
-        {proof.map((p) => (
-          <li>
-            <a href={p.href}>
-              <span class="proof__path">{p.label}</span>
-              <span>{p.text}</span>
-            </a>
-          </li>
-        ))}
-      </ul>
-    </div>
-  </section>
-
-  <section class="band grid self section" aria-labelledby="self-title">
+  <section class="band band--paper-2 self section" aria-labelledby="self-title">
     <div class="sheet self__sheet">
       <div>
         <p class="label" data-reveal>
-          04 / Check your own
+          03 / Check your own
         </p>
         <h2 id="self-title" class="display display--m" data-reveal>
           Five quick questions.
@@ -166,9 +116,9 @@ const selfCheck = [
     </div>
   </section>
 
-  <section class="band band--paper-2 faq section" aria-labelledby="faq-title">
+  <section class="band grid faq section" aria-labelledby="faq-title">
     <div class="sheet">
-      <p class="label">05 / Questions</p>
+      <p class="label">04 / Questions</p>
       <h2 id="faq-title" class="display display--s">
         Agentic AI-ready, answered
       </h2>
@@ -252,14 +202,11 @@ const selfCheck = [
     font-size: clamp(1rem, calc(var(--u) * 0.19), 1.15rem);
   }
 
-  /* ---------- proof ---------- */
-  .proof__sheet,
   .self__sheet {
     display: grid;
     gap: var(--space-5);
   }
 
-  .proof__text,
   .self__text {
     max-width: 30rem;
     margin-top: 1.25rem;
@@ -269,32 +216,6 @@ const selfCheck = [
 
   .self__text a {
     font-weight: 600;
-  }
-
-  .proof__list {
-    display: grid;
-    gap: 0.75rem;
-  }
-
-  .proof__list a {
-    display: grid;
-    gap: 0.3rem;
-    padding: 1.1rem 1.5rem;
-    border: 1px solid var(--ink);
-    border-radius: 0 999px 999px 0;
-    background: var(--paper);
-    text-decoration: none;
-  }
-
-  .proof__list a:hover {
-    background: var(--grad-lilac);
-  }
-
-  .proof__path {
-    font: 500 0.875rem var(--font-mono);
-    letter-spacing: 0.06em;
-    text-decoration: underline;
-    text-underline-offset: 0.25em;
   }
 
   /* ---------- self-check ---------- */
@@ -368,7 +289,6 @@ const selfCheck = [
 
   @media (min-width: 64rem) {
     .why__sheet,
-    .proof__sheet,
     .self__sheet {
       grid-template-columns: calc(var(--u) * 6.2) 1fr;
       gap: calc(var(--u) * 0.66);
