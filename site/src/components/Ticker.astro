@@ -1,0 +1,123 @@
+---
+/**
+ * A running strip of the service areas (src/data/services.ts) under the home stats. The words are
+ * already on the page, so the moving copy is hidden from screen readers. Hover or the pause
+ * button stops it (WCAG 2.2.2: anything moving for over 5 s can be paused). Still under reduced
+ * motion, and then the button is hidden.
+ */
+import { serviceAreas } from '../data/services';
+import Sparkle from './Sparkle.astro';
+
+const words = [...serviceAreas.map((s) => s.title), 'Agentic AI-ready'];
+---
+
+<div class="ticker">
+  <div class="ticker__track" aria-hidden="true">
+    {[0, 1].map(() => (
+      <ul class="ticker__run">
+        {words.map((w) => (
+          <li>
+            {w}
+            <Sparkle class="ticker__star" color="var(--lilac)" />
+          </li>
+        ))}
+      </ul>
+    ))}
+  </div>
+  <button type="button" class="ticker__toggle" aria-pressed="false">
+    Pause
+  </button>
+</div>
+
+<script>
+  for (const ticker of document.querySelectorAll<HTMLElement>('.ticker')) {
+    const button = ticker.querySelector<HTMLButtonElement>('.ticker__toggle');
+    button?.addEventListener('click', () => {
+      const paused = ticker.classList.toggle('is-paused');
+      button.setAttribute('aria-pressed', String(paused));
+      button.textContent = paused ? 'Play' : 'Pause';
+    });
+  }
+</script>
+
+<style>
+  .ticker {
+    position: relative;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .ticker__track {
+    display: flex;
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    padding-block: 0.9rem;
+  }
+
+  .ticker__run {
+    display: flex;
+    flex-shrink: 0;
+    gap: 2.5rem;
+    padding-right: 2.5rem;
+    font: 400 0.75rem var(--font-mono);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .ticker__run li {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+  }
+
+  .ticker :global(.ticker__star) {
+    width: 0.9rem;
+  }
+
+  .ticker__toggle {
+    flex-shrink: 0;
+    align-self: stretch;
+    padding: 0 1.1rem;
+    border: 0;
+    border-left: 1px solid #2a2c2f;
+    background: var(--ink);
+    color: var(--muted-on-ink);
+    font: 400 0.6875rem var(--font-mono);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  .ticker__toggle:hover,
+  .ticker__toggle:focus-visible {
+    color: var(--paper);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .ticker__run {
+      animation: ticker 38s linear infinite;
+    }
+
+    .ticker:hover .ticker__run,
+    .ticker.is-paused .ticker__run {
+      animation-play-state: paused;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ticker__toggle {
+      display: none;
+    }
+  }
+
+  @keyframes ticker {
+    to {
+      translate: -100% 0;
+    }
+  }
+</style>
