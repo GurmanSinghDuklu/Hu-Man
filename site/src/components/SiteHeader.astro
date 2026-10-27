@@ -18,11 +18,8 @@ const navLinks = [
 <header class="site-header">
   <div class="sheet site-header__inner">
     <a href={withBase('/')} class="site-header__home" aria-label={`${site.name} home`}>
-      <!-- Two extra copies of the real artwork are the hover glitch bands (never retyped). -->
       <span class="site-header__logo logo-led">
         <Logo variant="ink" label="" />
-        <Logo variant="ink" label="" class="site-header__band site-header__band--a" />
-        <Logo variant="ink" label="" class="site-header__band site-header__band--b" />
       </span>
     </a>
 
@@ -137,70 +134,6 @@ const navLinks = [
     display: none;
   }
 
-  /* Hover glitch: Pink and Indigo bands of the artwork jump sideways for a beat, every 2 s. */
-  .site-header__logo :global(.site-header__band) {
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    pointer-events: none;
-  }
-
-  .site-header__logo :global(.site-header__band--a) {
-    clip-path: inset(12% 0 55% 0);
-  }
-
-  .site-header__logo :global(.site-header__band--a path) {
-    fill: var(--pink);
-  }
-
-  .site-header__logo :global(.site-header__band--b) {
-    clip-path: inset(58% 0 14% 0);
-  }
-
-  .site-header__logo :global(.site-header__band--b path) {
-    fill: var(--indigo);
-  }
-
-  .site-header__home:hover :global(.site-header__band--a),
-  .site-header__home:focus-visible :global(.site-header__band--a) {
-    animation: logo-band-a 2s steps(1, end) infinite;
-  }
-
-  .site-header__home:hover :global(.site-header__band--b),
-  .site-header__home:focus-visible :global(.site-header__band--b) {
-    animation: logo-band-b 2s steps(1, end) infinite;
-  }
-
-  @keyframes logo-band-a {
-    0% {
-      opacity: 1;
-      transform: translateX(-5px);
-    }
-    5% {
-      transform: translateX(4px);
-    }
-    15%,
-    100% {
-      opacity: 0;
-      transform: none;
-    }
-  }
-
-  @keyframes logo-band-b {
-    0% {
-      opacity: 1;
-      transform: translateX(4px);
-    }
-    6% {
-      transform: translateX(-6px);
-    }
-    15%,
-    100% {
-      opacity: 0;
-      transform: none;
-    }
-  }
-
   /* ---------- mobile menu ---------- */
   .site-header__menu {
     position: relative;
@@ -296,15 +229,8 @@ const navLinks = [
     }
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .site-header__logo :global(.site-header__band) {
-      animation: none !important;
-    }
-  }
-
-  /* The LED colour cycle (.logo-led, base.css) colours the real logo only; the hover glitch
-     bands stay ink. */
-  .site-header__logo > :global(.logo:first-child path) {
+  /* The LED colour cycle (.logo-led, base.css). */
+  .site-header__logo :global(.logo path) {
     fill: currentColor;
   }
 </style>

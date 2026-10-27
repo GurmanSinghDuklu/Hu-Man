@@ -373,6 +373,7 @@ interaction; none load under reduced motion. Things worth knowing:
    hex stops of `oklch(0.6 0.2 h)` and `oklch(0.75 0.17 h)` animating `color`, paths `fill: currentColor`,
    12 s. Not `@property`: that version stayed still in Gurman's browser. It keeps running under reduced
    motion (a colour change, not movement; his request, 2026-10-27). Essence's credit uses the same effect.
+   The navbar logo's hover glitch was removed at Gurman's request (2026-10-27).
 5. `npm run motion-check` (Playwright; `BROWSER=webkit|firefox` for other engines) checks the logo,
    ticker pause, shader count, reduced motion and console errors against `dist/`. In WebKit it strips
    `upgrade-insecure-requests`, which breaks the plain-http test server only.
