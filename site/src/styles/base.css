@@ -14,6 +14,11 @@ html {
   background: var(--paper);
 }
 
+/* Lenis does the smoothing when it runs; native smooth scrolling would fight it. */
+html.lenis {
+  scroll-behavior: auto;
+}
+
 body {
   margin: 0;
   background: var(--paper);
@@ -263,7 +268,10 @@ ol {
   min-height: 44px;
   padding: 0.85rem 1.4rem;
   border: 1.5px solid var(--ink);
-  background: var(--ink);
+  /* The hover fill sweeps in from the left: a second background layer grows from 0% to 100%. */
+  background:
+    linear-gradient(var(--paper), var(--paper)) no-repeat left / 0% 100%,
+    var(--ink);
   color: var(--paper);
   font: 500 0.8125rem/1.2 var(--font-mono);
   letter-spacing: 0.16em;
@@ -271,22 +279,28 @@ ol {
   text-decoration: none;
   cursor: pointer;
   transition:
-    background-color 0.15s linear,
-    color 0.15s linear;
+    background-size 0.35s var(--ease-out),
+    color 0.35s var(--ease-out);
 }
 
 .btn:hover {
-  background: var(--paper);
+  background-size:
+    100% 100%,
+    auto;
   color: var(--ink);
 }
 
 .btn--outline {
-  background: transparent;
+  background:
+    linear-gradient(var(--ink), var(--ink)) no-repeat left / 0% 100%,
+    transparent;
   color: var(--ink);
 }
 
 .btn--outline:hover {
-  background: var(--ink);
+  background-size:
+    100% 100%,
+    auto;
   color: var(--paper);
 }
 
@@ -307,7 +321,9 @@ ol {
   padding: 0.7rem 1.4rem;
   border: 1px solid var(--ink);
   border-radius: 999px;
-  background: var(--ink);
+  background:
+    linear-gradient(var(--paper), var(--paper)) no-repeat left / 0% 100%,
+    var(--ink);
   color: var(--paper);
   font: 500 0.75rem/1.2 var(--font-mono);
   letter-spacing: 0.18em;
@@ -315,22 +331,28 @@ ol {
   text-decoration: none;
   cursor: pointer;
   transition:
-    background-color 0.15s linear,
-    color 0.15s linear;
+    background-size 0.35s var(--ease-out),
+    color 0.35s var(--ease-out);
 }
 
 .pill-btn:hover {
-  background: var(--paper);
+  background-size:
+    100% 100%,
+    auto;
   color: var(--ink);
 }
 
 .pill-btn--outline {
-  background: transparent;
+  background:
+    linear-gradient(var(--ink), var(--ink)) no-repeat left / 0% 100%,
+    transparent;
   color: var(--ink);
 }
 
 .pill-btn--outline:hover {
-  background: var(--ink);
+  background-size:
+    100% 100%,
+    auto;
   color: var(--paper);
 }
 
@@ -349,18 +371,144 @@ ol {
 }
 
 /* ---------- motion: reveals play once as a section comes into view ---------- */
+/* Default: fade up. Variants: lines (GSAP splits the heading; the block itself just appears),
+   slide (from the right), grow (children rise from the baseline in turn), scan (rows tick in). */
 .js [data-reveal] {
   opacity: 0;
-  transform: translateY(14px);
+  translate: 0 28px;
   transition:
-    opacity 0.6s var(--ease-out),
-    transform 0.6s var(--ease-out);
+    opacity 0.8s var(--ease-out),
+    translate 0.8s var(--ease-out);
   transition-delay: var(--reveal-delay, 0s);
 }
 
 .js [data-reveal].is-in {
   opacity: 1;
-  transform: none;
+  translate: none;
+}
+
+.js [data-reveal='lines'] {
+  translate: none;
+  transition-duration: 0.4s;
+}
+
+.js [data-reveal='slide'] {
+  translate: 48px 0;
+}
+
+.js [data-reveal='grow'],
+.js [data-reveal='scan'] {
+  translate: none;
+}
+
+.js [data-reveal='grow'] > * {
+  scale: 1 0;
+  transform-origin: bottom;
+  transition: scale 0.9s var(--ease-out) calc(var(--i, 0) * 0.07s);
+}
+
+.js [data-reveal='grow'].is-in > * {
+  scale: 1 1;
+}
+
+.js [data-reveal='scan'] li {
+  opacity: 0;
+  translate: -12px 0;
+  transition:
+    opacity 0.45s var(--ease-out) calc(0.25s + var(--k, 0) * 0.32s),
+    translate 0.45s var(--ease-out) calc(0.25s + var(--k, 0) * 0.32s);
+}
+
+.js [data-reveal='scan'].is-in li {
+  opacity: 1;
+  translate: none;
+}
+
+/* ---------- motion: gentle loops that keep going while people read ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  .amb-spin {
+    animation: amb-spin 14s linear infinite;
+  }
+
+  .amb-float {
+    animation: amb-float 4.5s ease-in-out infinite alternate;
+  }
+
+  .amb-drift {
+    animation: amb-drift 9s ease-in-out infinite alternate;
+  }
+
+  .amb-drift--b {
+    animation-duration: 11s;
+    animation-direction: alternate-reverse;
+  }
+
+  .amb-pulse {
+    animation: amb-pulse 3.2s ease-in-out infinite;
+  }
+}
+
+@keyframes amb-spin {
+  to {
+    rotate: 360deg;
+  }
+}
+
+@keyframes amb-float {
+  to {
+    translate: 0 -10px;
+  }
+}
+
+@keyframes amb-drift {
+  to {
+    translate: -10px 8px;
+  }
+}
+
+@keyframes amb-pulse {
+  50% {
+    scale: 1.06;
+  }
+}
+
+/* Lenis (smooth wheel scrolling): its recommended CSS. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+
+.lenis [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* A moving shader gradient sits behind a panel's content; the panel's CSS gradient shows until
+   the canvas is ready (and stays if WebGL is unavailable). The panel needs isolation: isolate. */
+.shader-layer {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 1.2s var(--ease-out);
+  pointer-events: none;
+}
+
+.shader-layer.is-live {
+  opacity: 1;
+}
+
+.shader-layer canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 @media (prefers-reduced-motion: reduce) {
