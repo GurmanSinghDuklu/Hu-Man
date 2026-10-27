@@ -511,175 +511,28 @@ html.lenis body {
   height: 100%;
 }
 
-/* ---------- the colour-cycling logo (navbar and footer) ---------- */
-/* Like an LED strip: every hue in turn over 12 s, a new colour about every second, blended. The
-   24 stops are oklch(0.6 0.2 h) (pale header) and oklch(0.75 0.17 h) (Ink footer) every 15deg,
-   precomputed as hex so any browser can animate them: no @property needed (2026-10-27: the
-   @property version stayed still in Gurman's browser). The animation sets `color`; each logo's
-   paths use fill: currentColor. A slow colour change isn't movement, so it keeps running under
-   reduced motion (see the override below). */
-@keyframes logo-led {
-  0% {
-    color: #d7397b;
-  }
-  4.1667% {
-    color: #dd3858;
-  }
-  8.3333% {
-    color: #de3e2d;
-  }
-  12.5% {
-    color: #da4800;
-  }
-  16.6667% {
-    color: #d15700;
-  }
-  20.8333% {
-    color: #c26600;
-  }
-  25% {
-    color: #ae7500;
-  }
-  29.1667% {
-    color: #948300;
-  }
-  33.3333% {
-    color: #738e00;
-  }
-  37.5% {
-    color: #439800;
-  }
-  41.6667% {
-    color: #009e34;
-  }
-  45.8333% {
-    color: #00a261;
-  }
-  50% {
-    color: #00a385;
-  }
-  54.1667% {
-    color: #00a0a5;
-  }
-  58.3333% {
-    color: #009bc1;
-  }
-  62.5% {
-    color: #0093d8;
-  }
-  66.6667% {
-    color: #0089e9;
-  }
-  70.8333% {
-    color: #007df3;
-  }
-  75% {
-    color: #5471f5;
-  }
-  79.1667% {
-    color: #7965f0;
-  }
-  83.3333% {
-    color: #955be3;
-  }
-  87.5% {
-    color: #ab50d0;
-  }
-  91.6667% {
-    color: #be47b8;
-  }
-  95.8333% {
-    color: #cd3f9b;
-  }
-  100% {
-    color: #d7397b;
-  }
-}
-
-@keyframes logo-led-bright {
-  0% {
-    color: #ff7aa9;
-  }
-  4.1667% {
-    color: #ff7b8b;
-  }
-  8.3333% {
-    color: #ff7e6b;
-  }
-  12.5% {
-    color: #ff8648;
-  }
-  16.6667% {
-    color: #fa8f19;
-  }
-  20.8333% {
-    color: #eb9b00;
-  }
-  25% {
-    color: #d8a700;
-  }
-  29.1667% {
-    color: #bfb200;
-  }
-  33.3333% {
-    color: #a1bc1f;
-  }
-  37.5% {
-    color: #7cc54d;
-  }
-  41.6667% {
-    color: #4bcb71;
-  }
-  45.8333% {
-    color: #00ce93;
-  }
-  50% {
-    color: #00cfb2;
-  }
-  54.1667% {
-    color: #00cdcf;
-  }
-  58.3333% {
-    color: #00c9e9;
-  }
-  62.5% {
-    color: #00c2fe;
-  }
-  66.6667% {
-    color: #0cb9ff;
-  }
-  70.8333% {
-    color: #5cb0ff;
-  }
-  75% {
-    color: #85a5ff;
-  }
-  79.1667% {
-    color: #a59bff;
-  }
-  83.3333% {
-    color: #bf92ff;
-  }
-  87.5% {
-    color: #d689f7;
-  }
-  91.6667% {
-    color: #e882e1;
-  }
-  95.8333% {
-    color: #f77dc6;
-  }
-  100% {
-    color: #ff7aa9;
-  }
-}
-
+/* ---------- the colour-flowing logo (navbar and footer) ---------- */
+/* The site's own colours flow through the logo like an LED strip, blending as they go (the same
+   palette and blends as the price arches and the Talk banner). The logo artwork is the mask
+   (--logo-mask, set by the component from the real SVG file), so the shape is never retyped;
+   the inline SVG stays for its size and accessible name but is drawn invisible. The gradient is
+   one 720px horizontal tile that repeats, moved by exactly one tile per cycle, so it never jumps.
+   Each component picks colours for its background: --led-colours. A slow colour change isn't
+   movement, so it keeps running under reduced motion (see the override below). */
 .logo-led {
-  animation: logo-led 12s linear infinite;
+  background: linear-gradient(90deg, var(--led-colours)) 0 0 / 720px 100% repeat-x;
+  mask: var(--logo-mask) center / contain no-repeat;
+  animation: logo-led 14s linear infinite;
 }
 
-.logo-led--bright {
-  animation-name: logo-led-bright;
+.logo-led svg {
+  opacity: 0;
+}
+
+@keyframes logo-led {
+  to {
+    background-position-x: 720px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -701,9 +554,9 @@ html.lenis body {
     transition-delay: 0s !important;
   }
 
-  /* The logo's colour cycle isn't motion: keep it going. */
+  /* The logo's colour flow isn't motion: keep it going. */
   .logo-led {
-    animation-duration: 12s !important;
+    animation-duration: 14s !important;
     animation-iteration-count: infinite !important;
   }
 }

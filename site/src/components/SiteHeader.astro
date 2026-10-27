@@ -2,6 +2,7 @@
 import { site } from '../config/site';
 import { withBase } from '../config/paths';
 import Logo from './Logo.astro';
+import logoMask from '../assets/brand/logo-ink.svg?url';
 
 // The FAQ lives on the pricing page, so that link carries the page path and works from anywhere.
 const navLinks = [
@@ -18,7 +19,7 @@ const navLinks = [
 <header class="site-header">
   <div class="sheet site-header__inner">
     <a href={withBase('/')} class="site-header__home" aria-label={`${site.name} home`}>
-      <span class="site-header__logo logo-led">
+      <span class="site-header__logo logo-led" style={`--logo-mask:url("${logoMask}")`}>
         <Logo variant="ink" label="" />
       </span>
     </a>
@@ -229,8 +230,10 @@ const navLinks = [
     }
   }
 
-  /* The LED colour cycle (.logo-led, base.css). */
-  .site-header__logo :global(.logo path) {
-    fill: currentColor;
+  /* The colour flow (.logo-led, base.css): the deeper palette colours, which stay readable on the
+     pale header, blending like the price arches and the Talk banner. */
+  .site-header__logo {
+    --led-colours:
+      #4e28df, #8f6fe6, #db92db, #e85e8f, #d2133c, #ce3d10, #d9545a, #4a9bb0, #2c4477, #4e28df;
   }
 </style>

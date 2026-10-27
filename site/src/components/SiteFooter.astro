@@ -2,6 +2,7 @@
 import { site } from '../config/site';
 import { withBase } from '../config/paths';
 import Logo from './Logo.astro';
+import logoMask from '../assets/brand/logo-paper.svg?url';
 
 const currentYear = new Date().getFullYear();
 ---
@@ -9,7 +10,9 @@ const currentYear = new Date().getFullYear();
 <footer class="site-footer">
   <div class="sheet site-footer__grid">
     <div class="site-footer__brand">
-      <Logo variant="paper" label={site.name} class="site-footer__logo logo-led logo-led--bright" />
+      <span class="site-footer__led logo-led" style={`--logo-mask:url("${logoMask}")`}>
+        <Logo variant="paper" label={site.name} class="site-footer__logo" />
+      </span>
       <p>
         {site.location.town}, {site.location.region}
         <br />
@@ -98,7 +101,6 @@ const currentYear = new Date().getFullYear();
 
   .site-footer :global(.site-footer__logo) {
     width: clamp(96px, calc(var(--u) * 1.2), 120px);
-    margin-bottom: 1.5rem;
   }
 
   .site-footer__brand p {
@@ -146,8 +148,12 @@ const currentYear = new Date().getFullYear();
     }
   }
 
-  /* The LED colour cycle (.logo-led--bright, base.css), the brighter set for the Ink footer. */
-  .site-footer :global(.site-footer__logo path) {
-    fill: currentColor;
+  /* The colour flow (.logo-led, base.css): the lighter palette colours, which glow on Ink. */
+  .site-footer__led {
+    display: block;
+    width: fit-content;
+    line-height: 0;
+    margin-bottom: 1.5rem;
+    --led-colours: #cea4ee, #93aee0, #4a9bb0, #edd1a8, #f8cea2, #e79569, #e85e8f, #db92db, #cea4ee;
   }
 </style>

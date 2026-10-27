@@ -48,11 +48,12 @@ for (const path of PAGES) {
     window.scrollTo(0, 0);
   });
   await page.waitForTimeout(1500);
+  // The logos' colour flow: the gradient behind each logo mask moves along.
   const logoColours = () =>
     page.evaluate(() =>
-      ['.site-header__logo .logo path', '.site-footer__logo path'].map((sel) => {
+      ['.site-header__logo', '.site-footer__led'].map((sel) => {
         const el = document.querySelector(sel);
-        return el ? getComputedStyle(el).fill : '';
+        return el ? getComputedStyle(el).backgroundPositionX : '';
       }),
     );
   const before = await logoColours();
@@ -60,7 +61,7 @@ for (const path of PAGES) {
   const after = await logoColours();
   ['navbar', 'footer'].forEach((where, i) => {
     if (!before[i] || before[i] === after[i])
-      fail(path || '/', `${where} logo colour did not change (${before[i]} -> ${after[i]})`);
+      fail(path || '/', `${where} logo colours did not move (${before[i]} -> ${after[i]})`);
   });
   const canvases = await page.locator('[data-shader] canvas').count();
   if (canvases > 3) fail(path || '/', `${canvases} shader canvases (max 3)`);
@@ -91,11 +92,11 @@ for (const path of PAGES) {
         (a) =>
           a.playState === 'running' &&
           a.effect?.getTiming().iterations === Infinity &&
-          !a.animationName?.startsWith('logo-led'),
+          a.animationName !== 'logo-led',
       ).length,
     logo: document
       .getAnimations()
-      .some((a) => a.animationName?.startsWith('logo-led') && a.playState === 'running'),
+      .some((a) => a.animationName === 'logo-led' && a.playState === 'running'),
     canvases: document.querySelectorAll('[data-shader] canvas').length,
     lenis: document.documentElement.classList.contains('lenis'),
     hidden: [...document.querySelectorAll('[data-reveal]')].filter(
