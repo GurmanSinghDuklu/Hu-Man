@@ -8,8 +8,9 @@ import Sparkle from './Sparkle.astro';
 <section class="band talk-band" id="audit" aria-labelledby="audit-title">
   <div class="sheet">
     <div class="talk" data-reveal>
+      <span class="shader-layer" data-shader="talk" aria-hidden="true"></span>
       <span class="talk__orb" aria-hidden="true">
-        <Sparkle class="talk__star" color="var(--ink)" />
+        <Sparkle class="talk__star amb-spin" color="var(--ink)" />
       </span>
       <div class="talk__copy">
         <p class="label">Free audit · No obligation</p>
@@ -42,6 +43,8 @@ import Sparkle from './Sparkle.astro';
 
   .talk {
     position: relative;
+    isolation: isolate;
+    overflow: hidden;
     display: grid;
     gap: var(--space-4);
     padding: clamp(2rem, calc(var(--u) * 0.75), 4rem) clamp(1.5rem, calc(var(--u) * 0.6), 3rem);

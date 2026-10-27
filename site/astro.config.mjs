@@ -43,6 +43,10 @@ export default defineConfig({
       ],
       styleDirective: {
         resources: ["'self'", { resource: "'unsafe-inline'", kind: 'attribute' }],
+        // The one <style> Paper Shaders inserts (its canvas defaults, @paper-design/shaders
+        // 0.0.81). Pinned version, so the hash is stable; `npm run motion-check` reports a CSP
+        // console error if an upgrade changes it.
+        hashes: ['sha256-bcX2M6hOeEgeI9Ttj3KtXWZuoRsKenyQAlXswSnLakA='],
       },
     },
   },

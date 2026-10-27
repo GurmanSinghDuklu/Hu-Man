@@ -117,7 +117,8 @@ const px = (n: number) => `calc(${n.toFixed(3)} * var(--cu))`;
     class="collage__arch"
     style={`left:${px(L.arch[0] - bc)};top:${px(L.arch[1] - br)};height:${px(L.arch[2])}`}
   >
-    <Sparkle class="collage__arch-star" color="var(--paper)" />
+    <span class="shader-layer" data-shader="arch"></span>
+    <Sparkle class="collage__arch-star amb-spin" color="var(--paper)" />
     <span class="collage__est">Est. 2026</span>
   </span>
   <span
@@ -183,6 +184,8 @@ const px = (n: number) => `calc(${n.toFixed(3)} * var(--cu))`;
 
   .collage__arch {
     position: absolute;
+    isolation: isolate;
+    overflow: hidden;
     width: var(--cu);
     border-radius: calc(var(--cu) / 2) calc(var(--cu) / 2) 0 0;
     background: var(--grad-dusk);
@@ -241,6 +244,32 @@ const px = (n: number) => `calc(${n.toFixed(3)} * var(--cu))`;
       font-size: max(8px, calc(var(--cu) * 0.11));
       letter-spacing: 0.1em;
       transform: translateX(-12%);
+    }
+  }
+
+  /* The cells snap in along a diagonal on load: decorative, never the LCP (the h1 is). */
+  @media (prefers-reduced-motion: no-preference) {
+    .collage__cell {
+      animation: cell-in 0.5s var(--ease-out) both;
+      animation-delay: calc((var(--c) + var(--r)) * 0.06s);
+    }
+  }
+
+  /* The orb cell keeps drifting after it lands (two animations on one element, so both are set
+     here rather than with an .amb-* class). */
+  @media (prefers-reduced-motion: no-preference) {
+    .collage__cell--orb {
+      animation:
+        cell-in 0.5s var(--ease-out) both,
+        amb-float 4.5s ease-in-out infinite alternate;
+      animation-delay: calc((var(--c) + var(--r)) * 0.06s), 1s;
+    }
+  }
+
+  @keyframes cell-in {
+    from {
+      opacity: 0;
+      scale: 0.6;
     }
   }
 </style>

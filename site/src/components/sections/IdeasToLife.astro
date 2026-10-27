@@ -25,8 +25,9 @@ const steps = [
 <section class="band ideas" aria-labelledby={`ideas-title-${n}`}>
   <div class="sheet">
     <div class="ideas__block fill--indigo">
+      <span class="shader-layer" data-shader="ideas" aria-hidden="true"></span>
       <span class="ideas__rings" aria-hidden="true">
-        <Sparkle class="ideas__star" color="var(--paper)" />
+        <Sparkle class="ideas__star amb-spin" color="var(--paper)" />
       </span>
       <div class="ideas__copy">
         <p class="label" data-reveal>
@@ -70,6 +71,7 @@ const steps = [
 
   .ideas__block {
     position: relative;
+    isolation: isolate;
     display: grid;
     gap: clamp(2rem, calc(var(--u) * 0.66), 4rem);
     padding: clamp(1.75rem, calc(var(--u) * 0.66), 4rem) clamp(1.25rem, calc(var(--u) * 0.33), 2rem)
