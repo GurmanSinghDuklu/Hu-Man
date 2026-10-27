@@ -1,5 +1,5 @@
 /**
- * The FAQs on the pricing, agentic AI-ready and free AI check pages. One copy feeds each page, its
+ * The FAQs on the pricing, agentic AI-ready, free AI check and contact pages. One copy feeds each page, its
  * FAQPage schema and llms-full.txt, so the answer an AI tool reads is always the one a visitor sees.
  * The two newer lists are drafts (2026-10-26) awaiting Gurman's sign-off.
  */
@@ -86,5 +86,29 @@ export const checkFaq: FaqItem[] = [
   {
     q: 'Can you guarantee AI will recommend me afterwards?',
     a: 'No one can guarantee that. We show you what is holding you back and what to fix, and we can check again after the fixes are in.',
+  },
+];
+
+/** The contact page (/contact/). Draft, 2026-10-27, awaiting Gurman's sign-off. */
+export const contactFaq: FaqItem[] = [
+  {
+    q: 'How quickly will you reply?',
+    a: 'Within 48 hours, by email. A person reads every message.',
+  },
+  {
+    q: 'Do I need to know exactly what I want?',
+    a: 'No. Tell us the problem or the idea in your own words, and we will ask the questions.',
+  },
+  {
+    q: 'Does it cost anything to talk?',
+    a: 'No. Messages and the first call are free, with no obligation. If you go ahead, you get a fixed price before any work starts.',
+  },
+  {
+    q: 'Can we meet in person?',
+    a: 'Yes, in Leeds and across West Yorkshire. We also work by video call across the UK and worldwide.',
+  },
+  {
+    q: 'What happens to my details?',
+    a: 'We use them only to answer you. The form emails your message to us; the website stores nothing. The privacy notice has the details.',
   },
 ];

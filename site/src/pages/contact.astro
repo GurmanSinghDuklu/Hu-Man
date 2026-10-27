@@ -4,7 +4,30 @@ import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import InnerHero from '../components/InnerHero.astro';
 import EnquiryForm from '../components/EnquiryForm.astro';
+import Sparkle from '../components/Sparkle.astro';
 import { site } from '../config/site';
+import { withBase } from '../config/paths';
+import { contactFaq } from '../data/faq';
+
+// What happens after someone gets in touch (draft copy, 2026-10-27).
+const steps = [
+  { title: 'You send a message.', text: 'Use the form, email or WhatsApp. A few lines is plenty.' },
+  {
+    title: 'A person reads it.',
+    text: 'Not a bot, not a sales team. You get a reply by email within 48 hours.',
+  },
+  { title: 'A free call.', text: 'If it helps, we talk it through. No cost, no obligation.' },
+  {
+    title: 'A fixed price.',
+    text: 'Want to go ahead? You get a fixed price before any work starts.',
+  },
+];
+
+const lookAround = [
+  { href: withBase('/pricing/'), label: 'See the prices' },
+  { href: withBase('/work/'), label: 'See our work' },
+  { href: withBase('/how-we-build/'), label: 'See how we build' },
+];
 
 const tel = `tel:${site.contact.phone.replace(/\s+/g, '')}`;
 ---
@@ -26,6 +49,7 @@ const tel = `tel:${site.contact.phone.replace(/\s+/g, '')}`;
   <section class="band band--paper-2 contact section" aria-labelledby="contact-title">
     <div class="sheet contact__sheet">
       <div class="contact__form">
+        <p class="label">01 / Write to us</p>
         <h2 id="contact-title" class="display display--s">
           Send us a message
         </h2>
@@ -77,6 +101,65 @@ const tel = `tel:${site.contact.phone.replace(/\s+/g, '')}`;
     </div>
   </section>
 
+  <section class="band grid next section" aria-labelledby="next-title">
+    <div class="sheet next__sheet">
+      <div>
+        <p class="label" data-reveal>
+          02 / What happens next
+        </p>
+        <h2 id="next-title" class="display display--m" data-reveal>
+          No forms
+          <br />
+          into the void.
+        </h2>
+        <ol class="next__steps">
+          {steps.map((step) => (
+            <li data-reveal>
+              <strong>{step.title}</strong> {step.text}
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      <aside class="next__card" aria-labelledby="ready-title">
+        <Sparkle class="next__star" />
+        <h3 id="ready-title">Not ready to talk yet?</h3>
+        <p>
+          Start with a free AI check. Send your website address and a person checks whether AI
+          assistants recommend you, and what to fix. Findings within 48 hours.
+        </p>
+        <a class="pill-btn next__cta" href={withBase('/free-ai-check/')}>
+          Get your free AI check
+        </a>
+        <p class="next__or">Or look around first:</p>
+        <ul class="next__links">
+          {lookAround.map((link) => (
+            <li>
+              <a href={link.href}>{link.label}</a>
+            </li>
+          ))}
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <section class="band band--paper-2 faq section" aria-labelledby="faq-title">
+    <div class="sheet">
+      <p class="label">03 / Questions</p>
+      <h2 id="faq-title" class="display display--s">
+        Before you get in touch
+      </h2>
+      <dl class="faq__list">
+        {contactFaq.map((item) => (
+          <div class="faq__item">
+            <dt>{item.q}</dt>
+            <dd>{item.a}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+
   <SiteFooter slot="footer" />
 </BaseLayout>
 
@@ -114,11 +197,142 @@ const tel = `tel:${site.contact.phone.replace(/\s+/g, '')}`;
 
   .contact__other dd {
     margin: 0.25rem 0 0;
+    overflow-wrap: anywhere;
     font-size: 1.05rem;
     line-height: 1.45;
   }
 
+  /* ---------- what happens next ---------- */
+  .next__sheet {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .next__steps {
+    display: grid;
+    gap: 1.1rem;
+    max-width: 38rem;
+    margin-top: clamp(1.5rem, calc(var(--u) * 0.5), 3rem);
+    counter-reset: step;
+  }
+
+  .next__steps li {
+    position: relative;
+    padding-left: 3.25rem;
+    font-size: clamp(1rem, calc(var(--u) * 0.19), 1.15rem);
+    line-height: 1.5;
+    counter-increment: step;
+  }
+
+  .next__steps li::before {
+    content: counter(step, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--ink);
+    color: var(--paper);
+    font: 500 0.75rem var(--font-mono);
+  }
+
+  .next__card {
+    align-self: start;
+    padding: clamp(1.5rem, calc(var(--u) * 0.45), 2.5rem);
+    border-top-left-radius: calc(var(--u) * 1.1);
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .next__card :global(.next__star) {
+    width: clamp(1.1rem, calc(var(--u) * 0.27), 1.6rem);
+    margin-bottom: 1.25rem;
+    fill: var(--lilac);
+  }
+
+  .next__card h3 {
+    font: 800 clamp(1.35rem, calc(var(--u) * 0.31), 1.9rem) / 1.05 var(--font-display);
+    text-transform: uppercase;
+  }
+
+  .next__card p {
+    margin-top: 0.75rem;
+    line-height: 1.55;
+  }
+
+  .next__cta {
+    margin-top: 1.5rem;
+    border-color: var(--paper);
+    background: var(--paper);
+    color: var(--ink);
+  }
+
+  .next__cta:hover {
+    border-color: var(--lilac);
+    background: var(--lilac);
+  }
+
+  .next__or {
+    color: var(--muted-on-ink);
+    font-size: 0.9375rem;
+  }
+
+  .next__links {
+    display: grid;
+    gap: 0.35rem;
+    margin-top: 0.5rem;
+  }
+
+  .next__links a {
+    color: var(--paper);
+    font-weight: 700;
+    text-underline-offset: 0.25em;
+  }
+
+  /* ---------- FAQ ---------- */
+  .faq__list {
+    display: grid;
+    gap: 1rem max(16px, calc(var(--u) * 0.33));
+    margin: clamp(2rem, calc(var(--u) * 0.6), 3.5rem) 0 0;
+  }
+
+  .faq__item {
+    padding: clamp(1.25rem, calc(var(--u) * 0.33), 2rem);
+    border: 1px solid var(--ink);
+    border-top-right-radius: calc(var(--u) * 0.72);
+    background: var(--paper);
+  }
+
+  .faq__item dt {
+    font: 800 clamp(1.05rem, calc(var(--u) * 0.22), 1.35rem) / 1.05 var(--font-display);
+    text-transform: uppercase;
+  }
+
+  .faq__item dd {
+    margin: 0.6rem 0 0;
+    font-size: clamp(0.95rem, calc(var(--u) * 0.17), 1.05rem);
+    line-height: 1.5;
+  }
+
+  @media (min-width: 48rem) {
+    .faq__list {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
   @media (min-width: 64rem) {
+    .next__sheet {
+      grid-template-columns: 1fr calc(var(--u) * 5.4);
+      gap: calc(var(--u) * 0.66);
+    }
+
+    .next__card {
+      margin-top: calc(var(--u) * 0.6);
+    }
+
     .contact__sheet {
       grid-template-columns: 1fr calc(var(--u) * 4.6);
       gap: calc(var(--u) * 0.66);

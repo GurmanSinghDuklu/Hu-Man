@@ -8,7 +8,7 @@ import { withBase } from '../config/paths';
 import { pages, tierCount, type PageKey } from '../data/pages';
 import { serviceAreas } from '../data/services';
 import { tiers, addOns, fromPrice, priceOf } from '../data/pricing';
-import { faq, agenticFaq, checkFaq } from '../data/faq';
+import { faq, agenticFaq, checkFaq, contactFaq } from '../data/faq';
 import { definition, ingredients } from '../data/agentic';
 import { stages, checklist, compare, bonnet } from '../data/process';
 import { projects } from '../data/projects';
@@ -196,6 +196,7 @@ export function llmsFullTxt(): string {
     `- Instagram: ${site.contact.instagram}`,
     `- Website: ${abs('/')}`,
     '',
+    ...contactFaq.flatMap((item) => [`### ${item.q}`, '', item.a, '']),
   );
   return out.join('\n');
 }

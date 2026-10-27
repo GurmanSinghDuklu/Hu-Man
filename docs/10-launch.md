@@ -53,6 +53,27 @@ The form emails each enquiry to humansoftwareagency@gmail.com through Cloudflare
    (it should reply to the address you typed in the form).
 5. If sending ever fails, visitors are offered a ready-written email instead, so no enquiry is lost.
 
+What the enquiry email contains (since 2026-10-27): every field, the page it was sent from, the
+time it arrived and the "reply by" time (48 hours, UK time), and, when a website was given, a
+quick automatic look at it (loads? HTTPS? speed, title, description, robots.txt blocks on AI
+crawlers, llms.txt) plus links to PageSpeed, Google's rich results test, securityheaders.com and a
+`site:` search. Code: `site/worker/enquiry.js` and `site/worker/site-look.js`.
+
+### Auto-reply to the sender (built, switched off)
+The Worker can email each sender a fixed "We've got your message" note (what happens next, links
+to pricing and work; nothing they typed is echoed, so the form can't be used to send spam). It
+is off because Cloudflare's free plan can only send to verified addresses (just our Gmail).
+To switch it on (Gurman's decision, it costs money):
+1. Cloudflare → Workers & Pages → Plans → **Workers Paid** (includes 3,000 sent emails a month,
+   then $0.35 per 1,000; Email Sending is in beta).
+2. Cloudflare → Email → **Email Sending** → onboard humansoftwareagency.com and accept the DNS
+   records it adds (they sit alongside the Email Routing ones).
+3. In `site/wrangler.toml`, uncomment the two `REPLY_EMAIL` lines, commit and push.
+4. Update the privacy notice ("If you use a form") to say the sender gets one automatic email.
+5. Before step 3, the Cloudflare WAF rate-limiting rule on `/api/enquiry` (section 5b) should be
+   in place: an auto-reply is an email to an address someone typed, so flooding must be blocked.
+6. Test: send an enquiry from `/contact/` with a second address of yours and check both emails.
+
 ## 2. DNS
 1. Add humansoftwareagency.com to Cloudflare (free plan). Cloudflare gives two nameservers.
 2. Namecheap → Domain List → Manage → Nameservers → Custom DNS → paste Cloudflare's two.

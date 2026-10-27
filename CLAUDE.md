@@ -333,6 +333,18 @@ New pages `/agentic-ai-ready/` (the brand's term defined; DefinedTerm schema), `
    Noindex pages are flagged `noindex: true` in src/data/pages.ts.
 Lighthouse 98-100 / 100 / 100 / 100, axe 0 violations on all twelve pages.
 
+## Contact page and enquiry emails (2026-10-27)
+`/contact/` is in the header nav and now has "What happens next", a free AI check card and its own
+FAQ (`contactFaq` in `src/data/faq.ts`; draft copy). The phone number is off the footer (Gurman,
+2026-10-27) and stays on the contact page and in the schema; `seo-check` expects it on /contact/ only.
+1. **The enquiry email to the studio** adds the source page, a reply-by time (48 hours) and, when a
+   website is given, an automatic look at it (`worker/site-look.js`: public hostnames only, 3.5 s
+   timeout, 256 kB cap, never throws). The privacy notice says so.
+2. **The auto-reply to the sender is built but off**: it needs Cloudflare Workers Paid + Email
+   Sending (beta), and the commented `REPLY_EMAIL` binding in `wrangler.toml`. It echoes nothing the
+   sender typed. Steps: docs/10-launch.md "Auto-reply". Don't enable it without Gurman's go-ahead.
+3. A contact video is wanted later (parked 2026-10-27).
+
 ## GitHub and preview deploy
 Repo: github.com/GurmanSinghDuklu/Hu-Man (public; default branch `hu-man-rebrand`). Every push to
 `hu-man-rebrand` deploys a preview to https://gurmansinghduklu.github.io/Hu-Man/ via
