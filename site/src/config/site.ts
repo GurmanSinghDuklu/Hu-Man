@@ -34,7 +34,10 @@ export const site = {
     region: 'West Yorkshire',
     country: 'GB',
   },
-  areasServed: ['Leeds', 'Halifax', 'Huddersfield', 'Keighley', 'Shipley', 'Bingley', 'Ilkley'],
+  // Shown as "Leeds, West Yorkshire / UK · Global" (Gurman, 2026-10-27): in person around Leeds,
+  // remote across the UK and worldwide. No town-by-town list.
+  areasServed: ['Leeds'],
+  reach: ['UK', 'Global'],
   contact: {
     email: 'humansoftwareagency@gmail.com',
     phone: '+44 7988 450280',

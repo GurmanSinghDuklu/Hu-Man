@@ -5,8 +5,6 @@ import Logo from './Logo.astro';
 
 const currentYear = new Date().getFullYear();
 const tel = `tel:${site.contact.phone.replace(/\s+/g, '')}`;
-// Areas after the base town, set on two lines as in the design.
-const [, ...areas] = site.areasServed;
 ---
 
 <footer class="site-footer">
@@ -16,9 +14,7 @@ const [, ...areas] = site.areasServed;
       <p>
         {site.location.town}, {site.location.region}
         <br />
-        {areas.slice(0, 2).join(' · ')}
-        <br />
-        {areas.slice(2).join(' · ')}
+        {site.reach.join(' · ')}
       </p>
     </div>
     <div>

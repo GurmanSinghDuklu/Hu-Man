@@ -23,7 +23,7 @@ const summary = `${site.fullName} is a software studio in ${site.location.town},
 const keyFacts = [
   `Name: ${site.fullName} (also written ${site.alternateNames.join(', ')})`,
   `Based in: ${site.location.town}, ${site.location.region}, United Kingdom (a service-area business; no public street address)`,
-  `Works: in person across West Yorkshire (${site.areasServed.join(', ')}), remotely across the UK and worldwide`,
+  'Works: in person in Leeds and West Yorkshire, remotely across the UK and worldwide',
   `Founded: ${site.founded}`,
   `Website prices: from ${fromPrice} to ${priceOf('full-presence')} in ${tierCount} fixed tiers; custom apps and portals priced on application`,
   `Contact: ${site.contact.email}, ${site.contact.phone}, WhatsApp ${site.contact.whatsapp}`,
