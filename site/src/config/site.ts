@@ -26,9 +26,10 @@ export const site = {
   nameIsPlaceholder: true,
   tagline: 'Made by hand. Built by machine.',
   founder: 'Gurman Singh Duklu',
-  // Leeds became the base on 2026-10-19 (final designs). The name stays off the pages at
-  // Gurman's request; `founder` is used only by the privacy notice, which must name the
-  // person responsible for the data.
+  // Leeds became the base on 2026-10-19 (final designs). The name stays off the marketing
+  // pages; since 2026-10-27 (Gurman's choice) it appears in the footer's trading line and on
+  // the legal pages, which the E-Commerce Regulations 2002 ask to say who runs the site. No
+  // address yet: one goes in once Gurman has a business address (never the home address).
   location: {
     town: 'Leeds',
     region: 'West Yorkshire',

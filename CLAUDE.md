@@ -345,6 +345,16 @@ FAQ (`contactFaq` in `src/data/faq.ts`; draft copy). The phone number is off the
    sender typed. Steps: docs/10-launch.md "Auto-reply". Don't enable it without Gurman's go-ahead.
 3. A contact video is wanted later (parked 2026-10-27).
 
+## Legal pages (2026-10-27)
+Footer "Legal" column: `/terms/` (client work), `/user-agreement/` (using the site, forms, endpoint;
+crawlers welcome), `/privacy/`, `/cookies/` (the site sets no cookies; recheck before adding any
+script). All four use `LegalDoc.astro`, which names who runs the site. Gurman chose (2026-10-27) to
+show his name in the footer trading line and on these pages; there is no address yet, so the
+E-Commerce Regulations' geographic address is still missing: add a business address (never the home
+address) when he has one. Terms: 50% deposit, 50% before launch (his choice); three revision rounds,
+"pay once" and "pay the difference" match the pricing page. Drafts, awaiting a solicitor's review;
+the 30-day quote validity, 30-days-late termination and liability cap are my defaults to confirm.
+
 ## GitHub and preview deploy
 Repo: github.com/GurmanSinghDuklu/Hu-Man (public; default branch `hu-man-rebrand`). Every push to
 `hu-man-rebrand` deploys a preview to https://gurmansinghduklu.github.io/Hu-Man/ via

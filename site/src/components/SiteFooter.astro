@@ -33,7 +33,7 @@ const currentYear = new Date().getFullYear();
       <p class="site-footer__label">Explore</p>
       <ul>
         <li>
-          <a href={withBase('/services/')}>Services</a>
+          <a href={withBase('/services/')}>Our services</a>
         </li>
         <li>
           <a href={withBase('/work/')}>Real work</a>
@@ -62,15 +62,24 @@ const currentYear = new Date().getFullYear();
       </ul>
     </div>
     <div>
-      <p class="site-footer__label">Elsewhere</p>
+      <p class="site-footer__label">Legal</p>
       <ul>
         <li>
+          <a href={withBase('/terms/')}>Terms and conditions</a>
+        </li>
+        <li>
+          <a href={withBase('/user-agreement/')}>User agreement</a>
+        </li>
+        <li>
           <a href={withBase('/privacy/')}>Privacy notice</a>
+        </li>
+        <li>
+          <a href={withBase('/cookies/')}>Cookie policy</a>
         </li>
       </ul>
     </div>
     <p class="site-footer__base">
-      © {currentYear} {site.name} · No tracking cookies
+      © {currentYear} {site.fullName}, a trading name of {site.founder} · No cookies
     </p>
   </div>
 </footer>

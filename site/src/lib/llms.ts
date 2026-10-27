@@ -77,6 +77,9 @@ export function llmsTxt(): string {
     '',
     `- [Full details for AI tools](${abs('/llms-full.txt')}): every service, price, build stage and answer, then the full text of every page, in one file`,
     `- ${link('privacy')}: no cookies and no tracking on this site`,
+    `- ${link('cookies')}: this site sets no cookies`,
+    `- ${link('terms')}: terms for client work (fixed quotes, 50% deposit, three revision rounds, ownership on final payment)`,
+    `- ${link('user-agreement')}: terms for using the website, its forms and the enquiry endpoint; crawlers and AI assistants are welcome`,
     '',
   ].join('\n');
 }

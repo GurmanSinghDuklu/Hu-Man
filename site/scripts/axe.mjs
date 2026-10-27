@@ -17,6 +17,9 @@ const PAGES = [
   'contact/',
   'thanks/',
   'privacy/',
+  'cookies/',
+  'terms/',
+  'user-agreement/',
   '404.html',
 ];
 

@@ -1,0 +1,107 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import TalkBanner from '../components/TalkBanner.astro';
+import LegalDoc from '../components/LegalDoc.astro';
+import { site } from '../config/site';
+import { withBase } from '../config/paths';
+
+// The website's terms of use (draft, 2026-10-27). Client work is covered by /terms/.
+---
+
+<BaseLayout page="user-agreement">
+  <SiteHeader slot="header" />
+
+  <LegalDoc
+    title="User agreement"
+    updated="27 October 2026"
+    note="This agreement is new and is awaiting review."
+  >
+    <h2>1. About this agreement</h2>
+    <p>
+      This agreement covers using this website, its forms and its enquiry endpoint. By using the
+      site, you accept it. If you hire us, our{' '}
+      <a href={withBase('/terms/')}>terms and conditions</a> cover that work.
+    </p>
+
+    <h2>2. Using the site</h2>
+    <p>The site is free to use. Please don't:</p>
+    <ul>
+      <li>try to break into, overload or disrupt the site or the systems behind it;</li>
+      <li>upload or send anything harmful, such as viruses or malicious code;</li>
+      <li>use the site for anything unlawful, misleading or harmful to anyone else.</li>
+    </ul>
+
+    <h2>3. Search engines, AI assistants and crawlers</h2>
+    <p>
+      Search engines, AI assistants and other crawlers are welcome to read, index, summarise and
+      quote this site, including <a href={withBase('/llms.txt')}>llms.txt</a> and the Markdown
+      copies of each page, as set out in our <a href={withBase('/robots.txt')}>robots.txt</a>. When
+      you quote us, please link back to the page. Please crawl at a reasonable pace.
+    </p>
+
+    <h2>4. The forms and the enquiry endpoint</h2>
+    <ul>
+      <li>
+        Send genuine enquiries only. An AI agent may send one on behalf of a person who asked it to.
+      </li>
+      <li>
+        Don't send spam or bulk messages, and don't enter someone else's details without their
+        permission.
+      </li>
+      <li>We may block anyone who misuses the forms or the endpoint.</li>
+      <li>
+        Sending an enquiry doesn't create a contract. A contract starts only when you accept a
+        written quote from us.
+      </li>
+    </ul>
+
+    <h2>5. Our content</h2>
+    <p>
+      The text, design, logo, images and code of this site belong to {site.fullName} or the people
+      who licensed them to us. You may view the site, share links to it and quote short passages
+      with a link back. Please don't copy the design or the brand, or present our content as your
+      own. Names and trademarks of other businesses belong to their owners.
+    </p>
+
+    <h2>6. Accuracy</h2>
+    <p>
+      We keep the site accurate and up to date, but prices and services can change. The price and
+      scope in your written quote are the ones that apply. Examples on the site, such as sample
+      results, are labelled as examples.
+    </p>
+
+    <h2>7. Links to other sites</h2>
+    <p>
+      We link to other websites, such as WhatsApp, Instagram and our clients' sites. We don't
+      control them and are not responsible for their content or how they handle your information.
+    </p>
+
+    <h2>8. Availability and responsibility</h2>
+    <p>
+      We work to keep the site running and secure, but we can't promise it will always be available
+      or free of errors. The information on the site is general. To the extent the law allows, we
+      are not responsible for loss caused by relying on it. Nothing in this agreement limits
+      responsibility that the law doesn't allow to be limited.
+    </p>
+
+    <h2>9. Privacy and cookies</h2>
+    <p>
+      How we handle information you send us is in our{' '}
+      <a href={withBase('/privacy/')}>privacy notice</a>. The site sets no cookies: see our{' '}
+      <a href={withBase('/cookies/')}>cookie policy</a>.
+    </p>
+
+    <h2>10. Changes and law</h2>
+    <p>
+      We may update this agreement, and the version on this page is the one that applies. It is
+      governed by the law of England and Wales, and disputes go to the courts of England and Wales.
+      Questions: <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>.
+    </p>
+  </LegalDoc>
+
+  <TalkBanner />
+
+  <SiteFooter slot="footer" />
+</BaseLayout>

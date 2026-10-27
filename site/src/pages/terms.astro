@@ -1,0 +1,186 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import TalkBanner from '../components/TalkBanner.astro';
+import LegalDoc from '../components/LegalDoc.astro';
+import { site } from '../config/site';
+import { withBase } from '../config/paths';
+
+// Draft, 2026-10-27, awaiting a solicitor's review. Payment (50% deposit, 50% before launch) is
+// Gurman's choice; three revision rounds, "pay once" and "pay the difference" match the pricing
+// page. Keep them in step with docs/02-offer-and-pricing.md.
+---
+
+<BaseLayout page="terms">
+  <SiteHeader slot="header" />
+
+  <LegalDoc
+    title="Terms and conditions"
+    updated="27 October 2026"
+    note="These terms are new and are awaiting review. If anything here differs from the written quote you accept, your quote applies."
+  >
+    <h2>1. About these terms</h2>
+    <p>
+      These terms apply when you hire us for a website, app, design, software or support work. Your
+      written quote sets out exactly what you are getting and the price. If your quote and these
+      terms disagree, your quote applies. Using the website itself is covered by our{' '}
+      <a href={withBase('/user-agreement/')}>user agreement</a>.
+    </p>
+
+    <h2>2. Quotes and prices</h2>
+    <ul>
+      <li>
+        Before any work starts, we confirm in writing what is included and a fixed price. A quote is
+        valid for 30 days.
+      </li>
+      <li>
+        The prices on our <a href={withBase('/pricing/')}>pricing page</a> are for each tier as
+        described there. Custom work and anything outside a tier is quoted separately.
+      </li>
+      <li>
+        Websites are paid for once. There is no monthly fee unless you choose a care plan. If you
+        move up a tier later, you pay only the difference between the two prices.
+      </li>
+      <li>
+        Costs from other companies, such as your domain name, paid plugins, payment provider fees
+        and AI model or API usage, are either paid by you directly or passed on at cost. We tell you
+        about them before you commit.
+      </li>
+      <li>We are not registered for VAT, so no VAT is added to our prices.</li>
+    </ul>
+
+    <h2>3. Paying</h2>
+    <ul>
+      <li>We ask for a 50% deposit to book your project. Work starts once it is paid.</li>
+      <li>The remaining 50% is due before your site goes live or is handed over to you.</li>
+      <li>
+        Care plans are billed monthly in advance. What each plan includes is confirmed in writing
+        when you sign up.
+      </li>
+    </ul>
+
+    <h2>4. What we need from you</h2>
+    <ul>
+      <li>
+        The text, photos, logins and decisions the project needs, by the dates we agree at the
+        start. If they arrive late, the timeline moves with them.
+      </li>
+      <li>
+        Confirmation that you have the right to use everything you send us, such as photos, logos
+        and text.
+      </li>
+      <li>Feedback in one place at each stage, so changes don't get lost.</li>
+    </ul>
+
+    <h2>5. Revisions and changes</h2>
+    <p>
+      Every tier includes three rounds of revisions. A round is one set of changes you send us
+      together, which we then make. Extra rounds, or work beyond what your quote covers, are quoted
+      before we do them, and we only go ahead once you agree.
+    </p>
+
+    <h2>6. Timelines</h2>
+    <p>
+      Timelines we give are estimates. We tell you as soon as anything changes. We are not
+      responsible for delays caused by late content or feedback, or by other companies' services.
+    </p>
+
+    <h2>7. Who owns the work</h2>
+    <ul>
+      <li>
+        Once you have paid in full, you own your website's design and the content we create for you,
+        and we hand over everything you need to run it. Until then, the work remains ours.
+      </li>
+      <li>
+        Your domain name and accounts are set up in your name wherever possible, so they stay yours.
+      </li>
+      <li>
+        Fonts, plugins, open-source code and other third-party tools stay under their own licences.
+        We tell you about any that need a paid licence.
+      </li>
+      <li>
+        We may show the finished work in our portfolio, unless you ask us not to. We never show
+        private information or anything you ask us to keep confidential.
+      </li>
+    </ul>
+
+    <h2>8. What we don't promise</h2>
+    <p>
+      No one can guarantee search rankings, appearing in Google's AI Overviews or ChatGPT's answers,
+      visitor numbers or sales, and we don't. We promise the work set out in your quote, done with
+      reasonable care and skill, and we tell you honestly what we measure afterwards.
+    </p>
+
+    <h2>9. AI features</h2>
+    <p>
+      AI assistants and automations can make mistakes. Anything they say to your customers is
+      approved by you before launch, they tell people they are talking to an assistant, and they
+      hand over to a person when they aren't sure. If we handle your customers' personal data for
+      you, for example through a booking system or an AI assistant, we agree a data processing
+      agreement with you first.
+    </p>
+
+    <h2>10. Other companies' services</h2>
+    <p>
+      Hosting, domains, payments (such as Stripe, Square or SumUp), AI models and similar services
+      are provided by other companies under their own terms. We choose them carefully, but we are
+      not responsible for their outages or changes. Card details are handled by the payment provider
+      and never pass through our code.
+    </p>
+
+    <h2>11. Cancelling</h2>
+    <ul>
+      <li>
+        If you are buying as an individual rather than for a business, you have 14 days from
+        accepting your quote to cancel without giving a reason. If you ask us to start work within
+        those 14 days and then cancel, you pay for the work done up to the point you cancel.
+      </li>
+      <li>
+        At any other time, you can stop a project by telling us in writing. You pay for the work
+        done up to that point, and once it is paid for, it is yours.
+      </li>
+      <li>
+        We may end a project if payment is more than 30 days late, or if we are asked to do
+        something unlawful. We tell you in writing first.
+      </li>
+    </ul>
+
+    <h2>12. Our responsibility to you</h2>
+    <ul>
+      <li>
+        If we break these terms, we are responsible for loss you suffer that was a foreseeable
+        result of it.
+      </li>
+      <li>
+        If you hire us for a business, we are not responsible for lost profits, lost sales or
+        business interruption, and our total responsibility for a project is limited to the price
+        you paid for it.
+      </li>
+      <li>
+        Nothing in these terms limits responsibility for death or personal injury caused by
+        negligence, for fraud, or for anything else the law doesn't allow to be limited. If you are
+        a consumer, your legal rights, including those under the Consumer Rights Act 2015, are not
+        affected.
+      </li>
+    </ul>
+
+    <h2>13. If something goes wrong</h2>
+    <p>
+      Email <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a> and tell us what has
+      happened. A person will reply and we will do our best to put it right.
+    </p>
+
+    <h2>14. Changes and law</h2>
+    <p>
+      We may update these terms. The version in place when you accept your quote applies to your
+      project. These terms are governed by the law of England and Wales, and disputes go to the
+      courts of England and Wales. If you are a consumer living in Scotland or Northern Ireland, you
+      can also bring proceedings in your local courts.
+    </p>
+  </LegalDoc>
+
+  <TalkBanner />
+
+  <SiteFooter slot="footer" />
+</BaseLayout>

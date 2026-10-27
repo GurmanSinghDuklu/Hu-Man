@@ -20,6 +20,9 @@ export type PageKey =
   | 'contact'
   | 'thanks'
   | 'privacy'
+  | 'cookies'
+  | 'terms'
+  | 'user-agreement'
   | '404';
 
 export interface PageInfo {
@@ -161,6 +164,36 @@ export const pages: Record<PageKey, PageInfo> = {
       'How the Hu/man website handles your information: no cookies, no tracking, and what happens when you email, call or message us.',
     label: 'Privacy notice',
     ogHeadline: 'Privacy notice.',
+    schemaType: 'WebPage',
+  },
+  cookies: {
+    key: 'cookies',
+    path: '/cookies/',
+    title: 'Cookie policy | Hu/man Software Agency',
+    description:
+      'The Hu/man website sets no cookies and runs no analytics or tracking. What that means, and the one security cookie our host may set.',
+    label: 'Cookie policy',
+    ogHeadline: 'Cookie policy.',
+    schemaType: 'WebPage',
+  },
+  terms: {
+    key: 'terms',
+    path: '/terms/',
+    title: 'Terms and conditions | Hu/man Software Agency',
+    description:
+      'How working with Hu/man works: fixed quotes, a 50% deposit, three revision rounds, who owns the work, cancelling and what we don’t promise.',
+    label: 'Terms and conditions',
+    ogHeadline: 'Terms and conditions.',
+    schemaType: 'WebPage',
+  },
+  'user-agreement': {
+    key: 'user-agreement',
+    path: '/user-agreement/',
+    title: 'User agreement | Hu/man Software Agency',
+    description:
+      'The rules for using the Hu/man website, its forms and its enquiry endpoint, including what crawlers and AI assistants may do with our content.',
+    label: 'User agreement',
+    ogHeadline: 'User agreement.',
     schemaType: 'WebPage',
   },
   '404': {

@@ -1,0 +1,71 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import TalkBanner from '../components/TalkBanner.astro';
+import LegalDoc from '../components/LegalDoc.astro';
+import { site } from '../config/site';
+import { withBase } from '../config/paths';
+
+// Checked 2026-10-27: no Set-Cookie on any page or the enquiry endpoint, and no localStorage,
+// sessionStorage or document.cookie anywhere in src/. Recheck before adding any script or embed.
+---
+
+<BaseLayout page="cookies">
+  <SiteHeader slot="header" />
+
+  <LegalDoc title="Cookie policy" updated="27 October 2026">
+    <h2>The short version</h2>
+    <p>
+      This website sets no cookies. It runs no analytics, advertising or tracking, and it stores
+      nothing in your browser. That is why there is no cookie banner.
+    </p>
+
+    <h2>What cookies are</h2>
+    <p>
+      Cookies are small files a website saves in your browser. Some are needed for a site to work,
+      such as keeping you signed in. Others track what you do, often for analytics or advertising.
+      Similar tools, such as local storage, work in much the same way, and this policy covers them
+      too.
+    </p>
+
+    <h2>Cookies on this site</h2>
+    <p>
+      None. We don't set cookies on any page, on the contact form or on the free AI check form, and
+      we don't use local storage or similar tools. The site's fonts, images and videos are all
+      served from our own domain, so no other company's content loads when you visit.
+    </p>
+
+    <h2>Security cookies from our host</h2>
+    <p>
+      The site is hosted by Cloudflare. If Cloudflare's protection ever needs to check whether a
+      visitor is a person or a bot, it may set a strictly necessary security cookie, such as
+      <code>__cf_bm</code> or <code>cf_clearance</code>. These cookies are used only to protect the
+      site. They don't track you across other websites, and they last no more than the time the
+      check needs. Under the UK's Privacy and Electronic Communications Regulations (PECR), cookies
+      that are strictly necessary to protect a service don't need consent.
+    </p>
+
+    <h2>When you leave this site</h2>
+    <p>
+      Links to WhatsApp, Instagram, Google and other websites take you to services with their own
+      cookie and privacy policies. Those apply once you are on their sites.
+    </p>
+
+    <h2>If this changes</h2>
+    <p>
+      If we ever add analytics or any other cookies, we will update this policy first and ask for
+      your consent wherever the law requires it.
+    </p>
+
+    <h2>Questions</h2>
+    <p>
+      Email <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>. How we handle
+      information you send us is in our <a href={withBase('/privacy/')}>privacy notice</a>.
+    </p>
+  </LegalDoc>
+
+  <TalkBanner />
+
+  <SiteFooter slot="footer" />
+</BaseLayout>

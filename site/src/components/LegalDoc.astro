@@ -1,0 +1,103 @@
+---
+/**
+ * The shared shell of the legal pages (privacy, cookies, terms, user agreement): title, a dated
+ * note, who runs the site (the E-Commerce Regulations 2002 ask a business website to say so), then
+ * the page's own sections in the slot.
+ */
+import { site } from '../config/site';
+
+interface Props {
+  title: string;
+  /** "27 October 2026": set by hand when the wording changes, never from the build date. */
+  updated: string;
+  /** A short note above the title, e.g. that the document is awaiting review. */
+  note?: string;
+}
+
+const { title, updated, note } = Astro.props;
+const who = `This website is run by ${site.founder}, trading as ${site.fullName}, based in ${site.location.town}, ${site.location.region}, UK.`;
+---
+
+<section class="wrap legal">
+  {note && <p class="legal__note">{note}</p>}
+
+  <h1>{title}</h1>
+  <p class="legal__updated">Last updated: {updated}.</p>
+
+  <p class="legal__who">
+    {who} Email: <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>.
+  </p>
+
+  <slot />
+</section>
+
+<style>
+  .legal {
+    padding-block: clamp(3rem, 8vw, 6rem);
+    max-width: calc(65ch + 2 * var(--gutter));
+  }
+
+  .legal h1 {
+    font-size: clamp(2.75rem, 7vw, 5rem);
+    margin-bottom: var(--space-3);
+  }
+
+  .legal :global(h2) {
+    font-size: 1.5rem;
+    letter-spacing: -0.03em;
+    margin: var(--space-5) 0 var(--space-3);
+  }
+
+  .legal :global(p),
+  .legal :global(ul),
+  .legal :global(ol) {
+    margin: 0 0 var(--space-3);
+    color: var(--ink-text);
+    line-height: 1.65;
+  }
+
+  .legal :global(ul),
+  .legal :global(ol) {
+    padding-left: 1.25rem;
+  }
+
+  .legal :global(ul) {
+    list-style: disc;
+  }
+
+  .legal :global(ol) {
+    list-style: decimal;
+  }
+
+  .legal :global(li) {
+    margin-bottom: 0.4rem;
+  }
+
+  .legal :global(a) {
+    color: var(--forest-600);
+  }
+
+  .legal :global(code) {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+  }
+
+  .legal__note {
+    background: var(--paper-2);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    padding: var(--space-3) var(--space-4);
+    font-size: 0.95rem;
+    margin-bottom: var(--space-5) !important;
+  }
+
+  .legal__updated {
+    color: var(--color-text-muted) !important;
+    font-size: 0.9rem;
+  }
+
+  .legal__who {
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--color-line);
+  }
+</style>

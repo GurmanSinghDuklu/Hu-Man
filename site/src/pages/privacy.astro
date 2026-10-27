@@ -3,22 +3,19 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import TalkBanner from '../components/TalkBanner.astro';
+import LegalDoc from '../components/LegalDoc.astro';
 import { site } from '../config/site';
+import { withBase } from '../config/paths';
 ---
 
 <BaseLayout page="privacy">
   <SiteHeader slot="header" />
 
-  <section class="wrap privacy">
-    <p class="privacy__draft-flag">
-      Draft — this notice has not been finalised or reviewed. It describes the site as it currently
-      works. Update it before taking on paid client work or collecting any personal data beyond a
-      direct enquiry.
-    </p>
-
-    <h1>Privacy notice</h1>
-    <p class="privacy__updated">Last updated: {new Date().toISOString().slice(0, 10)}.</p>
-
+  <LegalDoc
+    title="Privacy notice"
+    updated="27 October 2026"
+    note="Draft: this notice has not been reviewed by a solicitor yet. It describes the site as it works today and will be updated before we collect any personal data beyond a direct enquiry."
+  >
     <h2>Who this covers</h2>
     <p>
       This notice covers this website, run by {site.founder} trading as {site.name} (a working name
@@ -80,52 +77,14 @@ import { site } from '../config/site';
       <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>. If you're not satisfied
       with the response, you can complain to the UK Information Commissioner's Office (ico.org.uk).
     </p>
-  </section>
+    <h2>Cookies</h2>
+    <p>
+      This site sets no cookies. The <a href={withBase('/cookies/')}>cookie policy</a> has the
+      details.
+    </p>
+  </LegalDoc>
 
   <TalkBanner />
 
   <SiteFooter slot="footer" />
 </BaseLayout>
-
-<style>
-  .privacy {
-    padding-block: clamp(3rem, 8vw, 6rem);
-    max-width: calc(65ch + 2 * var(--gutter));
-  }
-
-  .privacy h1 {
-    font-size: clamp(2.75rem, 7vw, 5rem);
-    margin-bottom: var(--space-3);
-  }
-
-  .privacy h2 {
-    font-size: 1.5rem;
-    letter-spacing: -0.03em;
-    margin: var(--space-5) 0 var(--space-3);
-  }
-
-  .privacy p,
-  .privacy ul {
-    margin: 0 0 var(--space-3);
-    color: var(--ink-text);
-    line-height: 1.65;
-  }
-
-  .privacy a {
-    color: var(--forest-600);
-  }
-
-  .privacy__draft-flag {
-    background: var(--paper-2);
-    border: 1px solid var(--color-line);
-    border-radius: var(--radius-md);
-    padding: var(--space-3) var(--space-4);
-    font-size: 0.95rem;
-    margin-bottom: var(--space-5) !important;
-  }
-
-  .privacy__updated {
-    color: var(--color-text-muted) !important;
-    font-size: 0.9rem;
-  }
-</style>
