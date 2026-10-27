@@ -232,9 +232,14 @@ const fakeSite =
   } = {}) =>
   async (target, { signal } = {}) => {
     if (slow)
-      return new Promise((_, reject) =>
-        signal.addEventListener('abort', () => reject(signal.reason)),
-      );
+      return new Promise((_, reject) => {
+        // Before Node 24, AbortSignal.timeout's timer doesn't keep the process alive on its own.
+        const keepAlive = setTimeout(() => {}, 5000);
+        signal.addEventListener('abort', () => {
+          clearTimeout(keepAlive);
+          reject(signal.reason);
+        });
+      });
     const { pathname } = new URL(target);
     if (pathname === '/robots.txt')
       return new Response(robots, { headers: { 'Content-Type': 'text/plain' } });
