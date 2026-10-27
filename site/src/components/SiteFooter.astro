@@ -9,7 +9,7 @@ const currentYear = new Date().getFullYear();
 <footer class="site-footer">
   <div class="sheet site-footer__grid">
     <div class="site-footer__brand">
-      <Logo variant="paper" label={site.name} class="site-footer__logo" />
+      <Logo variant="paper" label={site.name} class="site-footer__logo logo-led" />
       <p>
         {site.location.town}, {site.location.region}
         <br />
@@ -144,5 +144,10 @@ const currentYear = new Date().getFullYear();
     .site-footer__grid {
       grid-template-columns: 6.5fr 3fr 3fr 2.5fr;
     }
+  }
+
+  /* The LED colour cycle (.logo-led, base.css), brighter (lightness 0.75) for the Ink footer. */
+  .site-footer :global(.site-footer__logo path) {
+    fill: oklch(0.75 0.17 var(--logo-hue));
   }
 </style>

@@ -1,8 +1,8 @@
 /**
  * Behaviour checks for the site's motion, against the built dist/ (run `npm run build` first):
- * - normal motion: the navbar logo's hue changes over time, the ticker runs and its pause button
+ * - normal motion: the navbar and footer logos' hue changes over time, the ticker runs and its pause button
  *   toggles, shaders mount (at most 3 per page), no console errors;
- * - reduced motion: no running animations, no shader canvases, no Lenis, every reveal visible.
+ * - reduced motion: no looping animations except the logo colour cycle, no shader canvases, no Lenis, every reveal visible.
  * Exits 1 on any failure. BROWSER=webkit|firefox picks another engine (default chromium).
  */
 import { chromium, firefox, webkit } from 'playwright';
@@ -48,15 +48,20 @@ for (const path of PAGES) {
     window.scrollTo(0, 0);
   });
   await page.waitForTimeout(1500);
-  const logoColour = () =>
-    page.evaluate(() => {
-      const path = document.querySelector('.site-header__logo .logo path');
-      return path ? getComputedStyle(path).fill : '';
-    });
-  const c1 = await logoColour();
+  const logoColours = () =>
+    page.evaluate(() =>
+      ['.site-header__logo .logo path', '.site-footer__logo path'].map((sel) => {
+        const el = document.querySelector(sel);
+        return el ? getComputedStyle(el).fill : '';
+      }),
+    );
+  const before = await logoColours();
   await page.waitForTimeout(1500);
-  const c2 = await logoColour();
-  if (!c1 || c1 === c2) fail(path || '/', `logo colour did not change (${c1} -> ${c2})`);
+  const after = await logoColours();
+  ['navbar', 'footer'].forEach((where, i) => {
+    if (!before[i] || before[i] === after[i])
+      fail(path || '/', `${where} logo colour did not change (${before[i]} -> ${after[i]})`);
+  });
   const canvases = await page.locator('[data-shader] canvas').count();
   if (canvases > 3) fail(path || '/', `${canvases} shader canvases (max 3)`);
   if (path === '' && canvases < 1) fail('/', 'no shader mounted on the home page');
@@ -79,10 +84,18 @@ for (const path of PAGES) {
   await calm.goto(url, { waitUntil: 'load' });
   await calm.waitForTimeout(1200);
   const state = await calm.evaluate(() => ({
+    // The logos' colour cycle is the one loop allowed: it changes colour, it doesn't move.
     running: document
       .getAnimations()
-      .filter((a) => a.playState === 'running' && a.effect?.getTiming().iterations === Infinity)
-      .length,
+      .filter(
+        (a) =>
+          a.playState === 'running' &&
+          a.effect?.getTiming().iterations === Infinity &&
+          a.animationName !== 'logo-hue',
+      ).length,
+    logo: document
+      .getAnimations()
+      .some((a) => a.animationName === 'logo-hue' && a.playState === 'running'),
     canvases: document.querySelectorAll('[data-shader] canvas').length,
     lenis: document.documentElement.classList.contains('lenis'),
     hidden: [...document.querySelectorAll('[data-reveal]')].filter(
@@ -90,6 +103,7 @@ for (const path of PAGES) {
     ).length,
   }));
   if (state.running) fail(path || '/', `reduced motion: ${state.running} looping animations`);
+  if (!state.logo) fail(path || '/', 'reduced motion: the logo colour cycle stopped');
   if (state.canvases) fail(path || '/', 'reduced motion: shader canvases mounted');
   if (state.lenis) fail(path || '/', 'reduced motion: Lenis is on');
   if (state.hidden) fail(path || '/', `reduced motion: ${state.hidden} reveals still hidden`);

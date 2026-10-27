@@ -19,7 +19,7 @@ const navLinks = [
   <div class="sheet site-header__inner">
     <a href={withBase('/')} class="site-header__home" aria-label={`${site.name} home`}>
       <!-- Two extra copies of the real artwork are the hover glitch bands (never retyped). -->
-      <span class="site-header__logo">
+      <span class="site-header__logo logo-led">
         <Logo variant="ink" label="" />
         <Logo variant="ink" label="" class="site-header__band site-header__band--a" />
         <Logo variant="ink" label="" class="site-header__band site-header__band--b" />
@@ -302,28 +302,9 @@ const navLinks = [
     }
   }
 
-  /* The navbar logo cycles through every hue like an LED strip: a new colour about every
-     second, blended (OKLCH keeps the brightness even, so there are no muddy steps). Only the fill
-     of the fixed artwork changes; the hover glitch bands stay ink. Reduced motion: ink. */
-  @property --logo-hue {
-    syntax: '<number>';
-    inherits: true;
-    initial-value: 0;
-  }
-
-  @media (prefers-reduced-motion: no-preference) {
-    .site-header__logo {
-      animation: logo-hue 12s linear infinite;
-    }
-
-    .site-header__logo > :global(.logo:first-child path) {
-      fill: oklch(0.6 0.2 var(--logo-hue));
-    }
-  }
-
-  @keyframes logo-hue {
-    to {
-      --logo-hue: 360;
-    }
+  /* The LED colour cycle (.logo-led, base.css) colours the real logo only; the hover glitch
+     bands stay ink. Lightness 0.6 reads on the pale header. */
+  .site-header__logo > :global(.logo:first-child path) {
+    fill: oklch(0.6 0.2 var(--logo-hue));
   }
 </style>

@@ -511,6 +511,28 @@ html.lenis body {
   height: 100%;
 }
 
+/* ---------- the colour-cycling logo (navbar and footer) ---------- */
+/* Like an LED strip: every hue in turn, a new colour about every second, blended (OKLCH keeps the
+   brightness even, so there are no muddy steps). Only the fill of the fixed artwork changes; each
+   component sets the lightness for its background. A slow colour change isn't movement, so it
+   keeps running under reduced motion (see the override below). Browsers without @property show
+   one colour. */
+@property --logo-hue {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
+
+@keyframes logo-hue {
+  to {
+    --logo-hue: 360;
+  }
+}
+
+.logo-led {
+  animation: logo-hue 12s linear infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -528,5 +550,11 @@ html.lenis body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     transition-delay: 0s !important;
+  }
+
+  /* The logo's colour cycle isn't motion: keep it going. */
+  .logo-led {
+    animation-duration: 12s !important;
+    animation-iteration-count: infinite !important;
   }
 }

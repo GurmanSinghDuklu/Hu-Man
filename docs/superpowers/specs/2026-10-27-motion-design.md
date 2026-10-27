@@ -131,6 +131,8 @@ Differences from the design above, all made to keep performance at 95+:
 - **No separate `stagger` variant**: grids keep per-item `data-reveal` with `--reveal-delay`.
   `grow` and `scan` are CSS-only; GSAP is used for SplitText line headings.
 - **CSP**: Paper Shaders inserts one `<style>`; its hash is allowed in `astro.config.mjs`.
+- **The footer logo cycles too** (lightness 0.75 on Ink), and both logos keep cycling under
+  reduced motion: a slow colour change isn't movement (Gurman asked after the first build).
 
 Results: Lighthouse performance 97-100 on all ten content pages, accessibility, best practices
 and SEO 100; axe 0 violations on 15 pages; `npm run motion-check` clear in Chromium, Firefox and
