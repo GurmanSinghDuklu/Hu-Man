@@ -101,8 +101,21 @@ export function blockedAgents(robots) {
 /**
  * Looks at the site. Returns { url, status, https, ms, title, description, robots, blocked, llms }
  * or { error } when the address can't be used or the site doesn't answer.
+ *
+ * A hard deadline sits over the whole look: on Cloudflare a subrequest to some sites (seen with
+ * sites on Cloudflare themselves) never settled and ignored its abort signal, which held the
+ * enquiry open indefinitely. Whatever the fetches do, the look gives up after timeoutMs + 500 ms.
  */
-export async function lookAtSite(input, { fetch = globalThis.fetch, timeoutMs = 3500 } = {}) {
+export function lookAtSite(input, options = {}) {
+  const { timeoutMs = 3500 } = options;
+  let timer;
+  const deadline = new Promise((resolve) => {
+    timer = setTimeout(() => resolve({ error: 'timed out' }), timeoutMs + 500);
+  });
+  return Promise.race([look(input, options), deadline]).finally(() => clearTimeout(timer));
+}
+
+async function look(input, { fetch = globalThis.fetch, timeoutMs = 3500 } = {}) {
   const url = siteUrl(input);
   if (!url) return { error: 'not a public web address, so it was not fetched' };
   const get = (target, accept) =>

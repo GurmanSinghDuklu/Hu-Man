@@ -299,6 +299,19 @@ test('a site that never answers times out instead of holding the enquiry', async
   assert.match(look.error, /timed out/);
 });
 
+test('a fetch that ignores its abort signal still cannot hold the enquiry', async () => {
+  let keepAlive;
+  const stuck = () =>
+    new Promise(() => {
+      keepAlive = setTimeout(() => {}, 5000);
+    });
+  const started = Date.now();
+  const look = await lookAtSite('stuck.co.uk', { fetch: stuck, timeoutMs: 50 });
+  clearTimeout(keepAlive);
+  assert.match(look.error, /timed out/);
+  assert.ok(Date.now() - started < 2000);
+});
+
 test('the studio email says where it came from, when to reply, and what the look found', async () => {
   const env = makeEnv();
   const res = await handleEnquiry(
