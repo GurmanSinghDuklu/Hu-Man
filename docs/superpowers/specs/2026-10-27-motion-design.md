@@ -1,7 +1,6 @@
 # Motion across the site ("B · Alive")
 
-Date: 2026-10-27. Status: approved in brainstorming (motion level, tools, Part 1 inventory, logo);
-awaiting Gurman's review of this written spec.
+Date: 2026-10-27. Status: approved and built (branch `motion`). See "As built" at the end.
 
 ## Goal
 
@@ -117,3 +116,22 @@ the shaders and logo checked in Chromium, Firefox and WebKit.
 
 Kinetic headline word swaps and giant outline marquees (level C). A contact page video (parked).
 Changes to copy.
+
+## As built (2026-10-27)
+
+Differences from the design above, all made to keep performance at 95+:
+- **Shaders start on the first interaction** (scroll, pointer, key, touch), not on idle: compiling
+  them cost ~270 ms of script on Lighthouse's throttled phone and took home to 94. Until then each
+  panel shows its own CSS gradient.
+- **Lenis loads only with a mouse or trackpad** (`(hover: hover) and (pointer: fine)`): touch keeps
+  native scrolling anyway, and Lenis cost ~410 ms there.
+- **In-page links are handled by our own code**, not Lenis's `anchors`: a not-yet-revealed target
+  sits 28px low, so we measure where it will settle. Focus moves to the target.
+- **Keyboard focus reveals its section at once** (a focused link must never be invisible).
+- **No separate `stagger` variant**: grids keep per-item `data-reveal` with `--reveal-delay`.
+  `grow` and `scan` are CSS-only; GSAP is used for SplitText line headings.
+- **CSP**: Paper Shaders inserts one `<style>`; its hash is allowed in `astro.config.mjs`.
+
+Results: Lighthouse performance 97-100 on all ten content pages, accessibility, best practices
+and SEO 100; axe 0 violations on 15 pages; `npm run motion-check` clear in Chromium, Firefox and
+WebKit. Motion JavaScript 44 kB gzipped in total, 1.6 kB of it loaded up front.

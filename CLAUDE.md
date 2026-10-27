@@ -355,6 +355,27 @@ address) when he has one. Terms: 50% deposit, 50% before launch (his choice); th
 "pay once" and "pay the difference" match the pricing page. Drafts, awaiting a solicitor's review;
 the 30-day quote validity, 30-days-late termination and liability cap are my defaults to confirm.
 
+## Motion (2026-10-27, "B · Alive", branch `motion`)
+Spec `docs/superpowers/specs/2026-10-27-motion-design.md` (see its "As built"), plan
+`docs/superpowers/plans/2026-10-27-motion.md`. `src/scripts/motion/` starts reveals at once, loads GSAP
+(SplitText line headings) on idle, Lenis on idle with a fine pointer only, and Paper Shaders on the first
+interaction; none load under reduced motion. Things worth knowing:
+1. **Reveal variants** via `data-reveal="lines|slide|grow|scan"`; plain `data-reveal` fades up. Animate
+   the individual `translate`/`scale`/`rotate` properties, never `transform`, so existing centring
+   transforms survive. Section `h2`s use `lines`; page `h1`s never animate (LCP).
+2. **Shaders**: `<span class="shader-layer" data-shader="ideas|talk|arch">` inside a panel with
+   `isolation: isolate`; max 3 per page; colours in `src/scripts/motion/palettes.ts`, contrast-tested by
+   `npm test`. Paper Shaders' one `<style>` is allowed by hash in `astro.config.mjs`: after upgrading
+   `@paper-design/shaders`, rerun `npm run motion-check` and update the hash if it reports a CSP error.
+3. **Loading shaders on idle cost ~4 performance points on home** (shader compile on a throttled
+   phone); first interaction keeps it at 97-98. Don't move them earlier.
+4. **The navbar logo cycles hue** (`@property --logo-hue`, 12 s, `oklch(0.6 0.2 h)`); the footer logo
+   doesn't. Essence's footer credit uses the same effect at lightness 0.75 (dark footer).
+5. `npm run motion-check` (Playwright; `BROWSER=webkit|firefox` for other engines) checks the logo,
+   ticker pause, shader count, reduced motion and console errors against `dist/`. In WebKit it strips
+   `upgrade-insecure-requests`, which breaks the plain-http test server only.
+Lighthouse 97-100 / 100 / 100 / 100 on ten pages, axe 0 violations on 15. Motion JS 44 kB gz (1.6 kB eager).
+
 ## GitHub and preview deploy
 Repo: github.com/GurmanSinghDuklu/Hu-Man (public; default branch `hu-man-rebrand`). Every push to
 `hu-man-rebrand` deploys a preview to https://gurmansinghduklu.github.io/Hu-Man/ via
