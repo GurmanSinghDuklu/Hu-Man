@@ -4,7 +4,6 @@ import { withBase } from '../config/paths';
 import Logo from './Logo.astro';
 
 const currentYear = new Date().getFullYear();
-const tel = `tel:${site.contact.phone.replace(/\s+/g, '')}`;
 ---
 
 <footer class="site-footer">
@@ -22,9 +21,6 @@ const tel = `tel:${site.contact.phone.replace(/\s+/g, '')}`;
       <ul>
         <li>
           <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
-        </li>
-        <li>
-          <a href={tel}>{site.contact.phone}</a>
         </li>
         <li>
           <a href={site.contact.whatsapp} rel="noopener">

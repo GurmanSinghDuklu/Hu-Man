@@ -197,8 +197,11 @@ for (const file of htmlFiles) {
   ) {
     fail(where, `Markdown copy ${md} is missing`);
   }
-  // Contact details in the raw HTML of every page.
-  for (const fact of ['humansoftwareagency@gmail.com', '+44 7988 450280']) {
+  // Contact details in the raw HTML: the email on every page (footer), the phone on the contact
+  // page only (Gurman took it out of the footer, 2026-10-27).
+  const facts = ['humansoftwareagency@gmail.com'];
+  if (file === 'contact/index.html') facts.push('+44 7988 450280');
+  for (const fact of facts) {
     if (!rawText(doc).includes(fact)) fail(where, `"${fact}" is not in the raw HTML`);
   }
 }
