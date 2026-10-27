@@ -3,15 +3,19 @@
  * - normal motion: the navbar logo's hue changes over time, the ticker runs and its pause button
  *   toggles, shaders mount (at most 3 per page), no console errors;
  * - reduced motion: no running animations, no shader canvases, no Lenis, every reveal visible.
- * Exits 1 on any failure.
+ * Exits 1 on any failure. BROWSER=webkit|firefox picks another engine (default chromium).
  */
-import { chromium } from 'playwright';
+import { chromium, firefox, webkit } from 'playwright';
 import { startServer } from './serve.mjs';
 
 const PORT = 4393;
 const PAGES = ['', 'services/', 'pricing/', 'about/', 'contact/', 'terms/'];
 const server = await startServer(new URL('../dist/', import.meta.url).pathname, PORT);
-const browser = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader'] });
+// BROWSER=webkit or BROWSER=firefox runs the same checks in Safari's and Firefox's engines.
+const engine = { chromium, firefox, webkit }[process.env.BROWSER ?? 'chromium'];
+const browser = await engine.launch(
+  engine === chromium ? { args: ['--use-gl=angle', '--use-angle=swiftshader'] } : {},
+);
 const failures = [];
 const fail = (where, what) => failures.push(`${where}: ${what}`);
 
@@ -20,6 +24,18 @@ for (const path of PAGES) {
 
   // Normal motion.
   const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+  // The CSP's upgrade-insecure-requests makes WebKit fetch http://localhost files over https,
+  // which this plain-http test server can't answer. Drop that one directive for WebKit here; the
+  // live site is https, so it never applies there.
+  if (engine === webkit) {
+    await page.route('**/*', async (route) => {
+      const response = await route.fetch();
+      const type = response.headers()['content-type'] ?? '';
+      if (!type.includes('text/html')) return route.fulfill({ response });
+      const body = (await response.text()).replace(/\s*upgrade-insecure-requests;?/, '');
+      return route.fulfill({ response, body });
+    });
+  }
   const errors = [];
   page.on('console', (m) => m.type() === 'error' && errors.push(m.text()));
   page.on('pageerror', (e) => errors.push(e.message));

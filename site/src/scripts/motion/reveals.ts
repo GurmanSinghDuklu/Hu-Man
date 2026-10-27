@@ -30,6 +30,12 @@ function playLines(el: HTMLElement): void {
   });
 }
 
+function play(el: HTMLElement): void {
+  if (el.classList.contains('is-in')) return;
+  if (el.dataset.reveal === 'lines') playLines(el);
+  el.classList.add('is-in');
+}
+
 export function startReveals(reduceMotion: boolean): void {
   const items = document.querySelectorAll<HTMLElement>('[data-reveal]');
   if (reduceMotion || !('IntersectionObserver' in window)) {
@@ -40,13 +46,22 @@ export function startReveals(reduceMotion: boolean): void {
     (entries) => {
       for (const entry of entries) {
         if (!entry.isIntersecting) continue;
-        const el = entry.target as HTMLElement;
-        if (el.dataset.reveal === 'lines') playLines(el);
-        el.classList.add('is-in');
-        io.unobserve(el);
+        play(entry.target as HTMLElement);
+        io.unobserve(entry.target);
       }
     },
     { rootMargin: '0px 0px -8% 0px', threshold: 0.08 },
   );
   items.forEach((el) => io.observe(el));
+  // Keyboard focus can land on a link before its section has scrolled far enough to reveal:
+  // show it (and any hidden ancestors) at once, so focus is never on something invisible.
+  document.addEventListener('focusin', (event) => {
+    for (let node = event.target as HTMLElement | null; node; node = node.parentElement) {
+      if (node.matches('[data-reveal]:not(.is-in)')) {
+        node.style.transitionDuration = '0s';
+        play(node);
+        io.unobserve(node);
+      }
+    }
+  });
 }
