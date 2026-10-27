@@ -37,3 +37,16 @@ simple = { limit = 3, period = 60 }
 name = "ENQUIRY_GLOBAL"
 namespace_id = "1002"
 simple = { limit = 20, period = 60 }
+
+# Auto-reply to the sender ("We've got your message", worker/enquiry.js). Off until Gurman turns on
+# Cloudflare's Email Sending (Workers Paid plan, beta): the binding above can only reach the
+# studio's own verified inbox. To switch it on, follow docs/10-launch.md ("Auto-reply"), then
+# uncomment these two lines. With no REPLY_EMAIL binding the Worker simply skips it.
+# [[send_email]]
+# name = "REPLY_EMAIL"
+
+# At most one auto-reply a minute to any one address.
+[[ratelimits]]
+name = "REPLY_PER_ADDRESS"
+namespace_id = "1003"
+simple = { limit = 1, period = 60 }

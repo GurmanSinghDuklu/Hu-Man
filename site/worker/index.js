@@ -15,11 +15,11 @@ const SECURITY_HEADERS = {
 };
 
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     const url = new URL(request.url);
     let response;
     if (url.pathname === '/api/enquiry' || url.pathname === '/api/enquiry/') {
-      response = await handleEnquiry(request, env, EmailMessage);
+      response = await handleEnquiry(request, env, EmailMessage, ctx);
     } else {
       response = await env.ASSETS.fetch(request);
     }
