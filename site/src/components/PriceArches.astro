@@ -12,7 +12,7 @@ interface Props {
 const { variant } = Astro.props;
 ---
 
-<ol class:list={['arches', `arches--${variant}`]} style={`--n:${tiers.length}`}>
+<ol class:list={['arches', `arches--${variant}`]} style={`--n:${tiers.length}`} data-reveal="grow">
   {tiers.map((tier, i) => (
     <li class:list={['arch', `arch--${tier.style}`]} style={`--i:${i};--j:${i % 3}`}>
       {variant === 'pricing' && <span class="arch__name arch__name--top">{tier.name}</span>}

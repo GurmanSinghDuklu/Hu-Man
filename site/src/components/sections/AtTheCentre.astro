@@ -17,7 +17,7 @@ const { n } = Astro.props;
         <p class="label" data-reveal>
           {n} / At the centre
         </p>
-        <h2 id={`centre-title-${n}`} class="display display--m centre__title" data-reveal>
+        <h2 id={`centre-title-${n}`} class="display display--m centre__title" data-reveal="lines">
           At the centre
           <br />
           of it all, we’re
@@ -45,11 +45,11 @@ const { n } = Astro.props;
           </linearGradient>
         </defs>
         <g fill="none" stroke="#f1f2ec" stroke-width="1.2">
-          <circle cx="171" cy="171" r="170"></circle>
-          <circle cx="361" cy="171" r="170"></circle>
-          <circle cx="266" cy="337" r="170"></circle>
+          <circle cx="171" cy="171" r="170" class="amb-drift"></circle>
+          <circle cx="361" cy="171" r="170" class="amb-drift amb-drift--b"></circle>
+          <circle cx="266" cy="337" r="170" class="amb-drift"></circle>
         </g>
-        <circle cx="266" cy="225" r="75" fill={`url(#centre-rose-${n})`}></circle>
+        <circle cx="266" cy="225" r="75" fill={`url(#centre-rose-${n})`} class="amb-pulse"></circle>
         <g class="centre__words" text-anchor="middle" dominant-baseline="central">
           <text x="90" y="153">
             Grounded
@@ -60,7 +60,7 @@ const { n } = Astro.props;
           <text x="266" y="438">
             Creative
           </text>
-          <text x="266" y="225" class="centre__human">
+          <text x="266" y="225" class="centre__human amb-pulse">
             Human
           </text>
         </g>
@@ -121,5 +121,11 @@ const { n } = Astro.props;
       justify-self: start;
       margin-top: calc(var(--u) * 1.45);
     }
+  }
+
+  .centre__venn circle,
+  .centre__venn text {
+    transform-box: fill-box;
+    transform-origin: center;
   }
 </style>

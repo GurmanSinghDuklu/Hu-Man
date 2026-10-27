@@ -24,7 +24,7 @@ const layers = [
         <p class="label" data-reveal>
           {n} / Be honest
         </p>
-        <h2 id={`pretty-title-${n}`} class="display pretty__title" data-reveal>
+        <h2 id={`pretty-title-${n}`} class="display pretty__title" data-reveal="lines">
           Pretty isn’t
           <br />
           enough.
@@ -36,14 +36,14 @@ const layers = [
       </div>
 
       <ol class="pretty__layers">
-        <li class="pretty__looks" data-reveal>
+        <li class="pretty__looks" data-reveal="slide">
           <span class="pretty__looks-title">Looks good</span>
           <span class="pretty__looks-note">One prompt stops here</span>
         </li>
         {layers.map((l, i) => (
           <li
             class:list={['pretty__layer', `pretty__layer--${l.style}`]}
-            data-reveal
+            data-reveal="slide"
             style={`--reveal-delay:${(i + 1) * 0.08}s`}
           >
             <span class="pretty__n">{l.n}</span>

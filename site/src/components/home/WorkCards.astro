@@ -36,7 +36,7 @@ const cards = [
     <p class="label" data-reveal>
       06 / Our work
     </p>
-    <h2 id="cards-title" class="display display--m" data-reveal>
+    <h2 id="cards-title" class="display display--m" data-reveal="lines">
       Real projects. Real people.
     </h2>
 
@@ -142,5 +142,13 @@ const cards = [
     .card__tags {
       font-size: calc(var(--u) * 0.135);
     }
+  }
+
+  .card__shot {
+    transition: scale 0.6s var(--ease-out);
+  }
+
+  .card:hover .card__shot {
+    scale: 1.04;
   }
 </style>

@@ -17,7 +17,7 @@ const { n } = Astro.props;
       <p class="label" data-reveal>
         {n} / Future-proofed
       </p>
-      <h2 id={`agent-title-${n}`} class="display display--m" data-reveal>
+      <h2 id={`agent-title-${n}`} class="display display--m" data-reveal="lines">
         Agentic AI-ready,
         <br />
         as standard.
@@ -32,8 +32,8 @@ const { n } = Astro.props;
     </div>
 
     <div class="agent__art" aria-hidden="true">
-      <RingOrb tone="indigo" star class="agent__orb" />
-      <span class="agent__square"></span>
+      <RingOrb tone="indigo" star class="agent__orb amb-float" />
+      <span class="agent__square amb-pulse"></span>
     </div>
   </div>
 </section>

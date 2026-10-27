@@ -20,7 +20,7 @@ const sample = [
       <p class="label" data-reveal>
         03 / Free AI check
       </p>
-      <h2 id="check-section-title" class="display display--m honest__title" data-reveal>
+      <h2 id="check-section-title" class="display display--m honest__title" data-reveal="lines">
         Is AI recommending
         <br />
         your competitors?
@@ -52,10 +52,10 @@ const sample = [
             Next, tell us where to reply. A person checks it and replies within 48 hours.
           </p>
         </div>
-        <div class="check__sample">
+        <div class="check__sample" data-reveal="scan">
           <ul>
-            {sample.map((row) => (
-              <li>
+            {sample.map((row, k) => (
+              <li style={`--k:${k}`}>
                 <span>{row.q}</span>
                 <span class:list={['check__tag', `check__tag--${row.tone}`]}>{row.a}</span>
               </li>
