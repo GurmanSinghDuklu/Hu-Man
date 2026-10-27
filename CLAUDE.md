@@ -369,10 +369,10 @@ interaction; none load under reduced motion. Things worth knowing:
    `@paper-design/shaders`, rerun `npm run motion-check` and update the hash if it reports a CSP error.
 3. **Loading shaders on idle cost ~4 performance points on home** (shader compile on a throttled
    phone); first interaction keeps it at 97-98. Don't move them earlier.
-4. **The navbar and footer logos cycle hue** (`.logo-led` in base.css: `@property --logo-hue`, 12 s;
-   navbar `oklch(0.6 0.2 h)`, footer `oklch(0.75 0.17 h)` on Ink). It keeps running under reduced
-   motion (a colour change, not movement; Gurman's request, 2026-10-27). Essence's footer credit
-   uses the same effect at lightness 0.75.
+4. **The navbar and footer logos cycle hue** (`.logo-led` / `.logo-led--bright` in base.css): 24 precomputed
+   hex stops of `oklch(0.6 0.2 h)` and `oklch(0.75 0.17 h)` animating `color`, paths `fill: currentColor`,
+   12 s. Not `@property`: that version stayed still in Gurman's browser. It keeps running under reduced
+   motion (a colour change, not movement; his request, 2026-10-27). Essence's credit uses the same effect.
 5. `npm run motion-check` (Playwright; `BROWSER=webkit|firefox` for other engines) checks the logo,
    ticker pause, shader count, reduced motion and console errors against `dist/`. In WebKit it strips
    `upgrade-insecure-requests`, which breaks the plain-http test server only.

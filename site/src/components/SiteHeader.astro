@@ -303,8 +303,8 @@ const navLinks = [
   }
 
   /* The LED colour cycle (.logo-led, base.css) colours the real logo only; the hover glitch
-     bands stay ink. Lightness 0.6 reads on the pale header. */
+     bands stay ink. */
   .site-header__logo > :global(.logo:first-child path) {
-    fill: oklch(0.6 0.2 var(--logo-hue));
+    fill: currentColor;
   }
 </style>

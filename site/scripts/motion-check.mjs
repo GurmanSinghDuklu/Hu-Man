@@ -91,11 +91,11 @@ for (const path of PAGES) {
         (a) =>
           a.playState === 'running' &&
           a.effect?.getTiming().iterations === Infinity &&
-          a.animationName !== 'logo-hue',
+          !a.animationName?.startsWith('logo-led'),
       ).length,
     logo: document
       .getAnimations()
-      .some((a) => a.animationName === 'logo-hue' && a.playState === 'running'),
+      .some((a) => a.animationName?.startsWith('logo-led') && a.playState === 'running'),
     canvases: document.querySelectorAll('[data-shader] canvas').length,
     lenis: document.documentElement.classList.contains('lenis'),
     hidden: [...document.querySelectorAll('[data-reveal]')].filter(
