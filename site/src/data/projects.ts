@@ -21,7 +21,7 @@ export const projects: Project[] = [
   {
     id: 'essence',
     name: 'Essence Hair',
-    blurb: 'Bedfordshire’s premium hair salon, specialising in Balayage and Keratin treatment.',
+    blurb: 'Bedfordshire’s premium hair salon. Specialists in Balayage and Keratin treatment.',
     linkText: 'Live site',
     live: true,
     url: 'https://essencehairtreatment.com',
@@ -31,7 +31,8 @@ export const projects: Project[] = [
   {
     id: 'eldeva',
     name: 'Eldeva Candles',
-    blurb: 'Concept designs for Eldeva Candles.',
+    blurb:
+      'Pre-production full site rebuild and integration from Shopify. Full inventory, booking, ordering and bespoke customisation system.',
     live: false,
     summary:
       'A concept design for an online candle shop, made for a family member’s business. It has not launched.',
@@ -39,7 +40,8 @@ export const projects: Project[] = [
   {
     id: 'calculator',
     name: 'The Calculator App',
-    blurb: 'Android and Apple apps coming soon.',
+    blurb:
+      '100+ financial tools, calculators and guides. Web-powered app. iOS and Android app custom build in development.',
     live: true,
     url: 'https://thecalculatorapp.org',
     summary:

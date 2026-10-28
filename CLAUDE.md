@@ -382,8 +382,8 @@ Lighthouse 97-100 / 100 / 100 / 100 on ten pages, axe 0 violations on 15. Motion
 
 ## Work cards, external links, copyright (2026-10-28)
 - Home work cards show each project's `blurb` (Gurman's wording, in `src/data/projects.ts`); Essence
-  ends with a "Live site" link. Eldeva's line is now "Concept designs for Eldeva Candles." (still says
-  concept; never "live"). The Calculator line says Android and Apple apps are coming soon.
+  ends with a "Live site" link. Eldeva's line (2026-10-28) calls it a "pre-production" rebuild from
+  Shopify: still not live, never say "live". The Calculator line says its iOS and Android apps are in development.
 - **Every link to another site opens in a new tab** (`target="_blank" rel="noopener noreferrer"` plus a
   visually hidden "(opens in a new tab)"), so visitors keep our site open. Do the same for any new one.
 - Footer base line: "Copyright © year Hu/man Software Agency. All rights reserved." Keep it one template
