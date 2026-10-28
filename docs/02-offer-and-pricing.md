@@ -14,7 +14,7 @@ From Gurman's final designs. Still being decided and may change; the site reads 
 | Booking | £1,595 | Everything above · booking · Stripe, Square or SumUp |
 | Growth | £2,195 | Everything above · AI enquiry agent · reviews · service pages |
 | Full presence | £3,375 | Everything above · WhatsApp + call answering · follow-ups · owner digest |
-| Custom | POA | Web apps, client portals, marketplaces |
+| Custom | Bespoke (price on application; shown as "Bespoke" since 2026-10-28) | Web apps, client portals, marketplaces |
 
 Care plans (shown with a "Draft · being researched and reworked" badge): Basic £29/mo (hosting,
 security, backups); Care £59/mo (+ updates, 30 min edits a month); Grow £119/mo (+ monthly AI

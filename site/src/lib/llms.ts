@@ -149,7 +149,7 @@ export function llmsFullTxt(): string {
     '| --- | --- | --- |',
     ...tiers.map(
       (t) =>
-        `| ${t.name} | ${t.price === 'POA' ? 'Price on application' : t.price} | ${t.includes.replace(/ · /g, '; ')} |`,
+        `| ${t.name} | ${t.price === 'Bespoke' ? 'Bespoke (price on application)' : t.price} | ${t.includes.replace(/ · /g, '; ')} |`,
     ),
     '',
     `Add-ons: ${addOns.join('; ')}.`,

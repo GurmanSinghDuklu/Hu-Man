@@ -94,7 +94,7 @@ export const tiers: Tier[] = [
   {
     id: 'custom',
     name: 'Custom',
-    price: 'POA',
+    price: 'Bespoke',
     short: 'Apps and portals',
     includes: 'Web apps, client portals, marketplaces',
     style: 'rose',

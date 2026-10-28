@@ -22,7 +22,7 @@ type Node = Record<string, unknown>;
 /** Absolute URL for a root-relative path, respecting any base path. */
 export type AbsUrl = (path: string) => string;
 
-/** "£1,195" -> "1195"; "POA" -> undefined. */
+/** "£1,195" -> "1195"; "Bespoke" -> undefined. */
 const amount = (price: string): string | undefined => {
   const digits = price.replace(/[^\d.]/g, '');
   return digits ? digits : undefined;
