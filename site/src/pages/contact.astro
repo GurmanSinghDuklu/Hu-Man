@@ -76,16 +76,16 @@ const tel = `tel:${site.contact.phone.replace(/\s+/g, '')}`;
           <div>
             <dt>WhatsApp</dt>
             <dd>
-              <a href={site.contact.whatsapp} rel="noopener">
-                Message us on WhatsApp
+              <a href={site.contact.whatsapp} target="_blank" rel="noopener noreferrer">
+                Message us on WhatsApp<span class="visually-hidden"> (opens in a new tab)</span>
               </a>
             </dd>
           </div>
           <div>
             <dt>Instagram</dt>
             <dd>
-              <a href={site.contact.instagram} rel="noopener">
-                @humansoftwareagency
+              <a href={site.contact.instagram} target="_blank" rel="noopener noreferrer">
+                @humansoftwareagency<span class="visually-hidden"> (opens in a new tab)</span>
               </a>
             </dd>
           </div>

@@ -27,8 +27,13 @@ import Sparkle from './Sparkle.astro';
           <a class="pill-btn pill-btn--outline" href={withBase('/free-ai-check/')}>
             Free AI check
           </a>
-          <a class="pill-btn pill-btn--outline" href={site.contact.whatsapp} rel="noopener">
-            WhatsApp
+          <a
+            class="pill-btn pill-btn--outline"
+            href={site.contact.whatsapp}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            WhatsApp<span class="visually-hidden"> (opens in a new tab)</span>
           </a>
         </div>
       </div>

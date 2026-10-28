@@ -1,7 +1,8 @@
 ---
 /**
  * "Real projects. Real people." (home 06): each project's front page in a browser window, linking
- * to /work/. Eldeva is a concept for a family business: always "Concept design · Not live".
+ * to /work/. Eldeva is a concept for a family business: its line always says "Concept". Links to
+ * other sites open in a new tab, so the visitor keeps this one.
  */
 import { Image } from 'astro:assets';
 import { withBase } from '../../config/paths';
@@ -61,7 +62,12 @@ const cards = [
             />
           </div>
           <h3 class="card__name">{c.name}</h3>
-          <p class="card__tags">{c.tags}</p>
+          <p class="card__blurb">
+            {c.blurb}
+            {c.linkText && c.url &&
+              /* prettier-ignore */
+              <><a href={c.url} target="_blank" rel="noopener noreferrer">{c.linkText}<span class="visually-hidden"> (opens in a new tab)</span></a>.</>}
+          </p>
         </li>
       ))}
     </ul>
@@ -121,11 +127,16 @@ const cards = [
     line-height: 1;
   }
 
-  .card__tags {
+  .card__blurb {
+    max-width: 34ch;
     margin-top: 0.75rem;
-    font: 400 0.75rem/1.3 var(--font-mono);
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
+    font-size: clamp(0.95rem, calc(var(--u) * 0.17), 1.05rem);
+    line-height: 1.5;
+  }
+
+  .card__blurb a {
+    font-weight: 700;
+    text-underline-offset: 0.2em;
   }
 
   .cards__link {
@@ -139,9 +150,6 @@ const cards = [
   }
 
   @media (min-width: 64rem) {
-    .card__tags {
-      font-size: calc(var(--u) * 0.135);
-    }
   }
 
   .card__shot {

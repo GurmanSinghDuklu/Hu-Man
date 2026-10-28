@@ -26,8 +26,8 @@ const currentYear = new Date().getFullYear();
           <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
         </li>
         <li>
-          <a href={site.contact.whatsapp} rel="noopener">
-            WhatsApp
+          <a href={site.contact.whatsapp} target="_blank" rel="noopener noreferrer">
+            WhatsApp<span class="visually-hidden"> (opens in a new tab)</span>
           </a>
         </li>
       </ul>
@@ -82,7 +82,7 @@ const currentYear = new Date().getFullYear();
       </ul>
     </div>
     <p class="site-footer__base">
-      © {currentYear} {site.fullName}, a trading name of {site.founder} · No cookies
+      {`Copyright © ${currentYear} ${site.fullName}. All rights reserved. A trading name of ${site.founder} · No cookies`}
     </p>
   </div>
 </footer>

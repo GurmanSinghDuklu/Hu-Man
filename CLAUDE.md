@@ -380,6 +380,15 @@ interaction; none load under reduced motion. Things worth knowing:
    `upgrade-insecure-requests`, which breaks the plain-http test server only.
 Lighthouse 97-100 / 100 / 100 / 100 on ten pages, axe 0 violations on 15. Motion JS 44 kB gz (1.6 kB eager).
 
+## Work cards, external links, copyright (2026-10-28)
+- Home work cards show each project's `blurb` (Gurman's wording, in `src/data/projects.ts`); Essence
+  ends with a "Live site" link. Eldeva's line is now "Concept designs for Eldeva Candles." (still says
+  concept; never "live"). The Calculator line says Android and Apple apps are coming soon.
+- **Every link to another site opens in a new tab** (`target="_blank" rel="noopener noreferrer"` plus a
+  visually hidden "(opens in a new tab)"), so visitors keep our site open. Do the same for any new one.
+- Footer base line: "Copyright © year Hu/man Software Agency. All rights reserved." Keep it one template
+  string: an expression at a line end loses the following space.
+
 ## GitHub and preview deploy
 Repo: github.com/GurmanSinghDuklu/Hu-Man (public; default branch `hu-man-rebrand`). Every push to
 `hu-man-rebrand` deploys a preview to https://gurmansinghduklu.github.io/Hu-Man/ via

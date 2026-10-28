@@ -6,8 +6,10 @@
 export interface Project {
   id: 'essence' | 'eldeva' | 'calculator';
   name: string;
-  /** The line under the name on the home cards. */
-  tags: string;
+  /** The sentence under the name on the home cards (Gurman's wording, 2026-10-28). */
+  blurb: string;
+  /** When set, the home card ends with a link to `url` with this text. */
+  linkText?: string;
   live: boolean;
   /** The live site, when there is one. */
   url?: string;
@@ -19,7 +21,8 @@ export const projects: Project[] = [
   {
     id: 'essence',
     name: 'Essence Hair',
-    tags: 'Built for a family business · Live',
+    blurb: 'Bedfordshire’s premium hair salon, specialising in Balayage and Keratin treatment.',
+    linkText: 'Live site',
     live: true,
     url: 'https://essencehairtreatment.com',
     summary:
@@ -28,7 +31,7 @@ export const projects: Project[] = [
   {
     id: 'eldeva',
     name: 'Eldeva Candles',
-    tags: 'Concept design · Not live',
+    blurb: 'Concept designs for Eldeva Candles.',
     live: false,
     summary:
       'A concept design for an online candle shop, made for a family member’s business. It has not launched.',
@@ -36,7 +39,7 @@ export const projects: Project[] = [
   {
     id: 'calculator',
     name: 'The Calculator App',
-    tags: 'Web app · Live',
+    blurb: 'Android and Apple apps coming soon.',
     live: true,
     url: 'https://thecalculatorapp.org',
     summary:

@@ -129,8 +129,9 @@ const pic = (w: Win, width: number) => ({
         <div class="sheet project__about">
           <p>{facts.summary}</p>
           {facts.url ? (
-            <a class="more-link" href={facts.url} rel="noopener">
-              Visit the live site<span class="visually-hidden">: {p.name}</span>{' '}
+            <a class="more-link" href={facts.url} target="_blank" rel="noopener noreferrer">
+              Visit the live site
+              <span class="visually-hidden">: {p.name} (opens in a new tab)</span>{' '}
               <span aria-hidden="true">↗</span>
             </a>
           ) : (
