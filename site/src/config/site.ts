@@ -43,7 +43,6 @@ export const site = {
     email: 'humansoftwareagency@gmail.com',
     phone: '+44 7988 450280',
     phoneIntl: '447988450280',
-    whatsapp: 'https://wa.me/447988450280',
     github: 'https://github.com/GurmanSinghDuklu',
     linkedin: 'https://www.linkedin.com/in/gurman-singh-duklu',
     // The studio's own profile (approved 2026-10-25). GitHub and LinkedIn are personal, so they

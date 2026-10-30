@@ -26,7 +26,7 @@ const keyFacts = [
   'Works: in person in Leeds and West Yorkshire, remotely across the UK and worldwide',
   `Founded: ${site.founded}`,
   `Website prices: from ${fromPrice} to ${priceOf('full-presence')} in ${tierCount} fixed tiers; custom apps and portals priced on application`,
-  `Contact: ${site.contact.email}, ${site.contact.phone}, WhatsApp ${site.contact.whatsapp}`,
+  `Contact: ${site.contact.email}, ${site.contact.phone}`,
   `Instagram: ${site.contact.instagram}`,
   'Free offer: a free AI check of an existing website, reviewed by a person, with a reply within 48 hours',
 ];
@@ -47,7 +47,7 @@ const pageKeys: PageKey[] = [
 const actions = () => [
   `- Send an enquiry: POST ${abs('/api/enquiry')} with JSON or form fields name, email and message (optional: topic, website, phone, tier). topic is one of ai-check, website, idea, tier, other; for ai-check, website is required and message is optional. A person reads every enquiry and replies by email. GET the same URL for the full field list.`,
   `- Ask for a free AI check: the same endpoint with topic "ai-check" and website, or the form at ${abs('/free-ai-check/')}.`,
-  `- Contact page with a form, phone, WhatsApp and email: ${abs('/contact/')}`,
+  `- Contact page with a form, phone and email: ${abs('/contact/')}`,
 ];
 
 export function llmsTxt(): string {
@@ -195,7 +195,6 @@ export function llmsFullTxt(): string {
     '',
     `- Email: ${site.contact.email}`,
     `- Phone: ${site.contact.phone}`,
-    `- WhatsApp: ${site.contact.whatsapp}`,
     `- Instagram: ${site.contact.instagram}`,
     `- Website: ${abs('/')}`,
     '',

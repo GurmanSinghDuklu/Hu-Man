@@ -3,7 +3,6 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
-import { site } from '../config/site';
 import { withBase } from '../config/paths';
 ---
 
@@ -13,13 +12,7 @@ import { withBase } from '../config/paths';
   <section class="wrap thanks">
     <p class="label">Message sent</p>
     <h1>Thanks. A human will be in touch.</h1>
-    <p>
-      Your message is with us. A real person will read it and reply by email. If it’s urgent,
-      <a href={site.contact.whatsapp} target="_blank" rel="noopener noreferrer">
-        WhatsApp us<span class="visually-hidden"> (opens in a new tab)</span>
-      </a>{' '}
-      too.
-    </p>
+    <p>Your message is with us. A real person will read it and reply by email.</p>
     <div class="thanks__actions">
       <a href={withBase('/')} class="btn">
         Back to the homepage

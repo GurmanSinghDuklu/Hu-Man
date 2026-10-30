@@ -141,7 +141,7 @@ export const pages: Record<PageKey, PageInfo> = {
     path: '/contact/',
     title: 'Contact Hu/man Software Agency, Leeds',
     description:
-      'Tell us about your website, app or idea. A real person reads every message and replies by email. Or call or WhatsApp. Based in Leeds, working UK-wide.',
+      'Tell us about your website, app or idea. A real person reads every message and replies by email. Or call us. Based in Leeds, working UK-wide.',
     label: 'Contact',
     ogHeadline: 'Talk to a human.',
     schemaType: 'ContactPage',

@@ -136,7 +136,7 @@ document.querySelectorAll<HTMLFormElement>('[data-enquiry-form]').forEach((form)
         form.querySelector<HTMLElement>('[data-fields]')?.setAttribute('hidden', '');
         status(
           form,
-          '<strong>Thanks, that’s sent.</strong> A real person will read it and reply by email. If it’s urgent, WhatsApp us too.',
+          '<strong>Thanks, that’s sent.</strong> A real person will read it and reply by email.',
           'ok',
         );
         return;

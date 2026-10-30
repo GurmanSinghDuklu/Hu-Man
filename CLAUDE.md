@@ -388,6 +388,8 @@ Lighthouse 97-100 / 100 / 100 / 100 on ten pages, axe 0 violations on 15. Motion
   visually hidden "(opens in a new tab)"), so visitors keep our site open. Do the same for any new one.
 - Footer base line: "Copyright © year Hu/man Software Agency. All rights reserved." Keep it one template
   string: an expression at a line end loses the following space.
+- **No WhatsApp anywhere on the site** (Gurman, 2026-10-30): contact is the form, email, phone (contact
+  page only) and Instagram. Full presence's "WhatsApp + call answering" is a client service and stays.
 
 ## GitHub and preview deploy
 Repo: github.com/GurmanSinghDuklu/Hu-Man (public; default branch `hu-man-rebrand`). Every push to

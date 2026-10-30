@@ -1,6 +1,5 @@
 ---
 /** "Talk to a human": the banner that closes most pages (id="audit"). */
-import { site } from '../config/site';
 import { withBase } from '../config/paths';
 import Sparkle from './Sparkle.astro';
 ---
@@ -26,14 +25,6 @@ import Sparkle from './Sparkle.astro';
           </a>
           <a class="pill-btn pill-btn--outline" href={withBase('/free-ai-check/')}>
             Free AI check
-          </a>
-          <a
-            class="pill-btn pill-btn--outline"
-            href={site.contact.whatsapp}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            WhatsApp<span class="visually-hidden"> (opens in a new tab)</span>
           </a>
         </div>
       </div>

@@ -11,7 +11,7 @@ import { contactFaq } from '../data/faq';
 
 // What happens after someone gets in touch (draft copy, 2026-10-27).
 const steps = [
-  { title: 'You send a message.', text: 'Use the form, email or WhatsApp. A few lines is plenty.' },
+  { title: 'You send a message.', text: 'Use the form or email. A few lines is plenty.' },
   {
     title: 'A person reads it.',
     text: 'Not a bot, not a sales team. You get a reply by email within 48 hours.',
@@ -71,14 +71,6 @@ const tel = `tel:${site.contact.phone.replace(/\s+/g, '')}`;
             <dt>Phone</dt>
             <dd>
               <a href={tel}>{site.contact.phone}</a>
-            </dd>
-          </div>
-          <div>
-            <dt>WhatsApp</dt>
-            <dd>
-              <a href={site.contact.whatsapp} target="_blank" rel="noopener noreferrer">
-                Message us on WhatsApp<span class="visually-hidden"> (opens in a new tab)</span>
-              </a>
             </dd>
           </div>
           <div>
