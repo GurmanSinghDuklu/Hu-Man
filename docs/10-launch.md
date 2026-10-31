@@ -1,7 +1,9 @@
 # Launch runbook: humansoftwareagency.com
 
-Everything in the code is ready. These are the steps that need Gurman's accounts, in order. Nothing
-here has been done yet: no host, DNS or search-engine account has been touched.
+Everything in the code is ready. These are the steps that need Gurman's accounts, in order. The site
+is live on Cloudflare Workers. Done 2026-10-31: Bing Webmaster Tools (verified with
+`public/BingSiteAuth.xml`, sitemap submitted) and a first IndexNow submission of all 13 pages.
+Still to do: Google Search Console, Google Business Profile and the rest of section 5.
 
 ## 0. Confirm before launch
 - [ ] **The new pages' wording** (drafts, 2026-10-26): `/agentic-ai-ready/` (the definition and the
