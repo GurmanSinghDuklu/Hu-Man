@@ -1,0 +1,259 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import InnerHero from '../components/InnerHero.astro';
+import TalkBanner from '../components/TalkBanner.astro';
+import { portfolioTiers, portfolioAddOns, portfolioExpress } from '../data/pricing';
+import { contactPath } from '../config/links';
+import { withBase } from '../config/paths';
+
+const choose = (name: string) => withBase(contactPath({ tier: `Portfolio: ${name}` }));
+---
+
+<BaseLayout page="portfolio">
+  <SiteHeader slot="header" />
+
+  <InnerHero label="Portfolio sites" lens="Lens 10 / Portfolio sites">
+    <Fragment slot="title">
+      <span class="ptitle">A CV gets you past the screen. A portfolio gets you remembered.</span>
+    </Fragment>
+    <Fragment slot="lede">
+      Personal portfolio and CV websites for job seekers, graduates, creatives and freelancers. For
+      individuals, not businesses.
+    </Fragment>
+  </InnerHero>
+
+  <section class="band grid ptiers" aria-labelledby="tiers-title">
+    <div class="sheet">
+      <h2 id="tiers-title" class="label">
+        3 tiers · Pay once · Domain cost extra
+      </h2>
+      <p class="ptiers__text">
+        A site you own, that works on a phone and that search and AI can read. We do not promise
+        jobs, interviews or results with applicant tracking systems: a portfolio shows your work,
+        and what happens next is up to you and the people reading it.
+      </p>
+      <ul class="ptiers__list">
+        {portfolioTiers.map((t, i) => (
+          <li
+            class:list={['ptier', `ptier--${t.id}`]}
+            data-reveal
+            style={`--reveal-delay:${i * 0.08}s`}
+          >
+            <p class="ptier__name">
+              {t.name}
+              {t.tag && <span class="ptier__tag">{t.tag}</span>}
+            </p>
+            <p class="ptier__price">{t.price}</p>
+            <ul class="ptier__includes">
+              {t.includes.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+            <p class="ptier__time">{t.timeline}</p>
+            <a class="pill-btn ptier__btn" href={choose(t.name)}>
+              Choose<span class="visually-hidden"> {t.name}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="band band--paper-2 pextras" aria-labelledby="extras-title">
+    <div class="sheet pextras__sheet">
+      <div>
+        <p class="label" data-reveal>
+          Add-ons
+        </p>
+        <h2 id="extras-title" class="display display--s" data-reveal="lines">
+          Add what you need.
+        </h2>
+        <ul class="pextras__list">
+          {portfolioAddOns.map((a) => (
+            <li class="pill">{a}</li>
+          ))}
+        </ul>
+      </div>
+      <div class="pextras__express" data-reveal>
+        <p class="label">{portfolioExpress.title}</p>
+        <p class="pextras__price">{portfolioExpress.price}</p>
+        <p>{portfolioExpress.text}</p>
+      </div>
+    </div>
+  </section>
+
+  <TalkBanner />
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+  .ptitle {
+    display: block;
+    max-width: 12em;
+    font-size: 0.72em;
+    line-height: 0.95;
+  }
+
+  .ptiers {
+    padding-block: clamp(2.5rem, calc(var(--u) * 0.6), 3.5rem)
+      clamp(3rem, calc(var(--u) * 0.66), 4rem);
+    border-top: 1px solid var(--grid-line);
+  }
+
+  .ptiers__text {
+    max-width: 42rem;
+    margin-top: 0.5rem;
+    font-size: clamp(1rem, calc(var(--u) * 0.18), 1.1rem);
+    line-height: 1.5;
+  }
+
+  .ptiers__list {
+    display: grid;
+    gap: max(12px, calc(var(--u) * 0.2));
+    margin-top: clamp(2rem, calc(var(--u) * 0.6), 3.5rem);
+  }
+
+  .ptier {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: clamp(1.25rem, calc(var(--u) * 0.3), 2rem);
+    border: 1px solid var(--ink);
+    background: var(--paper);
+  }
+
+  .ptier--profile {
+    background: var(--paper-2);
+    border-top-right-radius: calc(var(--u) * 0.9);
+  }
+
+  .ptier--portfolio {
+    background: var(--peach);
+    border-top-left-radius: calc(var(--u) * 0.9);
+    border-top-right-radius: calc(var(--u) * 0.9);
+  }
+
+  .ptier--portfolio-pro {
+    background: var(--ink);
+    color: var(--paper);
+    border-top-right-radius: calc(var(--u) * 0.9);
+  }
+
+  .ptier__name {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    font: 400 0.8125rem var(--font-mono);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .ptier__tag {
+    padding: 0.2rem 0.6rem;
+    border: 1px solid currentColor;
+    border-radius: 999px;
+    font-size: 0.6875rem;
+    letter-spacing: 0.12em;
+  }
+
+  .ptier__price {
+    font: 800 clamp(2.6rem, calc(var(--u) * 0.7), 4rem) / 1 var(--font-display);
+    letter-spacing: -0.03em;
+  }
+
+  .ptier__includes {
+    display: grid;
+    gap: 0.5rem;
+    font-size: clamp(0.95rem, calc(var(--u) * 0.165), 1.05rem);
+    line-height: 1.4;
+  }
+
+  .ptier__includes li {
+    padding-left: 1rem;
+    border-left: 2px solid currentColor;
+  }
+
+  .ptier__time {
+    margin-top: auto;
+    padding-top: 0.75rem;
+    font: 400 0.75rem var(--font-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .ptier__btn {
+    align-self: flex-start;
+  }
+
+  .ptier--portfolio-pro .ptier__btn {
+    border-color: var(--paper);
+  }
+
+  .pextras {
+    padding-block: clamp(3rem, calc(var(--u) * 0.9), 5.5rem);
+  }
+
+  .pextras__sheet {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .pextras__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .pextras__list .pill {
+    padding: 0.65rem 1rem;
+    background: transparent;
+    font-size: 0.75rem;
+    white-space: normal;
+  }
+
+  .pextras__express {
+    display: grid;
+    align-content: start;
+    gap: 0.5rem;
+    padding: clamp(1.25rem, calc(var(--u) * 0.3), 2rem);
+    border: 1px solid var(--ink);
+    background: var(--paper);
+    line-height: 1.45;
+  }
+
+  .pextras__price {
+    font: 800 clamp(2.2rem, calc(var(--u) * 0.55), 3.2rem) / 1 var(--font-display);
+    letter-spacing: -0.03em;
+  }
+
+  @media (min-width: 40rem) {
+    .ptiers__list {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .ptier {
+      min-height: calc(var(--u) * 5.2);
+    }
+
+    .ptier__name,
+    .ptier__time {
+      font-size: calc(var(--u) * 0.115);
+    }
+
+    .ptier__tag {
+      font-size: calc(var(--u) * 0.095);
+    }
+
+    .pextras__sheet {
+      grid-template-columns: 7fr 4fr;
+      align-items: start;
+    }
+  }
+</style>

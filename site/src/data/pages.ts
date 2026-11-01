@@ -5,7 +5,7 @@
  *
  * Titles stay under 60 characters and descriptions near 150, so search results show them whole.
  */
-import { fromPrice, priceOf, tiers } from './pricing';
+import { fromPrice, priceOf, tiers, portfolioTiers } from './pricing';
 import { checklist } from './process';
 
 export type PageKey =
@@ -13,6 +13,7 @@ export type PageKey =
   | 'services'
   | 'pricing'
   | 'work'
+  | 'portfolio'
   | 'about'
   | 'how-we-build'
   | 'agentic-ai-ready'
@@ -65,7 +66,7 @@ export const pages: Record<PageKey, PageInfo> = {
     description:
       'Leeds studio for websites, apps and software: agentic AI-ready as standard, with a real person from first call to long after launch. Free AI check.',
     label: 'Home',
-    ogHeadline: 'Got an idea? Let’s build it.',
+    ogHeadline: 'Got an idea? We’ll build it, and build it to be found by AI.',
     schemaType: 'WebPage',
   },
   services: {
@@ -86,6 +87,15 @@ export const pages: Record<PageKey, PageInfo> = {
     label: 'Pricing',
     ogHeadline: `Start at ${fromPrice}. Grow from there.`,
     schemaType: 'FAQPage',
+  },
+  portfolio: {
+    key: 'portfolio',
+    path: '/portfolio/',
+    title: `Portfolio and CV websites from ${portfolioTiers[0].price} | Hu/man`,
+    description: `Personal portfolio and CV websites for job seekers, graduates, creatives and freelancers, from ${portfolioTiers[0].price}. Mobile-first, readable by search and AI, with a PDF CV.`,
+    label: 'Portfolio sites',
+    ogHeadline: 'Be remembered, not just screened.',
+    schemaType: 'WebPage',
   },
   work: {
     key: 'work',
@@ -111,7 +121,7 @@ export const pages: Record<PageKey, PageInfo> = {
     key: 'how-we-build',
     path: '/how-we-build/',
     title: 'How we build fast, secure, AI-ready sites | Hu/man',
-    description: `Not AI slop: six stages a human signs off, the technology under every build, and the ${checklist.length}-point checklist every site passes before it goes live.`,
+    description: `Not AI slop: one five-step method a human signs off, the technology under every build, and the ${checklist.length}-point checklist every site passes before it goes live.`,
     label: 'How we build',
     ogHeadline: 'Not AI slop.',
     schemaType: 'WebPage',
@@ -202,7 +212,7 @@ export const pages: Record<PageKey, PageInfo> = {
     title: 'Page not found | Hu/man Software Agency',
     description: 'This page could not be found.',
     label: 'Page not found',
-    ogHeadline: 'Got an idea? Let’s build it.',
+    ogHeadline: 'Got an idea? We’ll build it, and build it to be found by AI.',
     schemaType: 'WebPage',
     noindex: true,
   },
