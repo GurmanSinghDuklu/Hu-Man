@@ -27,8 +27,8 @@ export const site = {
   /** The one headline across the site (change list, Nov 2026); also the schema slogan. */
   tagline: 'Got an idea? We’ll build it, and build it to be found by AI.',
   founder: 'Gurman Singh Duklu',
-  /** How the founder is named in the footer and on /about ("Founded by Gurman Singh"). */
-  founderShort: 'Gurman Singh',
+  /** How the founder is named in the footer and on /about ("Founded by Gurman Singh and team"). */
+  founderShort: 'Gurman Singh and team',
   // Leeds became the base on 2026-10-19 (final designs). The name stays off the marketing
   // pages; since 2026-10-27 (Gurman's choice) it appears in the footer's trading line and on
   // the legal pages, which the E-Commerce Regulations 2002 ask to say who runs the site. No

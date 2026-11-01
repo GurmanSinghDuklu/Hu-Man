@@ -1,7 +1,7 @@
 # Business context
 
 ## Summary
-Gurman Singh Duklu, 18, Bradford, is starting a solo studio that gives local small businesses a complete, modern online presence: a high-end website redesign, online booking and payments, AI enquiry assistants and automations, and local and AI-search visibility. He wants it as his full-time income and plans to grow aggressively but honestly. He does not plan to employ anyone.
+Gurman Singh Duklu, 18, Bradford, is starting a studio, Hu/man (founded by Gurman Singh and team), that gives local small businesses a complete, modern online presence: a high-end website redesign, online booking and payments, AI enquiry assistants and automations, and local and AI-search visibility. He wants it as his full-time income and plans to grow aggressively but honestly. Public line everywhere: "Gurman Singh and team". Gurman does development and builds, and writes and builds every site; consultancy and client care (first call, every enquiry, ongoing customer service) is handled by a dedicated team member (name to be confirmed).
 
 ## How the idea evolved (so you understand the reasoning)
 1. Started as a freelance web developer for local businesses.
@@ -25,7 +25,7 @@ Gaps: no paid deployment yet, no sector expertise, no sales experience, and visu
 Competition: specialist vendors already sell AI call answering to some sectors (for example VoiceStack to UK dental practices), and job-management software exists for trades (Powered Now, Tradify). Win by being local, done-for-you, tested and accountable, and integrate with tools they already use.
 
 ## Full-time plan and checkpoint
-- Solo capacity: roughly two or three full builds a month at most. Standardise the offer and cap new onboardings (about three a month at first).
+- Build capacity (Gurman builds every site): roughly two or three full builds a month at most. Standardise the offer and cap new onboardings (about three a month at first).
 - Illustrative target (my estimate, not a benchmark): about £3,000 to £5,000 of build revenue a month plus a growing base of monthly plans. Fifteen plans at £150 is £2,250 recurring.
 - Set a 90-day checkpoint with a clear measure (for example three paying clients and a set monthly recurring revenue) to decide whether to stay full-time or add income alongside.
 - Pricing strategy: low introductory prices for the first few years while building reputation, then raise as the diary fills. Not blind undercutting: premium quality, introductory rates. See `02-offer-and-pricing.md`.
@@ -38,7 +38,7 @@ Competition: specialist vendors already sell AI call answering to some sectors (
 - Open source: wrote a macOS/Apple Silicon setup section for Arm's "AI Agent on CPU" Learning Path and submitted it as a pull request. Do not say it was merged unless Gurman confirms.
 - FinBERT financial sentiment analysis (2025): fine-tuned a BERT-based model with Hugging Face and PyTorch, tracked with Weights & Biases.
 - Spring Boot REST API test-automation project (2026): CRUD service with MongoDB, Docker, automated API tests, CI in Azure DevOps and GitHub Actions.
-- Essence Hair Treatment website (2026): live React website (essencehairtreatment.com per the CV) built unpaid for his aunt's business. Describe as "built for a family business".
+- Essence Hair Treatment website (2026): live React website (essencehairtreatment.com per the CV) built unpaid for his aunt's business. Describe it publicly only as a live website for Essence Hair & Academy, a hair studio; do not mention family on the site.
 - The Calculator App (2026): live site at thecalculatorapp.org, 130+ free UK and US calculators and unit converters. Gurman confirmed on 2026-09-27 that he made it and redesigned it from a basic, functional site. Relationship (own product or client) not yet stated: the site calls it a "Redesign" and does not say "client".
 - In progress (label as such): Claude Certified Architect (tier not confirmed), AWS Cloud Practitioner Essentials (self-study), Azure DevOps for CI/CD (self-study).
 - Also completed: C++ Foundations (Udemy), COBOL Basics (IBM, 2026).
