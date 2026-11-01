@@ -7,10 +7,19 @@ import { site } from '../config/site';
 import { withBase } from '../config/paths';
 import { pages, tierCount, type PageKey } from '../data/pages';
 import { serviceAreas } from '../data/services';
-import { tiers, addOns, fromPrice, priceOf } from '../data/pricing';
+import {
+  tiers,
+  fromPrice,
+  priceOf,
+  fastTrack,
+  portfolioTiers,
+  portfolioAddOns,
+  portfolioExpress,
+  carePlansNote,
+} from '../data/pricing';
 import { faq, agenticFaq, checkFaq, contactFaq } from '../data/faq';
 import { definition, ingredients } from '../data/agentic';
-import { stages, checklist, compare, bonnet } from '../data/process';
+import { method, methodName, methodNote, checklist, compare, bonnet } from '../data/process';
 import { projects } from '../data/projects';
 import { mission, rules, promises } from '../data/about';
 
@@ -18,14 +27,16 @@ const abs = (path: string) => new URL(withBase(path), site.url).toString();
 const plus = (text: string) => text.replace(/\s\+\s/g, ' and ');
 const link = (key: PageKey) => `[${pages[key].label}](${abs(pages[key].path)})`;
 
-const summary = `${site.fullName} is a software studio in ${site.location.town}, ${site.location.region}, UK. It designs and builds websites, e-commerce stores, mobile apps and custom software for individuals and small businesses, and looks after them after launch. Every site from the ${priceOf('spark')} Spark tier up is agentic AI-ready as standard: fast, secure, and structured so people, search engines and AI agents can read it and act on it. A real person works with each client from the first call to long after launch.`;
+const summary = `${site.fullName} is a software studio in ${site.location.town}, ${site.location.region}, UK. It designs and builds websites, e-commerce stores, mobile apps and custom software for individuals and small businesses, and looks after them after launch. Every site, from the ${fromPrice} Essential tier up, is agentic AI-ready as standard: fast, secure, and structured so people, search engines and AI agents can read it and act on it. A real person works with each client from the first call to long after launch.`;
 
 const keyFacts = [
   `Name: ${site.fullName} (also written ${site.alternateNames.join(', ')})`,
   `Based in: ${site.location.town}, ${site.location.region}, United Kingdom (a service-area business; no public street address)`,
+  `Locations: ${site.locations.join(' · ')}`,
+  `Founded by: ${site.founderShort}`,
   'Works: in person in Leeds and West Yorkshire, remotely across the UK and worldwide',
   `Founded: ${site.founded}`,
-  `Website prices: from ${fromPrice} to ${priceOf('full-presence')} in ${tierCount} fixed tiers; custom apps and portals priced on application`,
+  `Website prices: from ${fromPrice} to ${priceOf('growth')} in ${tierCount} fixed tiers; custom apps and portals priced on application`,
   `Contact: ${site.contact.email}, ${site.contact.phone}`,
   `Instagram: ${site.contact.instagram}`,
   'Free offer: a free AI check of an existing website, reviewed by a person, with a reply within 48 hours',
@@ -39,6 +50,7 @@ const pageKeys: PageKey[] = [
   'free-ai-check',
   'how-we-build',
   'work',
+  'portfolio',
   'about',
   'contact',
 ];
@@ -108,7 +120,7 @@ export function llmsFullTxt(): string {
     '',
     ...ingredients.map((item, i) => `${i + 1}. ${item.title}: ${item.text}`),
     '',
-    `Every website from the ${priceOf('spark')} Spark tier up is agentic AI-ready as standard; the ${fromPrice} Essential tier is a standard website without it.`,
+    `Every website we build, from the ${fromPrice} Essential tier up, is agentic AI-ready as standard.`,
     '',
     ...agenticFaq.flatMap((item) => [`### ${item.q}`, '', item.a, '']),
     `## Free AI check (${link('free-ai-check')})`,
@@ -145,22 +157,40 @@ export function llmsFullTxt(): string {
     '',
     'Pay once. Every tier includes a person from first call to launch, three revision rounds and full ownership. Move up a tier any time and only pay the difference.',
     '',
-    '| Tier | Price | What is included |',
-    '| --- | --- | --- |',
+    '| Tier | Price | What it is | What is included | Timeline |',
+    '| --- | --- | --- | --- | --- |',
     ...tiers.map(
       (t) =>
-        `| ${t.name} | ${t.price === 'Bespoke' ? 'Bespoke (price on application)' : t.price} | ${t.includes.replace(/ · /g, '; ')} |`,
+        `| ${t.name} | ${t.price === 'Bespoke' ? 'Bespoke (price on application)' : t.price} | ${t.what}${t.tag ? ` (${t.tag})` : ''} | ${t.includes.join('; ')} | ${t.timeline} |`,
     ),
     '',
-    `Add-ons: ${addOns.join('; ')}.`,
+    `${fastTrack.title}: ${fastTrack.text}`,
     '',
-    'Monthly care plans (hosting, security, backups, updates, small fixes and support) are being reworked; the current draft prices are on the pricing page.',
+    `Care plans: launching soon, with no prices yet. ${carePlansNote}`,
+    '',
+    `## Portfolio and CV websites (${link('portfolio')})`,
+    '',
+    'Personal sites for individuals: job seekers, graduates, creatives and freelancers. We do not promise jobs, interviews or any result with applicant tracking systems.',
+    '',
+    ...portfolioTiers.flatMap((t) => [
+      `### ${t.name}${t.tag ? ` (${t.tag})` : ''}: ${t.price}, ${t.timeline}`,
+      '',
+      `${t.summary}.`,
+      '',
+      ...t.includes.map((i) => `- ${i}`),
+      '',
+    ]),
+    `Add-ons: ${portfolioAddOns.join('; ')}.`,
+    '',
+    `${portfolioExpress.title} (${portfolioExpress.price}): ${portfolioExpress.text}`,
     '',
     `## How we build (${link('how-we-build')})`,
     '',
-    'Six stages. A person signs off each one.',
+    `${methodName} A person signs off each step.`,
     '',
-    ...stages.map((s, i) => `${i + 1}. ${plus(s.title)}: ${s.text}`),
+    ...method.map((s, i) => `${i + 1}. ${s.title} (${s.when}): ${s.text}`),
+    '',
+    methodNote,
     '',
     '### What is under the bonnet',
     '',

@@ -13,4 +13,4 @@ Standards: HTML, CSS, TypeScript, WCAG 2.2 AA
 Software: Astro, Sharp, Playwright
 Fonts: Montserrat, Archivo, IBM Plex Mono, Newsreader (self-hosted)
 Tracking: none. No cookies.
-Made by hand. Built by machine.
+Got an idea? We’ll build it, and build it to be found by AI.

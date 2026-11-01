@@ -3,14 +3,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import InnerHero from '../components/InnerHero.astro';
-import PriceArches from '../components/PriceArches.astro';
+import HeadlineCards from '../components/HeadlineCards.astro';
 import TalkBanner from '../components/TalkBanner.astro';
-import { tiers, carePlans, addOns, fromPrice } from '../data/pricing';
+import { tiers, carePlansNote, fromPrice, fastTrack } from '../data/pricing';
 import { faq } from '../data/faq';
-import { contactPath } from '../config/links';
-import { withBase } from '../config/paths';
-
-const choose = (name: string) => withBase(contactPath({ tier: name }));
 ---
 
 <BaseLayout page="pricing">
@@ -29,41 +25,22 @@ const choose = (name: string) => withBase(contactPath({ tier: name }));
     </Fragment>
   </InnerHero>
 
-  <section class="band grid tiers" aria-labelledby="tiers-title">
+  <section class="band grid cards" aria-labelledby="tiers-title">
     <div class="sheet">
       <h2 id="tiers-title" class="label">
-        {tiers.length} tiers · Pay once · Add a care plan if you want one
+        {tiers.length} tiers · Pay once · Timelines on every card
       </h2>
-      <p class="tiers__text">
+      <p class="cards__text">
         Every tier includes a human from first call to launch, three revision rounds and full
         ownership.
       </p>
-      <div class="tiers__arches" data-reveal>
-        <PriceArches variant="pricing" />
+      <div class="cards__grid">
+        <HeadlineCards />
       </div>
-    </div>
-  </section>
-
-  <section class="band band--paper-2 rows" aria-labelledby="rows-title">
-    <div class="sheet">
-      <p class="label" data-reveal>
-        What is in each
+      <p class="cards__fast" data-reveal>
+        <strong>{fastTrack.title}.</strong>
+        {fastTrack.text}
       </p>
-      <h2 id="rows-title" class="display display--s rows__title" data-reveal="lines">
-        Tier by tier
-      </h2>
-      <ul class="rows__list">
-        {tiers.map((t) => (
-          <li class:list={['row', `row--${t.style}`, `row--${t.id}`]} data-reveal>
-            <h3 class="row__name">{t.name}</h3>
-            <p class="row__price">{t.price}</p>
-            <p class="row__includes">{t.includes}</p>
-            <a class="pill-btn row__btn" href={choose(t.name)}>
-              Choose<span class="visually-hidden"> {t.name}</span>
-            </a>
-          </li>
-        ))}
-      </ul>
     </div>
   </section>
 
@@ -76,30 +53,11 @@ const choose = (name: string) => withBase(contactPath({ tier: name }));
         <h2 id="care-title" class="display care__title">
           Care plans
         </h2>
-        <span class="pill care__draft">Draft · Being researched and reworked</span>
+        <span class="pill care__draft">Launching soon</span>
       </div>
-      <ul class="care__cards">
-        {carePlans.map((c, i) => (
-          <li
-            class:list={['care__card', `care__card--${c.style}`]}
-            data-reveal
-            style={`--reveal-delay:${i * 0.06}s`}
-          >
-            <span class="care__name">{c.name}</span>
-            <span class="care__price">
-              {c.price}
-              <small>/mo</small>
-            </span>
-            <span>{c.includes}</span>
-          </li>
-        ))}
-      </ul>
-      <h3 class="label care__addons-title">Add-ons</h3>
-      <ul class="care__addons">
-        {addOns.map((a) => (
-          <li class="pill">{a}</li>
-        ))}
-      </ul>
+      <p class="care__text" data-reveal>
+        {carePlansNote}
+      </p>
     </div>
   </section>
 
@@ -119,17 +77,7 @@ const choose = (name: string) => withBase(contactPath({ tier: name }));
                 <span class="faq__q">{item.q}</span>
                 <span class="faq__toggle" aria-hidden="true" />
               </summary>
-              <p class="faq__a">
-                {item.a}
-                {item.linkTiers && (
-                  <>
-                    <br />
-                    <a href="#tiers-title">
-                      See every tier <span aria-hidden="true">↗</span>
-                    </a>
-                  </>
-                )}
-              </p>
+              <p class="faq__a">{item.a}</p>
             </details>
           </li>
         ))}
@@ -143,109 +91,36 @@ const choose = (name: string) => withBase(contactPath({ tier: name }));
 </BaseLayout>
 
 <style>
-  /* ---------- arches ---------- */
-  .tiers {
+  /* ---------- headline cards ---------- */
+  .cards {
     padding-block: clamp(2.5rem, calc(var(--u) * 0.6), 3.5rem)
       clamp(3rem, calc(var(--u) * 0.66), 4rem);
     border-top: 1px solid var(--grid-line);
   }
 
-  .tiers__text {
+  .cards__text {
     max-width: 38rem;
     margin-top: 0.5rem;
     font-size: clamp(1rem, calc(var(--u) * 0.18), 1.1rem);
   }
 
-  .tiers__arches {
+  .cards__grid {
     margin-top: clamp(2rem, calc(var(--u) * 0.6), 3.5rem);
   }
 
-  /* ---------- tier by tier ---------- */
-  .rows {
-    padding-block: clamp(3.5rem, calc(var(--u) * 0.9), 5.5rem) clamp(3rem, calc(var(--u) * 1), 6rem);
+  /* Fast Track: a quiet line, not a card. */
+  .cards__fast {
+    max-width: 46rem;
+    margin-top: clamp(1.5rem, calc(var(--u) * 0.4), 2.5rem);
+    padding-top: 1rem;
+    border-top: 1px solid var(--ink);
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: var(--muted);
   }
 
-  .rows__title {
-    margin-top: 0.3rem;
-  }
-
-  .rows__list {
-    display: grid;
-    gap: calc(var(--u) * 0.13);
-    margin-top: clamp(2rem, calc(var(--u) * 0.6), 3rem);
-  }
-
-  .row {
-    --mark: var(--mist);
-    position: relative;
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 0.5rem 1rem;
-    align-items: center;
-    padding: 1.1rem 1.25rem 1.1rem 1.75rem;
-    border: 1px solid var(--ink);
-    border-left: 0;
-    border-radius: 0 999px 999px 0;
-    background: var(--paper);
-  }
-
-  /* The coloured marker on the left edge of each row. */
-  .row::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: -1px;
-    bottom: -1px;
-    width: calc(var(--u) * 0.17);
-    min-width: 10px;
-    background: var(--mark);
-    border-radius: 999px 0 0 999px;
-  }
-
-  .row--peach {
-    --mark: var(--peach);
-  }
-
-  .row--lilac {
-    --mark: var(--grad-lilac);
-  }
-
-  .row--dusk {
-    --mark: var(--grad-dusk);
-  }
-
-  .row--ink {
-    --mark: var(--ink);
-  }
-
-  .row--rose {
-    --mark: var(--grad-rose);
-  }
-
-  /* In the design, the markers alternate: round, square, round... */
-  .row:nth-child(even)::before {
-    border-radius: 0;
-  }
-
-  .row__name {
-    font-size: clamp(1rem, calc(var(--u) * 0.225), 1.4rem);
-    line-height: 1;
-  }
-
-  .row__price {
-    font: 800 clamp(1.2rem, calc(var(--u) * 0.29), 1.8rem) / 1 var(--font-display);
-    letter-spacing: -0.02em;
-  }
-
-  .row__includes {
-    grid-column: 1 / -1;
-    font-size: clamp(0.9rem, calc(var(--u) * 0.165), 1rem);
-  }
-
-  .row__btn {
-    grid-column: 1 / -1;
-    justify-self: start;
-    min-width: 9rem;
+  .cards__fast strong {
+    color: var(--ink);
   }
 
   /* ---------- care plans ---------- */
@@ -267,77 +142,10 @@ const choose = (name: string) => withBase(contactPath({ tier: name }));
     white-space: normal;
   }
 
-  .care__cards {
-    display: grid;
-    gap: 1rem;
-    margin-top: clamp(2rem, calc(var(--u) * 0.6), 3.5rem);
-  }
-
-  .care__card {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    gap: 0.4rem;
-    min-height: 13rem;
-    padding: clamp(1.25rem, calc(var(--u) * 0.32), 2rem);
-    border: 1px solid var(--ink);
-    font-size: clamp(0.95rem, calc(var(--u) * 0.165), 1.05rem);
-  }
-
-  .care__card--outline {
-    background: var(--paper);
-  }
-
-  .care__card--peach {
-    border-top-right-radius: calc(var(--u) * 0.9);
-    background: var(--peach);
-  }
-
-  .care__card--lilac {
-    border-radius: 999px 999px 0 0;
-    background: var(--grad-lilac);
-  }
-
-  .care__card--ink {
-    border-top-right-radius: calc(var(--u) * 1.6);
-    background: var(--ink);
-    color: var(--paper);
-  }
-
-  .care__name {
-    font: 400 0.75rem var(--font-mono);
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-  }
-
-  .care__price {
-    display: flex;
-    align-items: baseline;
-    font: 800 clamp(2.6rem, calc(var(--u) * 0.66), 4rem) / 1 var(--font-display);
-    letter-spacing: -0.03em;
-  }
-
-  .care__price small {
-    font-size: 0.3em;
-    letter-spacing: 0;
-    text-transform: uppercase;
-  }
-
-  .care__addons-title {
-    margin-top: clamp(2rem, calc(var(--u) * 0.5), 3rem);
-  }
-
-  .care__addons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
+  .care__text {
+    max-width: 38rem;
     margin-top: 1rem;
-  }
-
-  .care__addons .pill {
-    padding: 0.65rem 1rem;
-    background: transparent;
-    font-size: 0.75rem;
+    font-size: clamp(1rem, calc(var(--u) * 0.18), 1.1rem);
   }
 
   /* ---------- FAQ ---------- */
@@ -436,10 +244,6 @@ const choose = (name: string) => withBase(contactPath({ tier: name }));
   }
 
   @media (min-width: 48rem) {
-    .care__cards {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
     .faq__list {
       grid-template-columns: repeat(2, 1fr);
       gap: calc(var(--u) * 0.22) calc(var(--u) * 0.33);
@@ -451,37 +255,6 @@ const choose = (name: string) => withBase(contactPath({ tier: name }));
   }
 
   @media (min-width: 64rem) {
-    .row {
-      grid-template-columns: calc(var(--u) * 3.11) calc(var(--u) * 1.67) 1fr auto;
-      height: calc(var(--u) * 0.93);
-      padding: 0 calc(var(--u) * 0.34) 0 calc(var(--u) * 0.35);
-    }
-
-    .row__includes,
-    .row__btn {
-      grid-column: auto;
-    }
-
-    .row__btn {
-      min-width: calc(var(--u) * 2);
-      min-height: calc(var(--u) * 0.41);
-      font-size: calc(var(--u) * 0.11);
-    }
-
-    .care__cards {
-      grid-template-columns: repeat(4, 1fr);
-      gap: calc(var(--u) * 0.33);
-    }
-
-    .care__card {
-      min-height: calc(var(--u) * 3.66);
-    }
-
-    .care__name,
-    .care__addons .pill {
-      font-size: calc(var(--u) * 0.13);
-    }
-
     .faq__item {
       min-height: calc(var(--u) * 1.44);
     }

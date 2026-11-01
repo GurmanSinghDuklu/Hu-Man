@@ -24,8 +24,11 @@ export const site = {
   wordmark: 'HU/MAN',
   descriptor: 'Studio',
   nameIsPlaceholder: true,
-  tagline: 'Made by hand. Built by machine.',
+  /** The one headline across the site (change list, Nov 2026); also the schema slogan. */
+  tagline: 'Got an idea? We’ll build it, and build it to be found by AI.',
   founder: 'Gurman Singh Duklu',
+  /** How the founder is named in the footer and on /about ("Founded by Gurman Singh and team"). */
+  founderShort: 'Gurman Singh and team',
   // Leeds became the base on 2026-10-19 (final designs). The name stays off the marketing
   // pages; since 2026-10-27 (Gurman's choice) it appears in the footer's trading line and on
   // the legal pages, which the E-Commerce Regulations 2002 ask to say who runs the site. No
@@ -37,7 +40,9 @@ export const site = {
   },
   // Shown as "Leeds, West Yorkshire / UK · Global" (Gurman, 2026-10-27): in person around Leeds,
   // remote across the UK and worldwide. No town-by-town list.
-  areasServed: ['Leeds'],
+  areasServed: ['Leeds', 'Manchester'],
+  /** Shown as "Leeds · Manchester" in the footer and on /about (change list, Nov 2026). */
+  locations: ['Leeds', 'Manchester'],
   reach: ['UK', 'Global'],
   contact: {
     email: 'humansoftwareagency@gmail.com',

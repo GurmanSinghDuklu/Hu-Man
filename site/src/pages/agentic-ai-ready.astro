@@ -11,7 +11,7 @@ import InnerHero from '../components/InnerHero.astro';
 import TalkBanner from '../components/TalkBanner.astro';
 import { agenticFaq } from '../data/faq';
 import { definition, ingredients } from '../data/agentic';
-import { fromPrice, priceOf } from '../data/pricing';
+import { fromPrice } from '../data/pricing';
 import { withBase } from '../config/paths';
 
 const selfCheck = [
@@ -84,9 +84,7 @@ const selfCheck = [
         ))}
       </ol>
       <p class="takes__note">
-        It comes as standard on every website we build from our {priceOf('spark')} Spark tier up.
-        Our
-        {fromPrice} Essential tier is a standard website without it.
+        It comes as standard on every website we build, from our {fromPrice} Essential tier up.
       </p>
     </div>
   </section>

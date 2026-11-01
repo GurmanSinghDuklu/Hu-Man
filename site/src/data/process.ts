@@ -1,46 +1,55 @@
 /**
- * How a build runs (the /how-we-build/ page). Shared with the page's schema and llms-full.txt.
+ * How a build runs: one named method with timings (change list, Nov 2026). The home page and
+ * /how-we-build/ show this same block, and the page schema and llms-full.txt read it too.
  */
-export interface Stage {
+export interface MethodStep {
   title: string;
+  /** When it happens. */
+  when: string;
   text: string;
-  /** The card's shape and fill on the page. */
-  style: 'ink' | 'arch' | 'square' | 'lilac';
+  /** The card's shape on the page. */
+  shape: 'curve' | 'square' | 'lilac';
 }
 
-/** "Six stages. A human signs off each one." */
-export const stages: Stage[] = [
+/** "Talk, Shape, Build, Launch, Stay." */
+export const methodName = 'Talk. Shape. Build. Launch. Stay.';
+
+export const method: MethodStep[] = [
   {
-    title: 'Discovery call',
-    text: 'We learn your business, your customers and what the site needs to do.',
-    style: 'ink',
+    title: 'Talk',
+    when: 'Day 1 · free 1-hour call',
+    text: 'You leave knowing what to build first.',
+    shape: 'curve',
   },
   {
-    title: 'Design + concept',
-    text: 'You see the design before a line of code is written.',
-    style: 'arch',
+    title: 'Shape',
+    when: 'Week 1',
+    text: 'A plan and design you approve before any code.',
+    shape: 'square',
   },
   {
     title: 'Build',
-    text: 'AI speeds up the groundwork. A developer writes, reviews and tests every page.',
-    style: 'square',
-  },
-  {
-    title: 'Test',
-    text: 'Speed, security, accessibility and every device, checked before launch.',
-    style: 'square',
+    when: 'Weeks 2 to 4',
+    text: 'Developer-written, and tested on real phones.',
+    shape: 'curve',
   },
   {
     title: 'Launch',
-    text: 'Domain, certificates, redirects and search setup done for you.',
-    style: 'arch',
+    when: 'Go-live',
+    text: 'Domain, redirects, search and AI setup done for you.',
+    shape: 'square',
   },
   {
-    title: 'Still here',
-    text: 'After launch, you message a person when you need something.',
-    style: 'lilac',
+    title: 'Stay',
+    when: 'Ongoing',
+    text: 'A person who knows your site answers.',
+    shape: 'lilac',
   },
 ];
+
+/** Under the method block: the timings above are typical, each tier has its own (/pricing/). */
+export const methodNote =
+  'Typical timings. Each tier has its own timeline on the pricing page, and we confirm yours on the call.';
 
 /** "Every site passes this checklist", before go-live. */
 export const checklist: string[] = [

@@ -97,7 +97,7 @@ Use this copy unless Gurman changes it. Do not invent extra claims.
 - Note: "These are concept designs for fictional businesses. They show what I would build, not past client work."
 - Six tiles from the sector data below, each with a caption listing what the concept includes (for example "Online booking, deposits, AI assistant").
 - Real projects (plain list, H3: Real projects):
-  - Essence Hair Treatment: live React website, built for a family business (link to the live site).
+  - Essence Hair Treatment: live React website (link to the live site).
   - Arm Learning Paths: macOS setup guide for the "AI Agent on CPU" path, submitted as a pull request.
   - Lloyds Banking Group placement: live mortgage web pages built in a React and TypeScript Agile team (no screenshots).
 
@@ -115,7 +115,7 @@ Use this copy unless Gurman changes it. Do not invent extra claims.
 - CTA per tier: mailto link with the tier in the subject.
 
 **About and credentials (H2: About)**
-- "I'm Gurman, a developer based in Bradford. I've shipped live customer pages inside a major bank's Agile team, written open-source documentation for Arm, and built and launched a live website for a family business. I started this studio because local businesses deserve websites as good as national brands', and I'd rather be judged on your bookings than my hours."
+- "I'm Gurman, a developer based in Bradford. I've shipped live customer pages inside a major bank's Agile team, written open-source documentation for Arm, and built and launched a live website for a hair studio. I started this studio because local businesses deserve websites as good as national brands', and I'd rather be judged on your bookings than my hours."
 - Credential list exactly as in `01-business-context.md` "Verified credentials", with "in progress" items labelled. No testimonials section until real ones exist (then add it).
 - No photo yet. Leave a clearly marked slot in the design for a professional photo (see open questions).
 

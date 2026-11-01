@@ -1,6 +1,6 @@
 # Duklu Digital: project memory
 
-Gurman Singh Duklu's solo web, AI and local-search studio (Leeds, UK; Bradford before 2026-10-19). Working brand since 2026-09-23: **Hu/man** (wordmark "HU/MAN"), replacing "Duklu Digital". Still a working name: keep it in `src/config/site.ts` (`name`, `wordmark`, `descriptor`) so it is easy to change.
+Gurman Singh Duklu's web, AI and local-search studio (public line: "Gurman Singh and team") (Leeds, UK; Bradford before 2026-10-19). Working brand since 2026-09-23: **Hu/man** (wordmark "HU/MAN"), replacing "Duklu Digital". Still a working name: keep it in `src/config/site.ts` (`name`, `wordmark`, `descriptor`) so it is easy to change.
 
 ## Current goal
 Build the studio's own marketing website: high-end, fast, local-SEO-ready, with concept before/after renders, services, pricing, credentials, FAQ and a free-audit contact path. Build it in the phases in `docs/08-roadmap.md`. Do not deploy, buy domains or publish anything without asking first.
@@ -13,7 +13,7 @@ Build the studio's own marketing website: high-end, fast, local-SEO-ready, with 
 
 ## Hard rules (never break)
 1. No invented proof. No fake testimonials, ratings, review counts, client logos, awards, statistics or "as seen in". Concept work is labelled "Concept design for a fictional business" wherever it appears. Fictional domains use `.example`.
-2. Credentials appear exactly as listed under "Verified credentials" in `docs/01-business-context.md`. Essence Hair Treatment was built unpaid for his aunt's business: call it "built for a family business", never a paid client. Claude Certified Architect is in progress: show it only as "in progress" until he confirms a pass. The Arm contribution is a submitted pull request unless he says it was merged.
+2. Credentials appear exactly as listed under "Verified credentials" in `docs/01-business-context.md`. Essence Hair Treatment was built unpaid for his aunt's business: never call it a paid client, and do not mention family on the public site (client request, Nov 2026). Claude Certified Architect is in progress: show it only as "in progress" until he confirms a pass. The Arm contribution is a submitted pull request unless he says it was merged.
 3. No guarantees: not rankings, not Google AI Overviews or ChatGPT recommendations, not sales. State what is done and what is measured.
 4. Publish only the contact details listed under "Public contact details". Never publish a home address.
 5. UK English, sentence case, plain verbs. Buttons say what happens ("Get your free presence audit").
@@ -204,7 +204,7 @@ Revision 6 (2026-09-28) made the hero a Higgsfield-style collage wall with filte
 Revision 7 (2026-10-01) replaced every fictional-brand tile in the hero collage with real work
 only (`src/assets/projects/`, frames cropped from Gurman's screen recordings, browser chrome
 removed): The Calculator App and Essence (Live, green dot) plus two Concepts with a visible tag.
-Eldeva is a mock-up for a family member's real business, not live: tag "Concept", never "Live".
+Eldeva is a mock-up, not live (no mention of family on the site): tag "Concept", never "Live".
 The Tesla fan site is Gurman's unofficial redesign of a real brand (his decision to show it): tag
 "Unofficial concept" and keep "not affiliated with Tesla, Inc." in the key line. Never use Eldeva
 frames showing its mock reviews or star ratings. Filters are by project, not service type.

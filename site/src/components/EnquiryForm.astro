@@ -11,7 +11,7 @@
  */
 import { site } from '../config/site';
 import { withBase } from '../config/paths';
-import { tiers } from '../data/pricing';
+import { tiers, portfolioTiers } from '../data/pricing';
 
 interface Props {
   variant: 'contact' | 'check';
@@ -103,11 +103,20 @@ const isCheck = variant === 'check';
         </label>
         <select id={id('tier')} name="tier">
           <option value="">Not sure yet</option>
-          {tiers.map((t) => (
-            <option value={t.name}>
-              {t.name} ({t.price})
-            </option>
-          ))}
+          <optgroup label="Websites">
+            {tiers.map((t) => (
+              <option value={t.name}>
+                {t.name} ({t.price})
+              </option>
+            ))}
+          </optgroup>
+          <optgroup label="Portfolio and CV sites">
+            {portfolioTiers.map((t) => (
+              <option value={`Portfolio: ${t.name}`}>
+                {t.name} ({t.price})
+              </option>
+            ))}
+          </optgroup>
         </select>
       </div>
     )}

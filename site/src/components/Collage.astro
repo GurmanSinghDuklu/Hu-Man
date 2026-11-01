@@ -65,7 +65,9 @@ const layouts: Record<Props['variant'], Layout> = {
       ['indigo', 13, 8],
     ],
     arch: [14, 6, 3],
-    ring: [13, 4, 1.62, 1.5],
+    // The tile eye is at row 3.49 (face top -0.31 + 0.2906 of the image height); 3.54 puts the
+    // ring's eye level with it, with the same offset as on the inner heroes.
+    ring: [13, 3.54, 1.62, 1.5],
     pill: [11.1, 6.2],
   },
   inner: {

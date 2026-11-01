@@ -1,7 +1,7 @@
 ---
 /**
- * "Real projects. Real people." (home 06): each project's front page in a browser window, linking
- * to /work/. Eldeva is a concept for a family business: its line always says "Concept". Links to
+ * "Portfolio" (home 06): each project's front page in a browser window, linking
+ * to /work/. Eldeva is a concept: its line always says "Concept". Links to
  * other sites open in a new tab, so the visitor keeps this one.
  */
 import { Image } from 'astro:assets';
@@ -11,25 +11,22 @@ import eldeva from '../../assets/projects/eldeva-hero.jpg';
 import calculator from '../../assets/work/calculator-desktop.jpg';
 import { projects } from '../../data/projects';
 
-const project = (id: string) => projects.find((p) => p.id === id)!;
-
-const cards = [
-  {
-    ...project('essence'),
+// The order comes from src/data/projects.ts.
+const shots: Record<string, { src: typeof essence; alt: string }> = {
+  essence: {
     src: essence,
     alt: 'The Essence Hair home page: “More than hair, a place to relax, refresh and feel your best.”',
   },
-  {
-    ...project('eldeva'),
+  eldeva: {
     src: eldeva,
     alt: 'The Eldeva concept home page: “Golden hour, bottled.”',
   },
-  {
-    ...project('calculator'),
+  calculator: {
     src: calculator,
     alt: 'The Calculator App home page, with featured calculators',
   },
-];
+};
+const cards = projects.map((p) => ({ ...p, ...shots[p.id] }));
 ---
 
 <section class="band band--paper-2 cards section" aria-labelledby="cards-title">
@@ -38,7 +35,7 @@ const cards = [
       06 / Our work
     </p>
     <h2 id="cards-title" class="display display--m" data-reveal="lines">
-      Real projects. Real people.
+      Portfolio
     </h2>
 
     <ul class="cards__list">

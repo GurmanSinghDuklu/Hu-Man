@@ -2,6 +2,7 @@
 /** "Talk to a human": the banner that closes most pages (id="audit"). */
 import { withBase } from '../config/paths';
 import Sparkle from './Sparkle.astro';
+import BookingLink from './BookingLink.astro';
 ---
 
 <section class="band talk-band" id="audit" aria-labelledby="audit-title">
@@ -12,17 +13,16 @@ import Sparkle from './Sparkle.astro';
         <Sparkle class="talk__star amb-spin" color="var(--ink)" />
       </span>
       <div class="talk__copy">
-        <p class="label">Free audit · No obligation</p>
+        <p class="label">Free call · No obligation</p>
         <h2 id="audit-title" class="talk__title">
           Talk to a human
         </h2>
         <p class="talk__text">
-          Send your web address or just say hello. You get a reply from a real person, not a bot.
+          Book a free 1-hour call, or send your web address for a free AI check. You get a real
+          person, not a bot.
         </p>
         <div class="talk__actions">
-          <a class="pill-btn" href={withBase('/contact/')}>
-            Send us a message
-          </a>
+          <BookingLink class="pill-btn" />
           <a class="pill-btn pill-btn--outline" href={withBase('/free-ai-check/')}>
             Free AI check
           </a>

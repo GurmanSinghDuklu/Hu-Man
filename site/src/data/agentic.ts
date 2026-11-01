@@ -9,7 +9,7 @@ export const term = 'Agentic AI-ready website';
 export const definition =
   'An agentic AI-ready website is one that people, search engines and AI agents can all read, trust and act on: its facts are clear and machine-readable, AI crawlers are let in, and actions like enquiring or booking can be completed by a person or by an AI agent working for them.';
 
-/** What it takes: the standard every build from Spark up meets. */
+/** What it takes: the standard every build from Start up meets. */
 export const ingredients = [
   {
     title: 'Open to AI crawlers',

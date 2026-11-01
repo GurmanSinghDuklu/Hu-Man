@@ -2,7 +2,7 @@
  * The schema.org JSON-LD for each page, as one linked @graph. Every page carries the business,
  * the website, the page itself and its breadcrumb, joined by @id, so search engines and AI tools
  * read one consistent entity wherever they land. Pages then add what they are about: the service
- * catalogue, the priced tiers and FAQ, the build stages, or the projects.
+ * catalogue, the priced tiers and FAQ, the build method, or the projects.
  *
  * Rule: the schema only states what the visible page states (Google's structured data policy,
  * and the hard rule on proof). No ratings, reviews or awards until real ones exist.
@@ -10,10 +10,10 @@
 import { site } from '../config/site';
 import { pages, type PageKey } from './pages';
 import { serviceAreas } from './services';
-import { tiers } from './pricing';
+import { tiers, portfolioTiers } from './pricing';
 import { faq, agenticFaq, checkFaq } from './faq';
 import { term, definition } from './agentic';
-import { stages } from './process';
+import { method, methodName } from './process';
 import { projects } from './projects';
 import { lastModified, pageFile } from '../lib/lastModified';
 
@@ -22,7 +22,7 @@ type Node = Record<string, unknown>;
 /** Absolute URL for a root-relative path, respecting any base path. */
 export type AbsUrl = (path: string) => string;
 
-/** "£1,195" -> "1195"; "Bespoke" -> undefined. */
+/** "£2,240" -> "2240"; "Bespoke" -> undefined. */
 const amount = (price: string): string | undefined => {
   const digits = price.replace(/[^\d.]/g, '');
   return digits ? digits : undefined;
@@ -78,7 +78,7 @@ export function buildSchema(key: PageKey, abs: AbsUrl): Node {
     image: abs('/og/index.png'),
     description:
       'A software studio in Leeds, West Yorkshire, building websites, e-commerce stores, mobile apps and custom software for individuals and small businesses. Every site is fast, secure and agentic AI-ready, and a real person supports it after launch.',
-    slogan: 'Made by hand. Built by machine.',
+    slogan: site.tagline,
     foundingDate: site.founded,
     email: site.contact.email,
     telephone: `+${site.contact.phoneIntl}`,
@@ -196,7 +196,7 @@ export function buildSchema(key: PageKey, abs: AbsUrl): Node {
         return {
           '@type': 'Offer',
           name: tier.name,
-          description: tier.includes,
+          description: `${tier.what}. ${tier.includes.join('; ')}`,
           url: `${url}#tiers-title`,
           seller: { '@id': ids.org },
           ...(price
@@ -209,7 +209,7 @@ export function buildSchema(key: PageKey, abs: AbsUrl): Node {
               }),
           itemOffered: {
             '@type': 'Service',
-            name: `${tier.name}: ${tier.short}`,
+            name: `${tier.name}: ${tier.what}`,
             provider: { '@id': ids.org },
           },
         };
@@ -222,16 +222,39 @@ export function buildSchema(key: PageKey, abs: AbsUrl): Node {
     }));
   }
 
+  if (key === 'portfolio') {
+    graph.push({
+      '@type': 'OfferCatalog',
+      '@id': `${url}#tiers`,
+      name: 'Portfolio and CV websites',
+      url,
+      itemListElement: portfolioTiers.map((tier) => ({
+        '@type': 'Offer',
+        name: tier.name,
+        description: tier.includes.join('; '),
+        url: `${url}#tiers-title`,
+        seller: { '@id': ids.org },
+        price: amount(tier.price),
+        priceCurrency: 'GBP',
+        itemOffered: {
+          '@type': 'Service',
+          name: `${tier.name}: portfolio website, ${tier.timeline}`,
+          provider: { '@id': ids.org },
+        },
+      })),
+    });
+  }
+
   if (key === 'how-we-build') {
     webPage.mainEntity = {
       '@type': 'ItemList',
-      name: 'Six stages. A human signs off each one.',
+      name: methodName,
       itemListOrder: 'https://schema.org/ItemListOrderAscending',
-      itemListElement: stages.map((stage, i) => ({
+      itemListElement: method.map((step, i) => ({
         '@type': 'ListItem',
         position: i + 1,
-        name: stage.title.replace(/\s\+\s/g, ' and '),
-        description: stage.text,
+        name: step.title,
+        description: `${step.when}. ${step.text}`,
       })),
     };
   }
