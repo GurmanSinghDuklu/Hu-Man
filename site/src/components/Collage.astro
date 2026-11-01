@@ -236,10 +236,11 @@ const px = (n: number) => `calc(${n.toFixed(3)} * var(--cu))`;
     padding: calc(var(--cu) * 0.07) calc(var(--cu) * 0.15);
   }
 
-  /* Narrow screens: the collage scales into the content width. */
+  /* Narrow screens: the collage scales into the content width, and no taller than the hero allows (--collage-h, set by the hero so it fits the window). */
   @media (max-width: 63.99rem) {
     .collage {
-      --cu: calc((100vw - 2 * var(--pad)) / var(--bw));
+      --cu: min((100vw - 2 * var(--pad)) / var(--bw), var(--collage-h, 100svh) / var(--bh));
+      margin-inline: auto;
     }
 
     .collage__pill {

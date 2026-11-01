@@ -259,7 +259,7 @@ ol {
 
 /* ---------- buttons ---------- */
 
-/* Square button: Ink fill, mono capitals (header "Free audit", hero buttons). */
+/* Square button: --btn fill (indigo), mono capitals (header "Free audit", hero buttons). */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -267,11 +267,11 @@ ol {
   gap: 0.5em;
   min-height: 44px;
   padding: 0.85rem 1.4rem;
-  border: 1.5px solid var(--ink);
+  border: 1.5px solid var(--btn);
   /* The hover fill sweeps in from the left: a second background layer grows from 0% to 100%. */
   background:
     linear-gradient(var(--paper), var(--paper)) no-repeat left / 0% 100%,
-    var(--ink);
+    var(--btn);
   color: var(--paper);
   font: 500 0.8125rem/1.2 var(--font-mono);
   letter-spacing: 0.16em;
@@ -287,14 +287,14 @@ ol {
   background-size:
     100% 100%,
     auto;
-  color: var(--ink);
+  color: var(--btn);
 }
 
 .btn--outline {
   background:
-    linear-gradient(var(--ink), var(--ink)) no-repeat left / 0% 100%,
+    linear-gradient(var(--btn), var(--btn)) no-repeat left / 0% 100%,
     transparent;
-  color: var(--ink);
+  color: var(--btn);
 }
 
 .btn--outline:hover {
@@ -319,11 +319,11 @@ ol {
   justify-content: center;
   min-height: 44px;
   padding: 0.7rem 1.4rem;
-  border: 1px solid var(--ink);
+  border: 1px solid var(--btn);
   border-radius: 999px;
   background:
     linear-gradient(var(--paper), var(--paper)) no-repeat left / 0% 100%,
-    var(--ink);
+    var(--btn);
   color: var(--paper);
   font: 500 0.75rem/1.2 var(--font-mono);
   letter-spacing: 0.18em;
@@ -339,14 +339,14 @@ ol {
   background-size:
     100% 100%,
     auto;
-  color: var(--ink);
+  color: var(--btn);
 }
 
 .pill-btn--outline {
   background:
-    linear-gradient(var(--ink), var(--ink)) no-repeat left / 0% 100%,
+    linear-gradient(var(--btn), var(--btn)) no-repeat left / 0% 100%,
     transparent;
-  color: var(--ink);
+  color: var(--btn);
 }
 
 .pill-btn--outline:hover {

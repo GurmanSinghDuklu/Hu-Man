@@ -417,3 +417,13 @@ Pages. A plain `npm run build` is unchanged (base `/`, example.com).
 @docs/02-offer-and-pricing.md
 @docs/03-site-spec.md
 @docs/05-compliance-and-claims.md
+
+## Heroes fit one window, indigo buttons (2026-11-01)
+- **Every hero fits the browser window** (Gurman). Desktop: `.hero`/`.ihero` set their own `--u`
+  (with `--pad`, `--sheet`) from the window height, so the whole layout shrinks, centred, never below
+  70% of the page unit; their grid lines are centred on the sheet so collage cells stay on them.
+  Phones: tighter stack, and `--collage-h` caps the collage's height. Inner heroes are 7.5 rows now.
+- **Buttons use `--btn`** (tokens.css, the logo's indigo `#4e28df`). TalkBanner sets it back to Ink
+  (its gradient runs through indigo and pink); the dark-ground buttons style their own colours.
+- Already there before this change, not fixed yet: sideways scroll on phones on home (418px) and on
+  /services/ at 390 and 768px.

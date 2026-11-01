@@ -30,10 +30,15 @@ const { label, lens, longWords = false } = Astro.props;
 </section>
 
 <style>
+  /* Fits one window, like the home hero: a tight stack on phones with the collage capped by the window height; on desktop the layout shrinks with the window (see the media query). */
+  .ihero {
+    --collage-h: 26svh;
+  }
+
   .ihero__sheet {
     display: grid;
-    gap: var(--space-5);
-    padding-block: var(--space-5) var(--space-6);
+    gap: var(--space-4);
+    padding-block: var(--space-4) var(--space-5);
   }
 
   .ihero__copy {
@@ -59,9 +64,18 @@ const { label, lens, longWords = false } = Astro.props;
   }
 
   @media (min-width: 64rem) {
+    /* The hero's own grid unit, as on the home hero: shrinks so the 7.5 rows fit under the header, never below 70% of the page unit. Grid lines centred on the sheet. */
+    .ihero {
+      --page-u: min(100vw / 16, 100px);
+      --u: clamp(var(--page-u) * 0.7, (100svh - var(--page-u) - 1px) * 0.96 / 7.5, var(--page-u));
+      --pad: calc(var(--u) / 2);
+      --sheet: calc(var(--u) * 16);
+      background-position: calc(50% - var(--u) / 2) 0;
+    }
+
     .ihero__sheet {
       display: block;
-      height: calc(var(--u) * 7.9);
+      height: calc(var(--u) * 7.5);
       padding: 0;
     }
 
@@ -83,7 +97,7 @@ const { label, lens, longWords = false } = Astro.props;
 
     .ihero__lede {
       max-width: calc(var(--u) * 5.9);
-      font-size: calc(var(--u) * 0.2);
+      font-size: max(0.9375rem, calc(var(--u) * 0.2));
     }
 
     .ihero__collage {

@@ -48,6 +48,8 @@ import BookingLink from './BookingLink.astro';
     background: var(--grad-talk);
     color: var(--ink);
     overflow: hidden;
+    /* The gradient runs through indigo and pinks: indigo buttons would vanish or fail contrast. */
+    --btn: var(--ink);
   }
 
   .talk__orb {

@@ -76,6 +76,8 @@
 
   --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
   --focus-ring: var(--indigo);
+  /* Button colour: the logo's indigo on pale grounds. A section on a dark or gradient ground sets it back to Ink (TalkBanner) or styles its own buttons. */
+  --btn: var(--indigo);
 
   /* Legacy names still used by the privacy notice and 404. */
   --surface: var(--paper);
