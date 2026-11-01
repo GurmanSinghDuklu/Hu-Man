@@ -1,6 +1,7 @@
 ---
-import PriceArches from '../PriceArches.astro';
+import HeadlineCards from '../HeadlineCards.astro';
 import { withBase } from '../../config/paths';
+import { portfolioTiers } from '../../data/pricing';
 ---
 
 <section class="band teaser" aria-labelledby="teaser-title">
@@ -13,12 +14,18 @@ import { withBase } from '../../config/paths';
       <br />
       as you grow.
     </h2>
-    <div class="teaser__arches" data-reveal>
-      <PriceArches variant="home" />
+    <div class="teaser__arches">
+      <HeadlineCards />
     </div>
-    <a class="more-link teaser__link" href={withBase('/pricing/')}>
+    <a class="more-link teaser__link" href={`${withBase('/pricing/')}#tiers-title`}>
       See every tier <span aria-hidden="true">↗</span>
     </a>
+    <p class="teaser__strip" data-reveal>
+      <a class="more-link" href={withBase('/portfolio/')}>
+        Building a portfolio or CV site? From {portfolioTiers[0].price}{' '}
+        <span aria-hidden="true">↗</span>
+      </a>
+    </p>
   </div>
 </section>
 
@@ -33,6 +40,12 @@ import { withBase } from '../../config/paths';
 
   .teaser__arches {
     margin-top: clamp(2rem, calc(var(--u) * 0.15), 3rem);
+  }
+
+  .teaser__strip {
+    margin-top: clamp(1.5rem, calc(var(--u) * 0.4), 2.5rem);
+    padding-top: clamp(1rem, calc(var(--u) * 0.25), 1.5rem);
+    border-top: 1px solid var(--ink);
   }
 
   .teaser__link {

@@ -3,7 +3,7 @@
  * FAQPage schema and llms-full.txt, so the answer an AI tool reads is always the one a visitor sees.
  * The two newer lists are drafts (2026-10-26) awaiting Gurman's sign-off.
  */
-import { fromPrice, priceOf } from './pricing';
+import { fromPrice, priceOf, headlineCards } from './pricing';
 
 export interface FaqItem {
   q: string;
@@ -15,7 +15,7 @@ export interface FaqItem {
 export const faq: FaqItem[] = [
   {
     q: 'How much does a website cost?',
-    a: `Sites start from ${fromPrice} (standard) or ${priceOf('spark')} (agentic AI-ready) and go up in tiers to ${priceOf('full-presence')}, with custom work priced on request.`,
+    a: `Sites start from ${fromPrice} (standard) or ${priceOf('start')} (agentic AI-ready) and go up in tiers to ${priceOf('full-presence')}, with custom work priced on request.`,
     linkTiers: true,
   },
   {
@@ -26,7 +26,14 @@ export const faq: FaqItem[] = [
     q: 'Can you get me into AI answers?',
     a: 'No one can guarantee it. We run a thorough, extensive check and work to get you found and cited across ChatGPT, Perplexity, Claude, Gemini, Grok and Google AI Overviews.',
   },
-  { q: 'How long does it take?', a: 'About 2 to 3 weeks for Launch, 4 to 6 for Growth.' },
+  {
+    q: 'How long does it take?',
+    a: `${headlineCards
+      .map((c) => `${c.name}: ${c.timeline.charAt(0).toLowerCase()}${c.timeline.slice(1)}`)
+      .join(
+        '. ',
+      )}. It depends on how quickly you send content. Need it sooner? Ask about Fast Track on the call.`,
+  },
   {
     q: 'Do I own my website?',
     a: 'Yes, after final payment. Domain and accounts stay in your name.',
@@ -57,7 +64,7 @@ export const agenticFaq: FaqItem[] = [
   },
   {
     q: 'Which of your websites are agentic AI-ready?',
-    a: `Every tier from Spark (${priceOf('spark')}) up. Essential (${fromPrice}) is a standard website without the agentic AI-ready setup.`,
+    a: `Every tier from Start (${priceOf('start')}) up. Essential (${fromPrice}) is a standard website without the agentic AI-ready setup.`,
   },
   {
     q: 'Can my current website be made agentic AI-ready?',
