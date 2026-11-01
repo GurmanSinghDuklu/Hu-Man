@@ -67,7 +67,8 @@ const { n } = Astro.props;
 
   .agent__square {
     position: absolute;
-    right: -8%;
+    /* Overhangs the orb, but never past the page padding. */
+    right: max(-8%, -1 * var(--pad));
     bottom: -6%;
     width: 33%;
     aspect-ratio: 1;

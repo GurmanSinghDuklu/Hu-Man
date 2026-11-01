@@ -31,6 +31,12 @@ body {
   overflow-x: clip;
 }
 
+/* Slide-in reveals start 48px to the right; clip them so the page never scrolls sideways.
+   (body's overflow-x is passed to the viewport, which iOS Safari still lets you pan.) */
+main {
+  overflow-x: clip;
+}
+
 img,
 svg {
   max-width: 100%;

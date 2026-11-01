@@ -425,5 +425,7 @@ Pages. A plain `npm run build` is unchanged (base `/`, example.com).
   Phones: tighter stack, and `--collage-h` caps the collage's height. Inner heroes are 7.5 rows now.
 - **Buttons use `--btn`** (tokens.css, the logo's indigo `#4e28df`). TalkBanner sets it back to Ink
   (its gradient runs through indigo and pink); the dark-ground buttons style their own colours.
-- Already there before this change, not fixed yet: sideways scroll on phones on home (418px) and on
-  /services/ at 390 and 768px.
+- **No sideways scroll**: `main` has `overflow-x: clip` (body's own overflow passes to the viewport,
+  which iOS Safari still pans), because slide reveals start 48px to the right. Clipping only hides
+  it: also fix real overflows (a 2-column grid needs `minmax(0, 1fr)`, long headline words need a
+  `vw` cap up to tablet width). Check every width from 360 to 1280px, reveals done and not.

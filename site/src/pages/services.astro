@@ -330,7 +330,14 @@ const lightNumber = new Set(['indigo', 'dusk']);
   @media (min-width: 48rem) {
     .svc__cards,
     .paid__cards {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  /* Tablets: two narrow cards, so "Projects" is sized to fit its card. */
+  @media (min-width: 48rem) and (max-width: 63.99rem) {
+    .paid__card h3 {
+      font-size: clamp(2rem, 4.6vw, 4rem);
     }
   }
 

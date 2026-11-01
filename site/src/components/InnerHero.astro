@@ -51,9 +51,10 @@ const { label, lens, longWords = false } = Astro.props;
     line-height: 0.88;
   }
 
-  @media (max-width: 39.99rem) {
+  /* Up to tablet width, so "recommending" never runs past the screen. */
+  @media (max-width: 63.99rem) {
     .ihero__title--long {
-      font-size: min(8.8vw, 2.6rem);
+      font-size: min(8.8vw, 5.4rem);
     }
   }
 
