@@ -67,3 +67,16 @@ export const promises: Card[] = [
     text: 'No one can guarantee a place in AI answers. We tell you what we can and can’t do.',
   },
 ];
+
+/**
+ * The founder note on /about/ (change list, Nov 2026). Plain facts only: no photo (none of the
+ * images in src/assets/portrait is Gurman) and no credentials, which stay off the pages.
+ * Draft wording: Gurman to replace with his own words.
+ */
+export const founderNote = {
+  title: 'Founded by Gurman Singh',
+  lines: [
+    'Hu/man started in 2026, with a simple idea: software and websites made by people who stay.',
+    'We are one human team of planners, builders and developers, and the person you talk to on day one still knows your project long after launch.',
+  ],
+};

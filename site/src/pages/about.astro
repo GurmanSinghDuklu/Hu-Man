@@ -7,7 +7,8 @@ import TalkBanner from '../components/TalkBanner.astro';
 import Sparkle from '../components/Sparkle.astro';
 import RingOrb from '../components/RingOrb.astro';
 import { withBase } from '../config/paths';
-import { mission, rules, promises } from '../data/about';
+import { site } from '../config/site';
+import { mission, rules, promises, founderNote } from '../data/about';
 ---
 
 <BaseLayout page="about">
@@ -28,6 +29,25 @@ import { mission, rules, promises } from '../data/about';
       apps for individuals and businesses, and we stay with you long after launch.
     </Fragment>
   </InnerHero>
+
+  <section class="band grid founder section" aria-labelledby="founder-title">
+    <div class="sheet founder__sheet">
+      <div>
+        <p class="label" data-reveal>
+          Who we are
+        </p>
+        <h2 id="founder-title" class="display display--m" data-reveal="lines">
+          {founderNote.title}
+        </h2>
+      </div>
+      <div class="founder__body" data-reveal>
+        {founderNote.lines.map((line) => (
+          <p>{line}</p>
+        ))}
+        <p class="founder__places">{site.locations.join(' · ')}</p>
+      </div>
+    </div>
+  </section>
 
   <section class="band band--ink mission" aria-labelledby="mission-title">
     <div class="grid grid--ink">
@@ -154,6 +174,33 @@ import { mission, rules, promises } from '../data/about';
 </BaseLayout>
 
 <style>
+  /* ---------- founder ---------- */
+  .founder__sheet {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .founder__body {
+    display: grid;
+    gap: 1rem;
+    max-width: 38rem;
+    font-size: clamp(1rem, calc(var(--u) * 0.2), 1.25rem);
+    line-height: 1.5;
+  }
+
+  .founder__places {
+    font: 400 0.8125rem var(--font-mono);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  @media (min-width: 64rem) {
+    .founder__sheet {
+      grid-template-columns: 6fr 5fr;
+      align-items: end;
+    }
+  }
+
   /* ---------- mission ---------- */
   .mission .label,
   .mission .display,

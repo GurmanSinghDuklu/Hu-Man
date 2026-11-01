@@ -14,10 +14,11 @@ const currentYear = new Date().getFullYear();
         <Logo variant="paper" label={site.name} class="site-footer__logo" />
       </span>
       <p>
-        {site.location.town}, {site.location.region}
+        {site.locations.join(' · ')}
         <br />
         {site.reach.join(' · ')}
       </p>
+      <p class="site-footer__founder">Founded by {site.founderShort}</p>
     </div>
     <div>
       <p class="site-footer__label">Contact</p>
@@ -38,6 +39,9 @@ const currentYear = new Date().getFullYear();
         </li>
         <li>
           <a href={withBase('/pricing/')}>Pricing</a>
+        </li>
+        <li>
+          <a href={withBase('/portfolio/')}>Portfolio sites</a>
         </li>
         <li>
           <a href={withBase('/about/')}>About</a>
@@ -101,6 +105,10 @@ const currentYear = new Date().getFullYear();
   .site-footer__brand p {
     color: #c9cac4;
     line-height: 1.6;
+  }
+
+  .site-footer__founder {
+    margin-top: 0.75rem;
   }
 
   .site-footer__label {
