@@ -24,7 +24,7 @@ export const credentials: Credential[] = [
   {
     text: 'Spring Boot REST API test-automation project (2026): CRUD service with MongoDB, Docker, automated API tests, CI in Azure DevOps and GitHub Actions',
   },
-  { text: 'Essence Hair Treatment website (2026): live React website built for a family business' },
+  { text: 'Essence Hair Treatment website (2026): live React website' },
   { text: 'Claude Certified Architect, Foundations', inProgress: true },
   { text: 'AWS Cloud Practitioner Essentials (self-study)', inProgress: true },
   { text: 'Azure DevOps for CI/CD (self-study)', inProgress: true },

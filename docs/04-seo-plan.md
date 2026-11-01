@@ -39,7 +39,7 @@ Never create near-duplicate town pages ("web designer in Halifax" with swapped c
 3. How to get your business recommended by Google and ChatGPT (what actually works, and what nobody can promise).
 4. Moving your website without losing Google rankings.
 5. What an AI enquiry assistant can and cannot do for a barber, salon or electrician.
-6. Case study pages, starting with Essence Hair Treatment (labelled honestly as a family business) and then real clients.
+6. Case study pages, starting with Essence Hair Treatment and then real clients.
 
 ## Measurement
 - Search Console (impressions, clicks, queries), Google Business Profile insights, and Lighthouse.

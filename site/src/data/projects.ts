@@ -1,7 +1,7 @@
 /**
  * The projects on the site (home cards, /work/), with the facts the schema and llms-full.txt state
- * about them. Keep every line provable: Essence was built unpaid for a family business, Eldeva is
- * a concept for a family member's business and has never been live.
+ * about them. Keep every line provable: Essence is a live site, Eldeva is a concept
+ * and has never been live. No results or numbers.
  */
 export interface Project {
   id: 'essence' | 'eldeva' | 'calculator';
@@ -26,7 +26,7 @@ export const projects: Project[] = [
     live: true,
     url: 'https://essencehairtreatment.com',
     summary:
-      'A live website for Essence Hair & Academy, a hair studio, built for a family business: design, services and booking links.',
+      'A live website for Essence Hair & Academy, a hair studio: design, services and booking links.',
   },
   {
     id: 'eldeva',
@@ -34,8 +34,7 @@ export const projects: Project[] = [
     blurb:
       'Pre-production full site rebuild and integration from Shopify. Full inventory, booking, ordering and bespoke customisation system.',
     live: false,
-    summary:
-      'A concept design for an online candle shop, made for a family member’s business. It has not launched.',
+    summary: 'A concept design for an online candle shop, It has not launched.',
   },
   {
     id: 'calculator',
