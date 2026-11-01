@@ -6,7 +6,7 @@ import InnerHero from '../components/InnerHero.astro';
 import PriceArches from '../components/PriceArches.astro';
 import HeadlineCards from '../components/HeadlineCards.astro';
 import TalkBanner from '../components/TalkBanner.astro';
-import { tiers, carePlansNote, addOns, fromPrice, fastTrack } from '../data/pricing';
+import { tiers, carePlansNote, fromPrice, fastTrack } from '../data/pricing';
 import { faq } from '../data/faq';
 import { contactPath } from '../config/links';
 import { withBase } from '../config/paths';
@@ -33,7 +33,7 @@ const choose = (name: string) => withBase(contactPath({ tier: name }));
   <section class="band grid cards" aria-labelledby="cards-title">
     <div class="sheet">
       <h2 id="cards-title" class="label">
-        Four ways to start · Pay once · Timelines on every card
+        Five ways to start · Pay once · Timelines on every card
       </h2>
       <p class="cards__text">
         Every tier includes a human from first call to launch, three revision rounds and full
@@ -98,14 +98,8 @@ const choose = (name: string) => withBase(contactPath({ tier: name }));
         <span class="pill care__draft">Launching soon</span>
       </div>
       <p class="care__text" data-reveal>
-        {carePlansNote} We will publish prices when they are final.
+        {carePlansNote}
       </p>
-      <h3 class="label care__addons-title">Add-ons</h3>
-      <ul class="care__addons">
-        {addOns.map((a) => (
-          <li class="pill">{a}</li>
-        ))}
-      </ul>
     </div>
   </section>
 
@@ -381,23 +375,6 @@ const choose = (name: string) => withBase(contactPath({ tier: name }));
     font-size: clamp(1rem, calc(var(--u) * 0.18), 1.1rem);
   }
 
-  .care__addons-title {
-    margin-top: clamp(2rem, calc(var(--u) * 0.5), 3rem);
-  }
-
-  .care__addons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-top: 1rem;
-  }
-
-  .care__addons .pill {
-    padding: 0.65rem 1rem;
-    background: transparent;
-    font-size: 0.75rem;
-  }
-
   /* ---------- FAQ ---------- */
   .faq {
     padding-block: clamp(3.5rem, calc(var(--u) * 0.9), 5.5rem)
@@ -520,10 +497,6 @@ const choose = (name: string) => withBase(contactPath({ tier: name }));
       min-width: calc(var(--u) * 2);
       min-height: calc(var(--u) * 0.41);
       font-size: calc(var(--u) * 0.11);
-    }
-
-    .care__addons .pill {
-      font-size: calc(var(--u) * 0.13);
     }
 
     .faq__item {
