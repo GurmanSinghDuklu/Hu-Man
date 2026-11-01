@@ -104,7 +104,7 @@ export const pages: Record<PageKey, PageInfo> = {
     description:
       'Live websites and concepts from Hu/man: Essence Hair, The Calculator App and the Eldeva Candles concept design.',
     label: 'Our work',
-    ogHeadline: 'Real projects. Real people.',
+    ogHeadline: 'Portfolio',
     schemaType: 'CollectionPage',
   },
   about: {
