@@ -3,20 +3,17 @@
  * FAQPage schema and llms-full.txt, so the answer an AI tool reads is always the one a visitor sees.
  * The two newer lists are drafts (2026-10-26) awaiting Gurman's sign-off.
  */
-import { fromPrice, priceOf, headlineCards } from './pricing';
+import { fromPrice, priceOf, tiers } from './pricing';
 
 export interface FaqItem {
   q: string;
   a: string;
-  /** Show "See every tier" under the answer. */
-  linkTiers?: boolean;
 }
 
 export const faq: FaqItem[] = [
   {
     q: 'How much does a website cost?',
-    a: `Sites start from ${fromPrice} (standard) or ${priceOf('start')} (agentic AI-ready) and go up in tiers to ${priceOf('full-presence')}, with custom work priced on request.`,
-    linkTiers: true,
+    a: `Sites start from ${fromPrice} for a one-page site and go up in five tiers to ${priceOf('growth')}, with custom work priced on request. Every site is agentic AI-ready.`,
   },
   {
     q: 'Will I lose my Google rankings?',
@@ -28,7 +25,7 @@ export const faq: FaqItem[] = [
   },
   {
     q: 'How long does it take?',
-    a: `${headlineCards
+    a: `${tiers
       .map((c) => `${c.name}: ${c.timeline.charAt(0).toLowerCase()}${c.timeline.slice(1)}`)
       .join(
         '. ',
@@ -64,7 +61,7 @@ export const agenticFaq: FaqItem[] = [
   },
   {
     q: 'Which of your websites are agentic AI-ready?',
-    a: `Every tier from Start (${priceOf('start')}) up. Essential (${fromPrice}) is a standard website without the agentic AI-ready setup.`,
+    a: `Every tier, from Essential (${fromPrice}) up.`,
   },
   {
     q: 'Can my current website be made agentic AI-ready?',

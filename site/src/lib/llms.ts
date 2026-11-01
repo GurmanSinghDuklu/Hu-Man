@@ -11,7 +11,6 @@ import {
   tiers,
   fromPrice,
   priceOf,
-  headlineCards,
   fastTrack,
   portfolioTiers,
   portfolioAddOns,
@@ -28,7 +27,7 @@ const abs = (path: string) => new URL(withBase(path), site.url).toString();
 const plus = (text: string) => text.replace(/\s\+\s/g, ' and ');
 const link = (key: PageKey) => `[${pages[key].label}](${abs(pages[key].path)})`;
 
-const summary = `${site.fullName} is a software studio in ${site.location.town}, ${site.location.region}, UK. It designs and builds websites, e-commerce stores, mobile apps and custom software for individuals and small businesses, and looks after them after launch. Every site from the ${priceOf('start')} Start tier up is agentic AI-ready as standard: fast, secure, and structured so people, search engines and AI agents can read it and act on it. A real person works with each client from the first call to long after launch.`;
+const summary = `${site.fullName} is a software studio in ${site.location.town}, ${site.location.region}, UK. It designs and builds websites, e-commerce stores, mobile apps and custom software for individuals and small businesses, and looks after them after launch. Every site, from the ${fromPrice} Essential tier up, is agentic AI-ready as standard: fast, secure, and structured so people, search engines and AI agents can read it and act on it. A real person works with each client from the first call to long after launch.`;
 
 const keyFacts = [
   `Name: ${site.fullName} (also written ${site.alternateNames.join(', ')})`,
@@ -37,7 +36,7 @@ const keyFacts = [
   `Founded by: ${site.founderShort}`,
   'Works: in person in Leeds and West Yorkshire, remotely across the UK and worldwide',
   `Founded: ${site.founded}`,
-  `Website prices: from ${fromPrice} to ${priceOf('full-presence')} in ${tierCount} fixed tiers; custom apps and portals priced on application`,
+  `Website prices: from ${fromPrice} to ${priceOf('growth')} in ${tierCount} fixed tiers; custom apps and portals priced on application`,
   `Contact: ${site.contact.email}, ${site.contact.phone}`,
   `Instagram: ${site.contact.instagram}`,
   'Free offer: a free AI check of an existing website, reviewed by a person, with a reply within 48 hours',
@@ -121,7 +120,7 @@ export function llmsFullTxt(): string {
     '',
     ...ingredients.map((item, i) => `${i + 1}. ${item.title}: ${item.text}`),
     '',
-    `Every website from the ${priceOf('start')} Start tier up is agentic AI-ready as standard; the ${fromPrice} Essential tier is a standard website without it.`,
+    `Every website we build, from the ${fromPrice} Essential tier up, is agentic AI-ready as standard.`,
     '',
     ...agenticFaq.flatMap((item) => [`### ${item.q}`, '', item.a, '']),
     `## Free AI check (${link('free-ai-check')})`,
@@ -158,18 +157,11 @@ export function llmsFullTxt(): string {
     '',
     'Pay once. Every tier includes a person from first call to launch, three revision rounds and full ownership. Move up a tier any time and only pay the difference.',
     '',
-    '| Tier | Price | What is included |',
-    '| --- | --- | --- |',
+    '| Tier | Price | What it is | What is included | Timeline |',
+    '| --- | --- | --- | --- | --- |',
     ...tiers.map(
       (t) =>
-        `| ${t.name} | ${t.price === 'Bespoke' ? 'Bespoke (price on application)' : t.price} | ${t.includes.replace(/ · /g, '; ')} |`,
-    ),
-    '',
-    'Headline cards, with timelines:',
-    '',
-    ...headlineCards.map(
-      (c) =>
-        `- ${c.name}${c.tag ? ` (${c.tag})` : ''}: ${c.price === 'Bespoke' ? 'Bespoke' : c.price}, ${c.what}. ${c.timeline}.`,
+        `| ${t.name} | ${t.price === 'Bespoke' ? 'Bespoke (price on application)' : t.price} | ${t.what}${t.tag ? ` (${t.tag})` : ''} | ${t.includes.join('; ')} | ${t.timeline} |`,
     ),
     '',
     `${fastTrack.title}: ${fastTrack.text}`,

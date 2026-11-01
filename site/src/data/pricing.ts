@@ -2,23 +2,20 @@
  * Prices come only from docs/02-offer-and-pricing.md ("Draft pricing"). Do not invent, round or
  * add prices here: edit that doc first, then mirror the change here.
  *
- * These are the prices from the final designs (2026-10-19, Essential added 2026-10-25; headline cards, Fast Track and portfolio tiers added Nov 2026). Gurman is
- * still deciding, so they are drafts: every page reads them from this one file.
+ * One set of five tiers (site change list, Nov 2026), shown identically on the home page and
+ * /pricing. Gurman is still deciding, so they are drafts: every page reads them from this one file.
  */
-
-/** How a tier's arch and row marker are filled (the colours in the designs). */
-export type TierStyle = 'stone' | 'outline' | 'peach' | 'lilac' | 'dusk' | 'ink' | 'rose';
 
 export interface Tier {
   id: string;
   name: string;
   price: string;
-  /** Short line under the price on the arches. */
-  short: string;
-  /** The "Tier by tier" line. */
-  includes: string;
-  style: TierStyle;
-  /** The pill on the arch, if any. */
+  /** What the tier is, in one line. */
+  what: string;
+  /** What is in it, one item per line on the cards. */
+  includes: string[];
+  timeline: string;
+  /** The pill on the card, if any. */
   tag?: string;
 }
 
@@ -26,79 +23,72 @@ export const tiers: Tier[] = [
   {
     id: 'essential',
     name: 'Essential',
-    price: '£295',
-    short: 'Standard website',
-    includes: '1 page · mobile-first · contact form · basic SEO · not agentic AI-ready',
-    style: 'stone',
+    price: '£318',
+    what: 'One-page site, agentic AI-ready',
+    includes: [
+      '1 page',
+      'Mobile-first',
+      'Contact form',
+      'Basic SEO',
+      'Agentic AI-ready, so AI crawlers can read it',
+    ],
+    timeline: 'Live in 1 week',
   },
   {
     id: 'start',
     name: 'Start',
-    price: '£395',
-    short: 'AI-ready one-page site',
-    includes:
-      '1 page · mobile-first · contact form · Business Profile setup · agentic AI-ready setup',
-    style: 'outline',
-    tag: 'Start here',
-  },
-  {
-    id: 'starter',
-    name: 'Starter',
-    price: '£595',
-    short: 'Small business basics',
-    includes: 'Up to 3 pages · everything in Start · on-page SEO',
-    style: 'outline',
+    price: '£446',
+    what: 'A full website, up to 10 pages',
+    includes: [
+      'Up to 10 pages',
+      'Mobile-first',
+      'Contact form',
+      'On-page SEO',
+      'Business Profile setup',
+      'Agentic AI-ready',
+    ],
+    timeline: '2 weeks',
   },
   {
     id: 'launch',
     name: 'Launch',
-    price: '£895',
-    short: 'Replace an old site',
-    includes: 'Up to 5 pages · move off Wix or Squarespace · redirects · speed work',
-    style: 'peach',
-    // Launch is the pick on the headline cards (change list, Nov 2026); nobody has bought yet, so
-    // it is "Our pick", never "Most picked".
+    price: '£932',
+    what: 'A full interactive, multi-page build',
+    includes: [
+      'Multi-page full build',
+      'Custom design',
+      'Motion and interactive elements',
+      'Your own owner dashboard',
+      'Move off Wix or Squarespace, with redirects',
+      'Speed work',
+      'Agentic AI-ready',
+    ],
+    timeline: '2 to 3 weeks',
+    // Nobody has bought yet, so it is "Our pick", never "Most picked".
     tag: 'Our pick',
-  },
-  {
-    id: 'launch-dashboard',
-    name: 'Launch + Dashboard',
-    price: '£1,195',
-    short: 'Edit it yourself',
-    includes: 'Everything in Launch · your own owner dashboard',
-    style: 'lilac',
-  },
-  {
-    id: 'booking',
-    name: 'Booking',
-    price: '£1,595',
-    short: 'Take bookings and deposits',
-    includes: 'Everything above · booking · Stripe, Square or SumUp',
-    style: 'outline',
   },
   {
     id: 'growth',
     name: 'Growth',
-    price: '£2,195',
-    short: 'Answer enquiries 24/7',
-    includes: 'Everything above · AI enquiry agent · reviews · service pages',
-    style: 'dusk',
-  },
-  {
-    id: 'full-presence',
-    name: 'Full presence',
-    price: '£3,375',
-    short: 'Hands-off growth',
-    includes: 'Everything above · WhatsApp + call answering · follow-ups · owner digest',
-    style: 'ink',
+    price: '£2,240',
+    what: 'The full build with bookings, payments and AI',
+    includes: [
+      'Everything in Launch',
+      'Online booking',
+      'Payments through Stripe, Square or SumUp',
+      'AI enquiry agent',
+      'Reviews',
+      'Service pages',
+    ],
+    timeline: '4 to 6 weeks',
   },
   {
     id: 'custom',
     name: 'Custom',
     price: 'Bespoke',
-    short: 'Apps and portals',
-    includes: 'Web apps, client portals, marketplaces',
-    style: 'rose',
+    what: 'Apps, portals, software',
+    includes: ['Web apps, client portals and marketplaces', 'Call answering and automations'],
+    timeline: 'Quoted after the call',
   },
 ];
 
@@ -109,67 +99,15 @@ export const tiers: Tier[] = [
 export const carePlansNote =
   'Monthly care plans for hosting, security, backups and updates are launching soon.';
 
-/** A tier's price by id, for copy such as "from our £395 Start tier up". */
+/** A tier's price by id, for copy such as "from our £446 Start tier up". */
 export const priceOf = (id: string): string => {
   const tier = tiers.find((t) => t.id === id);
   if (!tier) throw new Error(`Unknown tier: ${id}`);
   return tier.price;
 };
 
-/** The lowest fixed price, for copy such as "Start at £295". */
+/** The lowest fixed price, for copy such as "Start at £318". */
 export const fromPrice = tiers[0].price;
-
-/**
- * The five headline cards on the home page and /pricing (docs/02 "Headline cards and timelines").
- * Prices come from the ladder above, so they cannot drift; timelines are from the change list.
- */
-export interface HeadlineCard {
-  id: string;
-  name: string;
-  price: string;
-  what: string;
-  timeline: string;
-  tag?: string;
-}
-
-export const headlineCards: HeadlineCard[] = [
-  {
-    id: 'essential',
-    name: 'Essential',
-    price: priceOf('essential'),
-    what: 'Standard website: mobile-first, contact form and basic SEO',
-    timeline: 'Live in 1 week',
-  },
-  {
-    id: 'start',
-    name: 'Start',
-    price: priceOf('start'),
-    what: 'AI-ready one-page site',
-    timeline: 'Live in 1 week',
-  },
-  {
-    id: 'launch',
-    name: 'Launch',
-    price: priceOf('launch'),
-    what: 'Up to 5 pages. Move off Wix or Squarespace.',
-    timeline: '2 to 3 weeks',
-    tag: 'Our pick',
-  },
-  {
-    id: 'growth',
-    name: 'Growth',
-    price: priceOf('growth'),
-    what: 'Booking, payments and an AI enquiry agent',
-    timeline: '4 to 6 weeks',
-  },
-  {
-    id: 'custom',
-    name: 'Custom',
-    price: priceOf('custom'),
-    what: 'Apps, portals and software',
-    timeline: 'Quoted after the call',
-  },
-];
 
 /** The quiet Fast Track line on /pricing (docs/02 "Fast Track"). No derived prices: only "+50%". */
 export const fastTrack = {
@@ -193,7 +131,7 @@ export const portfolioTiers: PortfolioTier[] = [
   {
     id: 'profile',
     name: 'Profile',
-    price: '£149',
+    price: '£156',
     timeline: '5 working days',
     summary: 'A single static page',
     includes: [
@@ -207,7 +145,7 @@ export const portfolioTiers: PortfolioTier[] = [
   {
     id: 'portfolio',
     name: 'Portfolio',
-    price: '£249',
+    price: '£264',
     timeline: '7 to 10 working days',
     tag: 'Our pick',
     summary: 'A full portfolio website',
@@ -224,15 +162,15 @@ export const portfolioTiers: PortfolioTier[] = [
   {
     id: 'portfolio-pro',
     name: 'Portfolio Pro',
-    price: '£395',
-    timeline: '2 weeks',
+    price: '£932',
+    timeline: '2 to 3 weeks',
     summary: 'The full build',
     includes: [
       'Everything in Portfolio',
       'Custom design and graphics',
       'Motion graphics',
-      'Video built in (showreels, embeds)',
-      'Social media integration: feeds and links for content creators, marketers and ad people',
+      'Video built in (showreels, YouTube and other embeds)',
+      'Social media integration: Instagram, TikTok, LinkedIn and YouTube feeds',
       'Media and third-party integrations',
       'A writing or blog section',
       'An owner dashboard, so you edit it yourself',
@@ -241,13 +179,13 @@ export const portfolioTiers: PortfolioTier[] = [
 ];
 
 export const portfolioAddOns = [
-  'CV rewrite to match the site £49',
-  'Keep-it-live hosting and two content updates a year £60/year',
+  'CV rewrite to match the site £54',
+  'Keep-it-live hosting and two content updates a year £64/year',
 ];
 
 /** 48-hour Express, Profile only (docs/02). */
 export const portfolioExpress = {
   title: '48-hour Express',
-  price: '+£100',
+  price: '+£110',
   text: 'Available on Profile, for interview deadlines. The same site, moved to the front of the queue.',
 };

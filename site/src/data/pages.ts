@@ -83,7 +83,7 @@ export const pages: Record<PageKey, PageInfo> = {
     key: 'pricing',
     path: '/pricing/',
     title: `Website prices from ${fromPrice} | Hu/man, Leeds`,
-    description: `Website prices from ${fromPrice} to ${priceOf('full-presence')} in ${tierCount} fixed tiers, plus custom apps and portals. Pay once, own it, and move up a tier by paying the difference.`,
+    description: `Website prices from ${fromPrice} to ${priceOf('growth')} in ${tierCount} fixed tiers, plus custom apps and portals. Pay once, own it, and move up a tier by paying the difference.`,
     label: 'Pricing',
     ogHeadline: `Start at ${fromPrice}. Grow from there.`,
     schemaType: 'FAQPage',

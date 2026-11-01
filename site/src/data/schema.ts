@@ -22,7 +22,7 @@ type Node = Record<string, unknown>;
 /** Absolute URL for a root-relative path, respecting any base path. */
 export type AbsUrl = (path: string) => string;
 
-/** "£1,195" -> "1195"; "Bespoke" -> undefined. */
+/** "£2,240" -> "2240"; "Bespoke" -> undefined. */
 const amount = (price: string): string | undefined => {
   const digits = price.replace(/[^\d.]/g, '');
   return digits ? digits : undefined;
@@ -196,7 +196,7 @@ export function buildSchema(key: PageKey, abs: AbsUrl): Node {
         return {
           '@type': 'Offer',
           name: tier.name,
-          description: tier.includes,
+          description: `${tier.what}. ${tier.includes.join('; ')}`,
           url: `${url}#tiers-title`,
           seller: { '@id': ids.org },
           ...(price
@@ -209,7 +209,7 @@ export function buildSchema(key: PageKey, abs: AbsUrl): Node {
               }),
           itemOffered: {
             '@type': 'Service',
-            name: `${tier.name}: ${tier.short}`,
+            name: `${tier.name}: ${tier.what}`,
             provider: { '@id': ids.org },
           },
         };

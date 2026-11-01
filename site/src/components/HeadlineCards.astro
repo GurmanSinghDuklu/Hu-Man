@@ -1,14 +1,16 @@
 ---
 /**
  * The five headline cards (Essential, Start, Launch, Growth and Custom) with a price and a timeline on each.
- * Home page and /pricing show the same cards, read from `headlineCards` in src/data/pricing.ts
+ * Home page and /pricing show the same cards, read from `tiers` in src/data/pricing.ts
  * (which mirrors docs/02-offer-and-pricing.md). Launch carries "Our pick", never "Most picked".
  */
-import { headlineCards } from '../data/pricing';
+import { tiers } from '../data/pricing';
+import { contactPath } from '../config/links';
+import { withBase } from '../config/paths';
 ---
 
 <ul class="hcards">
-  {headlineCards.map((c, i) => (
+  {tiers.map((c, i) => (
     <li class:list={['hcard', `hcard--${c.id}`]} data-reveal style={`--reveal-delay:${i * 0.08}s`}>
       <p class="hcard__name">
         {c.name}
@@ -16,7 +18,15 @@ import { headlineCards } from '../data/pricing';
       </p>
       <p class="hcard__price">{c.price}</p>
       <p class="hcard__what">{c.what}</p>
+      <ul class="hcard__list">
+        {c.includes.map((item) => (
+          <li>{item}</li>
+        ))}
+      </ul>
       <p class="hcard__time">{c.timeline}</p>
+      <a class="pill-btn hcard__btn" href={withBase(contactPath({ tier: c.name }))}>
+        Choose<span class="visually-hidden"> {c.name}</span>
+      </a>
     </li>
   ))}
 </ul>
@@ -92,6 +102,45 @@ import { headlineCards } from '../data/pricing';
     line-height: 1.4;
   }
 
+  .hcard__list {
+    display: grid;
+    gap: 0.35rem;
+    font-size: clamp(0.85rem, calc(var(--u) * 0.15), 0.95rem);
+    line-height: 1.35;
+  }
+
+  .hcard__list li {
+    position: relative;
+    padding-left: 1rem;
+  }
+
+  .hcard__list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 0.4rem;
+    height: 1.5px;
+    background: currentColor;
+  }
+
+  .hcard__what {
+    font-weight: 700;
+  }
+
+  .hcard__btn {
+    align-self: flex-start;
+    margin-top: 0.5rem;
+  }
+
+  .hcard--launch .hcard__btn {
+    border-color: var(--ink);
+  }
+
+  .hcard--custom .hcard__btn {
+    border-color: var(--paper);
+  }
+
   .hcard__time {
     margin-top: auto;
     padding-top: 0.75rem;
@@ -125,6 +174,19 @@ import { headlineCards } from '../data/pricing';
     }
 
     .hcard__name,
+    .hcard__btn {
+      align-self: flex-start;
+      margin-top: 0.5rem;
+    }
+
+    .hcard--launch .hcard__btn {
+      border-color: var(--ink);
+    }
+
+    .hcard--custom .hcard__btn {
+      border-color: var(--paper);
+    }
+
     .hcard__time {
       font-size: calc(var(--u) * 0.115);
     }
