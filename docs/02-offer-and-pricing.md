@@ -40,7 +40,7 @@ output or in schema. Kept here for reference only.
 
 ### Fast Track (priority scheduling)
 +50% on the tier price, delivered in about half the standard timeline. Limited to 2 Fast Track slots a
-month. If a Fast Track date is missed through our delay, the Fast Track fee is refunded. It is the same
+month. If a Fast Track date is missed through our delay, the Fast Track fee is refunded (refund signed off by Gurman, 1 Nov 2026). It is the same
 build moved to the front of the queue, never a sign that the standard service is slow or lower quality.
 Shown as a quiet line on /pricing, as an option in the booking form and on the 1-hour call when the
 client has a deadline; not headlined on the homepage. No derived Fast Track prices are published (only

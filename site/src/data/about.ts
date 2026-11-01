@@ -73,14 +73,12 @@ export const promises: Card[] = [
  * images in src/assets/portrait is Gurman) and no credentials, which stay off the pages.
  * Draft wording: Gurman to replace with his own words.
  */
-// TODO: client-care lead's name. Leave empty until it is confirmed; no name is rendered while empty.
-const clientCareLead = '';
 
 export const founderNote = {
   title: 'Founded by Gurman Singh and team',
   lines: [
     'Hu/man started in 2026, with a simple idea: software and websites made by people who stay. One human team, from first call to aftercare.',
     'Gurman Singh: development and builds. He writes and builds every site.',
-    `Consultancy and client care${clientCareLead ? `, ${clientCareLead}` : ''}: your first call, every enquiry and ongoing customer service are handled by a dedicated member of the team.`,
+    'Mandeep: consultancy and client care. Your first call, every enquiry and ongoing customer service.',
   ],
 };

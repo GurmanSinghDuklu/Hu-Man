@@ -1,7 +1,7 @@
 # Business context
 
 ## Summary
-Gurman Singh Duklu, 18, Bradford, is starting a studio, Hu/man (founded by Gurman Singh and team), that gives local small businesses a complete, modern online presence: a high-end website redesign, online booking and payments, AI enquiry assistants and automations, and local and AI-search visibility. He wants it as his full-time income and plans to grow aggressively but honestly. Public line everywhere: "Gurman Singh and team". Gurman does development and builds, and writes and builds every site; consultancy and client care (first call, every enquiry, ongoing customer service) is handled by a dedicated team member (name to be confirmed).
+Gurman Singh Duklu, 18, Bradford, is starting a studio, Hu/man (founded by Gurman Singh and team), that gives local small businesses a complete, modern online presence: a high-end website redesign, online booking and payments, AI enquiry assistants and automations, and local and AI-search visibility. He wants it as his full-time income and plans to grow aggressively but honestly. Public line everywhere: "Gurman Singh and team". Gurman does development and builds, and writes and builds every site; consultancy and client care (first call, every enquiry, ongoing customer service) is handled by Mandeep.
 
 ## How the idea evolved (so you understand the reasoning)
 1. Started as a freelance web developer for local businesses.
