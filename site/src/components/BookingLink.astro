@@ -1,0 +1,32 @@
+---
+/**
+ * The primary call to action: a link to `bookingUrl` (src/config/links.ts). Every "Book a free
+ * 1-hour call" button uses this, so changing that one URL changes them all. A full URL opens in a
+ * new tab with the usual hidden hint; the contact page path gets the site's base path.
+ */
+import { bookingUrl, bookingLabel } from '../config/links';
+import { withBase } from '../config/paths';
+
+interface Props {
+  class?: string;
+  /** Replaces the default label, for the rare button that needs to say more. */
+  label?: string;
+  /** Anything else (data-reveal, aria attributes) is passed to the link. */
+  [attr: string]: unknown;
+}
+
+const { class: className, label = bookingLabel, ...rest } = Astro.props;
+const external = /^https?:\/\//.test(bookingUrl);
+const href = external ? bookingUrl : withBase(bookingUrl);
+---
+
+<a
+  class={className}
+  href={href}
+  {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+  data-booking
+  {...rest}
+>
+  <slot>{label}</slot>
+  {external && <span class="visually-hidden"> (opens in a new tab)</span>}
+</a>

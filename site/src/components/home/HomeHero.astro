@@ -1,7 +1,8 @@
 ---
 import Collage from '../Collage.astro';
-import { contactPath } from '../../config/links';
+import BookingLink from '../BookingLink.astro';
 import { withBase } from '../../config/paths';
+import { site } from '../../config/site';
 
 // What we make, top right of the hero (from the design).
 const offer = [
@@ -16,13 +17,9 @@ const offer = [
 
 <section class="band grid hero" aria-labelledby="hero-title">
   <div class="sheet hero__sheet">
-    <p class="label hero__kicker">Made by hand. Built by machine.</p>
+    <p class="label hero__kicker">Est. {site.founded}</p>
     <h1 id="hero-title" class="hero__title">
-      Got an idea?
-      <br />
-      Let’s
-      <br />
-      build it.
+      Got an idea? We’ll build it, and build it to be found by AI.
     </h1>
 
     <ul class="hero__offer" aria-label="What we make">
@@ -32,12 +29,12 @@ const offer = [
     </ul>
 
     <div class="hero__collage">
-      <Collage variant="home" lens="Lens 01 / Human in the loop" />
+      <Collage variant="home" lens="Lens 01 / Built by people" />
     </div>
 
     <div class="hero__intro">
-      <p class="label">Human in the loop</p>
-      <p class="hero__serif">One person, from the first call to the aftercare.</p>
+      <p class="label">Planners, builders, developers</p>
+      <p class="hero__serif">One human team, from first call to aftercare.</p>
       <p class="hero__body">
         Websites, apps and software built properly, agentic AI-ready as standard, with a real person
         beside you from first call to long after launch.
@@ -45,11 +42,9 @@ const offer = [
     </div>
 
     <div class="hero__actions">
-      <a href="#check" class="btn btn--outline btn--display">
-        Check my site free
-      </a>
-      <a href={withBase(contactPath({ topic: 'idea' }))} class="btn btn--display">
-        Tell us your idea
+      <BookingLink class="btn btn--display" />
+      <a href={withBase('/free-ai-check/')} class="btn btn--outline btn--display">
+        Free AI check
       </a>
     </div>
   </div>
@@ -64,9 +59,10 @@ const offer = [
 
   .hero__title {
     margin-top: -1.5rem;
-    font-size: clamp(3rem, 13vw, 8.1rem);
-    line-height: 0.9;
+    font-size: clamp(2.1rem, 10.5vw, 5.5rem);
+    line-height: 0.95;
     letter-spacing: -0.015em;
+    text-wrap: balance;
   }
 
   .hero__offer {
@@ -117,7 +113,8 @@ const offer = [
       left: var(--pad);
       top: calc(var(--u) * 0.31);
       margin: 0;
-      font-size: calc(var(--u) * 1.29);
+      max-width: calc(var(--u) * 7.4);
+      font-size: calc(var(--u) * 0.74);
     }
 
     .hero__offer {
@@ -161,7 +158,7 @@ const offer = [
       gap: calc(var(--u) * 0.2);
     }
 
-    .hero__actions .btn {
+    .hero__actions :global(.btn) {
       min-height: calc(var(--u) * 0.6);
       padding: 0 calc(var(--u) * 0.27);
       font-size: calc(var(--u) * 0.17);

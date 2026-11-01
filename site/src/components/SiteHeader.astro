@@ -2,6 +2,7 @@
 import { site } from '../config/site';
 import { withBase } from '../config/paths';
 import Logo from './Logo.astro';
+import BookingLink from './BookingLink.astro';
 import logoMask from '../assets/brand/logo-ink.svg?url';
 
 // The FAQ lives on the pricing page, so that link carries the page path and works from anywhere.
@@ -34,9 +35,7 @@ const navLinks = [
       </ul>
     </nav>
 
-    <a href={withBase('/free-ai-check/')} class="btn site-header__cta">
-      Free audit
-    </a>
+    <BookingLink class="btn site-header__cta" />
 
     <details class="site-header__menu">
       <summary aria-label="Menu">
@@ -53,8 +52,9 @@ const navLinks = [
             </li>
           ))}
         </ul>
-        <a href={withBase('/free-ai-check/')} class="btn">
-          Free audit
+        <BookingLink class="btn" />
+        <a href={withBase('/free-ai-check/')} class="btn btn--outline">
+          Free AI check
         </a>
       </div>
     </details>
@@ -131,7 +131,7 @@ const navLinks = [
     background-size: 100% 1px;
   }
 
-  .site-header__cta {
+  .site-header :global(.site-header__cta) {
     display: none;
   }
 
@@ -198,8 +198,12 @@ const navLinks = [
     text-decoration: none;
   }
 
-  .site-header__panel .btn {
+  .site-header__panel :global(.btn) {
     width: 100%;
+    margin-top: var(--space-3);
+  }
+
+  .site-header__panel :global(.btn:first-of-type) {
     margin-top: var(--space-4);
   }
 
@@ -209,12 +213,11 @@ const navLinks = [
       gap: calc(var(--u) * 0.3);
     }
 
-    .site-header__nav,
-    .site-header__cta {
+    .site-header__nav {
       display: block;
     }
 
-    .site-header__cta {
+    .site-header :global(.site-header__cta) {
       display: inline-flex;
       min-height: max(36px, calc(var(--u) * 0.48));
       padding: 0 calc(var(--u) * 0.2);
