@@ -6,7 +6,8 @@ import InnerHero from '../components/InnerHero.astro';
 import TalkBanner from '../components/TalkBanner.astro';
 import Sparkle from '../components/Sparkle.astro';
 import RingOrb from '../components/RingOrb.astro';
-import { stages, checklist, compare, bonnet } from '../data/process';
+import { checklist, compare, bonnet } from '../data/process';
+import MethodSteps from '../components/sections/MethodSteps.astro';
 ---
 
 <BaseLayout page="how-we-build">
@@ -63,24 +64,16 @@ import { stages, checklist, compare, bonnet } from '../data/process';
         02 / Every build
       </p>
       <h2 id="stages-title" class="display" data-reveal="lines">
-        Six stages. A human signs
+        Talk. Shape. Build.
         <br />
-        off each one.
+        Launch. Stay.
       </h2>
-      <ol class="stages__list">
-        {stages.map((s, i) => (
-          <li
-            class:list={['stage', `stage--${s.style}`]}
-            data-reveal
-            style={`--reveal-delay:${(i % 3) * 0.08}s`}
-          >
-            <Sparkle class="stage__star" />
-            <span class="stage__n">{String(i + 1).padStart(2, '0')}</span>
-            <h3>{s.title}</h3>
-            <p>{s.text}</p>
-          </li>
-        ))}
-      </ol>
+      <p class="stages__text" data-reveal>
+        One method for every build, and a human signs off each step.
+      </p>
+      <div class="stages__method">
+        <MethodSteps tone="on-page" />
+      </div>
     </div>
   </section>
 
@@ -229,64 +222,16 @@ import { stages, checklist, compare, bonnet } from '../data/process';
     color: var(--muted);
   }
 
-  /* ---------- six stages ---------- */
-  .stages__list {
-    display: grid;
-    gap: max(16px, calc(var(--u) * 0.33));
-    margin-top: clamp(2rem, calc(var(--u) * 1.1), 6.5rem);
+  /* ---------- the method ---------- */
+  .stages__text {
+    max-width: 42rem;
+    margin-top: 1.25rem;
+    font-size: clamp(1rem, calc(var(--u) * 0.2), 1.25rem);
+    line-height: 1.5;
   }
 
-  .stage {
-    --r: calc(var(--u) * 1.4);
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    min-height: 14rem;
-    padding: clamp(1.25rem, calc(var(--u) * 0.33), 2rem);
-    border: 1px solid var(--ink);
-    background: var(--paper);
-  }
-
-  .stage--ink {
-    border-top-right-radius: calc(var(--u) * 1.1);
-    background: var(--ink);
-    color: var(--paper);
-  }
-
-  .stage--arch {
-    border-radius: var(--r) var(--r) 0 0;
-  }
-
-  .stage--lilac {
-    border-top-right-radius: calc(var(--u) * 1.1);
-    background: var(--grad-lilac);
-  }
-
-  .stage :global(.stage__star) {
-    position: absolute;
-    right: clamp(1.25rem, calc(var(--u) * 0.33), 2rem);
-    top: clamp(1.25rem, calc(var(--u) * 0.36), 2.25rem);
-    width: clamp(1.1rem, calc(var(--u) * 0.27), 1.6rem);
-    fill: currentColor;
-  }
-
-  .stage__n {
-    font: 800 clamp(2.4rem, calc(var(--u) * 0.7), 4.2rem) / 1 var(--font-display);
-    letter-spacing: -0.02em;
-  }
-
-  .stage h3 {
-    margin-top: auto;
-    padding-top: 1.5rem;
-    font-size: clamp(1.2rem, calc(var(--u) * 0.33), 2rem);
-    line-height: 1;
-  }
-
-  .stage p {
-    margin-top: 0.6rem;
-    min-height: 2.9em;
-    font-size: clamp(0.9rem, calc(var(--u) * 0.165), 1rem);
-    line-height: 1.45;
+  .stages__method {
+    margin-top: clamp(2rem, calc(var(--u) * 0.8), 5rem);
   }
 
   /* ---------- under the bonnet ---------- */
@@ -434,7 +379,6 @@ import { stages, checklist, compare, bonnet } from '../data/process';
   }
 
   @media (min-width: 48rem) {
-    .stages__list,
     .bonnet__cards {
       grid-template-columns: repeat(2, 1fr);
     }
@@ -460,15 +404,6 @@ import { stages, checklist, compare, bonnet } from '../data/process';
 
     .cmp__us {
       padding: calc(var(--u) * 0.14) calc(var(--u) * 0.29);
-    }
-
-    .stages__list {
-      grid-template-columns: repeat(3, 1fr);
-    }
-
-    .stage {
-      height: calc(var(--u) * 3.11);
-      min-height: 0;
     }
 
     .bonnet__cards {
