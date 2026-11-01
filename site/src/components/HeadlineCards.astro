@@ -1,6 +1,6 @@
 ---
 /**
- * The four headline cards (Start, Launch, Custom and Growth) with a price and a timeline on each.
+ * The five headline cards (Essential, Start, Launch, Growth and Custom) with a price and a timeline on each.
  * Home page and /pricing show the same cards, read from `headlineCards` in src/data/pricing.ts
  * (which mirrors docs/02-offer-and-pricing.md). Launch carries "Our pick", never "Most picked".
  */
@@ -36,6 +36,11 @@ import { headlineCards } from '../data/pricing';
     border: 1px solid var(--ink);
     background: var(--paper);
     color: var(--ink);
+  }
+
+  .hcard--essential {
+    background: var(--paper);
+    border-top-left-radius: calc(var(--u) * 0.9);
   }
 
   .hcard--start {
@@ -99,11 +104,20 @@ import { headlineCards } from '../data/pricing';
     .hcards {
       grid-template-columns: repeat(2, 1fr);
     }
+
+    /* Five cards in two columns: the last one spans so no card sits alone beside a gap. */
+    .hcard:last-child:nth-child(odd) {
+      grid-column: 1 / -1;
+    }
   }
 
   @media (min-width: 64rem) {
     .hcards {
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(5, 1fr);
+    }
+
+    .hcard:last-child:nth-child(odd) {
+      grid-column: auto;
     }
 
     .hcard {
