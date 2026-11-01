@@ -120,7 +120,13 @@ const offer = [
     .hero__offer {
       position: absolute;
       right: var(--pad);
-      top: calc(var(--u) * 0.32);
+      top: calc(var(--u) * 0.05);
+      /* Two columns of three keep the list clear of the eye ring, which now sits level with the
+                 face-tile eye (see Collage.astro). */
+      display: grid;
+      grid-auto-flow: column;
+      grid-template-rows: repeat(3, auto);
+      column-gap: calc(var(--u) * 0.5);
       text-align: right;
       font-size: calc(var(--u) * 0.15);
     }
