@@ -109,15 +109,6 @@ export const tiers: Tier[] = [
 export const carePlansNote =
   'Monthly care plans for hosting, security, backups and updates are launching soon.';
 
-export const addOns = [
-  'Extra page £75',
-  'Logo + brand pack £195',
-  'Copywriting £95/page',
-  'Photo shoot (Leeds) £195',
-  'Google Ads setup £245',
-  'Extra AI check £49',
-];
-
 /** A tier's price by id, for copy such as "from our £395 Start tier up". */
 export const priceOf = (id: string): string => {
   const tier = tiers.find((t) => t.id === id);
@@ -129,7 +120,7 @@ export const priceOf = (id: string): string => {
 export const fromPrice = tiers[0].price;
 
 /**
- * The four headline cards on the home page and /pricing (docs/02 "Headline cards and timelines").
+ * The five headline cards on the home page and /pricing (docs/02 "Headline cards and timelines").
  * Prices come from the ladder above, so they cannot drift; timelines are from the change list.
  */
 export interface HeadlineCard {
@@ -142,6 +133,13 @@ export interface HeadlineCard {
 }
 
 export const headlineCards: HeadlineCard[] = [
+  {
+    id: 'essential',
+    name: 'Essential',
+    price: priceOf('essential'),
+    what: 'Standard website: mobile-first, contact form and basic SEO',
+    timeline: 'Live in 1 week',
+  },
   {
     id: 'start',
     name: 'Start',
@@ -185,6 +183,8 @@ export interface PortfolioTier {
   name: string;
   price: string;
   timeline: string;
+  /** One line on what the tier is. */
+  summary: string;
   includes: string[];
   tag?: string;
 }
@@ -195,8 +195,9 @@ export const portfolioTiers: PortfolioTier[] = [
     name: 'Profile',
     price: '£149',
     timeline: '5 working days',
+    summary: 'A single static page',
     includes: [
-      'One-page personal site: intro, experience, skills, contact',
+      'One static page: intro, experience, skills, contact',
       'A downloadable PDF CV',
       'Mobile-first',
       'Person structured data, so search and AI can read it',
@@ -209,9 +210,12 @@ export const portfolioTiers: PortfolioTier[] = [
     price: '£249',
     timeline: '7 to 10 working days',
     tag: 'Our pick',
+    summary: 'A full portfolio website',
     includes: [
       'Everything in Profile',
-      'Up to 6 project case studies with images and files',
+      'Unlimited project case studies with images and files',
+      'A full multi-page site',
+      'Light motion and interactive touches',
       'Testimonials',
       'Links to LinkedIn, GitHub, Behance or Dribbble',
       'Analytics',
@@ -222,9 +226,14 @@ export const portfolioTiers: PortfolioTier[] = [
     name: 'Portfolio Pro',
     price: '£395',
     timeline: '2 weeks',
+    summary: 'The full build',
     includes: [
-      'Up to 4 pages and a custom design',
-      'Up to 12 case studies',
+      'Everything in Portfolio',
+      'Custom design and graphics',
+      'Motion graphics',
+      'Video built in (showreels, embeds)',
+      'Social media integration: feeds and links for content creators, marketers and ad people',
+      'Media and third-party integrations',
       'A writing or blog section',
       'An owner dashboard, so you edit it yourself',
     ],
@@ -233,7 +242,6 @@ export const portfolioTiers: PortfolioTier[] = [
 
 export const portfolioAddOns = [
   'CV rewrite to match the site £49',
-  'Extra case study £25',
   'Keep-it-live hosting and two content updates a year £60/year',
 ];
 

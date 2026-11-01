@@ -46,6 +46,7 @@ const choose = (name: string) => withBase(contactPath({ tier: `Portfolio: ${name
               {t.tag && <span class="ptier__tag">{t.tag}</span>}
             </p>
             <p class="ptier__price">{t.price}</p>
+            <p class="ptier__what">{t.summary}</p>
             <ul class="ptier__includes">
               {t.includes.map((item) => (
                 <li>{item}</li>
@@ -163,6 +164,10 @@ const choose = (name: string) => withBase(contactPath({ tier: `Portfolio: ${name
   .ptier__price {
     font: 800 clamp(2.6rem, calc(var(--u) * 0.7), 4rem) / 1 var(--font-display);
     letter-spacing: -0.03em;
+  }
+
+  .ptier__what {
+    font-weight: 700;
   }
 
   .ptier__includes {

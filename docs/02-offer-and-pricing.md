@@ -21,15 +21,18 @@ final** (change list, Nov 2026). Working figures only, not for publishing: Basic
 security, backups); Care £59/mo (+ updates, 30 min edits a month); Grow £119/mo (+ monthly AI
 visibility check, 2 hrs work); Partner £249/mo (+ priority replies, monthly report, 5 hrs work).
 
-Add-ons: extra page £75; logo + brand pack £195; copywriting £95/page; photo shoot (Leeds) £195;
-Google Ads setup £245; extra AI check £49.
+Add-ons are **not published** on the site (change list, Nov 2026): the add-ons section was removed
+from /pricing, the FAQ and llms output. Working figures only, not for publishing: extra page £75; logo
++ brand pack £195; copywriting £95/page; photo shoot (Leeds) £195; Google Ads setup £245; extra AI
+check £49.
 
 ### Headline cards and timelines (site change list, Nov 2026)
-The homepage and /pricing lead with four cards. The full ladder above stays on /pricing in a
+The homepage and /pricing lead with five cards (Essential first). The full ladder above stays on /pricing in a
 collapsible "Every tier". Prices are the ladder's own; nothing new is priced here.
 
 | Card | Price | What it is | Timeline |
 |---|---|---|---|
+| Essential | £295 | Standard website: 1 page, mobile-first, contact form, basic SEO (not agentic AI-ready) | Live in 1 week |
 | Start | £395 | AI-ready one-page site (the old Spark tier: **Spark is now presented as Start** everywhere on the site) | Live in 1 week |
 | Launch (Our pick) | £895 | Up to 5 pages, move off Wix or Squarespace | 2 to 3 weeks |
 | Growth | £2,195 | Booking, payments, AI enquiry agent | 4 to 6 weeks |
@@ -49,12 +52,13 @@ The slots-left count the change list asks for is not shown: there is no booking 
 ### Portfolio and CV websites (/portfolio, individuals only)
 | Tier | Price | Includes | Timeline |
 |---|---|---|---|
-| Profile | £149 | One-page personal site: intro, experience, skills, contact · downloadable PDF CV · mobile-first · Person structured data · connected to your own domain (domain cost extra) | 5 working days |
-| Portfolio (our pick) | £249 | Everything in Profile · up to 6 project case studies with images and files · testimonials · links to LinkedIn, GitHub, Behance or Dribbble · analytics | 7 to 10 working days |
-| Portfolio Pro | £395 | Up to 4 pages and a custom design · up to 12 case studies · a writing or blog section · an owner dashboard so you edit it yourself | 2 weeks |
+| Profile | £149 | A single static page: one static page (intro, experience, skills, contact) · downloadable PDF CV · mobile-first · Person structured data so search and AI can read it · connected to your own domain (domain cost extra) | 5 working days |
+| Portfolio (our pick) | £249 | A full portfolio website: everything in Profile · unlimited project case studies with images and files · a full multi-page site · light motion and interactive touches · testimonials · links to LinkedIn, GitHub, Behance or Dribbble · analytics | 7 to 10 working days |
+| Portfolio Pro | £395 | The full build: everything in Portfolio · custom design and graphics · motion graphics · video built in (showreels, embeds) · social media integration (feeds and links for content creators, marketers and ad people) · media and third-party integrations · a writing or blog section · an owner dashboard so you edit it yourself | 2 weeks |
 
-Add-ons: CV rewrite to match the site £49; extra case study £25; keep-it-live hosting and two content
-updates a year £60/year. 48-hour Express on Profile: +£100 (for interview deadlines). Never promise jobs,
+Add-ons: CV rewrite to match the site £49; keep-it-live hosting and two content updates a year
+£60/year. (The £25 extra case study add-on was removed: case studies are unlimited from Portfolio up.)
+48-hour Express on Profile: +£100 (for interview deadlines). Never promise jobs,
 interviews or "ATS-proof". Before ads run at /portfolio, 2 to 3 real portfolio examples are needed, with
 the owner's consent.
 

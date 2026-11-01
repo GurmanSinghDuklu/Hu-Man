@@ -9,7 +9,6 @@ import { pages, tierCount, type PageKey } from '../data/pages';
 import { serviceAreas } from '../data/services';
 import {
   tiers,
-  addOns,
   fromPrice,
   priceOf,
   headlineCards,
@@ -166,8 +165,6 @@ export function llmsFullTxt(): string {
         `| ${t.name} | ${t.price === 'Bespoke' ? 'Bespoke (price on application)' : t.price} | ${t.includes.replace(/ · /g, '; ')} |`,
     ),
     '',
-    `Add-ons: ${addOns.join('; ')}.`,
-    '',
     'Headline cards, with timelines:',
     '',
     ...headlineCards.map(
@@ -185,6 +182,8 @@ export function llmsFullTxt(): string {
     '',
     ...portfolioTiers.flatMap((t) => [
       `### ${t.name}${t.tag ? ` (${t.tag})` : ''}: ${t.price}, ${t.timeline}`,
+      '',
+      `${t.summary}.`,
       '',
       ...t.includes.map((i) => `- ${i}`),
       '',
