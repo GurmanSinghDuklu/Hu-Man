@@ -32,7 +32,7 @@ interface Project {
   windows: [Win, Win, Win, Win, Win];
 }
 
-const projects: Project[] = [
+const allProjects: Project[] = [
   {
     id: 'essence',
     n: '01',
@@ -100,6 +100,12 @@ const projects: Project[] = [
     ],
   },
 ];
+
+// Order and numbering follow src/data/projects.ts.
+const projects = projectFacts.map((f, i) => ({
+  ...allProjects.find((p) => p.id === f.id)!,
+  n: String(i + 1).padStart(2, '0'),
+}));
 
 const pic = (w: Win, width: number) => ({
   src: img(w.src),
