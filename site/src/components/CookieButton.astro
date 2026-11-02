@@ -1,0 +1,212 @@
+---
+/**
+ * The fingerprint button fixed to the bottom right of every page, which opens a short cookie
+ * panel. The site sets no cookies, so the panel says so: no switches to flip, nothing to accept.
+ * It uses the native popover (no script needed: Esc and clicking outside close it); browsers
+ * without popover support follow the button to the cookie policy instead.
+ */
+import printMask from '../assets/brand/fingerprint-line.svg?url';
+import { withBase } from '../config/paths';
+
+const policy = withBase('/cookies/');
+const rows = [
+  {
+    name: 'Strictly necessary',
+    status: 'Only if needed',
+    text: 'Cloudflare, our host, may set a security cookie to check a visitor is not a bot.',
+  },
+  { name: 'Analytics', status: 'Not used', text: 'We don’t measure or track visits.' },
+  { name: 'Advertising', status: 'Not used', text: 'No ads, no tracking pixels.' },
+];
+---
+
+<button
+  class="cookie-fab"
+  type="button"
+  popovertarget="cookie-panel"
+  aria-label="Cookies on this site"
+  title="Cookies on this site"
+  data-policy={policy}
+>
+  <span class="cookie-fab__print logo-led" style={`--logo-mask:url("${printMask}")`}></span>
+</button>
+
+<div
+  id="cookie-panel"
+  class="cookie-panel"
+  popover
+  role="dialog"
+  aria-labelledby="cookie-panel-title"
+  data-lenis-prevent
+>
+  <p class="label cookie-panel__label">Cookies</p>
+  <h2 id="cookie-panel-title" class="cookie-panel__title">
+    No cookies here.
+  </h2>
+  <p class="cookie-panel__text">
+    This site runs no analytics, advertising or tracking, and stores nothing in your browser. There
+    is nothing to accept or turn off.
+  </p>
+  <ul class="cookie-panel__rows">
+    {rows.map((row) => (
+      <li>
+        <span class="cookie-panel__name">{row.name}</span>
+        <span class="cookie-panel__status">{row.status}</span>
+        <span class="cookie-panel__note">{row.text}</span>
+      </li>
+    ))}
+  </ul>
+  <div class="cookie-panel__actions">
+    <a class="cookie-panel__link" href={policy}>
+      Read the cookie policy
+    </a>
+    <button
+      class="pill-btn"
+      type="button"
+      popovertarget="cookie-panel"
+      popovertargetaction="hide"
+      autofocus
+    >
+      Close
+    </button>
+  </div>
+</div>
+
+<script>
+  // Older browsers without popover: the button goes to the cookie policy instead.
+  if (!Object.prototype.hasOwnProperty.call(HTMLElement.prototype, 'popover')) {
+    const fab = document.querySelector<HTMLButtonElement>('.cookie-fab');
+    fab?.addEventListener('click', () => location.assign(fab.dataset.policy ?? '/cookies/'));
+  }
+</script>
+
+<style>
+  .cookie-fab {
+    position: fixed;
+    right: max(16px, env(safe-area-inset-right));
+    bottom: max(16px, env(safe-area-inset-bottom));
+    z-index: 60;
+    display: grid;
+    place-items: center;
+    width: 52px;
+    aspect-ratio: 1;
+    padding: 0;
+    border: 1px solid var(--muted-on-ink);
+    border-radius: 50%;
+    background: var(--ink);
+    cursor: pointer;
+    transition: scale 0.25s var(--ease-out);
+  }
+
+  .cookie-fab:hover {
+    scale: 1.08;
+  }
+
+  .cookie-fab:focus-visible {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 3px;
+  }
+
+  /* The print flows through the palette like the footer logo (.logo-led, base.css): the lighter colours, which glow on Ink. */
+  .cookie-fab__print {
+    --led-colours: #cea4ee, #93aee0, #4a9bb0, #edd1a8, #f8cea2, #e79569, #e85e8f, #db92db, #cea4ee;
+    width: 28px;
+    aspect-ratio: 1;
+  }
+
+  .cookie-panel {
+    position: fixed;
+    inset: auto max(16px, env(safe-area-inset-right))
+      calc(max(16px, env(safe-area-inset-bottom)) + 64px) auto;
+    width: min(23rem, calc(100vw - 32px));
+    max-height: calc(100svh - 112px);
+    overflow-y: auto;
+    margin: 0;
+    padding: 1.5rem;
+    border: 1px solid var(--ink);
+    border-top-right-radius: 2.5rem;
+    background: var(--paper);
+    color: var(--ink);
+  }
+
+  .cookie-panel__label {
+    color: var(--muted);
+  }
+
+  .cookie-panel__title {
+    margin-top: 0.4rem;
+    font: 800 1.6rem/1 var(--font-display);
+    text-transform: uppercase;
+  }
+
+  .cookie-panel__text {
+    margin-top: 0.75rem;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+  }
+
+  .cookie-panel__rows {
+    display: grid;
+    margin-top: 1.1rem;
+    border-top: 1px solid var(--line-soft);
+  }
+
+  .cookie-panel__rows li {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.2rem 1rem;
+    padding-block: 0.7rem;
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  .cookie-panel__name {
+    font-weight: 700;
+    font-size: 0.9375rem;
+  }
+
+  .cookie-panel__status {
+    font: 500 0.6875rem/1.6 var(--font-mono);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .cookie-panel__note {
+    grid-column: 1 / -1;
+    font-size: 0.875rem;
+    line-height: 1.45;
+    color: var(--muted);
+  }
+
+  .cookie-panel__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem 1rem;
+    margin-top: 1.25rem;
+  }
+
+  .cookie-panel__link {
+    color: var(--ink);
+    font-weight: 700;
+    font-size: 0.9375rem;
+    text-underline-offset: 0.25em;
+  }
+
+  /* Opens with a short rise and fade; closes at once. */
+  @media (prefers-reduced-motion: no-preference) {
+    .cookie-panel:popover-open {
+      transition:
+        opacity 0.25s var(--ease-out),
+        translate 0.25s var(--ease-out);
+    }
+
+    @starting-style {
+      .cookie-panel:popover-open {
+        opacity: 0;
+        translate: 0 12px;
+      }
+    }
+  }
+</style>

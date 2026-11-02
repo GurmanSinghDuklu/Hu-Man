@@ -1,6 +1,7 @@
 ---
 import '../styles/base.css';
 import Seo from '../components/Seo.astro';
+import CookieButton from '../components/CookieButton.astro';
 import { withBase } from '../config/paths';
 import { pages, type PageKey } from '../data/pages';
 import montserrat800 from '../fonts/montserrat-latin-800-normal.woff2?url';
@@ -41,6 +42,7 @@ const { title, description } = pages[page];
       <slot />
     </main>
     <slot name="footer" />
+    <CookieButton />
     <script>
       import '../scripts/motion/index.ts';
     </script>

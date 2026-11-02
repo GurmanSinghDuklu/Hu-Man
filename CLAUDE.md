@@ -429,3 +429,12 @@ Pages. A plain `npm run build` is unchanged (base `/`, example.com).
   which iOS Safari still pans), because slide reveals start 48px to the right. Clipping only hides
   it: also fix real overflows (a 2-column grid needs `minmax(0, 1fr)`, long headline words need a
   `vw` cap up to tablet width). Check every width from 360 to 1280px, reveals done and not.
+
+## Cookie button (2026-11-02)
+`CookieButton.astro` (in BaseLayout, after the footer): a fixed fingerprint button, bottom right, that
+opens a native `popover` cookie panel (no script; a tiny fallback sends old browsers to /cookies/).
+The site sets no cookies, so the panel says so: no toggles or "Accept" button, which would imply
+cookies that don't exist. If analytics or any non-essential cookie is ever added, this panel becomes
+the real consent UI (with storage for the choice) and the policy changes first. The print is
+`src/assets/brand/fingerprint-line.svg` as a `.logo-led` mask; on phones the footer's last line
+keeps 60px clear of it.

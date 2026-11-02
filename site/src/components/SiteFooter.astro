@@ -139,6 +139,13 @@ const currentYear = new Date().getFullYear();
     color: var(--muted-on-ink);
   }
 
+  /* Phones: the last line stops short of the fixed cookie button (CookieButton.astro). */
+  @media (max-width: 39.99rem) {
+    .site-footer__base {
+      padding-right: 60px;
+    }
+  }
+
   @media (min-width: 40rem) {
     .site-footer__grid {
       grid-template-columns: repeat(2, 1fr);
