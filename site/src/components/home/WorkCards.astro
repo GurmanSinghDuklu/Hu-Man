@@ -1,18 +1,32 @@
 ---
 /**
- * "Portfolio" (home 06): the three concept portfolio sites from /portfolio
- * (src/data/portfolioConcepts.ts), each front page in a browser window, linking
- * to its concept page. All three are fictional people and say so. Real
- * projects stay on /work/.
+ * "Portfolio" (home 06): each project's front page in a browser window, linking
+ * to /work/. Eldeva is a concept: its line always says "Concept". Links to
+ * other sites open in a new tab, so the visitor keeps this one.
  */
 import { Image } from 'astro:assets';
 import { withBase } from '../../config/paths';
-import { portfolioConcepts, portfolioConceptsIntro } from '../../data/portfolioConcepts';
-import noorShot from '../../assets/portfolio-concepts/noor.webp';
-import theoShot from '../../assets/portfolio-concepts/theo.webp';
-import mayaShot from '../../assets/portfolio-concepts/maya.webp';
+import essence from '../../assets/work/essence-desktop.jpg';
+import eldeva from '../../assets/projects/eldeva-hero.jpg';
+import calculator from '../../assets/work/calculator-desktop.jpg';
+import { projects } from '../../data/projects';
 
-const conceptShots = { noor: noorShot, theo: theoShot, maya: mayaShot };
+// The order comes from src/data/projects.ts.
+const shots: Record<string, { src: typeof essence; alt: string }> = {
+  essence: {
+    src: essence,
+    alt: 'The Essence Hair home page: “More than hair, a place to relax, refresh and feel your best.”',
+  },
+  eldeva: {
+    src: eldeva,
+    alt: 'The Eldeva concept home page: “Golden hour, bottled.”',
+  },
+  calculator: {
+    src: calculator,
+    alt: 'The Calculator App home page, with featured calculators',
+  },
+};
+const cards = projects.map((p) => ({ ...p, ...shots[p.id] }));
 ---
 
 <section class="band band--paper-2 cards section" aria-labelledby="cards-title">
@@ -25,7 +39,7 @@ const conceptShots = { noor: noorShot, theo: theoShot, maya: mayaShot };
     </h2>
 
     <ul class="cards__list">
-      {portfolioConcepts.map((c, i) => (
+      {cards.map((c, i) => (
         <li class="card" data-reveal style={`--reveal-delay:${i * 0.08}s`}>
           <div class="card__window">
             <span class="card__bar" aria-hidden="true">
@@ -34,9 +48,9 @@ const conceptShots = { noor: noorShot, theo: theoShot, maya: mayaShot };
               <i></i>
             </span>
             <Image
-              src={conceptShots[c.slug]}
+              src={c.src}
               alt={c.alt}
-              width={800}
+              width={640}
               format="webp"
               quality={70}
               loading="lazy"
@@ -44,26 +58,20 @@ const conceptShots = { noor: noorShot, theo: theoShot, maya: mayaShot };
               class="card__shot"
             />
           </div>
-          <p class="card__note">{portfolioConceptsIntro.note}</p>
           <h3 class="card__name">{c.name}</h3>
-          <p class="card__role">{c.role}</p>
-          <p class="card__blurb">{c.shows}</p>
-          <a class="card__link" href={withBase(`/concepts/${c.slug}/`)}>
-            {portfolioConceptsIntro.linkText}
-            <span class="visually-hidden"> for {c.name}</span>
-          </a>
+          <p class="card__blurb">
+            {c.blurb}
+            {c.linkText && c.url &&
+              /* prettier-ignore */
+              <><a href={c.url} target="_blank" rel="noopener noreferrer">{c.linkText}<span class="visually-hidden"> (opens in a new tab)</span></a>.</>}
+          </p>
         </li>
       ))}
     </ul>
 
-    <div class="cards__links">
-      <a class="more-link" href={withBase('/portfolio/')}>
-        See portfolio sites <span aria-hidden="true">↗</span>
-      </a>
-      <a class="cards__quiet" href={withBase('/work/')}>
-        See our client work
-      </a>
-    </div>
+    <a class="more-link cards__link" href={withBase('/work/')}>
+      See all our work <span aria-hidden="true">↗</span>
+    </a>
   </div>
 </section>
 
@@ -111,7 +119,7 @@ const conceptShots = { noor: noorShot, theo: theoShot, maya: mayaShot };
   }
 
   .card__name {
-    margin-top: 0.5rem;
+    margin-top: clamp(1rem, calc(var(--u) * 0.36), 2rem);
     font-size: clamp(1.25rem, calc(var(--u) * 0.31), 1.9rem);
     line-height: 1;
   }
@@ -123,39 +131,13 @@ const conceptShots = { noor: noorShot, theo: theoShot, maya: mayaShot };
     line-height: 1.5;
   }
 
-  .cards__links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem 2rem;
-    align-items: center;
-    margin-top: clamp(2rem, calc(var(--u) * 0.5), 3rem);
-  }
-
-  .cards__quiet,
-  .card__link {
+  .card__blurb a {
     font-weight: 700;
     text-underline-offset: 0.2em;
   }
 
-  .cards__quiet {
-    font-weight: 400;
-  }
-
-  .card__link {
-    display: inline-block;
-    margin-top: 0.75rem;
-  }
-
-  .card__note {
-    margin-top: clamp(1rem, calc(var(--u) * 0.36), 2rem);
-    font: 400 0.75rem var(--font-mono);
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-  }
-
-  .card__role {
-    margin-top: 0.5rem;
-    font-size: clamp(0.95rem, calc(var(--u) * 0.17), 1.05rem);
+  .cards__link {
+    margin-top: clamp(2rem, calc(var(--u) * 0.5), 3rem);
   }
 
   @media (min-width: 48rem) {
