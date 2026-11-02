@@ -14,6 +14,8 @@ export interface ServiceItem {
 }
 
 export interface ServiceArea {
+  /** The card's anchor on /services/ (the header's Services menu links to it). */
+  id: string;
   title: string;
   short: string;
   style: ServiceStyle;
@@ -22,6 +24,7 @@ export interface ServiceArea {
 
 export const serviceAreas: ServiceArea[] = [
   {
+    id: 'websites',
     title: 'Website design + development',
     short: 'Sites that look right and work properly.',
     style: 'lilac',
@@ -37,6 +40,7 @@ export const serviceAreas: ServiceArea[] = [
     ],
   },
   {
+    id: 'e-commerce',
     title: 'E-commerce',
     short: 'Stores that sell, and keep selling.',
     style: 'rose',
@@ -49,6 +53,7 @@ export const serviceAreas: ServiceArea[] = [
     ],
   },
   {
+    id: 'mobile-apps',
     title: 'Mobile apps',
     short: 'Apps for iPhone, Android and the web.',
     style: 'indigo',
@@ -61,6 +66,7 @@ export const serviceAreas: ServiceArea[] = [
     ],
   },
   {
+    id: 'design-branding',
     title: 'Graphic design + branding',
     short: 'A look people remember.',
     style: 'peach',
@@ -74,6 +80,7 @@ export const serviceAreas: ServiceArea[] = [
     ],
   },
   {
+    id: 'custom-software',
     title: 'Custom software',
     short: 'Tools built around how you work.',
     style: 'dusk',
@@ -87,6 +94,7 @@ export const serviceAreas: ServiceArea[] = [
     ],
   },
   {
+    id: 'hosting-support',
     title: 'Domains, hosting + support',
     short: 'The technical side, handled.',
     style: 'teal',

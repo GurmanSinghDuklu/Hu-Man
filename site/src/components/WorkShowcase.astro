@@ -123,7 +123,7 @@ const pic = (w: Win, width: number) => ({
     const [tall, wide, c1, c2, narrow] = p.windows;
     const facts = projectFacts.find((f) => f.id === p.id)!;
     return (
-      <article class="project" aria-labelledby={`project-${p.n}`}>
+      <article id={p.id} class="project" aria-labelledby={`project-${p.n}`}>
         <div class:list={['project__bar', `project__bar--${p.bar}`]}>
           <div class="sheet project__bar-inner">
             <h2 id={`project-${p.n}`} class="label">

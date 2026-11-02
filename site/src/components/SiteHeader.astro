@@ -4,17 +4,32 @@ import { withBase } from '../config/paths';
 import Logo from './Logo.astro';
 import BookingLink from './BookingLink.astro';
 import logoMask from '../assets/brand/logo-ink.svg?url';
+import { serviceAreas } from '../data/services';
+import { projects } from '../data/projects';
+
+const servicesPath = withBase('/services/');
+const workPath = withBase('/work/');
 
 // The FAQ lives on the pricing page, so that link carries the page path and works from anywhere.
-const navLinks = [
-  { href: withBase('/services/'), label: 'Services' },
-  { href: withBase('/work/'), label: 'Work' },
+// Services and Work open a menu: every service area with its items, and every project.
+const navLinks: { href: string; label: string; menu?: 'services' | 'work' }[] = [
+  { href: servicesPath, label: 'Services', menu: 'services' },
+  { href: workPath, label: 'Work', menu: 'work' },
   { href: withBase('/pricing/'), label: 'Pricing' },
   { href: withBase('/about/'), label: 'About' },
   { href: withBase('/how-we-build/'), label: 'How we build' },
   { href: `${withBase('/pricing/')}#faq`, label: 'FAQ' },
   { href: withBase('/contact/'), label: 'Contact' },
 ];
+
+// The first sentence of each project's card line, and where it sits on /work/.
+const workItems = projects.map((p) => ({
+  name: p.name,
+  status: p.live ? 'Live' : 'Concept',
+  line: p.blurb.split(/(?<=\.)\s/)[0],
+  href: `${workPath}#${p.id}`,
+  swatch: `var(--grad-${p.id})`,
+}));
 ---
 
 <header class="site-header">
@@ -27,11 +42,74 @@ const navLinks = [
 
     <nav class="site-header__nav" aria-label="Primary">
       <ul>
-        {navLinks.map((link) => (
-          <li>
-            <a href={link.href}>{link.label}</a>
-          </li>
-        ))}
+        {navLinks.map((link) =>
+          link.menu ? (
+            <li class="nav-drop">
+              <a href={link.href}>{link.label}</a>
+              <button
+                type="button"
+                class="nav-drop__toggle"
+                aria-expanded="false"
+                aria-controls={`menu-${link.menu}`}
+              >
+                <span class="visually-hidden">More in {link.label}</span>
+                <svg viewBox="0 0 10 6" aria-hidden="true">
+                  <path d="M1 1l4 4 4-4" />
+                </svg>
+              </button>
+              <div id={`menu-${link.menu}`} class="nav-drop__panel">
+                {link.menu === 'services' ? (
+                  <div class="sheet">
+                    <ul class="nav-drop__areas">
+                      {serviceAreas.map((area) => (
+                        <li>
+                          <a class="nav-drop__area" href={`${servicesPath}#${area.id}`}>
+                            <span class:list={['nav-drop__swatch', `fill--${area.style}`]} />
+                            {area.title}
+                          </a>
+                          <ul class="nav-drop__items">
+                            {area.items.map((item) => (
+                              <li>
+                                <a href={`${servicesPath}#${area.id}`} tabindex="-1">
+                                  {item.text}
+                                </a>
+                              </li>
+                            ))}
+                          </ul>
+                        </li>
+                      ))}
+                    </ul>
+                    <a class="more-link nav-drop__more" href={servicesPath}>
+                      See everything we do <span aria-hidden="true">↗</span>
+                    </a>
+                  </div>
+                ) : (
+                  <div class="sheet">
+                    <ul class="nav-drop__projects">
+                      {workItems.map((item) => (
+                        <li>
+                          <a class="nav-drop__project" href={item.href}>
+                            <span class="nav-drop__thumb" style={`background:${item.swatch}`} />
+                            <span class="nav-drop__name">{item.name}</span>
+                            <span class="nav-drop__status">{item.status}</span>
+                            <span class="nav-drop__line">{item.line}</span>
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                    <a class="more-link nav-drop__more" href={workPath}>
+                      See all our work <span aria-hidden="true">↗</span>
+                    </a>
+                  </div>
+                )}
+              </div>
+            </li>
+          ) : (
+            <li>
+              <a href={link.href}>{link.label}</a>
+            </li>
+          ),
+        )}
       </ul>
     </nav>
 
@@ -44,11 +122,29 @@ const navLinks = [
           <i></i>
         </span>
       </summary>
-      <div class="site-header__panel">
+      <div class="site-header__panel" data-lenis-prevent>
         <ul>
           {navLinks.map((link) => (
             <li>
               <a href={link.href}>{link.label}</a>
+              {link.menu === 'services' && (
+                <ul class="site-header__sub">
+                  {serviceAreas.map((area) => (
+                    <li>
+                      <a href={`${servicesPath}#${area.id}`}>{area.title}</a>
+                    </li>
+                  ))}
+                </ul>
+              )}
+              {link.menu === 'work' && (
+                <ul class="site-header__sub">
+                  {workItems.map((item) => (
+                    <li>
+                      <a href={item.href}>{item.name}</a>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </li>
           ))}
         </ul>
@@ -67,6 +163,49 @@ const navLinks = [
   document.querySelectorAll<HTMLDetailsElement>('.site-header__menu').forEach((menu) => {
     menu.addEventListener('click', (event) => {
       if ((event.target as HTMLElement).closest('a')) menu.open = false;
+    });
+  });
+
+  // Desktop menus (Services, Work): hover opens them through CSS; the arrow button opens and
+  // closes them for keyboard and touch. Esc, a click outside or following a link closes them.
+  const drops = [...document.querySelectorAll<HTMLElement>('.nav-drop')];
+  const setOpen = (drop: HTMLElement, open: boolean) => {
+    drop.classList.toggle('is-open', open);
+    drop.querySelector('.nav-drop__toggle')?.setAttribute('aria-expanded', String(open));
+  };
+  const dismiss = (drop: HTMLElement) => {
+    setOpen(drop, false);
+    drop.classList.add('is-dismissed');
+  };
+
+  drops.forEach((drop) => {
+    drop.querySelector('.nav-drop__toggle')?.addEventListener('click', () => {
+      const open = !drop.classList.contains('is-open');
+      drops.forEach((other) => setOpen(other, false));
+      drop.classList.remove('is-dismissed');
+      setOpen(drop, open);
+    });
+    drop.addEventListener('focusout', (event) => {
+      if (!drop.contains(event.relatedTarget as Node | null)) setOpen(drop, false);
+    });
+    drop.addEventListener('mouseleave', () => drop.classList.remove('is-dismissed'));
+    drop.querySelector('.nav-drop__panel')?.addEventListener('click', (event) => {
+      if ((event.target as HTMLElement).closest('a')) dismiss(drop);
+    });
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape') return;
+    drops.forEach((drop) => {
+      const hadFocus = drop.classList.contains('is-open') && drop.contains(document.activeElement);
+      if (drop.classList.contains('is-open') || drop.matches(':hover')) dismiss(drop);
+      if (hadFocus) drop.querySelector<HTMLButtonElement>('.nav-drop__toggle')?.focus();
+    });
+  });
+
+  document.addEventListener('click', (event) => {
+    drops.forEach((drop) => {
+      if (!drop.contains(event.target as Node)) setOpen(drop, false);
     });
   });
 </script>
@@ -108,12 +247,13 @@ const navLinks = [
     display: none;
   }
 
-  .site-header__nav ul {
+  /* Top-level links only: direct children, so this doesn't reach into the Services/Work menus below. */
+  .site-header__nav > ul {
     display: flex;
     gap: clamp(1.25rem, calc(var(--u) * 0.3), 1.75rem);
   }
 
-  .site-header__nav a {
+  .site-header__nav > ul > li > a {
     display: inline-block;
     padding-block: 0.75rem;
     font: 400 0.8125rem var(--font-mono);
@@ -126,9 +266,194 @@ const navLinks = [
     transition: background-size 0.3s var(--ease-out);
   }
 
-  .site-header__nav a:hover,
-  .site-header__nav a:focus-visible {
+  .site-header__nav > ul > li > a:hover,
+  .site-header__nav > ul > li > a:focus-visible {
     background-size: 100% 1px;
+  }
+
+  /* ---------- desktop menus (Services, Work) ---------- */
+
+  /* Each item fills the header's height, so the pointer stays on it on the way down to the menu. */
+  .site-header__nav,
+  .site-header__nav > ul,
+  .site-header__nav > ul > li {
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+  }
+
+  .nav-drop__toggle {
+    display: grid;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    margin-left: 0.1rem;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  .nav-drop__toggle svg {
+    width: 10px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    transition: rotate 0.25s var(--ease-out);
+  }
+
+  .nav-drop__toggle:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+
+  .nav-drop.is-open .nav-drop__toggle svg {
+    rotate: 180deg;
+  }
+
+  /* The menu spans the header's full width, just below it. */
+  .nav-drop__panel {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    padding-block: calc(var(--u) * 0.4) calc(var(--u) * 0.45);
+    border-block: 1px solid var(--ink);
+    background: var(--paper);
+    visibility: hidden;
+    opacity: 0;
+    translate: 0 -6px;
+    transition:
+      opacity 0.2s var(--ease-out),
+      translate 0.2s var(--ease-out),
+      visibility 0s linear 0.2s;
+  }
+
+  .nav-drop.is-open .nav-drop__panel {
+    visibility: visible;
+    opacity: 1;
+    translate: none;
+    transition-delay: 0s;
+  }
+
+  /* A short pause before opening on hover, so passing over the nav on the way elsewhere doesn't flash the menu. */
+  @media (hover: hover) {
+    .nav-drop:hover:not(.is-dismissed) .nav-drop__panel {
+      visibility: visible;
+      opacity: 1;
+      translate: none;
+      transition-delay: 0.08s;
+    }
+
+    .nav-drop:hover:not(.is-dismissed) .nav-drop__toggle svg {
+      rotate: 180deg;
+    }
+  }
+
+  .site-header__nav .nav-drop__panel a {
+    background: none;
+    letter-spacing: normal;
+    text-transform: none;
+  }
+
+  .nav-drop__areas {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: calc(var(--u) * 0.35) calc(var(--u) * 0.3);
+  }
+
+  .site-header__nav .nav-drop__area {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding-block: 0 0.6rem;
+    border-bottom: 1px solid var(--ink);
+    width: 100%;
+    font: 800 max(0.8125rem, calc(var(--u) * 0.14)) / 1.15 var(--font-display);
+    text-transform: uppercase;
+  }
+
+  .nav-drop__swatch {
+    flex: none;
+    width: 14px;
+    aspect-ratio: 1;
+  }
+
+  .nav-drop__items {
+    display: grid;
+    gap: 0.1rem;
+    margin-top: 0.6rem;
+  }
+
+  .site-header__nav .nav-drop__items a {
+    padding-block: 0.2rem;
+    font: 400 0.875rem/1.35 var(--font-text);
+    color: var(--muted);
+  }
+
+  .site-header__nav .nav-drop__area:hover,
+  .site-header__nav .nav-drop__items a:hover,
+  .site-header__nav .nav-drop__project:hover .nav-drop__name {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    color: var(--ink);
+  }
+
+  .nav-drop__projects {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: calc(var(--u) * 0.3);
+  }
+
+  .site-header__nav .nav-drop__project {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 0.35rem 0.75rem;
+    padding: 0;
+  }
+
+  .nav-drop__thumb {
+    grid-row: span 2;
+    width: calc(var(--u) * 0.8);
+    aspect-ratio: 1;
+    border-top-right-radius: calc(var(--u) * 0.4);
+  }
+
+  .nav-drop__name {
+    font: 800 max(0.875rem, calc(var(--u) * 0.15)) / 1.1 var(--font-display);
+    text-transform: uppercase;
+  }
+
+  .nav-drop__status {
+    padding: 0.2rem 0.55rem;
+    border: 1px solid var(--ink);
+    border-radius: 999px;
+    font: 500 0.6875rem/1 var(--font-mono);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .nav-drop__line {
+    grid-column: 2 / -1;
+    align-self: start;
+    font: 400 0.875rem/1.4 var(--font-text);
+    color: var(--muted);
+  }
+
+  .site-header__nav .nav-drop__more {
+    margin-top: calc(var(--u) * 0.35);
+    padding-block: 0 0.3rem;
+    font: 400 0.8125rem/1.3 var(--font-mono);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  @media (min-width: 75rem) {
+    .nav-drop__areas {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
   }
 
   .site-header :global(.site-header__cta) {
@@ -184,18 +509,38 @@ const navLinks = [
     right: 0;
     top: calc(100% + 0.75rem);
     width: min(20rem, calc(100vw - 2.5rem));
+    max-height: calc(100svh - 96px);
+    overflow-y: auto;
     padding: var(--space-4);
     background: var(--paper);
     border: 1px solid var(--ink);
   }
 
-  .site-header__panel li a {
+  .site-header__panel > ul > li > a {
     display: block;
     padding: 0.7rem 0;
     border-bottom: 1px solid var(--line-soft);
     font: 800 1.5rem/1.1 var(--font-display);
     text-transform: uppercase;
     text-decoration: none;
+  }
+
+  /* Services and Work list what's inside them, smaller. */
+  .site-header__sub {
+    display: grid;
+    padding-block: 0.4rem 0.6rem;
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  .site-header__sub a {
+    display: block;
+    padding: 0.3rem 0;
+    font-size: 0.9375rem;
+    text-decoration: none;
+  }
+
+  .site-header__panel > ul > li:has(.site-header__sub) > a {
+    border-bottom: 0;
   }
 
   .site-header__panel :global(.btn) {

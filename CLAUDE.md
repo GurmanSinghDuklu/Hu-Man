@@ -438,3 +438,18 @@ cookies that don't exist. If analytics or any non-essential cookie is ever added
 the real consent UI (with storage for the choice) and the policy changes first. The print is
 `src/assets/brand/fingerprint-line.svg` as a `.logo-led` mask; on phones the footer's last line
 keeps 60px clear of it.
+
+## Nav dropdowns: Services and Work (2026-11-02)
+The header's "Services" and "Work" links now open a menu on hover (desktop) or an arrow button
+(keyboard/touch): Services lists every service area and its items (`src/data/services.ts`, each
+area got an `id` used as its anchor on `/services/#id`); Work lists every project with its status
+and first sentence (`src/data/projects.ts`, linking to `/work/#id`). The mobile burger menu shows
+the same lists as a plain sub-list under each link, no JS needed. Esc, a click outside, or
+following a link closes an open menu; focus returns to the toggle on Esc. `scroll-padding-top` on
+`html` keeps anchored targets clear of the sticky header.
+1. **A descendant selector leaks into nested menus.** `.site-header__nav ul` (meant only for the
+   top-level link row) matched every `<ul>` inside the header, including the dropdown's own grid
+   lists, and silently forced them to `display: flex` — collapsing the 6-column services grid into
+   one wide row and overflowing the page by ~1700px sideways (invisible panels still count toward
+   `scrollWidth`). Fixed by scoping the original rule to `.site-header__nav > ul` (direct children
+   only). Check this again before adding another nested list inside the header.

@@ -67,6 +67,7 @@ const lightNumber = new Set(['indigo', 'dusk']);
       <ul class="svc__cards">
         {serviceAreas.map((s, i) => (
           <li
+            id={s.id}
             class:list={['svc__card', `svc__card--${i + 1}`]}
             data-reveal
             style={`--reveal-delay:${(i % 2) * 0.08}s`}
