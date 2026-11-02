@@ -7,6 +7,13 @@ import TalkBanner from '../components/TalkBanner.astro';
 import { portfolioTiers, portfolioAddOns, portfolioExpress } from '../data/pricing';
 import { contactPath } from '../config/links';
 import { withBase } from '../config/paths';
+import { Image } from 'astro:assets';
+import { portfolioConcepts, portfolioConceptsIntro } from '../data/portfolioConcepts';
+import noorShot from '../assets/portfolio-concepts/noor.webp';
+import theoShot from '../assets/portfolio-concepts/theo.webp';
+import mayaShot from '../assets/portfolio-concepts/maya.webp';
+
+const conceptShots = { noor: noorShot, theo: theoShot, maya: mayaShot };
 
 const choose = (name: string) => withBase(contactPath({ tier: `Portfolio: ${name}` }));
 ---
@@ -56,6 +63,44 @@ const choose = (name: string) => withBase(contactPath({ tier: `Portfolio: ${name
             <a class="pill-btn ptier__btn" href={choose(t.name)}>
               Choose<span class="visually-hidden"> {t.name}</span>
             </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="band pconcepts" aria-labelledby="concepts-title">
+    <div class="sheet">
+      <p class="label" data-reveal>
+        {portfolioConceptsIntro.label}
+      </p>
+      <h2 id="concepts-title" class="display display--s" data-reveal="lines">
+        {portfolioConceptsIntro.title}
+      </h2>
+      <p class="pconcepts__text">{portfolioConceptsIntro.text}</p>
+      <ul class="pconcepts__list">
+        {portfolioConcepts.map((c, i) => (
+          <li class="pconcept" data-reveal style={`--reveal-delay:${i * 0.08}s`}>
+            <Image
+              src={conceptShots[c.slug]}
+              alt={c.alt}
+              width={800}
+              format="webp"
+              quality={75}
+              loading="lazy"
+              decoding="async"
+              class="pconcept__shot"
+            />
+            <div class="pconcept__body">
+              <p class="pconcept__note">{portfolioConceptsIntro.note}</p>
+              <h3 class="pconcept__name">{c.name}</h3>
+              <p class="pconcept__role">{c.role}</p>
+              <p class="pconcept__shows">{c.shows}</p>
+              <a class="pill-btn pconcept__btn" href={withBase(`/concepts/${c.slug}/`)}>
+                {portfolioConceptsIntro.linkText}
+                <span class="visually-hidden"> for {c.name}</span>
+              </a>
+            </div>
           </li>
         ))}
       </ul>
@@ -198,6 +243,73 @@ const choose = (name: string) => withBase(contactPath({ tier: `Portfolio: ${name
     border-color: var(--paper);
   }
 
+  .pconcepts {
+    padding-block: clamp(3rem, calc(var(--u) * 0.9), 5.5rem);
+    border-top: 1px solid var(--grid-line);
+  }
+
+  .pconcepts__text {
+    max-width: 42rem;
+    margin-top: 1rem;
+    font-size: clamp(1rem, calc(var(--u) * 0.18), 1.1rem);
+    line-height: 1.5;
+  }
+
+  .pconcepts__list {
+    display: grid;
+    gap: max(12px, calc(var(--u) * 0.2));
+    margin-top: clamp(2rem, calc(var(--u) * 0.6), 3.5rem);
+  }
+
+  .pconcept {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--ink);
+    background: var(--paper);
+  }
+
+  .pconcept__shot {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    object-position: top;
+    border-bottom: 1px solid var(--ink);
+  }
+
+  .pconcept__body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: clamp(1.25rem, calc(var(--u) * 0.3), 2rem);
+  }
+
+  .pconcept__note {
+    font: 400 0.75rem var(--font-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .pconcept__name {
+    font: 800 clamp(1.6rem, calc(var(--u) * 0.4), 2.2rem) / 1.05 var(--font-display);
+    letter-spacing: -0.02em;
+  }
+
+  .pconcept__role {
+    font-weight: 700;
+  }
+
+  .pconcept__shows {
+    line-height: 1.45;
+  }
+
+  .pconcept__btn {
+    align-self: flex-start;
+    margin-top: auto;
+  }
+
   .pextras {
     padding-block: clamp(3rem, calc(var(--u) * 0.9), 5.5rem);
   }
@@ -237,6 +349,7 @@ const choose = (name: string) => withBase(contactPath({ tier: `Portfolio: ${name
   }
 
   @media (min-width: 40rem) {
+    .pconcepts__list,
     .ptiers__list {
       grid-template-columns: repeat(3, 1fr);
     }
