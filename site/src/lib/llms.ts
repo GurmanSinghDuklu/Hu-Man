@@ -213,7 +213,7 @@ export function llmsFullTxt(): string {
     '',
     ...projects.map(
       (p) =>
-        `- ${p.name}${p.url ? ` (${p.url})` : ''}: ${p.summary} ${p.live ? 'Live.' : 'Concept design, not live.'}`,
+        `- ${p.name}${p.url ? ` (${p.url})` : ''}: ${p.summary} ${p.live ? 'Live.' : 'Concept, not live.'}`,
     ),
     '',
     '## Frequently asked questions',

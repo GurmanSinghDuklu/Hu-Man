@@ -1,12 +1,12 @@
 /**
  * The three concept portfolio sites on /portfolio (they live in public/concepts/<slug>/).
- * All three are fictional people. The line under each name says only what the page shows: no
+ * All three are concepts. The line under each name says only what the page shows: no
  * results, no clients, no awards. Order here is the order on the page: Noor, Theo, Maya.
  */
 export interface PortfolioConcept {
   slug: 'noor' | 'theo' | 'maya';
   name: string;
-  /** Role and city of the fictional person. */
+  /** Role and city of the person shown. */
   role: string;
   /** One factual line about what the page shows. */
   shows: string;
@@ -17,9 +17,9 @@ export interface PortfolioConcept {
 export const portfolioConceptsIntro = {
   label: 'Concept portfolios',
   title: 'The level we build to.',
-  text: 'Three concept portfolios for fictional people. Every Profile, Portfolio and Portfolio Pro site is designed around the person, not a template.',
+  text: 'Three concept portfolios. Every Profile, Portfolio and Portfolio Pro site is designed around the person, not a template.',
   /** Shown on every card. */
-  note: 'Concept design for a fictional person',
+  note: 'Concept',
   linkText: 'View the concept',
 };
 
