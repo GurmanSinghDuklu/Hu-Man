@@ -32,7 +32,10 @@ async function walk(dir, prefix = '') {
 
 const files = await walk(dist);
 const fileSet = new Set(files);
-const htmlFiles = files.filter((f) => f.endsWith('.html'));
+// Concept portfolios (public/concepts/) are standalone, noindex pages with their own checks below.
+const isConcept = (f) => f.startsWith('concepts/');
+const conceptFiles = files.filter((f) => isConcept(f) && f.endsWith('.html'));
+const htmlFiles = files.filter((f) => f.endsWith('.html') && !isConcept(f));
 const html = Object.fromEntries(
   await Promise.all(htmlFiles.map(async (f) => [f, await readFile(`${dist}${f}`, 'utf8')])),
 );
@@ -231,6 +234,20 @@ const headersFile = await readFile(`${dist}_headers`, 'utf8').catch(() => '');
 if (/X-Robots-Tag/i.test(headersFile) && !noindexBuild)
   fail('_headers', 'sets X-Robots-Tag on the live site');
 
+// Concept portfolios: noindex, self-hosted (no third-party host) and absent from the sitemap.
+if (conceptFiles.length !== 3) fail('concepts', `${conceptFiles.length} concept pages (want 3)`);
+for (const f of conceptFiles) {
+  const doc = await readFile(`${dist}${f}`, 'utf8');
+  if (!/<meta name="robots" content="noindex,nofollow">/.test(doc)) fail(f, 'not noindex,nofollow');
+  if (!/<html lang="en-GB"/.test(doc)) fail(f, 'html lang is not en-GB');
+  if (/googleapis|gstatic|cdnjs|jsdelivr|unpkg|https?:\/\/(?!www\.w3\.org)/.test(doc))
+    fail(f, 'references an outside host');
+  if (!/href="\.\.\/\.\.\/portfolio\/"/.test(doc)) fail(f, 'no link back to the portfolio page');
+  for (const [, ref] of doc.matchAll(/(?:src|url)\(?=?["']?(\.\.\/(?:fonts|vendor)\/[^"')\s]+)/g)) {
+    if (!fileSet.has(`concepts/${ref.slice(3)}`)) fail(f, `missing asset ${ref}`);
+  }
+}
+
 // Sitemap: exactly the indexable pages.
 if (!noindexBuild) {
   const sitemap = await readFile(`${dist}sitemap-0.xml`, 'utf8');
@@ -281,4 +298,6 @@ if (errors.length) {
   );
   process.exit(1);
 }
-console.log(`SEO check: ${htmlFiles.length} pages, ${indexable.length} indexable, all clear.`);
+console.log(
+  `SEO check: ${htmlFiles.length} pages (+${conceptFiles.length} concepts), ${indexable.length} indexable, all clear.`,
+);

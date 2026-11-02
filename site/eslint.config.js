@@ -14,6 +14,13 @@ export default tseslint.config(
     },
   },
   {
-    ignores: ['dist/**', '.og-build/**', '.astro/**', 'node_modules/**', 'reports/**'],
+    ignores: [
+      'dist/**',
+      '.og-build/**',
+      '.astro/**',
+      'node_modules/**',
+      'reports/**',
+      'public/concepts/**',
+    ],
   },
 );
