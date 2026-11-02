@@ -45,6 +45,6 @@ export const projects: Project[] = [
     blurb:
       'Pre-production full site rebuild and integration from Shopify. Full inventory, booking, ordering and bespoke customisation system.',
     live: false,
-    summary: 'A concept design for an online candle shop, It has not launched.',
+    summary: 'A concept for an online candle shop. It has not launched.',
   },
 ];
