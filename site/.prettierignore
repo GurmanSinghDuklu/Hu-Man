@@ -3,3 +3,4 @@ dist
 node_modules
 reports
 .og-build
+public/concepts

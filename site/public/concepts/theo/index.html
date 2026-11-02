@@ -1,0 +1,730 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Theo Lindqvist, engineer (concept portfolio)</title>
+<meta name="robots" content="noindex,nofollow">
+<style>
+@font-face{font-family:'Big Shoulders Display';font-style:normal;font-weight:600;font-display:swap;src:url(../fonts/big-shoulders-display-latin-600-normal.woff2) format('woff2')}
+@font-face{font-family:'Big Shoulders Display';font-style:normal;font-weight:800;font-display:swap;src:url(../fonts/big-shoulders-display-latin-800-normal.woff2) format('woff2')}
+@font-face{font-family:'Big Shoulders Display';font-style:normal;font-weight:900;font-display:swap;src:url(../fonts/big-shoulders-display-latin-900-normal.woff2) format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:400;font-display:swap;src:url(../fonts/ibm-plex-mono-latin-400-normal.woff2) format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:500;font-display:swap;src:url(../fonts/ibm-plex-mono-latin-500-normal.woff2) format('woff2')}
+@font-face{font-family:'IBM Plex Sans';font-style:normal;font-weight:400;font-display:swap;src:url(../fonts/ibm-plex-sans-latin-400-normal.woff2) format('woff2')}
+@font-face{font-family:'IBM Plex Sans';font-style:normal;font-weight:500;font-display:swap;src:url(../fonts/ibm-plex-sans-latin-500-normal.woff2) format('woff2')}
+</style>
+<style>
+:root{
+  color-scheme: dark;
+  --ground:#131518;
+  --raise:#1a1d21;
+  --sunk:#0f1113;
+  --line:#2b2f35;
+  --line-soft:#212429;
+  --text:#ece8df;
+  --muted:#a2a5a8;
+  --faint:#6f7479;
+  --amber:#ffb02e;
+  --amber-ink:#1a1204;
+  --amber-glow:rgba(255,176,46,.14);
+  --add:#8fd6a4;
+  --del:#e9806e;
+  --display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --body:"IBM Plex Sans",system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:#131518;color:#ece8df;scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:#131518;color:#ece8df;font-family:var(--body);font-size:17px;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:2px solid #ffb02e;outline-offset:3px;border-radius:2px}
+::selection{background:#ffb02e;color:#1a1204}
+
+.site{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));background:#131518;color:#ece8df;overflow-x:clip}
+.in{max-width:1360px;margin:0 auto;padding-inline:clamp(0px,3vw,40px)}
+.skip{position:absolute;left:-999px;top:8px;background:#ffb02e;color:#1a1204;padding:8px 12px;font-family:var(--mono);font-size:13px;z-index:100}
+.skip:focus{left:16px}
+
+/* ---------- hero ---------- */
+.hero{position:relative;min-height:max(640px,100svh);display:flex;flex-direction:column;justify-content:space-between;margin-left:calc(-1 * max(16px,env(safe-area-inset-left,0px)));margin-right:calc(-1 * max(16px,env(safe-area-inset-right,0px)));background:#131518;isolation:isolate;touch-action:pan-y;overflow:hidden}
+#field{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:-2}
+.hero::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:
+   linear-gradient(to top,#131518 0%,rgba(19,21,24,.8) 16%,rgba(19,21,24,0) 46%),
+   linear-gradient(to bottom,rgba(19,21,24,.8) 0%,rgba(19,21,24,0) 18%)}
+.hero-top,.hero-bottom{width:100%;max-width:1360px;margin:0 auto;padding-inline:calc(max(16px,env(safe-area-inset-left,0px)) + clamp(0px,3vw,40px)) calc(max(16px,env(safe-area-inset-right,0px)) + clamp(0px,3vw,40px))}
+.hero-top{padding-top:22px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:13px;color:var(--muted)}
+.hero-top nav{display:flex;gap:6px 22px;flex-wrap:wrap}
+.hero-top a{text-decoration:none;color:var(--muted);padding:4px 0;border-bottom:1px solid transparent;transition:color .2s,border-color .2s}
+.hero-top a:hover{color:var(--text);border-color:var(--amber)}
+.hero-top .where{color:var(--text)}
+.hero-bottom{padding-bottom:clamp(64px,8vh,84px)}
+.name{font-family:var(--display);font-weight:900;text-transform:uppercase;line-height:.84;letter-spacing:-.005em;font-size:clamp(4.4rem,22.5vw,9rem);color:#ece8df;margin:0 0 clamp(18px,3vh,32px)}
+.name .w{display:block;overflow:hidden;padding-top:.06em;padding-bottom:.02em}
+.name .ch{display:inline-block;will-change:transform}
+.hero-line{display:flex;gap:16px 40px;justify-content:space-between;align-items:flex-end;flex-wrap:wrap}
+.role{font-family:var(--body);font-size:clamp(1.05rem,1.6vw,1.3rem);line-height:1.45;max-width:34ch;color:#ece8df}
+.role b{font-weight:500;color:var(--amber)}
+.hint{font-family:var(--mono);font-size:12.5px;color:var(--muted);display:flex;align-items:center;gap:10px}
+.hint i{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--amber);box-shadow:0 0 0 4px var(--amber-glow)}
+@media (min-width:820px){
+  .name{font-size:clamp(9rem,14.6vw,21rem);white-space:nowrap}
+  .name .w{display:inline-block;overflow:hidden;margin-right:.18em}
+  .name .w:last-child{margin-right:0}
+}
+
+/* ---------- thesis ---------- */
+.thesis{padding:clamp(80px,14vw,200px) 0 clamp(70px,10vw,140px)}
+.thesis p{font-family:var(--display);font-weight:800;font-size:clamp(2.6rem,7.4vw,7.2rem);line-height:.95;letter-spacing:-.005em;max-width:17ch;color:#ece8df}
+.thesis small{display:block;margin-top:28px;font-family:var(--mono);font-size:13px;color:var(--muted);font-weight:400;max-width:52ch;line-height:1.7}
+
+/* ---------- section head ---------- */
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:clamp(24px,4vw,48px)}
+h2{font-family:var(--display);font-weight:800;font-size:clamp(2.6rem,6vw,5rem);line-height:.92;color:#ece8df}
+.sec-head p{font-family:var(--mono);font-size:13px;color:var(--muted);max-width:44ch}
+
+/* ---------- build logs ---------- */
+.logs{padding-bottom:clamp(60px,9vw,120px)}
+.log{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);grid-template-areas:"head viz" "body viz";column-gap:clamp(28px,5vw,88px);row-gap:22px;padding:clamp(40px,6vw,76px) 0;border-top:1px solid var(--line);align-content:start}
+.log-head{grid-area:head}
+.log-viz{grid-area:viz;align-self:start;position:sticky;top:24px}
+.log-body{grid-area:body}
+.log h3{font-family:var(--display);font-weight:900;font-size:clamp(3.2rem,6.2vw,6rem);line-height:.88;color:#ece8df}
+.log .kind{font-family:var(--mono);font-size:13px;color:var(--amber);margin-top:12px}
+.facts{display:grid;grid-template-columns:auto 1fr;gap:6px 18px;font-family:var(--mono);font-size:13px;margin-bottom:26px;padding-bottom:22px;border-bottom:1px dashed var(--line)}
+.facts dt{color:var(--faint)}
+.facts dd{color:var(--text)}
+.beat{margin-bottom:18px;max-width:58ch}
+.beat h4{font-family:var(--mono);font-weight:500;font-size:13px;color:var(--amber);margin-bottom:4px}
+.beat p{color:#d6d2c9;font-size:16.5px}
+.panel{background:var(--sunk);border:1px solid var(--line);border-radius:10px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(0,0,0,.6)}
+.panel-bar{display:flex;justify-content:space-between;align-items:center;padding:9px 12px 9px 14px;border-bottom:1px solid var(--line);background:var(--raise);font-family:var(--mono);font-size:12.5px;color:var(--muted);gap:10px}
+.panel-bar span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.replay{font-family:var(--mono);font-size:12px;background:transparent;color:var(--text);border:1px solid var(--line);border-radius:999px;padding:4px 12px;cursor:pointer;transition:background .2s,color .2s,border-color .2s;flex:none}
+.replay:hover{background:var(--amber);color:var(--amber-ink);border-color:var(--amber)}
+.panel-body{padding:18px;min-height:292px;display:flex;align-items:center}
+.panel-body svg{width:100%;height:auto;display:block}
+.code{font-family:var(--mono);font-size:13.5px;line-height:1.75;white-space:normal;word-break:break-word;width:100%}
+.code .ln{display:block;white-space:pre-wrap;padding:0 10px;margin:0 -10px;border-left:2px solid transparent;color:#bdbab2}
+.code .ln.add{background:rgba(143,214,164,.09);border-left-color:var(--add);color:#d9f0df}
+.code .ln.del{background:rgba(233,128,110,.09);border-left-color:var(--del);color:#f2c5bc}
+.code .ln.ctx{color:var(--faint)}
+.code .pill{display:inline-block;margin-top:14px;font-size:12px;padding:3px 12px;border-radius:999px;background:var(--amber);color:var(--amber-ink);font-weight:500}
+.tok{display:inline-block;padding:0 4px;margin:0 1px;border-radius:3px}
+.tok.d{background:rgba(233,128,110,.2);color:#f2c5bc;text-decoration:line-through;text-decoration-color:var(--del)}
+.tok.a{background:rgba(143,214,164,.2);color:#d9f0df}
+.row-label{font-size:12px;color:var(--faint);display:block;margin-bottom:2px}
+.svg-t{font-family:var(--mono);font-size:11px;fill:#a2a5a8}
+.svg-t.strong{fill:#ece8df}
+.svg-t.amber{fill:#ffb02e}
+.svg-box{fill:#171a1e;stroke:#3a3f46;stroke-width:1.2}
+.svg-link{stroke:#4a5058;stroke-width:1.2;fill:none}
+.svg-amber{stroke:#ffb02e;stroke-width:2.2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.fit{transform-box:fill-box;transform-origin:center}
+
+/* ---------- activity ---------- */
+.activity{padding:clamp(60px,9vw,120px) 0;border-top:1px solid var(--line)}
+.heat-wrap{background:var(--sunk);border:1px solid var(--line);border-radius:10px;padding:clamp(14px,2.4vw,28px)}
+.months{display:grid;grid-template-columns:repeat(52,1fr);gap:3px;font-family:var(--mono);font-size:11px;color:var(--faint);margin-bottom:6px}
+.months span{grid-row:1;white-space:nowrap}
+.heat{display:grid;grid-template-columns:repeat(52,1fr);grid-template-rows:repeat(7,auto);gap:3px}
+.cell{aspect-ratio:1;border-radius:3px;background:#1f2327;transition:opacity .25s,outline-color .2s;outline:1px solid transparent}
+.cell.l1{background:#3b3125}
+.cell.l2{background:#6e5224}
+.cell.l3{background:#b57b22}
+.cell.l4{background:#ffb02e}
+.heat.filtering .cell{opacity:.16}
+.heat.filtering .cell.on{opacity:1}
+.heat-ctrl{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px;align-items:center}
+.chip{font-family:var(--mono);font-size:12.5px;color:var(--text);background:transparent;border:1px solid var(--line);border-radius:999px;padding:6px 14px;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+.chip:hover{border-color:var(--amber)}
+.chip[aria-pressed="true"]{background:var(--amber);color:var(--amber-ink);border-color:var(--amber)}
+.legend{margin-left:auto;display:flex;align-items:center;gap:4px;font-family:var(--mono);font-size:11.5px;color:var(--faint)}
+.legend i{width:12px;height:12px;border-radius:2px;display:inline-block}
+.note{margin-top:14px;font-family:var(--mono);font-size:12px;color:var(--muted)}
+
+/* ---------- stack ---------- */
+.stack{padding:clamp(60px,9vw,120px) 0;border-top:1px solid var(--line)}
+.stack-row{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:12px 40px;padding:22px 0;border-bottom:1px solid var(--line-soft);align-items:baseline}
+.stack-row h3{font-family:var(--display);font-weight:800;font-size:clamp(1.9rem,3.4vw,2.9rem);line-height:1}
+.stack-row h3 small{display:block;font-family:var(--mono);font-weight:400;font-size:12.5px;color:var(--faint);margin-top:6px;line-height:1.5}
+.stack-row ul{list-style:none;display:flex;flex-wrap:wrap;gap:8px 8px}
+.stack-row li{font-family:var(--mono);font-size:14px;padding:5px 12px;border:1px solid var(--line);border-radius:6px;color:var(--text)}
+.stack-row li.core{border-color:#7a5a22;background:rgba(255,176,46,.07)}
+
+/* ---------- experience ---------- */
+.path{padding:clamp(60px,9vw,120px) 0;border-top:1px solid var(--line)}
+.tl{list-style:none;position:relative;margin-left:0}
+.tl li{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,9fr);gap:8px 40px;padding:0 0 clamp(30px,4vw,52px) 0;position:relative}
+.tl .when{font-family:var(--mono);font-size:13px;color:var(--muted);padding-top:.5em}
+.tl .what{position:relative;padding-left:30px;border-left:1px solid var(--line)}
+.tl li:last-child .what{border-left-color:transparent}
+.tl .what::before{content:"";position:absolute;left:-6px;top:.55em;width:11px;height:11px;border-radius:50%;background:#131518;border:2px solid var(--faint)}
+.tl li:first-child .what::before{background:var(--amber);border-color:var(--amber);box-shadow:0 0 0 5px var(--amber-glow)}
+.tl h3{font-family:var(--display);font-weight:800;font-size:clamp(1.8rem,3.2vw,2.7rem);line-height:1}
+.tl .co{font-family:var(--mono);font-size:13px;color:var(--amber);margin:6px 0 10px}
+.tl p{color:#d6d2c9;max-width:60ch;font-size:16.5px}
+
+/* ---------- contact ---------- */
+.contact{padding:clamp(70px,11vw,160px) 0 clamp(90px,10vw,140px);border-top:1px solid var(--line)}
+.contact p.lead{font-family:var(--body);color:var(--muted);max-width:44ch;margin:20px 0 28px}
+.mail{display:inline-block;font-family:var(--display);font-weight:900;font-size:clamp(2rem,7.2vw,7rem);line-height:1;color:#ece8df;text-decoration:none;word-break:break-word;background:linear-gradient(var(--amber),var(--amber)) 0 100%/0 .09em no-repeat;transition:background-size .5s cubic-bezier(.2,.8,.2,1),color .3s;padding-bottom:.08em}
+.mail:hover,.mail:focus-visible{background-size:100% .09em;color:#ffb02e}
+.links{display:flex;flex-wrap:wrap;gap:10px 14px;margin-top:34px;font-family:var(--mono);font-size:14px}
+.links a{text-decoration:none;border:1px solid var(--line);border-radius:8px;padding:10px 16px;display:inline-flex;flex-direction:column;gap:2px;transition:border-color .2s,background .2s}
+.links a span{font-size:12px;color:var(--faint)}
+.links a:hover{border-color:var(--amber);background:var(--amber-glow)}
+footer{border-top:1px solid var(--line);padding:26px 0 84px;font-family:var(--mono);font-size:12.5px;color:var(--faint);display:flex;justify-content:space-between;gap:12px 30px;flex-wrap:wrap}
+
+/* ---------- badge ---------- */
+.badge{position:fixed;left:max(12px,env(safe-area-inset-left,0px));bottom:max(12px,env(safe-area-inset-bottom,0px));z-index:50;display:flex;align-items:center;gap:8px;background:rgba(15,17,19,.92);border:1px solid #3a3f46;color:#ece8df;font-family:var(--mono);font-size:11.5px;line-height:1.3;padding:8px 12px;border-radius:999px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);max-width:calc(100vw - 24px)}
+.badge i{width:7px;height:7px;border-radius:50%;background:#ffb02e;flex:none}
+
+/* ---------- responsive ---------- */
+@media (max-width:900px){
+  .log{grid-template-columns:minmax(0,1fr);grid-template-areas:"head" "viz" "body";}
+  .log-viz{position:static}
+  .stack-row,.tl li{grid-template-columns:minmax(0,1fr)}
+  .tl .when{padding-top:0;padding-left:30px}
+  .legend{margin-left:0;width:100%}
+}
+@media (max-width:520px){
+  body{font-size:16px}
+  .panel-body{padding:14px;min-height:260px}
+  .code{font-size:12.5px}
+  .months{font-size:9.5px}
+  .heat,.months{gap:1px}
+  .cell{border-radius:1px}
+  .months span:nth-child(even){visibility:hidden}
+  .hero-top .where{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .replay{display:none}
+  *{transition:none!important}
+}
+
+/* HU/MAN concept badge */
+.badge{display:flex;flex-wrap:wrap;align-items:center;gap:2px 12px;pointer-events:auto;border-radius:18px;line-height:1.3}
+.badge a{color:inherit;font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.badge a:focus-visible{outline:2px solid currentColor;outline-offset:3px;border-radius:3px}
+@media (max-width:640px){.badge{position:static;margin:24px max(16px,env(safe-area-inset-left,0px)) max(16px,env(safe-area-inset-bottom,0px));max-width:none;justify-content:center;text-align:center;border-radius:14px}footer{padding-bottom:26px!important}}
+</style>
+</head>
+<body>
+
+<div class="site">
+<a class="skip" href="#builds">Skip to build logs</a>
+
+<header class="hero" id="top">
+  <canvas id="field" aria-hidden="true"></canvas>
+  <div class="hero-top">
+    <nav aria-label="Sections">
+      <a href="#builds">Build logs</a>
+      <a href="#lately">Lately</a>
+      <a href="#toolbox">Toolbox</a>
+      <a href="#path">Path</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <span class="where">Manchester, UK&nbsp;&nbsp;53.48N 2.24W</span>
+  </div>
+  <div class="hero-bottom">
+    <h1 class="name" aria-label="Theo Lindqvist"><span class="w" aria-hidden="true">Theo</span><span class="w" aria-hidden="true">Lindqvist</span></h1>
+    <div class="hero-line">
+      <p class="role"><b>Backend and platform engineer.</b> Five years making the quiet layers of software dependable.</p>
+      <p class="hint"><i></i>Move through the map. It parts around you.</p>
+    </div>
+  </div>
+</header>
+
+<main class="in">
+  <section class="thesis" aria-label="Thesis">
+    <p>Software should fail loudly, recover quietly, and be boring to run.</p>
+    <small>That is the whole job. Queues that outlive deploys, ledgers that balance, routes that adapt, and code small enough to read.</small>
+  </section>
+
+  <section class="logs" id="builds" aria-labelledby="h-builds">
+    <div class="sec-head">
+      <h2 id="h-builds">Build logs</h2>
+      <p>Four projects, written up as what was broken, what changed, and what got easier. All invented for this concept.</p>
+    </div>
+
+    <!-- FERRY -->
+    <article class="log" data-viz="ferry">
+      <div class="log-head">
+        <h3>Ferry</h3>
+        <p class="kind">A job queue that survives restarts</p>
+      </div>
+      <div class="log-viz">
+        <div class="panel">
+          <div class="panel-bar"><span>ferry / lease and recover</span><button class="replay" type="button" aria-label="Replay Ferry animation">Replay</button></div>
+          <div class="panel-body">
+            <svg viewBox="0 0 480 280" role="img" aria-label="Diagram: a producer writes a job to a durable log. Worker A leases the job and crashes. The lease expires and Worker B picks the job up from the log.">
+              <defs><marker id="ar" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L8 4L0 8z" fill="#4a5058"/></marker></defs>
+              <g class="svg-box-g">
+                <rect class="svg-box" x="16" y="104" width="96" height="64" rx="8"/>
+                <text class="svg-t strong" x="64" y="132" text-anchor="middle">producer</text>
+                <text class="svg-t" x="64" y="150" text-anchor="middle">enqueue()</text>
+
+                <rect class="svg-box" id="f-log" x="168" y="96" width="132" height="80" rx="8" style="stroke:#7a5a22"/>
+                <text class="svg-t amber" x="234" y="122" text-anchor="middle">append-only log</text>
+                <g stroke="#3a3f46" stroke-width="1">
+                  <line x1="182" y1="136" x2="286" y2="136"/><line x1="182" y1="148" x2="286" y2="148"/><line x1="182" y1="160" x2="286" y2="160"/>
+                </g>
+                <rect id="f-row" x="182" y="144" width="104" height="8" rx="2" fill="#ffb02e" opacity=".85"/>
+
+                <rect class="svg-box" id="f-wa" x="360" y="30" width="104" height="64" rx="8" stroke-dasharray="4 4"/>
+                <text class="svg-t strong" x="412" y="58" text-anchor="middle">worker A</text>
+                <text class="svg-t" x="412" y="76" text-anchor="middle">lease expired</text>
+
+                <rect class="svg-box" id="f-wb" x="360" y="186" width="104" height="64" rx="8" style="stroke:#ffb02e"/>
+                <text class="svg-t strong" x="412" y="214" text-anchor="middle">worker B</text>
+                <text class="svg-t" x="412" y="232" text-anchor="middle">re-leased</text>
+              </g>
+              <path class="svg-link" d="M112 136 H168" marker-end="url(#ar)"/>
+              <path class="svg-link" d="M300 120 L360 70" marker-end="url(#ar)"/>
+              <path class="svg-link" d="M300 152 L360 206" marker-end="url(#ar)"/>
+              <g id="f-x" class="fit" stroke="#ffb02e" stroke-width="2.4" stroke-linecap="round"><path d="M436 40 l12 12 M448 40 l-12 12"/></g>
+              <g id="f-ok" class="fit" stroke="#ffb02e" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M436 198 l7 7 l13 -14"/></g>
+              <circle id="f-dot" cx="412" cy="236" r="0" fill="#ffb02e"/>
+              <text class="svg-t" x="16" y="262">A crash costs a lease, not a job.</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div class="log-body">
+        <dl class="facts">
+          <dt>Role</dt><dd>Sole author, design to rollout</dd>
+          <dt>Stack</dt><dd>Go, PostgreSQL, Prometheus</dd>
+          <dt>Year</dt><dd>2025</dd>
+        </dl>
+        <div class="beat"><h4>Problem</h4><p>Overnight import jobs vanished whenever a worker restarted mid-run. The team heard about it from customers, not from alerts.</p></div>
+        <div class="beat"><h4>What I built</h4><p>A queue that writes each job to an append-only log before acknowledging it, hands work out on short heartbeat leases, and replays anything unfinished at boot. Retries back off with jitter, and a dead-letter lane can be inspected and re-driven by hand.</p></div>
+        <div class="beat"><h4>Outcome</h4><p>Deploys stopped being scheduled around the queue. Restarts became routine, and a lost job turned into something the team had to be reminded was ever possible.</p></div>
+      </div>
+    </article>
+
+    <!-- LEDGERLINE -->
+    <article class="log" data-viz="ledger">
+      <div class="log-head">
+        <h3>Ledgerline</h3>
+        <p class="kind">A double-entry payments service</p>
+      </div>
+      <div class="log-viz">
+        <div class="panel">
+          <div class="panel-bar"><span>ledger / transfer.kt</span><button class="replay" type="button" aria-label="Replay Ledgerline animation">Replay</button></div>
+          <div class="panel-body">
+            <div class="code" role="img" aria-label="Code diff: two mutable balance updates are replaced by a single balanced ledger posting with an idempotency key.">
+<span class="ln ctx">fun transfer(from, to, amount, key) {</span>
+<span class="ln del">-  from.balance -= amount</span>
+<span class="ln del">-  to.balance   += amount</span>
+<span class="ln add">+  ledger.post(key, listOf(</span>
+<span class="ln add">+    debit(from, amount),</span>
+<span class="ln add">+    credit(to,  amount),</span>
+<span class="ln add">+  ))</span>
+<span class="ln add">+  check(entries.sum() == 0)</span>
+<span class="ln ctx">}</span>
+<span class="pill">balances are derived, never stored</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="log-body">
+        <dl class="facts">
+          <dt>Role</dt><dd>Backend lead, team of four</dd>
+          <dt>Stack</dt><dd>Kotlin, PostgreSQL, Kafka</dd>
+          <dt>Year</dt><dd>2023 to 2024</dd>
+        </dl>
+        <div class="beat"><h4>Problem</h4><p>Balances lived in a single mutable column. Untangling a disputed payment meant reading logs and making an educated guess.</p></div>
+        <div class="beat"><h4>What I built</h4><p>An immutable ledger where every movement is a balanced pair of entries committed in one transaction. Every write carries an idempotency key, and balances are computed from entries rather than stored.</p></div>
+        <div class="beat"><h4>Outcome</h4><p>Finance could answer "where did this money go" with a query instead of an investigation. Disputes became lookups, and retries stopped being scary.</p></div>
+      </div>
+    </article>
+
+    <!-- PATHFINDER -->
+    <article class="log" data-viz="path">
+      <div class="log-head">
+        <h3>Pathfinder</h3>
+        <p class="kind">A routing engine for Marrow &amp; Finch Couriers (fictional)</p>
+      </div>
+      <div class="log-viz">
+        <div class="panel">
+          <div class="panel-bar"><span>pathfinder / reroute</span><button class="replay" type="button" aria-label="Replay Pathfinder animation">Replay</button></div>
+          <div class="panel-body">
+            <svg viewBox="0 0 480 280" role="img" aria-label="Diagram: a delivery route through six stops. A new late order appears and the route is adjusted without rebuilding it.">
+              <g stroke="#242830" stroke-width="1">
+                <path d="M20 60H460M20 120H460M20 180H460M20 240H460M80 20V260M180 20V260M280 20V260M380 20V260"/>
+              </g>
+              <path id="p-old" d="M52 220 L130 150 L200 190 L290 100 L360 140 L430 60" fill="none" stroke="#ffb02e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".28"/>
+              <path id="p-new" class="svg-amber" d="M52 220 L130 150 L200 190 L250 232 L330 200 L290 100 L360 140 L430 60"/>
+              <g fill="#131518" stroke="#ece8df" stroke-width="1.6" id="p-nodes">
+                <circle cx="52" cy="220" r="7" fill="#ffb02e" stroke="#ffb02e"/>
+                <circle cx="130" cy="150" r="6"/><circle cx="200" cy="190" r="6"/>
+                <circle cx="290" cy="100" r="6"/><circle cx="360" cy="140" r="6"/><circle cx="430" cy="60" r="6"/>
+              </g>
+              <g id="p-late" class="fit">
+                <circle cx="250" cy="232" r="9" fill="#ffb02e"/><circle cx="330" cy="200" r="0"/>
+                <text class="svg-t amber" x="262" y="256">late order, slotted in</text>
+              </g>
+              <text class="svg-t" x="30" y="248">depot</text>
+              <text class="svg-t" x="352" y="168">time window kept</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div class="log-body">
+        <dl class="facts">
+          <dt>Role</dt><dd>Backend engineer, owned the solver service</dd>
+          <dt>Stack</dt><dd>Rust, PostGIS, gRPC</dd>
+          <dt>Year</dt><dd>2022 to 2023</dd>
+        </dl>
+        <div class="beat"><h4>Problem</h4><p>Dispatchers rebuilt each day's routes by hand in spreadsheets, and every late order broke the plan they had just finished.</p></div>
+        <div class="beat"><h4>What I built</h4><p>A graph-based engine that honours delivery windows, precomputes road distances up front, and re-plans only the affected stretch when an order arrives. Each stop carries a short reason for why it sits where it does.</p></div>
+        <div class="beat"><h4>Outcome</h4><p>Dispatchers went from drawing routes to approving them. Late orders slot in without a full rebuild, and the "why is this stop here" question answers itself.</p></div>
+      </div>
+    </article>
+
+    <!-- TINY-DIFF -->
+    <article class="log" data-viz="tiny">
+      <div class="log-head">
+        <h3>tiny-diff</h3>
+        <p class="kind">Open source: a text diff library</p>
+      </div>
+      <div class="log-viz">
+        <div class="panel">
+          <div class="panel-bar"><span>tiny-diff / diff("the quick brown fox", ...)</span><button class="replay" type="button" aria-label="Replay tiny-diff animation">Replay</button></div>
+          <div class="panel-body">
+            <div class="code" role="img" aria-label="Token diff: the word brown is replaced by red, and the word jumps is added.">
+<span class="row-label">before</span>the quick <span class="tok d">brown</span> fox
+<br><span class="row-label">after</span>the quick <span class="tok a">red</span> fox <span class="tok a">jumps</span>
+<br><span class="row-label">edit script</span><span class="ln ctx">= the</span><span class="ln ctx">= quick</span><span class="ln del">- brown</span><span class="ln add">+ red</span><span class="ln ctx">= fox</span><span class="ln add">+ jumps</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="log-body">
+        <dl class="facts">
+          <dt>Role</dt><dd>Author and maintainer</dd>
+          <dt>Stack</dt><dd>TypeScript, no dependencies</dd>
+          <dt>Since</dt><dd>2021</dd>
+        </dl>
+        <div class="beat"><h4>Problem</h4><p>Showing what changed in a form field shouldn't need a diff library bigger than the form. The options were all heavier than the job.</p></div>
+        <div class="beat"><h4>What I built</h4><p>A token-level Myers diff in a few hundred lines. It tree-shakes cleanly, returns a plain edit script, and prints output a person can read.</p></div>
+        <div class="beat"><h4>Outcome</h4><p>Small enough to read in an evening. Contributors have found their way around it without a guide, which is the review I care about most.</p></div>
+      </div>
+    </article>
+  </section>
+
+  <section class="activity" id="lately" aria-labelledby="h-lately">
+    <div class="sec-head">
+      <h2 id="h-lately">What I've been working on</h2>
+      <p>A made-up year of commits, shaped by the projects above. Pick one to see where it lands.</p>
+    </div>
+    <div class="heat-wrap">
+      <div class="months" id="months" aria-hidden="true"></div>
+      <div class="heat" id="heat" role="img" aria-label="Illustrative contribution heatmap, fifty-two weeks by seven days, not real data"></div>
+      <div class="heat-ctrl" id="heat-ctrl">
+        <button class="chip" type="button" data-p="ferry" aria-pressed="false">Ferry</button>
+        <button class="chip" type="button" data-p="ledger" aria-pressed="false">Ledgerline</button>
+        <button class="chip" type="button" data-p="path" aria-pressed="false">Pathfinder</button>
+        <button class="chip" type="button" data-p="tiny" aria-pressed="false">tiny-diff</button>
+        <span class="legend" aria-hidden="true">quiet <i style="background:#1f2327"></i><i style="background:#3b3125"></i><i style="background:#6e5224"></i><i style="background:#b57b22"></i><i style="background:#ffb02e"></i> busy</span>
+      </div>
+      <p class="note">Illustrative only. Generated for this concept, not pulled from any real account.</p>
+    </div>
+  </section>
+
+  <section class="stack" id="toolbox" aria-labelledby="h-stack">
+    <div class="sec-head"><h2 id="h-stack">Toolbox</h2><p>Highlighted tools are the ones I reach for without thinking.</p></div>
+    <div class="stack-row">
+      <h3>Languages<small>What the code is written in</small></h3>
+      <ul><li class="core">Go</li><li class="core">TypeScript</li><li>Rust</li><li>Kotlin</li><li class="core">SQL</li><li>Bash</li></ul>
+    </div>
+    <div class="stack-row">
+      <h3>Data and queues<small>Where state lives and moves</small></h3>
+      <ul><li class="core">PostgreSQL</li><li>PostGIS</li><li>SQLite</li><li>Kafka</li><li>Redis</li></ul>
+    </div>
+    <div class="stack-row">
+      <h3>Platform<small>How it ships and stays up</small></h3>
+      <ul><li class="core">Kubernetes</li><li>Terraform</li><li>GitHub Actions</li><li class="core">Prometheus</li><li>Grafana</li><li>OpenTelemetry</li></ul>
+    </div>
+    <div class="stack-row">
+      <h3>Habits<small>What keeps it honest</small></h3>
+      <ul><li class="core">Design docs first</li><li>Property-based tests</li><li>Runbooks people use</li><li>Blameless reviews</li><li>Pairing</li></ul>
+    </div>
+  </section>
+
+  <section class="path" id="path" aria-labelledby="h-path">
+    <div class="sec-head"><h2 id="h-path">Path so far</h2><p>Three teams in five years. All employers are invented for this concept.</p></div>
+    <ol class="tl">
+      <li>
+        <div class="when">2024 to now</div>
+        <div class="what"><h3>Backend engineer, platform team</h3><p class="co">Northwharf Labs</p><p>Owns the job and workflow infrastructure other teams build on, and carries the pager for it. Built Ferry, and rewrote the on-call runbooks so a tired engineer can follow them at 3am.</p></div>
+      </li>
+      <li>
+        <div class="when">2022 to 2024</div>
+        <div class="what"><h3>Software engineer, payments and routing</h3><p class="co">Brindle Freight Tech</p><p>Moved from the routing solver to the payments core. Shipped Pathfinder, then led the Ledgerline rebuild with three other engineers.</p></div>
+      </li>
+      <li>
+        <div class="when">2021 to 2022</div>
+        <div class="what"><h3>Graduate engineer</h3><p class="co">Mill Street Software</p><p>First production code, first incident, first postmortem. Started tiny-diff here as a weekend answer to a problem at work.</p></div>
+      </li>
+    </ol>
+  </section>
+
+  <section class="contact" id="contact" aria-labelledby="h-contact">
+    <h2 id="h-contact">Say hello</h2>
+    <p class="lead">Open to backend and platform roles in the UK and remote. Email is quickest.</p>
+    <a class="mail" href="mailto:hello@theolindqvist.example">hello@theolindqvist.example</a>
+    <div class="links">
+      <a href="#contact" title="Fictional handle, concept only"><span>GitHub</span>github.com/theo-lindqvist-concept</a>
+      <a href="#contact" title="Fictional handle, concept only"><span>LinkedIn</span>linkedin.com/in/theo-lindqvist-concept</a>
+    </div>
+  </section>
+
+  <footer>
+    <span>Theo Lindqvist is a fictional person. Projects, companies and handles are invented.</span>
+    <span>Concept portfolio by HU/MAN</span>
+  </footer>
+</main>
+
+<div class="badge" role="note"><a href="../../portfolio/">&larr; Back to HU/MAN</a><span>Concept site by HU/MAN &middot; fictional person</span></div>
+</div>
+
+<script src="../vendor/gsap.min.js"></script>
+<script src="../vendor/ScrollTrigger.min.js"></script>
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ================= hero contour field ================= */
+  var cv = document.getElementById('field'), hero = document.getElementById('top');
+  var ctx = cv.getContext('2d');
+  var W=0,H=0,dpr=1,cell=14,cols=0,rows=0,t=reduce?46:0,rt=0;
+  var ptr = {x:0,y:0,active:false,e:0,px:0,py:0};
+  var GL = ['-','\\','|','/'];
+  var INK='236,232,223', AMB='255,176,46';
+
+  function size(){
+    var r = hero.getBoundingClientRect();
+    W = Math.max(1,r.width); H = Math.max(1,r.height);
+    dpr = Math.min(window.devicePixelRatio||1, 2);
+    cv.width = Math.round(W*dpr); cv.height = Math.round(H*dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    cell = W<600 ? 12 : 14; RAD = W<600 ? 110 : 210;
+    cols = Math.ceil(W/cell)+1; rows = Math.ceil(H/cell)+1;
+    ctx.font = (cell*0.95)+'px "IBM Plex Mono", ui-monospace, monospace';
+    ctx.textAlign='center'; ctx.textBaseline='middle';
+    if(!ptr.px){ptr.px=W*0.7;ptr.py=H*0.38;}
+    if(reduce) draw();
+  }
+
+  var RAD=210, S = 560, cx_=0, cy_=0, cen=0;
+  function F(x,y){
+    var u=x/S, v=y/S;
+    var w1=Math.sin(v*2.2+t*0.11)*0.6;
+    var a=Math.sin((u+w1)*3.1+t*0.07);
+    var b=Math.sin((v-u*0.5)*2.6-t*0.05+a*0.8);
+    var c=Math.sin((u*0.7+v)*5.3+t*0.09)*0.35;
+    var f=a*0.9+b+c;
+    if(cen>0.001){
+      var dx=x-cx_, dy=y-cy_, d2=dx*dx+dy*dy, d=Math.sqrt(d2);
+      f += cen*(1.7*Math.exp(-d2/(2*(RAD*0.57)*(RAD*0.57))) + 0.32*Math.sin(d/20 - rt*2.4)*Math.exp(-d/300));
+    }
+    return f;
+  }
+  function hash(i,j){var h=(i*374761393+j*668265263)^(i*j+1013904223);h=(h^(h>>>13))*1274126177;return ((h^(h>>>16))>>>0)/4294967295;}
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    var LV=2.9, ix=cell*0.5;
+    for(var j=0;j<rows;j++){
+      var y=j*cell;
+      for(var i=0;i<cols;i++){
+        var x=i*cell;
+        var f0=F(x,y), fx=F(x+cell,y), fy=F(x,y+cell);
+        var g=f0*LV, gx=(fx-f0)*LV, gy=(fy-f0)*LV;
+        var gm=Math.sqrt(gx*gx+gy*gy)+1e-4;
+        var near=Math.round(g), dist=Math.abs(g-near)/gm; // in cells
+        var line = 1 - Math.min(1,Math.max(0,(dist-0.3)/0.7));
+        var dx=x-cx_, dy=y-cy_;
+        var infl = cen*Math.exp(-(dx*dx+dy*dy)/(2*RAD*RAD));
+        var amber = infl>0.18;
+        if(line>0.32){
+          var ang=Math.atan2(gy,gx)+Math.PI/2; ang=((ang%Math.PI)+Math.PI)%Math.PI;
+          var k=Math.round(ang/(Math.PI/4))%4;
+          var idx = (((near%4)+4)%4)===0;
+          var al = (idx?0.85:0.46)*line + infl*0.5;
+          ctx.fillStyle='rgb('+(amber?AMB:INK)+')';
+          ctx.globalAlpha=Math.min(1,al);
+          if(idx && line>0.85 && hash(i,j)>0.985){
+            ctx.fillStyle='rgb('+AMB+')'; ctx.globalAlpha=0.9;
+            ctx.fillText(String(Math.abs(near/4)*100+100),x,y);
+          } else {
+            ctx.fillText(GL[k],x,y);
+          }
+        } else {
+          ctx.fillStyle='rgb('+(amber?AMB:INK)+')';
+          ctx.globalAlpha=0.14+infl*0.3;
+          ctx.fillRect(x-0.6,y-0.6,1.3,1.3);
+        }
+      }
+    }
+    ctx.globalAlpha=1;
+  }
+
+  var running=false,last=0,vis=true;
+  function frame(ts){
+    if(!running) return;
+    var dt=Math.min(0.05,(ts-last)/1000||0.016); last=ts;
+    t+=dt*1.0; rt+=dt;
+    var tx,ty,target;
+    if(ptr.active){tx=ptr.x;ty=ptr.y;target=1;}
+    else{
+      tx=W*(0.64+0.2*Math.sin(rt*0.21)); ty=H*(0.36+0.16*Math.sin(rt*0.33+1.3)); target=0.55;
+    }
+    ptr.px+=(tx-ptr.px)*0.12; ptr.py+=(ty-ptr.py)*0.12;
+    cen+=(target-cen)*0.05;
+    cx_=ptr.px; cy_=ptr.py;
+    draw();
+    requestAnimationFrame(frame);
+  }
+  function start(){ if(running||reduce||!vis) return; running=true; last=performance.now(); requestAnimationFrame(frame); }
+  function stop(){ running=false; }
+
+  size();
+  if(reduce){ cen=0.55; cx_=W*0.64; cy_=H*0.36; draw(); }
+  else { start(); }
+  if(window.ResizeObserver){ new ResizeObserver(function(){size(); if(reduce){cx_=W*0.64;cy_=H*0.36;draw();}}).observe(hero); }
+  else window.addEventListener('resize',size);
+
+  function setPtr(e){var r=hero.getBoundingClientRect();ptr.x=e.clientX-r.left;ptr.y=e.clientY-r.top;ptr.active=true;}
+  hero.addEventListener('pointermove',setPtr);
+  hero.addEventListener('pointerdown',setPtr);
+  hero.addEventListener('pointerleave',function(){ptr.active=false;});
+  hero.addEventListener('pointercancel',function(){ptr.active=false;});
+  hero.addEventListener('pointerup',function(e){ if(e.pointerType!=='mouse') ptr.active=false; });
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(en){vis=en[0].isIntersecting; if(vis)start(); else stop();}).observe(hero);
+  }
+  document.addEventListener('visibilitychange',function(){ if(document.hidden)stop(); else start(); });
+
+  /* ================= heatmap ================= */
+  var heat=document.getElementById('heat'), months=document.getElementById('months');
+  var seed=7; function rnd(){seed=(seed*16807)%2147483647;return (seed-1)/2147483646;}
+  var NW=52, cells=[];
+  function phase(w,d){
+    if(d===0||d===6){ return rnd()<0.62?'tiny':null; }
+    if(w<17) return rnd()<0.82?'ferry':(rnd()<0.5?'ledger':'path');
+    if(w<35) return rnd()<0.72?'ledger':(rnd()<0.5?'ferry':'path');
+    return rnd()<0.78?'path':(rnd()<0.5?'ferry':'ledger');
+  }
+  for(var w=0;w<NW;w++){
+    for(var d=0;d<7;d++){
+      var p=phase(w,d), wk=(d===0||d===6);
+      var r = rnd(), burst = (w%17>=6&&w%17<=10)?0.18:0;
+      var lvl = r<0.34-burst ? 0 : r<0.62-burst ? 1 : r<0.82 ? 2 : r<0.94 ? 3 : 4;
+      if(wk) lvl = Math.max(0,lvl-1);
+      if(!p) lvl = rnd()<0.85?0:1;
+      var el=document.createElement('div');
+      el.className='cell'+(lvl?' l'+lvl:'');
+      el.style.gridColumn=(w+1); el.style.gridRow=(d+1);
+      el.dataset.p=p||''; el.title='Illustrative activity, level '+lvl;
+      heat.appendChild(el); cells.push(el);
+    }
+  }
+  [['Nov',0],['Dec',4],['Jan',9],['Feb',13],['Mar',17],['Apr',22],['May',26],['Jun',30],['Jul',35],['Aug',39],['Sep',44],['Oct',48]].forEach(function(m){
+    var s=document.createElement('span'); s.textContent=m[0]; s.style.gridColumn=(m[1]+1); months.appendChild(s);
+  });
+  var chips=[].slice.call(document.querySelectorAll('.chip'));
+  chips.forEach(function(c){
+    c.addEventListener('click',function(){
+      var on = c.getAttribute('aria-pressed')==='true';
+      chips.forEach(function(o){o.setAttribute('aria-pressed','false');});
+      cells.forEach(function(el){el.classList.remove('on');});
+      if(on){heat.classList.remove('filtering');return;}
+      c.setAttribute('aria-pressed','true'); heat.classList.add('filtering');
+      cells.forEach(function(el){ if(el.dataset.p===c.dataset.p) el.classList.add('on'); });
+    });
+  });
+
+  /* ================= motion ================= */
+  if(reduce || !window.gsap) return;
+  gsap.registerPlugin(window.ScrollTrigger);
+
+  // hero name: split letters, one orchestrated rise
+  var words=document.querySelectorAll('.name .w'), chars=[];
+  words.forEach(function(w){
+    var txt=w.textContent; w.textContent='';
+    txt.split('').forEach(function(c){var s=document.createElement('span');s.className='ch';s.textContent=c;w.appendChild(s);chars.push(s);});
+  });
+  gsap.from(chars,{yPercent:105,duration:1,ease:'power4.out',stagger:0.045,delay:0.1});
+  gsap.from('.hero-line, .hero-top',{opacity:0,duration:0.9,delay:0.7,ease:'power2.out'});
+
+  // build-log animations: created lazily so everything is visible at rest
+  function q(root,s){return [].slice.call(root.querySelectorAll(s));}
+  var builders={
+    ferry:function(root){
+      var tl=gsap.timeline();
+      var dot=root.querySelector('#f-dot'), x=root.querySelector('#f-x'), ok=root.querySelector('#f-ok');
+      tl.set(dot,{attr:{cx:64,cy:136,r:6}})
+        .set([x,ok],{opacity:0,scale:0.2})
+        .to(dot,{attr:{cx:234,cy:148},duration:0.8,ease:'power2.inOut'},0.2)
+        .from('#f-row',{scaleX:0,transformOrigin:'0% 50%',duration:0.5},'>-0.1')
+        .to(dot,{attr:{cx:412,cy:62},duration:0.8,ease:'power2.inOut'},'>0.1')
+        .to(x,{opacity:1,scale:1,duration:0.4,ease:'back.out(3)'})
+        .to(dot,{attr:{cx:234,cy:148},duration:0.7,ease:'power2.inOut'},'+=0.35')
+        .to(dot,{attr:{cx:412,cy:218},duration:0.8,ease:'power2.inOut'},'+=0.15')
+        .to(ok,{opacity:1,scale:1,duration:0.4,ease:'back.out(3)'})
+        .to(dot,{attr:{r:0},duration:0.25},'<');
+      return tl;
+    },
+    ledger:function(root){
+      var tl=gsap.timeline();
+      tl.from(q(root,'.ln'),{opacity:0,x:-16,duration:0.45,stagger:0.17,ease:'power2.out'})
+        .from(q(root,'.ln.add'),{backgroundColor:'rgba(255,176,46,.35)',duration:0.9,stagger:0.1},0.55)
+        .from(q(root,'.pill'),{opacity:0,scale:0.8,duration:0.4,ease:'back.out(3)'},'>-0.2');
+      return tl;
+    },
+    path:function(root){
+      var tl=gsap.timeline();
+      var o=root.querySelector('#p-old'), n=root.querySelector('#p-new');
+      var lo=o.getTotalLength(), ln=n.getTotalLength();
+      gsap.set(o,{strokeDasharray:lo,strokeDashoffset:lo,opacity:1});
+      gsap.set(n,{strokeDasharray:ln,strokeDashoffset:ln});
+      tl.to(o,{strokeDashoffset:0,duration:1.3,ease:'power1.inOut'})
+        .from('#p-late',{scale:0,opacity:0,duration:0.5,ease:'back.out(3)'},'+=0.2')
+        .to(o,{opacity:0.28,duration:0.4},'<')
+        .to(n,{strokeDashoffset:0,duration:1.4,ease:'power1.inOut'},'<0.1')
+        .set([o,n],{clearProps:'strokeDasharray,strokeDashoffset'});
+      return tl;
+    },
+    tiny:function(root){
+      var tl=gsap.timeline();
+      tl.from(q(root,'.tok'),{opacity:0,y:-8,duration:0.45,stagger:0.22,ease:'power2.out'})
+        .from(q(root,'.ln'),{opacity:0,x:-14,duration:0.35,stagger:0.12,ease:'power2.out'},'>-0.1');
+      return tl;
+    }
+  };
+  var logs=[].slice.call(document.querySelectorAll('.log'));
+  logs.forEach(function(card){
+    var kind=card.dataset.viz, panel=card.querySelector('.panel-body');
+    function play(){
+      if(card._tl){card._tl.progress(1).kill();}
+      card._tl=builders[kind](panel);
+    }
+    ScrollTrigger.create({trigger:card.querySelector('.log-viz'),start:'top 72%',once:true,onEnter:play});
+    card.querySelector('.replay').addEventListener('click',play);
+    card.querySelector('.log-viz').addEventListener('pointerenter',function(){ if(!card._tl||!card._tl.isActive()) play(); });
+  });
+
+  // heatmap sweep, once, on enter
+  ScrollTrigger.create({trigger:heat,start:'top 80%',once:true,onEnter:function(){
+    gsap.from(cells,{opacity:0,duration:0.5,stagger:{each:0.003,from:'start'},clearProps:'opacity'});
+  }});
+})();
+</script>
+
+</body>
+</html>
