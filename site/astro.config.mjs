@@ -36,6 +36,8 @@ export default defineConfig({
         "font-src 'self'",
         "connect-src 'self'",
         "media-src 'self'",
+        // /portfolio's live wall frames the concept pages (same origin only).
+        "frame-src 'self'",
         "object-src 'none'",
         "base-uri 'self'",
         "form-action 'self' mailto:",

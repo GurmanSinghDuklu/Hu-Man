@@ -1,0 +1,680 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ryan Holt, vehicle technician (concept portfolio)</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="color-scheme" content="dark light">
+<style>
+@font-face{font-family:'Figtree';font-style:normal;font-weight:400;font-display:swap;src:url(../fonts/figtree-latin-400-normal.woff2) format('woff2')}
+@font-face{font-family:'Figtree';font-style:normal;font-weight:500;font-display:swap;src:url(../fonts/figtree-latin-500-normal.woff2) format('woff2')}
+@font-face{font-family:'Figtree';font-style:normal;font-weight:800;font-display:swap;src:url(../fonts/figtree-latin-800-normal.woff2) format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:400;font-display:swap;src:url(../fonts/ibm-plex-mono-latin-400-normal.woff2) format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:500;font-display:swap;src:url(../fonts/ibm-plex-mono-latin-500-normal.woff2) format('woff2')}
+</style>
+<style>
+:root{
+  --black:#0A0A0A; --grey:#9C9C9C; --white:#FFFFFF; --acc:#FF5A1F;
+  --sans:"Figtree","Helvetica Neue",Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --pad:clamp(16px,3.2vw,48px);
+  --bar:44px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{background:#0A0A0A;-webkit-text-size-adjust:100%;scroll-padding-top:var(--bar);scroll-behavior:smooth}
+body{margin:0;background:#0A0A0A;color:#fff;font-family:var(--sans);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4,p,ul,ol,dl,dd,figure,table{margin:0;padding:0}
+ul,ol{list-style:none}
+a{color:inherit}
+:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+.page{overflow-x:clip;position:relative}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:8px;top:-60px;z-index:100;background:#fff;color:#0A0A0A;padding:8px 12px;font:500 13px var(--mono)}
+.skip:focus{top:8px}
+.mono{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;font-weight:500}
+
+/* ---------- top bar ---------- */
+.bar{position:fixed;z-index:50;top:0;left:0;right:0;height:var(--bar);background:#0A0A0A;color:#fff;border-bottom:1px solid #3a3a3a;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 var(--pad)}
+.bar a{text-decoration:none}
+.bar .brand{font-family:var(--mono);font-weight:500;font-size:13px;letter-spacing:.04em;white-space:nowrap}
+.bar nav{display:flex;align-items:center;gap:clamp(10px,2.4vw,30px)}
+.bar nav a{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#9C9C9C;padding:12px 2px;border-bottom:2px solid transparent;transition:color .2s,border-color .2s}
+.bar nav a:hover,.bar nav a.cur{color:#fff;border-bottom-color:#fff}
+.bar nav a.cta{color:#0A0A0A;background:#fff;padding:5px 10px;border:0;margin:0}
+.bar nav a.cta:hover{background:#9C9C9C;color:#0A0A0A}
+.prog{position:absolute;left:0;bottom:-1px;height:2px;width:100%;background:#fff;transform:scaleX(0);transform-origin:0 50%}
+@media (max-width:620px){.bar nav a .nm{display:none}.bar nav a.cta{padding:5px 8px}}
+
+/* ---------- hero ---------- */
+.hero{position:relative;min-height:100vh;min-height:100svh;background:#0A0A0A;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end}
+.hero canvas,.brk canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hero::after,.brk::after{content:"";position:absolute;left:0;right:0;bottom:0;height:46%;background:linear-gradient(to top,#0A0A0A 8%,rgba(10,10,10,0));pointer-events:none}
+.hero-top{position:absolute;z-index:2;top:calc(var(--bar) + 18px);left:var(--pad);right:var(--pad);display:flex;justify-content:space-between;gap:16px;color:#9C9C9C}
+.hero-top .r{text-align:right;font-variant-numeric:tabular-nums}
+.live{display:inline-block;width:7px;height:7px;background:var(--acc);margin-right:8px;vertical-align:1px}
+.hero-in{position:relative;z-index:2;padding:0 var(--pad) clamp(22px,3.4vw,44px)}
+.hero h1{font-weight:800;font-size:clamp(60px,14.2vw,236px);letter-spacing:-.062em;line-height:.8;margin-left:-.04em}
+.hero-row{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:clamp(18px,4vw,64px);margin-top:clamp(18px,2.4vw,34px);border-top:1px solid #9C9C9C;padding-top:16px;align-items:start}
+.lede{font-size:clamp(19px,1.9vw,27px);line-height:1.22;letter-spacing:-.015em;font-weight:500;max-width:30em}
+.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 22px}
+.facts div{border-top:1px solid #3d3d3d;padding-top:8px}
+.facts dt{color:#9C9C9C}
+.facts dd{font-weight:500;font-size:16px;line-height:1.3;margin-top:2px}
+@media (max-width:760px){.hero-row{grid-template-columns:1fr}.facts{grid-template-columns:repeat(2,minmax(0,1fr))}.hero h1{font-size:clamp(56px,19vw,120px)}.hero-top .r{display:none}}
+
+/* ---------- chapter breaks ---------- */
+.brk{position:relative;height:clamp(430px,84vh,780px);background:#0A0A0A;overflow:hidden;border-top:1px solid #3a3a3a}
+.brk-top{position:absolute;z-index:2;top:16px;left:var(--pad);right:var(--pad);display:flex;justify-content:space-between;gap:12px;color:#9C9C9C;font-variant-numeric:tabular-nums}
+.brk-top .rule{position:absolute;left:0;right:0;top:30px;height:7px;background:repeating-linear-gradient(90deg,#9C9C9C 0 1px,transparent 1px 24px);opacity:.7}
+.brk-in{position:absolute;z-index:2;left:var(--pad);right:var(--pad);bottom:clamp(20px,3vw,40px)}
+.brk h2{font-weight:800;font-size:clamp(54px,13vw,220px);letter-spacing:-.06em;line-height:.8;margin-left:-.03em}
+.brk h2 .n{display:block;font:500 clamp(13px,1.2vw,16px)/1 var(--mono);letter-spacing:.08em;color:#9C9C9C;margin:0 0 clamp(10px,1.4vw,20px) .1em}
+@media (max-width:760px){.brk{height:clamp(440px,74svh,640px)}.brk h2{font-size:clamp(50px,18vw,120px)}}
+
+/* ---------- chapters ---------- */
+.chap{padding:clamp(54px,8vw,120px) var(--pad) clamp(60px,9vw,130px);position:relative}
+.chap.w{background:#fff;color:#0A0A0A}
+.chap.g{background:#9C9C9C;color:#0A0A0A}
+.chap .grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:clamp(28px,4vw,64px) clamp(14px,2vw,28px)}
+.intro{grid-column:1 / span 5;align-self:start;position:sticky;top:calc(var(--bar) + 28px)}
+.main{grid-column:7 / span 6;min-width:0}
+.chap .lab{display:block;margin-bottom:16px}
+.chap.w .lab{color:#5c5c5c}
+.chap.g .lab{color:#1f1f1f}
+.chap h3{font-weight:800;font-size:clamp(34px,4.6vw,76px);letter-spacing:-.05em;line-height:.9}
+.chap .intro p{margin-top:clamp(18px,2vw,28px);font-size:clamp(17px,1.4vw,20px);max-width:30em}
+.chap h4{font:500 12px/1.2 var(--mono);letter-spacing:.07em;text-transform:uppercase;margin-bottom:12px;padding-bottom:10px;border-bottom:2px solid currentColor}
+.blk+.blk{margin-top:clamp(36px,5vw,64px)}
+.note{font:400 12px/1.5 var(--mono);margin-top:12px}
+.chap.w .note{color:#5c5c5c}
+.chap.g .note{color:#1f1f1f}
+@media (max-width:900px){.intro,.main{grid-column:1 / -1}.intro{position:static}}
+
+/* spec sheet */
+table.spec{width:100%;border-collapse:collapse}
+.spec caption{caption-side:top;text-align:left}
+.spec th,.spec td{text-align:left;vertical-align:top;padding:14px 8px 14px 0;border-bottom:1px solid currentColor;font-weight:400}
+.chap.w .spec th,.chap.w .spec td{border-color:#cfcfcf}
+.chap.g .spec th,.chap.g .spec td{border-color:#5a5a5a}
+.spec thead th{font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;padding-top:0;border-bottom:1px solid currentColor!important}
+.spec td.ref{font:500 12px/1.9 var(--mono);width:3.4em;letter-spacing:.04em}
+.spec td.sk strong{display:block;font-weight:800;font-size:clamp(18px,1.7vw,22px);letter-spacing:-.025em;line-height:1.15}
+.spec td.sk span{display:block;margin-top:3px;font-size:15px;line-height:1.45}
+.spec td.lv{font:500 12px/1.9 var(--mono);letter-spacing:.04em;text-align:right;white-space:nowrap;padding-right:0}
+.spec tr[data-hov]{transition:background .18s,color .18s}
+.chap.w .spec tr.on,.chap.w .spec tr[data-hov]:hover{background:#0A0A0A;color:#fff}
+.chap.g .spec tr.on,.chap.g .spec tr[data-hov]:hover{background:#fff}
+.spec tr.on td:first-child,.spec tr[data-hov]:hover td:first-child{padding-left:10px}
+.spec td:first-child{transition:padding .18s}
+.spec tr.on td:last-child,.spec tr[data-hov]:hover td:last-child{padding-right:10px}
+
+/* ladder */
+.ladder{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 20px}
+.ladder li{border-top:2px solid #0A0A0A;padding-top:10px}
+.ladder b{display:block;font:500 12px/1 var(--mono);letter-spacing:.06em;color:#5c5c5c;margin-bottom:10px}
+.ladder strong{display:block;font-weight:800;font-size:20px;letter-spacing:-.025em;line-height:1.1}
+.ladder span{display:block;margin-top:6px;font-size:15px;line-height:1.45}
+@media (max-width:420px){.ladder{grid-template-columns:1fr}}
+
+/* sample jobs */
+.jobs li{display:grid;grid-template-columns:3.4em minmax(0,1fr);gap:0 8px;padding:16px 0;border-bottom:1px solid #cfcfcf}
+.chap.g .jobs li{border-color:#5a5a5a}
+.jobs li:first-child{border-top:1px solid #cfcfcf}
+.chap.g .jobs li:first-child{border-top-color:#5a5a5a}
+.jobs .id{font:500 12px/1.9 var(--mono);letter-spacing:.04em}
+.jobs strong{font-weight:800;font-size:clamp(18px,1.7vw,22px);letter-spacing:-.025em;line-height:1.15;display:block}
+.jobs p{margin-top:5px;font-size:15px;line-height:1.5}
+.jobs .out{display:block;margin-top:8px;font:400 12px/1.5 var(--mono);letter-spacing:.02em}
+.chap.w .jobs .out{color:#4a4a4a}
+.chap.g .jobs .out{color:#1a1a1a}
+
+/* checklist + experience */
+.ck{columns:2;column-gap:28px}
+.ck li{break-inside:avoid;padding:9px 0 9px 22px;border-bottom:1px solid #cfcfcf;position:relative;font-size:15.5px;line-height:1.4}
+.ck li::before{content:"";position:absolute;left:0;top:15px;width:9px;height:9px;border:2px solid #0A0A0A}
+@media (max-width:560px){.ck{columns:1}}
+.exp li{display:grid;grid-template-columns:7.6em minmax(0,1fr);gap:4px 14px;padding:15px 0;border-bottom:1px solid #cfcfcf}
+.exp li:first-child{border-top:1px solid #cfcfcf}
+.exp .yr{font:500 12px/1.9 var(--mono);letter-spacing:.04em}
+.exp strong{display:block;font-weight:800;font-size:19px;letter-spacing:-.02em;line-height:1.2}
+.exp span{display:block;font-size:15px;color:#3b3b3b}
+@media (max-width:420px){.exp li{grid-template-columns:1fr}}
+
+/* ---------- contact ---------- */
+.contact{background:#0A0A0A;color:#fff;padding:clamp(60px,9vw,130px) var(--pad) clamp(40px,5vw,64px);border-top:1px solid #3a3a3a}
+.contact .lab{color:#9C9C9C;display:block;margin-bottom:18px}
+.contact h2{font-weight:800;font-size:clamp(44px,9.4vw,170px);letter-spacing:-.06em;line-height:.84;margin-left:-.03em}
+.contact .mail{display:inline-block;margin-top:clamp(28px,4vw,56px);font-weight:800;font-size:clamp(22px,4.6vw,76px);letter-spacing:-.045em;line-height:1;text-decoration:none;border-bottom:3px solid #fff;padding-bottom:4px;overflow-wrap:anywhere;transition:background .2s,color .2s}
+.contact .mail:hover,.contact .mail.on{background:#fff;color:#0A0A0A}
+.c-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:clamp(40px,6vw,90px)}
+.c-grid div{border-top:1px solid #9C9C9C;padding-top:10px}
+.c-grid dt{color:#9C9C9C;margin-bottom:4px}
+.c-grid dd{font-size:16px;line-height:1.45}
+@media (max-width:700px){.c-grid{grid-template-columns:1fr}}
+.foot{margin-top:clamp(40px,5vw,70px);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:#9C9C9C}
+
+/* reveal */
+.js .rv{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+.js .rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  .js .rv{opacity:1;transform:none}
+  *,*::before,*::after{transition:none!important;animation:none!important}
+}
+
+/* ---------- badge ---------- */
+.badge{position:fixed;z-index:90;left:max(12px,env(safe-area-inset-left,0px));bottom:max(12px,env(safe-area-inset-bottom,0px));background:#fff;color:#0A0A0A;border:1px solid #0A0A0A;box-shadow:0 0 0 2px #fff;padding:8px 14px;font:500 12px/1.3 var(--sans);max-width:calc(100vw - 24px)}
+/* HU/MAN concept badge */
+.badge{display:flex;flex-wrap:wrap;align-items:center;gap:2px 12px;pointer-events:auto;border-radius:18px;line-height:1.3}
+.badge a{color:inherit;font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.badge a:focus-visible{outline:2px solid currentColor;outline-offset:3px;border-radius:3px}
+@media (max-width:640px){.badge{position:static;margin:24px max(16px,env(safe-area-inset-left,0px)) max(16px,env(safe-area-inset-bottom,0px));max-width:none;justify-content:center;text-align:center;border-radius:14px}footer{padding-bottom:26px!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#diagnose">Skip to the chapters</a>
+<div class="page" id="top">
+
+<header class="bar">
+  <a class="brand" href="#top">RH / Ryan Holt</a>
+  <nav aria-label="Chapters">
+    <a href="#diagnose" data-nav="diagnose"><span class="nm">Diagnose </span>01</a>
+    <a href="#repair" data-nav="repair"><span class="nm">Repair </span>02</a>
+    <a href="#service" data-nav="service"><span class="nm">Service </span>03</a>
+    <a href="#contact" class="cta" data-nav="contact">Contact</a>
+  </nav>
+  <span class="prog" id="prog" aria-hidden="true"></span>
+</header>
+
+<main id="main">
+
+<!-- HERO -->
+<section class="hero" aria-labelledby="name">
+  <canvas id="c0" role="img" aria-label="A ventilated brake disc with caliper turning slowly while a hard light moves across the metal. Move the cursor to tilt it."></canvas>
+  <div class="hero-top mono" aria-hidden="true">
+    <div><i class="live"></i>Wakefield, West Yorkshire</div>
+    <div class="r" id="t0">ROT 000.0&deg; &nbsp; LIGHT 000&deg; &nbsp; TILT +0.00</div>
+  </div>
+  <div class="hero-in">
+    <h1 id="name">Ryan Holt</h1>
+    <div class="hero-row">
+      <p class="lede">Vehicle technician. I find the fault, fix it properly and write down what I did.</p>
+      <dl class="facts">
+        <div><dt class="mono">Level</dt><dd>3 light vehicle technician</dd></div>
+        <div><dt class="mono">In the bay</dt><dd>7 years</dd></div>
+        <div><dt class="mono">Work</dt><dd>Diagnostics, servicing, brakes and suspension</dd></div>
+        <div><dt class="mono">Safe working</dt><dd>Hybrid and electric vehicles</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section aria-labelledby="h-diagnose">
+  <div class="brk" id="b1">
+    <canvas id="c1" role="img" aria-label="The same brake disc and caliper seen from a fixed three-quarter front angle, lit by a moving light."></canvas>
+    <div class="brk-top mono" aria-hidden="true"><span>Cam A / 3/4 front</span><span id="t1">LIGHT 000&deg;</span><i class="rule"></i></div>
+    <div class="brk-in"><h2 id="h-diagnose"><span class="n">Chapter 01</span>Diagnose</h2></div>
+  </div>
+  <div class="chap w" id="diagnose">
+    <div class="grid">
+      <div class="intro rv">
+        <span class="lab mono">01 / Fault finding</span>
+        <h3>Start with the complaint, not the code.</h3>
+        <p>A fault code points at a circuit, not at a part. I confirm the problem, read the data, test the circuit and only then change anything. One change at a time, then retest.</p>
+      </div>
+      <div class="main">
+        <div class="blk rv">
+          <h4>Method</h4>
+          <ol class="ladder">
+            <li><b>01.1</b><strong>Verify the complaint</strong><span>Road test or reproduce it. Note the conditions: cold, hot, load, speed.</span></li>
+            <li><b>01.2</b><strong>Read the data</strong><span>Stored codes, freeze frame and live values from the scan tool.</span></li>
+            <li><b>01.3</b><strong>Test, don't guess</strong><span>Meter, scope, pressure and smoke tests before parts.</span></li>
+            <li><b>01.4</b><strong>Prove the fix</strong><span>Retest under the same conditions and record the result.</span></li>
+          </ol>
+        </div>
+        <div class="blk rv">
+          <table class="spec">
+            <caption class="mono" style="padding-bottom:10px;border-bottom:2px solid currentColor;margin-bottom:0">Spec sheet / diagnostics</caption>
+            <thead><tr><th scope="col">Ref</th><th scope="col">Skill</th><th scope="col" style="text-align:right">Use</th></tr></thead>
+            <tbody>
+              <tr data-hov><td class="ref">D-1</td><td class="sk"><strong>Scan tool and live data</strong><span>Codes, freeze frame, adaptations, module coding.</span></td><td class="lv">Daily</td></tr>
+              <tr data-hov><td class="ref">D-2</td><td class="sk"><strong>Circuit testing</strong><span>Voltage drop, continuity, parasitic draw, CAN checks.</span></td><td class="lv">Daily</td></tr>
+              <tr data-hov><td class="ref">D-3</td><td class="sk"><strong>Oscilloscope waveforms</strong><span>Sensors, injectors and ignition patterns.</span></td><td class="lv">Weekly</td></tr>
+              <tr data-hov><td class="ref">D-4</td><td class="sk"><strong>Wiring and connector repair</strong><span>Proper crimps, sealed splices, heat-shrink.</span></td><td class="lv">Weekly</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="blk rv">
+          <h4>Sample jobs</h4>
+          <ol class="jobs">
+            <li data-hov><span class="id">J-01</span><div><strong>Intermittent misfire under load</strong><p>2.0 diesel hatchback. Fault only appeared on warm motorway runs.</p><span class="out">Found: corroded injector connector. Repaired, road tested, logged.</span></div></li>
+            <li data-hov><span class="id">J-02</span><div><strong>Flat battery overnight</strong><p>Petrol estate, new battery already fitted by the owner.</p><span class="out">Found: boot light switch holding a module awake. Replaced and retested.</span></div></li>
+            <li data-hov><span class="id">J-03</span><div><strong>ABS warning light on</strong><p>Small SUV, light on from cold start.</p><span class="out">Found: cracked sensor ring on a driveshaft. Replaced and recalibrated.</span></div></li>
+          </ol>
+          <p class="note">Sample jobs, written as examples of the method.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section aria-labelledby="h-repair">
+  <div class="brk" id="b2">
+    <canvas id="c2" role="img" aria-label="The brake disc seen side-on from a fixed angle, showing the ventilated rim and caliper under a moving light."></canvas>
+    <div class="brk-top mono" aria-hidden="true"><span>Cam B / side on</span><span id="t2">LIGHT 000&deg;</span><i class="rule"></i></div>
+    <div class="brk-in"><h2 id="h-repair"><span class="n">Chapter 02</span>Repair</h2></div>
+  </div>
+  <div class="chap g" id="repair">
+    <div class="grid">
+      <div class="intro rv">
+        <span class="lab mono">02 / Brakes, suspension, high voltage</span>
+        <h3>Brakes that stop. Suspension that holds.</h3>
+        <p>Parts are measured against the maker's limits, fitted clean and torqued to the figure in the book. On hybrid and electric cars the first job is always the same: isolate, prove dead, lock off, record.</p>
+      </div>
+      <div class="main">
+        <div class="blk rv">
+          <table class="spec">
+            <caption class="mono" style="padding-bottom:10px;border-bottom:2px solid currentColor">Spec sheet / repair</caption>
+            <thead><tr><th scope="col">Ref</th><th scope="col">Skill</th><th scope="col" style="text-align:right">Use</th></tr></thead>
+            <tbody>
+              <tr data-hov><td class="ref">R-1</td><td class="sk"><strong>Discs, pads and calipers</strong><span>Thickness and run-out checks, slider service, hose condition.</span></td><td class="lv">Daily</td></tr>
+              <tr data-hov><td class="ref">R-2</td><td class="sk"><strong>Brake fluid</strong><span>Moisture test, full bleed, pedal feel check.</span></td><td class="lv">Daily</td></tr>
+              <tr data-hov><td class="ref">R-3</td><td class="sk"><strong>Springs, dampers, arms, bushes</strong><span>Knocks and pulls traced before parts are ordered.</span></td><td class="lv">Weekly</td></tr>
+              <tr data-hov><td class="ref">R-4</td><td class="sk"><strong>Wheel bearings and alignment</strong><span>Tracking checks and adjustment after suspension work.</span></td><td class="lv">Weekly</td></tr>
+              <tr data-hov><td class="ref">R-5</td><td class="sk"><strong>Hybrid and EV safe working</strong><span>Isolation, proving dead, insulated tools, lock-off and record.</span></td><td class="lv">As needed</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="blk rv">
+          <h4>Sample jobs</h4>
+          <ol class="jobs">
+            <li data-hov><span class="id">J-04</span><div><strong>Front brakes and fluid</strong><p>Discs and pads on one axle, calipers freed, fluid renewed.</p><span class="out">Checked: thickness, run-out, pedal travel, road test.</span></div></li>
+            <li data-hov><span class="id">J-05</span><div><strong>Knock over speed bumps</strong><p>Hatchback with a clunk from the front left.</p><span class="out">Found: worn lower arm bush. Replaced, tracking checked.</span></div></li>
+            <li data-hov><span class="id">J-06</span><div><strong>Coolant hose on a hybrid</strong><p>Hose leaking near the power electronics.</p><span class="out">Isolated, proved dead, locked off, repaired, refilled, handed back.</span></div></li>
+          </ol>
+          <p class="note">Sample jobs, written as examples of the method.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section aria-labelledby="h-service">
+  <div class="brk" id="b3">
+    <canvas id="c3" role="img" aria-label="A close view of the brake disc hub and bolt holes under a moving light, from a fixed angle."></canvas>
+    <div class="brk-top mono" aria-hidden="true"><span>Cam C / close, hub</span><span id="t3">LIGHT 000&deg;</span><i class="rule"></i></div>
+    <div class="brk-in"><h2 id="h-service"><span class="n">Chapter 03</span>Service</h2></div>
+  </div>
+  <div class="chap w" id="service">
+    <div class="grid">
+      <div class="intro rv">
+        <span class="lab mono">03 / Servicing, record, people</span>
+        <h3>A service is an inspection with a schedule.</h3>
+        <p>Oil and filters are the easy part. The value is in what gets measured, written down and flagged before it becomes a breakdown. Customers get a plain list: done, advised, can wait.</p>
+      </div>
+      <div class="main">
+        <div class="blk rv">
+          <h4>Every service sheet covers</h4>
+          <ul class="ck">
+            <li>Oil, filters and fluid levels</li>
+            <li>Brake wear, measured not guessed</li>
+            <li>Tyre depth, age and condition</li>
+            <li>Battery and charging test</li>
+            <li>Lights, wipers, washers</li>
+            <li>Suspension and steering joints</li>
+            <li>Open recalls and software updates</li>
+            <li>A written note of what to watch</li>
+          </ul>
+        </div>
+        <div class="blk rv">
+          <table class="spec">
+            <caption class="mono" style="padding-bottom:10px;border-bottom:2px solid currentColor">Spec sheet / qualifications</caption>
+            <thead><tr><th scope="col">Ref</th><th scope="col">Qualification</th><th scope="col" style="text-align:right">Status</th></tr></thead>
+            <tbody>
+              <tr data-hov><td class="ref">Q-1</td><td class="sk"><strong>Level 3 diploma, light vehicle maintenance and repair</strong><span>Sample entry.</span></td><td class="lv">Completed</td></tr>
+              <tr data-hov><td class="ref">Q-2</td><td class="sk"><strong>High-voltage awareness, hybrid and electric vehicles</strong><span>Sample entry.</span></td><td class="lv">Current</td></tr>
+              <tr data-hov><td class="ref">Q-3</td><td class="sk"><strong>Air conditioning service and refrigerant handling</strong><span>Sample entry.</span></td><td class="lv">Current</td></tr>
+              <tr data-hov><td class="ref">Q-4</td><td class="sk"><strong>Full UK driving licence</strong><span>Sample entry.</span></td><td class="lv">Held</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="blk rv">
+          <h4>Where I have worked</h4>
+          <ul class="exp">
+            <li data-hov><span class="yr">2022 &ndash; now</span><div><strong>Technician, Calder Row Motors</strong><span>Servicing, diagnostics and brake work. calderrowmotors.example</span></div></li>
+            <li data-hov><span class="yr">2019 &ndash; 2022</span><div><strong>Apprentice, then technician, Ings Road Garage</strong><span>Servicing, tyres, brakes and suspension. ingsroadgarage.example</span></div></li>
+          </ul>
+          <p class="note">Sample text for a concept page.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact" aria-labelledby="h-contact">
+  <span class="lab mono">04 / Contact</span>
+  <h2 id="h-contact">Got a fault that won't behave?</h2>
+  <a class="mail" id="mail" href="mailto:ryan@ryanholt.example" data-hov>ryan@ryanholt.example</a>
+  <dl class="c-grid">
+    <div><dt class="mono">Based</dt><dd>Wakefield, West Yorkshire</dd></div>
+    <div><dt class="mono">Looking for</dt><dd>Light vehicle technician roles within reach of Wakefield, Leeds and Barnsley.</dd></div>
+    <div><dt class="mono">Reply</dt><dd>By email, usually the same working day.</dd></div>
+  </dl>
+  <footer class="foot mono"><span>Ryan Holt, concept portfolio</span><a href="#top">Back to top</a></footer>
+</section>
+
+</main>
+</div>
+
+<div class="badge" role="note"><a href="../../portfolio/">&larr; Back to HU/MAN</a><span>Concept site by HU/MAN</span></div>
+
+<script>
+(function () {
+  'use strict';
+  var doc = document, root = doc.documentElement, win = window;
+  root.classList.add('js');
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var TAU = Math.PI * 2, SEG = 48, D = 5.6;
+
+  /* ================= geometry: a ventilated disc and caliper ================= */
+  var faces = [];
+  var MAT = {
+    metal: { k: 1, s: 1 }, cast: { k: .72, s: .3 }, vane: { k: .62, s: .15 },
+    pad: { k: .28, s: .03 }, dark: { flat: 12 }, acc: { flatC: '#FF5A1F' }
+  };
+  function F(p, n, m, part, bias) { faces.push({ p: p, n: n, m: MAT[m], part: part || 0, b: bias || 0 }); }
+  function pol(r, a, z) { return [r * Math.cos(a), r * Math.sin(a), z]; }
+  function annulus(r0, r1, z, nz, m, part, bias) {
+    for (var i = 0; i < SEG; i++) {
+      var s = TAU * i / SEG, e = TAU * (i + 1) / SEG;
+      F([pol(r0, s, z), pol(r1, s, z), pol(r1, e, z), pol(r0, e, z)], [0, 0, nz], m, part, bias);
+    }
+  }
+  function wall(r, z0, z1, sg, m, part, seg, a0, a1) {
+    seg = seg || SEG; a0 = a0 || 0; a1 = a1 === undefined ? TAU : a1;
+    for (var i = 0; i < seg; i++) {
+      var s = a0 + (a1 - a0) * i / seg, e = a0 + (a1 - a0) * (i + 1) / seg, mid = (s + e) / 2;
+      F([pol(r, s, z0), pol(r, e, z0), pol(r, e, z1), pol(r, s, z1)], [sg * Math.cos(mid), sg * Math.sin(mid), 0], m, part);
+    }
+  }
+  function sectorPrism(r0, r1, a0, a1, z0, z1, m, part) {
+    var seg = Math.max(2, Math.ceil((a1 - a0) / .075));
+    for (var i = 0; i < seg; i++) {
+      var s = a0 + (a1 - a0) * i / seg, e = a0 + (a1 - a0) * (i + 1) / seg;
+      F([pol(r0, s, z1), pol(r1, s, z1), pol(r1, e, z1), pol(r0, e, z1)], [0, 0, 1], m, part);
+      F([pol(r0, s, z0), pol(r1, s, z0), pol(r1, e, z0), pol(r0, e, z0)], [0, 0, -1], m, part);
+    }
+    wall(r1, z0, z1, 1, m, part, seg, a0, a1);
+    wall(r0, z0, z1, -1, m, part, seg, a0, a1);
+    F([pol(r0, a0, z0), pol(r1, a0, z0), pol(r1, a0, z1), pol(r0, a0, z1)], [Math.sin(a0), -Math.cos(a0), 0], m, part);
+    F([pol(r0, a1, z0), pol(r1, a1, z0), pol(r1, a1, z1), pol(r0, a1, z1)], [-Math.sin(a1), Math.cos(a1), 0], m, part);
+  }
+  function cylZ(cx, cy, r, z0, z1, seg, m, part) {
+    var dir = z1 > z0 ? 1 : -1, cap = [];
+    for (var i = 0; i < seg; i++) {
+      var s = TAU * i / seg, e = TAU * (i + 1) / seg, mid = (s + e) / 2;
+      var a = [cx + r * Math.cos(s), cy + r * Math.sin(s)], b = [cx + r * Math.cos(e), cy + r * Math.sin(e)];
+      F([[a[0], a[1], z0], [b[0], b[1], z0], [b[0], b[1], z1], [a[0], a[1], z1]], [Math.cos(mid), Math.sin(mid), 0], m, part);
+      cap.push([a[0], a[1], z1]);
+    }
+    F(cap, [0, 0, dir], m, part);
+  }
+  function decalQuad(r0, r1, s, e, z, nz, m, part) {
+    F([pol(r0, s, z), pol(r1, s, z), pol(r1, e, z), pol(r0, e, z)], [0, 0, nz], m, part, .05);
+  }
+
+  (function build() {
+    var step = TAU / SEG, i, k;
+    /* friction faces */
+    annulus(.5, 1, .09, 1, 'metal', 1);
+    annulus(.5, 1, -.09, -1, 'metal', 1);
+    /* lips + ventilated rim */
+    wall(1, .05, .09, 1, 'metal', 1);
+    wall(1, -.09, -.05, 1, 'metal', 1);
+    for (i = 0; i < SEG; i++) {
+      var s = step * i, e = step * (i + 1), mid = (s + e) / 2;
+      if (i % 2 === 0) {
+        F([pol(1, s, -.05), pol(1, e, -.05), pol(1, e, .05), pol(1, s, .05)], [Math.cos(mid), Math.sin(mid), 0], 'vane', 1);
+      } else {
+        F([pol(.84, s, -.05), pol(.84, e, -.05), pol(.84, e, .05), pol(.84, s, .05)], [Math.cos(mid), Math.sin(mid), 0], 'dark', 1, -.22);
+        F([pol(.84, s, .05), pol(1, s, .05), pol(1, e, .05), pol(.84, e, .05)], [0, 0, -1], 'vane', 1, -.22);
+        F([pol(.84, s, -.05), pol(1, s, -.05), pol(1, e, -.05), pol(.84, e, -.05)], [0, 0, 1], 'vane', 1, -.22);
+        F([pol(.84, s, -.05), pol(1, s, -.05), pol(1, s, .05), pol(.84, s, .05)], [-Math.sin(s), Math.cos(s), 0], 'vane', 1, -.22);
+        F([pol(.84, e, -.05), pol(1, e, -.05), pol(1, e, .05), pol(.84, e, .05)], [Math.sin(e), -Math.cos(e), 0], 'vane', 1, -.22);
+      }
+      /* cross-drilled slots */
+      if (i % 2 === 1) {
+        decalQuad(.64, .93, s + step * .08, s + step * .34, .09, 1, 'dark', 1);
+        decalQuad(.64, .93, s + step * .08, s + step * .34, -.09, -1, 'dark', 1);
+      }
+    }
+    /* hat */
+    wall(.5, .09, .2, 1, 'metal', 1);
+    wall(.5, -.09, .17, -1, 'cast', 1);
+    annulus(.13, .5, .2, 1, 'metal', 1);
+    annulus(.13, .5, .17, -1, 'cast', 1);
+    wall(.13, .17, .2, -1, 'cast', 1);
+    for (k = 0; k < 5; k++) {
+      var a = TAU * k / 5 + .3, hx = .32 * Math.cos(a), hy = .32 * Math.sin(a), pts = [];
+      for (i = 0; i < 10; i++) pts.push([hx + .05 * Math.cos(TAU * i / 10), hy + .05 * Math.sin(TAU * i / 10), .2]);
+      faces.push({ p: pts, n: [0, 0, 1], m: MAT.dark, part: 1, b: .05 });
+    }
+    /* caliper (static) */
+    var phi = .55, h = .44;
+    sectorPrism(.68, 1.06, phi - h, phi + h, .115, .25, 'cast', 0);
+    sectorPrism(.68, 1.06, phi - h, phi + h, -.25, -.115, 'cast', 0);
+    sectorPrism(1.0, 1.15, phi - h, phi + h, -.25, .25, 'cast', 0);
+    sectorPrism(.62, .97, phi - h + .06, phi + h - .06, .092, .115, 'pad', 0);
+    sectorPrism(.62, .97, phi - h + .06, phi + h - .06, -.115, -.092, 'pad', 0);
+    cylZ(.86 * Math.cos(phi - .17), .86 * Math.sin(phi - .17), .1, .25, .285, 14, 'metal', 0);
+    cylZ(.86 * Math.cos(phi + .17), .86 * Math.sin(phi + .17), .1, .25, .285, 14, 'metal', 0);
+    /* tiny accent stripe on the caliper */
+    decalQuad(.76, .8, phi - h + .05, phi + h - .05, .2515, 1, 'acc', 0);
+  })();
+
+  /* ================= renderer: own projection, flat shading, hard light ================= */
+  function drawScene(ctx, W, H, P) {
+    var cy_ = Math.cos(P.yaw), sy_ = Math.sin(P.yaw), cp = Math.cos(P.pitch), sp = Math.sin(P.pitch);
+    var cs = Math.cos(P.spin), ss = Math.sin(P.spin);
+    var scale = P.scale, ox = P.cx * W, oy = P.cy * H, f = scale * D;
+    function rot(x, y, z) {
+      var x1 = x * cy_ + z * sy_, z1 = -x * sy_ + z * cy_;
+      return [x1, y * cp - z1 * sp, y * sp + z1 * cp];
+    }
+    function rotSpin(x, y, z) { return rot(x * cs - y * ss, x * ss + y * cs, z); }
+    function proj(v) { var d = D - v[2]; return [ox + v[0] * f / d, oy - v[1] * f / d]; }
+    var la = P.light, LP = [Math.sin(la) * 5.2, 2 + Math.cos(la * .7) * 2.2, 2.5 + Math.cos(la) * .9];
+    ctx.clearRect(0, 0, W, H);
+
+    /* construction lines behind the object */
+    ctx.save();
+    ctx.lineWidth = 1; ctx.strokeStyle = 'rgba(156,156,156,.5)'; ctx.setLineDash([3, 6]);
+    ctx.beginPath();
+    for (var i = 0; i <= 120; i++) {
+      var q = proj(rot(1.34 * Math.cos(TAU * i / 120), 1.34 * Math.sin(TAU * i / 120), 0));
+      if (i) ctx.lineTo(q[0], q[1]); else ctx.moveTo(q[0], q[1]);
+    }
+    ctx.stroke();
+    ctx.setLineDash([14, 5, 2, 5]);
+    var a1 = proj(rot(0, 0, -1.1)), a2 = proj(rot(0, 0, 1.3));
+    ctx.beginPath(); ctx.moveTo(a1[0], a1[1]); ctx.lineTo(a2[0], a2[1]); ctx.stroke();
+    ctx.setLineDash([]);
+    for (i = 0; i < 24; i++) {
+      var an = TAU * i / 24, len = i % 6 === 0 ? .1 : .045;
+      var p1 = proj(rot(1.34 * Math.cos(an), 1.34 * Math.sin(an), 0)), p2 = proj(rot((1.34 + len) * Math.cos(an), (1.34 + len) * Math.sin(an), 0));
+      ctx.strokeStyle = i === 0 ? '#FF5A1F' : 'rgba(156,156,156,.7)'; ctx.lineWidth = i === 0 ? 2 : 1;
+      ctx.beginPath(); ctx.moveTo(p1[0], p1[1]); ctx.lineTo(p2[0], p2[1]); ctx.stroke();
+    }
+    ctx.restore();
+
+    var list = [], n = faces.length, f_, j, v, c, nn, d, depth;
+    for (i = 0; i < n; i++) {
+      f_ = faces[i];
+      var tr = f_.part ? rotSpin : rot;
+      nn = tr(f_.n[0], f_.n[1], f_.n[2]);
+      var pts = [], cx = 0, cy = 0, cz = 0, len2 = f_.p.length;
+      for (j = 0; j < len2; j++) { v = tr(f_.p[j][0], f_.p[j][1], f_.p[j][2]); pts.push(v); cx += v[0]; cy += v[1]; cz += v[2]; }
+      cx /= len2; cy /= len2; cz /= len2;
+      var vx = -cx, vy = -cy, vz = D - cz;
+      if (nn[0] * vx + nn[1] * vy + nn[2] * vz <= 0) continue;
+      depth = D - cz - f_.b;
+      list.push({ f: f_, pts: pts, nn: nn, c: [cx, cy, cz], d: depth });
+    }
+    list.sort(function (a, b) { return b.d - a.d; });
+
+    ctx.lineJoin = 'round';
+    for (i = 0; i < list.length; i++) {
+      var it = list[i], m = it.f.m, col;
+      if (m.flatC) col = m.flatC;
+      else if (m.flat !== undefined) col = 'rgb(' + m.flat + ',' + m.flat + ',' + m.flat + ')';
+      else {
+        var lx = LP[0] - it.c[0], ly = LP[1] - it.c[1], lz = LP[2] - it.c[2], ll = Math.sqrt(lx * lx + ly * ly + lz * lz);
+        lx /= ll; ly /= ll; lz /= ll;
+        var vx2 = -it.c[0], vy2 = -it.c[1], vz2 = D - it.c[2], vl = Math.sqrt(vx2 * vx2 + vy2 * vy2 + vz2 * vz2);
+        vx2 /= vl; vy2 /= vl; vz2 /= vl;
+        var hx = lx + vx2, hy = ly + vy2, hz = lz + vz2, hl = Math.sqrt(hx * hx + hy * hy + hz * hz);
+        var nl = it.nn, ndl = nl[0] * lx + nl[1] * ly + nl[2] * lz, nh = (nl[0] * hx + nl[1] * hy + nl[2] * hz) / hl;
+        var lum = .07 + m.k * (ndl > 0 ? (.1 + .9 * Math.pow(ndl, 1.3)) * .84 : 0) + (ndl > 0 ? m.s * Math.pow(Math.max(0, nh), 38) * .8 : 0);
+        var g = Math.round(255 * Math.min(1, lum));
+        col = 'rgb(' + g + ',' + g + ',' + g + ')';
+      }
+      ctx.beginPath();
+      for (j = 0; j < it.pts.length; j++) { q = proj(it.pts[j]); if (j) ctx.lineTo(q[0], q[1]); else ctx.moveTo(q[0], q[1]); }
+      ctx.closePath();
+      ctx.fillStyle = col; ctx.fill();
+      ctx.strokeStyle = col; ctx.lineWidth = .8; ctx.stroke();
+    }
+  }
+
+  /* ================= scenes ================= */
+  var ptr = { tx: 0, ty: 0, x: 0, y: 0 };
+  function onMove(e) {
+    ptr.tx = e.clientX / win.innerWidth - .5;
+    ptr.ty = e.clientY / win.innerHeight - .5;
+  }
+  win.addEventListener('pointermove', onMove);
+  win.addEventListener('mousemove', onMove);
+
+  function pad(n, w) { var s = String(Math.abs(Math.round(n))); while (s.length < w) s = '0' + s; return s; }
+  function deg(r) { var d = (r * 180 / Math.PI) % 360; return d < 0 ? d + 360 : d; }
+
+  var scenes = [
+    { id: 'c0', tel: 't0', hero: true },
+    { id: 'c1', tel: 't1', yaw: -.58, pitch: -.4, zoom: 1.08, cx: .64, cy: .44, l0: -1.15, l1: 1.15 },
+    { id: 'c2', tel: 't2', yaw: 1.22, pitch: -.14, zoom: 1.12, cx: .46, cy: .5, l0: 1.15, l1: -1.05 },
+    { id: 'c3', tel: 't3', yaw: .28, pitch: .52, zoom: 2.5, cx: .64, cy: .62, l0: -1.0, l1: 1.2 }
+  ];
+  var t0 = performance.now(), running = false, frame = 0;
+
+  function setup(sc) {
+    sc.cv = doc.getElementById(sc.id); sc.ctx = sc.cv.getContext('2d');
+    sc.tel = doc.getElementById(sc.tel); sc.vis = false; sc.w = 0; sc.h = 0;
+    sc.sec = sc.hero ? sc.cv.parentNode : sc.cv.parentNode;
+  }
+  function size(sc) {
+    var dpr = Math.min(2, win.devicePixelRatio || 1), w = sc.cv.clientWidth, h = sc.cv.clientHeight;
+    if (!w || !h) return;
+    if (sc.w !== w || sc.h !== h || sc.dpr !== dpr) {
+      sc.w = w; sc.h = h; sc.dpr = dpr;
+      sc.cv.width = Math.round(w * dpr); sc.cv.height = Math.round(h * dpr);
+      sc.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+  }
+  function params(sc, t) {
+    var W = sc.w, H = sc.h, narrow = W < 760, P = {};
+    if (sc.hero) {
+      var rt = reduce ? 0 : t;
+      P.yaw = .62 + rt * .2 + ptr.x * .9; P.pitch = -.3 + ptr.y * .55; P.spin = rt * .55;
+      P.light = Math.sin(rt * .42 + .6) * 1.15; P.zoom = 1;
+      P.cx = narrow ? .5 : .69; P.cy = narrow ? .33 : .4;
+      P.scale = narrow ? Math.min(W * .31, H * .2) : Math.min(W, H) * .28;
+    } else {
+      var r = sc.sec.getBoundingClientRect(), p = Math.max(0, Math.min(1, (win.innerHeight - r.top) / (win.innerHeight + r.height)));
+      P.yaw = sc.yaw; P.pitch = sc.pitch; P.spin = reduce ? 0 : t * .18;
+      P.light = reduce ? sc.l0 + (sc.l1 - sc.l0) * .5 : sc.l0 + (sc.l1 - sc.l0) * p + Math.sin(t * .5) * .22;
+      P.cx = narrow ? (sc.id === 'c3' ? .6 : .5) : sc.cx; P.cy = narrow ? (sc.id === 'c3' ? .3 : .34) : sc.cy;
+      var z = narrow ? sc.zoom * .82 : sc.zoom;
+      P.scale = (narrow ? Math.min(W * .32, H * .26) : Math.min(W * .3, H * .33)) * z;
+    }
+    return P;
+  }
+  function render(sc, t) {
+    size(sc);
+    if (!sc.w) return;
+    var P = params(sc, t);
+    drawScene(sc.ctx, sc.w, sc.h, P);
+    if (sc.tel && frame % 4 === 0) {
+      var L = pad(deg(P.light), 3);
+      sc.tel.innerHTML = sc.hero
+        ? 'ROT ' + pad(deg(P.yaw), 3) + '.' + pad((deg(P.yaw) % 1) * 10, 1) + '&deg; &nbsp; LIGHT ' + L + '&deg; &nbsp; TILT ' + (ptr.x >= 0 ? '+' : '-') + Math.abs(ptr.x).toFixed(2)
+        : 'LIGHT ' + L + '&deg;';
+    }
+  }
+  function loop(now) {
+    var t = (now - t0) / 1000, any = false;
+    ptr.x += (ptr.tx - ptr.x) * .06; ptr.y += (ptr.ty - ptr.y) * .06;
+    frame++;
+    for (var i = 0; i < scenes.length; i++) if (scenes[i].vis) { any = true; render(scenes[i], t); }
+    if (any) requestAnimationFrame(loop); else running = false;
+  }
+  function kick() { if (!running) { running = true; requestAnimationFrame(loop); } }
+
+  scenes.forEach(setup);
+  if (reduce) {
+    var still = function () { scenes.forEach(function (sc) { render(sc, 0); }); };
+    still(); win.addEventListener('resize', still);
+    if (doc.fonts && doc.fonts.ready) doc.fonts.ready.then(still);
+  } else {
+    if ('IntersectionObserver' in win) {
+      var io = new IntersectionObserver(function (es) {
+        es.forEach(function (e) {
+          scenes.forEach(function (sc) { if (sc.sec === e.target) sc.vis = e.isIntersecting; });
+        });
+        kick();
+      }, { rootMargin: '80px 0px' });
+      scenes.forEach(function (sc) { io.observe(sc.sec); });
+    } else { scenes.forEach(function (sc) { sc.vis = true; }); kick(); }
+    win.addEventListener('resize', function () { scenes.forEach(function (sc) { if (sc.vis) size(sc); }); });
+  }
+
+  /* ================= page chrome ================= */
+  var prog = doc.getElementById('prog'), navs = [].slice.call(doc.querySelectorAll('[data-nav]'));
+  var anchors = navs.map(function (a) { return doc.getElementById(a.getAttribute('data-nav')); });
+  function onScroll() {
+    var max = Math.max(1, root.scrollHeight - win.innerHeight);
+    prog.style.transform = 'scaleX(' + Math.min(1, win.scrollY / max).toFixed(4) + ')';
+    var cur = -1, line = win.innerHeight * .4;
+    anchors.forEach(function (el, i) { if (el && el.getBoundingClientRect().top < line) cur = i; });
+    navs.forEach(function (a, i) { a.classList.toggle('cur', i === cur); if (i === cur) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current'); });
+  }
+  win.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+  /* reveal on scroll */
+  var rvs = [].slice.call(doc.querySelectorAll('.rv'));
+  if (reduce || !('IntersectionObserver' in win)) rvs.forEach(function (el) { el.classList.add('in'); });
+  else {
+    var io2 = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io2.unobserve(e.target); } });
+    }, { rootMargin: '0px 0px -8% 0px' });
+    rvs.forEach(function (el) { io2.observe(el); });
+  }
+
+  /* hover driven from JS (also works with synthetic events) */
+  var hov = null;
+  doc.addEventListener('mouseover', function (e) {
+    var h = e.target && e.target.closest ? e.target.closest('[data-hov]') : null;
+    if (h === hov) return;
+    if (hov) hov.classList.remove('on');
+    hov = h; if (h) h.classList.add('on');
+  });
+  doc.addEventListener('mouseout', function (e) { if (!e.relatedTarget && hov) { hov.classList.remove('on'); hov = null; } });
+})();
+</script>
+<script src="../preview.js" defer></script>
+</body>
+</html>

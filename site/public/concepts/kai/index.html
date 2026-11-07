@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kai Thompson, restaurant general manager (concept portfolio)</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="color-scheme" content="dark">
+<style>
+@font-face{font-family:'Figtree';font-style:normal;font-weight:400;font-display:swap;src:url(../fonts/figtree-latin-400-normal.woff2) format('woff2')}
+@font-face{font-family:'Figtree';font-style:normal;font-weight:500;font-display:swap;src:url(../fonts/figtree-latin-500-normal.woff2) format('woff2')}
+@font-face{font-family:'Figtree';font-style:normal;font-weight:700;font-display:swap;src:url(../fonts/figtree-latin-700-normal.woff2) format('woff2')}
+@font-face{font-family:'Figtree';font-style:normal;font-weight:800;font-display:swap;src:url(../fonts/figtree-latin-800-normal.woff2) format('woff2')}
+</style>
+<style>
+:root{--bg:#131313;--card:#1a1a1a;--line:#333;--tx:#fff;--mute:#9a9a9a;--dim:#8c8c8c;--mint:#7be0b8;--coral:#ff7a66;--lilac:#b79cff;--amber:#ffc24b;--purple:#7b4dff;--pad:clamp(18px,4.4vw,64px);--ease:cubic-bezier(.22,1,.36,1)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;background:var(--bg);-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--tx);font-family:'Figtree',system-ui,sans-serif;font-size:1.0625rem;line-height:1.55;font-weight:400;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--mint);outline-offset:3px;border-radius:4px}
+.page{overflow-x:clip;position:relative}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:12px;top:-60px;z-index:200;background:var(--mint);color:#131313;padding:10px 16px;border-radius:99px;font-weight:700;text-decoration:none}
+.skip:focus{top:12px}
+.grain{position:fixed;inset:-50%;width:200%;height:200%;z-index:80;pointer-events:none;opacity:.06;mix-blend-mode:screen;background-size:128px 128px}
+.sh{position:absolute;left:0;top:0;width:50%;height:50%;overflow:visible}
+.sh use{fill:currentColor}
+.c-coral{color:var(--coral)}.c-lilac{color:var(--lilac)}.c-mint{color:var(--mint)}.c-amber{color:var(--amber)}
+.mark{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:#fff}
+.mark svg.k{width:30px;height:36px;flex:none}
+.mark .cl{position:relative;width:20px;height:20px;flex:none}
+.mark b{font-weight:700;font-size:1rem;letter-spacing:.01em;margin-left:4px}
+header.top{position:absolute;z-index:20;left:0;right:0;top:0;display:flex;justify-content:space-between;align-items:center;padding:22px var(--pad)}
+.where{font-size:.8125rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+.btn{display:inline-flex;align-items:center;gap:12px;border:1.5px solid var(--mint);color:var(--mint);background:transparent;border-radius:99px;padding:15px 26px;font:700 .8125rem/1 'Figtree',sans-serif;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;cursor:pointer;transition:background .35s var(--ease),color .35s var(--ease)}
+.btn svg{width:14px;height:14px;transition:transform .35s var(--ease)}
+.btn:hover,.btn.is-hot{background:var(--mint);color:#131313}
+.btn:hover svg,.btn.is-hot svg{transform:translate(3px,-3px)}
+/* hero */
+.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:110px var(--pad) 120px;isolation:isolate}
+.wm{position:absolute;left:50%;top:50%;width:0;height:0;z-index:-1;pointer-events:none}
+.wm i{position:absolute;left:0;top:0;transform:translate(-50%,-50%);display:block;font-style:normal;font-weight:800;font-size:min(112vh,92vw);line-height:.8;color:#222;user-select:none}
+h1{font-weight:700;font-size:clamp(2.1rem,6vw,5.4rem);line-height:1.06;letter-spacing:-.025em;max-width:16em}
+h1 .ln{display:block;overflow:hidden;padding-bottom:.08em;margin-bottom:-.08em}
+h1 .ln>span{display:block}
+h1 em{font-style:normal;color:var(--mint)}
+.sub{margin:26px auto 34px;max-width:34em;color:#d4d4d4;font-size:clamp(1rem,1.5vw,1.2rem)}
+.sub b{color:#fff;font-weight:700}
+/* four things */
+.sec{padding:clamp(80px,12vw,170px) var(--pad)}
+.kick{font-size:.8125rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--mint);margin-bottom:18px}
+h2{font-weight:700;font-size:clamp(2.1rem,5.6vw,5rem);line-height:1.04;letter-spacing:-.025em}
+h2 em{font-style:normal;color:var(--mint)}
+.run{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:clamp(24px,5vw,80px);align-items:start;margin-top:clamp(40px,6vw,80px)}
+.big{position:sticky;top:15vh;width:min(100%,380px);aspect-ratio:1;margin-top:2vh}
+.big .sh{will-change:transform}
+.rows{list-style:none;text-align:right}
+.row{display:flex;flex-direction:column;align-items:flex-end;border-top:1px solid var(--line);padding:clamp(24px,4vw,44px) 0 clamp(60px,14vh,150px);min-height:36vh;transition:color .5s var(--ease)}
+.row:last-child{border-bottom:1px solid var(--line)}
+.row svg.ic{width:38px;height:38px;margin-bottom:18px}
+.row h3{font-weight:500;font-size:clamp(2rem,4.6vw,4.2rem);line-height:1.05;letter-spacing:-.02em;transition:color .5s var(--ease)}
+.row p{max-width:26em;margin-top:14px;color:inherit}
+.js-motion .row{color:var(--dim)}
+.js-motion .row.is-active{color:#fff}
+.js-motion .row.is-active h3{font-weight:800}
+/* photo band */
+.band{position:relative;height:clamp(420px,92vh,900px);margin-top:-8vh;z-index:3;overflow:hidden;background:#000}
+.band img{position:absolute;left:0;top:-14%;width:100%;height:128%;object-fit:cover}
+.band::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(19,19,19,.15),rgba(19,19,19,.6))}
+.band p{position:absolute;z-index:2;left:var(--pad);right:var(--pad);bottom:clamp(24px,5vw,60px);font-weight:700;font-size:clamp(1.6rem,4vw,3.4rem);line-height:1.1;letter-spacing:-.02em;max-width:14em}
+/* venues */
+.venues{padding-bottom:clamp(60px,9vw,120px)}
+.venues .lead{max-width:32em;color:#cfcfcf;margin-top:18px}
+.vp{position:relative;margin:clamp(34px,5vw,64px) calc(var(--pad)*-1) 0;overflow-x:auto;scrollbar-width:thin;scrollbar-color:#444 transparent;touch-action:pan-y}
+.vp:focus-visible{outline-offset:-3px}
+.track{display:flex;gap:clamp(12px,1.6vw,24px);padding:0 var(--pad);width:max-content}
+.card{width:clamp(250px,28vw,420px);flex:none;position:relative}
+.media{position:relative;height:clamp(300px,58vh,560px);overflow:hidden;border-radius:6px;background:#222}
+.media img{width:100%;height:100%;object-fit:cover}
+.panel{position:absolute;inset:0;display:none}
+.card figcaption{padding-top:16px}
+.card h3{font-weight:700;font-size:1.25rem;line-height:1.2}
+.card span{display:block;color:var(--mute);font-size:.9375rem;margin-top:2px}
+.js-drag .vp{overflow:hidden;cursor:grab;user-select:none;-webkit-user-select:none}
+.js-drag .vp:active{cursor:grabbing}
+.js-drag .media img{-webkit-user-drag:none;pointer-events:none}
+.js-drag .panel{display:block}
+@media (hover:hover) and (pointer:fine){.js-drag .vp{cursor:none}}
+.drag{position:fixed;left:0;top:0;z-index:70;width:92px;height:92px;margin:-46px 0 0 -46px;border-radius:50%;background:var(--mint);color:#131313;display:none;align-items:center;justify-content:center;font-weight:800;font-size:.8125rem;letter-spacing:.16em;pointer-events:none;opacity:0;transform:scale(.4)}
+@media (hover:hover) and (pointer:fine){.js-drag .drag{display:flex}}
+/* help */
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,1.6vw,20px);margin-top:clamp(36px,5vw,64px)}
+.hc{border:1px solid var(--line);background:transparent;border-radius:14px;padding:clamp(22px,2.6vw,34px);min-height:clamp(220px,22vw,300px);display:flex;flex-direction:column;justify-content:space-between;gap:30px;color:#fff;transition:background .4s var(--ease),color .4s var(--ease),border-color .4s var(--ease)}
+.hc svg{width:48px;height:48px;fill:none;stroke:var(--mint);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;transition:stroke .4s var(--ease)}
+.hc h3{font-weight:700;font-size:clamp(1.35rem,2vw,1.75rem);line-height:1.15;letter-spacing:-.01em}
+.hc p{margin-top:10px;color:var(--mute);transition:color .4s var(--ease)}
+.hc:hover,.hc.is-hot{background:var(--mint);border-color:var(--mint);color:#131313}
+.hc:hover svg,.hc.is-hot svg{stroke:#131313}
+.hc:hover p,.hc.is-hot p{color:#131313}
+.lad{list-style:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(14px,2vw,28px);margin-top:clamp(36px,5vw,64px);counter-reset:n}
+.lad li{border-top:2px solid var(--mint);padding-top:20px}
+.lad li:nth-child(2){border-color:var(--coral)}.lad li:nth-child(3){border-color:var(--lilac)}.lad li:nth-child(4){border-color:var(--amber)}
+.lad b{font-size:.8125rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);font-weight:700}
+.lad h3{font-weight:700;font-size:clamp(1.3rem,2vw,1.7rem);line-height:1.15;margin:10px 0 8px}
+.lad p{color:var(--mute)}
+@media (max-width:900px){.lad{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.lad{grid-template-columns:minmax(0,1fr)}}
+/* strip */
+.strip{padding:clamp(40px,6vw,90px) 0;overflow:hidden}
+.st{display:flex;gap:clamp(14px,2vw,28px);width:max-content;padding-left:var(--pad)}
+.st figure{flex:none;width:clamp(150px,17vw,250px);overflow:hidden;background:#222}
+.st img{width:100%;height:100%;object-fit:cover}
+.s-arch{aspect-ratio:3/4;border-radius:999px 999px 12px 12px}
+.s-circle{aspect-ratio:1;border-radius:50%;align-self:center}
+.s-dia{aspect-ratio:1;clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);align-self:flex-end}
+.s-pill{aspect-ratio:3/4;border-radius:0 999px 999px 0;align-self:flex-start}
+.st .dup{display:none}
+.js-motion .st .dup{display:block}
+html:not(.js-motion) .strip{overflow-x:auto}
+/* contact */
+.contact{text-align:center;padding-bottom:clamp(170px,22vw,260px)}
+.contact h2{font-size:clamp(3.2rem,13vw,12rem);line-height:.95;letter-spacing:-.04em}
+.contact p{margin:26px auto 34px;max-width:30em;color:#d4d4d4}
+.mail{display:block;margin-top:26px;color:var(--mute);font-size:.9375rem}
+.mail a{color:#fff}
+footer{border-top:1px solid var(--line);padding:26px var(--pad) 150px;color:var(--mute);font-size:.875rem;display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between}
+/* dock */
+.dock{position:fixed;z-index:75;left:50%;bottom:max(16px,env(safe-area-inset-bottom,0px));transform:translateX(-50%);display:flex;gap:4px;padding:6px;background:rgba(30,30,30,.82);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:1px solid #3a3a3a;border-radius:99px}
+.dock a{position:relative;display:grid;place-items:center;width:46px;height:46px;border-radius:50%;transition:background .3s var(--ease),transform .3s var(--ease)}
+.dock a svg{width:22px;height:22px}
+.dock a use{fill:currentColor}
+.dock a:hover,.dock a.is-hot,.dock a[aria-current="true"]{background:#2e2e2e}
+.dock a.is-hot{transform:translateY(-3px)}
+.up{position:fixed;z-index:75;left:max(16px,env(safe-area-inset-left,0px));bottom:max(16px,env(safe-area-inset-bottom,0px));width:50px;height:50px;border-radius:50%;background:var(--coral);color:#131313;display:grid;place-items:center;text-decoration:none;transition:transform .35s var(--ease)}
+.up svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.up:hover,.up.is-hot{transform:scale(1.1)}
+@media (min-width:1101px){.up{bottom:68px}}
+@media (max-width:1000px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:800px){
+  .run{grid-template-columns:minmax(0,1fr)}
+  .big{position:sticky;top:8px;z-index:5;width:120px;margin:0 auto 0 0;background:rgba(19,19,19,.9);padding:0}
+  .row{min-height:0;padding-bottom:60px}
+  .where{display:none}
+}
+@media (max-width:560px){.grid{grid-template-columns:minmax(0,1fr)}.hc{min-height:200px}.btn{padding:14px 22px}.dock a{width:44px;height:44px}}
+/* HU/MAN concept badge */
+.badge{position:fixed;z-index:90;left:max(12px, env(safe-area-inset-left, 0px));bottom:max(12px, env(safe-area-inset-bottom, 0px));display:inline-flex;align-items:center;gap:8px;background:#121317;color:#EDECE6;border-radius:99px;padding:8px 14px 8px 11px;font-size:12px;font-weight:600;line-height:1.2;box-shadow:0 0 0 1.5px #EDECE6,0 10px 24px -8px rgba(18,19,23,.5);max-width:calc(100vw - 24px);pointer-events:none}
+.badge{display:flex;flex-wrap:wrap;align-items:center;gap:2px 12px;pointer-events:auto;border-radius:18px;line-height:1.3}
+.badge a{color:inherit;font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.badge a:focus-visible{outline:2px solid currentColor;outline-offset:3px;border-radius:3px}
+@media (max-width:1100px){.badge{position:static;margin:24px max(16px,env(safe-area-inset-left,0px)) max(96px,env(safe-area-inset-bottom,0px));max-width:none;justify-content:center;text-align:center;border-radius:14px}footer{padding-bottom:26px!important}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#run">Skip to content</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+<defs>
+<symbol id="s-sparkle" viewBox="0 0 100 100"><path d="M50 4C54 34 66 46 96 50C66 54 54 66 50 96C46 66 34 54 4 50C34 46 46 34 50 4Z"/></symbol>
+<symbol id="s-leaf" viewBox="0 0 100 100"><path d="M10 90V10A80 80 0 0 1 90 90Z"/></symbol>
+<symbol id="s-square" viewBox="0 0 100 100"><rect x="18" y="18" width="64" height="64" rx="18" transform="rotate(45 50 50)"/></symbol>
+<symbol id="s-circle" viewBox="0 0 100 100"><circle cx="50" cy="50" r="42"/></symbol>
+</defs>
+</svg>
+<div class="page">
+<header class="top">
+  <a class="mark" href="#top" aria-label="Kai Thompson, back to top">
+    <svg class="k" viewBox="0 0 30 36" fill="none" stroke="currentColor" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4v28M24 10 11 21M14 19l11 13"/></svg>
+    <span class="cl" id="logoCl" aria-hidden="true">
+      <svg class="sh c-coral" viewBox="0 0 100 100"><use href="#s-sparkle"/></svg>
+      <svg class="sh c-lilac" viewBox="0 0 100 100"><use href="#s-leaf"/></svg>
+      <svg class="sh c-mint" viewBox="0 0 100 100"><use href="#s-square"/></svg>
+      <svg class="sh c-amber" viewBox="0 0 100 100"><use href="#s-circle"/></svg>
+    </span>
+    <b>Kai Thompson</b>
+  </a>
+  <span class="where">Liverpool, UK</span>
+</header>
+<main id="main">
+<section class="hero" id="top" aria-labelledby="h1">
+  <div class="wm" aria-hidden="true"><i id="wm">K</i></div>
+  <h1 id="h1"><span class="ln"><span>Ten years of busy nights,</span></span> <span class="ln"><span>run calmly,</span></span> <span class="ln"><span><em>from the door to the pass.</em></span></span></h1>
+  <p class="sub"><b>Kai Thompson</b>, restaurant general manager in Liverpool. Front of house to GM, with a team of 40.</p>
+  <a class="btn" href="#contact" data-hot>Let's talk <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11 11 3M4.5 3H11v6.5"/></svg></a>
+</section>
+
+<section class="sec" id="run" aria-labelledby="h-run">
+  <p class="kick rv">What I do</p>
+  <h2 id="h-run" class="rv">Four things <em>I run.</em></h2>
+  <div class="run">
+    <div class="big" id="big" aria-hidden="true">
+      <svg class="sh c-coral" viewBox="0 0 100 100"><use href="#s-sparkle"/></svg>
+      <svg class="sh c-lilac" viewBox="0 0 100 100"><use href="#s-leaf"/></svg>
+      <svg class="sh c-mint" viewBox="0 0 100 100"><use href="#s-square"/></svg>
+      <svg class="sh c-amber" viewBox="0 0 100 100"><use href="#s-circle"/></svg>
+    </div>
+    <ol class="rows">
+      <li class="row"><svg class="ic c-coral" viewBox="0 0 100 100" aria-hidden="true"><use href="#s-sparkle" fill="currentColor"/></svg><h3>Guests</h3><p>Greeting, seating, the first drink and the last goodbye. I set the pace of a night so guests never feel the pressure behind it.</p></li>
+      <li class="row"><svg class="ic c-lilac" viewBox="0 0 100 100" aria-hidden="true"><use href="#s-leaf" fill="currentColor"/></svg><h3>Team</h3><p>A team of 40, from the door to the pass. Clear briefings, rotas that hold, and people who want the next shift.</p></li>
+      <li class="row"><svg class="ic c-mint" viewBox="0 0 100 100" aria-hidden="true"><use href="#s-square" fill="currentColor"/></svg><h3>Stock and margin</h3><p>Ordering, wastage and GP looked at every week, so the numbers say something early, not at month end.</p></li>
+      <li class="row"><svg class="ic c-amber" viewBox="0 0 100 100" aria-hidden="true"><use href="#s-circle" fill="currentColor"/></svg><h3>New openings</h3><p>Hiring, training, a soft launch and a first service the whole team is ready for.</p></li>
+    </ol>
+  </div>
+</section>
+
+<div class="band" id="band">
+  <img src="img/room.webp" width="1100" height="825" alt="An empty dining room in golden evening light, tables laid before service" data-par>
+  <p class="rv">The calm half hour before the doors open.</p>
+</div>
+
+<section class="sec venues" id="venues" aria-labelledby="h-ven">
+  <p class="kick rv">Where I've worked</p>
+  <h2 id="h-ven" class="rv">Rooms <em>I've run.</em></h2>
+  <p class="lead rv">Five sample venues, from a hotel dining room to a neighbourhood kitchen. Drag to look around.</p>
+  <div class="vp" id="vp" tabindex="0" role="region" aria-label="Venues, scroll sideways with the arrow keys">
+    <div class="track" id="track">
+      <figure class="card"><div class="media"><img src="img/pass.webp" width="1100" height="825" alt="A chef plating a dish at the pass" loading="lazy"><i class="panel" style="background:var(--lilac)"></i></div><figcaption><h3>Ember Yard</h3><span>Open-kitchen grill</span></figcaption></figure>
+      <figure class="card"><div class="media"><img src="img/briefing.webp" width="1100" height="825" alt="A front-of-house team gathered for a briefing before service" loading="lazy"><i class="panel" style="background:var(--mint)"></i></div><figcaption><h3>Harbour &amp; Vine</h3><span>All-day brasserie</span></figcaption></figure>
+      <figure class="card"><div class="media"><img src="img/room.webp" width="1100" height="825" alt="The dining room at golden hour" loading="lazy" style="object-position:30% 50%"><i class="panel" style="background:var(--coral)"></i></div><figcaption><h3>The Lantern Room</h3><span>Hotel dining room</span></figcaption></figure>
+      <figure class="card"><div class="media"><img src="img/bar.webp" width="1100" height="825" alt="A bartender pouring a drink" loading="lazy"><i class="panel" style="background:var(--amber)"></i></div><figcaption><h3>Salt House Bar</h3><span>Cocktail bar and kitchen</span></figcaption></figure>
+      <figure class="card"><div class="media"><img src="img/host.webp" width="1100" height="825" alt="A manager greeting guests at the door" loading="lazy"><i class="panel" style="background:var(--purple)"></i></div><figcaption><h3>Marlow Street Kitchen</h3><span>Neighbourhood restaurant, opened new</span></figcaption></figure>
+    </div>
+  </div>
+  <div class="drag" id="drag" aria-hidden="true">DRAG</div>
+</section>
+
+<section class="sec" id="help" aria-labelledby="h-help" style="padding-top:0">
+  <p class="kick rv">How I can help</p>
+  <h2 id="h-help" class="rv">A venue that <em>runs itself</em> on a good night.</h2>
+  <div class="grid">
+    <article class="hc rv"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M8 42V18l16-10 16 10v24M8 42h32M19 42V28h10v14"/></svg><div><h3>Open a new site</h3><p>Hiring, training and a soft launch before the first full night.</p></div></article>
+    <article class="hc rv"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="7" y="9" width="34" height="32" rx="4"/><path d="M7 19h34M16 5v8M32 5v8M15 27h4M22 27h4M29 27h4M15 34h4M22 34h4"/></svg><div><h3>Fix a rota that never works</h3><p>Cover where the covers are, fair shifts, fewer last-minute texts.</p></div></article>
+    <article class="hc rv"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M6 40h36M8 32l9-9 7 6 14-17"/><path d="M30 12h8v8"/></svg><div><h3>Get GP back on track</h3><p>Weekly counts, menu costing and wastage you can actually see.</p></div></article>
+    <article class="hc rv"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="26" r="16"/><path d="M24 16v10l7 4M19 5h10"/></svg><div><h3>Steady a busy service</h3><p>Pacing the pass, floor and bar so Friday feels like a Tuesday.</p></div></article>
+    <article class="hc rv"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="17" cy="16" r="6"/><circle cx="33" cy="18" r="5"/><path d="M5 40c0-8 5-13 12-13s12 5 12 13M31 28c7 0 12 4 12 12"/></svg><div><h3>Run a better briefing</h3><p>Ten minutes before doors: specials, allergens, who is where.</p></div></article>
+    <article class="hc rv"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 5l17 8v22l-17 8-17-8V13zM7 13l17 8 17-8M24 21v22"/></svg><div><h3>Sort stock and ordering</h3><p>Par levels, supplier calls and a storeroom anyone can read.</p></div></article>
+  </div>
+</section>
+
+<section class="sec ladder" id="ladder" aria-labelledby="h-lad" style="padding-top:0">
+  <p class="kick rv">The route</p>
+  <h2 id="h-lad" class="rv">From the door <em>to the office.</em></h2>
+  <ol class="lad">
+    <li class="rv"><b>Year 1</b><h3>Host and server</h3><p>Learning the floor, the menu and how a table feels when it is ignored.</p></li>
+    <li class="rv"><b>Years 3 to 5</b><h3>Supervisor</h3><p>Running a section, then the shift. First rotas, first difficult conversations.</p></li>
+    <li class="rv"><b>Years 6 to 8</b><h3>Assistant manager</h3><p>Ordering, cash-up, training plans and the weekly numbers.</p></li>
+    <li class="rv"><b>Now</b><h3>General manager</h3><p>The whole venue: guests, a team of 40, margin and what comes next.</p></li>
+  </ol>
+</section>
+
+<section class="strip" role="region" tabindex="0" aria-label="Photos from the floor">
+  <div class="st" id="st">
+    <figure class="s-arch"><img src="img/host.webp" width="1100" height="825" alt="A manager greeting guests at the door" loading="lazy" style="object-position:55% 50%"></figure>
+    <figure class="s-circle"><img src="img/bar.webp" width="1100" height="825" alt="A bartender pouring a drink" loading="lazy"></figure>
+    <figure class="s-dia"><img src="img/pass.webp" width="1100" height="825" alt="A chef plating a dish at the pass" loading="lazy"></figure>
+    <figure class="s-pill"><img src="img/briefing.webp" width="1100" height="825" alt="The team gathered for a briefing" loading="lazy" style="object-position:50% 50%"></figure>
+    <figure class="s-arch"><img src="img/room.webp" width="1100" height="825" alt="The dining room before service" loading="lazy" style="object-position:70% 50%"></figure>
+    <figure class="s-circle dup" aria-hidden="true"><img src="img/host.webp" width="1100" height="825" alt="" loading="lazy" style="object-position:55% 50%"></figure>
+    <figure class="s-dia dup" aria-hidden="true"><img src="img/bar.webp" width="1100" height="825" alt="" loading="lazy"></figure>
+    <figure class="s-pill dup" aria-hidden="true"><img src="img/pass.webp" width="1100" height="825" alt="" loading="lazy"></figure>
+    <figure class="s-arch dup" aria-hidden="true"><img src="img/briefing.webp" width="1100" height="825" alt="" loading="lazy"></figure>
+    <figure class="s-circle dup" aria-hidden="true"><img src="img/room.webp" width="1100" height="825" alt="" loading="lazy" style="object-position:70% 50%"></figure>
+  </div>
+</section>
+
+<section class="sec contact" id="contact" aria-labelledby="h-c">
+  <h2 id="h-c" class="rv">Let's <em>talk.</em></h2>
+  <p class="rv">Hiring a general manager, opening a site or fixing a rota? Say hello.</p>
+  <a class="btn rv" href="mailto:kai@kaithompson.example" data-hot>Email Kai <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11 11 3M4.5 3H11v6.5"/></svg></a>
+  <span class="mail rv"><a href="mailto:kai@kaithompson.example">kai@kaithompson.example</a> &middot; Liverpool</span>
+</section>
+</main>
+<footer><span>&copy; Kai Thompson</span><span>Concept site by HU/MAN. Names, venues and details are sample content.</span></footer>
+</div>
+
+<nav class="dock" aria-label="Jump to a section">
+  <a href="#run" title="What I run" aria-label="What I run"><svg viewBox="0 0 100 100" class="c-coral"><use href="#s-sparkle"/></svg></a>
+  <a href="#venues" title="Venues" aria-label="Venues"><svg viewBox="0 0 100 100" class="c-lilac"><use href="#s-leaf"/></svg></a>
+  <a href="#help" title="How I can help" aria-label="How I can help"><svg viewBox="0 0 100 100" class="c-mint"><use href="#s-square"/></svg></a>
+  <a href="#contact" title="Contact" aria-label="Contact"><svg viewBox="0 0 100 100" class="c-amber"><use href="#s-circle"/></svg></a>
+</nav>
+<a class="up" href="#top" aria-label="Back to top" data-hot><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 16V4M4.5 9.5 10 4l5.5 5.5"/></svg></a>
+<div class="grain" id="grain" aria-hidden="true"></div>
+
+<div class="badge" role="note"><a href="../../portfolio/">&larr; Back to HU/MAN</a><span>Concept site by HU/MAN</span></div>
+
+<script src="../vendor/gsap.min.js"></script>
+<script src="../vendor/ScrollTrigger.min.js"></script>
+<script src="../vendor/Draggable.min.js"></script>
+<script>
+(function(){
+var doc=document.documentElement;
+var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+var $=function(s,r){return (r||document).querySelector(s)};
+var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+
+/* film grain: noise tile drawn on a canvas, no files */
+(function(){
+  try{
+    var c=document.createElement('canvas');c.width=c.height=128;
+    var x=c.getContext('2d'),d=x.createImageData(128,128);
+    for(var i=0;i<d.data.length;i+=4){var v=Math.random()*255;d.data[i]=d.data[i+1]=d.data[i+2]=v;d.data[i+3]=255}
+    x.putImageData(d,0,0);
+    $('#grain').style.backgroundImage='url('+c.toDataURL()+')';
+  }catch(e){}
+})();
+
+/* hot state from JS (CSS :hover does not fire from synthetic events) */
+var hotNow=null;
+document.addEventListener('mouseover',function(e){
+  var t=e.target&&e.target.closest?e.target.closest('.hc,[data-hot],.dock a'):null;
+  if(t===hotNow)return;
+  if(hotNow)hotNow.classList.remove('is-hot');
+  hotNow=t;if(t)t.classList.add('is-hot');
+});
+document.addEventListener('mouseout',function(e){
+  if(hotNow&&(!e.relatedTarget||!hotNow.contains(e.relatedTarget))){hotNow.classList.remove('is-hot');hotNow=null}
+});
+
+if(!window.gsap||!window.ScrollTrigger||reduce){return}
+gsap.registerPlugin(ScrollTrigger,Draggable);
+doc.classList.add('js-motion');
+
+/* four-slot shape cluster: shapes swap places clockwise */
+var SLOTS=[[0,0],[100,0],[100,100],[0,100]];
+function cluster(box){
+  var sh=$$('.sh',box),step=0;
+  function place(s,dur,active){
+    step=s;
+    sh.forEach(function(el,i){
+      var p=SLOTS[(i+s)%4];
+      gsap.to(el,{xPercent:p[0],yPercent:p[1],rotation:s*90*(i%2?1:-1),duration:dur,ease:'power3.inOut',overwrite:'auto'});
+      if(active!==undefined)gsap.to(el,{opacity:i===active?1:.4,scale:i===active?1.12:.86,duration:dur,ease:'power3.out'});
+    });
+  }
+  place(0,0,undefined);
+  return {place:place,get step(){return step},sh:sh};
+}
+
+/* hero */
+var logo=cluster($('#logoCl'));
+var tick=0;
+gsap.delayedCall(2.2,function loop(){tick++;logo.place(tick,.9);gsap.delayedCall(2.4,loop)});
+gsap.from('h1 .ln>span',{yPercent:115,duration:1.15,ease:'power4.out',stagger:.14,delay:.15});
+gsap.from(['.sub','.hero .btn','.where'],{opacity:0,y:24,duration:1,ease:'power3.out',stagger:.12,delay:.75});
+gsap.to('#wm',{scale:1.045,duration:4.2,ease:'sine.inOut',yoyo:true,repeat:-1,transformOrigin:'50% 50%'});
+var wmx=gsap.quickTo('.wm',"x",{duration:1.4,ease:'power3.out'}),wmy=gsap.quickTo('.wm',"y",{duration:1.4,ease:'power3.out'});
+window.addEventListener('pointermove',function(e){
+  wmx((e.clientX/innerWidth-.5)*-60);wmy((e.clientY/innerHeight-.5)*-40);
+});
+/* idle drift so the watermark moves with no pointer too */
+gsap.to('.wm',{rotation:-1.5,duration:7,ease:'sine.inOut',yoyo:true,repeat:-1});
+
+/* reveals */
+gsap.set('.rv',{opacity:0,y:38});
+ScrollTrigger.batch('.rv',{start:'top 90%',once:true,onEnter:function(b){gsap.to(b,{opacity:1,y:0,duration:1,ease:'power3.out',stagger:.12,overwrite:true})}});
+
+/* four things I run */
+var big=cluster($('#big')),rows=$$('.row'),cur=-1;
+function setActive(i){
+  if(i===cur)return;cur=i;
+  rows.forEach(function(r,k){r.classList.toggle('is-active',k===i)});
+  big.place(i,1.1,i);
+}
+setActive(0);
+rows.forEach(function(r,i){
+  ScrollTrigger.create({trigger:r,start:'top 58%',end:'bottom 58%',onToggle:function(s){if(s.isActive)setActive(i)}});
+});
+
+/* photo band slides up and parallaxes */
+gsap.fromTo('#band',{yPercent:14},{yPercent:0,ease:'none',scrollTrigger:{trigger:'#band',start:'top bottom',end:'top 35%',scrub:.6}});
+gsap.fromTo('#band img',{yPercent:-7},{yPercent:7,ease:'none',scrollTrigger:{trigger:'#band',start:'top bottom',end:'bottom top',scrub:.6}});
+
+/* venues: skewed coloured panels unfold into a draggable carousel */
+var vp=$('#vp'),track=$('#track'),cards=$$('.card'),drag=null;
+doc.classList.add('js-drag');
+function cw(){return cards[0].getBoundingClientRect().width}
+function bounds(){
+  var min=Math.min(0,vp.clientWidth-track.scrollWidth);
+  if(drag){drag.applyBounds({minX:min,maxX:0})}
+}
+function open(){
+  drag=Draggable.create(track,{type:'x',bounds:{minX:Math.min(0,vp.clientWidth-track.scrollWidth),maxX:0},edgeResistance:.85,dragClickables:true,onPress:function(){gsap.to('#drag',{scale:.8,duration:.25,overwrite:'auto'})},onRelease:function(){gsap.to('#drag',{scale:1,duration:.3,overwrite:'auto'})}})[0];
+}
+var collapsed=true;
+var narrow=function(){return Math.max(64,innerWidth*.13)};
+gsap.set(cards,{width:narrow()});
+gsap.set('.media',{skewX:-9,transformOrigin:'50% 100%'});
+gsap.set('.card figcaption',{opacity:0,y:14});
+var full=null;
+ScrollTrigger.create({trigger:vp,start:'top 72%',once:true,onEnter:function(){
+  var w=getComputedStyle(document.documentElement).getPropertyValue('--cw');
+  var tl=gsap.timeline({defaults:{ease:'power3.inOut'},onComplete:function(){collapsed=false;gsap.set(cards,{clearProps:'width'});open()}});
+  tl.to(cards,{width:function(){return Math.min(420,Math.max(250,innerWidth*.28))},duration:1.4,stagger:.08},0)
+    .to('.media',{skewX:0,duration:1.4,stagger:.08},0)
+    .to('.panel',{yPercent:-101,duration:1.1,stagger:.09,ease:'power4.inOut'},.5)
+    .to('.card figcaption',{opacity:1,y:0,duration:.8,ease:'power3.out',stagger:.08},1.2);
+}});
+vp.addEventListener('keydown',function(e){
+  if(!drag||(e.key!=='ArrowRight'&&e.key!=='ArrowLeft'))return;
+  e.preventDefault();
+  var min=Math.min(0,vp.clientWidth-track.scrollWidth);
+  var nx=gsap.utils.clamp(min,0,gsap.getProperty(track,'x')+(e.key==='ArrowRight'?-1:1)*(cw()+16));
+  gsap.to(track,{x:nx,duration:.7,ease:'power3.out',onUpdate:function(){drag.update()}});
+});
+addEventListener('resize',function(){if(!collapsed)bounds()});
+
+/* DRAG cursor */
+var dg=$('#drag'),dx=gsap.quickTo(dg,'x',{duration:.35,ease:'power3.out'}),dy=gsap.quickTo(dg,'y',{duration:.35,ease:'power3.out'});
+var overVp=false;
+var px=-999,py=-999;
+function chk(){
+  var r=vp.getBoundingClientRect();
+  var inside=px>=r.left&&px<=r.right&&py>=r.top&&py<=r.bottom;
+  if(inside!==overVp){overVp=inside;gsap.to(dg,{opacity:inside?1:0,scale:inside?1:.4,duration:.35,ease:'power3.out',overwrite:'auto'})}
+}
+addEventListener('pointermove',function(e){px=e.clientX;py=e.clientY;dx(px);dy(py);chk()});
+addEventListener('scroll',chk,{passive:true});
+
+/* photo strip drifts sideways, a little faster when you scroll */
+var st=$('#st');
+var drift=gsap.to(st,{x:function(){return -(st.scrollWidth/2)},duration:46,ease:'none',repeat:-1,modifiers:{x:gsap.utils.unitize(function(x){var w=st.scrollWidth/2;return gsap.utils.wrap(-w,0,parseFloat(x))})}});
+ScrollTrigger.create({trigger:st,start:'top bottom',end:'bottom top',onUpdate:function(s){var v=Math.min(4,1+Math.abs(s.getVelocity())/900);gsap.to(drift,{timeScale:v,duration:.2,overwrite:true,onComplete:function(){gsap.to(drift,{timeScale:1,duration:1.2})}})}});
+
+/* dock: mark the section in view */
+var links=$$('.dock a');
+['#run','#venues','#help','#contact'].forEach(function(id,i){
+  ScrollTrigger.create({trigger:id,start:'top 55%',end:'bottom 55%',onToggle:function(s){if(s.isActive){links.forEach(function(a,k){a.removeAttribute('aria-current');if(k===i)a.setAttribute('aria-current','true')})}else if(links[i].getAttribute('aria-current')){links[i].removeAttribute('aria-current')}}});
+});
+
+/* grain flicker */
+var g=$('#grain'),gt=0;
+gsap.ticker.add(function(t,dt,f){if(f%4===0){g.style.transform='translate('+(Math.random()*-30|0)+'px,'+(Math.random()*-30|0)+'px)'}});
+})();
+</script>
+<script src="../preview.js" defer></script>
+</body>
+</html>

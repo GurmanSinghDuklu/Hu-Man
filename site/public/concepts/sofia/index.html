@@ -1,0 +1,629 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sofia Marín, travel consultant (concept portfolio)</title>
+<meta name="robots" content="noindex,nofollow">
+<script>(function(d){d.classList.add('js');if(matchMedia('(prefers-reduced-motion: reduce)').matches)d.classList.add('rm')})(document.documentElement)</script>
+<style>
+@font-face{font-family:'Archivo';font-style:normal;font-weight:100 900;font-stretch:62% 125%;font-display:swap;src:url(../fonts/archivo-latin-wdth-normal.woff2) format('woff2')}
+@font-face{font-family:'Instrument Serif';font-style:italic;font-weight:400;font-display:swap;src:url(../fonts/instrument-serif-latin-400-italic.woff2) format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:400;font-display:swap;src:url(../fonts/ibm-plex-mono-latin-400-normal.woff2) format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:500;font-display:swap;src:url(../fonts/ibm-plex-mono-latin-500-normal.woff2) format('woff2')}
+@font-face{font-family:'IBM Plex Sans';font-style:normal;font-weight:400;font-display:swap;src:url(../fonts/ibm-plex-sans-latin-400-normal.woff2) format('woff2')}
+@font-face{font-family:'IBM Plex Sans';font-style:normal;font-weight:500;font-display:swap;src:url(../fonts/ibm-plex-sans-latin-500-normal.woff2) format('woff2')}
+</style>
+<style>
+:root{--c:#F2E8D0;--c2:#E7DBBB;--p:#FAF4E4;--k:#1D1E20;--k2:#2B2D30;--y:#FFC400;--b:#7B1E2B;--m:#5B5546;
+--wide:'Archivo','Helvetica Neue',Arial,sans-serif;--mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;--sans:'IBM Plex Sans','Helvetica Neue',Arial,sans-serif;--serif:'Instrument Serif',Georgia,serif;
+--pad:max(18px,env(safe-area-inset-left,0px),4vw);--bar:40px}
+*,*::before,*::after{box-sizing:border-box}
+html{background:var(--k);scroll-behavior:smooth;-webkit-text-size-adjust:100%;scroll-padding-top:56px}
+body{margin:0;background:var(--c);color:var(--k);font:400 17px/1.6 var(--sans);-webkit-font-smoothing:antialiased}
+h1,h2,h3,p,dl,dd,dt,ul,ol,figure{margin:0;padding:0}
+ul,ol{list-style:none}
+a{color:inherit}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--b);outline-offset:3px}
+.dk :focus-visible,.bar :focus-visible,.hero :focus-visible{outline-color:var(--y)}
+.sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:fixed;left:8px;top:-60px;z-index:200;background:var(--y);color:var(--k);padding:10px 14px;font:500 13px var(--mono)}
+.skip:focus{top:8px}
+.page{overflow-x:clip;position:relative}
+.mono{font-family:var(--mono)}
+
+/* ---------- top bar ---------- */
+.bar{position:fixed;z-index:80;left:0;right:0;top:0;height:var(--bar);display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 var(--pad);background:rgba(29,30,32,.94);color:#F2E8D0;font:500 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase}
+.bar a{text-decoration:none}
+.bar__name{font-weight:500;color:var(--y)}
+.bar__clock{display:flex;gap:.6em;white-space:nowrap}
+.bar__clock time{min-width:8ch;display:inline-block;color:#FFE27A}
+.bar nav{display:flex;gap:22px}
+.bar nav a{padding:12px 0;border-bottom:2px solid transparent}
+.bar nav a:hover,.bar nav a.is-on{border-color:var(--y)}
+
+/* ---------- hero ---------- */
+.hero{position:relative;height:100vh;height:100svh;min-height:520px;overflow:hidden;background:#C9B07B;isolation:isolate;color:#F2E8D0}
+.stage{position:absolute;inset:0;will-change:transform}
+.poster,.vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.vid--b{opacity:0}
+.rm .vid{display:none}
+.win{position:absolute;overflow:hidden;pointer-events:none}
+.shade{position:absolute;inset:0;transform:translateY(-102%);background:
+ linear-gradient(90deg,rgba(90,64,28,.34),rgba(90,64,28,0) 16%,rgba(90,64,28,0) 84%,rgba(90,64,28,.34)),
+ repeating-linear-gradient(180deg,rgba(255,255,255,.22) 0 calc(var(--s,1)*2px),rgba(110,84,44,.13) calc(var(--s,1)*2px) calc(var(--s,1)*3.5px),rgba(0,0,0,0) calc(var(--s,1)*3.5px) calc(var(--s,1)*9px)),
+ linear-gradient(180deg,#F1E7D1,#E9DCC0);
+ box-shadow:0 calc(var(--s,1)*14px) calc(var(--s,1)*22px) rgba(35,22,6,.45)}
+.shade::before{content:"";position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 100%,rgba(255,236,190,.55),rgba(255,236,190,0) 60%)}
+.grip{position:absolute;left:0;right:0;bottom:0;height:15%;background:linear-gradient(180deg,#E0D1B1,#EFE4CB 40%,#D8C8A6);border-top:calc(var(--s,1)*2px) solid rgba(255,255,255,.7)}
+.grip::before{content:"";position:absolute;left:50%;top:34%;width:30%;height:34%;transform:translateX(-50%);border-radius:99px;background:linear-gradient(180deg,#8E7B58,#C3B189);box-shadow:inset 0 calc(var(--s,1)*3px) calc(var(--s,1)*4px) rgba(40,26,8,.55)}
+.win::after{content:"";position:absolute;inset:0;background:radial-gradient(closest-side,rgba(0,0,0,0) 78%,rgba(40,24,6,.28))}
+.cut{position:absolute;inset:0;background:radial-gradient(circle at 20% 30%,rgba(29,30,32,.07) 0 2px,transparent 3px) 0 0/97px 91px,radial-gradient(circle at 70% 70%,rgba(123,30,43,.07) 0 3px,transparent 4px) 0 0/143px 129px,var(--c);opacity:0;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;padding:60px var(--pad) 40px;color:var(--k)}
+.rm .cut{display:none}
+.cut .k{font:500 12px/1.3 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--b)}
+.cut .t{font:800 clamp(34px,7.4vw,112px)/.98 var(--wide);font-stretch:125%;letter-spacing:-.02em}
+.cut .a{display:inline-flex;align-items:center;gap:12px;background:var(--y);border:3px solid var(--k);padding:12px 20px;font:500 12px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase}
+.chrome{position:absolute;inset:0;z-index:6;pointer-events:none}
+.plate{position:absolute;left:var(--pad);bottom:78px;background:var(--k);padding:16px 22px 18px;max-width:calc(100% - 2 * var(--pad));border-left:6px solid var(--y)}
+.plate .k{font:500 11px/1.3 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--y)}
+.plate h1{font:400 italic clamp(46px,7vw,92px)/.95 var(--serif);color:#F2E8D0;margin:6px 0 4px}
+.plate h1 em{color:var(--y)}
+.plate p{font:400 14px/1.4 var(--sans);color:#E3D9BF}
+.instr{position:absolute;left:50%;bottom:20px;transform:translateX(-50%);display:flex;align-items:center;gap:12px;background:rgba(29,30,32,.88);padding:10px 18px;font:500 11px/1.35 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:#F2E8D0;white-space:nowrap;max-width:calc(100% - 24px)}
+.belt{width:10px;height:10px;border-radius:50%;background:var(--y);flex:none;animation:blink 1.6s steps(1) infinite}
+@keyframes blink{50%{opacity:.15}}
+
+/* ---------- sign band ---------- */
+.sign{background:var(--y);color:var(--k);overflow:hidden;border-block:3px solid var(--k);font:500 13px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;white-space:nowrap}
+.sign__in{display:inline-flex;animation:scroll 38s linear infinite}
+.sign span{padding:15px 26px}
+@keyframes scroll{to{transform:translateX(-50%)}}
+
+/* ---------- common ---------- */
+.terr{background:radial-gradient(circle at 20% 30%,rgba(29,30,32,.07) 0 2px,transparent 3px) 0 0/97px 91px,radial-gradient(circle at 70% 70%,rgba(123,30,43,.07) 0 3px,transparent 4px) 0 0/143px 129px,radial-gradient(circle at 40% 80%,rgba(29,30,32,.05) 0 1.5px,transparent 2.5px) 0 0/61px 67px,var(--c)}
+.terr2{background:radial-gradient(circle at 30% 40%,rgba(29,30,32,.07) 0 2px,transparent 3px) 0 0/89px 83px,radial-gradient(circle at 75% 20%,rgba(123,30,43,.06) 0 3px,transparent 4px) 0 0/131px 119px,var(--c2)}
+.sec{padding:clamp(56px,9vw,120px) var(--pad);position:relative}
+.wrap{max-width:1280px;margin:0 auto}
+.dk{background:var(--k);color:#F2E8D0}
+.mk{display:inline-flex;align-items:stretch;background:var(--y);color:var(--k);border:3px solid var(--k);margin-bottom:22px}
+.dk .mk{border-color:var(--y)}
+.mk__ic{width:54px;background:var(--k);color:var(--y);display:grid;place-items:center}
+.dk .mk__ic{background:var(--k)}
+.mk svg{width:30px;height:30px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.mk__t{padding:10px 20px 10px 16px;font:500 12px/1.2 var(--mono);letter-spacing:.16em;text-transform:uppercase;display:flex;flex-direction:column;justify-content:center;gap:3px}
+.mk__t b{font:800 15px/1 var(--wide);font-stretch:125%;letter-spacing:.04em}
+h2{font:800 clamp(28px,4.5vw,64px)/1.04 var(--wide);font-stretch:125%;letter-spacing:-.015em;text-wrap:balance}
+.lede{font-size:clamp(17px,1.5vw,20px);max-width:56ch;margin-top:22px}
+.js:not(.rm) .rv{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0s)}
+.js:not(.rm) .rv.in{opacity:1;transform:none}
+
+/* ---------- about ---------- */
+.about{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:clamp(28px,5vw,80px);align-items:start}
+.facts{background:var(--p);border:2px dashed var(--k);padding:26px 26px 22px;position:relative;font:400 13px/1.5 var(--mono)}
+.facts::before{content:"";position:absolute;inset:6px;border:1px solid rgba(29,30,32,.25);pointer-events:none}
+.facts h3{font:500 11px var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--b);margin-bottom:12px}
+.facts dl{display:grid;grid-template-columns:auto 1fr;gap:10px 18px}
+.facts dt{color:var(--m);text-transform:uppercase;letter-spacing:.1em;font-size:11px;padding-top:2px}
+.facts dd{font-weight:500}
+
+/* ---------- flight path ---------- */
+.fp{position:relative;height:70px;margin:0 auto;max-width:1280px;color:var(--k)}
+.fp svg.fp__s{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.fp path{fill:none;stroke:var(--k);stroke-width:1.5;stroke-dasharray:2 7;stroke-linecap:round}
+.fp__plane{position:absolute;left:0;top:0;width:32px;height:32px;fill:var(--b);will-change:transform}
+.fp__t{position:absolute;bottom:0;font:500 11px var(--mono);letter-spacing:.16em}
+.fp__t--a{left:0}.fp__t--b{right:0}
+.fp-w{padding:0 var(--pad)}
+
+/* ---------- board ---------- */
+.brd{margin-top:44px;background:#0F1011;border:3px solid var(--y);border-radius:4px;overflow:hidden}
+.brd__top{display:flex;flex-wrap:wrap;align-items:stretch;justify-content:space-between;background:var(--y);color:var(--k)}
+.tabs{display:flex;flex-wrap:wrap}
+.tab{border:0;background:transparent;padding:15px 22px;font:500 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;cursor:pointer;color:var(--k);border-right:2px solid rgba(29,30,32,.25)}
+.tab[aria-selected=true]{background:var(--k);color:var(--y)}
+.tab:focus-visible{outline-color:var(--k);outline-offset:-4px}
+.tab[aria-selected=true]:focus-visible{outline-color:var(--y)}
+.brd__ttl{padding:15px 20px;font:500 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;display:flex;align-items:center;gap:10px}
+.brd__ttl i{width:9px;height:9px;border-radius:50%;background:var(--b);animation:blink 1.6s steps(1) infinite}
+.board{font-size:min(1.5vw,21.5px);padding:.8em 1.2em 1.1em;color:#F6EED8}
+.row,.hd{display:grid;grid-template-columns:calc(6*.88em) calc(10*.88em*1.15) calc(24*.88em) calc(4*.88em) calc(10*.88em);column-gap:1.3em;justify-content:space-between;align-items:center}
+.hd{padding:.6em 0 1.1em}
+.hd span{font:500 .55em/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:#C2BAA3}
+.row{padding:.5em 0;border-top:1px solid #2B2D30;font-size:1em;transition:background-color .18s;position:relative}
+.row.is-on{background:var(--y)}
+.row.empty .col{opacity:.5}
+.col{display:block}
+.col::before{display:none}
+.cells{display:flex;gap:.08em}
+.c-de{font-size:1.15em}
+.fc{position:relative;display:block;flex:none;width:.8em;height:1.35em;font:800 1em/1.35em var(--wide);font-stretch:100%;text-align:center;color:inherit;perspective:12em}
+.fc i{position:absolute;left:0;right:0;overflow:hidden;background:#17181A;font-style:normal;backface-visibility:hidden;transition:background-color .18s}
+.fc .t,.fc .fa{top:0;height:50%;border-radius:.12em .12em 0 0}
+.fc .b,.fc .fb{bottom:0;height:50%;border-radius:0 0 .12em .12em}
+.fc .fa{transform-origin:50% 100%;visibility:hidden;z-index:3;background:#17181A}
+.fc .fb{transform-origin:50% 0;visibility:hidden;z-index:3;background:#17181A}
+.fc i::before{content:attr(data-c);position:absolute;left:0;right:0;height:200%;line-height:1.35em}
+.fc .t::before,.fc .fa::before{top:0}
+.fc .b::before,.fc .fb::before{top:-100%}
+.fc::after{content:"";position:absolute;left:0;right:0;top:50%;height:.07em;margin-top:-.035em;background:#050505;z-index:5}
+.c-de .fc{color:var(--y)}
+.row[data-st=ld] .c-st .fc{color:#BDB59E}
+.row[data-st=tr] .c-st .fc{color:var(--y)}
+.row[data-st=bd] .c-st .fc i{background:var(--b)}
+.row[data-st=bd] .c-st .fc{color:#fff}
+.row.is-on .fc{color:var(--k)!important}
+.row.is-on .fc i{background:var(--y)!important}
+.row.is-on .fc::after{background:#B58D00}
+.row .thumb{display:none}
+.hint{padding:14px 24px;font:400 12px/1.4 var(--mono);color:#C2BAA3;border-top:1px solid #2B2D30;letter-spacing:.04em}
+.peek{position:fixed;left:0;top:0;z-index:70;width:240px;background:var(--p);padding:8px 8px 6px;pointer-events:none;opacity:0;transform:translate3d(-300px,0,0);transition:opacity .2s;box-shadow:0 18px 30px -12px rgba(0,0,0,.55);color:var(--k)}
+.peek.on{opacity:1}
+.peek img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover}
+.peek span{display:block;font:500 10px/1.2 var(--mono);letter-spacing:.14em;text-transform:uppercase;padding:7px 2px 2px}
+
+/* ---------- boarding passes ---------- */
+.passes{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,380px),1fr));gap:34px 30px;margin-top:48px}
+.pass{position:relative;display:grid;grid-template-columns:minmax(0,1fr) 94px;color:var(--k);outline-offset:6px}
+.pass::before,.pass::after{content:"";position:absolute;right:86px;width:20px;height:20px;border-radius:50%;background:var(--c);z-index:3}
+.pass::before{top:-10px}.pass::after{bottom:-10px}
+.pass__m{background:var(--p);padding:20px 22px 20px;border:2px solid var(--k);border-right:0;border-radius:6px 0 0 6px;transition:transform .35s cubic-bezier(.2,.7,.2,1)}
+.pass__m .l{display:flex;justify-content:space-between;gap:10px;font:500 10px/1.2 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--b)}
+.pass h3{font:800 clamp(19px,1.9vw,24px)/1.08 var(--wide);font-stretch:118%;margin:14px 0 10px}
+.pass p{font-size:15px;line-height:1.5;color:#3a382f}
+.pass dl{display:flex;gap:18px;margin-top:16px;padding-top:12px;border-top:1px dashed rgba(29,30,32,.4);font:400 11px/1.3 var(--mono)}
+.pass dt{color:var(--m);letter-spacing:.12em;text-transform:uppercase;font-size:9.5px}
+.pass dd{font-weight:500;font-size:14px}
+.stub{position:relative;z-index:2;background:var(--y);border:2px solid var(--k);border-left:2px dashed var(--k);border-radius:0 6px 6px 0;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:16px 8px;transform-origin:0 100%;transition:transform .4s cubic-bezier(.2,.8,.2,1),box-shadow .4s}
+.stub b{writing-mode:vertical-rl;font:500 11px var(--mono);letter-spacing:.2em;text-transform:uppercase}
+.bar-code{width:60px;height:46px;background:repeating-linear-gradient(90deg,var(--k) 0 2px,transparent 2px 4px,var(--k) 4px 5px,transparent 5px 8px,var(--k) 8px 11px,transparent 11px 12px)}
+.pass.is-on .stub{transform:translate(18px,10px) rotate(7deg);box-shadow:0 14px 16px -8px rgba(29,30,32,.4)}
+.pass.is-on .pass__m{transform:translate(-5px,-2px) rotate(-.8deg)}
+
+/* ---------- luggage tags ---------- */
+.rail{position:relative;margin-top:60px;height:12px;background:linear-gradient(180deg,#8d8672,#d9d2bd 45%,#6f6957);border-radius:6px;box-shadow:0 3px 0 rgba(29,30,32,.25)}
+.tags{display:flex;flex-wrap:wrap;justify-content:center;gap:0 clamp(14px,3vw,46px);margin-top:-6px}
+.tag{position:relative;width:min(44%,204px);height:var(--h,300px);transform-origin:50% 0;animation:swing var(--t,4.6s) ease-in-out var(--dl,0s) infinite alternate;outline-offset:6px}
+@keyframes swing{from{transform:rotate(-2.6deg)}to{transform:rotate(2.6deg)}}
+@keyframes swingh{0%{transform:rotate(-11deg)}25%{transform:rotate(9deg)}50%{transform:rotate(-6deg)}75%{transform:rotate(4deg)}100%{transform:rotate(-2deg)}}
+.tag.is-on{animation:swingh 1.3s ease-out 1 forwards}
+.tag__s{position:absolute;left:50%;top:0;width:2px;height:var(--len,64px);background:#6f634a;transform:translateX(-50%)}
+.tag__b{position:absolute;left:0;right:0;top:calc(var(--len,64px) - 8px);bottom:0;background:var(--tc,var(--y));color:var(--tk,var(--k));clip-path:polygon(18% 0,82% 0,100% 11%,100% 100%,0 100%,0 11%);padding:44px 14px 16px;display:flex;flex-direction:column;gap:8px}
+.tag__b::before{content:"";position:absolute;left:50%;top:14px;width:22px;height:22px;margin-left:-11px;border-radius:50%;background:var(--c2);box-shadow:inset 0 0 0 3px rgba(29,30,32,.55)}
+.tag__b .l{font:500 10px/1.2 var(--mono);letter-spacing:.16em;text-transform:uppercase;opacity:.9}
+.tag__b strong{font:800 clamp(13px,1.2vw,17px)/1.1 var(--wide);font-stretch:112%;text-transform:uppercase;hyphens:manual;overflow-wrap:normal;word-break:keep-all}
+.tag__b span{margin-top:auto;font:400 13px/1.35 var(--sans)}
+.tg1{--tc:var(--y)}.tg2{--tc:var(--p)}.tg3{--tc:var(--b);--tk:#fff}.tg4{--tc:var(--k);--tk:var(--y)}
+
+/* ---------- baggage hall ---------- */
+.bag{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(30px,5vw,80px);align-items:center;margin-top:50px}
+.case{container-type:inline-size;position:relative;width:min(100%,500px);margin:0 auto;aspect-ratio:1/1.12;padding-top:12%}
+.case__h{position:absolute;left:30%;right:30%;top:0;height:16%;border:3.2cqw solid #2f2a26;border-bottom:0;border-radius:12cqw 12cqw 0 0}
+.case__b{position:absolute;left:0;right:0;top:11%;bottom:5%;border-radius:5cqw;background:repeating-linear-gradient(90deg,rgba(0,0,0,.18) 0 .6cqw,rgba(255,255,255,.04) .6cqw 3.6cqw),linear-gradient(160deg,#9A2A39,#6B1925 60%,#5A141E);box-shadow:inset 0 0 0 1.2cqw #4a1019,inset 0 -3cqw 6cqw rgba(0,0,0,.3);overflow:hidden}
+.case__b i.s{position:absolute;left:0;right:0;height:7%;background:linear-gradient(180deg,#2f2a26,#161412);border-block:.5cqw solid #4b443d}
+.case__b i.s1{top:22%}.case__b i.s2{bottom:22%}
+.case__b i.lt{position:absolute;width:10%;height:5%;top:2.4%;z-index:2;background:linear-gradient(180deg,#F2D77A,#B58D2A);border-radius:1cqw;border:.5cqw solid #6b5416}
+.case__b i.lt1{left:26%}.case__b i.lt2{right:26%}
+.case__b::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(112deg,rgba(255,255,255,.22),rgba(255,255,255,0) 28%,rgba(255,255,255,0) 66%,rgba(0,0,0,.22)),radial-gradient(circle at 0 0,#1b1816 0 7%,transparent 7.5%),radial-gradient(circle at 100% 0,#1b1816 0 7%,transparent 7.5%),radial-gradient(circle at 0 100%,#1b1816 0 7%,transparent 7.5%),radial-gradient(circle at 100% 100%,#1b1816 0 7%,transparent 7.5%)}
+.case__f{position:absolute;bottom:0;width:8%;height:6%;background:#161412;border-radius:0 0 2cqw 2cqw}
+.case__f1{left:14%}.case__f2{right:14%}
+.stk{position:absolute;left:var(--px);top:var(--py);width:var(--w,26%);aspect-ratio:var(--ar,1);display:grid;place-items:center;align-content:center;text-align:center;background:var(--sb,var(--y));color:var(--sk,var(--k));transform:rotate(var(--r,0deg));font:800 3.4cqw/1.05 var(--wide);font-stretch:118%;text-transform:uppercase;box-shadow:0 .6cqw 1cqw rgba(0,0,0,.35),inset 0 0 0 .7cqw var(--sb,var(--y)),inset 0 0 0 1cqw var(--sk,var(--k));opacity:.97}
+.stk small{display:block;font:500 2.3cqw/1 var(--mono);letter-spacing:.12em;margin-top:.8cqw}
+.stk.ci{border-radius:50%}.stk.ro{border-radius:1.6cqw}.stk.ov{border-radius:50%}.stk.hx{clip-path:polygon(25% 3%,75% 3%,100% 50%,75% 97%,25% 97%,0 50%);box-shadow:none}.stk.ar{border-radius:50% 50% 1.6cqw 1.6cqw}
+.sa{--sb:var(--y);--sk:var(--k)}.sb{--sb:var(--p);--sk:var(--k)}.sc{--sb:var(--k);--sk:var(--y)}.sd{--sb:#F2E8D0;--sk:var(--b)}
+.js:not(.rm) .case .stk{opacity:0;transform:rotate(var(--r,0deg)) scale(1.7);transition:opacity .15s steps(1),transform .35s cubic-bezier(.2,1.2,.4,1);transition-delay:calc(var(--i)*.14s)}
+.js:not(.rm) .case.in .stk{opacity:.97;transform:rotate(var(--r,0deg))}
+.pp{position:relative;background:var(--p);border:2px solid var(--k);padding:clamp(22px,3vw,38px);border-radius:6px;background-image:repeating-linear-gradient(180deg,transparent 0 31px,rgba(29,30,32,.1) 31px 32px)}
+.pp::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:2px;background:rgba(29,30,32,.18)}
+.pp h3{font:500 11px var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--b);margin-bottom:6px;position:relative;background:var(--p);display:inline-block;padding-right:10px}
+.pp p.n{font-size:14px;color:var(--m);position:relative;background:var(--p);display:inline-block;padding-right:10px}
+.stamps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px 8px;margin-top:22px;position:relative}
+.stamp{--ink:var(--b);aspect-ratio:1/.82;display:grid;place-content:center;text-align:center;color:var(--ink);border:.3em double var(--ink);font:500 11px/1.25 var(--mono);letter-spacing:.1em;text-transform:uppercase;transform:rotate(var(--r));filter:url(#ink);padding:6px;margin:var(--mg,0);font-size:clamp(9px,1.05vw,12px);cursor:default;outline-offset:4px}
+.stamp b{display:block;font:800 1.35em/1 var(--wide);font-stretch:125%;margin:.3em 0}
+.stamp.k{--ink:var(--k)}
+.stamp.s1{border-radius:50%;aspect-ratio:1}.stamp.s2{border-radius:.5em}.stamp.s3{border-radius:50%}.stamp.s4{border-radius:.2em;border-style:solid}
+.js:not(.rm) .pp .stamp{opacity:0;transform:rotate(var(--r)) scale(1.9);transition:opacity .1s steps(1),transform .22s cubic-bezier(.3,1.5,.5,1);transition-delay:calc(var(--i)*.18s)}
+.js:not(.rm) .pp.in .stamp{opacity:.92;transform:rotate(var(--r))}
+.stamp.is-on{transform:rotate(calc(var(--r) * -1)) scale(1.06)!important;transition:transform .25s!important}
+
+/* ---------- contact ---------- */
+.gate{display:grid;grid-template-columns:minmax(0,1fr) 150px;background:var(--p);color:var(--k);margin-top:40px;border-radius:8px;position:relative}
+.gate::before,.gate::after{content:"";position:absolute;right:142px;width:30px;height:30px;border-radius:50%;background:var(--k)}
+.gate::before{top:-15px}.gate::after{bottom:-15px}
+.gate__m{padding:clamp(24px,4vw,48px);border-radius:8px 0 0 8px;position:relative}
+.gate__l{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;font:500 11px/1.2 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--b)}
+.now{display:inline-flex;gap:10px;align-items:center;background:var(--k);color:var(--y);padding:8px 14px;letter-spacing:.14em}
+.now i{width:9px;height:9px;border-radius:50%;background:var(--y);animation:blink 1.2s steps(1) infinite}
+.gate h3{font:800 clamp(26px,4.2vw,56px)/1.02 var(--wide);font-stretch:125%;margin:22px 0 14px;letter-spacing:-.01em}
+.gate .f{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px 24px;margin:26px 0;font:400 12px/1.4 var(--mono)}
+.gate .f dt{color:var(--m);letter-spacing:.12em;text-transform:uppercase;font-size:10px}
+.gate .f dd{font-weight:500;font-size:14px}
+.btn{display:inline-block;background:var(--k);color:var(--y);padding:16px 24px;font:500 14px/1.2 var(--mono);letter-spacing:.06em;text-decoration:none;border:3px solid var(--k);transition:background-color .2s,color .2s}
+.btn:hover,.btn.is-on{background:var(--y);color:var(--k)}
+.gate__s{background:var(--y);border-radius:0 8px 8px 0;border-left:3px dashed var(--k);display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:26px 10px}
+.gate__s b{writing-mode:vertical-rl;font:800 22px/1 var(--wide);font-stretch:125%;letter-spacing:.06em}
+.gate__s .bar-code{width:90px;height:70px}
+footer{background:var(--k);color:#D9D0B6;padding:26px var(--pad) 84px;font:400 12px/1.6 var(--mono);letter-spacing:.04em;border-top:3px solid var(--y)}
+
+
+/* ---------- responsive ---------- */
+@media (max-width:1000px){
+ .about,.bag{grid-template-columns:minmax(0,1fr)}
+ .bar nav{display:none}
+}
+@media (max-width:900px){
+ .board{font-size:clamp(12px,3.45vw,19px);padding:.4em .9em .6em}
+ .hd{display:none}
+ .row{grid-template-columns:auto auto 1fr;grid-template-areas:"fl yr st" "de de th" "tr tr tr";column-gap:1.3em;row-gap:.5em;padding:.8em 0}
+ .row.empty{display:none}
+ .c-fl{grid-area:fl}.c-yr{grid-area:yr}.c-st{grid-area:st;justify-self:end}.c-de{grid-area:de;font-size:1.3em}.c-tr{grid-area:tr}
+ .col::before{display:block;content:attr(data-l);font:500 .55em/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:#C2BAA3;margin-bottom:.4em}
+ .row.is-on .col::before{color:var(--k)}
+ .row .thumb{display:block;grid-area:th;justify-self:end;width:6em;height:4.5em;object-fit:cover;border:2px solid #F2E8D0}
+ .row .thumb[src=""]{display:none}
+ .peek{display:none}
+ .brd__ttl{display:none}
+}
+@media (max-width:640px){
+ body{font-size:16px}
+ .plate{bottom:70px;padding:12px 16px 14px}
+ .instr{letter-spacing:.08em;font-size:10px;white-space:normal;text-align:left;padding:9px 12px;width:calc(100% - 24px);gap:10px;bottom:14px}
+ .tab{padding:14px 12px;font-size:11px;letter-spacing:.06em}
+ .bar{font-size:11px;letter-spacing:.05em}
+ .bar__name{display:none}
+ .bar{justify-content:center}
+ .mk__t{padding:8px 14px 8px 12px}
+ .pass{grid-template-columns:minmax(0,1fr) 76px}
+ .pass::before,.pass::after{right:68px}
+ .gate{grid-template-columns:minmax(0,1fr) 84px}
+ .gate::before,.gate::after{right:76px}
+ .gate__s b{font-size:15px}
+ .gate__s .bar-code{width:56px}
+ .tag{width:calc(50% - 10px);max-width:204px}
+ .stamps{gap:8px 4px}
+ .stamp{font-size:7.5px;padding:3px}
+ .stamp b{font-size:1.2em;letter-spacing:-.02em}
+ .btn{font-size:11.5px;padding:14px 12px;letter-spacing:0;display:block;text-align:center;overflow-wrap:anywhere}
+ .gate__m{padding:22px 18px}
+}
+@media (prefers-reduced-motion: reduce){
+ html{scroll-behavior:auto}
+ .tag,.sign__in,.belt,.now i,.brd__ttl i{animation:none}
+ .sign{overflow-x:auto}
+ .pass__m,.stub,.row{transition:none}
+}
+.badge{position:fixed;z-index:90;left:max(12px, env(safe-area-inset-left, 0px));bottom:max(12px, env(safe-area-inset-bottom, 0px));display:inline-flex;align-items:center;gap:8px;background:#121317;color:#EDECE6;border-radius:99px;padding:8px 14px 8px 11px;font-size:12px;font-weight:600;line-height:1.2;box-shadow:0 0 0 1.5px #EDECE6,0 10px 24px -8px rgba(18,19,23,.5);max-width:calc(100vw - 24px);pointer-events:none}
+.badge i{width:9px;height:9px;border-radius:50%;background:#FFD23F;flex:none}
+/* HU/MAN concept badge */
+.badge{display:flex;flex-wrap:wrap;align-items:center;gap:2px 12px;pointer-events:auto;border-radius:18px;line-height:1.3}
+.badge a{color:inherit;font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.badge a:focus-visible{outline:2px solid currentColor;outline-offset:3px;border-radius:3px}
+@media (max-width:640px){.badge{position:static;margin:24px max(16px,env(safe-area-inset-left,0px)) max(16px,env(safe-area-inset-bottom,0px));max-width:none;justify-content:center;text-align:center;border-radius:14px}footer{padding-bottom:26px!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#about">Skip to content</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+ <defs>
+  <filter id="ink" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="4" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -1.7 1.75" result="m"/><feTurbulence type="fractalNoise" baseFrequency=".04" numOctaves="1" seed="9" result="w"/><feDisplacementMap in="SourceGraphic" in2="w" scale="2.5" result="d"/><feComposite in="d" in2="m" operator="in"/></filter>
+  <symbol id="i-plane" viewBox="0 0 64 64"><path d="M58 32c0 1.6-2.4 2.6-5 2.6H40L28 52h-5l5-17.4H14l-4 6H6l2.6-8.6L6 23.4h4l4 6h14L23 12h5l12 17.4h13c2.6 0 5 1 5 2.6z"/></symbol>
+  <symbol id="i-case" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M8 7v13M16 7v13"/></symbol>
+  <symbol id="i-dep" viewBox="0 0 24 24"><path d="M3 20h18M4.5 14.5l3.5 1 11.5-6a2 2 0 0 0-1.6-3.6L13 8 6.5 4.5 5 5.5l4 4-3.5 1.7-2-1.2-1 1z"/></symbol>
+  <symbol id="i-tkt" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M15 6v12" stroke-dasharray="2 2"/><path d="M6.5 10h5M6.5 14h3"/></symbol>
+  <symbol id="i-tag" viewBox="0 0 24 24"><path d="M4 4h8l8 8-8 8-8-8z"/><circle cx="8.5" cy="8.5" r="1.3"/></symbol>
+  <symbol id="i-claim" viewBox="0 0 24 24"><ellipse cx="12" cy="17" rx="9" ry="3.5"/><rect x="8" y="8" width="8" height="6" rx="1"/><path d="M10 8V6.5h4V8"/></symbol>
+  <symbol id="i-gate" viewBox="0 0 24 24"><path d="M5 21V4h9l5 4v13M3 21h18"/><path d="M9 14h6m-2.5-2.5L15 14l-2.5 2.5"/></symbol>
+ </defs>
+</svg>
+
+<div class="page" id="top">
+<header class="bar">
+ <a class="bar__name" href="#top">Sofia Marín</a>
+ <div class="bar__clock" aria-label="Local time in Manchester"><span>Manchester</span><time id="clock">22:41:00</time><span id="tz">GMT</span></div>
+ <nav aria-label="Sections"><a href="#board">Departures</a><a href="#passes">Skills</a><a href="#baggage">Places</a><a href="#contact">Gate 4</a></nav>
+</header>
+
+<section class="hero" id="hero" aria-labelledby="h1">
+ <div class="stage" id="stage">
+  <img class="poster" src="img/cabin.webp" width="1600" height="900" alt="View from an airliner seat: an oval window showing deep blue sky, a small distant plane and a thin contrail" fetchpriority="high">
+  <video class="vid vid--a" id="vA" src="img/cabin.mp4" poster="img/cabin.webp" autoplay muted playsinline loop preload="auto" aria-hidden="true" tabindex="-1"></video>
+  <video class="vid vid--b" id="vB" src="img/cabin.mp4" poster="img/cabin.webp" muted playsinline loop preload="auto" aria-hidden="true" tabindex="-1"></video>
+  <div class="win" id="win" aria-hidden="true"><div class="shade" id="shade"><div class="grip"></div></div></div>
+ </div>
+ <div class="cut" id="cut" aria-hidden="true"><span class="k">Arrivals hall · Manchester</span><span class="t">Welcome<br>aboard.</span><span class="a">Follow the signs ↓</span></div>
+ <div class="chrome" id="chrome">
+  <div class="plate"><p class="k">Travel consultant · Manchester</p><h1 id="h1">Sofia <em>Marín</em></h1><p>Quay &amp; Compass Travel (sample) · English and Spanish</p></div>
+  <p class="instr"><i class="belt" aria-hidden="true"></i><span>Seatbelt sign is on · scroll down to board</span></p>
+ </div>
+</section>
+
+<div class="sign" aria-hidden="true"><div class="sign__in"><span>Check-in</span><span>Departures ↗</span><span>Boarding passes</span><span>Luggage tags</span><span>Baggage claim ↓</span><span>Gate 4 → now boarding</span><span>Check-in</span><span>Departures ↗</span><span>Boarding passes</span><span>Luggage tags</span><span>Baggage claim ↓</span><span>Gate 4 → now boarding</span></div></div>
+
+<main id="main">
+<section class="sec terr" id="about" aria-labelledby="h-about">
+ <div class="wrap">
+  <div class="mk rv"><span class="mk__ic"><svg aria-hidden="true"><use href="#i-case"/></svg></span><span class="mk__t">Check-in<b>01</b></span></div>
+  <div class="about">
+   <div>
+    <h2 id="h-about" class="rv">Tailor-made trips, planned one conversation at a time.</h2>
+    <p class="lede rv" style="--d:.1s">I'm Sofia, a travel consultant at Quay &amp; Compass Travel (sample) in Manchester. For eight years I've planned honeymoons, family holidays and long rail journeys that don't follow a brochure. I start with who is travelling and what they'd like to remember, then build the route, the stays and the spare hours around it.</p>
+   </div>
+   <aside class="facts rv" style="--d:.2s" aria-label="Quick facts"><h3>Passenger details</h3>
+    <dl><dt>Base</dt><dd>Manchester, UK</dd><dt>Agency</dt><dd>Quay &amp; Compass Travel (sample)</dd><dt>Experience</dt><dd>8 years planning tailor-made trips</dd><dt>Languages</dt><dd>English · Español</dd><dt>Trips</dt><dd>Honeymoons, family trips, rail journeys</dd></dl>
+   </aside>
+  </div>
+ </div>
+</section>
+<div class="fp-w terr" style="padding-bottom:40px"><div class="fp" aria-hidden="true"><svg class="fp__s"><path/></svg><span class="fp__t fp__t--a">MAN</span><span class="fp__t fp__t--b">KIX</span><svg class="fp__plane"><use href="#i-plane"/></svg></div></div>
+
+<section class="sec dk" id="board" aria-labelledby="h-board" style="padding-top:clamp(48px,7vw,90px)">
+ <div class="wrap">
+  <div class="mk rv"><span class="mk__ic"><svg aria-hidden="true"><use href="#i-dep"/></svg></span><span class="mk__t">Departures · Salidas<b>02</b></span></div>
+  <h2 id="h-board" class="rv" style="max-width:15ch">Trips on the board</h2>
+  <p class="lede rv" style="--d:.1s;color:#E3D9BF">A sample of the trips I've planned, shown the way an airport would show them. Move over a row to see where it went.</p>
+  <div class="brd rv" id="brd" style="--d:.15s">
+   <div class="brd__top">
+    <div class="tabs" role="tablist" aria-label="Board view">
+     <button class="tab" role="tab" id="t-dep" aria-selected="true" aria-controls="panel" data-k="dep">Departures</button>
+     <button class="tab" role="tab" id="t-arr" aria-selected="false" aria-controls="panel" data-k="arr" tabindex="-1">Arrivals</button>
+     <button class="tab" role="tab" id="t-trn" aria-selected="false" aria-controls="panel" data-k="trn" tabindex="-1">In transit</button>
+    </div>
+    <div class="brd__ttl"><i aria-hidden="true"></i>Live board · sample trips</div>
+   </div>
+   <div class="board" aria-live="off">
+    <div class="hd" aria-hidden="true"><span>Flight</span><span>Destination</span><span>Trip</span><span>Year</span><span>Status</span></div>
+    <div id="panel" role="tabpanel" aria-labelledby="t-dep"><ul class="rows" id="rows"></ul></div>
+   </div>
+   <p class="hint">Sample trips and flight numbers. Destinations show where each journey went or is planned to go.</p>
+  </div>
+ </div>
+</section>
+
+<div class="fp-w terr" style="padding-top:20px"><div class="fp" aria-hidden="true"><svg class="fp__s"><path/></svg><span class="fp__t fp__t--a">KIX</span><span class="fp__t fp__t--b">OPO</span><svg class="fp__plane"><use href="#i-plane"/></svg></div></div>
+<section class="sec terr" id="passes" aria-labelledby="h-pass" style="padding-top:20px">
+ <div class="wrap">
+  <div class="mk rv"><span class="mk__ic"><svg aria-hidden="true"><use href="#i-tkt"/></svg></span><span class="mk__t">Boarding passes<b>03</b></span></div>
+  <h2 id="h-pass" class="rv" style="max-width:16ch">What I bring on board</h2>
+  <ul class="passes">
+   <li class="pass rv" data-h tabindex="0"><div class="pass__m"><div class="l"><span>Boarding pass</span><span>Skill 01</span></div><h3>Itinerary design</h3><p>Day-by-day plans with slack built in, so the best moment can be an unplanned one.</p><dl><div><dt>From</dt><dd>Brief</dd></div><div><dt>To</dt><dd>Day by day</dd></div><div><dt>Seat</dt><dd>1A</dd></div></dl></div><div class="stub" aria-hidden="true"><b>Skill 01</b><i class="bar-code"></i></div></li>
+   <li class="pass rv" data-h tabindex="0" style="--d:.08s"><div class="pass__m"><div class="l"><span>Boarding pass</span><span>Skill 02</span></div><h3>Rail and multi-stop routes</h3><p>Journeys by train with sensible changes, seat reservations and time to look out of the window.</p><dl><div><dt>From</dt><dd>Station</dd></div><div><dt>To</dt><dd>Station</dd></div><div><dt>Seat</dt><dd>2C</dd></div></dl></div><div class="stub" aria-hidden="true"><b>Skill 02</b><i class="bar-code"></i></div></li>
+   <li class="pass rv" data-h tabindex="0" style="--d:.16s"><div class="pass__m"><div class="l"><span>Boarding pass</span><span>Skill 03</span></div><h3>Budgets and quotes</h3><p>A clear budget up front, with honest advice on where to save and where to spend.</p><dl><div><dt>From</dt><dd>Budget</dd></div><div><dt>To</dt><dd>Quote</dd></div><div><dt>Seat</dt><dd>3F</dd></div></dl></div><div class="stub" aria-hidden="true"><b>Skill 03</b><i class="bar-code"></i></div></li>
+   <li class="pass rv" data-h tabindex="0"><div class="pass__m"><div class="l"><span>Boarding pass</span><span>Skill 04</span></div><h3>Hotels, guides and transfers</h3><p>Booking and confirming the people and places along the route, in English or Spanish.</p><dl><div><dt>From</dt><dd>Shortlist</dd></div><div><dt>To</dt><dd>Confirmed</dd></div><div><dt>Seat</dt><dd>4A</dd></div></dl></div><div class="stub" aria-hidden="true"><b>Skill 04</b><i class="bar-code"></i></div></li>
+   <li class="pass rv" data-h tabindex="0" style="--d:.08s"><div class="pass__m"><div class="l"><span>Boarding pass</span><span>Skill 05</span></div><h3>Paperwork pointers</h3><p>Pointing travellers to the official sources for visas, insurance and entry rules, and checking they've seen them.</p><dl><div><dt>From</dt><dd>Questions</dd></div><div><dt>To</dt><dd>Checklist</dd></div><div><dt>Seat</dt><dd>5D</dd></div></dl></div><div class="stub" aria-hidden="true"><b>Skill 05</b><i class="bar-code"></i></div></li>
+   <li class="pass rv" data-h tabindex="0" style="--d:.16s"><div class="pass__m"><div class="l"><span>Boarding pass</span><span>Skill 06</span></div><h3>Help while you travel</h3><p>A message away when a train is cancelled or a restaurant is full, so you can stay on holiday.</p><dl><div><dt>From</dt><dd>Problem</dd></div><div><dt>To</dt><dd>Plan B</dd></div><div><dt>Seat</dt><dd>6B</dd></div></dl></div><div class="stub" aria-hidden="true"><b>Skill 06</b><i class="bar-code"></i></div></li>
+  </ul>
+ </div>
+</section>
+
+<div class="fp-w terr2" style="padding-top:34px"><div class="fp" aria-hidden="true"><svg class="fp__s"><path/></svg><span class="fp__t fp__t--a">OPO</span><span class="fp__t fp__t--b">NAP</span><svg class="fp__plane"><use href="#i-plane"/></svg></div></div>
+<section class="sec terr2" id="tags" aria-labelledby="h-tags" style="padding-top:20px">
+ <div class="wrap">
+  <div class="mk rv"><span class="mk__ic"><svg aria-hidden="true"><use href="#i-tag"/></svg></span><span class="mk__t">Luggage tags<b>04</b></span></div>
+  <h2 id="h-tags" class="rv" style="max-width:18ch">Languages and specialisms</h2>
+  <div class="rail" aria-hidden="true"></div>
+  <ul class="tags">
+   <li class="tag tg1" data-h tabindex="0" style="--len:56px;--h:290px;--t:4.4s;--dl:-1s"><i class="tag__s" aria-hidden="true"></i><div class="tag__b"><div class="l">Language</div><strong>English</strong><span>Planning, booking and trip support.</span></div></li>
+   <li class="tag tg4" data-h tabindex="0" style="--len:92px;--h:300px;--t:5.1s;--dl:-2.5s"><i class="tag__s" aria-hidden="true"></i><div class="tag__b"><div class="l">Idioma</div><strong>Español</strong><span>Reservas y planes en español, con proveedores locales.</span></div></li>
+   <li class="tag tg3" data-h tabindex="0" style="--len:64px;--h:290px;--t:4.8s;--dl:-.4s"><i class="tag__s" aria-hidden="true"></i><div class="tag__b"><div class="l">Specialism</div><strong>Honey&shy;moons</strong><span>Quiet stays and a few small surprises.</span></div></li>
+   <li class="tag tg2" data-h tabindex="0" style="--len:100px;--h:310px;--t:4.2s;--dl:-3.2s"><i class="tag__s" aria-hidden="true"></i><div class="tag__b"><div class="l">Specialism</div><strong>Family trips</strong><span>Plans that suit every age in the party.</span></div></li>
+   <li class="tag tg1" data-h tabindex="0" style="--len:70px;--h:290px;--t:5.4s;--dl:-1.8s"><i class="tag__s" aria-hidden="true"></i><div class="tag__b"><div class="l">Specialism</div><strong>Rail journeys</strong><span>Multi-stop routes by train.</span></div></li>
+  </ul>
+ </div>
+</section>
+
+<div class="fp-w terr" style="padding-top:34px"><div class="fp" aria-hidden="true"><svg class="fp__s"><path/></svg><span class="fp__t fp__t--a">NAP</span><span class="fp__t fp__t--b">RAK</span><svg class="fp__plane"><use href="#i-plane"/></svg></div></div>
+<section class="sec terr" id="baggage" aria-labelledby="h-bag" style="padding-top:20px">
+ <div class="wrap">
+  <div class="mk rv"><span class="mk__ic"><svg aria-hidden="true"><use href="#i-claim"/></svg></span><span class="mk__t">Baggage claim<b>05</b></span></div>
+  <h2 id="h-bag" class="rv" style="max-width:17ch">Places I know well</h2>
+  <div class="bag">
+   <div class="case rv" id="case" role="img" aria-label="A burgundy suitcase covered in travel stickers: Kyoto, Porto, Amalfi, Swiss Alps, Marrakech, Iceland, Lisbon, Seville, Zermatt and Naples.">
+    <div class="case__h"></div>
+    <div class="case__b"><i class="s s1"></i><i class="s s2"></i><i class="lt lt1"></i><i class="lt lt2"></i>
+     <span class="stk ci sa" style="--px:6%;--py:5%;--w:27%;--r:-9deg;--i:0">Kyoto<small>JP</small></span>
+     <span class="stk ro sb" style="--px:37%;--py:4%;--w:31%;--ar:1.5;--r:6deg;--i:1">Porto<small>PT</small></span>
+     <span class="stk hx sc" style="--px:71%;--py:7%;--w:25%;--ar:1.15;--r:11deg;--i:2">Amalfi<small>IT</small></span>
+     <span class="stk ov sd" style="--px:3%;--py:34%;--w:34%;--ar:1.35;--r:5deg;--i:3">Alps<small>CH</small></span>
+     <span class="stk ar sa" style="--px:63%;--py:31%;--w:27%;--ar:.95;--r:-7deg;--i:4">Mar&shy;rakech<small>MA</small></span>
+     <span class="stk ci sc" style="--px:36%;--py:36%;--w:25%;--r:-4deg;--i:5">Ice&shy;land<small>IS</small></span>
+     <span class="stk ro sd" style="--px:5%;--py:62%;--w:30%;--ar:1.4;--r:-6deg;--i:6">Lisbon<small>PT</small></span>
+     <span class="stk hx sa" style="--px:36%;--py:55%;--w:26%;--ar:1.15;--r:8deg;--i:7">Seville<small>ES</small></span>
+     <span class="stk ov sb" style="--px:67%;--py:56%;--w:29%;--ar:1.3;--r:-10deg;--i:8">Zermatt<small>CH</small></span>
+     <span class="stk ci sc" style="--px:41%;--py:72%;--w:22%;--r:12deg;--i:9">Naples<small>IT</small></span>
+    </div>
+    <i class="case__f case__f1"></i><i class="case__f case__f2"></i>
+   </div>
+   <div class="pp rv" id="pp" style="--d:.1s"><h3>Passport control</h3><br><p class="n">Countries I've planned trips in.</p>
+    <div class="stamps">
+     <div class="stamp s1" data-h style="--r:-8deg;--i:0"><span>Arrival</span><b>Japan</b><span>KIX</span></div>
+     <div class="stamp s2 k" data-h style="--r:5deg;--i:1;--mg:14px 0 0"><span>Entry</span><b>Portugal</b><span>OPO</span></div>
+     <div class="stamp s3" data-h style="--r:9deg;--i:2"><span>Admitted</span><b>Italy</b><span>NAP</span></div>
+     <div class="stamp s4 k" data-h style="--r:-4deg;--i:3;--mg:-6px 0 0"><span>Arrival</span><b>Morocco</b><span>RAK</span></div>
+     <div class="stamp s1 k" data-h style="--r:7deg;--i:4"><span>Entry</span><b>Iceland</b><span>KEF</span></div>
+     <div class="stamp s2" data-h style="--r:-6deg;--i:5;--mg:10px 0 0"><span>Admitted</span><b>Swiss</b><span>ZRH</span></div>
+     <div class="stamp s4" data-h style="--r:4deg;--i:6;--mg:-4px 0 0"><span>Arrival</span><b>Spain</b><span>SVQ</span></div>
+    </div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section class="sec dk" id="contact" aria-labelledby="h-contact">
+ <div class="wrap">
+  <div class="mk rv"><span class="mk__ic"><svg aria-hidden="true"><use href="#i-gate"/></svg></span><span class="mk__t">Gate 4<b>Now boarding</b></span></div>
+  <h2 id="h-contact" class="rv" style="max-width:16ch">Ready when you are.</h2>
+  <div class="gate rv" style="--d:.1s">
+   <div class="gate__m">
+    <div class="gate__l"><span>Quay &amp; Compass Travel (sample)</span><span class="now"><i aria-hidden="true"></i>Gate 4 · Now boarding</span></div>
+    <h3>Tell me where you'd like to wake up.</h3>
+    <p style="max-width:52ch">Send me who's travelling, roughly when, and what a good day looks like. I'll write back with a first idea of the route.</p>
+    <dl class="f"><div><dt>Passenger</dt><dd>You, and whoever's coming</dd></div><div><dt>From</dt><dd>Manchester, UK</dd></div><div><dt>Languages</dt><dd>English · Español</dd></div></dl>
+    <a class="btn" data-h href="mailto:sofia@sofiamarin.example?subject=Planning%20a%20trip">sofia@sofiamarin.example</a>
+   </div>
+   <div class="gate__s" aria-hidden="true"><b>Seat 1A</b><i class="bar-code"></i></div>
+  </div>
+ </div>
+</section>
+</main>
+
+<footer><p>Concept site by HU/MAN. Names, trips and details are sample content.</p></footer>
+</div>
+
+<div class="peek" id="peek" aria-hidden="true"><img src="img/kyoto.webp" width="1100" height="825" alt=""><span></span></div>
+<div class="badge" role="note"><a href="../../portfolio/">&larr; Back to HU/MAN</a><span>Concept site by HU/MAN</span></div>
+
+<script src="../vendor/gsap.min.js"></script>
+<script src="../vendor/ScrollTrigger.min.js"></script>
+<script>
+(function(){
+'use strict';
+var D=document,$=function(s,r){return (r||D).querySelector(s)},$$=function(s,r){return [].slice.call((r||D).querySelectorAll(s))};
+var RM=D.documentElement.classList.contains('rm'),raf=requestAnimationFrame;
+var clamp=function(v,a,b){return Math.max(a,Math.min(b,v))};
+
+/* ---- clock ---- */
+var clockEl=$('#clock'),tzEl=$('#tz');
+try{var fmt=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/London',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false,timeZoneName:'short'});
+ var tick=function(){var p=fmt.formatToParts(new Date()),g=function(t){var x=p.filter(function(o){return o.type===t})[0];return x?x.value:''};
+  clockEl.textContent=g('hour')+':'+g('minute')+(RM?'':':'+g('second'));tzEl.textContent=g('timeZoneName')||'GMT'};
+ tick();setInterval(tick,1000)}catch(e){}
+
+/* ---- reveals ---- */
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.15,rootMargin:'0px 0px -6% 0px'});
+$$('.rv,#case,#pp').forEach(function(el){io.observe(el)});
+
+/* ---- hero: window box, shade, video loop ---- */
+var hero=$('#hero'),stage=$('#stage'),win=$('#win'),shade=$('#shade'),Z={s:3,x:0,y:0};
+var G={x:604,y:147,w:420,h:548},VW=1600,VH=900,N=2.65;
+(function(){var pts=[],n=100,i,t,c,s;for(i=0;i<n;i++){t=i/n*Math.PI*2;c=Math.cos(t);s=Math.sin(t);
+ pts.push((50+50*Math.sign(c)*Math.pow(Math.abs(c),2/N)).toFixed(2)+'% '+(50+50*Math.sign(s)*Math.pow(Math.abs(s),2/N)).toFixed(2)+'%')}
+ win.style.clipPath='polygon('+pts.join(',')+')'})();
+function layout(){
+ var W=hero.clientWidth,H=hero.clientHeight,s=Math.max(W/VW,H/VH),ox=(W-VW*s)/2,oy=(H-VH*s)/2,
+  x=ox+G.x*s,y=oy+G.y*s,w=G.w*s,h=G.h*s,cx=x+w/2,cy=y+h/2,u=W/w,v=H/h;
+ win.style.left=x+'px';win.style.top=y+'px';win.style.width=w+'px';win.style.height=h+'px';win.style.setProperty('--s',s.toFixed(3));
+ stage.style.transformOrigin=cx+'px '+cy+'px';
+ Z.s=Math.pow(Math.pow(u,N)+Math.pow(v,N),1/N)*1.08;Z.x=W/2-cx;Z.y=H/2-cy}
+layout();addEventListener('resize',layout);
+
+var vA=$('#vA'),vB=$('#vB');
+if(RM){[vA,vB].forEach(function(v){v.pause();v.removeAttribute('src');v.load();v.remove()})}
+else{
+ var cur=vA,oth=vB,fading=false,run=true;
+ var play=function(v){var p=v.play();if(p&&p.catch)p.catch(function(){})};
+ var loop=function(){
+  if(run&&!fading&&cur.duration&&cur.currentTime>cur.duration-1.1){
+   fading=true;oth.currentTime=0;play(oth);var t0=performance.now(),a=cur,b=oth;
+   (function f(){var p=clamp((performance.now()-t0)/900,0,1);b.style.opacity=p;a.style.opacity=1-p;
+    if(p<1)raf(f);else{a.pause();cur=b;oth=a;fading=false}})()}
+  raf(loop)};
+ raf(loop);
+ new IntersectionObserver(function(es){run=es[0].isIntersecting;if(run){play(cur)}else{vA.pause();vB.pause()}},{threshold:.01}).observe(hero);
+ D.addEventListener('visibilitychange',function(){if(D.hidden){vA.pause();vB.pause()}else if(run)play(cur)});
+ vB.addEventListener('canplay',function(){vB.pause()},{once:true});
+}
+if(!RM&&window.gsap&&window.ScrollTrigger){
+ gsap.registerPlugin(ScrollTrigger);
+ shade.style.transform='none';
+ var tl=gsap.timeline({defaults:{ease:'none'}});
+ tl.fromTo(shade,{yPercent:-102},{yPercent:0,duration:.55,ease:'power1.inOut'},0)
+  .to('#chrome',{opacity:0,duration:.16},0)
+  .fromTo(stage,{scale:1,x:0,y:0},{scale:function(){return Z.s},x:function(){return Z.x},y:function(){return Z.y},duration:.4,ease:'power3.in'},.6)
+  .fromTo('#cut',{opacity:0},{opacity:1,duration:.06},.86);
+ ScrollTrigger.create({trigger:hero,start:'top top',end:function(){return '+='+Math.round(innerHeight*2.4)},pin:true,scrub:.5,animation:tl,invalidateOnRefresh:true,anticipatePin:1});
+ ScrollTrigger.addEventListener('refreshInit',layout);
+ addEventListener('load',function(){ScrollTrigger.refresh()});
+}
+
+/* ---- flight paths ---- */
+var fps=$$('.fp').map(function(f){return {f:f,path:$('path',f),pl:$('.fp__plane',f),L:1}});
+function fpBuild(o){var w=o.f.clientWidth,h=70;o.path.setAttribute('d','M10 '+(h-14)+' Q '+(w/2)+' '+(-h*.6)+' '+(w-10)+' '+(h-14));o.L=o.path.getTotalLength()}
+function fpUpdate(o){var r=o.f.getBoundingClientRect(),p=RM?.5:clamp((innerHeight*.98-r.top)/(innerHeight*.85),0,1),
+ a=o.path.getPointAtLength(o.L*p),b=o.path.getPointAtLength(Math.min(o.L,o.L*p+2)),b0=o.path.getPointAtLength(Math.max(0,o.L*p-2)),
+ ang=Math.atan2(b.y-b0.y,b.x-b0.x)*180/Math.PI;o.pl.style.transform='translate('+(a.x-16)+'px,'+(a.y-16)+'px) rotate('+ang+'deg)'}
+function fpAll(){fps.forEach(fpUpdate)}
+function fpRebuild(){fps.forEach(fpBuild);fpAll()}
+fpRebuild();addEventListener('resize',fpRebuild);addEventListener('load',fpRebuild);
+var sT=0;addEventListener('scroll',function(){if(!sT){sT=1;raf(function(){sT=0;fpAll()})}},{passive:true});
+
+/* ---- split-flap board ---- */
+var AL=' ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+var DATA={
+dep:[['SM 104','KYOTO','14 NIGHTS · HONEYMOON','2027','ON TIME','kyoto'],['SM 112','PORTO','6 NIGHTS · RAIL TRIP','2027','ON TIME','porto'],['SM 118','AMALFI','9 NIGHTS · FAMILY OF 5','2026','BOARDING','amalfi'],['SM 121','SWISS ALPS','7 NIGHTS · GLACIER RAIL','2027','ON TIME','alps'],['SM 127','MARRAKECH','5 NIGHTS · CITY BREAK','2027','ON TIME','marrakech'],['SM 130','ICELAND','8 NIGHTS · RING ROAD','2027','ON TIME','iceland']],
+arr:[['SM 097','KYOTO','12 NIGHTS · FAMILY OF 4','2026','LANDED','kyoto'],['SM 093','PORTO','7 NIGHTS · HONEYMOON','2026','LANDED','porto'],['SM 089','AMALFI','10 NIGHTS · HONEYMOON','2025','LANDED','amalfi'],['SM 081','SWISS ALPS','9 NIGHTS · RAIL JOURNEY','2025','LANDED','alps'],['SM 076','MARRAKECH','6 NIGHTS · FAMILY OF 6','2024','LANDED','marrakech'],['SM 070','ICELAND','7 NIGHTS · GROUP OF 4','2024','LANDED','iceland']],
+trn:[['SM 101','PORTO','8 NIGHTS · FAMILY OF 3','2026','IN TRANSIT','porto'],['SM 105','AMALFI','11 NIGHTS · HONEYMOON','2026','IN TRANSIT','amalfi'],['SM 109','SWISS ALPS','10 NIGHTS · RAIL JOURNEY','2026','IN TRANSIT','alps']]};
+var COLS=[['fl',6,'Flight'],['de',10,'Destination'],['tr',24,'Trip'],['yr',4,'Year'],['st',10,'Status']];
+var STK={'ON TIME':'ok','BOARDING':'bd','LANDED':'ld','IN TRANSIT':'tr'};
+var rowsEl=$('#rows'),R=[],i,j;
+function mkCell(){var c=D.createElement('span');c.className='fc';c.innerHTML='<i class="t" data-c=" "></i><i class="b" data-c=" "></i><i class="fa" data-c=" "></i><i class="fb" data-c=" "></i>';c._c=' ';c._t=c.children[0];c._b=c.children[1];c._fa=c.children[2];c._fb=c.children[3];return c}
+for(i=0;i<6;i++){
+ var li=D.createElement('li'),o={el:li,cols:{}},h='<span class="sr"></span>';
+ li.className='row empty';
+ COLS.forEach(function(c){h+='<span class="col c-'+c[0]+'" data-l="'+c[2]+'"><span class="cells" aria-hidden="true"></span></span>'});
+ h+='<img class="thumb" src="" alt="" width="96" height="72" loading="lazy" decoding="async">';
+ li.innerHTML=h;o.sr=li.firstChild;o.img=li.lastChild;
+ COLS.forEach(function(c){var box=$('.c-'+c[0]+' .cells',li),cells=[];for(j=0;j<c[1];j++){var k=mkCell();box.appendChild(k);cells.push(k)}o.cols[c[0]]=cells});
+ rowsEl.appendChild(li);R.push(o)}
+var Q=[],running=false,STEP=64;
+function flip(c,ch){
+ var old=c._c;if(ch===old)return;c._c=ch;
+ c._t.dataset.c=ch;c._fa.dataset.c=old;c._fb.dataset.c=ch;
+ if(RM||!c.animate){c._b.dataset.c=ch;return}
+ var d=STEP*.55;
+ c._fa.animate([{visibility:'visible',transform:'rotateX(0)'},{visibility:'visible',transform:'rotateX(-90deg)'}],{duration:d,easing:'ease-in'});
+ var a=c._fb.animate([{visibility:'visible',transform:'rotateX(90deg)'},{visibility:'visible',transform:'rotateX(0)'}],{duration:d,delay:d,easing:'ease-out',fill:'backwards'});
+ a.onfinish=function(){c._b.dataset.c=c._c}}
+function pump(now){
+ for(var k=Q.length-1;k>=0;k--){var q=Q[k];if(now>=q.t){flip(q.c,q.s.shift());q.t=now+STEP;if(!q.s.length)Q.splice(k,1)}}
+ if(Q.length)raf(pump);else running=false}
+function setCell(c,ch,delay){
+ if(RM){flip(c,ch);return}
+ if(ch===c._c&&ch===' ')return;
+ var n=ch===c._c?0:2+((Math.random()*5)|0),s=[],k;for(k=0;k<n;k++)s.push(AL[1+((Math.random()*(AL.length-1))|0)]);s.push(ch);
+ for(k=Q.length-1;k>=0;k--)if(Q[k].c===c)Q.splice(k,1);
+ Q.push({c:c,s:s,t:performance.now()+delay});if(!running){running=true;raf(pump)}}
+function setText(o,col,txt,delay){var cells=o.cols[col],k;txt=(txt||'').toUpperCase();for(k=0;k<cells.length;k++)setCell(cells[k],txt.charAt(k)||' ',delay+k*16)}
+var curTab=null,tabs=$$('.tab');
+function show(key){
+ curTab=key;var rows=DATA[key];setHot(null);
+ tabs.forEach(function(t){var on=t.dataset.k===key;t.setAttribute('aria-selected',on);t.tabIndex=on?0:-1});
+ $('#panel').setAttribute('aria-labelledby','t-'+key);
+ R.forEach(function(o,n){var d=rows[n];o.el.classList.toggle('empty',!d);
+  if(d){o.sr.textContent=d[0]+', '+d[1].toLowerCase()+', '+d[2].toLowerCase()+', '+d[3]+', '+d[4].toLowerCase();
+   o.el.setAttribute('data-h','');o.el.dataset.img=d[5];o.el.dataset.cap=d[1]+' · '+d[3];o.el.dataset.st=STK[d[4]];o.img.src='img/'+d[5]+'.webp';o.img.alt=d[1]+', sample trip photo';
+   COLS.forEach(function(c,ci){setText(o,c[0],d[ci],n*70+ci*40)})}
+  else{o.sr.textContent='';o.el.removeAttribute('data-h');delete o.el.dataset.img;o.img.removeAttribute('src');o.img.alt='';COLS.forEach(function(c){setText(o,c[0],'',n*50)})}})}
+var touched=false;
+tabs.forEach(function(t,n){
+ t.addEventListener('click',function(){touched=true;if(curTab!==t.dataset.k)show(t.dataset.k)});
+ t.addEventListener('keydown',function(e){var m=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;if(m){var nx=tabs[(n+m+tabs.length)%tabs.length];nx.focus();nx.click();e.preventDefault()}})});
+var brd=$('#brd'),boardSeen=false,boardVis=false,order=['dep','arr','trn'];
+new IntersectionObserver(function(es){boardVis=es[0].isIntersecting;if(boardVis&&!boardSeen){boardSeen=true;show('dep')}},{threshold:.25}).observe(brd);
+if(!RM)setInterval(function(){if(boardVis&&!touched&&!D.hidden){show(order[(order.indexOf(curTab)+1)%3])}},7500);
+
+/* ---- hover (driven from JS so synthetic events work) ---- */
+var hot=null,peek=$('#peek'),pimg=$('img',peek),pcap=$('span',peek),pOn=false,px=0,py=0,tx=0,ty=0,cox=30,pr=0;
+function setHot(el){
+ if(el===hot)return;if(hot)hot.classList.remove('is-on');hot=el;if(el)el.classList.add('is-on');
+ if(el&&el.classList.contains('row')&&el.dataset.img&&matchMedia('(min-width:901px)').matches){
+  if(!pOn){px=tx;py=ty}
+  if(pimg.getAttribute('src')!=='img/'+el.dataset.img+'.webp')pimg.src='img/'+el.dataset.img+'.webp';
+  pcap.textContent=el.dataset.cap;peek.classList.add('on');pOn=true;if(!pr)pr=raf(pt)}
+ else if(pOn){peek.classList.remove('on');pOn=false}}
+function pt(){pr=0;var dx=tx-px,dy=ty-py,w=peek.offsetWidth,tgt=tx>innerWidth-w-60?-w-30:30;
+ px+=dx*.13;py+=dy*.13;cox+=(tgt-cox)*.15;
+ var rot=clamp(dx*.05,-8,8),y=clamp(py-peek.offsetHeight/2,50,innerHeight-peek.offsetHeight-8);
+ peek.style.transform='translate3d('+(px+cox)+'px,'+y+'px,0) rotate('+rot+'deg)';
+ if(pOn||Math.abs(dx)>.5||Math.abs(dy)>.5)pr=raf(pt)}
+addEventListener('pointermove',function(e){tx=e.clientX;ty=e.clientY;if(pOn&&!pr)pr=raf(pt)},{passive:true});
+D.addEventListener('mouseover',function(e){var t=e.target;setHot(t&&t.closest?t.closest('[data-h]'):null)});
+D.addEventListener('mouseleave',function(){setHot(null)});
+D.addEventListener('focusin',function(e){var t=e.target.closest&&e.target.closest('[data-h]');if(t&&!t.classList.contains('row'))setHot(t)});
+D.addEventListener('focusout',function(e){if(hot&&!hot.classList.contains('row'))setHot(null)});
+D.addEventListener('keydown',function(e){if(e.key==='Escape')setHot(null)});
+})();
+</script>
+<script src="../preview.js" defer></script>
+</body>
+</html>
