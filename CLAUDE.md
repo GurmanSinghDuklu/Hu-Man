@@ -394,6 +394,31 @@ Lighthouse 97-100 / 100 / 100 / 100 on ten pages, axe 0 violations on 15. Motion
 ## Concept portfolios (2026-11-02, branch `portfolio-concepts`)
 Three standalone concept sites (Noor Haddad, Theo Lindqvist, Maya Okonkwo) live in `site/public/concepts/<slug>/index.html` and are shown as cards on `/portfolio` (data in `src/data/portfolioConcepts.ts`, screenshots in `src/assets/portfolio-concepts/`). They are plain HTML copied as is, not Astro pages: fonts are self-hosted woff2 in `public/concepts/fonts/` (from `@fontsource`, not added to package.json) and GSAP 3.15.0 (gsap, ScrollTrigger, Draggable) is copied from `node_modules` into `public/concepts/vendor/`, all via relative paths so the `/Hu-Man` preview base works. Gotchas: Astro's meta CSP does not cover public files, so `public/_headers` has a `/concepts/*` rule that detaches the global CSP (`! Content-Security-Policy`) and sets one that allows their inline scripts and styles; the pages are `noindex,nofollow`, not in the sitemap and not in `llms-full.txt`, and `seo-check.mjs` checks them separately (noindex, no outside hosts, assets exist, back link); ESLint and Prettier skip `public/concepts`. Each page has a fixed badge with a back link to `../../portfolio/` (static at the foot on phones). Known axe finding left: the Maya nav links over the pink circle fail colour contrast. The home Portfolio section (`WorkCards.astro`) shows the real projects from `projects.ts`, not these concepts (Gurman, 2026-11-02: the concept version was reverted).
 
+## Live concept wall (2026-11-07, branch `portfolio-gallery`)
+/portfolio now opens with eleven concept portfolios on a dark live wall (`ConceptWall.astro`,
+`src/scripts/concept-wall.ts`; spec `docs/superpowers/specs/2026-11-07-portfolio-gallery.md`). Eight new
+concepts for ordinary jobs (priya, dan, grace, sofia, ryan, hannah, kai, amira) borrow interaction
+mechanics from Gurman's Awwwards references but never their layouts, art or words. Things worth knowing:
+1. **Every concept loads `../preview.js`** (seo-check fails without it). With `?preview` it hides the
+   badge, scrolls the page in a loop and sends synthetic pointer events; the wall forwards the real cursor
+   by `postMessage` (`hm-pointer`, `hm-pause`). CSS `:hover` can't fire from synthetic events, so concept
+   hover effects that matter are also driven from JS.
+2. **At most 4 iframes live** (2 on phones), mounted near the viewport after idle, removed when far away.
+   Reduced motion, Data Saver: posters only, with a note.
+3. **Posters** come from `npm run concept-posters [slug]` into `src/assets/portfolio-concepts/<slug>.jpg`.
+   Re-run after changing a concept. Concepts and wall order live in `src/data/portfolioConcepts.ts`;
+   seo-check matches pages to that file.
+4. **Framing**: `frame-src 'self'` in the CSP; `/concepts/*` drops `X-Frame-Options: DENY` for
+   `SAMEORIGIN` and `frame-ancestors 'self'` in `_headers`.
+5. Concept pages say "Concept" and "sample", never "fictional" (hard rule 1). Known axe finding left:
+   Maya's nav over the pink circle (pre-existing).
+6. **Revision 2 (same night, Gurman's notes):** Hannah is now a bookcase (each book = a workplace that
+   opens into its history; for people with many employers), Sofia uses a real muapi cabin clip
+   (`sofia/img/cabin.mp4`, kling-v3.0-pro from an imagen4-ultra frame) and an old-school terminal (split-flap
+   board, boarding passes, luggage tags), Kai follows the Addviso look (dark grain, mint, giant K, four
+   shapes). Their photos are muapi-generated and live in `<slug>/img/`. The muapi key stays in
+   `~/.muapi/key`, never in the repo.
+
 ## GitHub and preview deploy
 Repo: github.com/GurmanSinghDuklu/Hu-Man (public; default branch `hu-man-rebrand`). Every push to
 `hu-man-rebrand` deploys a preview to https://gurmansinghduklu.github.io/Hu-Man/ via

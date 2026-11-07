@@ -21,7 +21,8 @@
     "indexnow": "node scripts/indexnow.mjs",
     "seo-check": "node scripts/seo-check.mjs",
     "test": "node --test worker/enquiry.test.js tests/palettes.test.mjs",
-    "build:site": "astro build"
+    "build:site": "astro build",
+    "concept-posters": "node scripts/concept-posters.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.10",

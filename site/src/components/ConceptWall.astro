@@ -1,0 +1,440 @@
+---
+/**
+ * The live concept wall on /portfolio. Each tile shows a poster of a concept portfolio; when the tile
+ * nears the viewport, an iframe of the concept in preview mode (public/concepts/preview.js) mounts
+ * over the poster, scrolls itself and follows the cursor. Columns drift at different speeds while the
+ * page scrolls. Reduced motion, Data Saver or no JS: posters only. Script: src/scripts/concept-wall.ts.
+ */
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import { portfolioConcepts, portfolioConceptsIntro } from '../data/portfolioConcepts';
+import { withBase } from '../config/paths';
+import BookingLink from './BookingLink.astro';
+
+const posters = import.meta.glob<{ default: ImageMetadata }>(
+  '../assets/portfolio-concepts/*.{jpg,webp,png}',
+  { eager: true },
+);
+const posterFor = (slug: string) =>
+  Object.entries(posters).find(([path]) => path.split('/').pop()?.split('.')[0] === slug)?.[1]
+    .default;
+
+const COLS = 3;
+const columns = Array.from({ length: COLS }, (_, c) =>
+  portfolioConcepts
+    .map((concept, index) => ({ concept, index }))
+    .filter(({ index }) => index % COLS === c),
+);
+const size = { desktop: { w: 1440, h: 900 }, phone: { w: 390, h: 844 } };
+---
+
+<div class="cwall" data-cwall>
+  <p class="cwall__static" data-cwall-static hidden>
+    {portfolioConceptsIntro.staticNote}
+  </p>
+  <div class="cwall__cols">
+    {columns.map((col, c) => (
+      <div class="cwall__col" data-cwall-col={c}>
+        {col.map(({ concept, index }) => {
+          const poster = posterFor(concept.slug);
+          const href = withBase(`/concepts/${concept.slug}/`);
+          const { w, h } = size[concept.device];
+          return (
+            <article
+              class:list={['ctile', `ctile--${concept.device}`]}
+              style={`order:${index}`}
+              data-ctile
+              data-src={`${href}?preview`}
+              data-w={w}
+              data-h={h}
+              aria-labelledby={`ctile-${concept.slug}`}
+            >
+              <div class="ctile__frame">
+                {concept.device === 'desktop' ? (
+                  <div class="ctile__bar" aria-hidden="true">
+                    <span class="ctile__dots">
+                      <i />
+                      <i />
+                      <i />
+                    </span>
+                    <span class="ctile__url">{concept.domain}</span>
+                    <span class="ctile__state" data-ctile-state>
+                      Preview
+                    </span>
+                  </div>
+                ) : (
+                  <div class="ctile__notch" aria-hidden="true">
+                    <span class="ctile__state" data-ctile-state>
+                      Preview
+                    </span>
+                  </div>
+                )}
+                <div class="ctile__screen" data-ctile-screen>
+                  {poster && (
+                    <Image
+                      src={poster}
+                      alt={concept.alt}
+                      width={concept.device === 'desktop' ? 900 : 420}
+                      format="webp"
+                      quality={72}
+                      loading="lazy"
+                      decoding="async"
+                      class="ctile__poster"
+                    />
+                  )}
+                  <div class="ctile__mount" data-ctile-mount aria-hidden="true" />
+                  <a
+                    class="ctile__hit"
+                    href={href}
+                    tabindex="-1"
+                    aria-hidden="true"
+                    data-ctile-hit
+                  />
+                </div>
+              </div>
+              <div class="ctile__body">
+                <p class="ctile__note">
+                  {portfolioConceptsIntro.note} · {concept.field}
+                </p>
+                <h3 class="ctile__name" id={`ctile-${concept.slug}`}>
+                  {concept.name}
+                </h3>
+                <p class="ctile__role">{concept.role}</p>
+                <p class="ctile__shows">{concept.shows}</p>
+                <a class="ctile__link" href={href}>
+                  {portfolioConceptsIntro.linkText}
+                  <span class="visually-hidden"> for {concept.name}</span>
+                </a>
+              </div>
+            </article>
+          );
+        })}
+        {c === COLS - 1 && (
+          <BookingLink class="cwall__next" style={`order:${portfolioConcepts.length}`}>
+            <span class="cwall__next-label">{portfolioConceptsIntro.next.label}</span>
+            <span class="cwall__next-title">{portfolioConceptsIntro.next.title}</span>
+            <span class="cwall__next-text">{portfolioConceptsIntro.next.text}</span>
+            <span class="cwall__next-btn">{portfolioConceptsIntro.next.button}</span>
+          </BookingLink>
+        )}
+      </div>
+    ))}
+  </div>
+</div>
+
+<script>
+  import { initConceptWall } from '../scripts/concept-wall';
+  initConceptWall();
+</script>
+
+<style>
+  .cwall {
+    --tile-gap: max(16px, calc(var(--u) * 0.32));
+    position: relative;
+    margin-top: clamp(2rem, calc(var(--u) * 0.6), 3.5rem);
+  }
+
+  .cwall__static {
+    margin-bottom: 1rem;
+    font: 400 0.75rem var(--font-mono);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted-on-ink);
+  }
+
+  .cwall__static[hidden] {
+    display: none;
+  }
+
+  .cwall__cols {
+    display: flex;
+    flex-direction: column;
+    gap: var(--tile-gap);
+  }
+
+  /* Phones: one column in data order. */
+  .cwall__col {
+    display: contents;
+  }
+
+  .ctile {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    min-width: 0;
+  }
+
+  .ctile__frame {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #2a2c29;
+    background: #141613;
+  }
+
+  .ctile--desktop .ctile__frame {
+    border-radius: 10px;
+  }
+
+  .ctile--phone .ctile__frame {
+    width: min(100%, 300px);
+    margin-inline: auto;
+    padding: 10px;
+    border: 1px solid #343632;
+    border-radius: 38px;
+    background: #050605;
+  }
+
+  .ctile__bar,
+  .ctile__notch {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    height: 30px;
+    padding-inline: 0.75rem;
+    font: 500 0.6875rem var(--font-mono);
+    color: var(--muted-on-ink);
+  }
+
+  .ctile__bar {
+    border-bottom: 1px solid #2a2c29;
+  }
+
+  .ctile__notch {
+    justify-content: center;
+    height: 22px;
+  }
+
+  .ctile__dots {
+    display: flex;
+    gap: 5px;
+  }
+
+  .ctile__dots i {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #3a3c38;
+  }
+
+  .ctile__url {
+    flex: 1;
+    overflow: hidden;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .ctile__state {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .ctile__state::before {
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #5a5c58;
+  }
+
+  .ctile.is-live .ctile__state::before {
+    background: #39ff14;
+    animation: ctile-pulse 1.6s steps(2, jump-none) infinite;
+  }
+
+  @keyframes ctile-pulse {
+    50% {
+      opacity: 0.35;
+    }
+  }
+
+  .ctile__screen {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 1440 / 900;
+    background: #1c1e1b;
+    container-type: inline-size;
+  }
+
+  .ctile--phone .ctile__screen {
+    aspect-ratio: 390 / 844;
+    border-radius: 28px;
+  }
+
+  .ctile__poster {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+  }
+
+  .ctile__mount {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.6s var(--ease-out);
+  }
+
+  .ctile.is-live .ctile__mount {
+    opacity: 1;
+  }
+
+  .ctile__mount :global(iframe) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: 0;
+    transform-origin: 0 0;
+    background: transparent;
+  }
+
+  .ctile__hit {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    cursor: pointer;
+  }
+
+  .ctile__body {
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .ctile--phone .ctile__body {
+    width: min(100%, 300px);
+    margin-inline: auto;
+  }
+
+  .ctile__note {
+    font: 400 0.6875rem var(--font-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted-on-ink);
+  }
+
+  .ctile__name {
+    font: 800 clamp(1.35rem, calc(var(--u) * 0.32), 1.9rem) / 1.05 var(--font-display);
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+
+  .ctile__role {
+    font-weight: 700;
+  }
+
+  .ctile__shows {
+    max-width: 40ch;
+    color: var(--muted-on-ink);
+    line-height: 1.45;
+  }
+
+  .ctile__link {
+    justify-self: start;
+    margin-top: 0.35rem;
+    padding: 0.55rem 1rem;
+    border: 1px solid var(--paper);
+    border-radius: 999px;
+    color: var(--paper);
+    font: 500 0.75rem var(--font-mono);
+    letter-spacing: 0.14em;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition:
+      background-color 0.2s,
+      color 0.2s;
+  }
+
+  .ctile__link:hover,
+  .ctile:has(.ctile__hit:hover) .ctile__link {
+    background: var(--paper);
+    color: var(--ink);
+  }
+
+  .ctile__link:focus-visible {
+    outline: 2px solid var(--paper);
+    outline-offset: 3px;
+  }
+
+  .cwall__next {
+    display: grid;
+    gap: 0.9rem;
+    padding: clamp(1.5rem, calc(var(--u) * 0.45), 2.5rem);
+    border: 1px dashed var(--muted-on-ink);
+    border-radius: 10px;
+    color: var(--paper);
+    text-decoration: none;
+    transition:
+      border-color 0.2s,
+      background-color 0.2s;
+  }
+
+  .cwall__next:hover {
+    border-style: solid;
+    border-color: var(--paper);
+    background: #141613;
+  }
+
+  .cwall__next:focus-visible {
+    outline: 2px solid var(--paper);
+    outline-offset: 3px;
+  }
+
+  .cwall__next-label {
+    font: 400 0.6875rem var(--font-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted-on-ink);
+  }
+
+  .cwall__next-title {
+    font: 800 clamp(2rem, calc(var(--u) * 0.6), 3.4rem) / 0.95 var(--font-display);
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+  }
+
+  .cwall__next-text {
+    max-width: 34ch;
+    color: var(--muted-on-ink);
+    line-height: 1.45;
+  }
+
+  .cwall__next-btn {
+    justify-self: start;
+    padding: 0.7rem 1.1rem;
+    border-radius: 999px;
+    background: var(--btn);
+    font: 500 0.75rem var(--font-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  @media (min-width: 48rem) {
+    .cwall__cols {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      align-items: start;
+      gap: var(--tile-gap);
+    }
+
+    .cwall__col {
+      display: flex;
+      flex-direction: column;
+      gap: calc(var(--tile-gap) * 2.2);
+      will-change: translate;
+    }
+
+    /* Stagger the columns so the wall reads as a sprawl, not a table. */
+    .cwall__col[data-cwall-col='1'] {
+      padding-top: calc(var(--u) * 1.4);
+    }
+
+    .cwall__col[data-cwall-col='2'] {
+      padding-top: calc(var(--u) * 0.6);
+    }
+  }
+</style>

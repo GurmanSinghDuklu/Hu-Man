@@ -1,0 +1,662 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dan Okafor, construction site manager (concept portfolio)</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="description" content="Concept portfolio for Dan Okafor, a fictional construction site manager in Bradford.">
+<style>
+@font-face{font-family:'Big Shoulders Display';font-style:normal;font-weight:600;font-display:swap;src:url(../fonts/big-shoulders-display-latin-600-normal.woff2) format('woff2')}
+@font-face{font-family:'Big Shoulders Display';font-style:normal;font-weight:800;font-display:swap;src:url(../fonts/big-shoulders-display-latin-800-normal.woff2) format('woff2')}
+@font-face{font-family:'Big Shoulders Display';font-style:normal;font-weight:900;font-display:swap;src:url(../fonts/big-shoulders-display-latin-900-normal.woff2) format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:400;font-display:swap;src:url(../fonts/ibm-plex-mono-latin-400-normal.woff2) format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:500;font-display:swap;src:url(../fonts/ibm-plex-mono-latin-500-normal.woff2) format('woff2')}
+@font-face{font-family:'IBM Plex Sans';font-style:normal;font-weight:400;font-display:swap;src:url(../fonts/ibm-plex-sans-latin-400-normal.woff2) format('woff2')}
+@font-face{font-family:'IBM Plex Sans';font-style:normal;font-weight:500;font-display:swap;src:url(../fonts/ibm-plex-sans-latin-500-normal.woff2) format('woff2')}
+</style>
+<style>
+:root{
+  --navy:#07111F; --navy2:#0B1B33; --blue:#12294A; --orange:#FF6A13; --steel:#CFD6DE; --white:#F3F6FA; --mute:#A9B8CB;
+  --padL:max(18px, env(safe-area-inset-left, 0px));
+  --padR:max(18px, env(safe-area-inset-right, 0px));
+  --disp:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --sans:"IBM Plex Sans","Helvetica Neue",Arial,sans-serif;
+  /* hero scene colours, switched by JS */
+  --h-bg:#07111F; --h-fg:#FF6A13; --h-ink:#F3F6FA;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{background:#07111F;scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:#07111F;color:#F3F6FA;font-family:var(--sans);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+h1,h2,h3,p,ul,ol,dl,dd,dt,figure{margin:0;padding:0}
+ul,ol{list-style:none}
+a{color:inherit}
+:focus-visible{outline:3px solid #FFB020;outline-offset:4px}
+.on-light :focus-visible,.b-orange :focus-visible,.b-steel :focus-visible{outline-color:#07111F}
+.page{overflow-x:clip;position:relative}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:12px;top:-60px;z-index:100;background:#FF6A13;color:#07111F;padding:10px 14px;font-family:var(--mono);font-weight:500;text-decoration:none}
+.skip:focus{top:12px}
+
+/* ---------- hero ---------- */
+.hero{position:relative;height:100vh;height:100svh;min-height:560px;background:var(--h-bg);color:var(--h-ink);overflow:hidden;isolation:isolate;transition:background-color .5s}
+.hero canvas{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:-1}
+.hero__in{height:100%;display:flex;flex-direction:column;padding:0 var(--padR) 0 var(--padL)}
+.top{display:flex;justify-content:space-between;align-items:flex-start;padding-top:clamp(14px,2.4vh,26px)}
+.brand{display:inline-flex;align-items:center;gap:12px;text-decoration:none;font-family:var(--mono);font-size:12px;line-height:1.35;letter-spacing:.08em;text-transform:uppercase;font-weight:500}
+.brand svg{width:46px;height:46px;flex:none}
+.brand .m-bg{fill:var(--h-fg)} .brand .m-fg{fill:var(--h-bg)} .brand .m-ln{stroke:var(--h-bg)}
+.rot{width:clamp(96px,11vw,156px);aspect-ratio:1;flex:none;margin-right:-4px}
+.rot svg{width:100%;height:100%;display:block;overflow:visible}
+.rot .disc{fill:var(--h-bg);stroke:var(--h-fg);stroke-width:1.5}
+.rot text{fill:var(--h-fg);font-family:var(--mono);font-weight:500;font-size:9.4px;letter-spacing:.02em}
+.rot .spin{transform-origin:60px 60px;animation:spin 24s linear infinite}
+.rot .ico{stroke:var(--h-fg);fill:none;stroke-width:2;stroke-linecap:square}
+@keyframes spin{to{transform:rotate(360deg)}}
+.mid{margin-top:auto;padding-bottom:clamp(8px,2vh,22px)}
+.kick{font-family:var(--mono);font-size:clamp(11px,1.05vw,14px);letter-spacing:.14em;text-transform:uppercase;font-weight:500;margin-bottom:clamp(4px,1vh,12px);color:var(--h-fg);transition:color .5s}
+.word{font-family:var(--disp);font-weight:900;text-transform:uppercase;line-height:.8;letter-spacing:-.005em;font-size:min(18.4vw,27vh);white-space:nowrap;transform:translate3d(var(--wx,0px),var(--wy,0px),0);color:var(--h-ink);transition:color .5s}
+.word span{display:inline-block}
+.word .sp{width:.18em}
+.marq{margin:0 calc(var(--padL) * -1) 0 calc(var(--padR) * -1);background:var(--h-fg);color:var(--h-bg);overflow:hidden;white-space:nowrap;border-block:2px solid var(--h-bg);transition:background-color .5s,color .5s;position:relative;z-index:1}
+.marq .track{display:inline-flex;animation:marq 38s linear infinite;will-change:transform}
+.marq span{font-family:var(--mono);font-weight:500;font-size:clamp(12px,1.1vw,15px);letter-spacing:.16em;padding:9px 0;flex:none}
+@keyframes marq{to{transform:translateX(-50%)}}
+.nav{display:flex;flex-direction:column;align-items:flex-start;padding:clamp(8px,1.8vh,20px) 0 clamp(10px,2.4vh,26px);line-height:.82;gap:0}
+.nav a{font-family:var(--disp);font-weight:900;text-transform:uppercase;text-decoration:none;font-size:min(21vw,12.2vh);color:transparent;-webkit-text-stroke:2px var(--h-ink);letter-spacing:.005em;padding:.03em .05em;transition:color .25s,-webkit-text-stroke-color .5s;display:block}
+.nav a.on,.nav a:focus-visible{color:var(--h-ink)}
+.nav a:focus-visible{outline-offset:2px}
+@media (min-width:820px){
+  .nav{flex-direction:row;align-items:baseline;justify-content:space-between;gap:1.2vw}
+  .nav a{font-size:min(9.2vw,17vh);-webkit-text-stroke-width:2.5px}
+}
+.hint{display:none}
+
+/* ---------- shared ---------- */
+.wrap{padding-left:var(--padL);padding-right:var(--padR)}
+.eyebrow{font-family:var(--mono);font-size:13px;letter-spacing:.14em;text-transform:uppercase;font-weight:500}
+.h2{font-family:var(--disp);font-weight:900;text-transform:uppercase;line-height:.84;letter-spacing:-.003em}
+
+/* ---------- projects ---------- */
+.projects{background:var(--navy);padding-top:clamp(56px,9vw,120px)}
+.p-head{display:grid;gap:18px;padding-bottom:clamp(28px,4vw,52px);grid-template-columns:minmax(0,1fr)}
+.p-head .h2{font-size:clamp(3.4rem,11vw,10rem)}
+.p-head p{max-width:46ch;color:var(--mute)}
+.p-head .eyebrow{color:var(--orange)}
+@media (min-width:900px){.p-head{grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);align-items:end}}
+.bands{display:block}
+.band{position:relative;display:block;min-height:clamp(230px,36vh,360px);overflow:hidden;isolation:isolate;border-top:2px solid var(--navy)}
+.band .art{position:absolute;inset:0;z-index:-1;clip-path:inset(0 0 0 0);transition:transform 1s cubic-bezier(.2,.7,.1,1)}
+.band .art svg{width:100%;height:100%;display:block;transform:translate3d(var(--ax,0px),0,0);transition:transform .7s cubic-bezier(.2,.7,.1,1)}
+.band.hot .art svg{transform:translate3d(calc(var(--ax,0px) - 26px),0,0) scale(1.04)}
+.band__in{height:100%;min-height:inherit;display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-rows:auto 1fr auto;column-gap:clamp(12px,2vw,28px);padding:clamp(14px,2vw,24px) var(--padR) clamp(14px,2vw,24px) var(--padL)}
+.band .no{font-family:var(--mono);font-size:13px;font-weight:500;letter-spacing:.12em;grid-column:1;grid-row:1;padding-top:.4em}
+.band .tag{grid-column:2;grid-row:1;justify-self:end;font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;border:1.5px solid currentColor;padding:3px 9px}
+.band h3{grid-column:1 / -1;grid-row:2;align-self:end;font-family:var(--disp);font-weight:900;text-transform:uppercase;line-height:.82;font-size:clamp(2.9rem,9.4vw,9.6rem);letter-spacing:-.004em;margin:clamp(14px,2vw,26px) 0 .08em;transition:transform .5s cubic-bezier(.2,.7,.1,1)}
+.band.hot h3{transform:translateX(1.2vw)}
+.band .scope{grid-column:1 / -1;grid-row:3;font-family:var(--mono);font-size:clamp(12px,1.15vw,15px);font-weight:500;letter-spacing:.06em}
+.b-navy{background:var(--navy2);color:var(--white);--art:#FF6A13}
+.b-orange{background:var(--orange);color:var(--navy);--art:#07111F}
+.b-steel{background:var(--steel);color:var(--navy);--art:#07111F}
+.b-blue{background:var(--blue);color:var(--white);--art:#FF8A3D}
+.b-ink{background:#030a14;color:var(--white);--art:#FF6A13}
+.band .art svg *{vector-effect:non-scaling-stroke}
+/* wipe reveal (only when JS runs and motion is allowed) */
+.js-motion .band .art{clip-path:inset(0 100% 0 0)}
+.js-motion .band.in .art{clip-path:inset(0 0 0 0);transition:clip-path 1.15s cubic-bezier(.7,0,.15,1)}
+.js-motion .band .band__in{opacity:0;transform:translateX(-28px);transition:opacity .6s .35s,transform .9s .35s cubic-bezier(.2,.7,.1,1)}
+.js-motion .band.in .band__in{opacity:1;transform:none}
+.p-note{font-family:var(--mono);font-size:12px;color:var(--mute);padding:18px var(--padR) 0 var(--padL);letter-spacing:.04em}
+
+/* ---------- about ---------- */
+.about{background:var(--steel);color:var(--navy);position:relative;isolation:isolate;margin-top:clamp(48px,6vw,90px);padding-block:clamp(56px,9vw,120px)}
+.about::before{content:"";position:absolute;inset:0;z-index:-1;opacity:.5;mix-blend-mode:multiply;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3 0 0 0 0 .35 0 0 0 0 .42 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23n)'/%3E%3C/svg%3E")}
+.about .eyebrow{color:var(--navy)}
+.a-grid{display:grid;gap:clamp(32px,5vw,72px);grid-template-columns:minmax(0,1fr)}
+.about .h2{font-size:clamp(3.2rem,9.4vw,9rem);margin-top:14px}
+.about .h2 em{font-style:normal;background:var(--navy);color:var(--orange);padding:0 .12em;display:inline-block}
+.a-copy p{font-size:clamp(17px,1.5vw,20px);max-width:56ch}
+.a-copy p+p{margin-top:1em}
+.tick{display:grid;gap:0;margin-top:clamp(24px,3vw,40px);border-top:2px solid var(--navy)}
+.tick li{display:grid;grid-template-columns:5.2em minmax(0,1fr);gap:14px;padding:13px 0;border-bottom:1.5px solid rgba(7,17,31,.55);align-items:baseline}
+.tick b{font-family:var(--mono);font-weight:500;font-size:13px;letter-spacing:.06em}
+.tick span{font-family:var(--disp);font-weight:800;text-transform:uppercase;font-size:clamp(1.5rem,2.4vw,2.2rem);line-height:.95;letter-spacing:.005em}
+.tick small{display:block;font-family:var(--sans);font-weight:400;font-size:15px;text-transform:none;letter-spacing:0;line-height:1.4;margin-top:4px}
+.skills{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));margin-top:clamp(40px,6vw,80px)}
+.skill{border:2px solid var(--navy);padding:18px 18px 20px;background:rgba(243,246,250,.35)}
+.skill h3{font-family:var(--disp);font-weight:900;text-transform:uppercase;font-size:2.1rem;line-height:.9;display:flex;align-items:center;gap:10px}
+.skill h3 svg{width:30px;height:30px;flex:none}
+.skill p{margin-top:10px;font-size:15.5px;line-height:1.5}
+.tickets{margin-top:clamp(24px,3vw,40px);display:flex;flex-wrap:wrap;gap:8px}
+.tickets li{font-family:var(--mono);font-weight:500;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;background:var(--navy);color:var(--white);padding:7px 11px}
+@media (min-width:900px){.a-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:start}}
+
+/* ---------- contact ---------- */
+.contact{background:var(--navy);padding-block:clamp(60px,9vw,130px) 84px;position:relative;overflow:hidden;isolation:isolate}
+.contact .eyebrow{color:var(--orange)}
+.c-big{display:block;font-family:var(--disp);font-weight:900;text-transform:uppercase;line-height:.82;font-size:clamp(3.6rem,13.4vw,13rem);margin:16px 0 0;color:transparent;-webkit-text-stroke:2px var(--white);text-decoration:none;overflow-wrap:anywhere;transition:color .25s}
+.c-big.on,.c-big:focus-visible{color:var(--orange);-webkit-text-stroke-color:var(--orange)}
+.c-row{display:grid;gap:30px;margin-top:clamp(36px,5vw,64px);grid-template-columns:minmax(0,1fr)}
+.c-row h3{font-family:var(--mono);font-weight:500;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--orange);margin-bottom:8px}
+.c-row p,.c-row li{color:var(--white);max-width:44ch}
+.c-row li{padding:7px 0;border-bottom:1px solid rgba(169,184,203,.35)}
+.c-mail{font-family:var(--disp);font-weight:800;font-size:clamp(1.6rem,3vw,2.6rem);line-height:1;text-transform:none;text-decoration:underline;text-decoration-thickness:3px;text-underline-offset:6px;text-decoration-color:var(--orange)}
+@media (min-width:860px){.c-row{grid-template-columns:repeat(3,minmax(0,1fr));gap:40px}}
+.foot{margin-top:clamp(50px,7vw,100px);display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 24px;font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--mute);border-top:1px solid rgba(169,184,203,.35);padding-top:16px}
+.foot a{color:var(--white)}
+.cgrid{position:absolute;inset:0;z-index:-1;opacity:.5;pointer-events:none}
+
+/* ---------- reduced motion ---------- */
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .rot .spin,.marq .track{animation:none}
+  .marq{white-space:normal;text-align:center}
+  .marq .track{display:block;transform:none}
+  .marq .track span:nth-child(n+2){display:none}
+  .marq span{display:block;white-space:normal;line-height:1.5;padding:9px var(--padL)}
+  .band .art,.band__in,.band h3,.band .art svg{transition:none!important}
+}
+
+/* ---------- responsive ---------- */
+@media (max-width:819px){
+  .word{font-size:min(29vw,19vh);line-height:.8;white-space:normal}
+  .word span{display:block}
+  .word .sp{display:none}
+  .nav a{-webkit-text-stroke-width:2px}
+  .band{min-height:clamp(210px,32vh,300px)}
+}
+@media (max-height:640px) and (min-width:820px){.rot{width:84px}}
+
+/* HU/MAN concept badge */
+.badge{position:fixed;z-index:90;left:max(12px, env(safe-area-inset-left, 0px));bottom:max(12px, env(safe-area-inset-bottom, 0px));display:inline-flex;align-items:center;gap:8px;background:#F3F6FA;color:#07111F;padding:8px 14px 8px 11px;font-family:var(--mono);font-size:12px;font-weight:500;line-height:1.2;box-shadow:0 0 0 2px #07111F;max-width:calc(100vw - 24px)}
+/* HU/MAN concept badge */
+.badge{display:flex;flex-wrap:wrap;align-items:center;gap:2px 12px;pointer-events:auto;border-radius:18px;line-height:1.3}
+.badge a{color:inherit;font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.badge a:focus-visible{outline:2px solid currentColor;outline-offset:3px;border-radius:3px}
+@media (max-width:640px){.badge{position:static;margin:24px max(16px,env(safe-area-inset-left,0px)) max(16px,env(safe-area-inset-bottom,0px));max-width:none;justify-content:center;text-align:center;border-radius:14px}.foot{padding-bottom:6px}}
+</style>
+</head>
+<body>
+<a class="skip" href="#projects">Skip to projects</a>
+<div class="page" id="top">
+
+<header class="hero" id="hero" data-scene="0">
+  <canvas id="scene" aria-hidden="true"></canvas>
+  <div class="hero__in">
+    <div class="top">
+      <a class="brand" href="#top" aria-label="Dan Okafor, back to top">
+        <svg viewBox="0 0 46 46" aria-hidden="true" focusable="false">
+          <rect class="m-bg" width="46" height="46"/>
+          <g class="m-fg"><rect x="8" y="30" width="14" height="8"/><rect x="24" y="30" width="14" height="8"/><rect x="14" y="21" width="14" height="8"/><rect x="30" y="21" width="8" height="8"/><rect x="8" y="21" width="5" height="8"/></g>
+          <path class="m-ln" d="M10 12H37M31 12V18M14 8L14 12" fill="none" stroke-width="2.4"/>
+          <path class="m-ln" d="M10 12L24 6L37 12" fill="none" stroke-width="1.6"/>
+        </svg>
+        <span>Dan Okafor<br>Site manager</span>
+      </a>
+      <div class="rot" role="img" aria-label="Available from spring 2027, site manager">
+        <svg viewBox="0 0 120 120" aria-hidden="true">
+          <circle class="disc" cx="60" cy="60" r="58"/>
+          <defs><path id="circ" d="M60 60m-43 0a43 43 0 1 1 86 0a43 43 0 1 1 -86 0"/></defs>
+          <g class="spin"><text><textPath href="#circ" textLength="266" lengthAdjust="spacing">AVAILABLE FROM SPRING 2027 • SITE MANAGER •</textPath></text></g>
+          <g class="ico"><path d="M44 80V44M44 44L82 52M44 44L32 40M70 50V62"/><path d="M66 62h8v7h-8z"/></g>
+        </svg>
+      </div>
+    </div>
+
+    <div class="mid">
+      <p class="kick">Construction site manager · Bradford</p>
+      <h1 class="word" id="name"><span>Dan</span><span class="sp"></span><span>Okafor</span></h1>
+    </div>
+
+    <div class="marq" role="region" aria-label="Skills: site management, SMSTS, health and safety, programme, subcontractors, cost control">
+      <div class="track" aria-hidden="true">
+        <span>SITE MANAGEMENT • SMSTS • HEALTH AND SAFETY • PROGRAMME • SUBCONTRACTORS • COST CONTROL •&nbsp;&nbsp;SITE MANAGEMENT • SMSTS • HEALTH AND SAFETY • PROGRAMME • SUBCONTRACTORS • COST CONTROL •&nbsp;&nbsp;</span>
+        <span>SITE MANAGEMENT • SMSTS • HEALTH AND SAFETY • PROGRAMME • SUBCONTRACTORS • COST CONTROL •&nbsp;&nbsp;SITE MANAGEMENT • SMSTS • HEALTH AND SAFETY • PROGRAMME • SUBCONTRACTORS • COST CONTROL •&nbsp;&nbsp;</span>
+      </div>
+    </div>
+
+    <nav class="nav" aria-label="Sections">
+      <a href="#projects" data-scene="1">Projects</a>
+      <a href="#about" data-scene="2">About</a>
+      <a href="#contact" data-scene="3">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="projects" id="projects" aria-labelledby="p-h">
+  <div class="wrap p-head">
+    <div><p class="eyebrow">01 / Projects</p><h2 class="h2" id="p-h" style="margin-top:14px">Built, handed over, signed off</h2></div>
+    <p>Five sample jobs from twelve years on site: schools, housing and retail fit-outs. Each one is a different mix of programme pressure, trades on the same floor and cost kept honest week by week.</p>
+  </div>
+  <div class="bands" id="bands">
+    <article class="band b-navy" data-art="0">
+      <div class="art" aria-hidden="true"></div>
+      <div class="band__in"><span class="no">01</span><span class="tag">Education</span><h3>Riverside primary extension</h3><p class="scope">£4.2m · 46 weeks · 30 trades</p></div>
+    </article>
+    <article class="band b-orange" data-art="1">
+      <div class="art" aria-hidden="true"></div>
+      <div class="band__in"><span class="no">02</span><span class="tag">Housing</span><h3>Canal Wharf 48 homes</h3><p class="scope">£9.8m · 78 weeks · 55 trades</p></div>
+    </article>
+    <article class="band b-steel" data-art="2">
+      <div class="art" aria-hidden="true"></div>
+      <div class="band__in"><span class="no">03</span><span class="tag">Retail fit-out</span><h3>Marlowe Court unit 4</h3><p class="scope">£1.6m · 14 weeks · 18 trades</p></div>
+    </article>
+    <article class="band b-blue" data-art="3">
+      <div class="art" aria-hidden="true"></div>
+      <div class="band__in"><span class="no">04</span><span class="tag">Education</span><h3>Northfield school hall</h3><p class="scope">£2.9m · 38 weeks · 24 trades</p></div>
+    </article>
+    <article class="band b-ink" data-art="4">
+      <div class="art" aria-hidden="true"></div>
+      <div class="band__in"><span class="no">05</span><span class="tag">Retail fit-out</span><h3>Kirkgate arcade refit</h3><p class="scope">£1.1m · 12 weeks · 14 trades</p></div>
+    </article>
+  </div>
+  <p class="p-note">Sample projects and sample scope, written for this concept. No real clients.</p>
+</section>
+
+<section class="about on-light" id="about" aria-labelledby="a-h">
+  <div class="wrap">
+    <div class="a-grid">
+      <div>
+        <p class="eyebrow">02 / About</p>
+        <h2 class="h2" id="a-h">From <em>labourer</em> to site manager</h2>
+        <ul class="tickets" aria-label="Tickets and training">
+          <li>SMSTS</li><li>CSCS card</li><li>First aid at work</li><li>Temporary works awareness</li>
+        </ul>
+      </div>
+      <div class="a-copy">
+        <p>I started on housing sites carrying and mixing, and learned the job from the ground up. Twelve years on, I run the site: who is on which floor this week, what has to be signed off before the next trade starts, and what the numbers say before they become a surprise.</p>
+        <p>I like jobs where the programme is tight and the site is busy. A clear look-ahead, a proper daily briefing and subcontractors who know what is expected of them do more for a project than heroics in week thirty.</p>
+        <ol class="tick" aria-label="Career so far">
+          <li><b>2014</b><span>Labourer<small>Housing sites. Learned materials, setting out and how a site really runs.</small></span></li>
+          <li><b>2017</b><span>Chargehand<small>First crews of my own. First time owning a daily plan.</small></span></li>
+          <li><b>2020</b><span>Assistant site manager<small>Schools and extensions, working alongside the site manager on programme and permits.</small></span></li>
+          <li><b>2022</b><span>Site manager<small>Housing and retail fit-outs from start on site to handover.</small></span></li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="skills">
+      <div class="skill"><h3><svg viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M3 24H27M6 24V9H24V24M6 16.5H24M15 9V24"/></svg>Programme</h3><p>Weekly look-ahead plans, a three-week lookahead for each trade, and one honest list of what is holding the critical path.</p></div>
+      <div class="skill"><h3><svg viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M15 3L27 25H3Z M15 11V18 M15 21.5V22"/></svg>Health and safety</h3><p>Briefings, permits and inspections done every day, not just before an audit. Near misses recorded and talked about.</p></div>
+      <div class="skill"><h3><svg viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><circle cx="10" cy="10" r="5"/><circle cx="21" cy="21" r="5"/><path d="M4 26L26 4"/></svg>Subcontractors</h3><p>Clear scopes, early conversations about access and sequence, and a fair view of what each trade needs to finish properly.</p></div>
+      <div class="skill"><h3><svg viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M4 26V14H11V26M12 26V6H19V26M20 26V18H27V26"/></svg>Cost control</h3><p>Measured progress against the budget each week, variations logged as they happen and cash flow kept in view.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact" aria-labelledby="c-h">
+  <canvas class="cgrid" id="cgrid" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <p class="eyebrow">03 / Contact</p>
+    <h2 class="sr" id="c-h">Contact Dan</h2>
+    <a class="c-big" id="cbig" href="mailto:dan@danokafor.example?subject=Site%20manager%20role">Talk to Dan</a>
+    <div class="c-row">
+      <div><h3>Email</h3><a class="c-mail" href="mailto:dan@danokafor.example">dan@danokafor.example</a></div>
+      <div><h3>Based</h3><p>Bradford, West Yorkshire. Happy to travel across the north of England for the right job.</p></div>
+      <div><h3>Useful to include</h3><ul><li>Type of work and rough value</li><li>Start date and programme length</li><li>Where the site is</li></ul></div>
+    </div>
+    <div class="foot"><span>Dan Okafor · Available from spring 2027</span><span>Fictional person for a concept site</span></div>
+  </div>
+</section>
+</main>
+</div>
+
+<div class="badge" role="note"><a href="../../portfolio/">&larr; Back to HU/MAN</a><span>Concept site by HU/MAN</span></div>
+
+<script>
+(function(){
+'use strict';
+var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+var doc = document, root = doc.documentElement;
+if(!reduce) root.classList.add('js-motion');
+function $(s,c){return (c||doc).querySelector(s)}
+function $$(s,c){return Array.prototype.slice.call((c||doc).querySelectorAll(s))}
+function clamp(v,a,b){return Math.max(a,Math.min(b,v))}
+function hex(h){h=h.replace('#','');return [parseInt(h.substr(0,2),16),parseInt(h.substr(2,2),16),parseInt(h.substr(4,2),16)]}
+
+/* ---------------- scenes ---------------- */
+var SCENES = [
+  {bg:'#07111F', fg:'#FF6A13', ink:'#F3F6FA', blocks:.55, scaf:.35, crane:1,  a:1},   /* default: navy and hi-vis orange */
+  {bg:'#FF6A13', fg:'#07111F', ink:'#07111F', blocks:1,   scaf:.2,  crane:.5, a:.55}, /* projects: inverted, stacked blocks */
+  {bg:'#0E2A52', fg:'#F0EE3A', ink:'#F3F6FA', blocks:.2,  scaf:1,   crane:.4, a:.9},  /* about: scaffold in hi-vis yellow */
+  {bg:'#04080F', fg:'#7FDCFF', ink:'#F3F6FA', blocks:.15, scaf:.25, crane:1.3, a:.9}   /* contact: night crane, cyan */
+];
+SCENES.forEach(function(s){s.bgc=hex(s.bg);s.fgc=hex(s.fg)});
+var hero = $('#hero'), cv = $('#scene'), ctx = cv.getContext('2d');
+var cur = {bg:SCENES[0].bgc.slice(), fg:SCENES[0].fgc.slice(), blocks:.55, scaf:.35, crane:1, a:1};
+var target = SCENES[0], sceneIdx = 0;
+function applyVars(){
+  var s = SCENES[sceneIdx];
+  hero.style.setProperty('--h-bg', s.bg); hero.style.setProperty('--h-fg', s.fg); hero.style.setProperty('--h-ink', s.ink);
+  hero.setAttribute('data-scene', sceneIdx);
+}
+function setScene(i){
+  if(i === sceneIdx) return;
+  sceneIdx = i; target = SCENES[i]; applyVars();
+  if(reduce){snap(); drawFrame(0)} else kick();
+}
+function snap(){cur.bg = target.bgc.slice(); cur.fg = target.fgc.slice(); cur.blocks=target.blocks; cur.scaf=target.scaf; cur.crane=target.crane; cur.a=target.a}
+function ease(){
+  var k = .07, moving = false, i;
+  for(i=0;i<3;i++){cur.bg[i]+=(target.bgc[i]-cur.bg[i])*k; cur.fg[i]+=(target.fgc[i]-cur.fg[i])*k}
+  ['blocks','scaf','crane','a'].forEach(function(n){var d=target[n]-cur[n]; cur[n]+=d*k; if(Math.abs(d)>.002) moving=true});
+  return moving;
+}
+function rgb(c,a){return 'rgba('+(c[0]|0)+','+(c[1]|0)+','+(c[2]|0)+','+a+')'}
+
+/* ---------------- canvas ---------------- */
+var W=0,H=0,dpr=1,S=1;
+function resize(){
+  var r = hero.getBoundingClientRect();
+  dpr = Math.min(window.devicePixelRatio||1, 1.5);
+  W = Math.max(1, r.width); H = Math.max(1, r.height);
+  cv.width = Math.round(W*dpr); cv.height = Math.round(H*dpr);
+  S = clamp(Math.min(H/900, W/1400)*1.1, .5, 1.6);
+  if(W < 820) S = clamp(H/900, .55, 1);
+  if(reduce) drawFrame(0);
+}
+/* concrete noise tile */
+var noise = doc.createElement('canvas'); noise.width = noise.height = 200;
+(function(){
+  var n = noise.getContext('2d'), d = n.createImageData(200,200), i, v;
+  for(i=0;i<d.data.length;i+=4){v = Math.random()*255|0; d.data[i]=d.data[i+1]=d.data[i+2]=v; d.data[i+3]=Math.random()*90|0}
+  n.putImageData(d,0,0);
+})();
+function hash(n){var x=Math.sin(n*127.1+311.7)*43758.5453;return x-Math.floor(x)}
+/* skyline of stacked blocks: stacks of setback boxes, built once */
+function makeStacks(seed,count,minW,maxW){
+  var out=[], x=0, i,j,st,lv,w,h,cx;
+  for(i=0;i<count;i++){
+    w = minW + hash(seed+i*3.1)*(maxW-minW);
+    lv = 2 + (hash(seed+i*7.7)*5|0);
+    st = {x:x,w:w,lv:[]};
+    cx = 0;
+    for(j=0;j<lv;j++){
+      h = 28 + hash(seed+i*13.3+j)*38;
+      var ww = w*(1 - j*.1 - hash(seed+i+j*5)*.12);
+      st.lv.push({w:Math.max(ww,w*.35),h:h,dx:(hash(seed+i*2+j*9)-.5)*w*.18});
+    }
+    out.push(st); x += w + 14 + hash(seed+i*19)*60;
+  }
+  return {list:out, period:x};
+}
+var farS = makeStacks(3,18,70,150), nearS = makeStacks(11,12,110,220);
+
+function drawStacks(set,pan,gy,sc,depthX,alpha,line){
+  var P = set.period*sc, o = -((pan*sc)%P), k, n=Math.ceil(W/P)+2;
+  for(k=-1;k<n;k++){
+    set.list.forEach(function(b){
+      var bx = o + k*P + b.x*sc + depthX, y = gy;
+      if(bx > W+10 || bx + b.w*sc < -10) return;
+      b.lv.forEach(function(l){
+        var lw = l.w*sc, lh = l.h*sc, lx = bx + (b.w*sc-lw)/2 + l.dx*sc;
+        y -= lh;
+        ctx.fillStyle = rgb(cur.fg, alpha*.16); ctx.fillRect(lx,y,lw,lh);
+        ctx.strokeStyle = rgb(cur.fg, alpha*.75); ctx.lineWidth = line; ctx.strokeRect(lx+.5,y+.5,lw,lh);
+        /* floor window rule */
+        ctx.strokeStyle = rgb(cur.fg, alpha*.28);
+        ctx.beginPath(); var step = 18*sc, xx;
+        for(xx=lx+step; xx<lx+lw-4; xx+=step){ctx.moveTo(xx,y+lh*.3);ctx.lineTo(xx,y+lh*.7)}
+        ctx.stroke();
+      });
+    });
+  }
+}
+function drawScaffold(pan,gy,sc,depthX,alpha){
+  var bw = 70*sc, lh = 54*sc, first = Math.floor((pan*sc)/bw)-1, off = -((pan*sc)%bw), i,l, cols = Math.ceil(W/bw)+3;
+  ctx.lineCap = 'square';
+  for(i=0;i<cols;i++){
+    var gi = first + i, h = hash(gi*1.7+5);
+    if(h > .62) continue;
+    var levels = 2 + (hash(gi*3.3)*4|0), x = off + i*bw + depthX - bw;
+    /* two bays wide share braces; poles at each end */
+    ctx.strokeStyle = rgb(cur.fg, alpha*.6); ctx.lineWidth = 2*sc+.4;
+    ctx.beginPath(); ctx.moveTo(x,gy); ctx.lineTo(x,gy-levels*lh); ctx.moveTo(x+bw,gy); ctx.lineTo(x+bw,gy-levels*lh); ctx.stroke();
+    ctx.lineWidth = 1.3; ctx.strokeStyle = rgb(cur.fg, alpha*.45);
+    ctx.beginPath();
+    for(l=0;l<=levels;l++){var yy = gy-l*lh; ctx.moveTo(x,yy); ctx.lineTo(x+bw,yy)}
+    for(l=0;l<levels;l++){
+      if(hash(gi*5+l)<.55){ctx.moveTo(x,gy-l*lh);ctx.lineTo(x+bw,gy-(l+1)*lh)} else {ctx.moveTo(x+bw,gy-l*lh);ctx.lineTo(x,gy-(l+1)*lh)}
+    }
+    ctx.stroke();
+    /* planks */
+    ctx.fillStyle = rgb(cur.fg, alpha*.5);
+    for(l=1;l<=levels;l+=2) ctx.fillRect(x-3, gy-l*lh-3*sc, bw+6, 4*sc);
+  }
+}
+function drawCrane(cx,gy,top,sc,t,phase,alpha,mx){
+  var tw = 30*sc, y, i, x0 = cx - tw/2, x1 = cx + tw/2, n = Math.max(6, Math.round((gy-top)/(40*sc)));
+  ctx.strokeStyle = rgb(cur.fg, alpha); ctx.lineWidth = 2*sc+.6; ctx.lineJoin='miter';
+  /* tower mast */
+  ctx.beginPath(); ctx.moveTo(x0,gy); ctx.lineTo(x0,top); ctx.moveTo(x1,gy); ctx.lineTo(x1,top);
+  for(i=0;i<n;i++){
+    var ya = gy - (gy-top)*i/n, yb = gy - (gy-top)*(i+1)/n;
+    if(i%2){ctx.moveTo(x0,ya);ctx.lineTo(x1,yb)} else {ctx.moveTo(x1,ya);ctx.lineTo(x0,yb)}
+    ctx.moveTo(x0,yb);ctx.lineTo(x1,yb);
+  }
+  ctx.stroke();
+  /* slewing: jib rotates around the mast, foreshortened by cos */
+  var a = t*.21 + phase, ca = Math.cos(a), jibL = Math.min(W*.46,560*sc*1.6), cjL = jibL*.3;
+  var jx = cx + ca*jibL, cx2 = cx - ca*cjL, jy = top + 6*sc, depth = Math.sin(a);
+  var tipY = top - 36*sc, ph = 12*sc;
+  ctx.beginPath();
+  /* jib: two chords and a zigzag */
+  ctx.moveTo(cx2, jy); ctx.lineTo(jx, jy); ctx.moveTo(cx2, jy+ph); ctx.lineTo(jx, jy+ph);
+  var seg = 16, p;
+  for(i=0;i<seg;i++){
+    var xa = cx + ca*jibL*i/seg, xb = cx + ca*jibL*(i+1)/seg;
+    if(i%2){ctx.moveTo(xa,jy);ctx.lineTo(xb,jy+ph)} else {ctx.moveTo(xa,jy+ph);ctx.lineTo(xb,jy)}
+  }
+  /* apex and tie bars */
+  ctx.moveTo(cx,top); ctx.lineTo(cx,tipY); ctx.moveTo(cx,tipY); ctx.lineTo(jx*.88+cx*.12,jy); ctx.moveTo(cx,tipY); ctx.lineTo(cx2,jy);
+  ctx.stroke();
+  /* counterweight */
+  ctx.fillStyle = rgb(cur.fg, alpha*.9);
+  ctx.fillRect(Math.min(cx2,cx)-(cx2<cx?18*sc:0), jy+ph, 18*sc, 24*sc);
+  /* cab */
+  ctx.strokeRect(cx-tw*.4, top+ph+6*sc, tw*.8, 16*sc);
+  /* trolley, cable and load */
+  var tf = .55 + .3*Math.sin(t*.37+phase*2), tx = cx + ca*jibL*tf, drop = (gy-jy)*(.28 + .22*(.5+.5*Math.sin(t*.29+phase)));
+  var sway = Math.sin(t*1.1+phase)*8*sc + (ca*jibL)*.0;
+  ctx.fillRect(tx-6*sc, jy+ph-2, 12*sc, 8*sc);
+  ctx.lineWidth = 1.2;
+  ctx.beginPath(); ctx.moveTo(tx, jy+ph+6*sc); ctx.lineTo(tx+sway, jy+ph+drop); ctx.stroke();
+  var lw = (30 + 22*Math.abs(depth)) * sc;
+  ctx.fillStyle = rgb(cur.fg, alpha*.22); ctx.fillRect(tx+sway-lw/2, jy+ph+drop, lw, 26*sc);
+  ctx.lineWidth = 2*sc; ctx.strokeRect(tx+sway-lw/2, jy+ph+drop, lw, 26*sc);
+  ctx.beginPath(); ctx.moveTo(tx+sway-lw/2, jy+ph+drop); ctx.lineTo(tx+sway, jy+ph+drop-14*sc); ctx.lineTo(tx+sway+lw/2, jy+ph+drop); ctx.stroke();
+}
+
+var mx = 0, my = 0, tmx = 0, tmy = 0, t0 = performance.now(), pan = 0;
+function drawFrame(t){
+  var gy = H*.9, x;
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  ctx.fillStyle = rgb(cur.bg,1); ctx.fillRect(0,0,W,H);
+  /* faint horizon lines */
+  ctx.lineWidth = 1; ctx.strokeStyle = rgb(cur.fg,.07*cur.a);
+  ctx.beginPath(); for(x=0.14;x<1;x+=.14){ctx.moveTo(0,H*x);ctx.lineTo(W,H*x)} ctx.stroke();
+  var A = cur.a;
+  /* far crane, small */
+  drawCrane(W*.3 - mx*18, gy-14*S, H*.34, S*.52, t, 2.1, .38*A*Math.min(1,cur.crane), mx);
+  drawStacks(farS, pan*.35, gy-14*S, S*.62, -mx*22, A*cur.blocks*.9+A*.12, 1);
+  drawScaffold(pan*.55, gy-4*S, S*.8, -mx*34, A*cur.scaf*.8);
+  drawStacks(nearS, pan*.8, gy+2, S*1.05, -mx*58, A*cur.blocks, 1.5);
+  drawScaffold(pan, gy, S*1.25, -mx*72, A*cur.scaf);
+  /* main crane */
+  var mainA = Math.min(1, cur.crane)*.95*A;
+  drawCrane(W*.74 - mx*46, gy, H*.13 - my*10, S*1.3, t, 0, mainA, mx);
+  /* ground */
+  ctx.fillStyle = rgb(cur.fg,.14*A); ctx.fillRect(0,gy,W,H-gy);
+  ctx.strokeStyle = rgb(cur.fg,.9*A); ctx.lineWidth = 2.5; ctx.beginPath(); ctx.moveTo(0,gy); ctx.lineTo(W,gy); ctx.stroke();
+  ctx.lineWidth = 1; ctx.strokeStyle = rgb(cur.fg,.25*A); ctx.beginPath();
+  var hs = 22*S, hoff = -((pan*1.2)%hs);
+  for(x=hoff-H;x<W+H;x+=hs){ctx.moveTo(x,gy);ctx.lineTo(x-(H-gy),H)}
+  ctx.stroke();
+  /* concrete grain (static noise pattern jittered) */
+  ctx.save();
+  ctx.globalAlpha = .13; ctx.globalCompositeOperation = 'overlay';
+  var jx2 = (t*7|0)%200, jy2 = (t*13|0)%200;
+  ctx.translate(-jx2,-jy2);
+  ctx.fillStyle = ctx.createPattern(noise,'repeat'); ctx.fillRect(0,0,W+200,H+200);
+  ctx.restore();
+  /* vignette keeps the headline readable */
+  var g = ctx.createRadialGradient(W*.4,H*.5,H*.2,W*.5,H*.5,Math.max(W,H)*.75);
+  g.addColorStop(0,'rgba(0,0,0,0)'); g.addColorStop(1,'rgba(0,0,0,.28)');
+  ctx.fillStyle = g; ctx.fillRect(0,0,W,H);
+}
+
+var running = false, visible = true, raf = 0, last = performance.now();
+function frame(now){
+  raf = 0;
+  if(!visible || doc.hidden){running=false;return}
+  var dt = Math.min(.05,(now-last)/1000); last = now;
+  var t = (now-t0)/1000;
+  pan += dt*26;
+  mx += (tmx-mx)*.06; my += (tmy-my)*.06;
+  ease();
+  drawFrame(t);
+  raf = requestAnimationFrame(frame);
+}
+function kick(){ if(reduce) return; if(!raf && visible){last = performance.now(); running=true; raf = requestAnimationFrame(frame)} }
+
+addEventListener('resize', function(){resize(); if(!reduce) kick()});
+resize();
+if(reduce){snap(); drawFrame(0)} else { kick(); }
+
+if('IntersectionObserver' in window){
+  new IntersectionObserver(function(es){
+    visible = es[0].isIntersecting;
+    if(visible) kick();
+  },{threshold:0}).observe(hero);
+}
+doc.addEventListener('visibilitychange', function(){ if(!doc.hidden) kick() });
+
+/* cursor: parallax of the scene and a nudge of the wordmark */
+var word = $('#name');
+function onMove(e){
+  tmx = clamp(e.clientX/innerWidth*2-1,-1,1); tmy = clamp(e.clientY/innerHeight*2-1,-1,1);
+  if(!reduce) word.style.setProperty('--wx', (tmx*-10).toFixed(1)+'px'), word.style.setProperty('--wy', (tmy*-6).toFixed(1)+'px');
+}
+addEventListener('pointermove', onMove, {passive:true});
+addEventListener('mousemove', onMove, {passive:true});
+
+/* nav words: fill + scene swap, driven from mouseover so it also works with synthetic events */
+var navLinks = $$('.nav a');
+function navFrom(el){return el && el.closest ? el.closest('.nav a') : null}
+doc.addEventListener('mouseover', function(e){
+  var a = navFrom(e.target);
+  navLinks.forEach(function(l){l.classList.toggle('on', l === a)});
+  setScene(a ? +a.getAttribute('data-scene') : 0);
+  var cb = e.target.closest ? e.target.closest('#cbig') : null;
+  $('#cbig').classList.toggle('on', !!cb);
+  /* project bands */
+  var b = e.target.closest ? e.target.closest('.band') : null;
+  bandEls.forEach(function(x){x.classList.toggle('hot', x === b)});
+});
+doc.addEventListener('mouseout', function(e){
+  if(!e.relatedTarget){
+    navLinks.forEach(function(l){l.classList.remove('on')}); setScene(0);
+    $('#cbig').classList.remove('on'); bandEls.forEach(function(x){x.classList.remove('hot')});
+  }
+});
+navLinks.forEach(function(a){
+  a.addEventListener('focus', function(){a.classList.add('on'); setScene(+a.getAttribute('data-scene'))});
+  a.addEventListener('blur', function(){a.classList.remove('on'); setScene(0)});
+});
+
+/* ---------------- project art (SVG, generated) ---------------- */
+var bandEls = $$('.band');
+function line(x1,y1,x2,y2,w,o){return '<path d="M'+x1+' '+y1+'L'+x2+' '+y2+'" stroke="var(--art)" stroke-width="'+(w||1.5)+'" opacity="'+(o||.5)+'" fill="none"/>'}
+function rect(x,y,w,h,f,s,o){return '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" fill="'+(f?'var(--art)':'none')+'" fill-opacity="'+(f||0)+'" stroke="'+(s?'var(--art)':'none')+'" stroke-width="1.6" opacity="'+(o||1)+'"/>'}
+function art(type){
+  var s='', i, j, W=1400, H=380;
+  if(type===0){ /* stepped extension on a hatched ground */
+    for(i=-10;i<44;i++) s += line(i*40,H,i*40+240,0,1.2,.3);
+    var bl=[[760,250,300,130],[860,150,200,100],[960,70,160,80],[1060,260,260,120],[500,300,240,80]];
+    bl.forEach(function(b){s += rect(b[0],b[1],b[2],b[3],.2,1,.9)});
+    for(i=0;i<8;i++) s += rect(790+i*34,270,22,34,.35,0);
+    s += line(0,330,1400,330,3,.8);
+  } else if(type===1){ /* 48 homes: 12 x 4 */
+    for(j=0;j<4;j++) for(i=0;i<12;i++){
+      var x=380+i*86, y=26+j*86, on=hash(i*3+j*11)>.4;
+      s += '<path d="M'+x+' '+(y+56)+'V'+(y+22)+'L'+(x+28)+' '+y+'L'+(x+56)+' '+(y+22)+'V'+(y+56)+'Z" fill="var(--art)" fill-opacity="'+(on?.5:.08)+'" stroke="var(--art)" stroke-width="1.6" opacity=".9"/>';
+    }
+    for(i=0;i<20;i++) s += line(i*30,H,i*30+160,H-380,1.2,.25);
+  } else if(type===2){ /* scaffold with braces */
+    var cols=20, rows=5, cw=76, rh=64, ox=340;
+    for(i=0;i<=cols;i++) s += line(ox+i*cw,H-rows*rh+10,ox+i*cw,H,2.4,.75);
+    for(j=0;j<=rows;j++) s += line(ox,H-j*rh,ox+cols*cw,H-j*rh,1.5,.6);
+    for(j=0;j<rows;j++) for(i=0;i<cols;i++) if(hash(i*7+j*3+4)>.5) s += line(ox+i*cw,H-j*rh,ox+(i+1)*cw,H-(j+1)*rh,1.2,.5);
+    for(i=0;i<8;i++) s += rect(ox+i*cw*2+6,H-rh*3-5,cw*2-12,8,.5,0,.8);
+  } else if(type===3){ /* roof trusses */
+    for(i=0;i<5;i++){
+      var x0=330+i*220, w=190;
+      s += '<path d="M'+x0+' 330L'+(x0+w/2)+' 120L'+(x0+w)+' 330Z" fill="var(--art)" fill-opacity=".1" stroke="var(--art)" stroke-width="2" opacity=".9"/>';
+      s += line(x0+w/2,120,x0+w/2,330,1.4,.6)+line(x0+w/4,225,x0+w*3/4,225,1.4,.6)+line(x0+w/4,225,x0+w/2,330,1.2,.5)+line(x0+w*3/4,225,x0+w/2,330,1.2,.5);
+    }
+    for(i=0;i<20;i++) s += line(0,300+i*8,W,300+i*8,1,.14);
+  } else { /* arcade: brick bond and arches */
+    for(j=0;j<12;j++) for(i=0;i<30;i++){
+      var bx=i*54-(j%2?27:0), by=j*32;
+      s += rect(bx+2,by+2,50,28,hash(i*5+j*7)>.8?.2:0,1,.28);
+    }
+    for(i=0;i<4;i++){
+      var ax=420+i*210;
+      s += '<path d="M'+ax+' 380V190A70 70 0 0 1 '+(ax+140)+' 190V380Z" fill="var(--art)" fill-opacity=".16" stroke="var(--art)" stroke-width="2.6" opacity=".95"/>';
+    }
+  }
+  return '<svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="xMaxYMid slice" focusable="false">'+s+'</svg>';
+}
+bandEls.forEach(function(b){ $('.art',b).innerHTML = art(+b.getAttribute('data-art')); });
+
+/* wipe reveal on scroll (IntersectionObserver, native scroll) */
+if(reduce || !('IntersectionObserver' in window)){
+  bandEls.forEach(function(b){b.classList.add('in')});
+} else {
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(en){ if(en.isIntersecting){en.target.classList.add('in'); io.unobserve(en.target)} });
+  },{threshold:.18, rootMargin:'0px 0px -6% 0px'});
+  bandEls.forEach(function(b){io.observe(b)});
+  /* safety net so nothing stays hidden if observers are throttled */
+  addEventListener('load', function(){setTimeout(function(){bandEls.forEach(function(b){var r=b.getBoundingClientRect(); if(r.top < innerHeight*.9 && r.bottom > 0) b.classList.add('in')})},1200)});
+}
+
+/* gentle scroll parallax of the band art */
+if(!reduce){
+  var ticking = false;
+  function par(){
+    ticking = false;
+    bandEls.forEach(function(b){
+      var r = b.getBoundingClientRect();
+      if(r.bottom < 0 || r.top > innerHeight) return;
+      var p = (r.top + r.height/2)/innerHeight - .5;
+      b.style.setProperty('--ax', (p*-90).toFixed(1)+'px');
+    });
+  }
+  addEventListener('scroll', function(){ if(!ticking){ticking = true; requestAnimationFrame(par)} }, {passive:true});
+  par();
+}
+
+/* small contact grid: survey lines drawn once, redrawn on resize */
+(function(){
+  var c = $('#cgrid'), x = c.getContext('2d');
+  function draw(){
+    var r = c.parentNode.getBoundingClientRect(), w = Math.round(r.width), h = Math.round(r.height), dp = Math.min(devicePixelRatio||1,1.5);
+    c.width = w*dp; c.height = h*dp; x.setTransform(dp,0,0,dp,0,0);
+    x.strokeStyle = 'rgba(255,106,19,.22)'; x.lineWidth = 1; x.beginPath();
+    for(var i=0;i<w;i+=60){x.moveTo(i+.5,0);x.lineTo(i+.5,h)}
+    for(var j=0;j<h;j+=60){x.moveTo(0,j+.5);x.lineTo(w,j+.5)}
+    x.stroke();
+    x.strokeStyle = 'rgba(255,106,19,.6)'; x.lineWidth = 2; x.beginPath();
+    for(var k=60;k<w;k+=300){x.moveTo(k+.5,0);x.lineTo(k+.5,16);x.moveTo(k+.5,h-16);x.lineTo(k+.5,h)}
+    x.stroke();
+  }
+  draw(); addEventListener('resize', draw);
+})();
+})();
+</script>
+<script src="../preview.js" defer></script>
+</body>
+</html>

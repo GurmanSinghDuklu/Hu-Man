@@ -14,10 +14,13 @@
   Cross-Origin-Opener-Policy: same-origin
 
 # Concept portfolios (public/concepts/): standalone pages with their own inline styles and scripts,
-# so the global policy above is detached and replaced. Still no outside hosts, no frames, no forms.
+# so the global policy above is detached and replaced. Still no outside hosts and no forms. They may
+# be framed by our own pages only (the live wall on /portfolio).
 /concepts/*
   ! Content-Security-Policy
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'none'; object-src 'none'
+  ! X-Frame-Options
+  X-Frame-Options: SAMEORIGIN
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'none'; frame-ancestors 'self'; base-uri 'self'; form-action 'none'; object-src 'none'
 /concepts/fonts/*
   Cache-Control: public, max-age=604800
 /concepts/vendor/*

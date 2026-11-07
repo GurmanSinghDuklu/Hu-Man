@@ -235,7 +235,17 @@ if (/X-Robots-Tag/i.test(headersFile) && !noindexBuild)
   fail('_headers', 'sets X-Robots-Tag on the live site');
 
 // Concept portfolios: noindex, self-hosted (no third-party host) and absent from the sitemap.
-if (conceptFiles.length !== 3) fail('concepts', `${conceptFiles.length} concept pages (want 3)`);
+// Every concept in the data file has a page, and every page is in the data file.
+const conceptSlugs = [
+  ...(
+    await readFile(new URL('../src/data/portfolioConcepts.ts', import.meta.url), 'utf8')
+  ).matchAll(/slug: '([^']+)'/g),
+].map((m) => m[1]);
+for (const slug of conceptSlugs)
+  if (!conceptFiles.includes(`concepts/${slug}/index.html`))
+    fail('concepts', `no page for ${slug}`);
+if (conceptFiles.length !== conceptSlugs.length)
+  fail('concepts', `${conceptFiles.length} concept pages, ${conceptSlugs.length} in the data file`);
 for (const f of conceptFiles) {
   const doc = await readFile(`${dist}${f}`, 'utf8');
   if (!/<meta name="robots" content="noindex,nofollow">/.test(doc)) fail(f, 'not noindex,nofollow');
@@ -243,6 +253,7 @@ for (const f of conceptFiles) {
   if (/googleapis|gstatic|cdnjs|jsdelivr|unpkg|https?:\/\/(?!www\.w3\.org)/.test(doc))
     fail(f, 'references an outside host');
   if (!/href="\.\.\/\.\.\/portfolio\/"/.test(doc)) fail(f, 'no link back to the portfolio page');
+  if (!/<script src="\.\.\/preview\.js" defer><\/script>/.test(doc)) fail(f, 'no preview script');
   for (const [, ref] of doc.matchAll(/(?:src|url)\(?=?["']?(\.\.\/(?:fonts|vendor)\/[^"')\s]+)/g)) {
     if (!fileSet.has(`concepts/${ref.slice(3)}`)) fail(f, `missing asset ${ref}`);
   }

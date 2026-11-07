@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Amira Hussain, biomedical science graduate (concept portfolio)</title>
+<meta name="robots" content="noindex,nofollow">
+<style>
+@font-face{font-family:'Figtree';font-style:normal;font-weight:400;font-display:swap;src:url(../fonts/figtree-latin-400-normal.woff2) format('woff2')}
+@font-face{font-family:'Figtree';font-style:normal;font-weight:500;font-display:swap;src:url(../fonts/figtree-latin-500-normal.woff2) format('woff2')}
+@font-face{font-family:'Figtree';font-style:normal;font-weight:700;font-display:swap;src:url(../fonts/figtree-latin-700-normal.woff2) format('woff2')}
+@font-face{font-family:'Figtree';font-style:normal;font-weight:800;font-display:swap;src:url(../fonts/figtree-latin-800-normal.woff2) format('woff2')}
+</style>
+<style>
+:root{
+  --bg:#FFFFFF; --tint:#F3F7F5; --ink:#14201D; --mute:#4A5753; --line:#DDE6E2;
+  --brand:#D81B60; --brand-d:#A8124A;
+  --lab:#0A7C6B; --data:#2749C9; --res:#7B3FC4; --com:#B1440A;
+  --labt:#DDF3EE; --datat:#E1E8FB; --rest:#EDE3F9; --comt:#FBE6D9;
+  --font:"Figtree","Helvetica Neue",Arial,sans-serif;
+  --pad:clamp(18px,5vw,72px);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{background:var(--bg);scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4,p,ul,ol,dl,dd,figure{margin:0;padding:0}
+ul,ol{list-style:none}
+a{color:inherit}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--data);outline-offset:3px;border-radius:4px}
+.page{overflow-x:clip;position:relative}
+.wrap{padding-left:var(--pad);padding-right:var(--pad);max-width:1400px;margin:0 auto}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:12px;top:-60px;background:var(--ink);color:#fff;padding:10px 14px;border-radius:8px;z-index:100;font-weight:700}
+.skip:focus{top:12px}
+
+/* reveal */
+.js .rv{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1);transition-delay:calc(var(--d,0) * 90ms)}
+.js .rv.in{opacity:1;transform:none}
+
+/* nav */
+.nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:20px;padding-bottom:12px;font-weight:700;font-size:15px}
+.nav .mk{display:inline-flex;align-items:center;gap:10px;text-decoration:none}
+.nav .mk b{display:grid;place-items:center;width:34px;height:34px;border-radius:9px;background:var(--brand);color:#fff;font-weight:800;letter-spacing:-.02em;font-size:15px}
+.nav ul{display:flex;gap:6px}
+.nav ul a{display:block;text-decoration:none;padding:8px 14px;border-radius:99px;transition:background .2s,color .2s}
+.nav ul a:hover,.nav ul a.hov{background:var(--ink);color:#fff}
+
+/* hero */
+.hero{position:relative;padding-top:clamp(20px,4vw,56px);padding-bottom:clamp(40px,6vw,90px);display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:clamp(20px,4vw,64px);align-items:center}
+.plate{position:absolute;inset:0;z-index:0;display:grid;grid-template-columns:repeat(16,minmax(0,1fr));align-content:space-around;overflow:hidden;gap:clamp(8px,1.6vw,22px);padding:2% 0;opacity:.5;pointer-events:none}
+.plate i{aspect-ratio:1;border-radius:50%;border:2px solid var(--line);background:transparent;animation:well 6s ease-in-out infinite;animation-delay:calc(var(--i) * -170ms)}
+@keyframes well{0%,100%{background:transparent;border-color:var(--line)}40%{background:var(--c,var(--labt));border-color:var(--c,var(--labt))}60%{background:var(--c,var(--labt));border-color:var(--c,var(--labt))}}
+.hero>*:not(.plate){position:relative;z-index:1}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-weight:700;font-size:14px;background:var(--tint);border:2px solid var(--line);padding:6px 14px 6px 10px;border-radius:99px;margin-bottom:22px}
+.eyebrow i{width:10px;height:10px;border-radius:50%;background:var(--lab);animation:ping 2s ease-out infinite}
+@keyframes ping{0%{box-shadow:0 0 0 0 rgba(10,124,107,.5)}80%,100%{box-shadow:0 0 0 10px rgba(10,124,107,0)}}
+h1{font-size:clamp(44px,7.4vw,116px);line-height:.95;font-weight:800;letter-spacing:-.035em}
+h1 .ln{display:block;overflow:hidden;padding-bottom:.08em;margin-bottom:-.08em}
+h1 .ln span{display:inline-block;animation:rise .9s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--d) * 120ms + 100ms)}
+@keyframes rise{from{transform:translateY(110%)}to{transform:none}}
+h1 em{font-style:normal;color:var(--brand)}
+.lede{margin-top:24px;font-size:clamp(18px,1.7vw,22px);max-width:34ch;color:var(--mute);font-weight:500}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.btn{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-weight:700;padding:14px 22px;border-radius:99px;border:2px solid var(--ink);transition:transform .25s cubic-bezier(.2,.8,.2,1),background .2s,color .2s}
+.btn.p{background:var(--brand);border-color:var(--brand);color:#fff}
+.btn.p:hover,.btn.p.hov{background:var(--brand-d);border-color:var(--brand-d);transform:translateY(-3px)}
+.btn.s:hover,.btn.s.hov{background:var(--ink);color:#fff;transform:translateY(-3px)}
+.mono-wrap{display:grid;place-items:center}
+#mono{width:100%;max-width:560px;aspect-ratio:1.18;display:block;touch-action:pan-y}
+
+/* strip */
+.strip{background:var(--ink);color:#fff;overflow:hidden;white-space:nowrap;padding:16px 0;font-weight:800;font-size:clamp(18px,2.2vw,26px);letter-spacing:-.01em}
+.strip div{display:inline-flex;gap:0;animation:slide 38s linear infinite}
+.strip span{display:inline-flex;align-items:center;gap:28px;padding-right:28px}
+.strip span::after{content:"";width:12px;height:12px;border-radius:50%;background:var(--c)}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+/* sections */
+section{padding-top:clamp(56px,8vw,120px)}
+.shead{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:16px 40px;margin-bottom:clamp(24px,3vw,44px)}
+h2{font-size:clamp(34px,5vw,68px);line-height:1;font-weight:800;letter-spacing:-.03em}
+.shead p{max-width:40ch;color:var(--mute);font-weight:500}
+
+/* finder */
+.finder{background:var(--tint);border-radius:clamp(20px,3vw,40px);padding:clamp(18px,3vw,44px)}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:clamp(20px,2.5vw,32px)}
+.chip{--c:var(--ink);--t:#fff;display:inline-flex;align-items:center;gap:9px;cursor:pointer;background:#fff;border:2px solid var(--c);border-radius:99px;padding:10px 18px 10px 14px;font-weight:700;font-size:16px;transition:background .25s,color .25s,transform .25s cubic-bezier(.2,.8,.2,1)}
+.chip i{width:12px;height:12px;border-radius:50%;background:var(--c);transition:background .25s}
+.chip[aria-pressed=true]{background:var(--c);color:#fff}
+.chip[aria-pressed=true] i{background:#fff}
+.chip:hover,.chip.hov{transform:translateY(-3px) rotate(-1.5deg)}
+.chip[data-k=Lab]{--c:var(--lab)}.chip[data-k=Data]{--c:var(--data)}.chip[data-k=Research]{--c:var(--res)}.chip[data-k=Communication]{--c:var(--com)}
+.count{margin-left:auto;align-self:center;font-weight:700;color:var(--mute);font-size:15px}
+.grid{position:relative;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,250px),1fr));gap:16px}
+.card{--c:var(--ink);position:relative;background:#fff;border:2px solid var(--line);border-radius:18px;padding:20px 20px 20px 24px;min-height:196px;overflow:hidden;display:flex;flex-direction:column;gap:8px;will-change:transform;transition:border-color .2s,box-shadow .2s;transform-origin:50% 50%}
+.card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:7px;background:var(--c)}
+.card[data-p=Lab]{--c:var(--lab)}.card[data-p=Data]{--c:var(--data)}.card[data-p=Research]{--c:var(--res)}.card[data-p=Communication]{--c:var(--com)}
+.card.hov{border-color:var(--c);box-shadow:0 14px 28px -16px rgba(20,32,29,.4)}
+.card .kind{font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--c)}
+.card h3{font-size:21px;line-height:1.15;font-weight:800;letter-spacing:-.015em}
+.card p{font-size:15.5px;color:var(--mute);line-height:1.45}
+.card .tags{margin-top:auto;display:flex;flex-wrap:wrap;gap:6px;padding-top:6px}
+.tag{font-size:12.5px;font-weight:700;padding:3px 10px;border-radius:99px}
+.tag.Lab{background:var(--labt);color:#075F52}.tag.Data{background:var(--datat);color:#1D3A9E}.tag.Research{background:var(--rest);color:#5E2AA0}.tag.Communication{background:var(--comt);color:#8A3406}
+.card.out{position:absolute;pointer-events:none;z-index:0}
+.card[hidden]{display:none}
+
+/* timeline */
+.tlw{position:relative}
+.tl{position:relative;display:grid;gap:clamp(18px,2.5vw,30px);padding-left:clamp(34px,5vw,64px)}
+.tlw::before{content:"";position:absolute;left:11px;top:8px;bottom:8px;width:4px;border-radius:2px;background:var(--line)}
+.tlw .fill{position:absolute;left:11px;top:8px;width:4px;border-radius:2px;background:var(--brand);height:0;transition:height .2s linear}
+.ti{position:relative;display:grid;grid-template-columns:minmax(0,200px) minmax(0,1fr);gap:8px clamp(16px,3vw,48px);background:var(--tint);border-radius:20px;padding:clamp(18px,2.4vw,30px)}
+.ti::before{content:"";position:absolute;left:calc(clamp(34px,5vw,64px) * -1 + 3px);top:30px;width:20px;height:20px;border-radius:50%;background:#fff;border:4px solid var(--line);transition:border-color .4s,background .4s,transform .4s}
+.ti.in::before{border-color:var(--brand);background:var(--brand);transform:scale(1.1)}
+.ti .when{font-weight:800;font-size:15px;color:var(--brand-d)}
+.ti h3{font-size:clamp(21px,2.2vw,28px);line-height:1.15;font-weight:800;letter-spacing:-.02em}
+.ti .where{font-weight:700;color:var(--mute);font-size:15px;margin-top:2px}
+.ti p{margin-top:8px;max-width:60ch;color:var(--mute)}
+
+/* bench */
+.bench{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(20px,4vw,64px);align-items:center}
+.habits{display:grid;gap:14px}
+.habits li{display:flex;gap:18px;align-items:flex-start;padding:18px 20px;border:2px solid var(--line);border-radius:18px;background:#fff;transition:border-color .2s,transform .3s cubic-bezier(.2,.8,.2,1)}
+.habits li:hover{border-color:var(--c,var(--ink))}
+.habits b{flex:none;display:grid;place-items:center;width:40px;height:40px;border-radius:12px;background:var(--c);color:#fff;font-weight:800}
+.habits h3{font-size:20px;font-weight:800;letter-spacing:-.015em}
+.habits p{color:var(--mute);margin-top:2px;font-size:16px}
+.curve{background:var(--tint);border-radius:24px;padding:clamp(16px,2.5vw,32px)}
+.curve svg{width:100%;height:auto;display:block}
+.js .curve path[pathLength]{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 2.2s cubic-bezier(.3,.6,.2,1)}
+.curve.in path.c2{transition-delay:.25s}.curve.in path.c3{transition-delay:.5s}
+.curve.in path[pathLength]{stroke-dashoffset:0}
+.curve figcaption{margin-top:12px;font-size:14.5px;color:var(--mute)}
+.js .curve.loop path[pathLength]{animation:redraw 9s ease-in-out infinite}
+@keyframes redraw{0%{stroke-dashoffset:1}35%,80%{stroke-dashoffset:0}100%{stroke-dashoffset:1}}
+@media (max-width:860px){.bench{grid-template-columns:1fr}}
+
+/* dissertation */
+.diss{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(18px,3vw,48px);background:var(--ink);color:#fff;border-radius:clamp(20px,3vw,40px);padding:clamp(22px,4vw,64px);position:relative;overflow:hidden}
+.diss .lab{font-weight:800;font-size:13px;letter-spacing:.07em;text-transform:uppercase;color:#FF9CC0}
+.diss h2{margin-top:12px;font-size:clamp(28px,3.8vw,52px)}
+.diss p{margin-top:16px;color:#D5DEDB;max-width:52ch}
+.diss dl{display:grid;gap:0;align-content:start}
+.diss dl div{padding:16px 0;border-top:2px solid rgba(255,255,255,.18)}
+.diss dt{font-weight:800;font-size:13px;letter-spacing:.07em;text-transform:uppercase;color:#9FE3D6}
+.diss dd{margin-top:4px;font-weight:600;font-size:17px}
+.diss .orb{position:absolute;right:-60px;bottom:-60px;width:260px;height:260px;border-radius:50%;border:3px dashed rgba(255,255,255,.14);animation:spin 40s linear infinite;pointer-events:none}
+.diss .orb::after{content:"";position:absolute;inset:36px;border-radius:50%;border:3px dashed rgba(255,156,192,.28);animation:spin 26s linear infinite reverse}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* contact */
+.contact{margin-top:clamp(56px,8vw,120px);background:var(--brand);color:#fff;border-radius:clamp(20px,3vw,40px) clamp(20px,3vw,40px) 0 0;padding:clamp(28px,5vw,80px) var(--pad) clamp(40px,5vw,72px)}
+.contact h2{font-size:clamp(38px,6.5vw,100px);max-width:12ch}
+.contact .row{display:flex;flex-wrap:wrap;gap:20px 56px;align-items:end;margin-top:28px;max-width:1400px}
+.contact .mail{display:inline-block;font-weight:800;font-size:clamp(22px,3.4vw,44px);letter-spacing:-.02em;text-decoration:none;border-bottom:4px solid #fff;transition:background .2s,color .2s;padding:0 4px}
+.contact .mail:hover,.contact .mail.hov{background:#fff;color:var(--brand-d)}
+.contact dl{display:grid;gap:10px;font-weight:600}
+.contact dt{font-size:13px;letter-spacing:.07em;text-transform:uppercase;font-weight:800}
+.contact :focus-visible{outline-color:#fff}
+.fine{margin-top:44px;padding-top:16px;border-top:2px solid rgba(255,255,255,.4);font-size:14px;max-width:80ch}
+
+@media (max-width:860px){
+  .hero{grid-template-columns:1fr}
+  .mono-wrap{order:-1}
+  #mono{max-width:360px}
+  .diss{grid-template-columns:1fr}
+  .ti{grid-template-columns:1fr}
+  .nav ul a{padding:8px 10px}
+  .plate{grid-template-columns:repeat(10,minmax(0,1fr));opacity:.28}
+  .plate i:nth-child(n+61){display:none}
+  .count{margin-left:0;width:100%}
+}
+@media (max-width:420px){.nav ul li:nth-child(n+3){display:none}}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .js .rv{opacity:1;transform:none}
+}
+
+/* HU/MAN concept badge */
+.badge{position:fixed;z-index:90;left:max(12px, env(safe-area-inset-left, 0px));bottom:max(12px, env(safe-area-inset-bottom, 0px));display:flex;flex-wrap:wrap;align-items:center;gap:2px 12px;background:#14201D;color:#fff;border-radius:18px;padding:8px 14px 8px 11px;font-size:12px;font-weight:600;line-height:1.3;max-width:calc(100vw - 24px);pointer-events:auto}
+.badge a{color:inherit;font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.badge a:focus-visible{outline:2px solid currentColor;outline-offset:3px;border-radius:3px}
+@media (max-width:640px){.badge{position:static;margin:24px max(16px,env(safe-area-inset-left,0px)) max(16px,env(safe-area-inset-bottom,0px));max-width:none;justify-content:center;text-align:center;border-radius:14px}}
+</style>
+<script>document.documentElement.className+=' js'</script>
+</head>
+<body>
+<a class="skip" href="#finder">Skip to what I can do</a>
+<div class="page">
+
+<div class="wrap">
+  <nav class="nav" aria-label="Main">
+    <a class="mk" href="#top"><b aria-hidden="true">AH</b><span>Amira Hussain</span></a>
+    <ul>
+      <li><a href="#finder">Skills</a></li>
+      <li><a href="#path">Path</a></li>
+      <li><a href="#dissertation">Dissertation</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <header class="hero" id="top">
+    <div class="plate" id="plate" aria-hidden="true"></div>
+    <div>
+      <p class="eyebrow"><i></i>Open to lab and clinical trials roles</p>
+      <h1><span class="ln"><span style="--d:0">Hello, I’m</span></span><span class="ln"><span style="--d:1"><em>Amira</em>, a</span></span><span class="ln"><span style="--d:2">biomedical</span></span><span class="ln"><span style="--d:3">scientist.</span></span></h1>
+      <p class="lede">BSc (Hons) Biomedical Science, 2026. Careful at the bench, tidy with data, and happy to explain the science to anyone. Based in Nottingham.</p>
+      <div class="cta">
+        <a class="btn p" href="#finder">Find what I can do</a>
+        <a class="btn s" href="#contact">Get in touch</a>
+      </div>
+    </div>
+    <div class="mono-wrap">
+      <canvas id="mono" role="img" aria-label="Monogram: the letters A and H built from diagonal stripes"></canvas>
+    </div>
+  </header>
+</div>
+
+<div class="strip" aria-hidden="true"><div id="strip"></div></div>
+
+<main class="wrap">
+  <section id="finder" aria-labelledby="h-finder">
+    <div class="shead rv">
+      <h2 id="h-finder">Find what I can do</h2>
+      <p>Pick a colour to filter. Modules, lab techniques, my dissertation, placement and volunteering all sit in one place.</p>
+    </div>
+    <div class="finder rv">
+      <div class="chips" id="chips" role="group" aria-label="Filter by skill area">
+        <button class="chip" type="button" data-k="All" aria-pressed="true"><i></i>All</button>
+        <button class="chip" type="button" data-k="Lab" aria-pressed="false"><i></i>Lab</button>
+        <button class="chip" type="button" data-k="Data" aria-pressed="false"><i></i>Data</button>
+        <button class="chip" type="button" data-k="Research" aria-pressed="false"><i></i>Research</button>
+        <button class="chip" type="button" data-k="Communication" aria-pressed="false"><i></i>Communication</button>
+        <span class="count" id="count" role="status" aria-live="polite"></span>
+      </div>
+      <ul class="grid" id="grid"></ul>
+    </div>
+  </section>
+
+  <section id="path" aria-labelledby="h-path">
+    <div class="shead rv">
+      <h2 id="h-path">My path so far</h2>
+      <p>Study, a placement year and time given to others. Dates and places are sample content for this concept.</p>
+    </div>
+    <div class="tlw" id="tl"><span class="fill" id="fill" aria-hidden="true"></span>
+    <ol class="tl">
+      <li class="ti rv"><div><p class="when">2022 to 2025</p></div><div><h3>BSc (Hons) Biomedical Science</h3><p class="where">University of the Trent Valley (sample), Nottingham</p><p>Core modules in human physiology, immunology, microbiology and molecular biology, with practical sessions every week.</p></div></li>
+      <li class="ti rv"><div><p class="when">2023 to 2024</p></div><div><h3>Placement year, research laboratory</h3><p class="where">Millrace Diagnostics Lab (sample)</p><p>Worked alongside the technical team on sample preparation, PCR set-up, ELISA plates and record keeping in a quality-controlled lab.</p></div></li>
+      <li class="ti rv"><div><p class="when">2024 to 2026</p></div><div><h3>Science outreach volunteer</h3><p class="where">Local school science club</p><p>Ran hands-on sessions that turn lab ideas into things 11 year olds can try, from pipetting races to model cells.</p></div></li>
+      <li class="ti rv"><div><p class="when">2026</p></div><div><h3>Graduated, looking for the next lab</h3><p class="where">Nottingham, open to relocating</p><p>Looking for a laboratory assistant, research technician or clinical trials assistant role.</p></div></li>
+    </ol></div>
+  </section>
+
+  <section id="bench" aria-labelledby="h-bench">
+    <div class="shead rv">
+      <h2 id="h-bench">How I work at the bench</h2>
+      <p>Four habits I bring to every experiment, whatever the technique.</p>
+    </div>
+    <div class="bench">
+      <ul class="habits">
+        <li class="rv"><b style="--c:var(--lab)">1</b><div><h3>Label everything</h3><p>Tubes, plates and notebook pages all carry a date, a name and a sample code, so nothing is ever a mystery later.</p></div></li>
+        <li class="rv"><b style="--c:var(--data)">2</b><div><h3>Run the controls</h3><p>A positive, a negative and a blank on every plate. If the controls look wrong, the results do not count.</p></div></li>
+        <li class="rv"><b style="--c:var(--res)">3</b><div><h3>Write it as I go</h3><p>Methods, deviations and small surprises go in the notebook at the time, not from memory at the end of the day.</p></div></li>
+        <li class="rv"><b style="--c:var(--com)">4</b><div><h3>Explain it plainly</h3><p>If I can tell a ten year old what the experiment is for, I understand it well enough to run it properly.</p></div></li>
+      </ul>
+      <figure class="curve rv" id="curve">
+        <svg viewBox="0 0 400 260" role="img" aria-labelledby="cv-t">
+          <title id="cv-t">Illustration of a qPCR amplification curve: signal stays flat, climbs steeply, then levels off</title>
+          <g stroke="#C9D6D1" stroke-width="2" fill="none"><path d="M40 20V220H380"/><path d="M40 170H380M40 120H380M40 70H380" stroke-dasharray="4 8"/></g>
+          <path class="c3" d="M40 214C120 214 170 212 200 205S250 120 290 62 330 36 380 34" fill="none" stroke="#B1440A" stroke-width="5" stroke-linecap="round" pathLength="1"/>
+          <path class="c2" d="M40 214C120 214 150 212 178 205S218 120 252 62 300 36 380 34" fill="none" stroke="#2749C9" stroke-width="5" stroke-linecap="round" pathLength="1"/>
+          <path class="c1" d="M40 214C100 214 120 212 146 205S184 120 214 62 280 36 380 34" fill="none" stroke="#0A7C6B" stroke-width="5" stroke-linecap="round" pathLength="1"/>
+          <path d="M40 216H380" stroke="#14201D" stroke-width="3" stroke-dasharray="2 9" stroke-linecap="round"/>
+          <text x="40" y="246" font-size="13" font-weight="700" fill="#4A5753">Cycle number</text>
+          <text x="14" y="16" font-size="13" font-weight="700" fill="#4A5753">Signal</text>
+        </svg>
+        <figcaption>Illustration only, not real data. Three samples cross the threshold at different cycles; the earlier the climb, the more starting material.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="dissertation" aria-labelledby="h-diss">
+    <article class="diss rv">
+      <div class="orb" aria-hidden="true"></div>
+      <div>
+        <p class="lab">Dissertation summary (sample)</p>
+        <h2 id="h-diss">How immune cells respond when oxygen runs low</h2>
+        <p>A final-year laboratory project looking at how cultured macrophages change their signalling molecules under low oxygen. I planned the experiments, grew and treated the cells, measured cytokines by ELISA, confirmed gene expression by qPCR and wrote up the analysis.</p>
+      </div>
+      <dl>
+        <div><dt>Question</dt><dd>Does low oxygen change which signals macrophages release?</dd></div>
+        <div><dt>Methods</dt><dd>Cell culture, ELISA, qPCR, statistical testing</dd></div>
+        <div><dt>Supervised by</dt><dd>A named academic supervisor (fictional)</dd></div>
+        <div><dt>Format</dt><dd>Written report and viva</dd></div>
+      </dl>
+    </article>
+  </section>
+</main>
+
+<footer class="contact" id="contact">
+  <h2>Let’s talk about your lab.</h2>
+  <div class="row">
+    <a class="mail" href="mailto:amira@amirahussain.example">amira@amirahussain.example</a>
+    <dl>
+      <div><dt>Based in</dt><dd>Nottingham</dd></div>
+      <div><dt>Looking for</dt><dd>Lab assistant, research technician, clinical trials assistant</dd></div>
+    </dl>
+  </div>
+  <p class="fine">This is a concept site designed by HU/MAN. The person, university, laboratory and project shown are part of the concept.</p>
+</footer>
+
+</div>
+
+<div class="badge" role="note"><a href="../../portfolio/">&larr; Back to HU/MAN</a><span>Concept site by HU/MAN</span></div>
+
+<script>
+(function(){
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var $ = function(s,r){return (r||document).querySelector(s)};
+  var $$ = function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+  var COL = {Lab:'#0A7C6B',Data:'#2749C9',Research:'#7B3FC4',Communication:'#B1440A'};
+  var TINT = {Lab:'#BFE8DF',Data:'#C7D3F6',Research:'#DCCBF2',Communication:'#F6CDB5'};
+
+  /* ---------- pointer (shared) ---------- */
+  var ptr = {x:-1,y:-1,t:-1e9};
+  function onMove(e){ptr.x=e.clientX;ptr.y=e.clientY;ptr.t=performance.now()}
+  addEventListener('pointermove',onMove,{passive:true});
+  addEventListener('mousemove',onMove,{passive:true});
+
+  /* ---------- JS-driven hover (works with synthetic events) ---------- */
+  var hovSel = '.btn,.chip,.card,.nav ul a,.mail';
+  var hovEl = null;
+  document.addEventListener('mouseover',function(e){
+    var t = e.target && e.target.closest ? e.target.closest(hovSel) : null;
+    if(hovEl && hovEl!==t) hovEl.classList.remove('hov');
+    hovEl = t; if(t) t.classList.add('hov');
+  });
+  document.addEventListener('mouseout',function(e){
+    if(!e.relatedTarget && hovEl){hovEl.classList.remove('hov');hovEl=null}
+  });
+
+  /* ---------- well plate + strip ---------- */
+  var plate = $('#plate'), cols = [COL.Lab,COL.Data,COL.Research,COL.Communication,'#D81B60'];
+  var tints = [TINT.Lab,TINT.Data,TINT.Research,TINT.Communication,'#F7B6CF'];
+  for(var i=0;i<128;i++){
+    var w=document.createElement('i'); w.style.setProperty('--i',i);
+    w.style.setProperty('--c',tints[(i*7+Math.floor(i/16)*3)%5]); plate.appendChild(w);
+  }
+  var words = ['PCR','ELISA','Cell culture','Gel electrophoresis','Aseptic technique','Data in R','Lab records','Good clinical practice'];
+  var cyc = ['Lab','Data','Research','Communication'];
+  var sh = '';
+  for(var r=0;r<2;r++) words.forEach(function(wd,k){sh+='<span style="--c:'+[COL.Lab,'#8FA6FF','#C7A3F5','#FFA574'][k%4]+'">'+wd+'</span>'});
+  $('#strip').innerHTML = sh+sh;
+
+  /* ---------- monogram ---------- */
+  var cv = $('#mono'), cx = cv.getContext('2d'), mw=0, mh=0, dpr=1, glyphReady=false;
+  var mask = document.createElement('canvas'), mx = mask.getContext('2d');
+  function sizeMono(){
+    var r = cv.getBoundingClientRect(); if(!r.width) return;
+    dpr = Math.min(devicePixelRatio||1,2);
+    mw = r.width; mh = r.height;
+    cv.width = Math.round(mw*dpr); cv.height = Math.round(mh*dpr);
+    mask.width = cv.width; mask.height = cv.height;
+    mx.setTransform(dpr,0,0,dpr,0,0); mx.clearRect(0,0,mw,mh);
+    var fs = 100; mx.font = '800 '+fs+'px Figtree, Arial, sans-serif';
+    var m = mx.measureText('AH'); fs = fs * (mw*0.94) / m.width;
+    mx.font = '800 '+fs+'px Figtree, Arial, sans-serif'; mx.textAlign='center'; mx.textBaseline='alphabetic';
+    mx.fillStyle='#000'; mx.fillText('AH', mw/2, mh/2 + fs*0.36);
+    // slight overlap for letter-spacing look
+    glyphReady = true;
+  }
+  var ANG = -62*Math.PI/180, dX=Math.cos(ANG), dY=Math.sin(ANG), nX=-dY, nY=dX;
+  var PITCH = 19, WID = 12;
+  function drawMono(t){
+    if(!glyphReady) return;
+    var R = Math.sqrt(mw*mw+mh*mh), span = R*1.1;
+    // cursor target in canvas space, idle orbit when no recent pointer
+    var rect = cv.getBoundingClientRect(), cxp, cyp, live = (performance.now()-ptr.t) < 2500 && ptr.x>=0;
+    if(live){cxp = ptr.x-rect.left; cyp = ptr.y-rect.top}
+    else {cxp = mw*(.5+.34*Math.cos(t*.0007)); cyp = mh*(.5+.3*Math.sin(t*.0011+1))}
+    cx.setTransform(dpr,0,0,dpr,0,0);
+    cx.globalCompositeOperation='source-over'; cx.clearRect(0,0,mw,mh);
+    var n = Math.ceil(span/PITCH), slide = reduce ? 0 : (t*0.018)%PITCH;
+    var sig = Math.max(mw*.28,90), amp = .5;
+    cx.lineWidth = WID; cx.lineCap='butt'; cx.lineJoin='round';
+    for(var k=-n; k<=n; k++){
+      var s = k*PITCH + slide;
+      var shim = reduce ? .5 : .5+.5*Math.sin(t*.0016 - k*.55);
+      cx.strokeStyle = shim>.82 ? '#FF5C97' : (shim<.18 ? '#B3104F' : '#D81B60');
+      cx.beginPath();
+      var first = true;
+      for(var u=-span; u<=span; u+=14){
+        var px = mw/2 + nX*s + dX*u, py = mh/2 + nY*s + dY*u;
+        if(px<-40||px>mw+40||py<-40||py>mh+40){first=true;continue}
+        var ddx=cxp-px, ddy=cyp-py, d2=ddx*ddx+ddy*ddy, f=Math.exp(-d2/(2*sig*sig))*amp;
+        var qx=px+ddx*f, qy=py+ddy*f;
+        if(first){cx.moveTo(qx,qy);first=false}else cx.lineTo(qx,qy);
+      }
+      cx.stroke();
+    }
+    cx.globalCompositeOperation='destination-in'; cx.drawImage(mask,0,0,mw,mh);
+    cx.globalCompositeOperation='source-over';
+  }
+  var monoVisible = true, raf = 0;
+  function loop(t){ if(monoVisible) drawMono(t); raf = requestAnimationFrame(loop) }
+  function startMono(){
+    sizeMono();
+    if(reduce){drawMono(0);} else if(!raf){raf=requestAnimationFrame(loop)}
+  }
+  (document.fonts && document.fonts.load ? document.fonts.load('800 100px Figtree','AH') : Promise.resolve()).then(startMono,startMono);
+  var rz; addEventListener('resize',function(){clearTimeout(rz);rz=setTimeout(function(){sizeMono();if(reduce)drawMono(0)},120)});
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es){monoVisible=es[0].isIntersecting}).observe(cv);
+  }
+
+  /* ---------- skills data + finder ---------- */
+  var DATA = [
+    ['Cell culture','Technique','Growing and passaging adherent cell lines with sterile technique, counting cells and checking viability.',['Lab','Research'],'Lab'],
+    ['PCR and qPCR','Technique','Setting up reactions, running controls and reading amplification curves to confirm gene expression.',['Lab','Data'],'Lab'],
+    ['ELISA','Technique','Coating, blocking and developing plates, then building a standard curve to read concentrations.',['Lab','Data'],'Lab'],
+    ['Gel electrophoresis','Technique','Casting gels, loading samples and sizing bands against a ladder.',['Lab'],'Lab'],
+    ['Aseptic technique and safety','Technique','Working in a safety cabinet, writing COSHH-style risk assessments and keeping a tidy bench.',['Lab'],'Lab'],
+    ['Dissertation project','Dissertation','Low oxygen and macrophage signalling, from planning the experiment to the written report and viva.',['Research','Lab','Data'],'Research'],
+    ['Placement year','Placement','A year in a quality-controlled diagnostics lab: samples, plates, logbooks and team handovers.',['Lab','Communication'],'Lab'],
+    ['Statistics for biologists','Module','Choosing tests, checking assumptions and reporting results honestly.',['Data'],'Data'],
+    ['Data handling in R and Excel','Module','Cleaning plate-reader output, plotting results and keeping analysis repeatable.',['Data'],'Data'],
+    ['Clinical trials and GCP','Module','How trials are designed, consented, monitored and reported under good clinical practice.',['Research'],'Research'],
+    ['Immunology','Module','Innate and adaptive responses, cytokines and how the immune system is measured.',['Research'],'Research'],
+    ['Reading and writing papers','Module','Searching the literature, critiquing methods and writing clear scientific reports.',['Research','Communication'],'Research'],
+    ['Science outreach volunteering','Volunteering','Running hands-on science club sessions for children, with a new activity each week.',['Communication'],'Communication'],
+    ['Poster presentation','Project','Turning a project into one page, then explaining it to people from outside the field.',['Communication','Research'],'Communication']
+  ];
+  var grid = $('#grid'), cards = [];
+  DATA.forEach(function(d,i){
+    var li = document.createElement('li'); li.className='card'; li.dataset.p=d[4]; li.dataset.cats=d[3].join(','); li.dataset.o=i;
+    li.innerHTML='<span class="kind">'+d[1]+'</span><h3>'+d[0]+'</h3><p>'+d[2]+'</p><span class="tags">'+d[3].map(function(c){return '<span class="tag '+c+'">'+c+'</span>'}).join('')+'</span>';
+    grid.appendChild(li); cards.push(li);
+  });
+  var chips = $$('.chip'), countEl = $('#count'), cur = 'All', busy = [];
+
+  function rectsOf(list){var m=new Map();list.forEach(function(c){m.set(c,c.getBoundingClientRect())});return m}
+  function setFilter(k, instant){
+    if(k===cur && !instant) return;
+    cur = k;
+    chips.forEach(function(c){c.setAttribute('aria-pressed', c.dataset.k===k ? 'true':'false')});
+    var vis = cards.filter(function(c){return !c.hidden});
+    var first = rectsOf(vis), gr = grid.getBoundingClientRect();
+    // sort: cards whose primary category is the filter first, then others by original order
+    var match = cards.filter(function(c){return k==='All' || c.dataset.cats.split(',').indexOf(k)>-1});
+    match.sort(function(a,b){
+      var pa = (k==='All'||a.dataset.p===k)?0:1, pb = (k==='All'||b.dataset.p===k)?0:1;
+      return pa-pb || a.dataset.o-b.dataset.o;
+    });
+    var leaving = vis.filter(function(c){return match.indexOf(c)<0});
+    busy.forEach(function(a){try{a.cancel()}catch(e){}}); busy=[];
+    $$('.card.out').forEach(function(c){c.classList.remove('out');c.hidden=true;c.style.cssText=''});
+    leaving.forEach(function(c){
+      if(!reduce && !instant){
+        var r = first.get(c);
+        c.classList.add('out');
+        c.style.cssText='left:'+(r.left-gr.left)+'px;top:'+(r.top-gr.top)+'px;width:'+r.width+'px;height:'+r.height+'px';
+      } else c.hidden=true;
+    });
+    match.forEach(function(c){c.hidden=false; grid.appendChild(c)});
+    leaving.forEach(function(c){grid.appendChild(c)});
+    countEl.textContent = 'Showing '+match.length+' of '+cards.length;
+    if(reduce||instant) return;
+    match.forEach(function(c,i){
+      var f = first.get(c), l = c.getBoundingClientRect(), a;
+      if(f){
+        var dx=f.left-l.left, dy=f.top-l.top;
+        if(Math.abs(dx)<1&&Math.abs(dy)<1) return;
+        a = c.animate([{transform:'translate('+dx+'px,'+dy+'px)'},{transform:'none'}],{duration:620,easing:'cubic-bezier(.2,.8,.2,1)',delay:Math.min(i*18,200)});
+      } else {
+        a = c.animate([{opacity:0,transform:'scale(.8) translateY(14px)'},{opacity:1,transform:'none'}],{duration:520,easing:'cubic-bezier(.2,.8,.2,1)',delay:120+Math.min(i*30,260),fill:'backwards'});
+      }
+      busy.push(a);
+    });
+    leaving.forEach(function(c){
+      var a = c.animate([{opacity:1,transform:'scale(1)'},{opacity:0,transform:'scale(.82)'}],{duration:340,easing:'ease-in',fill:'forwards'});
+      a.onfinish=function(){if(c.classList.contains('out')){c.classList.remove('out');c.hidden=true;c.style.cssText=''}try{a.cancel()}catch(e){}};
+      busy.push(a);
+    });
+  }
+  var auto = !reduce, autoT = 0, autoI = 0, finderIn = false;
+  function stopAuto(){auto=false;clearInterval(autoT)}
+  $('#chips').addEventListener('click',function(e){
+    var b = e.target.closest('.chip'); if(!b) return;
+    stopAuto(); setFilter(b.dataset.k);
+  });
+  $('#chips').addEventListener('keydown',stopAuto);
+  setFilter('All',true);
+
+  var seq = ['Lab','Data','Research','Communication','All'];
+  function stepAuto(){ if(!auto||!finderIn) return; setFilter(seq[autoI++%seq.length]) }
+  if(!reduce){
+    autoT = setInterval(stepAuto, 2800);
+  }
+
+  /* ---------- reveals, finder visibility, timeline ---------- */
+  var tlItems = $$('.ti'), fill = $('#fill'), tl = $('#tl');
+  function updateFill(){
+    var tr = tl.getBoundingClientRect(), mid = innerHeight*.62, h = Math.max(0,Math.min(tr.height-16, mid - tr.top - 8));
+    fill.style.height = h+'px';
+    tlItems.forEach(function(it){var r=it.getBoundingClientRect(); it.classList.toggle('in', reduce || r.top < mid)});
+  }
+  if(reduce){ $$('.rv').forEach(function(e){e.classList.add('in')}); tlItems.forEach(function(e){e.classList.add('in')}); fill.style.height='calc(100% - 16px)'; }
+  else {
+    var io = new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -6% 0px'});
+    $$('.rv').forEach(function(e,i){e.style.setProperty('--d',i%3);io.observe(e)});
+    addEventListener('scroll',updateFill,{passive:true}); addEventListener('resize',updateFill); updateFill();
+  }
+  if(!reduce) setTimeout(function(){var c=$('#curve');c.addEventListener('transitionend',function f(){c.classList.add('loop');c.removeEventListener('transitionend',f)})},0);
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es){finderIn=es[0].isIntersecting}).observe($('.finder'));
+  } else finderIn = true;
+})();
+</script>
+<script src="../preview.js" defer></script>
+</body>
+</html>
