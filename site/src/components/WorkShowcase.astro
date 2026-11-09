@@ -1,7 +1,7 @@
 ---
 /**
- * The /work/ page body: two live sites and one concept, each as a gradient bar and four windows cut from
- * the real sites (scripts/crop-work.mjs). Eldeva is a concept, never live.
+ * The /work/ page body: live sites, each as a gradient bar and four windows cut from
+ * the real sites (scripts/crop-work.mjs).
  */
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
@@ -27,7 +27,7 @@ interface Project {
   n: string;
   name: string;
   tags: string;
-  bar: 'essence' | 'eldeva' | 'calculator';
+  bar: 'essence' | 'calculator';
   /** Tall window, wide window, two circles, narrow window. */
   windows: [Win, Win, Win, Win, Win];
 }
@@ -52,22 +52,8 @@ const allProjects: Project[] = [
     ],
   },
   {
-    id: 'eldeva',
-    n: '02',
-    name: 'Eldeva Candles',
-    tags: 'Ecommerce · Design · Concept',
-    bar: 'eldeva',
-    windows: [
-      { src: 'eldeva-candle', alt: 'Eldeva concept: a candle on its stand', caption: 'The candle' },
-      { src: 'eldeva-hero', alt: 'Eldeva concept: the home page hero', caption: 'Hero' },
-      { src: 'eldeva-product', alt: 'Eldeva concept: a product shot', caption: 'Product' },
-      { src: 'eldeva-scents', alt: 'Eldeva concept: the scent finder', caption: 'Scent finder' },
-      { src: 'eldeva-ritual', alt: 'Eldeva concept: the ritual set', caption: 'Ritual set' },
-    ],
-  },
-  {
     id: 'calculator',
-    n: '03',
+    n: '02',
     name: 'The Calculator App',
     tags: 'Web app · UI/UX · SEO · Live',
     bar: 'calculator',
@@ -186,11 +172,6 @@ const pic = (w: Win, width: number) => ({
 
   .project__bar--essence {
     background: var(--grad-essence);
-  }
-
-  .project__bar--eldeva {
-    background: var(--grad-eldeva);
-    color: var(--paper);
   }
 
   .project__bar--calculator {

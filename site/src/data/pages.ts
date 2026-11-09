@@ -102,7 +102,7 @@ export const pages: Record<PageKey, PageInfo> = {
     path: '/work/',
     title: 'Our work: websites and web apps | Hu/man',
     description:
-      'Live websites and concepts from Hu/man: Essence Hair, The Calculator App and the Eldeva Candles concept.',
+      'Live websites built by Hu/man: Essence Hair, a salon redesign, and The Calculator App, a web app with 130+ free calculators.',
     label: 'Our work',
     ogHeadline: 'Portfolio',
     schemaType: 'CollectionPage',

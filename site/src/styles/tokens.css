@@ -52,7 +52,6 @@
     radial-gradient(30% 50% at 74% 38%, #e3296a 0%, rgba(227, 41, 106, 0) 100%),
     linear-gradient(100deg, #e79569 0%, #d9545a 42%, #d73533 72%, #ce3d10 100%);
   --grad-essence: linear-gradient(90deg, #d31942 0%, #e85d8e 50%, #d798df 100%);
-  --grad-eldeva: linear-gradient(180deg, #2f4f7e 0%, #4591a8 58%, #edd1a8 100%);
   --grad-calculator: linear-gradient(90deg, #5944dd 0%, #90aadd 30%, #512fde 70%, #2a3974 100%);
 
   /* ---------- type ---------- */

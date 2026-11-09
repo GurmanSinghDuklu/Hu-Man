@@ -1,10 +1,9 @@
 /**
  * The projects on the site (home cards, /work/), with the facts the schema and llms-full.txt state
- * about them. Keep every line provable: Essence is a live site, Eldeva is a concept
- * and has never been live. No results or numbers.
+ * about them. Keep every line provable. No results or numbers.
  */
 export interface Project {
-  id: 'essence' | 'eldeva' | 'calculator';
+  id: 'essence' | 'calculator';
   name: string;
   /** The sentence under the name on the home cards (Gurman's wording, 2026-10-28). */
   blurb: string;
@@ -17,7 +16,7 @@ export interface Project {
   summary: string;
 }
 
-/** The order here is the order everywhere (home cards, /work/, schema, llms): Essence Hair, The Calculator App, Eldeva. */
+/** The order here is the order everywhere (home cards, /work/, schema, llms): Essence Hair, The Calculator App. */
 export const projects: Project[] = [
   {
     id: 'essence',
@@ -38,13 +37,5 @@ export const projects: Project[] = [
     url: 'https://thecalculatorapp.org',
     summary:
       'A live web app with more than 130 free UK and US calculators and unit converters, redesigned from a basic, functional site.',
-  },
-  {
-    id: 'eldeva',
-    name: 'Eldeva Candles',
-    blurb:
-      'Pre-production full site rebuild and integration from Shopify. Full inventory, booking, ordering and bespoke customisation system.',
-    live: false,
-    summary: 'A concept for an online candle shop. It has not launched.',
   },
 ];

@@ -25,13 +25,7 @@ const crops = [
   ['our-work/essence-studio', 'work/essence-scroll', 60, 1080, 560, 560],
   ['our-work/essence-services', 'work/essence-scroll', 60, 1990, 560, 560],
   ['our-work/essence-copy', 'work/essence-scroll', 735, 1050, 420, 700],
-  // 02 / Eldeva Candles (concept)
-  ['our-work/eldeva-candle', 'projects/eldeva-sweet-plum', 380, 0, 455, 685],
-  ['our-work/eldeva-hero', 'projects/eldeva-hero', 258, 0, 685, 685],
-  ['our-work/eldeva-product', 'projects/eldeva-white-sands', 380, 120, 460, 460],
-  ['our-work/eldeva-scents', 'projects/eldeva-scents', 300, 160, 460, 460],
-  ['our-work/eldeva-ritual', 'projects/eldeva-ritual', 70, 60, 380, 625],
-  // 03 / The Calculator App
+  // 02 / The Calculator App
   ['our-work/calculator-mobile', 'work/calculator-mobile', 0, 140, 780, 1172],
   ['our-work/calculator-projection', 'work/calculator-compound', 0, 0, 1054, 1054],
   ['our-work/calculator-breakdown', 'work/calculator-retirement', 290, 1150, 400, 400],
