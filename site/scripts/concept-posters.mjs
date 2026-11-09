@@ -22,6 +22,9 @@ const concepts = [...src.matchAll(/slug: '([^']+)'[\s\S]*?device: '(desktop|phon
 const only = process.argv.slice(2);
 const list = only.length ? concepts.filter((c) => only.includes(c.slug)) : concepts;
 
+// Concepts that open behind an entry game: shoot their poster in preview mode, which skips it.
+const PREVIEW_POSTER = new Set(['ellie']);
+
 const port = 4399;
 const server = await startServer(publicDir, port);
 const browser = await chromium.launch();
@@ -33,7 +36,10 @@ try {
       deviceScaleFactor: phone ? 2 : 1,
     });
     const page = await ctx.newPage();
-    await page.goto(`http://localhost:${port}/concepts/${slug}/`, { waitUntil: 'networkidle' });
+    const query = PREVIEW_POSTER.has(slug) ? '?preview' : '';
+    await page.goto(`http://localhost:${port}/concepts/${slug}/${query}`, {
+      waitUntil: 'networkidle',
+    });
     // Hide the back badge; let fonts and the hero's first animation settle.
     await page.addStyleTag({ content: '.badge{display:none!important}' });
     await page.evaluate(() => document.fonts.ready);

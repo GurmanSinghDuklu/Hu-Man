@@ -1,0 +1,691 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tom Ashworth, UX/UI design student (concept portfolio)</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#111111">
+<script>
+/* Stage mode = one pinned canvas driven by scroll. Without it (no JS, no canvas, reduced motion) the slides stack as plain sections. */
+(function(){var d=document.documentElement;d.classList.add('js');var r=matchMedia('(prefers-reduced-motion: reduce)').matches;var c=document.createElement('canvas');if(!r&&c.getContext&&c.getContext('2d'))d.classList.add('stage-mode');})();
+</script>
+<style>
+@font-face{font-family:'Figtree';font-style:normal;font-weight:400;font-display:swap;src:url(../fonts/figtree-latin-400-normal.woff2) format('woff2')}
+@font-face{font-family:'Figtree';font-style:normal;font-weight:500;font-display:swap;src:url(../fonts/figtree-latin-500-normal.woff2) format('woff2')}
+@font-face{font-family:'Figtree';font-style:normal;font-weight:700;font-display:swap;src:url(../fonts/figtree-latin-700-normal.woff2) format('woff2')}
+@font-face{font-family:'Figtree';font-style:normal;font-weight:800;font-display:swap;src:url(../fonts/figtree-latin-800-normal.woff2) format('woff2')}
+@font-face{font-family:'Instrument Serif';font-style:italic;font-weight:400;font-display:swap;src:url(../fonts/instrument-serif-latin-400-italic.woff2) format('woff2')}
+</style>
+<style>
+:root{
+  --bg:#111111;--fg:#F3F2ED;--soft:#D6D5CF;--mut:#B2B1AB;--line:rgba(243,242,237,.22);
+  --blue:#3B5BFF;--blue-t:#8397FF;
+  --sans:'Figtree',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --serif:'Instrument Serif',Georgia,'Times New Roman',serif;
+  --pad:clamp(16px,3.2vw,56px);
+  --ease:cubic-bezier(.7,0,.2,1);
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{background:var(--bg);scrollbar-gutter:stable;-webkit-text-size-adjust:100%}
+html.lock{overflow:hidden}
+body{margin:0;background:var(--bg);color:var(--fg);font:400 1.0625rem/1.6 var(--sans);-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--blue-t);outline-offset:4px;border-radius:2px}
+.vh{position:absolute!important;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.skip{position:fixed;left:12px;top:-60px;z-index:200;background:var(--fg);color:#111;padding:10px 16px;border-radius:4px;font-weight:700;text-decoration:none}
+.skip:focus{top:12px}
+.page{overflow-x:clip}
+
+/* ---------- top bar ---------- */
+.top{position:relative;z-index:40;display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:clamp(16px,2.2vw,30px) var(--pad)}
+.stage-mode .top{position:fixed;left:0;right:0;top:0;pointer-events:none}
+.stage-mode .top>*{pointer-events:auto}
+.brand{font:italic 400 clamp(1.75rem,2.7vw,2.6rem)/1 var(--serif);text-decoration:none;letter-spacing:.005em}
+.all{display:none;align-items:center;gap:10px;background:none;border:0;padding:8px 0;cursor:pointer;font-weight:500;font-size:.9375rem;position:relative}
+.stage-mode .all{display:inline-flex}
+.all svg{width:16px;height:16px;flex:none}
+.all::after{content:"";position:absolute;left:0;right:0;bottom:2px;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease)}
+.all:hover::after,.all.is-hot::after{transform:scaleX(1)}
+
+/* ---------- stage / slides ---------- */
+.track{position:relative}
+.stage-mode .track{height:600vh;height:calc(6 * 100svh)}
+.stage{position:relative}
+.stage-mode .stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:var(--bg)}
+#cv,.shade,.ind,.chev{display:none}
+.stage-mode #cv{display:block;position:absolute;inset:0;width:100%;height:100%}
+.stage-mode .shade{display:block;position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(to top,rgba(17,17,17,.86) 0,rgba(17,17,17,.35) 38%,rgba(17,17,17,0) 62%),linear-gradient(to left,rgba(17,17,17,.6),rgba(17,17,17,0) 22%),linear-gradient(to bottom,rgba(17,17,17,.55),rgba(17,17,17,0) 18%)}
+
+.slide{position:relative;border-top:1px solid var(--line)}
+.slide:first-child{border-top:0}
+.slide>img{width:100%;aspect-ratio:16/9;object-fit:cover;filter:grayscale(1)}
+.stage-mode .slide{position:absolute;inset:0;border:0;pointer-events:none}
+.stage-mode .slide>img{display:none}
+
+.cap{padding:20px var(--pad) 44px}
+.stage-mode .cap{position:absolute;left:var(--pad);bottom:clamp(84px,12vh,128px);padding:0;width:min(66rem,calc(100% - var(--pad) - 96px));opacity:var(--a,0);visibility:hidden}
+.stage-mode .cap.vis{visibility:visible}
+.cap h2{margin:0 0 .22em;font:800 clamp(2.5rem,8.4vw,8.4rem)/.92 var(--sans);letter-spacing:-.045em;text-wrap:balance}
+.cap .role{margin:0 0 1.1rem;max-width:40rem;font-weight:500;font-size:clamp(.95rem,1.35vw,1.2rem);line-height:1.45;color:var(--soft)}
+.stage-mode .cap h2{transform:translateY(calc(var(--d,0) * -70px))}
+.stage-mode .cap .role{transform:translateY(calc(var(--d,0) * -105px))}
+.stage-mode .cap .more,.stage-mode .cap .go{transform:translateY(calc(var(--d,0) * -140px))}
+.stage-mode .cap.on{pointer-events:auto}
+.more,.go{display:inline-flex;align-items:center;gap:.7em;position:relative;background:none;border:0;padding:.45rem 0;margin:0;font-weight:700;font-size:1rem;color:var(--fg);cursor:pointer;text-decoration:none}
+.more::before,.more::after,.go::before,.go::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;transform:scaleX(0);transform-origin:left}
+.more::after,.go::after{background:var(--fg);transition:transform .9s var(--ease) .45s}
+.more::before,.go::before{background:var(--blue-t);z-index:1;transition:transform .55s var(--ease)}
+.cap.on .more::after,.cap.on .go::after{transform:scaleX(1)}
+.more.is-hot::before,.more:hover::before,.go.is-hot::before,.go:hover::before{transform:scaleX(1)}
+.more.is-hot,.more:hover,.go.is-hot,.go:hover{color:var(--blue-t)}
+.more svg,.go svg{width:14px;height:14px;transition:transform .4s var(--ease)}
+.more.is-hot svg,.go.is-hot svg{transform:translate(3px,-3px)}
+.more-body{max-width:40rem;color:var(--soft)}
+.more-body p{margin:0 0 .9rem}
+.more-body h3{margin:1.2rem 0 .4rem;font:700 .8125rem/1.3 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--mut)}
+.more-body ul{margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:6px}
+.more-body li{border:1px solid var(--line);padding:3px 11px;font-size:.9rem;border-radius:99px}
+.stage-mode .cap .more-body{display:none}
+.stack-only{display:block}
+.stage-mode .stack-only{display:none}
+.stage-mode .cap .more{display:inline-flex}
+.cap .more{display:none}
+.stage-mode .cap .more{display:inline-flex}
+.stage-mode .cap:not(.has-more) .more{display:none}
+
+/* right-hand indicator */
+.stage-mode .ind{display:flex;position:absolute;z-index:5;right:clamp(10px,2.2vw,34px);top:50%;transform:translateY(-50%);flex-direction:column;align-items:flex-end;gap:10px}
+.count{margin:0 0 6px;font:700 .8125rem/1 var(--sans);letter-spacing:.14em;color:var(--blue-t);font-variant-numeric:tabular-nums}
+.ticks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;align-items:flex-end}
+.tick{display:flex;justify-content:flex-end;align-items:center;width:56px;height:22px;background:none;border:0;padding:0;cursor:pointer}
+.tick i{display:block;height:2px;width:14px;background:var(--blue);opacity:.6;transition:width .55s var(--ease),opacity .4s}
+.tick.on i{width:42px;opacity:1}
+.tick.is-hot i{opacity:1;width:28px}
+.tick.on.is-hot i{width:42px}
+.stage-mode .chev{display:flex;position:absolute;z-index:5;right:clamp(10px,2.2vw,34px);bottom:clamp(20px,4.4vh,44px);gap:8px}
+.chev button{display:grid;place-items:center;width:46px;height:46px;border:1px solid rgba(243,242,237,.45);border-radius:50%;background:rgba(17,17,17,.5);cursor:pointer;transition:background .3s,border-color .3s,opacity .3s,color .3s}
+.chev button svg{width:18px;height:18px}
+.chev button:hover,.chev button.is-hot{background:var(--blue);border-color:var(--blue);color:#fff}
+.chev button[aria-disabled=true]{opacity:.35;cursor:default}
+.chev button[aria-disabled=true]:hover{background:rgba(17,17,17,.5);border-color:rgba(243,242,237,.45)}
+
+/* ---------- dialogs ---------- */
+dialog{border:0;padding:0;color:var(--fg);background:var(--bg);overscroll-behavior:contain}
+dialog::backdrop{background:rgba(17,17,17,.9)}
+.idx{width:100%;height:100%;max-width:none;max-height:none;overflow:auto}
+.idx-in{position:relative;min-height:100%;display:flex;flex-direction:column;padding:clamp(16px,2.2vw,30px) var(--pad) 36px;isolation:isolate}
+.idx-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:clamp(16px,4vh,48px)}
+.idx-head p{margin:0;font:italic 400 clamp(1.75rem,2.7vw,2.6rem)/1 var(--serif)}
+.x{background:none;border:1px solid rgba(243,242,237,.45);border-radius:99px;padding:9px 18px;cursor:pointer;font-weight:500;font-size:.9375rem;transition:background .3s,border-color .3s}
+.x:hover,.x.is-hot{background:var(--blue);border-color:var(--blue);color:#fff}
+.rows{list-style:none;margin:0;padding:0;position:relative;z-index:2}
+.rows li{border-top:1px solid var(--line)}
+.rows li:last-child{border-bottom:1px solid var(--line)}
+.rows a{display:grid;grid-template-columns:3.2rem minmax(0,1fr);gap:0 14px;align-items:baseline;padding:clamp(12px,2.2vh,24px) 0;text-decoration:none;transition:padding .5s var(--ease),color .3s}
+.rows .n{font:700 .8125rem/1 var(--sans);letter-spacing:.14em;color:var(--blue-t);font-variant-numeric:tabular-nums}
+.rows .t{font:800 clamp(1.9rem,5.4vw,5rem)/1 var(--sans);letter-spacing:-.04em}
+.rows .r{grid-column:2;margin-top:.35rem;color:var(--mut);font-size:.9375rem}
+.rows a:hover,.rows a.is-hot,.rows a:focus-visible{padding-left:clamp(10px,2vw,28px);color:#fff}
+.rows a:focus-visible{outline-offset:-3px}
+.pics{position:absolute;z-index:1;right:var(--pad);top:50%;width:min(44vw,38rem);aspect-ratio:16/9;transform:translateY(-44%);pointer-events:none}
+.pics img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1);opacity:0;transition:opacity .45s}
+.pics img.on{opacity:1}
+@media (max-width:820px){.pics{inset:0;right:0;top:0;width:100%;aspect-ratio:auto;transform:none;position:fixed}.pics img{opacity:0}.pics img.on{opacity:.28}}
+.sheet{width:min(40rem,100%);height:100%;max-height:none;margin:0 0 0 auto;overflow:auto;border-left:1px solid var(--line)}
+.sheet-in{padding:clamp(20px,3vw,40px) clamp(18px,3vw,40px) 48px}
+.sheet h2{margin:1.8rem 0 .2em;font:800 clamp(2.2rem,5vw,3.6rem)/.95 var(--sans);letter-spacing:-.04em}
+.sheet .role{margin:0 0 1.4rem;color:var(--blue-t);font-weight:500}
+.sheet-bar{display:flex;justify-content:flex-end}
+
+/* ---------- about / contact ---------- */
+.sec{position:relative;padding:clamp(72px,12vw,160px) var(--pad)}
+.tag{margin:0 0 1.6rem;font:700 .8125rem/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--blue-t)}
+.h{margin:0 0 .5em;font:800 clamp(2.3rem,6.4vw,6rem)/.95 var(--sans);letter-spacing:-.045em;text-wrap:balance}
+.h em{font:italic 400 1.08em/1 var(--serif);letter-spacing:0}
+.about{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(28px,6vw,96px);align-items:start;border-top:1px solid var(--line)}
+.portrait{position:relative;margin:0}
+.portrait img{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:80% 30%;filter:grayscale(1)}
+.portrait figcaption{margin-top:.7rem;font-size:.875rem;color:var(--mut)}
+.about p{max-width:38rem;color:var(--soft)}
+.about .lead{font-size:clamp(1.2rem,1.9vw,1.6rem);line-height:1.45;color:var(--fg);margin-top:0}
+.cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(20px,4vw,56px);margin-top:2.4rem}
+.cols h3{margin:0 0 .8rem;font:700 .8125rem/1.3 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--mut)}
+.cols ul{list-style:none;margin:0;padding:0}
+.cols li{padding:.55rem 0;border-top:1px solid var(--line);font-weight:500}
+.cols li:last-child{border-bottom:1px solid var(--line)}
+.contact{border-top:1px solid var(--line);padding-bottom:clamp(56px,8vw,96px)}
+.mail{display:inline-block;position:relative;font:800 clamp(1.55rem,5.6vw,5.2rem)/1.05 var(--sans);letter-spacing:-.04em;text-decoration:none;overflow-wrap:anywhere;padding-bottom:.12em}
+.mail::before,.mail::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--blue-t);transform-origin:left}
+.mail::after{background:var(--fg);opacity:.4}
+.mail::before{transform:scaleX(0);transition:transform .7s var(--ease);z-index:1}
+.mail:hover::before,.mail.is-hot::before{transform:scaleX(1)}
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,3vw,40px);margin:3rem 0 0;padding:0;list-style:none}
+.facts li{border-top:1px solid var(--line);padding-top:.9rem;color:var(--soft)}
+.facts b{display:block;margin-bottom:.2rem;color:var(--fg);font-weight:700}
+.foot{border-top:1px solid var(--line);padding:26px var(--pad) 28px;font-size:.875rem;color:var(--mut)}
+.foot p{margin:0}
+@media (min-width:641px){.foot{text-align:right}}
+.past .top{background:linear-gradient(#111 55%,rgba(17,17,17,0))}
+.stage-mode .rv{opacity:0;transform:translateY(34px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.stage-mode .rv.in{opacity:1;transform:none}
+
+@media (max-width:820px){
+  .about{grid-template-columns:minmax(0,1fr)}
+  .portrait{max-width:26rem}
+  .facts{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:640px){
+  .all span{font-size:.875rem}
+  .tick{width:40px;height:20px}
+  .tick i{width:9px}.tick.on i{width:26px}.tick.is-hot i{width:18px}.tick.on.is-hot i{width:26px}
+  .count{font-size:.6875rem;letter-spacing:.1em}
+  .chev button{width:42px;height:42px}
+  .stage-mode .cap{width:calc(100% - var(--pad) - 62px);bottom:clamp(76px,13vh,110px)}
+  .cols{grid-template-columns:minmax(0,1fr)}
+  .more,.go{padding:.6rem 0}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}
+
+.badge{position:fixed;z-index:90;left:max(12px, env(safe-area-inset-left, 0px));bottom:max(12px, env(safe-area-inset-bottom, 0px));display:inline-flex;align-items:center;gap:8px;background:#121317;color:#EDECE6;border-radius:99px;padding:8px 14px 8px 11px;font-size:12px;font-weight:600;line-height:1.2;box-shadow:0 0 0 1.5px #EDECE6,0 10px 24px -8px rgba(18,19,23,.5);max-width:calc(100vw - 24px);pointer-events:none}
+.badge i{width:9px;height:9px;border-radius:50%;background:#FFD23F;flex:none}
+/* HU/MAN concept badge */
+.badge{display:flex;flex-wrap:wrap;align-items:center;gap:2px 12px;pointer-events:auto;border-radius:18px;line-height:1.3}
+.badge a{color:inherit;font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.badge a:focus-visible{outline:2px solid currentColor;outline-offset:3px;border-radius:3px}
+@media (max-width:640px){.badge{position:static;margin:24px max(16px,env(safe-area-inset-left,0px)) max(16px,env(safe-area-inset-bottom,0px));max-width:none;justify-content:center;text-align:center;border-radius:14px}footer{padding-bottom:26px!important}}
+
+</style>
+</head>
+<body>
+<a class="skip" href="#about">Skip to about Tom</a>
+<div class="page" id="top">
+
+<header class="top">
+  <a class="brand" href="#top" aria-label="Tom Ashworth, back to the start">Tom Ashworth</a>
+  <button class="all hot" type="button" id="openIdx" aria-haspopup="dialog">
+    <svg viewBox="0 0 16 16" aria-hidden="true" fill="currentColor"><rect x="1" y="1" width="6" height="6"/><rect x="9" y="1" width="6" height="6"/><rect x="1" y="9" width="6" height="6"/><rect x="9" y="9" width="6" height="6"/></svg>
+    <span>See all projects</span>
+  </button>
+</header>
+
+<main id="main">
+<div class="track" id="track">
+ <div class="stage" id="stage">
+  <canvas id="cv" aria-hidden="true"></canvas>
+  <div class="shade" aria-hidden="true"></div>
+
+  <h1 class="vh">Tom Ashworth, UX/UI design student looking for a placement</h1>
+
+  <article class="slide" id="s0" aria-label="Introduction">
+    <img src="img/6.webp" width="1280" height="720" alt="Black and white portrait of Tom Ashworth, a young man with dark curly hair, smiling at the camera against a dark wall" data-fx=".5">
+    <div class="cap">
+      <h2>Hello, I’m Tom</h2>
+      <p class="role">UX/UI design student in my final year. Looking for a placement.</p>
+      <a class="go hot" href="#about"><span>Meet Tom</span><svg viewBox="0 0 14 14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12 12 2M4.5 2H12v7.5"/></svg></a>
+    </div>
+  </article>
+
+  <article class="slide" id="s1" aria-label="Project 1">
+    <img src="img/1.webp" width="1280" height="720" alt="Two people sitting at a table in a food bank, a young man and an older woman, both looking at a phone together while testing an app" data-fx=".5" loading="lazy">
+    <div class="cap has-more">
+      <h2>Pantry Run</h2>
+      <p class="role">Food-bank stock app. Student project, UX and UI.</p>
+      <button class="more hot" type="button" data-open="1"><span>See more</span><svg viewBox="0 0 14 14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12 12 2M4.5 2H12v7.5"/></svg></button>
+      <div class="more-body">
+        <p>A phone app for food-bank volunteers to log what comes in and what goes out, so the shelves and the spreadsheet stop disagreeing. The brief was to make a first-time volunteer useful in their first shift.</p>
+        <p>I sat with a volunteer and a first-time user while they tried a clickable prototype, then cut the stock-in flow down to three taps.</p>
+        <h3>What I did</h3>
+        <ul><li>Interviews</li><li>User flows</li><li>Prototype in Figma</li><li>Usability test</li></ul>
+      </div>
+    </div>
+  </article>
+
+  <article class="slide" id="s2" aria-label="Project 2">
+    <img src="img/2.webp" width="1280" height="720" alt="Visitors in a museum gallery with a row of hanging directional signs above them, seen in perspective down the hall" data-fx=".5" loading="lazy">
+    <div class="cap has-more">
+      <h2>Find your way</h2>
+      <p class="role">Wayfinding for a city museum. Signs, floor maps and a visitor leaflet.</p>
+      <button class="more hot" type="button" data-open="2"><span>See more</span><svg viewBox="0 0 14 14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12 12 2M4.5 2H12v7.5"/></svg></button>
+      <div class="more-body">
+        <p>A signage system for a museum where visitors keep asking the front desk the same three questions: where is the toilet, where is the café, and how do I get out. The brief asked for something that works without a phone.</p>
+        <p>I mapped how people actually walk the galleries, then designed hanging signs, a floor map and a pocket leaflet that share one set of arrows and colours.</p>
+        <h3>What I did</h3>
+        <ul><li>Walk-through observation</li><li>Sign hierarchy</li><li>Arrows and icons</li><li>Print layout</li></ul>
+      </div>
+    </div>
+  </article>
+
+  <article class="slide" id="s3" aria-label="Project 3">
+    <img src="img/3.webp" width="1280" height="720" alt="A hand sketching phone screens on paper with a pencil, surrounded by sticky notes" data-fx=".5" loading="lazy">
+    <div class="cap has-more">
+      <h2>Paper first</h2>
+      <p class="role">Sketching and wireframes. A process piece.</p>
+      <button class="more hot" type="button" data-open="3"><span>See more</span><svg viewBox="0 0 14 14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12 12 2M4.5 2H12v7.5"/></svg></button>
+      <div class="more-body">
+        <p>How I get from a vague idea to something people can poke at. Fast sketches on paper, sticky notes for the flow, then low-fidelity wireframes in Figma only once the paper version makes sense.</p>
+        <p>This piece walks through that process on one screen from start to finish, including the versions I threw away.</p>
+        <h3>What I did</h3>
+        <ul><li>Crazy eights sketching</li><li>Sticky-note flows</li><li>Low-fidelity wireframes</li><li>Design critique</li></ul>
+      </div>
+    </div>
+  </article>
+
+  <article class="slide" id="s4" aria-label="Project 4">
+    <img src="img/4.webp" width="1280" height="720" alt="A person waiting alone at a rainy bus shelter at night, a bus approaching on the left and wet street lights glowing" data-fx=".5" loading="lazy">
+    <div class="cap has-more">
+      <h2>Next bus, now</h2>
+      <p class="role">Live-times concept for night-time bus stops. Student project.</p>
+      <button class="more hot" type="button" data-open="4"><span>See more</span><svg viewBox="0 0 14 14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12 12 2M4.5 2H12v7.5"/></svg></button>
+      <div class="more-body">
+        <p>A concept for a live-times display at the stop itself, designed for someone waiting alone after dark who wants one answer fast: is my bus coming, and how long?</p>
+        <p>I designed the display for glare and rain, with large type, high contrast and a single line for the next bus, and kept the sample timetable data simple.</p>
+        <h3>What I did</h3>
+        <ul><li>Night-time site visit</li><li>Display typography</li><li>Contrast checks</li><li>Interface states</li></ul>
+      </div>
+    </div>
+  </article>
+
+  <article class="slide" id="s5" aria-label="Project 5">
+    <img src="img/5.webp" width="1280" height="720" alt="A group of students pinning printed work onto a long studio wall during a pin-up review" data-fx=".5" loading="lazy">
+    <div class="cap has-more">
+      <h2>Studio show</h2>
+      <p class="role">The pin-up wall and printed guide for our end-of-year show.</p>
+      <button class="more hot" type="button" data-open="5"><span>See more</span><svg viewBox="0 0 14 14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12 12 2M4.5 2H12v7.5"/></svg></button>
+      <div class="more-body">
+        <p>A group project: lay out forty-odd pieces of student work on one long wall so a visitor can read the room in a minute and still find the detail.</p>
+        <p>I worked on the wall plan, the numbering and the printed guide that matches it.</p>
+        <h3>What I did</h3>
+        <ul><li>Wall plan</li><li>Numbering system</li><li>Printed guide</li><li>Working in a team</li></ul>
+      </div>
+    </div>
+  </article>
+
+  <nav class="ind" aria-label="Slides">
+    <p class="count" id="count" aria-hidden="true">01 / 06</p>
+    <ul class="ticks" id="ticks"></ul>
+  </nav>
+  <div class="chev" role="group" aria-label="Move between slides">
+    <button type="button" class="hot" id="up" aria-label="Previous slide"><svg viewBox="0 0 18 18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11.5 9 5.5l6 6"/></svg></button>
+    <button type="button" class="hot" id="down" aria-label="Next slide"><svg viewBox="0 0 18 18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6.5l6 6 6-6"/></svg></button>
+  </div>
+ </div>
+</div>
+
+<section class="sec about" id="about" aria-labelledby="about-h">
+  <figure class="portrait rv">
+    <img src="img/6.webp" width="1280" height="720" alt="Black and white portrait of Tom Ashworth smiling, with dark curly hair" loading="lazy">
+    <figcaption>Tom, Leeds.</figcaption>
+  </figure>
+  <div>
+    <p class="tag rv">About</p>
+    <h2 class="h rv" id="about-h">I design for the <em>person</em> in the queue.</h2>
+    <p class="lead rv">I’m in the final year of a BA in Graphic and UX Design at a university in Leeds. I like problems with a real person attached: a volunteer sorting tins, a visitor lost in a gallery, someone at a bus stop at midnight.</p>
+    <p class="rv">I start on paper, test early with whoever I can find, and only then open Figma. I’m looking for a UX/UI placement where I can learn from a team, be useful quickly and keep asking good questions.</p>
+    <div class="cols rv">
+      <div>
+        <h3>Skills</h3>
+        <ul>
+          <li>User research basics</li>
+          <li>Wireframing and prototyping</li>
+          <li>Interaction design</li>
+          <li>Wayfinding and signage</li>
+          <li>Typography and layout</li>
+          <li>Accessibility checks (WCAG)</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Tools</h3>
+        <ul>
+          <li>Figma and FigJam</li>
+          <li>Adobe Illustrator</li>
+          <li>Adobe InDesign</li>
+          <li>Adobe Photoshop</li>
+          <li>Pen, paper and sticky notes</li>
+          <li>HTML and CSS, the basics</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec contact" id="contact" aria-labelledby="contact-h">
+  <p class="tag rv">Contact</p>
+  <h2 class="h rv" id="contact-h">Looking for a <em>placement?</em></h2>
+  <a class="mail hot rv" href="mailto:tom@tomashworth.example">tom@tomashworth.example</a>
+  <ul class="facts rv">
+    <li><b>What I’m after</b>A UX/UI design placement.</li>
+    <li><b>Where</b>Based in Leeds. Happy to meet in person or online.</li>
+    <li><b>Portfolio</b>Case-study detail and process work on request.</li>
+  </ul>
+</section>
+</main>
+
+<footer class="foot"><p>Concept site by HU/MAN. Names, projects and details are sample content.</p></footer>
+</div>
+
+<dialog class="idx" id="idx" aria-label="All projects">
+  <div class="idx-in">
+    <div class="idx-head"><p>Tom Ashworth</p><button class="x hot" type="button" id="closeIdx">Close</button></div>
+    <ol class="rows" id="rows">
+      <li><a class="hot" href="#s0" data-go="0"><span class="n">01</span><span class="t">Hello, I’m Tom</span><span class="r">Introduction</span></a></li>
+      <li><a class="hot" href="#s1" data-go="1"><span class="n">02</span><span class="t">Pantry Run</span><span class="r">Food-bank stock app</span></a></li>
+      <li><a class="hot" href="#s2" data-go="2"><span class="n">03</span><span class="t">Find your way</span><span class="r">Museum wayfinding</span></a></li>
+      <li><a class="hot" href="#s3" data-go="3"><span class="n">04</span><span class="t">Paper first</span><span class="r">Sketching and wireframes</span></a></li>
+      <li><a class="hot" href="#s4" data-go="4"><span class="n">05</span><span class="t">Next bus, now</span><span class="r">Bus-stop live times</span></a></li>
+      <li><a class="hot" href="#s5" data-go="5"><span class="n">06</span><span class="t">Studio show</span><span class="r">Pin-up wall and guide</span></a></li>
+    </ol>
+    <div class="pics" id="pics" aria-hidden="true">
+      <img src="img/6.webp" width="1280" height="720" alt="Portrait of Tom" loading="lazy">
+      <img src="img/1.webp" width="1280" height="720" alt="Food bank app test" loading="lazy">
+      <img src="img/2.webp" width="1280" height="720" alt="Museum wayfinding signs" loading="lazy">
+      <img src="img/3.webp" width="1280" height="720" alt="Sketching wireframes" loading="lazy">
+      <img src="img/4.webp" width="1280" height="720" alt="Bus stop at night" loading="lazy">
+      <img src="img/5.webp" width="1280" height="720" alt="Studio pin-up" loading="lazy">
+    </div>
+  </div>
+</dialog>
+
+<dialog class="sheet" id="sheet" aria-labelledby="sheet-h">
+  <div class="sheet-in">
+    <div class="sheet-bar"><button class="x hot" type="button" id="closeSheet">Close</button></div>
+    <h2 id="sheet-h"></h2>
+    <p class="role" id="sheet-r"></p>
+    <div class="more-body" id="sheet-b"></div>
+  </div>
+</dialog>
+
+<div class="badge" role="note"><a href="../../portfolio/">&larr; Back to HU/MAN</a><span>Concept site by HU/MAN</span></div>
+
+<script>
+(function(){
+  'use strict';
+  var root = document.documentElement;
+  var stageMode = root.classList.contains('stage-mode');
+  var preview = /(^|[?&])preview(=|&|$)/.test(location.search);
+  var $ = function(s,r){return (r||document).querySelector(s)};
+  var $$ = function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+  var clamp = function(v,a,b){return v<a?a:v>b?b:v};
+
+  /* ---- hover driven from JS too (synthetic events from the preview cannot fire :hover) ---- */
+  var hotEl = null;
+  function setHot(el){
+    if(el===hotEl) return;
+    if(hotEl) hotEl.classList.remove('is-hot');
+    hotEl = el;
+    if(el) el.classList.add('is-hot');
+    var row = el && el.closest ? el.closest('[data-go]') : null;
+    if(row) showPic(+row.getAttribute('data-go'));
+  }
+  document.addEventListener('mouseover', function(e){ setHot(e.target.closest ? e.target.closest('.hot') : null); });
+  document.addEventListener('mouseout', function(e){ if(!e.relatedTarget || !e.relatedTarget.closest || !e.relatedTarget.closest('.hot')) setHot(null); });
+  document.addEventListener('focusin', function(e){ var h=e.target.closest&&e.target.closest('.hot'); if(h&&h.matches(':focus-visible')) setHot(h); });
+  document.addEventListener('focusout', function(){ setHot(null); });
+
+  /* ---- reveal on scroll (about and contact) ---- */
+  var rv = $$('.rv');
+  if(stageMode && 'IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    },{rootMargin:'0px 0px -8% 0px',threshold:.05});
+    rv.forEach(function(el,i){ el.style.transitionDelay = (i%4)*70+'ms'; io.observe(el); });
+  } else rv.forEach(function(el){ el.classList.add('in'); });
+
+  /* ---- dialogs ---- */
+  var idx = $('#idx'), sheet = $('#sheet');
+  var N = 6;
+  var pics = $$('#pics img');
+  function showPic(i){ pics.forEach(function(p,k){ p.classList.toggle('on', k===i); }); }
+  function openDlg(d){
+    if(d.showModal){ d.showModal(); root.classList.add('lock'); }
+  }
+  [idx,sheet].forEach(function(d){
+    d.addEventListener('close', function(){ if(!idx.open && !sheet.open) root.classList.remove('lock'); });
+    d.addEventListener('click', function(e){ if(e.target===d) d.close(); });
+  });
+  $('#openIdx').addEventListener('click', function(){ showPic(cur); openDlg(idx); });
+  $('#closeIdx').addEventListener('click', function(){ idx.close(); });
+  $('#closeSheet').addEventListener('click', function(){ sheet.close(); });
+  $$('[data-go]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      e.preventDefault();
+      var i = +a.getAttribute('data-go');
+      idx.close();
+      goTo(i);
+    });
+  });
+  $$('.more').forEach(function(b){
+    b.addEventListener('click', function(){
+      var cap = b.closest('.cap');
+      $('#sheet-h').textContent = $('h2',cap).textContent;
+      $('#sheet-r').textContent = $('.role',cap).textContent;
+      $('#sheet-b').innerHTML = $('.more-body',cap).innerHTML;
+      openDlg(sheet);
+    });
+  });
+
+  if(!stageMode) return;
+
+  /* ---- stage ---- */
+  var track = $('#track'), stage = $('#stage'), cv = $('#cv'), ctx = cv.getContext('2d');
+  var slides = $$('.slide'), caps = slides.map(function(s){ return $('.cap',s); });
+  var imgs = slides.map(function(s){ return $('img',s); });
+  var fx = imgs.map(function(im){ return parseFloat(im.getAttribute('data-fx')||'.5'); });
+  imgs.forEach(function(im){ im.loading = 'eager'; });
+
+  var countEl = $('#count'), ticksEl = $('#ticks');
+  var ticks = slides.map(function(s,i){
+    var li = document.createElement('li'), b = document.createElement('button');
+    b.type='button'; b.className='tick hot';
+    b.setAttribute('aria-label','Go to slide '+(i+1)+' of '+N+': '+($('h2',caps[i]).textContent));
+    b.innerHTML = '<i></i>';
+    b.addEventListener('click', function(){ lastInput = performance.now(); goTo(i); });
+    li.appendChild(b); ticksEl.appendChild(li);
+    return b;
+  });
+  var upB = $('#up'), downB = $('#down');
+
+  var W=0,H=0,dpr=1, trackTop=0;
+  function resize(){
+    dpr = Math.min(window.devicePixelRatio||1, W>900?1.5:2);
+    W = stage.clientWidth; H = stage.clientHeight;
+    cv.width = Math.round(W*dpr); cv.height = Math.round(H*dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+  }
+  resize();
+  addEventListener('resize', resize);
+  if(window.ResizeObserver) new ResizeObserver(resize).observe(stage);
+
+  /* pointer: parallax + spotlight */
+  var px = .5, py = .5, pAt = -1e9;
+  function onMove(e){ px = clamp(e.clientX/Math.max(1,innerWidth),0,1); py = clamp(e.clientY/Math.max(1,innerHeight),0,1); pAt = performance.now(); }
+  addEventListener('pointermove', onMove, {passive:true});
+  addEventListener('mousemove', onMove, {passive:true});
+  var tx=0, ty=0, sx=.62, sy=.42;
+
+  /* input tracking for the idle auto-advance */
+  var lastInput = performance.now(), touching = false, goal = null, settleT = 0;
+  ['wheel','keydown','pointerdown'].forEach(function(n){ addEventListener(n, function(){ lastInput = performance.now(); }, {passive:true}); });
+  addEventListener('touchstart', function(){ touching = true; lastInput = performance.now(); }, {passive:true});
+  addEventListener('touchmove', function(){ lastInput = performance.now(); }, {passive:true});
+  addEventListener('touchend', function(){ touching = false; queueSettle(); }, {passive:true});
+  addEventListener('touchcancel', function(){ touching = false; }, {passive:true});
+
+  function pNow(){
+    var r = track.getBoundingClientRect();
+    return clamp(-r.top / Math.max(1,H), 0, N-1);
+  }
+  function goTo(i){
+    i = clamp(i,0,N-1);
+    goal = i;
+    var r = track.getBoundingClientRect();
+    scrollTo({top: Math.round(r.top + scrollY + i*H), behavior:'smooth'});
+  }
+  function goAfter(){
+    goal = null;
+    var el = $('#about'); var r = el.getBoundingClientRect();
+    scrollTo({top: Math.round(r.top + scrollY), behavior:'smooth'});
+  }
+  /* settle on the nearest slide once scrolling stops (not in the preview, not while a finger is down) */
+  function queueSettle(){
+    clearTimeout(settleT);
+    settleT = setTimeout(function(){
+      goal = null;
+      if(preview || touching || idx.open || sheet.open) return;
+      var r = track.getBoundingClientRect();
+      if(r.top > 0 || r.bottom < H*.9) return;
+      var p = pNow(), n = Math.round(p);
+      if(Math.abs(p-n) > .012) scrollTo({top: Math.round(r.top + scrollY + n*H), behavior:'smooth'});
+    }, 170);
+  }
+  addEventListener('scroll', queueSettle, {passive:true});
+
+  upB.addEventListener('click', function(){ lastInput = performance.now(); goTo((goal===null?Math.round(pNow()):goal)-1); });
+  downB.addEventListener('click', function(){
+    lastInput = performance.now();
+    var b = goal===null?Math.round(pNow()):goal;
+    if(b>=N-1) goAfter(); else goTo(b+1);
+  });
+  addEventListener('keydown', function(e){
+    if(idx.open || sheet.open || e.altKey || e.ctrlKey || e.metaKey) return;
+    var t = e.target; if(t && /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)) return;
+    var r = track.getBoundingClientRect();
+    if(r.bottom < H*.9 || r.top > 1) return;
+    var down = e.key==='ArrowDown' || e.key==='PageDown', upk = e.key==='ArrowUp' || e.key==='PageUp';
+    if(!down && !upk) return;
+    var b = goal===null?Math.round(pNow()):goal;
+    if(down){ e.preventDefault(); if(b>=N-1) goAfter(); else goTo(b+1); }
+    else if(b>0){ e.preventDefault(); goTo(b-1); }
+  });
+
+  /* ---- drawing ---- */
+  function ready(im){ return im.complete && im.naturalWidth>0; }
+  function src(im, zoom, ox, oy, f){
+    var iw = im.naturalWidth, ih = im.naturalHeight;
+    var sc = Math.max(W/iw, H/ih) * zoom;
+    var sw = W/sc, sh = H/sc;
+    var sxx = clamp((iw-sw)*f - ox/sc, 0, Math.max(0,iw-sw));
+    var syy = clamp((ih-sh)*.5 - oy/sc, 0, Math.max(0,ih-sh));
+    return {x:sxx,y:syy,w:sw,h:sh};
+  }
+  var K = 14, R = 26;
+  function drawA(im, i, e, zoom, ox, oy){
+    var s = src(im, zoom, ox, oy, fx[i]);
+    for(var k=0;k<K;k++){
+      var x0 = Math.round(k*W/K), x1 = Math.round((k+1)*W/K);
+      var d = k/(K-1)*.46;
+      var u = clamp((e-d)/.54,0,1);
+      var q = u<.5 ? 4*u*u*u : 1-Math.pow(-2*u+2,3)/2;
+      var dir = (k%2)?1:-1;
+      var yo = dir*q*H*1.04;
+      var xo = dir*Math.sin(q*Math.PI)*W*.012;
+      if(Math.abs(yo)>=H) continue;
+      ctx.globalAlpha = 1 - q*.55;
+      ctx.drawImage(im, s.x+(x0/W)*s.w, s.y, ((x1-x0+1)/W)*s.w, s.h, x0+xo, yo, x1-x0+1, H);
+    }
+    ctx.globalAlpha = 1;
+  }
+  function drawB(im, i, e, zoom, ox, oy, time){
+    var s = src(im, zoom, ox, oy, fx[i]);
+    var amp = Math.sin(e*Math.PI)*W*.018;
+    for(var r=0;r<R;r++){
+      var y0 = Math.round(r*H/R), y1 = Math.round((r+1)*H/R);
+      var xo = Math.sin(r*.6 + time*2.4)*amp;
+      ctx.drawImage(im, s.x, s.y+(y0/H)*s.h, s.w, ((y1-y0+1)/H)*s.h, xo-amp, y0, W+amp*2, y1-y0+1);
+    }
+  }
+  function render(q, time){
+    var i = Math.min(N-1, Math.floor(q+1e-4)), e = q - i;
+    if(i>=N-1){ i=N-1; e=0; }
+    var breathe = 1.075 + .014*Math.sin(time*.45);
+    var ox = -(tx)*W*.012 + Math.sin(time*.21)*W*.004, oy = -(ty)*H*.012;
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.fillStyle = '#111'; ctx.fillRect(0,0,W,H);
+    var a = imgs[i];
+    if(e<=.001){
+      if(ready(a)){ var s = src(a, breathe, ox, oy, fx[i]); ctx.drawImage(a, s.x,s.y,s.w,s.h, 0,0,W,H); }
+    } else {
+      var b = imgs[i+1];
+      if(ready(b)) drawB(b, i+1, e, breathe + .12*(1-e), ox*1.6, oy*1.6, time);
+      ctx.fillStyle = 'rgba(17,17,17,'+((1-e)*.55).toFixed(3)+')'; ctx.fillRect(0,0,W,H);
+      if(ready(a)) drawA(a, i, e, breathe, ox, oy);
+    }
+    /* darken, with a soft spotlight that follows the cursor */
+    var cx = sx*W, cy = sy*H, rad = Math.max(W,H)*.62;
+    var g = ctx.createRadialGradient(cx,cy,0,cx,cy,rad);
+    g.addColorStop(0,'rgba(8,8,8,.12)'); g.addColorStop(.45,'rgba(8,8,8,.34)'); g.addColorStop(1,'rgba(8,8,8,.6)');
+    ctx.fillStyle = g; ctx.fillRect(0,0,W,H);
+  }
+
+  /* ---- state + loop ---- */
+  var ps = pNow(), cur = -1, onScreen = true, last = performance.now();
+  if('IntersectionObserver' in window) new IntersectionObserver(function(es){ onScreen = es[0].isIntersecting; root.classList.toggle('past', !onScreen); }).observe(stage);
+
+  function setActive(n){
+    cur = n;
+    countEl.textContent = (n<9?'0':'')+(n+1)+' / 0'+N;
+    ticks.forEach(function(t,k){ t.classList.toggle('on',k===n); if(k===n) t.setAttribute('aria-current','true'); else t.removeAttribute('aria-current'); });
+    caps.forEach(function(c,k){ c.classList.toggle('on',k===n); if(k===n) c.removeAttribute('inert'); else c.setAttribute('inert',''); });
+    upB.setAttribute('aria-disabled', n===0 ? 'true':'false');
+    downB.setAttribute('aria-label', n===N-1 ? 'Continue to about Tom' : 'Next slide');
+  }
+  setActive(0);
+  caps.forEach(function(c,k){ if(k) c.setAttribute('inert',''); });
+
+  function qOf(p){
+    var i = Math.min(N-1, Math.floor(p)), f = p - i;
+    var u = clamp((f-.2)/.6,0,1), e = u*u*(3-2*u);
+    return i + e;
+  }
+
+  function frame(now){
+    requestAnimationFrame(frame);
+    var dt = Math.min(64, now-last); last = now;
+    if(!onScreen || document.hidden) return;
+    var k = 1 - Math.pow(1-.14, dt/16.7);
+    var target = pNow();
+    ps += (target-ps)*k; if(Math.abs(target-ps)<.0004) ps = target;
+    var q = qOf(ps);
+
+    var live = now - pAt < 3000, t = now/1000;
+    var gx = live ? px : .5 + .34*Math.sin(t*.5), gy = live ? py : .45 + .24*Math.sin(t*.73+1);
+    tx += ((gx-.5)*2 - tx)*.07*(dt/16.7); ty += ((gy-.5)*2 - ty)*.07*(dt/16.7);
+    sx += (gx - sx)*.1*(dt/16.7); sy += (gy - sy)*.1*(dt/16.7);
+
+    render(q, t);
+
+    var n = Math.round(q);
+    if(n!==cur) setActive(n);
+    for(var i=0;i<N;i++){
+      var d = q - i, a = clamp(1 - Math.abs(d)*2.2, 0, 1);
+      var c = caps[i];
+      if(a<=0){ if(c.classList.contains('vis')) c.classList.remove('vis'); continue; }
+      if(!c.classList.contains('vis')) c.classList.add('vis');
+      c.style.setProperty('--d', d.toFixed(3));
+      c.style.setProperty('--a', a.toFixed(3));
+    }
+  }
+  requestAnimationFrame(frame);
+
+  /* ---- idle auto-advance (about five seconds without input; never in the preview) ---- */
+  if(!preview){
+    setInterval(function(){
+      var now = performance.now();
+      if(now - lastInput < 5000 || idx.open || sheet.open || document.hidden || touching) return;
+      var r = track.getBoundingClientRect();
+      if(r.top > 1 || r.bottom < H*.9) return;
+      lastInput = now;
+      var p = Math.round(pNow());
+      goTo(p>=N-1 ? 0 : p+1);
+    }, 600);
+  }
+})();
+</script>
+<script src="../preview.js" defer></script>
+</body>
+</html>

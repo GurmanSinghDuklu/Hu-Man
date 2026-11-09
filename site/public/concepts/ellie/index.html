@@ -1,0 +1,599 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ellie Brooks, dog walker and pet sitter (concept portfolio)</title>
+<meta name="robots" content="noindex,nofollow">
+<script>
+(function(){var r=document.documentElement;r.classList.add('js');var p=/[?&]preview(&|=|$)/.test(location.search)||r.classList.contains('is-preview');var m=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;r.classList.add(p||m?'no-gate':'gate-on');})();
+</script>
+<style>
+@font-face{font-family:'Big Shoulders Display';font-style:normal;font-weight:600;font-display:swap;src:url(../fonts/big-shoulders-display-latin-600-normal.woff2) format('woff2')}
+@font-face{font-family:'Big Shoulders Display';font-style:normal;font-weight:800;font-display:swap;src:url(../fonts/big-shoulders-display-latin-800-normal.woff2) format('woff2')}
+@font-face{font-family:'Big Shoulders Display';font-style:normal;font-weight:900;font-display:swap;src:url(../fonts/big-shoulders-display-latin-900-normal.woff2) format('woff2')}
+@font-face{font-family:'Figtree';font-style:normal;font-weight:400;font-display:swap;src:url(../fonts/figtree-latin-400-normal.woff2) format('woff2')}
+@font-face{font-family:'Figtree';font-style:normal;font-weight:500;font-display:swap;src:url(../fonts/figtree-latin-500-normal.woff2) format('woff2')}
+@font-face{font-family:'Figtree';font-style:normal;font-weight:700;font-display:swap;src:url(../fonts/figtree-latin-700-normal.woff2) format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:500;font-display:swap;src:url(../fonts/ibm-plex-mono-latin-500-normal.woff2) format('woff2')}
+</style>
+<style>
+:root{--cream:#FBF1E0;--paper:#FFF9EE;--red:#C92F1A;--ink:#1D1612;--muted:#5A4A42;--pink:#F7C3CE;--pink2:#FBDDE2;--yellow:#E2E83C;--pad:clamp(16px,4vw,56px);--disp:'Big Shoulders Display','Arial Narrow',Impact,sans-serif;--body:'Figtree',system-ui,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:72px;-webkit-text-size-adjust:100%}
+html.gate-on{overflow:hidden}
+body{margin:0;background:var(--cream);color:var(--ink);font:400 18px/1.55 var(--body);overflow-x:clip}
+img,svg{max-width:100%}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--ink);outline-offset:3px;border-radius:4px}
+h1,h2,h3{margin:0;font-family:var(--disp);font-weight:900;text-transform:uppercase;line-height:.9;letter-spacing:.005em}
+p{margin:0}
+.mono{font-family:var(--mono);font-weight:500;font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+.skip{position:absolute;left:12px;top:-60px;z-index:200;background:var(--ink);color:var(--cream);padding:10px 16px;border-radius:99px;font-weight:700;text-decoration:none}
+.skip:focus{top:12px}
+#page{position:relative;overflow-x:clip}
+
+/* blobs */
+.blobs{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.blob{position:absolute;background:var(--pink);opacity:.62;border-radius:62% 38% 55% 45%/48% 58% 42% 52%;will-change:transform}
+.b1{width:46vmax;height:42vmax;left:-14vmax;top:8vh;animation:drift1 22s ease-in-out infinite alternate}
+.b2{width:34vmax;height:34vmax;right:-12vmax;top:46vh;background:var(--pink2);opacity:.9;animation:drift2 27s ease-in-out infinite alternate}
+.b3{width:26vmax;height:28vmax;left:30vw;bottom:-14vmax;animation:drift3 31s ease-in-out infinite alternate}
+@keyframes drift1{to{transform:translate(9vw,12vh) rotate(24deg) scale(1.08);border-radius:42% 58% 44% 56%/56% 42% 58% 44%}}
+@keyframes drift2{to{transform:translate(-8vw,-10vh) rotate(-20deg) scale(.92);border-radius:55% 45% 62% 38%/40% 60% 40% 60%}}
+@keyframes drift3{to{transform:translate(-12vw,-8vh) rotate(30deg) scale(1.12)}}
+
+/* lead + paws */
+#lead{position:absolute;left:0;top:0;width:100%;height:0;z-index:1;pointer-events:none;overflow:visible}
+#lead path{fill:none;stroke:var(--red);stroke-width:6;stroke-linecap:round;stroke-linejoin:round}
+#lead .tip{fill:var(--yellow);stroke:var(--ink);stroke-width:2.5}
+.pawtrail{position:fixed;inset:0;pointer-events:none;z-index:80;overflow:hidden}
+.paw{position:absolute;left:0;top:0;width:26px;height:26px;margin:-13px 0 0 -13px;opacity:.7;transition:opacity 1.2s ease-out}
+.paw.gone{opacity:0}
+.paw svg{display:block;width:100%;height:100%;fill:var(--red)}
+
+/* header */
+header.top{position:fixed;z-index:50;left:0;right:0;top:0;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px var(--pad);background:linear-gradient(var(--cream) 55%,rgba(251,241,224,0))}
+.brand{font:900 24px/1 var(--disp);text-transform:uppercase;text-decoration:none;color:var(--red);letter-spacing:.01em}
+.brand small{font:500 11px/1 var(--mono);color:var(--muted);letter-spacing:.06em;margin-left:6px}
+nav.links{display:flex;align-items:center;gap:clamp(14px,2.4vw,34px)}
+nav.links a{font-weight:700;font-size:15px;text-decoration:none}
+nav.links a:hover,nav.links a.hov{text-decoration:underline;text-decoration-thickness:3px;text-underline-offset:5px;text-decoration-color:var(--red)}
+.btn{display:inline-flex;align-items:center;gap:10px;background:var(--red);color:#fff;font:900 22px/1 var(--disp);text-transform:uppercase;letter-spacing:.03em;padding:13px 22px 12px;border-radius:99px;text-decoration:none;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);transition:transform .15s,box-shadow .15s}
+.btn:hover,.btn.hov{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink)}
+nav.links .btn{font-size:18px;padding:9px 16px 8px}
+
+/* gate */
+.gate{display:none;position:fixed;inset:0;z-index:150;background:var(--cream);place-items:center;text-align:center;overflow:hidden;transition:transform .95s cubic-bezier(.7,0,.2,1);touch-action:none}
+.gate-on .gate,.gate.lift{display:grid}
+.gate.lift{transform:translateY(-104%);border-bottom:6px solid var(--red)}
+.gate .gblob{position:absolute;background:var(--pink);border-radius:62% 38% 55% 45%/48% 58% 42% 52%;opacity:.7}
+.gate .g1{width:60vmin;height:52vmin;left:-10vmin;bottom:6vmin;animation:drift1 14s ease-in-out infinite alternate}
+.gate .g2{width:44vmin;height:44vmin;right:-8vmin;top:-8vmin;background:var(--pink2);animation:drift2 17s ease-in-out infinite alternate}
+.gate h1{position:relative;font-size:clamp(60px,15vw,200px);color:var(--red);line-height:.84;margin:0 var(--pad)}
+.gate h1 span{display:block}
+.gate .hint{position:relative;margin-top:22px;color:var(--muted)}
+.gate .skiplink{position:absolute;right:max(16px,3vw);top:max(16px,3vw);z-index:3;font:700 15px var(--body);background:var(--ink);color:var(--cream);padding:10px 18px;border-radius:99px;text-decoration:none}
+.ball{position:absolute;left:0;top:0;width:88px;height:88px;padding:0;border:0;background:none;border-radius:50%;cursor:grab;touch-action:none;z-index:2;will-change:transform}
+.ball.drag{cursor:grabbing}
+.ball svg{display:block;width:100%;height:100%;pointer-events:none}
+.ball:focus-visible{outline:4px solid var(--ink);outline-offset:5px}
+
+/* hero */
+.hero{position:relative;z-index:2;min-height:100vh;min-height:100svh;padding:92px var(--pad) 36px;display:grid;grid-template-columns:minmax(0,1.04fr) minmax(0,.96fr);align-items:center;gap:2vw}
+.strap{color:var(--ink);display:flex;align-items:center;gap:10px;margin-bottom:20px}
+.strap::before{content:"";width:34px;height:3px;background:var(--red);flex:none}
+.hero h1{font-size:clamp(60px,8.6vw,170px);color:var(--red);line-height:.84}
+.hero h1 .ln{display:block;white-space:nowrap;overflow:hidden;padding-top:.04em}
+.hero h1 .ln>span{display:block}
+.js .hero h1 .ln>span{transform:translateY(105%)}
+.js.in .hero h1 .ln>span,.js.no-gate .hero h1 .ln>span{transition:transform .9s cubic-bezier(.2,.8,.2,1);transition-delay:calc(var(--i)*.12s + .15s);transform:none}
+.hero .sub{margin-top:26px;max-width:34ch;font-size:clamp(17px,1.5vw,21px);color:var(--muted)}
+.hero .cta{margin-top:26px;display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.hero .cta a.ghost{font-weight:700;text-underline-offset:5px}
+.dogwrap{position:relative;justify-self:center;width:min(100%,560px)}
+.dog{display:block;width:100%;height:auto;overflow:visible}
+.dog #earL{transform-origin:182px 104px;transform-box:view-box;animation:twL 7s infinite}
+.dog #earR{transform-origin:338px 104px;animation:twR 9s infinite}
+.dog #tail{transform-origin:150px 452px;animation:wag 1.1s ease-in-out infinite alternate}
+.dog .eye{transform-box:fill-box;transform-origin:center;animation:blink 5.2s infinite}
+.dog .eye:nth-child(2){animation-delay:.02s}
+.dog #head{animation:breathe 3.6s ease-in-out infinite alternate}
+@keyframes twL{0%,86%,100%{transform:none}89%{transform:rotate(-9deg)}92%{transform:rotate(3deg)}95%{transform:rotate(-5deg)}}
+@keyframes twR{0%,55%,100%{transform:none}58%{transform:rotate(8deg)}61%{transform:rotate(-3deg)}64%{transform:rotate(5deg)}}
+@keyframes wag{from{transform:rotate(-9deg)}to{transform:rotate(11deg)}}
+@keyframes blink{0%,92%,100%{transform:scaleY(1)}95.5%{transform:scaleY(.08)}}
+@keyframes breathe{from{translate:0 0}to{translate:0 3px}}
+.stamp{position:absolute;right:-2%;top:2%;width:clamp(96px,11vw,132px);height:auto;animation:spin 18s linear infinite}
+.stamp text{font:500 12.4px var(--mono);letter-spacing:.14em;text-transform:uppercase;fill:var(--ink)}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* sections */
+section.block{position:relative;z-index:2;padding:clamp(70px,10vw,140px) var(--pad) clamp(40px,6vw,80px)}
+.kicker{display:flex;align-items:center;gap:10px;color:var(--muted);margin-bottom:14px}
+.kicker::before{content:"";width:34px;height:3px;background:var(--red)}
+h2.big{font-size:clamp(54px,9.2vw,150px);color:var(--red)}
+.lede{margin-top:20px;max-width:46ch;color:var(--muted)}
+.cards{list-style:none;margin:clamp(30px,5vw,60px) 0 0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+.card{background:var(--paper);border:3px solid var(--ink);border-radius:26px;padding:22px 22px 24px;display:flex;flex-direction:column;gap:12px;transition:background .25s,transform .25s}
+.card.hov,.card:hover{background:var(--pink);transform:translateY(-6px) rotate(-1deg)}
+.card svg.ico{width:66px;height:66px;fill:none;stroke:var(--ink);stroke-width:3;stroke-linecap:round;stroke-linejoin:round;transition:transform .35s}
+.card.hov svg.ico,.card:hover svg.ico{transform:rotate(-10deg) scale(1.1)}
+.card h3{font-size:clamp(34px,3.2vw,48px);color:var(--red)}
+.card.hov h3,.card:hover h3{color:#8F1F0F}
+.card p{font-size:16px;color:var(--ink)}
+.card .from{margin-top:auto;font:900 30px/1 var(--disp);text-transform:uppercase}
+.card .from small{font:500 12px var(--mono);letter-spacing:.06em;color:var(--muted);display:block;margin-bottom:4px}
+.sampletag{display:inline-block;margin-top:22px;border:2px solid var(--ink);border-radius:99px;padding:5px 14px}
+
+/* day */
+.day .track{list-style:none;margin:clamp(30px,5vw,60px) calc(var(--pad)*-1) 0;padding:20px var(--pad) 24px;display:flex;gap:22px;overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:thin;scrollbar-color:var(--red) transparent;position:relative}
+.day .track::before{content:"";position:absolute;left:0;right:0;top:56px;height:0;border-top:4px dashed var(--ink);opacity:.5;min-width:var(--w,100%)}
+.stop{flex:0 0 clamp(240px,23vw,330px);scroll-snap-align:start;position:relative;padding-top:0}
+.stop .t{font:900 clamp(40px,4vw,58px)/1 var(--disp);color:var(--red)}
+.stop .dot{display:block;width:20px;height:20px;border-radius:50%;background:var(--yellow);border:3px solid var(--ink);margin:10px 0 14px;position:relative;z-index:1;transition:transform .3s}
+.stop.hov .dot,.stop:hover .dot{transform:scale(1.5);background:var(--red)}
+.stop .art{background:var(--paper);border:3px solid var(--ink);border-radius:22px;padding:6px;transition:transform .7s cubic-bezier(.2,.8,.2,1),opacity .7s}
+.js:not(.nomo) .stop .art{transform:translateX(70px) rotate(4deg);opacity:0}
+.js:not(.nomo) .stop.on .art{transform:none;opacity:1}
+.stop .art svg{display:block;width:100%;height:auto}
+.stop h3{font-size:30px;margin:14px 0 6px}
+.stop p{font-size:16px;color:var(--muted)}
+.art *{stroke:var(--ink);stroke-width:3;stroke-linecap:round;stroke-linejoin:round;fill:none}
+.art .p{fill:var(--pink)}.art .y{fill:var(--yellow)}.art .w{fill:#fff}.art .r{fill:var(--red)}.art .k{fill:var(--ink)}.art .sr{stroke:var(--red)}.art .nos{stroke:none}
+
+/* about */
+.about .grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(24px,5vw,80px);margin-top:clamp(26px,4vw,50px);align-items:start}
+.about p+p{margin-top:14px}
+.creds{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.creds li{background:var(--paper);border:3px solid var(--ink);border-radius:22px;padding:16px 20px;display:grid;gap:2px}
+.creds b{font:900 28px/1 var(--disp);text-transform:uppercase;color:var(--red)}
+.creds span{font-size:15px;color:var(--muted)}
+.creds .mono{color:var(--ink);font-size:11px}
+
+/* faq */
+.faq-list{margin-top:clamp(26px,4vw,50px);max-width:900px;display:grid;gap:12px}
+details{background:var(--paper);border:3px solid var(--ink);border-radius:22px;padding:0 22px}
+details[open]{background:var(--pink2)}
+summary{cursor:pointer;list-style:none;padding:18px 0;font:900 clamp(24px,2.6vw,34px)/1.05 var(--disp);text-transform:uppercase;display:flex;justify-content:space-between;align-items:center;gap:16px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font:900 36px/1 var(--disp);color:var(--red);flex:none;transition:transform .25s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{padding:0 0 20px;max-width:62ch;color:var(--ink)}
+
+/* contact */
+.contact{text-align:left}
+.contact .panel{position:relative;background:var(--red);color:#fff;border:3px solid var(--ink);border-radius:36px;padding:clamp(28px,5vw,70px);overflow:hidden;box-shadow:8px 8px 0 var(--ink)}
+.contact h2{font-size:clamp(52px,7.4vw,124px);color:#fff;text-wrap:balance}
+.contact p{margin-top:20px;max-width:44ch;font-size:19px}
+.contact .btn{margin-top:28px;background:var(--yellow);color:var(--ink);font-size:clamp(24px,3vw,34px);padding:16px 28px 15px}
+.contact .mail{margin-top:18px;font-family:var(--mono);font-weight:500;font-size:15px}
+.contact .mail a{color:#fff}
+footer.foot{position:relative;z-index:2;padding:30px var(--pad) 40px;font-size:14px;color:var(--muted);display:flex;flex-wrap:wrap;gap:8px 28px;justify-content:space-between;border-top:3px solid var(--ink);margin:40px var(--pad) 0;padding-left:0;padding-right:0}
+
+/* reveal */
+.js:not(.nomo) .rv{opacity:0;transform:translateY(26px);transition:opacity .7s,transform .7s cubic-bezier(.2,.8,.2,1)}
+.js:not(.nomo) .rv.on{opacity:1;transform:none}
+
+@media (max-width:1000px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.about .grid{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:820px){
+  .hero{grid-template-columns:minmax(0,1fr);min-height:0;padding-top:84px}
+  .hero h1{font-size:clamp(44px,15.6vw,150px)}
+  .dogwrap{width:min(100%,440px)}
+  nav.links a:not(.btn){display:none}
+  .brand small{display:none}
+}
+@media (max-width:560px){
+  body{font-size:17px}
+  .cards{grid-template-columns:minmax(0,1fr)}
+  .stop{flex-basis:76vw}
+  h2.big{font-size:clamp(50px,17vw,90px)}
+  .contact h2{font-size:clamp(46px,15vw,90px)}
+  .contact .panel{box-shadow:5px 5px 0 var(--ink);border-radius:28px}
+  .gate h1{font-size:clamp(52px,17vw,100px)}
+  .ball{width:76px;height:76px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+
+/* HU/MAN concept badge */
+.badge{position:fixed;z-index:90;left:max(12px, env(safe-area-inset-left, 0px));bottom:max(12px, env(safe-area-inset-bottom, 0px));display:flex;flex-wrap:wrap;align-items:center;gap:2px 12px;background:#121317;color:#EDECE6;border-radius:18px;padding:8px 14px 8px 11px;font-size:12px;font-weight:600;line-height:1.3;box-shadow:0 0 0 1.5px #EDECE6,0 10px 24px -8px rgba(18,19,23,.5);max-width:calc(100vw - 24px);pointer-events:auto}
+.badge a{color:inherit;font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.badge a:focus-visible{outline:2px solid currentColor;outline-offset:3px;border-radius:3px}
+@media (max-width:640px){.badge{position:static;margin:24px max(16px,env(safe-area-inset-left,0px)) max(16px,env(safe-area-inset-bottom,0px));max-width:none;justify-content:center;text-align:center;border-radius:14px}footer.foot{padding-bottom:6px!important}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="paw" viewBox="0 0 40 40"><ellipse cx="20" cy="26" rx="9.5" ry="8"/><ellipse cx="8" cy="17" rx="4" ry="5.2"/><ellipse cx="15.5" cy="9.5" rx="4" ry="5.4"/><ellipse cx="24.5" cy="9.5" rx="4" ry="5.4"/><ellipse cx="32" cy="17" rx="4" ry="5.2"/></symbol>
+  <symbol id="mini" viewBox="0 0 44 28"><ellipse class="w" cx="20" cy="14" rx="13" ry="7"/><circle class="w" cx="35" cy="9" r="6"/><path class="k" d="M33 4q-5 0-4 8q4-1 5-5zM40 11l4 1"/><path d="M10 20v6M17 21v5M26 21v5M31 19v7"/><path d="M8 11q-6-4-5-9"/></symbol>
+</svg>
+
+<div class="gate" id="gate" aria-label="Entry game">
+  <i class="gblob g1"></i><i class="gblob g2"></i>
+  <div>
+    <p class="mono" style="position:relative;color:var(--muted);margin-bottom:16px">Muddy Paws Walks (sample)</p>
+    <p class="gate-h" style="margin:0;font:900 clamp(60px,15vw,200px)/.84 var(--disp);text-transform:uppercase;color:var(--red);position:relative"><span style="display:block">Throw the ball</span><span style="display:block">to come in</span></p>
+    <p class="hint mono">Drag and flick it, tap it, or press Enter</p>
+  </div>
+  <button class="ball" id="ball" type="button" aria-label="Throw the ball to come in">
+    <svg viewBox="0 0 88 88" aria-hidden="true"><circle cx="44" cy="44" r="40" fill="#E2E83C" stroke="#1D1612" stroke-width="4"/><path d="M12 24C32 34 32 54 12 64M76 24C56 34 56 54 76 64" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round"/></svg>
+  </button>
+  <a class="skiplink" href="#main" id="gateSkip">Skip</a>
+</div>
+
+<div class="blobs" aria-hidden="true"><i class="blob b1"></i><i class="blob b2"></i><i class="blob b3"></i></div>
+<div class="pawtrail" id="pawtrail" aria-hidden="true"></div>
+
+<div id="page">
+<svg id="lead" aria-hidden="true" focusable="false"><path id="leadPath" d=""/><circle id="leadTip" class="tip" r="9" cx="-50" cy="-50"/></svg>
+
+<header class="top">
+  <a class="brand" href="#top">Muddy Paws Walks<small>(sample)</small></a>
+  <nav class="links" aria-label="Main">
+    <a href="#services">Prices</a><a href="#day">A day</a><a href="#about">About</a><a href="#faq">Questions</a>
+    <a class="btn" href="#contact">Book</a>
+  </nav>
+</header>
+
+<main id="main" tabindex="-1">
+<section class="hero" id="top">
+  <div class="copy">
+    <p class="strap mono">Your dog's favourite person in Harrogate</p>
+    <h1><span class="ln" style="--i:0"><span>Long walks.</span></span><span class="ln" style="--i:1"><span>Muddy paws.</span></span><span class="ln" style="--i:2"><span>Happy dogs.</span></span></h1>
+    <p class="sub">Hi, I'm Ellie Brooks. Walks, in-home pet sitting, puppy visits and cat drop-ins around Harrogate, with the same face at your door every time.</p>
+    <div class="cta"><a class="btn" href="#contact">Book a meet-and-greet</a><a class="ghost" href="#services">See sample prices</a></div>
+  </div>
+  <div class="dogwrap">
+    <svg class="dog" id="dog" viewBox="0 0 520 500" role="img" aria-label="Drawing of a scruffy dog holding a red lead in its mouth">
+<g class="ink" fill="none" stroke="#1D1612" stroke-linecap="round" stroke-linejoin="round">
+<g class="tail" id="tail"><path d="M150 452C98 446 62 404 80 346" stroke-width="30"/><path d="M150 452C98 446 62 404 80 346" stroke="#fff" stroke-width="18"/><path d="M99.5 404.2q0.3 3.9 1.1 7.7" stroke-width="4.3"/><path d="M90.3 412.5q-0.3 4.5 -1 9.1" stroke-width="3.7"/><path d="M101.4 418.2q0.9 5.3 3 10.6" stroke-width="4.4"/><path d="M105.8 398.3q0.8 4.6 2.8 9.3" stroke-width="4"/></g>
+<path d="M373.6 372L362.9 384.4L371.6 399L357.6 408.5L364.9 425.5L347.7 430.8L346.1 445L333.2 450.2L331.3 466.9L315.2 465.8L309.2 480.5L293.9 475.6L285.1 488.9L271.6 481.5L260 494L248.3 482.9L235.3 487L225.6 477L211.1 479.9L204.7 466L188.8 466.8L186 451L170.6 447.7L172.4 430.8L158.3 424L163 408.2L146.9 399.4L157.7 384.3L147.9 372L157.3 359.6L151.3 345.6L161 335.1L155.9 318.8L173.3 313.8L172.5 297.9L186 293.1L188 276.2L204.6 278L210.5 263L225.8 267.8L234.1 251.7L248.3 261.1L260 248.6L271.5 262.9L285.1 255.4L294.7 266.3L307.8 266.5L314.7 279.1L330.8 277.8L333.2 293.8L347.3 298L347.8 313.1L364 318.9L358.9 335.1L371.8 344.9L364.2 359.5Z" fill="#fff" stroke-width="5"/>
+<path d="M254.4 466L248.1 471L248.2 477.9L238.5 479.7L233.3 487.3L221.5 484L212 492.4L202.3 484.8L190.8 487.2L186 479.3L176.2 477.7L175.8 471L168.7 466L175.8 461L176.5 454.5L186.1 452.8L191.3 445.7L202.4 447.5L212 439.8L221.8 446.8L233.3 444.6L238.6 452.1L249.2 453.5L248 461Z" fill="#fff" stroke-width="5"/><path d="M351.3 466L344.4 471.1L344 477.8L334.7 479.9L329.1 486.9L317.5 484L308 490.5L298.4 484.3L286.1 488.4L281.1 480.1L272.5 477.5L271.5 471.1L266.7 466L272 461L272.3 454.4L281.7 452.4L287.2 445.6L298.4 447.5L308 440L317.6 447.6L330 443.5L334.8 452L345.7 453.3L344.1 461Z" fill="#fff" stroke-width="5"/>
+<path d="M260 392V470M196 430l-6 18M324 430l6 18" stroke-width="4"/>
+<path d="M237.3 292.8q-0.4 12.7 -1.3 25.3" stroke-width="2.3"/><path d="M210.3 317.5q0.7 14.9 2.5 29.7" stroke-width="2.7"/><path d="M271.2 290.8q1.7 7.9 5.6 15.8" stroke-width="3.4"/><path d="M239.3 413q-0.1 13.7 -0.2 27.4" stroke-width="4.2"/><path d="M259.8 359.7q2.3 9.4 7.7 18.8" stroke-width="2.8"/><path d="M294.3 383.6q3.2 9.7 10.8 19.4" stroke-width="2.2"/><path d="M282.9 317.9q0.5 15.5 1.7 31" stroke-width="2.8"/><path d="M235.4 371.4q2.7 13.4 8.9 26.9" stroke-width="4.6"/><path d="M197.4 345.4q1.6 8.9 5.4 17.8" stroke-width="3.9"/><path d="M225.3 331.6q2.2 12.6 7.5 25.1" stroke-width="2"/><path d="M297.2 333.1q0.2 14.6 0.8 29.2" stroke-width="2.7"/><path d="M288.9 407q-0.1 15.6 -0.3 31.2" stroke-width="2"/><path d="M223.8 399.1q0.1 13 0.2 25.9" stroke-width="2.2"/><path d="M312.6 378.9q1.1 9.8 3.5 19.6" stroke-width="4.8"/><path d="M317.1 368.4q3.1 10 10.2 20" stroke-width="3.6"/><path d="M300 299.5q1.3 15.3 4.4 30.5" stroke-width="4.1"/>
+<path class="strand" d="M305 246C372 250 392 300 372 352C358 392 392 430 430 470L452 500" stroke="#C92F1A" stroke-width="6" vector-effect="non-scaling-stroke" fill="none"/>
+<g class="head" id="head">
+<g class="ear" id="earL"><path d="M178 100C130 90 105 150 118 215C150 205 185 170 195 130Z" fill="#1D1612" stroke-width="5"/><path d="M140 130q-8 30-2 56" stroke="#FBF1E0" stroke-width="3"/></g>
+<g class="ear" id="earR"><path d="M342 100C390 90 415 150 402 215C370 205 335 170 325 130Z" fill="#1D1612" stroke-width="5"/><path d="M380 130q8 30 2 56" stroke="#FBF1E0" stroke-width="3"/></g>
+<path d="M380.2 175L364.7 184.3L378.3 196.8L362.6 203.4L367.5 216.3L352.5 220.4L352.4 232.7L338 234.5L341.3 253.4L322.2 247.7L318.3 262.2L302.9 256.8L296.8 273.1L282.2 263.6L272.6 279L260 266.8L247.4 279L238.1 262.5L222.3 275.7L216.5 258.2L198.9 267L198.1 247.2L178.9 253.1L181.7 234.8L160.5 237.9L168.3 219.9L150.6 217.2L157.4 203.4L147.3 195.6L153.2 184.6L139.5 175L153.5 165.5L146.3 154.2L159.4 147.3L150.4 132.7L169.3 130.6L161.6 112.9L181.8 115.3L178.2 96L197.2 101.5L201.4 87.3L216.6 92.1L224.7 81.6L238.1 87.7L248.1 78L260 84.3L271.9 77.6L282.1 86.5L297.8 73.9L302.6 93.9L320 84.9L321.9 102.8L339.5 98.6L339.3 114.3L353 116.8L350.8 130.6L370.2 132.4L359.7 147.6L378.9 153L366.5 165.5Z" fill="#fff" stroke-width="5"/>
+<path d="M256.7 119.8q1.6 8.7 5.2 17.3" stroke-width="3.6"/><path d="M264.3 120.9q2.7 14.2 8.9 28.4" stroke-width="2.6"/><path d="M299.6 112.5q-1.2 7.6 -4 15.1" stroke-width="3.4"/><path d="M271.9 96.7q0.8 10.1 2.6 20.3" stroke-width="2.6"/><path d="M327.9 117.8q-0.1 14 -0.4 28" stroke-width="4.6"/><path d="M318.2 117.5q2.8 14.1 9.3 28.2" stroke-width="4.8"/><path d="M270.3 141.9q-0.4 9.3 -1.4 18.6" stroke-width="2.6"/><path d="M281.8 103.3q1.2 11.4 4.1 22.7" stroke-width="4.7"/><path d="M201 107.8q1.8 11.3 6 22.7" stroke-width="2.8"/><path d="M297.7 98.4q-0.4 10.2 -1.4 20.4" stroke-width="3.1"/>
+<ellipse cx="188" cy="204" rx="22" ry="13" fill="#F7C3CE" stroke="none" opacity=".85"/><ellipse cx="332" cy="204" rx="22" ry="13" fill="#F7C3CE" stroke="none" opacity=".85"/>
+<path d="M324.3 216L316.1 223.7L318.5 233.4L307.6 237.8L305.5 248.8L291.8 248.6L284.7 259.1L271.2 254.6L260 258.8L248.9 254.2L235.4 258.7L228.1 248.8L216.1 247.1L213 237.4L202.4 233L203.4 223.7L198.3 216L204.2 208.4L200.7 198.3L212.2 194L216.4 185.1L228.2 183.4L236.5 175.8L248.8 177.3L260 172.8L271.2 177.5L283.7 175.5L292.2 182.8L305.5 183.2L308 193.9L316 199.7L315.9 208.4Z" fill="#fff" stroke-width="5"/>
+<path d="M236 192Q260 178 284 192Q284 212 260 216Q236 212 236 192Z" fill="#1D1612" stroke-width="4"/><ellipse cx="252" cy="190" rx="7" ry="3" fill="#fff" stroke="none"/>
+<path d="M260 216V234M228 238Q244 254 260 234Q276 254 292 238" stroke-width="5"/>
+<path d="M248 244Q262 282 278 244Z" fill="#F08FA3" stroke-width="4"/>
+<path d="M200 248L318 248M200 248C186 252 176 264 180 282" stroke="#C92F1A" stroke-width="7" vector-effect="non-scaling-stroke"/><circle cx="180" cy="284" r="6" fill="#1D1612" stroke="none"/>
+<g class="eyes" id="eyes"><g class="eye"><circle cx="216" cy="152" r="12" fill="#1D1612" stroke="none"/><circle class="gl" cx="221" cy="147" r="4" fill="#fff" stroke="none"/></g><g class="eye"><circle cx="304" cy="152" r="12" fill="#1D1612" stroke="none"/><circle class="gl" cx="309" cy="147" r="4" fill="#fff" stroke="none"/></g></g>
+<path d="M194 126q20-14 40-2M286 124q20-12 40 2" stroke-width="6"/>
+<path d="M244 86q-8 22 0 40M268 84q4 22-2 38M226 92q-10 14-6 30" stroke-width="4"/>
+</g></g></svg>
+    <svg class="stamp" viewBox="0 0 120 120" aria-hidden="true"><defs><path id="circ" d="M60 60m-44 0a44 44 0 1 1 88 0a44 44 0 1 1-88 0"/></defs><circle cx="60" cy="60" r="56" fill="#E2E83C" stroke="#1D1612" stroke-width="3"/><text><textPath href="#circ" textLength="272" lengthAdjust="spacingAndGlyphs">Meet-and-greet first · Meet-and-greet first ·</textPath></text><use href="#paw" x="40" y="40" width="40" height="40" fill="#C92F1A"/></svg>
+  </div>
+</section>
+
+<section class="block" id="services" aria-labelledby="h-services" data-lead>
+  <p class="kicker mono rv">What I do</p>
+  <h2 class="big rv" id="h-services">Sample prices</h2>
+  <p class="lede rv">Every price on this page is sample content. A real quote comes after we meet.</p>
+  <ul class="cards">
+    <li class="card rv"><svg class="ico" viewBox="0 0 64 64" aria-hidden="true"><ellipse cx="32" cy="42" rx="13" ry="11"/><ellipse cx="14" cy="28" rx="5" ry="7"/><ellipse cx="25" cy="16" rx="5" ry="7"/><ellipse cx="39" cy="16" rx="5" ry="7"/><ellipse cx="50" cy="28" rx="5" ry="7"/></svg><h3>Group and solo walks</h3><p>An hour out on the Stray or the woods nearby. Groups stay small; solo walks suit shy or senior dogs.</p><p class="from"><small>Group, per walk</small>From £14<small style="margin-top:8px">Solo, per walk</small>From £19</p></li>
+    <li class="card rv"><svg class="ico" viewBox="0 0 64 64" aria-hidden="true"><path d="M8 32 32 10l24 22v22H8z"/><path d="M32 47c-9-7-12-13-6-16 3-1.500 6 .5 6 3 0-2.500 3-4.500 6-3 6 3 3 9-6 16z"/></svg><h3>Pet sitting at home</h3><p>Your pets stay in their own bed with their own routine. I feed, walk, play and send you a photo each day.</p><p class="from"><small>Per night</small>From £42</p></li>
+    <li class="card rv"><svg class="ico" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="36" r="16"/><path d="M17 26C6 22 4 42 12 48M47 26c11-4 13 16 5 22"/><circle cx="26" cy="33" r="1.800"/><circle cx="38" cy="33" r="1.800"/><path d="M29 41h6l-3 4zM27 49q5 4 10 0"/></svg><h3>Puppy visits</h3><p>A short, kind visit for toilet breaks, lunch, cuddles and the first lessons in being left alone.</p><p class="from"><small>20 minutes</small>From £12</p></li>
+    <li class="card rv"><svg class="ico" viewBox="0 0 64 64" aria-hidden="true"><path d="M13 22 18 8l10 9h8l10-9 5 14c4 14-2 32-19 32S9 36 13 22z"/><circle cx="25" cy="33" r="1.800"/><circle cx="39" cy="33" r="1.800"/><path d="M29 40h6l-3 3zM6 36l14 3M6 44l14-3M58 36 44 39M58 44 44 41"/></svg><h3>Cat drop-ins</h3><p>Fresh water, a good meal, a clean tray and some proper attention while you are away.</p><p class="from"><small>30 minutes</small>From £11</p></li>
+  </ul>
+  <p class="sampletag mono rv">Sample prices, not a real quote</p>
+</section>
+
+<section class="block day" id="day" aria-labelledby="h-day" data-lead>
+  <p class="kicker mono rv">7am to 7pm</p>
+  <h2 class="big rv" id="h-day">A day with Ellie</h2>
+  <p class="lede rv">A sample day. Scroll sideways, or let it drift.</p>
+  <ol class="track" id="track" tabindex="0" aria-label="A sample day with Ellie, from 7am to 7pm">
+    <li class="stop"><div class="t">07:00</div><i class="dot"></i><div class="art"><svg viewBox="0 0 160 110" aria-hidden="true"><path class="y" d="M14 44a18 18 0 0 1 36 0z"/><path d="M32 14v6M12 22l4 4M52 22l-4 4"/><path class="r" d="M40 58h96c-2 28-20 40-48 40S42 86 40 58z"/><ellipse class="y" cx="88" cy="58" rx="48" ry="9"/><circle class="k nos" cx="72" cy="57" r="2.500"/><circle class="k nos" cx="90" cy="60" r="2.500"/><circle class="k nos" cx="106" cy="56" r="2.500"/></svg></div><h3>Breakfast and garden break</h3><p>A quick top-up for the dogs staying with me, then boots on.</p></li>
+    <li class="stop"><div class="t">08:30</div><i class="dot"></i><div class="art"><svg viewBox="0 0 160 110" aria-hidden="true"><rect class="p" x="52" y="14" width="58" height="84" rx="4"/><circle class="y" cx="98" cy="58" r="4"/><path d="M62 30h20v18H62z"/><path class="sr" d="M26 56q-14 18 6 34"/><use href="#mini" x="112" y="76" width="44" height="28"/></svg></div><h3>Pick-ups</h3><p>Collecting the group, one front door at a time, with keys and treats.</p></li>
+    <li class="stop"><div class="t">09:30</div><i class="dot"></i><div class="art"><svg viewBox="0 0 160 110" aria-hidden="true"><circle class="y" cx="132" cy="24" r="12"/><path d="M8 90h144M36 90V58M100 90V50"/><circle class="p" cx="36" cy="46" r="16"/><circle class="p" cx="100" cy="38" r="18"/><use href="#mini" x="10" y="64" width="40" height="26"/><use href="#mini" x="52" y="64" width="40" height="26"/><use href="#mini" x="108" y="64" width="40" height="26"/></svg></div><h3>Group walk on the Stray</h3><p>Open grass, long sniffs and a lot of running about.</p></li>
+    <li class="stop"><div class="t">11:30</div><i class="dot"></i><div class="art"><svg viewBox="0 0 160 110" aria-hidden="true"><path d="M16 92Q80 -30 144 92" stroke-dasharray="3 9"/><circle class="y" cx="80" cy="30" r="12"/><path d="M71 26q9 8 18 0" stroke="#fff"/><path d="M8 96h144"/></svg></div><h3>Solo walk</h3><p>One dog, one pace, and a game of fetch if they want it.</p></li>
+    <li class="stop"><div class="t">13:00</div><i class="dot"></i><div class="art"><svg viewBox="0 0 160 110" aria-hidden="true"><circle class="w" cx="80" cy="60" r="32"/><path class="k" d="M52 40C26 34 22 80 40 90 52 84 58 60 58 46zM108 40c26-6 30 40 12 50-12-6-18-30-18-44z"/><circle class="k nos" cx="68" cy="56" r="4"/><circle class="k nos" cx="92" cy="56" r="4"/><path class="k" d="M72 68h16l-8 8zM72 82q8 6 16 0"/></svg></div><h3>Puppy visits</h3><p>Lunch, a wee, a cuddle and a quick lesson in sit.</p></li>
+    <li class="stop"><div class="t">14:30</div><i class="dot"></i><div class="art"><svg viewBox="0 0 160 110" aria-hidden="true"><path class="w" d="M40 42 46 14l20 16h28l20-16 6 28c8 30-6 58-40 58S32 72 40 42z"/><circle class="k nos" cx="64" cy="58" r="4"/><circle class="k nos" cx="96" cy="58" r="4"/><path class="p" d="M74 68h12l-6 7zM22 62l32 6M22 78l32-8M138 62l-32 6M138 78l-32-8"/></svg></div><h3>Cat drop-ins</h3><p>Water, dinner, a clean tray and a chat by the window.</p></li>
+    <li class="stop"><div class="t">16:00</div><i class="dot"></i><div class="art"><svg viewBox="0 0 160 110" aria-hidden="true"><ellipse class="p" cx="82" cy="80" rx="58" ry="16"/><path d="M52 80q30-8 60 0M68 80q14-4 28 0"/><use href="#paw" class="k" x="20" y="28" width="22" height="22"/><use href="#paw" class="k" x="52" y="14" width="22" height="22"/><use href="#paw" class="k" x="92" y="24" width="22" height="22"/><use href="#paw" class="k" x="124" y="10" width="22" height="22"/></svg></div><h3>Afternoon walk</h3><p>Puddles are not optional. Muddy paws, as promised.</p></li>
+    <li class="stop"><div class="t">17:30</div><i class="dot"></i><div class="art"><svg viewBox="0 0 160 110" aria-hidden="true"><rect class="w" x="30" y="24" width="84" height="64" rx="6"/><path class="sr" d="M30 42h84M30 60h84M30 78h84"/><path class="p" d="M128 30q-8 14 0 18q8-4 0-18zM140 56q-8 14 0 18q8-4 0-18z"/></svg></div><h3>Towel-off</h3><p>Paws wiped, coats dried, everyone home for tea.</p></li>
+    <li class="stop"><div class="t">19:00</div><i class="dot"></i><div class="art"><svg viewBox="0 0 160 110" aria-hidden="true"><path class="y" d="M118 16a24 24 0 1 0 24 34a20 20 0 1 1-24-34z"/><path d="M20 98V62l30-24 30 24v36z"/><rect class="y" x="42" y="68" width="16" height="16"/><path d="M22 26v8M18 30h8M96 20v6M93 23h6"/></svg></div><h3>Evening sit</h3><p>For sitting clients: supper, a last garden trip and a settled house.</p></li>
+  </ol>
+</section>
+
+<section class="block about" id="about" aria-labelledby="h-about" data-lead>
+  <p class="kicker mono rv">About</p>
+  <h2 class="big rv" id="h-about">Hello, I'm Ellie</h2>
+  <div class="grid">
+    <div class="rv">
+      <p>I run Muddy Paws Walks (sample), a small dog walking and pet sitting service in Harrogate. I keep my diary small on purpose, so every dog gets proper attention and every owner knows who is coming through the door.</p>
+      <p>Before any booking we meet at your home. You tell me about your pet's routine, quirks and favourite treats, and I find out whether we suit each other. Then I write it all down, so nothing gets forgotten.</p>
+      <p>When I am not out walking, I am usually drying a towel or learning another dog's name.</p>
+    </div>
+    <ul class="creds rv">
+      <li><span class="mono">Sample credential</span><b>Pet first aid</b><span>Dog and cat first aid course, sample certificate.</span></li>
+      <li><span class="mono">Sample credential</span><b>DBS checked</b><span>Enhanced DBS check, sample reference.</span></li>
+      <li><span class="mono">How I work</span><b>Meet first</b><span>A free meet-and-greet before every first booking.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="block" id="faq" aria-labelledby="h-faq" data-lead>
+  <p class="kicker mono rv">Good to know</p>
+  <h2 class="big rv" id="h-faq">Questions</h2>
+  <div class="faq-list rv">
+    <details><summary>What happens at a meet-and-greet?</summary><p>We meet at your home for about half an hour. I meet your pet, see where the lead and food live, and we agree a routine. It costs nothing and there is no obligation to book.</p></details>
+    <details><summary>Where do you work?</summary><p>Harrogate and the villages and neighbourhoods close around it. If you are not sure, send me your postcode and I will tell you.</p></details>
+    <details><summary>How many dogs are in a group walk?</summary><p>In this sample set-up, a small group, kept to dogs who get on well. Anyone who prefers their own company gets a solo walk instead.</p></details>
+    <details><summary>Will I hear how the visit went?</summary><p>Yes. After each visit you get a short message and a photo, so you know your pet is happy.</p></details>
+    <details><summary>What if I need to cancel?</summary><p>Let me know as early as you can. In this sample, 24 hours' notice means no charge.</p></details>
+  </div>
+</section>
+
+<section class="block contact" id="contact" aria-labelledby="h-contact" data-lead>
+  <div class="panel rv">
+    <h2 id="h-contact">Book a meet-and-greet</h2>
+    <p>Tell me about your pet and when you need help. I will reply with a time to meet.</p>
+    <a class="btn" id="mailbtn" href="mailto:ellie@elliebrooks.example?subject=Meet-and-greet&amp;body=Hi%20Ellie%2C%0A%0AMy%20pet%27s%20name%20and%20breed%3A%0AWhat%20I%20need%20help%20with%3A%0AMy%20postcode%3A">Email Ellie</a>
+    <p class="mail">ellie@elliebrooks.example</p>
+  </div>
+</section>
+</main>
+
+<footer class="foot"><span>Concept site by HU/MAN. Names and details are sample content.</span><span>Muddy Paws Walks (sample), Harrogate</span></footer>
+</div>
+
+<div class="badge" role="note"><a href="../../portfolio/">&larr; Back to HU/MAN</a><span>Concept site by HU/MAN</span></div>
+
+<script>
+(function(){
+  var root=document.documentElement;
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduce)root.classList.add('nomo');
+  var $=function(s,r){return (r||document).querySelector(s)};
+  var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+  var page=$('#page');
+
+  /* ---------- entry gate ---------- */
+  var gate=$('#gate'),ball=$('#ball');
+  var gateDone=!root.classList.contains('gate-on');
+  function startSite(){root.classList.add('in');}
+  function finishGate(fast){
+    if(gateDone)return;gateDone=true;
+    clearTimeout(idleT);cancelAnimationFrame(raf);
+    page.removeAttribute('inert');
+    root.classList.remove('gate-on');
+    startSite();
+    var main=$('#main');try{main.focus({preventScroll:true});}catch(e){}
+    if(fast){gate.style.display='none';return;}
+    gate.classList.add('lift');
+    setTimeout(function(){gate.style.display='none';},1100);
+  }
+  var idleT,raf;
+  if(gateDone){startSite();}
+  else{
+    page.setAttribute('inert','');
+    var R=44,W=0,H=0,x=0,y=0,vx=0,vy=0,state='idle',bounces=0,t0=0,lastT=0,samples=[],startPt=null,ignoreClick=0,ang=0;
+    var measure=function(){W=innerWidth;H=innerHeight;R=ball.offsetWidth/2;};
+    var place=function(){ball.style.transform='translate('+(x-R).toFixed(1)+'px,'+(y-R).toFixed(1)+'px) rotate('+ang.toFixed(0)+'deg)';};
+    measure();x=W/2;y=H-R-Math.min(120,H*.16);place();
+    addEventListener('resize',function(){if(state==='idle'){measure();x=W/2;y=H-R-Math.min(120,H*.16);place();}});
+    try{ball.focus({preventScroll:true});}catch(e){}
+    idleT=setTimeout(function(){if(state==='idle')finishGate();},4000);
+    var launch=function(ax,ay){
+      state='fly';vx=ax;vy=ay;bounces=0;t0=lastT=performance.now();clearTimeout(idleT);
+      ball.classList.remove('drag');raf=requestAnimationFrame(step);
+    };
+    var step=function(now){
+      var dt=Math.min(.032,(now-lastT)/1000);lastT=now;
+      vy+=2100*dt;x+=vx*dt;y+=vy*dt;ang+=vx*dt*.6;
+      var hit=false,e=.78;
+      if(x<R){x=R;vx=Math.abs(vx)*e;hit=true}
+      if(x>W-R){x=W-R;vx=-Math.abs(vx)*e;hit=true}
+      if(y<R){y=R;vy=Math.abs(vy)*e;hit=true}
+      if(y>H-R){y=H-R;vy=-Math.abs(vy)*e;hit=true;vx*=.96}
+      if(hit)bounces++;
+      place();
+      if(bounces>=4||now-t0>2400){finishGate();return;}
+      raf=requestAnimationFrame(step);
+    };
+    ball.addEventListener('pointerdown',function(e){
+      if(state==='fly')return;
+      state='drag';clearTimeout(idleT);ball.classList.add('drag');
+      try{ball.setPointerCapture(e.pointerId);}catch(_){}
+      startPt={x:e.clientX,y:e.clientY};samples=[{t:performance.now(),x:e.clientX,y:e.clientY}];
+      x=e.clientX;y=e.clientY;place();e.preventDefault();
+    });
+    ball.addEventListener('pointermove',function(e){
+      if(state!=='drag')return;
+      x=Math.max(R,Math.min(W-R,e.clientX));y=Math.max(R,Math.min(H-R,e.clientY));
+      samples.push({t:performance.now(),x:e.clientX,y:e.clientY});
+      if(samples.length>8)samples.shift();place();
+    });
+    var release=function(e){
+      if(state!=='drag')return;
+      ignoreClick=performance.now();
+      var moved=Math.hypot(e.clientX-startPt.x,e.clientY-startPt.y);
+      var now=performance.now(),a=null;
+      for(var i=0;i<samples.length;i++){if(now-samples[i].t<140){a=samples[i];break;}}
+      var vxx=0,vyy=0;
+      if(a&&now-a.t>8){vxx=(e.clientX-a.x)/((now-a.t)/1000);vyy=(e.clientY-a.y)/((now-a.t)/1000);}
+      var sp=Math.hypot(vxx,vyy);
+      if(moved<8||sp<250){vxx=(Math.random()<.5?-1:1)*(520+Math.random()*420);vyy=-(950+Math.random()*350);}
+      else if(sp>2600){vxx*=2600/sp;vyy*=2600/sp;}
+      launch(vxx,vyy);
+    };
+    ball.addEventListener('pointerup',release);
+    ball.addEventListener('pointercancel',release);
+    ball.addEventListener('click',function(){
+      if(performance.now()-ignoreClick<400||state==='fly')return;
+      state='drag';launch((Math.random()<.5?-1:1)*(520+Math.random()*420),-(950+Math.random()*350));
+    });
+    $('#gateSkip').addEventListener('click',function(e){e.preventDefault();finishGate();});
+    addEventListener('keydown',function(e){if(!gateDone&&e.key==='Escape')finishGate();});
+  }
+
+  /* ---------- reveals ---------- */
+  if(!reduce&&'IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add('on');io.unobserve(en.target);}});},{threshold:.12,rootMargin:'0px 0px -6% 0px'});
+    $$('.rv').forEach(function(el){io.observe(el);});
+    var io2=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){var el=en.target;setTimeout(function(){el.classList.add('on');},Math.min(900,$$('.stop').indexOf(el)*70));io2.unobserve(el);}});},{root:$('#track'),threshold:.2});
+    $$('.stop').forEach(function(el){io2.observe(el);});
+  }else{root.classList.add('nomo');}
+
+  /* ---------- hover classes driven by JS (works with synthetic events) ---------- */
+  function hov(sel){
+    document.addEventListener('mouseover',function(e){var el=e.target.closest&&e.target.closest(sel);if(el)el.classList.add('hov');});
+    document.addEventListener('mouseout',function(e){var el=e.target.closest&&e.target.closest(sel);if(el&&!(e.relatedTarget&&el.contains(e.relatedTarget)))el.classList.remove('hov');});
+  }
+  hov('.card');hov('.stop');hov('.btn');hov('nav.links a');
+
+  /* ---------- paw trail ---------- */
+  var trail=$('#pawtrail'),lx=null,ly=null,side=1,mx=innerWidth*.6,my=innerHeight*.4,moved=false;
+  function onMove(e){
+    if(e.pointerType==='touch')return;
+    mx=e.clientX;my=e.clientY;moved=true;
+    if(reduce||!gateDone)return;
+    if(lx===null){lx=mx;ly=my;return;}
+    var dx=mx-lx,dy=my-ly,d=Math.hypot(dx,dy);
+    if(d<64)return;
+    var ux=dx/d,uy=dy/d,a=Math.atan2(dy,dx)*180/Math.PI+90;
+    side=-side;
+    var px=mx+(-uy)*10*side,py=my+ux*10*side;
+    var p=document.createElement('div');p.className='paw';
+    p.style.transform='translate('+px.toFixed(0)+'px,'+py.toFixed(0)+'px) rotate('+a.toFixed(0)+'deg)';
+    p.innerHTML='<svg viewBox="0 0 40 40" aria-hidden="true"><use href="#paw"/></svg>';
+    trail.appendChild(p);
+    while(trail.children.length>16)trail.removeChild(trail.firstChild);
+    lx=mx;ly=my;
+    requestAnimationFrame(function(){requestAnimationFrame(function(){p.classList.add('gone');});});
+    setTimeout(function(){if(p.parentNode)p.parentNode.removeChild(p);},1500);
+  }
+  addEventListener('pointermove',onMove);
+  addEventListener('mousemove',function(e){if(!window.PointerEvent)onMove(e);});
+
+  /* ---------- dog follows the cursor ---------- */
+  var dog=$('#dog'),head=$('#head'),eyes=$('#eyes'),hx=0,hy=0,ex=0,ey=0,dogVis=true;
+  if(dog&&!reduce){
+    if('IntersectionObserver' in window)new IntersectionObserver(function(es){dogVis=es[0].isIntersecting;},{}).observe(dog);
+    var loop=function(now){
+      if(dogVis){
+        var r=dog.getBoundingClientRect(),cx=r.left+r.width*.5,cy=r.top+r.height*.34;
+        var tx,ty;
+        if(moved){tx=(mx-cx)/Math.max(300,innerWidth*.5);ty=(my-cy)/Math.max(300,innerHeight*.5);}
+        else{var s=now/1000;tx=Math.sin(s*.7)*.5;ty=Math.sin(s*.9+1)*.25;}
+        tx=Math.max(-1,Math.min(1,tx));ty=Math.max(-1,Math.min(1,ty));
+        hx+=(tx*6-hx)*.08;hy+=(ty*4-hy)*.08;ex+=(tx*7-ex)*.12;ey+=(ty*5-ey)*.12;
+        head.style.transform='translate('+hx.toFixed(2)+'px,'+hy.toFixed(2)+'px) rotate('+(hx*.35).toFixed(2)+'deg)';
+        eyes.style.transform='translate('+ex.toFixed(2)+'px,'+ey.toFixed(2)+'px)';
+      }
+      requestAnimationFrame(loop);
+    };
+    requestAnimationFrame(loop);
+  }
+
+  /* ---------- the lead ---------- */
+  var svg=$('#lead'),path=$('#leadPath'),tip=$('#leadTip');
+  var pts=[],cum=[],maxY=[],total=0,startY=0,progress=0,target=0,leadAnim=false;
+  function pageXY(el){var r=el.getBoundingClientRect();return {x:r.left+r.width/2+scrollX,y:r.top+r.height/2+scrollY};}
+  function bez(a,c1,c2,b,out){for(var i=1;i<=24;i++){var t=i/24,u=1-t;out.push({x:u*u*u*a.x+3*u*u*t*c1.x+3*u*t*t*c2.x+t*t*t*b.x,y:u*u*u*a.y+3*u*u*t*c1.y+3*u*t*t*c2.y+t*t*t*b.y});}}
+  function build(){
+    var W=page.clientWidth,H=page.scrollHeight;
+    svg.setAttribute('width',W);svg.style.height=H+'px';svg.setAttribute('viewBox','0 0 '+W+' '+H);
+    var end=$('#mailbtn');
+    var pr=page.getBoundingClientRect();
+    var s=$('.strand');var sr=s.getBoundingClientRect();
+    var st={x:sr.right+scrollX-pr.left-scrollX+0,y:sr.bottom+scrollY};
+    // the strand ends at its bottom right corner (svg point 452,500)
+    var dr=dog.getBoundingClientRect(),k=dr.width/520;
+    st={x:dr.left-pr.left+452*k,y:dr.top+scrollY+500*k};
+    var small=W<700,pad=small?14:Math.max(22,W*.025),b=small?24:44,a=small?11:18;
+    pts=[st];var cur=st;
+    var secs=$$('[data-lead]'),sideL=false;
+    secs.forEach(function(sec){
+      var top=sec.getBoundingClientRect().top+scrollY-40;
+      var tx=sideL?pad+2:W-pad-2;
+      var T={x:tx,y:top};
+      var dy=Math.min(240,Math.max(70,top-cur.y));
+      var run={x:cur.x,y:top-dy};
+      if(run.y>cur.y+4){
+        var rx=cur.x;pts.push({x:rx,y:cur.y});
+        // follow the margin straight down (eased to the side), then cross in the gap
+        var m={x:cur.x<W/2?pad+2:W-pad-2,y:cur.y+Math.min(160,(run.y-cur.y)*.4)};
+        bez(cur,{x:cur.x,y:cur.y+(m.y-cur.y)*.6},{x:m.x,y:m.y-(m.y-cur.y)*.3},m,pts);
+        run={x:m.x,y:Math.max(m.y,top-dy)};pts.push(run);
+        cur=run;
+      }
+      bez(cur,{x:cur.x,y:cur.y+dy*.55},{x:T.x,y:T.y-dy*.55},T,pts);
+      var dir=sideL?1:-1;
+      for(var j=1;j<=48;j++){var t=j/48*Math.PI*2;pts.push({x:T.x+dir*b*(1-Math.cos(t)),y:T.y+a*t-b*Math.sin(t)});}
+      cur=pts[pts.length-1];sideL=!sideL;
+    });
+    var d='';cum=[0];maxY=[pts[0].y];total=0;
+    pts.forEach(function(p,i){d+=(i?'L':'M')+p.x.toFixed(1)+' '+p.y.toFixed(1);if(i){total+=Math.hypot(p.x-pts[i-1].x,p.y-pts[i-1].y);cum.push(total);maxY.push(Math.max(maxY[i-1],p.y));}});
+    path.setAttribute('d',d);path.style.strokeDasharray=total+' '+(total+10);
+    startY=pts[0].y;
+    update(true);
+  }
+  function lenAtY(Y){
+    if(Y<=maxY[0])return 0;if(Y>=maxY[maxY.length-1])return total;
+    var lo=0,hi=maxY.length-1;while(hi-lo>1){var m=(lo+hi)>>1;if(maxY[m]<Y)lo=m;else hi=m;}
+    var span=maxY[hi]-maxY[lo]||1;return cum[lo]+(cum[hi]-cum[lo])*((Y-maxY[lo])/span);
+  }
+  function draw(len){
+    path.style.strokeDashoffset=(total-len).toFixed(1);
+    // find point at len for the ball tip
+    var lo=0,hi=cum.length-1;while(hi-lo>1){var m=(lo+hi)>>1;if(cum[m]<len)lo=m;else hi=m;}
+    var p=pts[hi];tip.setAttribute('cx',p.x.toFixed(1));tip.setAttribute('cy',p.y.toFixed(1));
+    tip.style.display=(len<=1||len>=total-1)?'none':'';
+  }
+  function update(jump){
+    if(!pts.length)return;
+    if(reduce){draw(total);return;}
+    target=lenAtY(scrollY+innerHeight*.72);
+    if(jump)progress=target;
+    if(!leadAnim){leadAnim=true;requestAnimationFrame(tick);}
+  }
+  function tick(){
+    progress+=(target-progress)*.14;
+    if(Math.abs(target-progress)<.6){progress=target;leadAnim=false;draw(progress);return;}
+    draw(progress);requestAnimationFrame(tick);
+  }
+  var rebuildT;
+  function rebuild(){clearTimeout(rebuildT);rebuildT=setTimeout(build,120);}
+  addEventListener('scroll',function(){update(false);},{passive:true});
+  addEventListener('resize',rebuild);
+  addEventListener('load',build);
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(build);
+  $$('details').forEach(function(d){d.addEventListener('toggle',rebuild);});
+  if('ResizeObserver' in window)new ResizeObserver(rebuild).observe(page);
+  build();
+
+  /* ---------- timeline: gentle drift until touched ---------- */
+  var track=$('#track'),drifting=!reduce,tv=false,pos=0;
+  if(track){
+    var stopDrift=function(){drifting=false;};
+    ['pointerdown','wheel','keydown','touchstart'].forEach(function(n){track.addEventListener(n,stopDrift,{passive:true});});
+    if('IntersectionObserver' in window)new IntersectionObserver(function(es){tv=es[0].isIntersecting;},{threshold:.4}).observe(track);
+    var lastN=performance.now();
+    var drift=function(now){
+      var dt=Math.min(50,now-lastN);lastN=now;
+      if(drifting&&tv&&gateDone){
+        var max=track.scrollWidth-track.clientWidth;
+        if(Math.abs(track.scrollLeft-pos)>2)pos=track.scrollLeft;
+        pos=Math.min(max,pos+dt*.035);track.scrollLeft=pos;
+        if(pos>=max)drifting=false;
+      }
+      requestAnimationFrame(drift);
+    };
+    if(!reduce)requestAnimationFrame(drift);
+  }
+})();
+</script>
+<script src="../preview.js" defer></script>
+</body>
+</html>
