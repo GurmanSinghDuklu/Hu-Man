@@ -2,7 +2,6 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
-import InnerHero from '../components/InnerHero.astro';
 import TalkBanner from '../components/TalkBanner.astro';
 import { portfolioTiers, portfolioAddOns, portfolioExpress } from '../data/pricing';
 import { contactPath } from '../config/links';
@@ -16,25 +15,26 @@ const choose = (name: string) => withBase(contactPath({ tier: `Portfolio: ${name
 <BaseLayout page="portfolio">
   <SiteHeader slot="header" />
 
-  <InnerHero label="Portfolio sites" lens="Lens 10 / Portfolio sites">
-    <Fragment slot="title">
-      <span class="ptitle">A CV gets you past the screen. A portfolio gets you remembered.</span>
-    </Fragment>
-    <Fragment slot="lede">
-      Personal portfolio and CV websites for job seekers, graduates, creatives and freelancers. For
-      individuals, not businesses.
-    </Fragment>
-  </InnerHero>
-
-  <section class="band pconcepts" aria-labelledby="concepts-title">
+  <section class="band pconcepts" aria-labelledby="pwall-title">
     <div class="sheet">
-      <p class="label" data-reveal>
-        {portfolioConceptsIntro.label} · {portfolioConcepts.length}
-      </p>
-      <h2 id="concepts-title" class="display display--s" data-reveal="lines">
-        {portfolioConceptsIntro.title}
-      </h2>
-      <p class="pconcepts__text">{portfolioConceptsIntro.text}</p>
+      <div class="pwall__head">
+        <div class="pwall__intro">
+          <p class="label">Portfolio sites · {portfolioConcepts.length} concepts</p>
+          <h1 id="pwall-title" class="pwall__title">
+            A CV gets you past the screen. A portfolio gets you remembered.
+          </h1>
+        </div>
+        <div class="pwall__side">
+          <p class="pwall__lede">
+            Personal portfolio and CV websites for job seekers, graduates, creatives and
+            freelancers. For individuals, not businesses.
+          </p>
+          <p class="pwall__hint">{portfolioConceptsIntro.text}</p>
+          <a class="pwall__jump" href="#tiers-title">
+            See prices
+          </a>
+        </div>
+      </div>
       <ConceptWall />
     </div>
   </section>
@@ -215,20 +215,60 @@ const choose = (name: string) => withBase(contactPath({ tier: `Portfolio: ${name
 
   .pconcepts {
     overflow: clip;
-    padding-block: clamp(3rem, calc(var(--u) * 0.9), 5.5rem) clamp(4rem, calc(var(--u) * 1.6), 9rem);
+    padding-block: clamp(1.5rem, calc(var(--u) * 0.45), 3rem)
+      clamp(4rem, calc(var(--u) * 1.6), 9rem);
     background: var(--ink);
     color: var(--paper);
   }
 
-  .pconcepts .label {
-    color: var(--muted-on-ink);
+  .pwall__head {
+    display: grid;
+    gap: 1.25rem;
+    align-items: end;
   }
 
-  .pconcepts__text {
-    max-width: 42rem;
-    margin-top: 1rem;
-    font-size: clamp(1rem, calc(var(--u) * 0.18), 1.1rem);
+  .pwall__title {
+    max-width: 18ch;
+    margin-top: 0.75rem;
+    font: 800 clamp(2rem, min(calc(var(--u) * 0.62), 8.5vw), 4rem) / 0.98 var(--font-display);
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+
+  .pwall__side {
+    display: grid;
+    gap: 0.75rem;
+    max-width: 34rem;
+  }
+
+  .pwall__lede {
+    font-size: clamp(1rem, calc(var(--u) * 0.18), 1.15rem);
     line-height: 1.5;
+  }
+
+  .pwall__hint {
+    color: var(--muted-on-ink);
+    line-height: 1.5;
+  }
+
+  .pwall__jump {
+    justify-self: start;
+    color: var(--paper);
+    font: 500 0.75rem var(--font-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-underline-offset: 0.4em;
+  }
+
+  @media (min-width: 64rem) {
+    .pwall__head {
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: calc(var(--u) * 0.8);
+    }
+  }
+
+  .pconcepts .label {
+    color: var(--muted-on-ink);
   }
 
   .pextras {

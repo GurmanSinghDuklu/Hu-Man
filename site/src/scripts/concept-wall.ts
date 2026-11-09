@@ -6,7 +6,7 @@
  * Nothing mounts under reduced motion, Data Saver or on very small screens with coarse pointers.
  */
 
-const SPEEDS = [0, -0.09, 0.06]; // column drift, as a share of the distance scrolled into the wall
+const SPEEDS = [0, -0.07]; // column drift, as a share of the distance scrolled into the wall
 
 type Tile = {
   el: HTMLElement;
@@ -66,7 +66,7 @@ export function initConceptWall() {
     f.style.width = `${t.w}px`;
     f.style.height = `${t.h}px`;
     f.tabIndex = -1;
-    f.title = `Live preview: ${t.el.querySelector('h3')?.textContent?.trim() ?? 'concept'}`;
+    f.title = `Live preview: ${t.el.querySelector('h2')?.textContent?.trim() ?? 'concept'}`;
     f.setAttribute('aria-hidden', 'true');
     f.setAttribute('inert', '');
     f.setAttribute('referrerpolicy', 'same-origin');
@@ -155,6 +155,8 @@ export function initConceptWall() {
   };
   for (const ev of ['scroll', 'pointermove', 'pointerdown', 'keydown'] as const)
     addEventListener(ev, kick, { passive: true });
+  // The wall is the page's hero: with a mouse, start as soon as the page is idle, no input needed.
+  if (matchMedia('(pointer: fine)').matches) addEventListener('load', kick, { once: true });
 
   // Pause previews while the tab is hidden.
   document.addEventListener('visibilitychange', () => {

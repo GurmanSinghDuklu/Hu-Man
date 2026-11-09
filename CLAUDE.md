@@ -424,6 +424,10 @@ mechanics from Gurman's Awwwards references but never their layouts, art or word
    executive; video pill in the headline grows full-bleed, hand-written 2D physics pills), leah (project
    manager; Swiss minimal, looping SVG Gantt, click-anywhere contact), tom (UX student; sticky canvas
    slideshow driven by scroll so the preview plays every slide).
+8. **Wall as hero (2026-11-09):** /portfolio now opens on the wall (the h1 sits in a compact intro above
+   it; `InnerHero` is no longer used there), in two wide columns with the right one starting lower
+   (staircase). With a fine pointer the live tiles start on load; on touch, on first interaction.
+   Tile names are h2 (heading order under the page h1).
 
 ## GitHub and preview deploy
 Repo: github.com/GurmanSinghDuklu/Hu-Man (public; default branch `hu-man-rebrand`). Every push to

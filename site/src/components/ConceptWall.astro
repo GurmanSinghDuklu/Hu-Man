@@ -19,7 +19,9 @@ const posterFor = (slug: string) =>
   Object.entries(posters).find(([path]) => path.split('/').pop()?.split('.')[0] === slug)?.[1]
     .default;
 
-const COLS = 3;
+// Two wide columns (Gurman, 9 Nov 2026): the concepts read bigger; the right column starts lower,
+// so the wall steps down like a staircase.
+const COLS = 2;
 const columns = Array.from({ length: COLS }, (_, c) =>
   portfolioConcepts
     .map((concept, index) => ({ concept, index }))
@@ -77,7 +79,8 @@ const size = { desktop: { w: 1440, h: 900 }, phone: { w: 390, h: 844 } };
                       width={concept.device === 'desktop' ? 900 : 420}
                       format="webp"
                       quality={72}
-                      loading="lazy"
+                      loading={index < 2 ? 'eager' : 'lazy'}
+                      fetchpriority={index < 2 ? 'high' : 'auto'}
                       decoding="async"
                       class="ctile__poster"
                     />
@@ -96,9 +99,9 @@ const size = { desktop: { w: 1440, h: 900 }, phone: { w: 390, h: 844 } };
                 <p class="ctile__note">
                   {portfolioConceptsIntro.note} · {concept.field}
                 </p>
-                <h3 class="ctile__name" id={`ctile-${concept.slug}`}>
+                <h2 class="ctile__name" id={`ctile-${concept.slug}`}>
                   {concept.name}
-                </h3>
+                </h2>
                 <p class="ctile__role">{concept.role}</p>
                 <p class="ctile__shows">{concept.shows}</p>
                 <a class="ctile__link" href={href}>
@@ -176,7 +179,7 @@ const size = { desktop: { w: 1440, h: 900 }, phone: { w: 390, h: 844 } };
   }
 
   .ctile--phone .ctile__frame {
-    width: min(100%, 300px);
+    width: min(100%, 360px);
     margin-inline: auto;
     padding: 10px;
     border: 1px solid #343632;
@@ -306,7 +309,7 @@ const size = { desktop: { w: 1440, h: 900 }, phone: { w: 390, h: 844 } };
   }
 
   .ctile--phone .ctile__body {
-    width: min(100%, 300px);
+    width: min(100%, 360px);
     margin-inline: auto;
   }
 
@@ -416,7 +419,7 @@ const size = { desktop: { w: 1440, h: 900 }, phone: { w: 390, h: 844 } };
   @media (min-width: 48rem) {
     .cwall__cols {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       align-items: start;
       gap: var(--tile-gap);
     }
@@ -424,17 +427,13 @@ const size = { desktop: { w: 1440, h: 900 }, phone: { w: 390, h: 844 } };
     .cwall__col {
       display: flex;
       flex-direction: column;
-      gap: calc(var(--tile-gap) * 2.2);
+      gap: calc(var(--tile-gap) * 2.6);
       will-change: translate;
     }
 
-    /* Stagger the columns so the wall reads as a sprawl, not a table. */
+    /* Staircase: the right column starts half a tile lower. */
     .cwall__col[data-cwall-col='1'] {
-      padding-top: calc(var(--u) * 1.4);
-    }
-
-    .cwall__col[data-cwall-col='2'] {
-      padding-top: calc(var(--u) * 0.6);
+      padding-top: calc(var(--u) * 2.6);
     }
   }
 </style>

@@ -275,7 +275,13 @@ const workItems = projects.map((p) => ({
   /* ---------- desktop menus (Services, Work) ---------- */
 
   /* Each item fills the header's height, so the pointer stays on it on the way down to the menu. */
-  .site-header__nav,
+  /* (The nav itself only turns into a flex row from 64rem up: a `display` here overrode the phone
+     `display: none` above and pushed the links off the right edge on phones.) */
+  .site-header__nav {
+    align-self: stretch;
+    align-items: center;
+  }
+
   .site-header__nav > ul,
   .site-header__nav > ul > li {
     align-self: stretch;
@@ -560,7 +566,7 @@ const workItems = projects.map((p) => ({
     }
 
     .site-header__nav {
-      display: block;
+      display: flex;
     }
 
     .site-header :global(.site-header__cta) {
