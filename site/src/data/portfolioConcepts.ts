@@ -13,7 +13,17 @@ export interface PortfolioConcept {
   role: string;
   /** Short job label for the filter chips. */
   field:
-    'Creative' | 'Tech' | 'Operations' | 'Trades' | 'Care' | 'Hospitality' | 'Finance' | 'Graduate';
+    | 'Creative'
+    | 'Tech'
+    | 'Operations'
+    | 'Trades'
+    | 'Care'
+    | 'Hospitality'
+    | 'Finance'
+    | 'Graduate'
+    | 'Marketing'
+    | 'Engineering'
+    | 'Pets';
   /** One factual line about what the page shows. */
   shows: string;
   /** Alt text for the poster: what is in the picture. */
@@ -63,6 +73,17 @@ export const portfolioConcepts: PortfolioConcept[] = [
     device: 'desktop',
   },
   {
+    slug: 'chloe',
+    name: 'Chloe Park',
+    role: 'Marketing executive, Manchester',
+    field: 'Marketing',
+    shows:
+      'A video inside the headline that grows to full screen, and skill tiles that fall and pile up.',
+    alt: 'The Chloe Park concept portfolio: a huge white headline on black with a small video playing inside one line.',
+    domain: 'chloepark.example',
+    device: 'desktop',
+  },
+  {
     slug: 'dan',
     name: 'Dan Okafor',
     role: 'Construction site manager, Bradford',
@@ -84,6 +105,16 @@ export const portfolioConcepts: PortfolioConcept[] = [
     device: 'desktop',
   },
   {
+    slug: 'ellie',
+    name: 'Ellie Brooks',
+    role: 'Dog walker and pet sitter, Harrogate',
+    field: 'Pets',
+    shows: "Throw a ball to get in, then a dog's red lead draws itself down the page.",
+    alt: 'The Ellie Brooks concept portfolio: tomato-red capitals on cream above a hand-drawn scruffy dog holding a red lead.',
+    domain: 'elliebrooks.example',
+    device: 'phone',
+  },
+  {
     slug: 'maya',
     name: 'Maya Okonkwo',
     role: 'Short-form video creator, London',
@@ -101,6 +132,17 @@ export const portfolioConcepts: PortfolioConcept[] = [
     shows: 'A 3D brake assembly that turns under a moving light and tilts with your cursor.',
     alt: 'The Ryan Holt concept portfolio: a black and grey page with a 3D-shaded mechanical part under hard light.',
     domain: 'ryanholt.example',
+    device: 'desktop',
+  },
+  {
+    slug: 'marcus',
+    name: 'Marcus Reid',
+    role: 'Mechanical design engineer, Rotherham',
+    field: 'Engineering',
+    shows:
+      'A spinning red-and-white 3D sphere on a red circle that travels from section to section.',
+    alt: 'The Marcus Reid concept portfolio: his name in black beside a red-and-white ribbon sphere on a big red circle.',
+    domain: 'marcusreid.example',
     device: 'desktop',
   },
   {
@@ -124,6 +166,16 @@ export const portfolioConcepts: PortfolioConcept[] = [
     device: 'desktop',
   },
   {
+    slug: 'leah',
+    name: 'Leah Morgan',
+    role: 'Project manager, Bristol',
+    field: 'Operations',
+    shows: 'A looping project timeline in the hero, and a contact area you can click anywhere on.',
+    alt: 'The Leah Morgan concept portfolio: bold black capitals on pale grey beside an animated project timeline.',
+    domain: 'leahmorgan.example',
+    device: 'desktop',
+  },
+  {
     slug: 'theo',
     name: 'Theo Lindqvist',
     role: 'Backend and platform engineer, Manchester',
@@ -142,6 +194,16 @@ export const portfolioConcepts: PortfolioConcept[] = [
       'Four shapes for four strengths that regroup as you scroll, and venue panels that unfold into a carousel.',
     alt: 'The Kai Thompson concept portfolio: a dark grainy page with a big centred headline over a giant K and four coloured shapes.',
     domain: 'kaithompson.example',
+    device: 'desktop',
+  },
+  {
+    slug: 'tom',
+    name: 'Tom Ashworth',
+    role: 'UX design student, Leeds',
+    field: 'Graduate',
+    shows: 'Full-screen black-and-white projects that slice apart as you move between them.',
+    alt: 'The Tom Ashworth concept portfolio: a dark full-screen black-and-white photo with a large project title and a 01 / 06 counter.',
+    domain: 'tomashworth.example',
     device: 'desktop',
   },
   {

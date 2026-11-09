@@ -395,7 +395,7 @@ Lighthouse 97-100 / 100 / 100 / 100 on ten pages, axe 0 violations on 15. Motion
 Three standalone concept sites (Noor Haddad, Theo Lindqvist, Maya Okonkwo) live in `site/public/concepts/<slug>/index.html` and are shown as cards on `/portfolio` (data in `src/data/portfolioConcepts.ts`, screenshots in `src/assets/portfolio-concepts/`). They are plain HTML copied as is, not Astro pages: fonts are self-hosted woff2 in `public/concepts/fonts/` (from `@fontsource`, not added to package.json) and GSAP 3.15.0 (gsap, ScrollTrigger, Draggable) is copied from `node_modules` into `public/concepts/vendor/`, all via relative paths so the `/Hu-Man` preview base works. Gotchas: Astro's meta CSP does not cover public files, so `public/_headers` has a `/concepts/*` rule that detaches the global CSP (`! Content-Security-Policy`) and sets one that allows their inline scripts and styles; the pages are `noindex,nofollow`, not in the sitemap and not in `llms-full.txt`, and `seo-check.mjs` checks them separately (noindex, no outside hosts, assets exist, back link); ESLint and Prettier skip `public/concepts`. Each page has a fixed badge with a back link to `../../portfolio/` (static at the foot on phones). Known axe finding left: the Maya nav links over the pink circle fail colour contrast. The home Portfolio section (`WorkCards.astro`) shows the real projects from `projects.ts`, not these concepts (Gurman, 2026-11-02: the concept version was reverted).
 
 ## Live concept wall (2026-11-07, branch `portfolio-gallery`)
-/portfolio now opens with eleven concept portfolios on a dark live wall (`ConceptWall.astro`,
+/portfolio now opens with the concept portfolios (sixteen since 9 Nov) on a dark live wall (`ConceptWall.astro`,
 `src/scripts/concept-wall.ts`; spec `docs/superpowers/specs/2026-11-07-portfolio-gallery.md`). Eight new
 concepts for ordinary jobs (priya, dan, grace, sofia, ryan, hannah, kai, amira) borrow interaction
 mechanics from Gurman's Awwwards references but never their layouts, art or words. Things worth knowing:
@@ -418,6 +418,12 @@ mechanics from Gurman's Awwwards references but never their layouts, art or word
    board, boarding passes, luggage tags), Kai follows the Addviso look (dark grain, mint, giant K, four
    shapes). Their photos are muapi-generated and live in `<slug>/img/`. The muapi key stays in
    `~/.muapi/key`, never in the repo.
+7. **Batch 3 (2026-11-09):** five more concepts, sixteen in all: ellie (dog walker; ball-throw entry gate,
+   skipped in preview/reduced motion, so its poster is shot with `?preview`), marcus (manufacturing
+   engineer; red-circle brand-book system, muapi sphere turntable `img/sphere.mp4`), chloe (marketing
+   executive; video pill in the headline grows full-bleed, hand-written 2D physics pills), leah (project
+   manager; Swiss minimal, looping SVG Gantt, click-anywhere contact), tom (UX student; sticky canvas
+   slideshow driven by scroll so the preview plays every slide).
 
 ## GitHub and preview deploy
 Repo: github.com/GurmanSinghDuklu/Hu-Man (public; default branch `hu-man-rebrand`). Every push to

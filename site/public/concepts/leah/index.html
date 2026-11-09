@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Leah Morgan, project manager (concept portfolio)</title>
+<meta name="robots" content="noindex,nofollow">
+<style>
+@font-face{font-family:'Unbounded';font-style:normal;font-weight:800;font-display:swap;src:url(../fonts/unbounded-latin-800-normal.woff2) format('woff2')}
+@font-face{font-family:'Figtree';font-style:normal;font-weight:400;font-display:swap;src:url(../fonts/figtree-latin-400-normal.woff2) format('woff2')}
+@font-face{font-family:'Figtree';font-style:normal;font-weight:500;font-display:swap;src:url(../fonts/figtree-latin-500-normal.woff2) format('woff2')}
+@font-face{font-family:'Figtree';font-style:normal;font-weight:700;font-display:swap;src:url(../fonts/figtree-latin-700-normal.woff2) format('woff2')}
+</style>
+<style>
+:root{--bg:#F7F7F7;--ink:#000;--mute:#4D4D4D;--line:#000;--blue:#0000EE;--pad:clamp(16px,3.4vw,48px);--disp:'Unbounded','Arial Black',system-ui,sans-serif;--body:'Figtree',system-ui,-apple-system,'Segoe UI',Arial,sans-serif}
+*{box-sizing:border-box;margin:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.page{overflow-x:clip;min-height:100vh}
+a{color:var(--blue);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,summary:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+img{display:block;max-width:100%}
+.disp{font-family:var(--disp);font-weight:800;text-transform:uppercase;line-height:1;letter-spacing:-.02em}
+sup.m{font-family:var(--body);font-weight:500;font-size:.38em;vertical-align:top;position:relative;top:.15em;margin-left:.08em;letter-spacing:0}
+.label{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.wrap{padding-inline:var(--pad)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* header */
+.top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px var(--pad);border-bottom:1px solid var(--line)}
+.top .name{font-family:var(--disp);font-weight:800;font-size:15px;text-transform:uppercase;color:var(--ink);text-decoration:none;letter-spacing:-.01em}
+.top nav{display:flex;gap:26px;align-items:center}
+.top nav a:not(.pill){font-size:15px;font-weight:500}
+.pill{display:inline-flex;align-items:center;gap:10px;background:var(--ink);color:var(--bg);text-decoration:none;font-weight:700;font-size:15px;padding:12px 22px;border-radius:99px;border:2px solid var(--ink);transition:background .2s,color .2s}
+.pill i{width:8px;height:8px;border-radius:50%;background:var(--bg);transition:background .2s}
+.pill:hover,.pill.is-on{background:var(--blue);border-color:var(--blue);color:#fff}
+.pill.ghost{background:transparent;color:var(--ink)}
+.pill.ghost:hover,.pill.ghost.is-on{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+
+/* hero */
+.hero{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:clamp(20px,3vw,48px);padding:clamp(28px,4vw,56px) var(--pad) clamp(32px,4vw,56px);align-items:center}
+.hero h1{font-size:clamp(26px,4.55vw,84px)}
+.hero h1 span{display:block;white-space:nowrap;overflow:hidden;padding-bottom:.04em}
+.hero h1 span b{display:block;font-weight:800;transform:translateY(0)}
+.hero .lede{max-width:34em;margin-top:clamp(18px,2.4vw,32px);color:var(--mute);font-size:18px}
+.hero .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px;align-items:center}
+.vis{position:relative;padding-bottom:70px}
+.vis .photo{aspect-ratio:4/5;overflow:hidden;background:#ddd;width:78%;margin-left:auto}
+.vis .photo img{width:100%;height:100%;object-fit:cover;object-position:38% 50%}
+.gantt{position:absolute;left:0;bottom:0;width:min(78%,440px);background:var(--bg);border:2px solid var(--ink);padding:10px 10px 6px}
+.gantt .gh{display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:0 2px 6px}
+.gantt .gh em{font-style:normal;color:var(--blue)}
+.gantt svg{display:block;width:100%;height:auto}
+.gantt text{font-family:var(--body);font-weight:700;fill:#000}
+.tag-spin{position:absolute;right:-6px;top:-14px;width:96px;height:96px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;text-align:center;font-family:var(--disp);font-weight:800;font-size:11px;line-height:1.15;text-transform:uppercase;transform:rotate(-8deg)}
+
+/* ticker */
+.ticker{border-block:1px solid var(--line);overflow:hidden;white-space:nowrap;padding:14px 0}
+.ticker .row{display:inline-flex;gap:0;animation:tick 38s linear infinite;will-change:transform}
+.ticker span{font-family:var(--disp);font-weight:800;font-size:clamp(18px,2.6vw,34px);text-transform:uppercase;padding-right:.9em;letter-spacing:-.02em}
+.ticker span:nth-child(even){color:var(--blue)}
+@keyframes tick{to{transform:translateX(-50%)}}
+
+/* sections */
+section{padding:clamp(56px,8vw,120px) 0 0}
+.sh{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;padding-bottom:22px;border-bottom:1px solid var(--line)}
+.sh h2{font-size:clamp(28px,5vw,76px)}
+.sh .label{padding-bottom:.6em;white-space:nowrap}
+
+/* projects */
+.ctrl{display:flex;gap:8px}
+.ctrl button{width:48px;height:48px;border-radius:50%;border:2px solid var(--ink);background:transparent;font-size:20px;line-height:1;cursor:pointer;color:var(--ink);transition:background .2s,color .2s}
+.ctrl button:hover,.ctrl button.is-on{background:var(--ink);color:var(--bg)}
+.track{display:flex;gap:clamp(12px,1.6vw,24px);overflow-x:auto;padding:28px var(--pad) 20px;scroll-snap-type:x proximity;scroll-padding-inline:var(--pad);scrollbar-width:none;cursor:grab}
+.track::-webkit-scrollbar{display:none}
+.track.drag{cursor:grabbing;scroll-snap-type:none;user-select:none}
+.card{flex:0 0 clamp(272px,34vw,500px);scroll-snap-align:start;position:relative}
+.card .frame{position:relative;aspect-ratio:4/5;overflow:hidden;background:#ddd}
+.card img{width:100%;height:100%;object-fit:cover;transform:scale(1);transition:transform .8s cubic-bezier(.2,.7,.2,1);-webkit-user-drag:none;user-select:none}
+.card.is-on img{transform:scale(1.08)}
+.card .sum{position:absolute;left:0;right:0;bottom:0;background:#000;color:#F7F7F7;padding:18px 18px 20px;transform:translateY(101%);transition:transform .45s cubic-bezier(.2,.7,.2,1);font-size:15px;line-height:1.45}
+.card.is-on .sum{transform:translateY(0)}
+.card .sum b{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px;color:#fff}
+.card .meta{display:flex;justify-content:space-between;gap:12px;align-items:baseline;padding-top:14px}
+.card h3{font-family:var(--disp);font-weight:800;text-transform:uppercase;font-size:clamp(15px,1.6vw,22px);letter-spacing:-.02em;line-height:1.1}
+.card .yr{font-weight:700;font-size:15px}
+.card ul{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.card li{border:1.5px solid var(--ink);border-radius:99px;font-size:13px;font-weight:500;padding:3px 11px}
+.card.is-on li{background:var(--ink);color:var(--bg)}
+.bar{margin:6px var(--pad) 0;height:3px;background:#d6d6d6}
+.bar i{display:block;height:100%;width:25%;background:var(--ink);transition:width .15s linear}
+@media (hover:none){.card .sum{position:static;transform:none;margin-top:0}.card .frame{aspect-ratio:auto}.card .frame img{aspect-ratio:4/5;height:auto}}
+
+/* services */
+.acc{border-bottom:1px solid var(--line)}
+.acc h3{font-size:inherit;font-weight:inherit}
+.acc button{display:grid;grid-template-columns:auto 1fr auto;gap:clamp(12px,3vw,40px);align-items:center;width:100%;text-align:left;background:none;border:0;border-top:1px solid var(--line);padding:clamp(18px,2.4vw,32px) 0;cursor:pointer;color:var(--ink);font:inherit}
+.acc h3:first-child button{border-top:0}
+.acc .n{font-weight:700;font-size:14px;min-width:2.2em}
+.acc .t{font-family:var(--disp);font-weight:800;text-transform:uppercase;font-size:clamp(20px,3.8vw,56px);letter-spacing:-.025em;line-height:1;transition:color .2s,transform .3s}
+.acc .pm{width:40px;height:40px;border:2px solid var(--ink);border-radius:50%;position:relative;transition:background .2s,transform .3s}
+.acc .pm::before,.acc .pm::after{content:"";position:absolute;left:50%;top:50%;width:14px;height:2px;background:var(--ink);transform:translate(-50%,-50%);transition:transform .3s,background .2s}
+.acc .pm::after{transform:translate(-50%,-50%) rotate(90deg)}
+.acc button:hover .t,.acc button.is-on .t{color:var(--blue)}
+.acc button:hover .pm,.acc button.is-on .pm{background:var(--ink)}
+.acc button:hover .pm::before,.acc button:hover .pm::after,.acc button.is-on .pm::before,.acc button.is-on .pm::after{background:var(--bg)}
+.acc button[aria-expanded=true] .pm::after{transform:translate(-50%,-50%) rotate(0)}
+.acc .panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s cubic-bezier(.2,.7,.2,1)}
+.acc .panel.open{grid-template-rows:1fr}
+.acc .panel>div{overflow:hidden}
+.acc .panel .in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:20px 40px;padding:0 0 clamp(22px,3vw,40px) calc(2.2em + clamp(12px,3vw,40px) + 14px)}
+.acc .panel p{max-width:36em;color:var(--mute)}
+.acc .panel ul{list-style:none;padding:0;display:grid;gap:6px;font-weight:500}
+.acc .panel li::before{content:"→  ";color:var(--blue);font-weight:700}
+
+/* approach */
+.steps{position:relative;margin:0 var(--pad);padding:clamp(28px,4vw,56px) 0 0 clamp(36px,5vw,72px)}
+.steps .track-line{position:absolute;left:11px;top:clamp(28px,4vw,56px);bottom:0;width:2px;background:#d0d0d0}
+.steps .fill{position:absolute;left:0;top:0;width:100%;height:0;background:var(--ink)}
+.step{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:8px 40px;padding-bottom:clamp(36px,5vw,72px)}
+.step h3{color:#6B6B6B;transition:color .4s}
+.step.on h3{color:#000}
+.step::before{content:"";position:absolute;left:calc(-1 * clamp(36px,5vw,72px) + 3px);top:.5em;width:16px;height:16px;border-radius:50%;background:var(--bg);border:2px solid var(--ink);transition:background .3s,border-color .3s}
+.step.on::before{background:var(--blue);border-color:var(--blue)}
+.step h3{font-family:var(--disp);font-weight:800;text-transform:uppercase;font-size:clamp(20px,3vw,40px);letter-spacing:-.02em;line-height:1.05}
+.step h3 small{display:block;font-family:var(--body);font-size:13px;letter-spacing:.08em;margin-bottom:8px;color:var(--blue)}
+.step p{color:var(--mute);max-width:34em}
+.creds{display:flex;flex-wrap:wrap;gap:10px;margin:8px var(--pad) 0;padding-top:26px;border-top:1px solid var(--line)}
+.creds span{border:1.5px solid var(--ink);border-radius:99px;padding:6px 14px;font-weight:500;font-size:15px}
+.creds .label{border:0;padding:6px 0;margin-right:10px}
+
+/* faq */
+.faq{margin:0 var(--pad)}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:20px;align-items:center;padding:22px 0;font-weight:700;font-size:clamp(17px,1.8vw,22px)}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font-family:var(--disp);font-size:26px;font-weight:800;line-height:1;transition:transform .3s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq summary:hover,.faq summary.is-on{color:var(--blue)}
+.faq details p{padding:0 0 24px;max-width:42em;color:var(--mute)}
+.faq-wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:20px 40px;margin-top:0}
+.faq-wrap>.label{padding:28px 0 0 var(--pad)}
+
+/* contact */
+.start{display:block;position:relative;margin-top:clamp(56px,8vw,120px);background:#000;color:#F7F7F7;text-decoration:none;padding:clamp(40px,7vw,110px) var(--pad);overflow:hidden}
+.start .label{color:#F7F7F7}
+.start .big{display:block;font-family:var(--disp);font-weight:800;text-transform:uppercase;letter-spacing:-.03em;line-height:.98;font-size:clamp(34px,10.6vw,190px);margin:18px 0 28px;transition:color .3s}
+.start .big em{font-style:normal;color:#8A8AFF}
+.start.is-on .big{color:#fff}
+.start .mail{display:inline-block;font-size:clamp(17px,2vw,26px);font-weight:700;border-bottom:2px solid #F7F7F7;padding-bottom:2px}
+.start:focus-visible{outline:4px solid #8A8AFF;outline-offset:-8px}
+.say{position:fixed;left:0;top:0;z-index:80;width:104px;height:104px;margin:-52px 0 0 -52px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;font-family:var(--disp);font-weight:800;font-size:15px;text-transform:uppercase;pointer-events:none;transform:translate3d(-200px,-200px,0) scale(0);transition:opacity .2s;opacity:0}
+.say.show{opacity:1}
+.say span{display:block;transform:rotate(-6deg)}
+@media (hover:none),(pointer:coarse){.say{display:none}}
+footer{padding:26px var(--pad) 30px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 30px;font-size:14px;border-top:0;background:#000;color:#F7F7F7}
+footer a{color:#B8B8FF}
+
+@media (max-width:900px){
+  .hero{grid-template-columns:minmax(0,1fr)}
+  .hero h1{font-size:clamp(24px,8.2vw,70px)}
+  .vis{max-width:560px}
+  .acc .panel .in{grid-template-columns:minmax(0,1fr);padding-left:0}
+  .step{grid-template-columns:minmax(0,1fr)}
+  .faq-wrap{grid-template-columns:minmax(0,1fr)}
+  .faq-wrap>.label{padding:24px var(--pad) 8px}
+}
+@media (max-width:640px){
+  body{font-size:16px}
+  .top nav a:not(.pill){display:none}
+  .top .name{font-size:13px}
+  .pill{padding:10px 16px;font-size:14px}
+  .sh{flex-wrap:wrap}
+  .sh .label{display:none}
+  .tag-spin{width:78px;height:78px;font-size:9px}
+  .vis .photo{width:84%}
+  .gantt{width:92%}
+  .acc .pm{width:34px;height:34px}
+  .acc button{grid-template-columns:auto 1fr auto}
+}
+@media (prefers-reduced-motion:reduce){
+  .ticker .row{animation:none}
+  *{transition-duration:.01ms!important}
+}
+
+/* HU/MAN concept badge */
+.badge{position:fixed;z-index:90;left:max(12px,env(safe-area-inset-left,0px));bottom:max(12px,env(safe-area-inset-bottom,0px));display:flex;flex-wrap:wrap;align-items:center;gap:2px 12px;background:#121317;color:#EDECE6;padding:8px 14px 8px 11px;font-size:12px;font-weight:600;line-height:1.3;box-shadow:0 0 0 1.5px #EDECE6,0 10px 24px -8px rgba(18,19,23,.5);max-width:calc(100vw - 24px);pointer-events:auto;border-radius:18px}
+.badge a{color:inherit;font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.badge a:focus-visible{outline:2px solid currentColor;outline-offset:3px;border-radius:3px}
+@media (max-width:640px){.badge{position:static;margin:24px max(16px,env(safe-area-inset-left,0px)) max(16px,env(safe-area-inset-bottom,0px));max-width:none;justify-content:center;text-align:center;border-radius:14px}footer{padding-bottom:26px!important}}
+</style>
+</head>
+<body>
+<div class="page">
+<header class="top">
+  <a class="name" href="#top">Leah Morgan<sup class="m">®</sup></a>
+  <nav aria-label="Main">
+    <a href="#projects">Projects</a><a href="#services">What I do</a><a href="#approach">Approach</a><a href="#faq">Questions</a>
+    <a class="pill" href="mailto:leah@leahmorgan.example"><i></i>Contact Leah</a>
+  </nav>
+</header>
+
+<main id="top">
+<div class="hero">
+  <div>
+    <p class="label" style="margin-bottom:18px">Project manager<sup class="m" style="font-size:.9em">®</sup> &nbsp;/&nbsp; Bristol, UK</p>
+    <h1 class="disp"><span><b>Planned</b></span><span><b>Delivered</b></span><span><b>Handed over<sup class="m">®</sup></b></span></h1>
+    <p class="lede">I’m Leah Morgan. For eleven years I’ve run fit-outs, public buildings and change programmes: keeping the budget honest, the stakeholders talking and the risks written down before they bite.</p>
+    <div class="cta">
+      <a class="pill" href="mailto:leah@leahmorgan.example"><i></i>Contact Leah</a>
+      <a class="pill ghost" href="#projects">See projects</a>
+    </div>
+  </div>
+  <div class="vis">
+    <div class="photo"><img src="img/p1.webp" width="1100" height="825" alt="A planning meeting around a table, with a schedule on the wall behind the team" fetchpriority="high"></div>
+    <div class="tag-spin" aria-hidden="true">On<br>time™<br>always<br>°</div>
+    <div class="gantt">
+      <div class="gh"><span>Programme plan</span><em id="gwk">Week 1</em></div>
+      <svg id="gsvg" viewBox="0 0 400 214" role="img" aria-label="An animated sample programme plan: bars grow for five phases, a marker sweeps across the weeks and milestones appear."></svg>
+    </div>
+  </div>
+</div>
+
+<div class="ticker" aria-hidden="true"><div class="row" id="tk"></div></div>
+
+<section id="projects" aria-labelledby="h-proj">
+  <div class="wrap sh"><h2 class="disp" id="h-proj">Projects<sup class="m">™</sup></h2>
+    <div class="ctrl"><button type="button" id="prev" aria-label="Previous projects">&larr;</button><button type="button" id="next" aria-label="Next projects">&rarr;</button></div></div>
+  <div class="track" id="track" tabindex="0" role="region" aria-label="Sample projects, scroll sideways">
+    <article class="card"><div class="frame"><img src="img/p2.webp" width="1100" height="825" alt="Inside a bright community library with shelves, reading tables and a children’s area" loading="lazy" draggable="false"><div class="sum"><b>What I ran</b>Phased works so the library stayed open to readers. I held the programme, the budget and the conversations with the user groups.</div></div>
+      <div class="meta"><h3>Community library refurb</h3><span class="yr">2024</span></div><ul><li>Public building</li><li>Phasing</li><li>Budget</li></ul></article>
+    <article class="card"><div class="frame"><img src="img/p3.webp" width="1100" height="825" alt="A long, calm hospital corridor with wayfinding signs on the walls" loading="lazy" draggable="false"><div class="sum"><b>What I ran</b>A wayfinding refresh for an outpatient wing. I coordinated clinical staff, signage makers and estates so the work fitted around live clinics.</div></div>
+      <div class="meta"><h3>Outpatient wing wayfinding</h3><span class="yr">2022</span></div><ul><li>Healthcare</li><li>Stakeholders</li><li>Risk</li></ul></article>
+    <article class="card"><div class="frame"><img src="img/p4.webp" width="1100" height="825" alt="An office fit-out in progress, with new partitions, cables and desks half installed" loading="lazy" draggable="false"><div class="sum"><b>What I ran</b>A multi-floor office fit-out, from tender to handover. I managed the contractors, the change log and the snagging list.</div></div>
+      <div class="meta"><h3>Office fit-out</h3><span class="yr">2020</span></div><ul><li>Fit-out</li><li>Contractors</li><li>Handover</li></ul></article>
+    <article class="card"><div class="frame"><img src="img/p1.webp" width="1100" height="825" alt="A project team reviewing a migration timeline together at a meeting table" loading="lazy" draggable="false"><div class="sum"><b>What I ran</b>A systems migration planned in stages, with go-live checks agreed up front and a clear route back if a stage slipped.</div></div>
+      <div class="meta"><h3>Systems migration</h3><span class="yr">2018</span></div><ul><li>Change programme</li><li>Planning</li><li>Go-live</li></ul></article>
+  </div>
+  <div class="bar" aria-hidden="true"><i id="pbar"></i></div>
+</section>
+
+<section id="services" aria-labelledby="h-serv">
+  <div class="wrap sh"><h2 class="disp" id="h-serv">What I do<sup class="m">°</sup></h2><span class="label">04 things</span></div>
+  <div class="acc wrap" id="acc">
+    <h3><button type="button" aria-expanded="false" aria-controls="a1" id="b1"><span class="n">01</span><span class="t">Planning<sup class="m">™</sup></span><span class="pm" aria-hidden="true"></span></button></h3>
+    <div class="panel" id="a1" role="region" aria-labelledby="b1"><div><div class="in"><p>A plan people can read in one sitting. Phases, dependencies and the critical path, kept current rather than filed.</p><ul><li>Programme and phase plans</li><li>Dependencies and critical path</li><li>Weekly look-ahead</li></ul></div></div></div>
+    <h3><button type="button" aria-expanded="false" aria-controls="a2" id="b2"><span class="n">02</span><span class="t">Budgets<sup class="m">®</sup></span><span class="pm" aria-hidden="true"></span></button></h3>
+    <div class="panel" id="a2" role="region" aria-labelledby="b2"><div><div class="in"><p>Costs tracked line by line, with change requests priced before anyone says yes.</p><ul><li>Cost plans and forecasts</li><li>Change control</li><li>Supplier and contractor management</li></ul></div></div></div>
+    <h3><button type="button" aria-expanded="false" aria-controls="a3" id="b3"><span class="n">03</span><span class="t">Stakeholders<sup class="m">°</sup></span><span class="pm" aria-hidden="true"></span></button></h3>
+    <div class="panel" id="a3" role="region" aria-labelledby="b3"><div><div class="in"><p>Everyone affected knows what is happening, when, and who to ask. No surprises on the day.</p><ul><li>Sponsor and board reporting</li><li>User and staff engagement</li><li>Clear, short updates</li></ul></div></div></div>
+    <h3><button type="button" aria-expanded="false" aria-controls="a4" id="b4"><span class="n">04</span><span class="t">Risk<sup class="m">™</sup></span><span class="pm" aria-hidden="true"></span></button></h3>
+    <div class="panel" id="a4" role="region" aria-labelledby="b4"><div><div class="in"><p>Risks and issues written down with an owner and a next step, reviewed on a rhythm.</p><ul><li>Risk and issue registers</li><li>Mitigation and contingency</li><li>Lessons kept for next time</li></ul></div></div></div>
+  </div>
+</section>
+
+<section id="approach" aria-labelledby="h-app">
+  <div class="wrap sh"><h2 class="disp" id="h-app">Approach<sup class="m">®</sup></h2><span class="label">Start to finish</span></div>
+  <div class="steps" id="steps">
+    <div class="track-line" aria-hidden="true"><div class="fill" id="fill"></div></div>
+    <ol style="list-style:none;padding:0">
+    <li class="step"><h3><small>Step 01</small>Understand</h3><p>What does done look like, who decides, and what can’t move? I get the brief, the budget and the constraints on one page.</p></li>
+    <li class="step"><h3><small>Step 02</small>Plan</h3><p>Phases, owners and dates agreed with the people doing the work, with the risks listed from day one.</p></li>
+    <li class="step"><h3><small>Step 03</small>Deliver</h3><p>A steady rhythm of check-ins, reports and decisions. Changes are priced and agreed before they happen.</p></li>
+    <li class="step"><h3><small>Step 04</small>Hand over</h3><p>Snagging closed, documents in order, the team trained and the lessons written down.</p></li>
+    </ol>
+  </div>
+  <div class="creds"><span class="label">Sample credentials</span><span>PRINCE2® Practitioner</span><span>APM Project Management Qualification</span><span>11 years in delivery</span></div>
+</section>
+
+<section id="faq" aria-labelledby="h-faq">
+  <div class="wrap sh"><h2 class="disp" id="h-faq">Questions<sup class="m">?</sup></h2></div>
+  <div class="faq">
+    <details><summary>What size of project do you take on?</summary><p>Fit-outs, public buildings and change programmes, usually with several teams and suppliers involved. If you’re not sure it fits, send a short note and I’ll say so honestly.</p></details>
+    <details><summary>Can you work with our existing team and suppliers?</summary><p>Yes. I’d rather join your way of working than replace it. I add the plan, the reporting rhythm and the registers if you don’t already have them.</p></details>
+    <details><summary>How do you report progress?</summary><p>A short written update on a set day each week, plus a one-page view for sponsors. What’s done, what’s next, what needs a decision.</p></details>
+    <details><summary>Are you based in Bristol only?</summary><p>Bristol is home. I travel for site work and run planning sessions remotely.</p></details>
+    <details><summary>How do we start?</summary><p>Email me. We’ll have a short call about the project, then I’ll send a plain outline of how I’d approach it.</p></details>
+  </div>
+</section>
+
+<a class="start" id="start" href="mailto:leah@leahmorgan.example?subject=A%20new%20project">
+  <span class="label">Next up<sup class="m" style="font-size:.9em">™</sup></span>
+  <span class="big">Click anywhere to start a <em>project</em></span>
+  <span class="mail">leah@leahmorgan.example</span>
+</a>
+</main>
+
+<footer><span>Leah Morgan, project manager, Bristol</span><span>Concept site by HU/MAN. Names, projects and details are sample content.</span></footer>
+</div>
+
+<div class="say" id="say" aria-hidden="true"><span>Say hi</span></div>
+<div class="badge" role="note"><a href="../../portfolio/">&larr; Back to HU/MAN</a><span>Concept site by HU/MAN</span></div>
+
+<script>
+(() => {
+  const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+
+  /* ticker content (decorative) */
+  const words = ['On time™', 'On budget®', 'On side°', 'Handed over®', 'Risks owned™', 'Plan kept°'];
+  $('#tk').innerHTML = [...words, ...words, ...words, ...words].map(w => `<span>${w}</span>`).join('');
+
+  /* ---- Gantt loop ---- */
+  const NS = 'http://www.w3.org/2000/svg';
+  const svg = $('#gsvg');
+  const W = 400, LBL = 78, GX0 = LBL, GX1 = 392, WEEKS = 12, TOP = 26, ROW = 33;
+  const wx = w => GX0 + (GX1 - GX0) * w / WEEKS;
+  const mk = (n, a, p) => { const e = document.createElementNS(NS, n); for (const k in a) e.setAttribute(k, a[k]); (p || svg).appendChild(e); return e; };
+  const rows = [
+    ['Plan', 0, 3], ['Design', 2, 6], ['Procure', 3.5, 8], ['Build', 6, 11], ['Handover', 10, 12]
+  ];
+  for (let w = 0; w <= WEEKS; w++) {
+    mk('line', { x1: wx(w), x2: wx(w), y1: TOP - 6, y2: TOP + ROW * rows.length, stroke: '#000', 'stroke-opacity': w % 4 === 0 ? .5 : .15, 'stroke-width': 1 });
+    if (w % 2 === 0 && w < WEEKS) { const t = mk('text', { x: wx(w) + 3, y: 14, 'font-size': 10, 'fill-opacity': .65 }); t.textContent = 'W' + (w + 1); }
+  }
+  const bars = rows.map((r, i) => {
+    const y = TOP + i * ROW;
+    const t = mk('text', { x: 2, y: y + 20, 'font-size': 12.5 }); t.textContent = r[0];
+    mk('rect', { x: wx(r[1]), y: y + 7, width: wx(r[2]) - wx(r[1]), height: 18, fill: 'none', stroke: '#000', 'stroke-opacity': .18 });
+    const crit = i === 1 || i === 3;
+    const b = mk('rect', { x: wx(r[1]), y: y + 7, width: 0, height: 18, fill: crit ? '#0000EE' : '#000' });
+    return { b, s: r[1], e: r[2], i };
+  });
+  const miles = [[3, 0], [6, 1], [8, 2], [11, 3], [12, 4]].map(([w, r]) => {
+    const g = mk('g', {}); mk('polygon', { points: '0,-9 9,0 0,9 -9,0', fill: '#F7F7F7', stroke: '#000', 'stroke-width': 2.2 }, g);
+    return { g, w, y: TOP + r * ROW + 16 };
+  });
+  const head = mk('line', { x1: 0, x2: 0, y1: TOP - 8, y2: TOP + ROW * rows.length + 4, stroke: '#0000EE', 'stroke-width': 2.4 });
+  const flag = mk('circle', { cx: 0, cy: TOP - 8, r: 4.5, fill: '#0000EE' });
+  const wkLabel = $('#gwk');
+  const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+  const eo = t => 1 - Math.pow(1 - t, 3);
+  const back = t => { const c = 2.2; return 1 + (c + 1) * Math.pow(t - 1, 3) + c * Math.pow(t - 1, 2); };
+  const T = 11;
+  function drawGantt(t) {
+    const fade = clamp((T - t) / 0.8);
+    bars.forEach(o => {
+      const k = eo(clamp((t - o.i * .35) / 2.2));
+      o.b.setAttribute('width', Math.max(0, (wx(o.e) - wx(o.s)) * k));
+    });
+    const ph = clamp((t - 2.6) / 6.6);
+    const px = wx(ph * WEEKS);
+    head.setAttribute('x1', px); head.setAttribute('x2', px); flag.setAttribute('cx', px);
+    const vis = t > 2.4 ? 1 : 0;
+    head.style.opacity = flag.style.opacity = vis * fade;
+    wkLabel.textContent = 'Week ' + Math.max(1, Math.min(12, Math.ceil(ph * WEEKS) || 1));
+    miles.forEach(m => {
+      const at = 2.6 + (m.w / WEEKS) * 6.6;
+      const s = t >= at ? back(clamp((t - at) / .55)) : 0;
+      m.g.setAttribute('transform', `translate(${wx(m.w)} ${m.y}) scale(${Math.max(0, s)})`);
+      m.g.style.opacity = fade;
+    });
+    bars.forEach(o => o.b.style.opacity = fade);
+  }
+  if (RM) { drawGantt(9.4); wkLabel.textContent = 'Week 12'; head.style.opacity = flag.style.opacity = 1; bars.forEach(o => o.b.style.opacity = 1); miles.forEach(m => m.g.style.opacity = 1); }
+  else {
+    const t0 = performance.now();
+    const loop = now => { drawGantt(((now - t0) / 1000) % T); requestAnimationFrame(loop); };
+    requestAnimationFrame(loop);
+  }
+
+  /* ---- Projects: drag, buttons, hover via JS ---- */
+  const track = $('#track'), pbar = $('#pbar');
+  const cards = $$('.card', track);
+  const prog = () => {
+    const max = track.scrollWidth - track.clientWidth;
+    const frac = max > 0 ? track.scrollLeft / max : 0;
+    const vis = track.clientWidth / track.scrollWidth;
+    pbar.style.width = (vis * 100) + '%';
+    pbar.style.marginLeft = (frac * (1 - vis) * 100) + '%';
+  };
+  track.addEventListener('scroll', prog, { passive: true });
+  addEventListener('resize', prog); prog();
+
+  let down = false, sx = 0, sl = 0, moved = 0;
+  track.addEventListener('pointerdown', e => {
+    if (e.pointerType === 'touch' || e.button > 0) return;
+    down = true; sx = e.clientX; sl = track.scrollLeft; moved = 0;
+  });
+  addEventListener('pointermove', e => {
+    if (!down) return;
+    const dx = e.clientX - sx; moved = Math.max(moved, Math.abs(dx));
+    if (moved > 4) track.classList.add('drag');
+    track.scrollLeft = sl - dx;
+  });
+  const up = () => { down = false; track.classList.remove('drag'); };
+  addEventListener('pointerup', up); addEventListener('pointercancel', up);
+  const step = dir => {
+    const w = (cards[0].offsetWidth + 20) * dir;
+    track.scrollBy({ left: w, behavior: RM ? 'auto' : 'smooth' });
+  };
+  $('#next').addEventListener('click', () => step(1));
+  $('#prev').addEventListener('click', () => step(-1));
+  track.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') { step(1); e.preventDefault(); }
+    if (e.key === 'ArrowLeft') { step(-1); e.preventDefault(); }
+  });
+
+  const setOn = (el, on) => el && el.classList.toggle('is-on', on);
+  document.addEventListener('mouseover', e => {
+    const c = e.target.closest && e.target.closest('.card');
+    cards.forEach(x => setOn(x, x === c));
+    const p = e.target.closest && e.target.closest('.pill,.ctrl button,.faq summary,.acc button');
+    $$('.pill.is-on,.ctrl button.is-on,.faq summary.is-on,.acc button.is-on').forEach(x => { if (x !== p) x.classList.remove('is-on'); });
+    if (p) p.classList.add('is-on');
+  });
+  document.addEventListener('mouseout', e => {
+    if (!e.relatedTarget) { $$('.is-on').forEach(x => { if (!x.matches('.start')) x.classList.remove('is-on'); }); }
+  });
+  cards.forEach(c => { c.addEventListener('focusin', () => setOn(c, true)); c.addEventListener('focusout', () => setOn(c, false)); });
+  cards.forEach(c => c.setAttribute('tabindex', '0'));
+
+  /* ---- Services accordion ---- */
+  $$('#acc button').forEach(b => b.addEventListener('click', () => {
+    const open = b.getAttribute('aria-expanded') === 'true';
+    $$('#acc button').forEach(o => {
+      const on = o === b && !open;
+      o.setAttribute('aria-expanded', on);
+      $('#' + o.getAttribute('aria-controls')).classList.toggle('open', on);
+    });
+  }));
+  if (RM) { $('#a1').classList.add('open'); $('#b1').setAttribute('aria-expanded', 'true'); }
+
+  /* ---- Approach progress line ---- */
+  const steps = $$('.step'), fill = $('#fill'), sbox = $('#steps');
+  const track2 = $('.track-line');
+  const onScroll = () => {
+    const vh = innerHeight, r = sbox.getBoundingClientRect(), tl = track2.getBoundingClientRect();
+    const mark = vh * .62;
+    if (RM) { fill.style.height = '100%'; steps.forEach(s => s.classList.add('on')); return; }
+    fill.style.height = clamp((mark - tl.top) / tl.height) * 100 + '%';
+    steps.forEach(s => s.classList.toggle('on', s.getBoundingClientRect().top < mark));
+  };
+  addEventListener('scroll', onScroll, { passive: true }); addEventListener('resize', onScroll); onScroll();
+
+  /* ---- Contact: round "Say hi" cursor ---- */
+  const start = $('#start'), say = $('#say');
+  let tx = -200, ty = -200, cx = -200, cy = -200, inside = false, raf = 0;
+  const frame = () => {
+    cx += (tx - cx) * (RM ? 1 : .2); cy += (ty - cy) * (RM ? 1 : .2);
+    say.style.transform = `translate3d(${cx}px,${cy}px,0) scale(${inside ? 1 : 0})`;
+    if (inside || Math.abs(tx - cx) > .5) raf = requestAnimationFrame(frame); else raf = 0;
+  };
+  const check = (x, y) => {
+    const r = start.getBoundingClientRect();
+    const was = inside;
+    inside = x >= r.left && x <= r.right && y >= r.top && y <= r.bottom;
+    tx = x; ty = y;
+    if (inside && !was) { cx = x; cy = y; say.classList.add('show'); start.classList.add('is-on'); }
+    if (!inside && was) { say.classList.remove('show'); start.classList.remove('is-on'); }
+    if (!raf && (inside || was)) raf = requestAnimationFrame(frame);
+    if (inside && !(matchMedia('(pointer:coarse)').matches)) start.style.cursor = 'none'; else start.style.cursor = '';
+  };
+  document.addEventListener('pointermove', e => check(e.clientX, e.clientY));
+  document.addEventListener('mousemove', e => check(e.clientX, e.clientY));
+  addEventListener('scroll', () => { if (inside) check(tx, ty); }, { passive: true });
+  document.addEventListener('mouseleave', () => check(-999, -999));
+})();
+</script>
+<script src="../preview.js" defer></script>
+</body>
+</html>

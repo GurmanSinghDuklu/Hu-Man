@@ -142,9 +142,19 @@ export function initConceptWall() {
       ro.observe(t.screen);
     }
   };
-  // Wait for an idle moment so live previews never compete with the page's first paint.
-  if ('requestIdleCallback' in window) requestIdleCallback(start, { timeout: 2500 });
-  else setTimeout(start, 1200);
+  // Live previews wait for the visitor's first scroll, pointer move or key press (then an idle moment),
+  // so they never compete with the page's first paint or cost data for someone who just glances.
+  let started = false;
+  const kick = () => {
+    if (started) return;
+    started = true;
+    for (const ev of ['scroll', 'pointermove', 'pointerdown', 'keydown'] as const)
+      removeEventListener(ev, kick);
+    if ('requestIdleCallback' in window) requestIdleCallback(start, { timeout: 1500 });
+    else setTimeout(start, 300);
+  };
+  for (const ev of ['scroll', 'pointermove', 'pointerdown', 'keydown'] as const)
+    addEventListener(ev, kick, { passive: true });
 
   // Pause previews while the tab is hidden.
   document.addEventListener('visibilitychange', () => {
