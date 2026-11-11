@@ -388,8 +388,10 @@ Lighthouse 97-100 / 100 / 100 / 100 on ten pages, axe 0 violations on 15. Motion
   visually hidden "(opens in a new tab)"), so visitors keep our site open. Do the same for any new one.
 - Footer base line: "Copyright © year Hu/man Software Agency. All rights reserved." Keep it one template
   string: an expression at a line end loses the following space.
-- **No WhatsApp anywhere on the site** (Gurman, 2026-10-30): contact is the form, email, phone (contact
-  page only) and Instagram. Full presence's "WhatsApp + call answering" is a client service and stays.
+- **WhatsApp**: was "none anywhere on the site" (Gurman, 2026-10-30); reversed 2026-11-11 (confirmed in
+  chat): the footer Contact column has "Contact on WhatsApp" (wa.me/447988450280, new tab, small green
+  glyph), the only place outside /contact/ the number appears. Full presence's "WhatsApp + call
+  answering" is a client service and stays.
 
 ## Concept portfolios (2026-11-02, branch `portfolio-concepts`)
 Three standalone concept sites (Noor Haddad, Theo Lindqvist, Maya Okonkwo) live in `site/public/concepts/<slug>/index.html` and are shown as cards on `/portfolio` (data in `src/data/portfolioConcepts.ts`, screenshots in `src/assets/portfolio-concepts/`). They are plain HTML copied as is, not Astro pages: fonts are self-hosted woff2 in `public/concepts/fonts/` (from `@fontsource`, not added to package.json) and GSAP 3.15.0 (gsap, ScrollTrigger, Draggable) is copied from `node_modules` into `public/concepts/vendor/`, all via relative paths so the `/Hu-Man` preview base works. Gotchas: Astro's meta CSP does not cover public files, so `public/_headers` has a `/concepts/*` rule that detaches the global CSP (`! Content-Security-Policy`) and sets one that allows their inline scripts and styles; the pages are `noindex,nofollow`, not in the sitemap and not in `llms-full.txt`, and `seo-check.mjs` checks them separately (noindex, no outside hosts, assets exist, back link); ESLint and Prettier skip `public/concepts`. Each page has a fixed badge with a back link to `../../portfolio/` (static at the foot on phones). Known axe finding left: the Maya nav links over the pink circle fail colour contrast. The home Portfolio section (`WorkCards.astro`) shows the real projects from `projects.ts`, not these concepts (Gurman, 2026-11-02: the concept version was reverted).
@@ -484,3 +486,54 @@ following a link closes an open menu; focus returns to the toggle on Esc. `scrol
    one wide row and overflowing the page by ~1700px sideways (invisible panels still count toward
    `scrollWidth`). Fixed by scoping the original rule to `.site-header__nav > ul` (direct children
    only). Check this again before adding another nested list inside the header.
+
+## Landing page and site-wide interactivity (2026-11-10, uncommitted)
+- **`/start/`** (noindex landing page for ads and links, rebuilt 2026-11-11 on Shopify's start-page
+  layout): a playlist of three videos in `public/landing/` (all H.264 + AAC, play everywhere), in turn
+  then looping: `reel.mp4` (82 s, 16:9, 20 MB), `portfolio-ad.mp4` (48 s, 9:16 vertical, 13 MB) and
+  `found.mp4` (51 s, 16:9, 25.5 MB, compressed from 143 MB). The list is `playlist` in start.astro; the
+  frame takes each video's shape (--ar), so vertical ones show as a tall screen, uncropped (full bleed on
+  phones). Compress new videos with `npm run compress-video -- in.mp4 out.mp4 [crf]` (ffmpeg-static,
+  dev dependency added 2026-11-11 with approval; crf 27 looked identical to the original for Found).
+  Flowing logo top centre, two boxes bottom left (they overlay the left of wide videos): pitch
+  and a short form (full name, email, service) that posts to `/api/enquiry`. No link to /contact/.
+  Browsers refuse sound on autoplay, so it starts muted when refused and unmutes on the first click,
+  tap or key press; Pause and Sound buttons always. Reduced motion or Data Saver: nothing plays until
+  pressed. Poster = the reel's first frame, set as the video's own `poster` (a separate still behind
+  a fading-in video once made the video the LCP). The endpoint takes an optional `service`; a
+  message is optional when one is given. It also takes `via` (the landing form sends "Landing page"):
+  the email subject starts "[Landing page]" and its first line is "Came from: Landing page". The form
+  can't send from `npm run dev` (no /api/enquiry there; it falls back to the email link): test it
+  deployed, or through the Worker's own tests. `npm run axe` waits for `load` (the reel keeps the network
+  busy) and turns transitions off before scanning.
+- **Fingerprint cursor** (`scripts/motion/cursor.ts`): mouse only, never under reduced motion; decoration
+  only (the real cursor stays). Hides over text fields and iframes.
+- **Scroll effects** (`scripts/motion/scroll-fx.ts`, loaded on idle): progress line, `[data-zoom]` image
+  frames, ticker speed-up, drifting `.orb`/`.sparkle` shapes, and **`data-pin-steps`** on any list: on
+  wide screens it pins and lights up its items in turn, but only if it fits 82% of the window (the
+  services grid doesn't, so it stays still). Unlit items use `filter`, never `opacity`, so reveals
+  keep working. Sticky needs no `overflow: hidden` ancestor: use `overflow: clip` (IdeasToLife).
+- Image reveal variant `data-reveal="unmask"` (work page windows).
+- **Header fix**: a desktop-dropdown rule gave `.site-header__nav` `display: flex`, overriding its phone
+  `display: none`, so every phone page was ~865px wide. The nav is now only flex at 64rem and up.
+- **Pointer effects** (`scripts/motion/pointer-fx.ts`, mouse only, loaded with the cursor): magnetic
+  buttons (`.btn`, `.pill-btn`, max 8px) and tilting cards (list in `TILT`, max 5 degrees, a
+  `.tilt-glare` light; rows over 720px wide don't tilt). Cursor is a full drawn print,
+  `src/assets/brand/fingerprint-full.svg`, 22x26px.
+- **Parallax** (in scroll-fx): hero collage pieces at their own speeds (max 50px) and section `h2.display`
+  sliding sideways (max 48px, 2.5% of the window width on phones). Anything in the first window moves by
+  scroll distance, so nothing jumps when the script starts. Elements with their own translate are skipped.
+- Home Portfolio: with exactly two projects the second card sits in the third column (right edge).
+- **Dev server and public folders**: Astro's dev server doesn't serve `public/<folder>/index.html` for a
+  folder address, so every concept (and the /portfolio wall's frames) showed the 404 page under
+  `npm run dev`. `src/integrations/dev-folder-index.mjs` fixes that in dev only; builds are untouched.
+- **Fingerprint head** (2026-11-11): the profile drawn in fingerprint ridges from the reel (0:47), cut out
+  as `site/src/assets/brand/fingerprint-head.png` (white ridges on transparency; no source file exists in
+  the brand pack, so it was taken from the reel frame). `HeadMark.astro` shows it as a transparent mark
+  in the flowing colours (.logo-led, colours from the parent's `--led-colours`), shipped as 22 kB WebP.
+  In the header, footer and /start/ the logo and head are ONE element, `BrandMark.astro`: a single moving
+  gradient cut by a two-layer mask (logo left, head right), so the colours run from the text into the
+  head in step (two separate .logo-led elements drift apart). Parent sets --lw, --hh, --gap,
+  --led-colours. The footer's is `.site-footer__mark` (`.site-footer__brand` is the footer column).
+  The cookie button uses `HeadMark.astro` alone. If a vector or higher-resolution original turns up,
+  swap the PNG. `npm run motion-check` now works on Windows (it used URL.pathname, so every page 404'd).
