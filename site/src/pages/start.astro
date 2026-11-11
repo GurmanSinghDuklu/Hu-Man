@@ -76,86 +76,114 @@ const first = playlist[0]!;
       <BrandMark class="lp__mark" />
     </a>
 
-    <div class="lp__boxes">
-      <div class="lp__pitch">
-        <h1 id="lp-title">Your business starts with a human.</h1>
-        <p>
-          Websites, apps and software, built by real people. Tell us what you need and a person
-          replies within 48 hours.
-        </p>
-      </div>
-
-      <form
-        class="lp__form"
-        action={action}
-        method="post"
-        enctype={mailtoMode ? 'text/plain' : 'application/x-www-form-urlencoded'}
-        data-enquiry-form
-        data-mode={mailtoMode ? 'mailto' : 'api'}
-        data-email={site.contact.email}
-        aria-labelledby="lp-form-title"
-        novalidate
+    <div class="lp__boxes" data-lp-boxes>
+      <!-- Desktop: folds both boxes down out of the video's way, leaving a small "Got an idea?"
+           pill that brings them back. Shown by the script, so without JS there's no dead button. -->
+      <button
+        class="lp__fold"
+        type="button"
+        aria-expanded="true"
+        aria-controls="lp-panels"
+        data-lp-fold
+        hidden
       >
-        <h2 id="lp-form-title" class="lp__form-title">
-          Start your project
-        </h2>
-        <p class="lp__status" role="status" aria-live="polite" data-status></p>
+        <span class="lp__fold-text">Got an idea? Tell us.</span>
+        <span class="visually-hidden" data-lp-fold-label>
+          Hide the form
+        </span>
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path
+            d="M6 9l6 6 6-6"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          ></path>
+        </svg>
+      </button>
 
-        <!-- Tells the inbox this came from the landing page (subject and first line of the email). -->
-        <input type="hidden" name="via" value="Landing page" />
-
-        <div class="lp__fields" data-fields>
-          <div class="lp__field lp__field--half">
-            <label for="lp-name">Full name</label>
-            <input
-              id="lp-name"
-              name="name"
-              type="text"
-              autocomplete="name"
-              required
-              maxlength="100"
-            />
-            <p class="lp__error" data-error-for="name"></p>
-          </div>
-          <div class="lp__field lp__field--half">
-            <label for="lp-email">Email</label>
-            <input
-              id="lp-email"
-              name="email"
-              type="email"
-              autocomplete="email"
-              inputmode="email"
-              required
-              maxlength="200"
-            />
-            <p class="lp__error" data-error-for="email"></p>
-          </div>
-          <div class="lp__field">
-            <label for="lp-service">Service</label>
-            <select id="lp-service" name="service" required>
-              <option value="">Choose a service</option>
-              {services.map((s) => (
-                <option value={s}>{s}</option>
-              ))}
-            </select>
-            <p class="lp__error" data-error-for="service"></p>
-          </div>
-
-          <!-- Spam trap: hidden from people and screen readers; bots fill it in. -->
-          <div class="lp__trap" aria-hidden="true">
-            <label for="lp-company">Leave this empty</label>
-            <input id="lp-company" name="company" type="text" tabindex="-1" autocomplete="off" />
-          </div>
-
-          <button class="lp__send" type="submit" data-submit>
-            Send my enquiry <span aria-hidden="true">→</span>
-          </button>
-          <p class="lp__small">
-            Prices are fixed and agreed with you before any work starts. We only use your details to
-            reply. <a href={withBase('/privacy/')}>Privacy notice</a>.
+      <div class="lp__panels" id="lp-panels">
+        <div class="lp__pitch">
+          <h1 id="lp-title">Your business starts with a human.</h1>
+          <p>
+            Websites, apps and software, built by real people. Tell us what you need and a person
+            replies within 48 hours.
           </p>
         </div>
-      </form>
+
+        <form
+          class="lp__form"
+          action={action}
+          method="post"
+          enctype={mailtoMode ? 'text/plain' : 'application/x-www-form-urlencoded'}
+          data-enquiry-form
+          data-mode={mailtoMode ? 'mailto' : 'api'}
+          data-email={site.contact.email}
+          aria-labelledby="lp-form-title"
+          novalidate
+        >
+          <h2 id="lp-form-title" class="lp__form-title">
+            Start your project
+          </h2>
+          <p class="lp__status" role="status" aria-live="polite" data-status></p>
+
+          <!-- Tells the inbox this came from the landing page (subject and first line of the email). -->
+          <input type="hidden" name="via" value="Landing page" />
+
+          <div class="lp__fields" data-fields>
+            <div class="lp__field lp__field--half">
+              <label for="lp-name">Full name</label>
+              <input
+                id="lp-name"
+                name="name"
+                type="text"
+                autocomplete="name"
+                required
+                maxlength="100"
+              />
+              <p class="lp__error" data-error-for="name"></p>
+            </div>
+            <div class="lp__field lp__field--half">
+              <label for="lp-email">Email</label>
+              <input
+                id="lp-email"
+                name="email"
+                type="email"
+                autocomplete="email"
+                inputmode="email"
+                required
+                maxlength="200"
+              />
+              <p class="lp__error" data-error-for="email"></p>
+            </div>
+            <div class="lp__field">
+              <label for="lp-service">Service</label>
+              <select id="lp-service" name="service" required>
+                <option value="">Choose a service</option>
+                {services.map((s) => (
+                  <option value={s}>{s}</option>
+                ))}
+              </select>
+              <p class="lp__error" data-error-for="service"></p>
+            </div>
+
+            <!-- Spam trap: hidden from people and screen readers; bots fill it in. -->
+            <div class="lp__trap" aria-hidden="true">
+              <label for="lp-company">Leave this empty</label>
+              <input id="lp-company" name="company" type="text" tabindex="-1" autocomplete="off" />
+            </div>
+
+            <button class="lp__send" type="submit" data-submit>
+              Send my enquiry <span aria-hidden="true">→</span>
+            </button>
+            <p class="lp__small">
+              Prices are fixed and agreed with you before any work starts. We only use your details
+              to reply. <a href={withBase('/privacy/')}>Privacy notice</a>.
+            </p>
+          </div>
+        </form>
+      </div>
     </div>
 
     <div class="lp__corner">
@@ -203,6 +231,25 @@ const first = playlist[0]!;
   const video = document.querySelector<HTMLVideoElement>('[data-lp-video]');
   const playBtn = document.querySelector<HTMLButtonElement>('[data-lp-play]');
   const soundBtn = document.querySelector<HTMLButtonElement>('[data-lp-sound]');
+
+  // ---- fold the boxes away (desktop) ----
+  const boxes = document.querySelector<HTMLElement>('[data-lp-boxes]');
+  const fold = document.querySelector<HTMLButtonElement>('[data-lp-fold]');
+  const foldLabel = document.querySelector<HTMLElement>('[data-lp-fold-label]');
+  const panels = document.getElementById('lp-panels');
+  if (boxes && fold && panels) {
+    fold.hidden = false;
+    const setFolded = (folded: boolean) => {
+      boxes.classList.toggle('is-folded', folded);
+      fold.setAttribute('aria-expanded', String(!folded));
+      if (foldLabel) foldLabel.textContent = folded ? 'Show the form' : 'Hide the form';
+      panels.inert = folded; // folded fields can't be tabbed into
+    };
+    fold.addEventListener('click', () => setFolded(!boxes.classList.contains('is-folded')));
+    // Phones show the boxes below the video and have no fold button: never leave them folded.
+    const phone = matchMedia('(max-width: 40rem)');
+    phone.addEventListener('change', () => phone.matches && setFolded(false));
+  }
 
   if (video && playBtn && soundBtn) {
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -385,6 +432,102 @@ const first = playlist[0]!;
     width: min(380px, calc(100% - 32px));
   }
 
+  .lp__panels {
+    display: grid;
+    gap: 8px;
+    transition:
+      translate 0.5s var(--ease-out),
+      opacity 0.35s var(--ease-out);
+  }
+
+  /* ---------- the fold button: a round ⌄ on the white box, a "Got an idea?" pill when folded ---------- */
+  .lp__fold {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: 1px solid var(--ink);
+    border-radius: 999px;
+    background: var(--ink);
+    color: var(--paper);
+    cursor: pointer;
+  }
+
+  .lp__fold[hidden] {
+    display: none;
+  }
+
+  .lp__fold svg {
+    flex: none;
+    width: 20px;
+    height: 20px;
+    transition: rotate 0.3s var(--ease-out);
+  }
+
+  .lp__fold:hover,
+  .lp__fold:focus-visible {
+    background: var(--indigo);
+    border-color: var(--indigo);
+  }
+
+  .lp__fold:focus-visible {
+    outline: 2px solid var(--paper);
+    outline-offset: 3px;
+  }
+
+  .lp__fold-text {
+    display: none;
+  }
+
+  /* Leave room for the button beside the headline. */
+  .lp__pitch h1 {
+    padding-right: 30px;
+  }
+
+  /* Folded: the boxes slide down out of view; the button becomes the pill, with the arrow up (^). */
+  .lp__boxes.is-folded .lp__panels {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    translate: 0 calc(100% + 80px);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .lp__boxes.is-folded .lp__fold {
+    position: static;
+    justify-self: start;
+    width: auto;
+    height: auto;
+    padding: 0.75rem 1rem 0.75rem 1.2rem;
+    border-color: var(--paper);
+    background: var(--paper);
+    color: var(--ink);
+    font: 700 1rem/1 var(--font-text);
+  }
+
+  .lp__boxes.is-folded .lp__fold:hover,
+  .lp__boxes.is-folded .lp__fold:focus-visible {
+    border-color: var(--lilac);
+    background: var(--lilac);
+  }
+
+  .lp__boxes.is-folded .lp__fold-text {
+    display: inline;
+  }
+
+  .lp__boxes.is-folded .lp__fold svg {
+    rotate: 180deg;
+  }
+
   .lp__pitch {
     padding: 18px 20px 16px;
     border-radius: 22px;
@@ -393,7 +536,7 @@ const first = playlist[0]!;
   }
 
   .lp__pitch h1 {
-    font: 800 clamp(1.25rem, 1.7vw, 1.5rem) / 1.02 var(--font-display);
+    font: 800 clamp(1.2rem, 1.6vw, 1.4rem) / 1.02 var(--font-display);
     letter-spacing: -0.01em;
     text-transform: uppercase;
   }
@@ -688,6 +831,14 @@ const first = playlist[0]!;
       width: 100%;
     }
 
+    .lp__fold {
+      display: none !important;
+    }
+
+    .lp__pitch h1 {
+      padding-right: 0;
+    }
+
     .lp__fields {
       grid-template-columns: minmax(0, 1fr);
     }
@@ -697,6 +848,11 @@ const first = playlist[0]!;
     .lp__send,
     .lp__hint {
       animation: none;
+    }
+
+    .lp__panels,
+    .lp__fold svg {
+      transition: none;
     }
   }
 </style>
