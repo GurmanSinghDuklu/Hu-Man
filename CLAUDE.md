@@ -507,6 +507,10 @@ following a link closes an open menu; focus returns to the toggle on Esc. `scrol
   can't send from `npm run dev` (no /api/enquiry there; it falls back to the email link): test it
   deployed, or through the Worker's own tests. `npm run axe` waits for `load` (the reel keeps the network
   busy) and turns transitions off before scanning.
+  Live host and video ranges: Cloudflare's static assets ignore `Range` (always 200, whole file), but
+  the landing videos play on iPhone Safari anyway (checked on a real iPhone, 2026-11-11), so no
+  range-serving Worker or R2 is needed. Phones: the video is a square block at the top, starts muted,
+  and unmutes only on real user activation (unmuting on a scroll's pointerdown made Chrome pause it).
 - **Fingerprint cursor** (`scripts/motion/cursor.ts`): mouse only, never under reduced motion; decoration
   only (the real cursor stays). Hides over text fields and iframes.
 - **Scroll effects** (`scripts/motion/scroll-fx.ts`, loaded on idle): progress line, `[data-zoom]` image
