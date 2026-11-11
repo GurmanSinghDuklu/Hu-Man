@@ -402,9 +402,14 @@ const workItems = projects.map((p) => ({
   }
 
   .nav-drop__projects {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
     gap: calc(var(--u) * 0.3);
+  }
+
+  .nav-drop__projects > li {
+    flex: 0 1 calc((100% - 2 * calc(var(--u) * 0.3)) / 3);
   }
 
   .site-header__nav .nav-drop__project {
