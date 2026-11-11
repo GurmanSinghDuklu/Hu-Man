@@ -164,8 +164,15 @@ const workItems = projects.map((p) => ({
     });
   });
 
-  // Desktop menus (Services, Work): hover opens them through CSS; the arrow button opens and
-  // closes them for keyboard and touch. Esc, a click outside or following a link closes them.
+  // Desktop menus (Services, Work): hovering the link or the panel opens them (a short delay on
+  // the way in so passing over the nav doesn't flash the menu, a longer one on the way out so
+  // crossing another nav item, or the gap down to the panel, while heading for it doesn't close
+  // it early); the arrow button opens and closes them for keyboard and touch. Esc, a click
+  // outside or following a link closes them.
+  const HOVER_OPEN_DELAY = 80;
+  const HOVER_CLOSE_DELAY = 350;
+  const hoverCapable = window.matchMedia('(hover: hover)').matches;
+
   const drops = [...document.querySelectorAll<HTMLElement>('.nav-drop')];
   const setOpen = (drop: HTMLElement, open: boolean) => {
     drop.classList.toggle('is-open', open);
@@ -177,7 +184,12 @@ const workItems = projects.map((p) => ({
   };
 
   drops.forEach((drop) => {
+    let openTimer: ReturnType<typeof setTimeout> | undefined;
+    let closeTimer: ReturnType<typeof setTimeout> | undefined;
+
     drop.querySelector('.nav-drop__toggle')?.addEventListener('click', () => {
+      clearTimeout(openTimer);
+      clearTimeout(closeTimer);
       const open = !drop.classList.contains('is-open');
       drops.forEach((other) => setOpen(other, false));
       drop.classList.remove('is-dismissed');
@@ -186,7 +198,20 @@ const workItems = projects.map((p) => ({
     drop.addEventListener('focusout', (event) => {
       if (!drop.contains(event.relatedTarget as Node | null)) setOpen(drop, false);
     });
-    drop.addEventListener('mouseleave', () => drop.classList.remove('is-dismissed'));
+
+    if (hoverCapable) {
+      drop.addEventListener('mouseenter', () => {
+        clearTimeout(closeTimer);
+        if (drop.classList.contains('is-dismissed')) return;
+        openTimer = setTimeout(() => setOpen(drop, true), HOVER_OPEN_DELAY);
+      });
+      drop.addEventListener('mouseleave', () => {
+        clearTimeout(openTimer);
+        drop.classList.remove('is-dismissed');
+        closeTimer = setTimeout(() => setOpen(drop, false), HOVER_CLOSE_DELAY);
+      });
+    }
+
     drop.querySelector('.nav-drop__panel')?.addEventListener('click', (event) => {
       if ((event.target as HTMLElement).closest('a')) dismiss(drop);
     });
@@ -331,19 +356,6 @@ const workItems = projects.map((p) => ({
     transition-delay: 0s;
   }
 
-  /* A short pause before opening on hover, so passing over the nav on the way elsewhere doesn't flash the menu. */
-  @media (hover: hover) {
-    .nav-drop:hover:not(.is-dismissed) .nav-drop__panel {
-      visibility: visible;
-      opacity: 1;
-      translate: none;
-      transition-delay: 0.08s;
-    }
-
-    .nav-drop:hover:not(.is-dismissed) .nav-drop__toggle svg {
-      rotate: 180deg;
-    }
-  }
 
   .site-header__nav .nav-drop__panel a {
     background: none;

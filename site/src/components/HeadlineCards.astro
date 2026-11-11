@@ -44,24 +44,21 @@ import { withBase } from '../config/paths';
     min-height: 15rem;
     padding: clamp(1.25rem, calc(var(--u) * 0.3), 1.75rem);
     border: 1px solid var(--ink);
+    border-top-left-radius: calc(var(--u) * 0.9);
     background: var(--paper);
     color: var(--ink);
   }
 
   .hcard--essential {
     background: var(--paper);
-    border-top-left-radius: calc(var(--u) * 0.9);
   }
 
   .hcard--start {
     background: var(--paper-2);
-    border-top-right-radius: calc(var(--u) * 0.9);
   }
 
   .hcard--launch {
     background: var(--peach);
-    border-radius: calc(var(--u) * 1.2) calc(var(--u) * 1.2) 0 0;
-    padding-top: clamp(2.25rem, calc(var(--u) * 0.7), 3.5rem);
   }
 
   .hcard--growth {
@@ -71,7 +68,6 @@ import { withBase } from '../config/paths';
   .hcard--custom {
     background: var(--ink);
     color: var(--paper);
-    border-top-right-radius: calc(var(--u) * 0.9);
   }
 
   .hcard__name {
