@@ -145,8 +145,7 @@ const cards = projects.map((p) => ({ ...p, ...shots[p.id] }));
       grid-template-columns: repeat(3, 1fr);
     }
 
-    /* With two projects, the second sits at the right edge (Gurman, 2026-11-10); a third would
-         fill the row as normal. */
+    /* Two projects: the second sits at the right edge (2026-11-10); a third fills the row. */
     .card:nth-child(2):last-child {
       grid-column: 3;
     }
