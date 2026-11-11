@@ -6,27 +6,28 @@
  * the contact form (worker/enquiry.js accepts `service` in place of a message) and is sent in place by
  * scripts/enquiry-form.ts. Noindex: /contact/ is the indexable way in.
  *
- * Four videos play in turn and then start again (public/landing/, all H.264 + AAC): the reel (82 s,
- * 16:9), the "Be seen" portfolio ad (28 s, 9:16), the portfolio-pages ad (48 s, 9:16) and "Built to
- * be found" (51 s, 16:9). Big ones were shrunk with `npm run compress-video`. The frame takes each video's own shape (--ar), so a
+ * Four videos play in turn and then start again (public/landing/, all H.264 + AAC): the "Be seen"
+ * portfolio ad (28 s, 9:16), "Built to be found" (51 s, 16:9), the reel (82 s, 16:9) and the
+ * portfolio-pages ad (48 s, 9:16). Big ones were shrunk with `npm run compress-video`. The frame takes each video's own shape (--ar), so a
  * vertical one shows as a tall screen, uncropped. The next video starts loading near the end of the
  * current one. To change the list, edit `playlist` below.
  *
  * The first video tries to play with sound. Browsers only allow
  * sound after the visitor has interacted with the page, so it starts muted when they refuse, and the
  * sound comes on at the first click, tap or key press; the sound button works at any time. Its poster is
- * the reel's own first frame, so the swap is seamless. Under reduced motion or Data Saver nothing
+ * the first video's own first frame (src/assets/landing/), so the swap is seamless. Under reduced motion or Data Saver nothing
  * plays until the visitor presses play. Pause and sound buttons meet WCAG 1.4.2 and 2.2.2.
  */
 import { getImage } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import BrandMark from '../components/BrandMark.astro';
-import reelStill from '../assets/landing/reel-poster.jpg';
+// The first video's own first frame (keep in step with playlist[0]), so the swap is seamless.
+import firstStill from '../assets/landing/seen-poster.jpg';
 import { site } from '../config/site';
 import { withBase } from '../config/paths';
 import { serviceAreas } from '../data/services';
 
-const poster = await getImage({ src: reelStill, width: 1600, format: 'webp', quality: 70 });
+const poster = await getImage({ src: firstStill, width: 1080, format: 'webp', quality: 70 });
 const mailtoMode = import.meta.env.PUBLIC_FORM_MODE === 'mailto';
 const action = mailtoMode ? `mailto:${site.contact.email}` : withBase('/api/enquiry');
 const services = [...serviceAreas.map((s) => s.title), 'Portfolio or CV website', 'Not sure yet'];
@@ -34,20 +35,20 @@ const year = new Date().getFullYear();
 
 /** Played in this order, then from the top again. w/h: the video's own size, for the frame shape. */
 const playlist = [
-  { src: withBase('/landing/reel.mp4'), w: 1920, h: 1080, label: 'The Hu/man showreel' },
   {
     src: withBase('/landing/portfolio-seen.mp4'),
     w: 1080,
     h: 1920,
     label: 'Be seen: portfolio sites by Hu/man, from £156',
   },
+  { src: withBase('/landing/found.mp4'), w: 1920, h: 1080, label: 'Built to be found, by Hu/man' },
+  { src: withBase('/landing/reel.mp4'), w: 1920, h: 1080, label: 'The Hu/man showreel' },
   {
     src: withBase('/landing/portfolio-ad.mp4'),
     w: 1080,
     h: 1920,
     label: 'Portfolio pages by Hu/man, from £156',
   },
-  { src: withBase('/landing/found.mp4'), w: 1920, h: 1080, label: 'Built to be found, by Hu/man' },
 ];
 const first = playlist[0]!;
 ---
