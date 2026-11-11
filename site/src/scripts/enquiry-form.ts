@@ -24,12 +24,16 @@ function fieldsOf(form: HTMLFormElement): Fields {
 
 function mailtoFor(email: string, f: Fields): string {
   const topic =
-    f.topic === 'tier' && f.tier ? `${f.tier} tier` : (TOPIC_LABELS[f.topic] ?? 'Enquiry');
+    f.topic === 'tier' && f.tier
+      ? `${f.tier} tier`
+      : (f.service ?? TOPIC_LABELS[f.topic] ?? 'Enquiry');
   const lines = [
     'Hi,',
     '',
     f.message || '',
     '',
+    f.service ? `Service: ${f.service}` : '',
+    f.via ? `Sent from: the ${f.via.toLowerCase()}` : '',
     `Name: ${f.name ?? ''}`,
     f.website ? `Website: ${f.website}` : '',
     f.phone ? `Phone: ${f.phone}` : '',
@@ -65,8 +69,11 @@ function check(f: Fields): Record<string, string> {
     errors.email = 'Please add an email address we can reply to.';
   }
   if (f.topic === 'ai-check' && !f.website) errors.website = 'Please add the website to check.';
-  if (f.topic !== 'ai-check' && !f.message)
-    errors.message = 'Please tell us a little about what you need.';
+  // A chosen service is enough (the short /start/ form has a service list and no message box).
+  if (f.topic !== 'ai-check' && !f.message && !f.service) {
+    if ('service' in f) errors.service = 'Please choose what you need.';
+    else errors.message = 'Please tell us a little about what you need.';
+  }
   return errors;
 }
 

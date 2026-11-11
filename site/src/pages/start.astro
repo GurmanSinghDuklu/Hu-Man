@@ -1,0 +1,656 @@
+---
+/**
+ * /start/: the landing page for ads and links. Laid out like Shopify's start page: the Hu/man reel
+ * fills the screen, the flowing logo sits at the top, and two boxes at the bottom left hold the
+ * pitch and a short enquiry form (full name, email, service). The form posts to /api/enquiry like
+ * the contact form (worker/enquiry.js accepts `service` in place of a message) and is sent in place by
+ * scripts/enquiry-form.ts. Noindex: /contact/ is the indexable way in.
+ *
+ * Three videos play in turn and then start again (public/landing/, all H.264 + AAC): the reel (82 s,
+ * 16:9), the portfolio-pages ad (48 s, 9:16 vertical) and "Built to be found" (51 s, 16:9; compressed
+ * from 143 MB with `npm run compress-video`). The frame takes each video's own shape (--ar), so a
+ * vertical one shows as a tall screen, uncropped. The next video starts loading near the end of the
+ * current one. To change the list, edit `playlist` below.
+ *
+ * The first video tries to play with sound. Browsers only allow
+ * sound after the visitor has interacted with the page, so it starts muted when they refuse, and the
+ * sound comes on at the first click, tap or key press; the sound button works at any time. Its poster is
+ * the reel's own first frame, so the swap is seamless. Under reduced motion or Data Saver nothing
+ * plays until the visitor presses play. Pause and sound buttons meet WCAG 1.4.2 and 2.2.2.
+ */
+import { getImage } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BrandMark from '../components/BrandMark.astro';
+import reelStill from '../assets/landing/reel-poster.jpg';
+import { site } from '../config/site';
+import { withBase } from '../config/paths';
+import { serviceAreas } from '../data/services';
+
+const poster = await getImage({ src: reelStill, width: 1600, format: 'webp', quality: 70 });
+const mailtoMode = import.meta.env.PUBLIC_FORM_MODE === 'mailto';
+const action = mailtoMode ? `mailto:${site.contact.email}` : withBase('/api/enquiry');
+const services = [...serviceAreas.map((s) => s.title), 'Portfolio or CV website', 'Not sure yet'];
+const year = new Date().getFullYear();
+
+/** Played in this order, then from the top again. w/h: the video's own size, for the frame shape. */
+const playlist = [
+  { src: withBase('/landing/reel.mp4'), w: 1920, h: 1080, label: 'The Hu/man showreel' },
+  {
+    src: withBase('/landing/portfolio-ad.mp4'),
+    w: 1080,
+    h: 1920,
+    label: 'Portfolio pages by Hu/man, from £156',
+  },
+  { src: withBase('/landing/found.mp4'), w: 1920, h: 1080, label: 'Built to be found, by Hu/man' },
+];
+const first = playlist[0]!;
+---
+
+<BaseLayout page="start">
+  <section class="lp" aria-labelledby="lp-title">
+    <video
+      class="lp__video"
+      data-lp-video
+      data-playlist={JSON.stringify(playlist)}
+      src={first.src}
+      poster={poster.src}
+      width={first.w}
+      height={first.h}
+      style={`--ar:${first.w} / ${first.h}`}
+      playsinline
+      preload="none"
+      disablepictureinpicture
+      aria-label={first.label}
+      tabindex="-1"
+    ></video>
+    <div class="lp__shade" aria-hidden="true"></div>
+
+    <a class="lp__brand" href={withBase('/')} aria-label={`${site.name} home`}>
+      <BrandMark class="lp__mark" />
+    </a>
+
+    <div class="lp__boxes">
+      <div class="lp__pitch">
+        <h1 id="lp-title">Your business starts with a human.</h1>
+        <p>
+          Websites, apps and software, built by real people. Tell us what you need and a person
+          replies within 48 hours.
+        </p>
+      </div>
+
+      <form
+        class="lp__form"
+        action={action}
+        method="post"
+        enctype={mailtoMode ? 'text/plain' : 'application/x-www-form-urlencoded'}
+        data-enquiry-form
+        data-mode={mailtoMode ? 'mailto' : 'api'}
+        data-email={site.contact.email}
+        aria-labelledby="lp-form-title"
+        novalidate
+      >
+        <h2 id="lp-form-title" class="lp__form-title">
+          Start your project
+        </h2>
+        <p class="lp__status" role="status" aria-live="polite" data-status></p>
+
+        <!-- Tells the inbox this came from the landing page (subject and first line of the email). -->
+        <input type="hidden" name="via" value="Landing page" />
+
+        <div class="lp__fields" data-fields>
+          <div class="lp__field lp__field--half">
+            <label for="lp-name">Full name</label>
+            <input
+              id="lp-name"
+              name="name"
+              type="text"
+              autocomplete="name"
+              required
+              maxlength="100"
+            />
+            <p class="lp__error" data-error-for="name"></p>
+          </div>
+          <div class="lp__field lp__field--half">
+            <label for="lp-email">Email</label>
+            <input
+              id="lp-email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              inputmode="email"
+              required
+              maxlength="200"
+            />
+            <p class="lp__error" data-error-for="email"></p>
+          </div>
+          <div class="lp__field">
+            <label for="lp-service">Service</label>
+            <select id="lp-service" name="service" required>
+              <option value="">Choose a service</option>
+              {services.map((s) => (
+                <option value={s}>{s}</option>
+              ))}
+            </select>
+            <p class="lp__error" data-error-for="service"></p>
+          </div>
+
+          <!-- Spam trap: hidden from people and screen readers; bots fill it in. -->
+          <div class="lp__trap" aria-hidden="true">
+            <label for="lp-company">Leave this empty</label>
+            <input id="lp-company" name="company" type="text" tabindex="-1" autocomplete="off" />
+          </div>
+
+          <button class="lp__send" type="submit" data-submit>
+            Send my enquiry <span aria-hidden="true">→</span>
+          </button>
+          <p class="lp__small">
+            Prices are fixed and agreed with you before any work starts. We only use your details to
+            reply. <a href={withBase('/privacy/')}>Privacy notice</a>.
+          </p>
+        </div>
+      </form>
+    </div>
+
+    <div class="lp__corner">
+      <!-- Shown only when the browser starts the video muted (it refuses sound until a gesture). -->
+      <p class="lp__hint" data-lp-hint hidden>
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor"></path>
+          <path
+            d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+          ></path>
+        </svg>
+        <span data-lp-hint-text>Click anywhere for sound</span>
+      </p>
+      <div class="lp__controls">
+        <button class="lp__ctl" type="button" data-lp-play aria-pressed="false">
+          Pause
+        </button>
+        <button class="lp__ctl" type="button" data-lp-sound aria-pressed="false">
+          Sound on
+        </button>
+      </div>
+      <ul class="lp__legal">
+        <li>
+          <a href={withBase('/privacy/')}>Privacy</a>
+        </li>
+        <li>
+          <a href={withBase('/terms/')}>Terms</a>
+        </li>
+        <li>
+          <a href={withBase('/cookies/')}>Cookies</a>
+        </li>
+      </ul>
+      <p class="lp__copy">{`© ${year} Hu/man Software Agency`}</p>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  import '../scripts/enquiry-form.ts';
+
+  const video = document.querySelector<HTMLVideoElement>('[data-lp-video]');
+  const playBtn = document.querySelector<HTMLButtonElement>('[data-lp-play]');
+  const soundBtn = document.querySelector<HTMLButtonElement>('[data-lp-sound]');
+
+  if (video && playBtn && soundBtn) {
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection
+      ?.saveData;
+    let soundChosen = false; // the visitor used the sound button: never override their choice
+
+    const showPlaying = () => {
+      const playing = !video.paused;
+      playBtn.textContent = playing ? 'Pause' : 'Play';
+      playBtn.setAttribute('aria-pressed', String(!playing));
+    };
+    const hint = document.querySelector<HTMLElement>('[data-lp-hint]');
+    const hintText = document.querySelector<HTMLElement>('[data-lp-hint-text]');
+    if (hintText && matchMedia('(hover: none)').matches)
+      hintText.textContent = 'Tap anywhere for sound';
+    const showSound = () => {
+      soundBtn.textContent = video.muted ? 'Sound on' : 'Sound off';
+      soundBtn.setAttribute('aria-pressed', String(!video.muted));
+      if (hint && !video.muted) hint.hidden = true;
+    };
+    video.addEventListener('play', showPlaying);
+    video.addEventListener('pause', showPlaying);
+    video.addEventListener('volumechange', showSound);
+
+    // ---- the playlist: each video in turn, then from the top ----
+    type Item = { src: string; w: number; h: number; label: string };
+    const list = JSON.parse(video.dataset.playlist ?? '[]') as Item[];
+    let index = 0;
+    let preloader: HTMLVideoElement | null = null;
+    const show = (i: number) => {
+      const item = list[i];
+      if (!item) return;
+      index = i;
+      video.removeAttribute('poster'); // the last frame stays up while the next one loads
+      video.style.setProperty('--ar', `${item.w} / ${item.h}`);
+      video.dataset.shape = item.h > item.w ? 'tall' : 'wide';
+      video.setAttribute('aria-label', item.label);
+      video.src = item.src;
+      void video.play().catch(() => {});
+    };
+    video.addEventListener('ended', () => show((index + 1) % list.length));
+    // Warm the next video's first seconds while this one finishes, so the handover is quick.
+    video.addEventListener('timeupdate', () => {
+      const next = list[(index + 1) % list.length];
+      if (preloader || !next || list.length < 2 || !video.duration) return;
+      if (video.currentTime < video.duration - 8) return;
+      preloader = document.createElement('video');
+      preloader.muted = true;
+      preloader.preload = 'auto';
+      preloader.src = next.src;
+      video.addEventListener('ended', () => (preloader = null), { once: true });
+    });
+
+    /** Play with sound if the browser allows it; otherwise muted, with sound on the first gesture. */
+    const start = async () => {
+      video.muted = false;
+      try {
+        await video.play();
+      } catch {
+        video.muted = true;
+        await video.play().catch(() => {});
+        if (hint) hint.hidden = false;
+        const unmute = (event: Event) => {
+          if (soundChosen || (event.target as Element | null)?.closest('[data-lp-sound]')) return;
+          video.muted = false;
+          gestures.forEach((g) => removeEventListener(g, unmute, true));
+        };
+        const gestures = ['pointerdown', 'keydown', 'touchend'];
+        gestures.forEach((g) => addEventListener(g, unmute, true));
+      }
+      showPlaying();
+      showSound();
+    };
+
+    playBtn.addEventListener('click', () => {
+      if (video.paused) {
+        if (video.currentTime === 0 && !video.played.length) void start();
+        else void video.play();
+      } else video.pause();
+    });
+    soundBtn.addEventListener('click', () => {
+      soundChosen = true;
+      if (hint) hint.hidden = true;
+      video.muted = !video.muted;
+      if (!video.muted && video.paused) void video.play();
+    });
+
+    if (reduce || saveData) {
+      video.muted = true;
+      showPlaying();
+      showSound();
+    } else {
+      void start();
+    }
+  }
+</script>
+
+<style>
+  .lp {
+    position: relative;
+    isolation: isolate;
+    min-height: 100svh;
+    overflow: hidden;
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  /* The whole 16:9 reel as a big screen in the middle of the window (nothing cropped), as large
+     as fits with a margin all round. Phones (below) fill the screen instead. */
+  .lp__video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: -2;
+    /* As large as fits, in the current video's own shape (--ar, set per video): shown whole. */
+    width: min(92vw, (100svh - 2 * clamp(56px, 9svh, 96px)) * (var(--ar, 16 / 9)));
+    aspect-ratio: var(--ar, 16 / 9);
+    height: auto;
+    translate: -50% -50%;
+    border-radius: 18px;
+    object-fit: cover;
+  }
+
+  /* A soft dark corner behind the boxes and the controls, so they read over any frame. */
+  .lp__shade {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(ellipse 60% 70% at 0% 100%, rgb(11 13 10 / 0.55), transparent 70%),
+      radial-gradient(ellipse 35% 40% at 100% 100%, rgb(11 13 10 / 0.5), transparent 70%),
+      linear-gradient(180deg, rgb(11 13 10 / 0.35), transparent 18%);
+  }
+
+  /* ---------- logo, top centre, in the light flowing colours ---------- */
+  .lp__brand {
+    position: absolute;
+    top: clamp(16px, 3.5svh, 32px);
+    left: 50%;
+    translate: -50% 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    --led-colours: #cea4ee, #93aee0, #4a9bb0, #edd1a8, #f8cea2, #e79569, #e85e8f, #db92db, #cea4ee;
+  }
+
+  .lp__brand :global(.lp__mark) {
+    --lw: clamp(120px, 12vw, 170px);
+    --hh: clamp(34px, 3.4vw, 48px);
+  }
+
+  .lp__brand:focus-visible {
+    outline: 2px solid var(--paper);
+    outline-offset: 8px;
+  }
+
+  /* ---------- the two boxes, bottom left ---------- */
+  .lp__boxes {
+    position: absolute;
+    left: clamp(16px, 3vw, 40px);
+    bottom: clamp(16px, 4svh, 40px);
+    display: grid;
+    gap: 8px;
+    width: min(380px, calc(100% - 32px));
+  }
+
+  .lp__pitch {
+    padding: 18px 20px 16px;
+    border-radius: 22px;
+    background: var(--paper);
+    color: var(--ink);
+  }
+
+  .lp__pitch h1 {
+    font: 800 clamp(1.25rem, 1.7vw, 1.5rem) / 1.02 var(--font-display);
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+  }
+
+  .lp__pitch p {
+    margin-top: 0.45rem;
+    color: var(--muted);
+    font-size: 0.875rem;
+    line-height: 1.45;
+  }
+
+  .lp__form {
+    display: grid;
+    gap: 0.5rem;
+    padding: 16px 18px 14px;
+    border-radius: 22px;
+    background: rgb(11 13 10 / 0.92);
+    color: var(--paper);
+  }
+
+  .lp__form-title {
+    font: 400 1rem/1.2 var(--font-text);
+    text-transform: none;
+  }
+
+  .lp__status:empty {
+    display: none;
+  }
+
+  .lp__status {
+    font-size: 0.9375rem;
+    line-height: 1.45;
+  }
+
+  .lp__status :global(a) {
+    color: var(--paper);
+  }
+
+  .lp__fields {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 0.45rem 0.5rem;
+  }
+
+  /* Name and email share a row; everything else is full width. */
+  .lp__fields > :not(.lp__field--half) {
+    grid-column: 1 / -1;
+  }
+
+  /* `hidden` loses to the display rule above without this (set after a successful send). */
+  .lp__fields[hidden] {
+    display: none;
+  }
+
+  .lp__field {
+    display: grid;
+    gap: 0.25rem;
+  }
+
+  .lp__field label {
+    color: var(--muted-on-ink);
+    font: 500 0.6875rem/1.3 var(--font-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .lp__field input,
+  .lp__field select {
+    width: 100%;
+    min-height: 42px;
+    padding: 0 14px;
+    border: 1px solid rgb(241 242 236 / 0.28);
+    border-radius: 999px;
+    background: var(--ink-2);
+    color: var(--paper);
+    font: 400 1rem var(--font-text);
+  }
+
+  .lp__field select {
+    appearance: none;
+    padding-right: 40px;
+    background:
+      linear-gradient(45deg, transparent 50%, var(--paper) 50%) calc(100% - 20px) 50% / 6px 6px
+        no-repeat,
+      linear-gradient(-45deg, transparent 50%, var(--paper) 50%) calc(100% - 14px) 50% / 6px 6px
+        no-repeat,
+      var(--ink-2);
+  }
+
+  .lp__field input:focus-visible,
+  .lp__field select:focus-visible {
+    outline: 2px solid var(--lilac);
+    outline-offset: 2px;
+  }
+
+  .lp__field [aria-invalid='true'] {
+    border-color: #ff8fb1;
+  }
+
+  .lp__error:empty {
+    display: none;
+  }
+
+  .lp__error {
+    color: #ff8fb1;
+    font-size: 0.8125rem;
+  }
+
+  .lp__trap {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .lp__send {
+    min-height: 44px;
+    margin-top: 0.2rem;
+    border: 0;
+    border-radius: 999px;
+    background: linear-gradient(
+        90deg,
+        #cea4ee,
+        #93aee0,
+        #edd1a8,
+        #f8cea2,
+        #e79569,
+        #e85e8f,
+        #db92db,
+        #cea4ee
+      )
+      0 0 / 720px 100% repeat-x;
+    color: var(--ink);
+    font: 800 0.9375rem/1 var(--font-display);
+    text-transform: uppercase;
+    cursor: pointer;
+    animation: logo-led 14s linear infinite;
+  }
+
+  .lp__send:focus-visible {
+    outline: 2px solid var(--paper);
+    outline-offset: 3px;
+  }
+
+  .lp__send:disabled {
+    opacity: 0.6;
+    cursor: wait;
+  }
+
+  .lp__small {
+    color: var(--muted-on-ink);
+    font-size: 0.75rem;
+    line-height: 1.45;
+  }
+
+  .lp__small a {
+    color: var(--paper);
+  }
+
+  /* ---------- controls and legal links, bottom right ---------- */
+  /* Clear of the fixed cookie button in the very corner (CookieButton.astro). */
+  .lp__corner {
+    position: absolute;
+    right: calc(clamp(16px, 3vw, 40px) + 64px);
+    bottom: clamp(16px, 4svh, 40px);
+    display: grid;
+    justify-items: end;
+    gap: 0.6rem;
+    font-size: 0.75rem;
+  }
+
+  .lp__controls {
+    display: flex;
+    gap: 8px;
+  }
+
+  /* "Click anywhere for sound": a soft pulse so it is noticed (none under reduced motion). */
+  .lp__hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.9rem 0.5rem 0.7rem;
+    border-radius: 999px;
+    background: var(--paper);
+    color: var(--ink);
+    font: 600 0.8125rem/1 var(--font-text);
+    animation: lp-hint 1.8s ease-in-out infinite;
+  }
+
+  .lp__hint[hidden] {
+    display: none;
+  }
+
+  .lp__hint svg {
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+
+  @keyframes lp-hint {
+    50% {
+      scale: 1.05;
+    }
+  }
+
+  .lp__ctl {
+    min-height: 40px;
+    padding: 0 16px;
+    border: 1px solid rgb(241 242 236 / 0.45);
+    border-radius: 999px;
+    background: rgb(11 13 10 / 0.6);
+    color: var(--paper);
+    font: 500 0.6875rem/1 var(--font-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  .lp__ctl:hover,
+  .lp__ctl:focus-visible {
+    border-color: var(--paper);
+  }
+
+  .lp__legal {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .lp__legal a,
+  .lp__copy {
+    color: #d6d7d1;
+    text-shadow: 0 1px 2px rgb(0 0 0 / 0.6);
+  }
+
+  /* ---------- phones: the boxes take the lower part of the screen, controls and links below ---------- */
+  @media (max-width: 40rem) {
+    .lp {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 88px 16px 16px;
+    }
+
+    .lp__boxes {
+      position: static;
+      width: 100%;
+    }
+
+    .lp__video {
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      translate: none;
+      border-radius: 0;
+    }
+
+    .lp__fields {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    /* The reel's captions run along the bottom: darken behind the links and buttons. */
+    .lp__shade {
+      background:
+        linear-gradient(0deg, rgb(11 13 10 / 0.9), rgb(11 13 10 / 0.6) 30%, transparent 55%),
+        linear-gradient(180deg, rgb(11 13 10 / 0.35), transparent 18%);
+    }
+
+    .lp__corner {
+      position: static;
+      justify-items: start;
+      margin-top: 14px;
+      padding-right: 64px; /* the cookie button */
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lp__send,
+    .lp__hint {
+      animation: none;
+    }
+  }
+</style>

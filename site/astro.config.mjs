@@ -3,6 +3,7 @@ import sitemap from '@astrojs/sitemap';
 import { productionUrl } from './src/config/domain.ts';
 import { lastModified, pageFile } from './src/lib/lastModified.ts';
 import aiReadable from './src/integrations/ai-readable.mjs';
+import devFolderIndex from './src/integrations/dev-folder-index.mjs';
 
 const base = process.env.SITE_BASE ?? '/';
 
@@ -55,7 +56,7 @@ export default defineConfig({
   integrations: [
     sitemap({
       // Noindex pages (404, the form's thank-you page) stay out.
-      filter: (page) => !/\/(404|thanks)\/?$/.test(page),
+      filter: (page) => !/\/(404|thanks|start)\/?$/.test(page),
       serialize(item) {
         const lastmod = lastModified(pageFile(pageKeyFor(item.url)));
         return lastmod ? { ...item, lastmod } : item;
@@ -63,5 +64,7 @@ export default defineConfig({
     }),
     // After the sitemap: Markdown copies of every page, full llms-full.txt, image sitemap.
     aiReadable(),
+    // Dev only: /concepts/<slug>/ serves its index.html, as every real host does.
+    devFolderIndex(),
   ],
 });

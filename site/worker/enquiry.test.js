@@ -77,6 +77,28 @@ test('a free AI check needs a website but no message', async () => {
   assert.ok(validate({ name: 'A', email: 'a@b.co', topic: 'website' }).errors.message);
 });
 
+test('a chosen service is enough without a message, and shows in the email', async () => {
+  const { data } = validate({ name: 'A', email: 'a@b.co', service: 'Mobile apps' });
+  assert.ok(data);
+  const raw = buildEmail(data, { from: 'web@x.com', to: 'in@x.com' });
+  const body = bodyOf(raw);
+  assert.match(body, /Service: +Mobile apps/);
+  assert.doesNotMatch(body, /Came from:/);
+  const landing = validate({
+    name: 'A',
+    email: 'a@b.co',
+    service: 'Mobile apps',
+    via: 'Landing page',
+  }).data;
+  const raw2 = buildEmail(landing, { from: 'web@x.com', to: 'in@x.com' });
+  assert.match(bodyOf(raw2), /Came from: Landing page/);
+  assert.equal(
+    Buffer.from(header(raw2, 'Subject').split('?B?')[1].split('?=')[0], 'base64').toString('utf8'),
+    '[Landing page] Website enquiry: Mobile apps from A',
+  );
+  assert.ok(validate({ name: 'A', email: 'a@b.co', service: 'x'.repeat(81) }).errors.service);
+});
+
 test('bad input is refused with field errors and nothing is sent', async () => {
   const env = makeEnv();
   const res = await handleEnquiry(

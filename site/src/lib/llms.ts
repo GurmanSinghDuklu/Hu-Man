@@ -57,7 +57,7 @@ const pageKeys: PageKey[] = [
 
 /** How a person or an AI agent can make an enquiry without a mail app. */
 const actions = () => [
-  `- Send an enquiry: POST ${abs('/api/enquiry')} with JSON or form fields name, email and message (optional: topic, website, phone, tier). topic is one of ai-check, website, idea, tier, other; for ai-check, website is required and message is optional. A person reads every enquiry and replies by email. GET the same URL for the full field list.`,
+  `- Send an enquiry: POST ${abs('/api/enquiry')} with JSON or form fields name, email and message (optional: topic, website, phone, tier, service). topic is one of ai-check, website, idea, tier, other; for ai-check, website is required and message is optional; message is also optional when a service is given. A person reads every enquiry and replies by email. GET the same URL for the full field list.`,
   `- Ask for a free AI check: the same endpoint with topic "ai-check" and website, or the form at ${abs('/free-ai-check/')}.`,
   `- Contact page with a form, phone and email: ${abs('/contact/')}`,
 ];

@@ -22,7 +22,8 @@
     "seo-check": "node scripts/seo-check.mjs",
     "test": "node --test worker/enquiry.test.js tests/palettes.test.mjs",
     "build:site": "astro build",
-    "concept-posters": "node scripts/concept-posters.mjs"
+    "concept-posters": "node scripts/concept-posters.mjs",
+    "compress-video": "node scripts/compress-video.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.10",
@@ -40,6 +41,7 @@
     "@eslint/js": "^10.0.1",
     "eslint": "^10.11.0",
     "eslint-plugin-astro": "^1.7.0",
+    "ffmpeg-static": "^5.2.0",
     "globals": "^17.12.0",
     "lighthouse": "^13.5.0",
     "playwright": "^1.63.0",

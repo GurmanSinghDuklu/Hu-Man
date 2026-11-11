@@ -46,9 +46,21 @@ export const API_DESCRIPTION = {
       description: 'The website to check or redesign.',
     },
     tier: { required: false, maxLength: 60, description: 'Pricing tier name, e.g. "Launch".' },
+    service: {
+      required: false,
+      maxLength: 80,
+      description:
+        'The service wanted, e.g. "Website design + development" (from the /start/ form).',
+    },
+    via: {
+      required: false,
+      maxLength: 60,
+      description:
+        'Which of the site’s own forms sent it, e.g. "Landing page". Shown in the email.',
+    },
     phone: { required: false, maxLength: 40 },
     message: {
-      required: 'unless topic is ai-check',
+      required: 'unless topic is ai-check or a service is given',
       maxLength: 4000,
       description: 'What you need, in your own words.',
     },
@@ -60,7 +72,16 @@ export const API_DESCRIPTION = {
   },
 };
 
-const LIMITS = { name: 100, email: 200, phone: 40, website: 200, tier: 60, message: 4000 };
+const LIMITS = {
+  name: 100,
+  email: 200,
+  phone: 40,
+  website: 200,
+  tier: 60,
+  service: 80,
+  via: 60,
+  message: 4000,
+};
 
 /** One line, no control characters: safe for email headers and subjects. */
 const oneLine = (value) =>
@@ -121,6 +142,8 @@ export function validate(raw) {
     phone: oneLine(raw.phone),
     website: oneLine(raw.website),
     tier: oneLine(raw.tier),
+    service: oneLine(raw.service),
+    via: oneLine(raw.via),
     topic: TOPICS[oneLine(raw.topic)] ? oneLine(raw.topic) : raw.tier ? 'tier' : 'other',
     message: String(raw.message ?? '')
       .replace(/\r\n?/g, '\n')
@@ -135,7 +158,8 @@ export function validate(raw) {
     errors.email = 'Please add an email address we can reply to.';
   if (data.topic === 'ai-check' && !data.website)
     errors.website = 'Please add the website to check.';
-  if (data.topic !== 'ai-check' && !data.message)
+  // A chosen service is enough to start a conversation (the short /start/ form).
+  if (data.topic !== 'ai-check' && !data.service && !data.message)
     errors.message = 'Please tell us a little about what you need.';
   for (const [field, max] of Object.entries(LIMITS)) {
     if (data[field].length > max) errors[field] = `Please keep this under ${max} characters.`;
@@ -178,19 +202,27 @@ export function buildEmail(
   data,
   { from, to, now = new Date(), id = crypto.randomUUID(), source = '', look = null },
 ) {
-  const what = data.topic === 'tier' && data.tier ? `${data.tier} tier` : TOPICS[data.topic];
-  const subject = `Website enquiry: ${what}${data.website ? ` (${data.website})` : ''} from ${data.name}`;
+  const what =
+    data.topic === 'tier' && data.tier
+      ? `${data.tier} tier`
+      : data.service && data.topic === 'other'
+        ? data.service
+        : TOPICS[data.topic];
+  // "[Landing page] ..." when one of the site's forms says where it is, so it stands out in the inbox.
+  const subject = `${data.via ? `[${data.via}] ` : ''}Website enquiry: ${what}${data.website ? ` (${data.website})` : ''} from ${data.name}`;
   const due = new Date(now.getTime() + REPLY_HOURS * 3600 * 1000);
   const links = data.website ? checkLinks(data.website) : [];
   const lines = [
     `New enquiry from the website.`,
     '',
+    data.via ? `Came from: ${data.via}` : null,
     `Topic:    ${what}`,
     `Name:     ${data.name}`,
     `Email:    ${data.email}`,
     data.phone ? `Phone:    ${data.phone}` : null,
     data.website ? `Website:  ${data.website}` : null,
     data.tier ? `Tier:     ${data.tier}` : null,
+    data.service ? `Service:  ${data.service}` : null,
     '',
     data.message || '(No message.)',
     '',

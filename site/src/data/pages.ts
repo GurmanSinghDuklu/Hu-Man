@@ -20,6 +20,7 @@ export type PageKey =
   | 'free-ai-check'
   | 'contact'
   | 'thanks'
+  | 'start'
   | 'privacy'
   | 'cookies'
   | 'terms'
@@ -164,6 +165,18 @@ export const pages: Record<PageKey, PageInfo> = {
     label: 'Thanks',
     ogHeadline: 'Talk to a human.',
     schemaType: 'WebPage',
+    noindex: true,
+  },
+  start: {
+    key: 'start',
+    path: '/start/',
+    title: 'Start your project | Hu/man',
+    description:
+      'Websites, apps and portfolios designed around you, not a template. Tell us what you need and a real person replies within 48 hours.',
+    label: 'Start',
+    ogHeadline: 'Talk to a human.',
+    schemaType: 'WebPage',
+    // A landing page for links and ads; the indexable way in is /contact/.
     noindex: true,
   },
   privacy: {

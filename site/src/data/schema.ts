@@ -113,7 +113,7 @@ export function buildSchema(key: PageKey, abs: AbsUrl): Node {
       '@type': 'CommunicateAction',
       name: 'Send an enquiry',
       description:
-        'POST name, email and message (and optionally topic, website, phone, tier) as JSON or form data. GET the same URL for the field list.',
+        'POST name, email and message (and optionally topic, website, phone, tier, service) as JSON or form data. GET the same URL for the field list.',
       target: {
         '@type': 'EntryPoint',
         urlTemplate: abs('/api/enquiry'),
