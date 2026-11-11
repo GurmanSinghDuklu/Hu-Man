@@ -17,6 +17,7 @@ const PAGES = [
   'portfolio/',
   'contact/',
   'thanks/',
+  'start/',
   'privacy/',
   'cookies/',
   'terms/',
@@ -32,12 +33,19 @@ async function run() {
   try {
     const browser = await chromium.launch();
     try {
-      const context = await browser.newContext();
+      // bypassCSP lets the scan add its no-transitions style; the site's own policy is unchanged.
+      const context = await browser.newContext({ bypassCSP: true });
       const page = await context.newPage();
       for (const path of PAGES) {
-        await page.goto(SITE_URL + path, { waitUntil: 'networkidle' });
+        // 'load', not 'networkidle': /start/ streams a long video, so the network never goes quiet.
+        await page.goto(SITE_URL + path, { waitUntil: 'load' });
+        await page.waitForTimeout(800);
         // Scroll-reveal content starts at opacity 0 and axe skips invisible
-        // elements, so force every reveal on before scanning.
+        // elements, so force every reveal on before scanning. Transitions go first, so staggered
+        // reveals (up to ~1.6 s) are measured finished, not half faded.
+        await page.addStyleTag({
+          content: '*,*::before,*::after{transition:none!important;transition-delay:0s!important}',
+        });
         await page.evaluate(() =>
           document.querySelectorAll('[data-reveal]').forEach((el) => el.classList.add('is-in')),
         );

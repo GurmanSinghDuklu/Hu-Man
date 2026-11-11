@@ -6,11 +6,13 @@
  * Exits 1 on any failure. BROWSER=webkit|firefox picks another engine (default chromium).
  */
 import { chromium, firefox, webkit } from 'playwright';
+import { fileURLToPath } from 'node:url';
 import { startServer } from './serve.mjs';
 
 const PORT = 4393;
 const PAGES = ['', 'services/', 'pricing/', 'about/', 'contact/', 'terms/'];
-const server = await startServer(new URL('../dist/', import.meta.url).pathname, PORT);
+// fileURLToPath, not URL.pathname: on Windows .pathname gives /C:/..., which matches no file.
+const server = await startServer(fileURLToPath(new URL('../dist/', import.meta.url)), PORT);
 // BROWSER=webkit or BROWSER=firefox runs the same checks in Safari's and Firefox's engines.
 const engine = { chromium, firefox, webkit }[process.env.BROWSER ?? 'chromium'];
 const browser = await engine.launch(
@@ -51,7 +53,7 @@ for (const path of PAGES) {
   // The logos' colour flow: the gradient behind each logo mask moves along.
   const logoColours = () =>
     page.evaluate(() =>
-      ['.site-header__logo', '.site-footer__led'].map((sel) => {
+      ['.site-header__brand', '.site-footer__mark'].map((sel) => {
         const el = document.querySelector(sel);
         return el ? getComputedStyle(el).backgroundPositionX : '';
       }),
