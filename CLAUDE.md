@@ -547,3 +547,12 @@ following a link closes an open menu; focus returns to the toggle on Esc. `scrol
   --led-colours. The footer's is `.site-footer__mark` (`.site-footer__brand` is the footer column).
   The cookie button uses `HeadMark.astro` alone. If a vector or higher-resolution original turns up,
   swap the PNG. `npm run motion-check` now works on Windows (it used URL.pathname, so every page 404'd).
+
+## SEO audit fixes (2026-11-11)
+- `public/_redirects`: each page without its final slash 301s to the page (Cloudflare's own handling
+  is a temporary 307). Exact-match rules, no loops. **Add a line when you add a page.** `/portfolio` used
+  to go to /work/ (stale rule from before /portfolio/ existed, and the "Be seen" ad prints that address).
+- `docs/04-seo-plan.md` targets Leeds (and Manchester) now, not Bradford.
+- Speed: Lighthouse's simulated mobile LCP is 2.0-2.7 s on long pages, but measured first paint is
+  ~0.35 s at 4x CPU throttling; the gap is the slow-4G model. Judge by Search Console's Core Web
+  Vitals (real visitors) before reworking CSS for it.

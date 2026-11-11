@@ -8,8 +8,10 @@
 - One 2026 local SEO guide says AI local answers draw on Google Business Profile data, review text and third-party mentions, the same inputs as local search. A BrightLocal survey (vendor, n about 1,164) found 58% of consumers had used AI to find or get a recommendation for a local business, but 75% then go to Google to verify. Treat these as directional.
 
 ## Target queries (hypotheses; validate with Search Console and a keyword tool)
-Primary: web designer Bradford; website design Bradford; website redesign Bradford; web design West Yorkshire.
-Long tail (likely easier): AI chatbot for small business Bradford; Squarespace alternative Bradford; website with online booking Bradford; local SEO Bradford; Google Business Profile help Bradford.
+The base moved from Bradford to Leeds on 2026-10-19 (the site, schema and footer say Leeds and Manchester), so the targets follow Leeds. Bradford stays a nearby town we serve, not the headline.
+Primary: web designer Leeds; website design Leeds; website redesign Leeds; web design West Yorkshire.
+Secondary: web designer Manchester; website design Manchester (only with real, specific reasons on the page, never a swapped-name copy).
+Long tail (likely easier): AI chatbot for small business Leeds; Squarespace alternative Leeds; website with online booking Leeds; local SEO Leeds; Google Business Profile help Leeds; agentic AI-ready website; portfolio website UK.
 Never create near-duplicate town pages ("web designer in Halifax" with swapped city names). Create a location page only if it has unique, useful content and a real reason (a real client or meeting presence).
 
 ## Technical checklist
@@ -34,7 +36,7 @@ Never create near-duplicate town pages ("web designer in Halifax" with swapped c
 - LinkedIn, GitHub and Facebook pages with the same name and link.
 
 ## Content plan (helpful, specific, honest; one strong page beats five thin ones)
-1. How much does a website cost in Bradford in 2026?
+1. How much does a website cost in Leeds in 2026?
 2. Squarespace or a custom site for a small UK business?
 3. How to get your business recommended by Google and ChatGPT (what actually works, and what nobody can promise).
 4. Moving your website without losing Google rankings.

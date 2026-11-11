@@ -83,13 +83,11 @@ const size = { desktop: { w: 1440, h: 900 }, phone: { w: 390, h: 844 } };
                     />
                   )}
                   <div class="ctile__mount" data-ctile-mount aria-hidden="true" />
-                  <a
-                    class="ctile__hit"
-                    href={href}
-                    tabindex="-1"
-                    aria-hidden="true"
-                    data-ctile-hit
-                  />
+                  {/* Hidden from screen readers (the text link below is the real one), but it still
+                      gets words, so search engines don't see a link with no text. */}
+                  <a class="ctile__hit" href={href} tabindex="-1" aria-hidden="true" data-ctile-hit>
+                    <span class="visually-hidden">View the concept for {concept.name}</span>
+                  </a>
                 </div>
               </div>
               <div class="ctile__body">
