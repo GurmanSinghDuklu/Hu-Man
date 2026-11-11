@@ -257,20 +257,35 @@ const first = playlist[0]!;
     });
 
     /** Play with sound if the browser allows it; otherwise muted, with sound on the first gesture. */
+    // Phones and tablets: start muted (always allowed there; an attempt with sound is often
+    // refused and on some Android browsers leaves the video paused), sound on at the first tap.
+    // Desktop: try with sound first.
+    const touch = matchMedia('(hover: none)').matches;
     const start = async () => {
-      video.muted = false;
-      try {
-        await video.play();
-      } catch {
+      let withSound = false;
+      if (!touch) {
+        video.muted = false;
+        withSound = await video.play().then(
+          () => true,
+          () => false,
+        );
+      }
+      if (!withSound) {
         video.muted = true;
         await video.play().catch(() => {});
         if (hint) hint.hidden = false;
+        // Unmute only on a real tap, click or key press. Unmuting without one (e.g. the
+        // pointerdown that starts a scroll on a phone) makes Chrome pause the video.
         const unmute = (event: Event) => {
           if (soundChosen || (event.target as Element | null)?.closest('[data-lp-sound]')) return;
+          const activation = (navigator as Navigator & { userActivation?: { isActive: boolean } })
+            .userActivation;
+          if (activation && !activation.isActive) return;
           video.muted = false;
+          if (video.paused) void video.play().catch(() => {});
           gestures.forEach((g) => removeEventListener(g, unmute, true));
         };
-        const gestures = ['pointerdown', 'keydown', 'touchend'];
+        const gestures = ['click', 'keydown', 'touchend'];
         gestures.forEach((g) => addEventListener(g, unmute, true));
       }
       showPlaying();
@@ -613,12 +628,58 @@ const first = playlist[0]!;
   }
 
   /* ---------- phones: the boxes take the lower part of the screen, controls and links below ---------- */
+  /* Phones: a square video block at the top (the whole frame shown inside it, wide or tall),
+     the sound prompt and buttons right under it, then the boxes, then the legal links. */
   @media (max-width: 40rem) {
     .lp {
       display: flex;
       flex-direction: column;
-      justify-content: flex-end;
-      padding: 88px 16px 16px;
+      gap: 12px;
+      padding: 80px 16px 16px;
+    }
+
+    .lp__video {
+      position: relative;
+      inset: auto;
+      top: auto;
+      left: auto;
+      z-index: 0;
+      order: 0;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 1 / 1;
+      translate: none;
+      border-radius: 18px;
+      background: #000;
+      object-fit: contain;
+    }
+
+    .lp__corner {
+      display: contents;
+    }
+
+    .lp__hint,
+    .lp__controls {
+      order: 1;
+    }
+
+    .lp__hint {
+      justify-self: start;
+      align-self: flex-start;
+    }
+
+    .lp__boxes {
+      order: 2;
+    }
+
+    .lp__legal,
+    .lp__copy {
+      order: 3;
+      padding-right: 64px; /* the cookie button */
+    }
+
+    .lp__shade {
+      display: none;
     }
 
     .lp__boxes {
@@ -626,30 +687,8 @@ const first = playlist[0]!;
       width: 100%;
     }
 
-    .lp__video {
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      translate: none;
-      border-radius: 0;
-    }
-
     .lp__fields {
       grid-template-columns: minmax(0, 1fr);
-    }
-
-    /* The reel's captions run along the bottom: darken behind the links and buttons. */
-    .lp__shade {
-      background:
-        linear-gradient(0deg, rgb(11 13 10 / 0.9), rgb(11 13 10 / 0.6) 30%, transparent 55%),
-        linear-gradient(180deg, rgb(11 13 10 / 0.35), transparent 18%);
-    }
-
-    .lp__corner {
-      position: static;
-      justify-items: start;
-      margin-top: 14px;
-      padding-right: 64px; /* the cookie button */
     }
   }
 
