@@ -18,7 +18,7 @@ const fail = (where, msg) => errors.push(`${where}: ${msg}`);
 
 const noindexBuild = Boolean(process.env.PUBLIC_NOINDEX);
 /** Pages that are never indexed (src/data/pages.ts `noindex`). */
-const NOINDEX_FILES = new Set(['404.html', 'thanks/index.html', 'start/index.html']);
+const NOINDEX_FILES = new Set(['404.html', 'thanks/index.html']);
 
 async function walk(dir, prefix = '') {
   const out = [];

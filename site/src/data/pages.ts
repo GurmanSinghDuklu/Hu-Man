@@ -174,10 +174,9 @@ export const pages: Record<PageKey, PageInfo> = {
     description:
       'Websites, apps and portfolios designed around you, not a template. Tell us what you need and a real person replies within 48 hours.',
     label: 'Start',
-    ogHeadline: 'Talk to a human.',
+    ogHeadline: 'Your business starts with a human.',
+    // The landing page for ads and links; indexed since 2026-11-11 (Gurman's call).
     schemaType: 'WebPage',
-    // A landing page for links and ads; the indexable way in is /contact/.
-    noindex: true,
   },
   privacy: {
     key: 'privacy',

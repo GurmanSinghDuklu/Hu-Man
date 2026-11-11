@@ -56,7 +56,7 @@ export default defineConfig({
   integrations: [
     sitemap({
       // Noindex pages (404, the form's thank-you page) stay out.
-      filter: (page) => !/\/(404|thanks|start)\/?$/.test(page),
+      filter: (page) => !/\/(404|thanks)\/?$/.test(page),
       serialize(item) {
         const lastmod = lastModified(pageFile(pageKeyFor(item.url)));
         return lastmod ? { ...item, lastmod } : item;

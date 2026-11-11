@@ -18,7 +18,9 @@ const root = fileURLToPath(new URL('..', import.meta.url));
 const tmpDir = `${root}.og-build/`;
 const outDir = `${root}public/og/`;
 
-execFileSync('npx', ['astro', 'build', '--outDir', tmpDir], {
+// Astro's own CLI through this Node, not `npx`: execFileSync can't start npx on Windows (ENOENT).
+const astroCli = fileURLToPath(new URL('../node_modules/astro/bin/astro.mjs', import.meta.url));
+execFileSync(process.execPath, [astroCli, 'build', '--outDir', tmpDir], {
   cwd: root,
   stdio: 'inherit',
   env: { ...process.env, OG_RENDER: '1' },

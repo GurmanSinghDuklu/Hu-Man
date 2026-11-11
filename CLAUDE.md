@@ -488,7 +488,8 @@ following a link closes an open menu; focus returns to the toggle on Esc. `scrol
    only). Check this again before adding another nested list inside the header.
 
 ## Landing page and site-wide interactivity (2026-11-10, uncommitted)
-- **`/start/`** (noindex landing page for ads and links, rebuilt 2026-11-11 on Shopify's start-page
+- **`/start/`** (landing page for ads and links; indexed since 2026-11-11 at Gurman's request, so it has a
+  canonical, sitemap entry, `public/og/start.png` and the business email under the form; rebuilt on Shopify's start-page
   layout): a playlist of four videos in `public/landing/` (all H.264 + AAC, play everywhere), in this
   order (2026-11-11) then looping: `portfolio-seen.mp4` ("Be seen", 28 s, 9:16, 10.4 MB, from 16.8 MB at
   crf 26), `found.mp4` (51 s, 16:9, 25.5 MB, from 143 MB at crf 27), `reel.mp4` (82 s, 16:9, 20 MB) and
@@ -497,8 +498,11 @@ following a link closes an open menu; focus returns to the toggle on Esc. `scrol
   frame takes each video's shape (--ar), so vertical ones show as a tall screen, uncropped (full bleed on
   phones). Compress new videos with `npm run compress-video -- in.mp4 out.mp4 [crf]` (ffmpeg-static,
   dev dependency added 2026-11-11 with approval; crf 27 looked identical to the original for Found).
-  Flowing logo top centre, two boxes bottom left (they overlay the left of wide videos): pitch
+  Flowing logo top centre, two boxes bottom left (they overlay the left of wide videos; a round
+  down-arrow folds them away to a "Got an idea? Tell us." pill on desktop): pitch
   and a short form (full name, email, service) that posts to `/api/enquiry`. No link to /contact/.
+  `npm run og-images` now runs Astro via Node (npx failed on Windows); it rewrites every card, so
+  commit only the cards you meant to change.
   Browsers refuse sound on autoplay, so it starts muted when refused and unmutes on the first click,
   tap or key press; Pause and Sound buttons always. Reduced motion or Data Saver: nothing plays until
   pressed. Poster = the reel's first frame, set as the video's own `poster` (a separate still behind

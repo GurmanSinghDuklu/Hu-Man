@@ -181,6 +181,10 @@ const first = playlist[0]!;
               Prices are fixed and agreed with you before any work starts. We only use your details
               to reply. <a href={withBase('/privacy/')}>Privacy notice</a>.
             </p>
+            <!-- Indexed pages carry the business email (NAP consistency; seo-check expects it). -->
+            <p class="lp__small">
+              Prefer email? <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
+            </p>
           </div>
         </form>
       </div>
