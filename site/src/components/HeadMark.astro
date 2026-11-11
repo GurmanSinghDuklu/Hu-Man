@@ -1,0 +1,35 @@
+---
+/**
+ * The fingerprint head (a profile drawn in fingerprint ridges, cut from the Hu/man reel at 0:47) as
+ * a transparent mark in the logo's flowing colours. The cut-out (src/assets/brand/fingerprint-head.png,
+ * white ridges on transparency) is the mask; .logo-led (base.css) flows the colours through it, so it
+ * takes whatever --led-colours its parent sets. Decorative: aria-hidden. Size it with `class`
+ * (height; the width follows the head's 120:172 shape).
+ */
+import { getImage } from 'astro:assets';
+import head from '../assets/brand/fingerprint-head.png';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+const mask = await getImage({ src: head, format: 'webp', width: 240, quality: 82 });
+---
+
+<span
+  class:list={['head-mark', 'logo-led', className]}
+  style={`--logo-mask:url("${mask.src}")`}
+  aria-hidden="true"
+></span>
+
+<style>
+  .head-mark {
+    display: inline-block;
+    flex: none;
+    height: 2rem;
+    aspect-ratio: 120 / 172;
+    /* A smaller colour tile than the logo's, so the flow shows across a small mark. */
+    background-size: 240px 100%;
+  }
+</style>

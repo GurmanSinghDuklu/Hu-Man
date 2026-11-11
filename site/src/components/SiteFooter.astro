@@ -1,8 +1,7 @@
 ---
 import { site } from '../config/site';
 import { withBase } from '../config/paths';
-import Logo from './Logo.astro';
-import logoMask from '../assets/brand/logo-paper.svg?url';
+import BrandMark from './BrandMark.astro';
 
 const currentYear = new Date().getFullYear();
 ---
@@ -10,9 +9,9 @@ const currentYear = new Date().getFullYear();
 <footer class="site-footer">
   <div class="sheet site-footer__grid">
     <div class="site-footer__brand">
-      <span class="site-footer__led logo-led" style={`--logo-mask:url("${logoMask}")`}>
-        <Logo variant="paper" label={site.name} class="site-footer__logo" />
-      </span>
+      <div class="site-footer__marks">
+        <BrandMark label={site.name} class="site-footer__mark" />
+      </div>
       <p>
         {site.locations.join(' · ')}
         <br />
@@ -25,6 +24,29 @@ const currentYear = new Date().getFullYear();
       <ul>
         <li>
           <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
+        </li>
+        <li>
+          <a
+            class="site-footer__wa"
+            href={`https://wa.me/${site.contact.phoneIntl}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path
+                d="M12 2.2a9.8 9.8 0 0 0-8.5 14.7L2.2 21.8l5-1.3A9.8 9.8 0 1 0 12 2.2z"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linejoin="round"
+              ></path>
+              <path
+                d="M8.6 7.3c.3-.6.6-.6.9-.6h.6c.2 0 .5.1.7.6l.8 1.9c.1.2.1.5 0 .7l-.5.7c-.2.2-.2.5 0 .7.4.7 1 1.4 1.6 1.9.6.5 1.2.9 1.9 1.2.2.1.5.1.7-.1l.7-.8c.2-.2.4-.3.7-.2l1.9.9c.3.1.4.3.4.6 0 .4-.1 1.1-.6 1.6-.5.5-1.4.9-2.4.8-1.6-.2-3.5-1-5.2-2.6-1.7-1.6-2.8-3.6-3-5.1-.2-1.2.4-2.1.8-2.6z"
+                fill="currentColor"
+              ></path>
+            </svg>
+            Contact on WhatsApp<span class="visually-hidden"> (opens in a new tab)</span>
+          </a>
         </li>
       </ul>
     </div>
@@ -98,10 +120,6 @@ const currentYear = new Date().getFullYear();
     gap: var(--space-5) var(--space-4);
   }
 
-  .site-footer :global(.site-footer__logo) {
-    width: clamp(96px, calc(var(--u) * 1.2), 120px);
-  }
-
   .site-footer__brand p {
     color: #c9cac4;
     line-height: 1.6;
@@ -159,11 +177,30 @@ const currentYear = new Date().getFullYear();
   }
 
   /* The colour flow (.logo-led, base.css): the lighter palette colours, which glow on Ink. */
-  .site-footer__led {
-    display: block;
-    width: fit-content;
-    line-height: 0;
+  /* WhatsApp (Gurman's go-ahead, 2026-11-11): the glyph in WhatsApp green, the words as the other links. */
+  .site-footer__wa {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .site-footer__wa svg {
+    flex: none;
+    width: 1.15em;
+    height: 1.15em;
+    color: #25d366;
+  }
+
+  .site-footer__marks {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     margin-bottom: 1.5rem;
     --led-colours: #cea4ee, #93aee0, #4a9bb0, #edd1a8, #f8cea2, #e79569, #e85e8f, #db92db, #cea4ee;
+  }
+
+  .site-footer__marks :global(.site-footer__mark) {
+    --lw: clamp(96px, calc(var(--u) * 1.2), 120px);
+    --hh: 42px;
   }
 </style>

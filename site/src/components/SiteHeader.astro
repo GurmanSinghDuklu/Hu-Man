@@ -1,9 +1,8 @@
 ---
 import { site } from '../config/site';
 import { withBase } from '../config/paths';
-import Logo from './Logo.astro';
+import BrandMark from './BrandMark.astro';
 import BookingLink from './BookingLink.astro';
-import logoMask from '../assets/brand/logo-ink.svg?url';
 import { serviceAreas } from '../data/services';
 import { projects } from '../data/projects';
 
@@ -36,9 +35,7 @@ const workItems = projects.map((p) => ({
 <header class="site-header">
   <div class="sheet site-header__inner">
     <a href={withBase('/')} class="site-header__home" aria-label={`${site.name} home`}>
-      <span class="site-header__logo logo-led" style={`--logo-mask:url("${logoMask}")`}>
-        <Logo variant="ink" label="" />
-      </span>
+      <BrandMark class="site-header__brand" />
     </a>
 
     <nav class="site-header__nav" aria-label="Primary">
@@ -229,19 +226,10 @@ const workItems = projects.map((p) => ({
 
   .site-header__home {
     display: flex;
+    align-items: center;
+    gap: clamp(6px, calc(var(--u) * 0.1), 10px);
     margin-right: auto;
     padding-block: 0.75rem;
-  }
-
-  .site-header__logo {
-    position: relative;
-    display: block;
-    line-height: 0;
-  }
-
-  .site-header__logo :global(.logo) {
-    width: clamp(96px, calc(var(--u) * 1.25), 120px);
-    min-width: 0;
   }
 
   .site-header__nav {
@@ -275,7 +263,12 @@ const workItems = projects.map((p) => ({
   /* ---------- desktop menus (Services, Work) ---------- */
 
   /* Each item fills the header's height, so the pointer stays on it on the way down to the menu. */
-  .site-header__nav,
+  /* The nav itself only stretches: giving it display here too overrode its phone `display: none`
+     above, and the hidden desktop row pushed every phone page ~475px wide (sideways scroll). */
+  .site-header__nav {
+    align-self: stretch;
+  }
+
   .site-header__nav > ul,
   .site-header__nav > ul > li {
     align-self: stretch;
@@ -565,7 +558,8 @@ const workItems = projects.map((p) => ({
     }
 
     .site-header__nav {
-      display: block;
+      display: flex;
+      align-items: center;
     }
 
     .site-header :global(.site-header__cta) {
@@ -586,7 +580,11 @@ const workItems = projects.map((p) => ({
 
   /* The colour flow (.logo-led, base.css): the deeper palette colours, which stay readable on the
      pale header, blending like the price arches and the Talk banner. */
-  .site-header__logo {
+  /* Logo and fingerprint head share one flow (BrandMark.astro); the head is about a third taller. */
+  .site-header__home :global(.site-header__brand) {
+    --lw: clamp(96px, calc(var(--u) * 1.25), 120px);
+    --hh: clamp(30px, calc(var(--u) * 0.42), 40px);
+    --gap: clamp(6px, calc(var(--u) * 0.1), 10px);
     --led-colours:
       #4e28df, #8f6fe6, #db92db, #e85e8f, #d2133c, #ce3d10, #d9545a, #4a9bb0, #2c4477, #4e28df;
   }

@@ -1,0 +1,63 @@
+---
+/**
+ * The Hu/man wordmark with the fingerprint head to its right, sharing ONE colour flow: the moving
+ * gradient is painted once across the whole mark and cut out by a two-layer mask (the logo at the
+ * left, the head at the right), so the colours run straight from the text into the head, always in
+ * step (two separate .logo-led elements drift apart). The inline logo SVG stays, invisible, for its
+ * size and accessible name.
+ *
+ * The parent sets: --lw (logo width), --hh (head height), --gap, and --led-colours. Each has a
+ * fallback, so a missing value can never drop the mask and paint the gradient as a solid bar.
+ */
+import { getImage } from 'astro:assets';
+import Logo from './Logo.astro';
+import logoUrl from '../assets/brand/logo-paper.svg?url';
+import head from '../assets/brand/fingerprint-head.png';
+
+interface Props {
+  /** Accessible name; '' when a parent (e.g. a labelled link) already names it. */
+  label?: string;
+  class?: string;
+}
+
+const { label = '', class: className } = Astro.props;
+const headMask = await getImage({ src: head, format: 'webp', width: 240, quality: 82 });
+---
+
+<span
+  class:list={['brand-mark', className]}
+  style={`--logo-mask:url("${logoUrl}");--head-mask:url("${headMask.src}")`}
+>
+  <Logo variant="paper" label={label} class="brand-mark__logo" />
+  <span class="brand-mark__head" aria-hidden="true"></span>
+</span>
+
+<style>
+  .brand-mark {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--gap, 10px);
+    line-height: 0;
+    background: linear-gradient(90deg, var(--led-colours, #cea4ee, #93aee0, #e85e8f, #cea4ee)) 0 0 /
+      720px 100% repeat-x;
+    mask:
+      var(--logo-mask) left center / var(--lw, 120px) auto no-repeat,
+      var(--head-mask) right center / auto 100% no-repeat;
+    animation: logo-led 14s linear infinite;
+  }
+
+  .brand-mark :global(.brand-mark__logo) {
+    width: var(--lw, 120px);
+    min-width: 0;
+  }
+
+  .brand-mark :global(.brand-mark__logo svg) {
+    opacity: 0;
+  }
+
+  .brand-mark__head {
+    flex: none;
+    height: var(--hh, 40px);
+    aspect-ratio: 120 / 172;
+  }
+</style>

@@ -1,11 +1,11 @@
 ---
 /**
- * The fingerprint button fixed to the bottom right of every page, which opens a short cookie
+ * The fingerprint-head button fixed to the bottom right of every page, which opens a short cookie
  * panel. The site sets no cookies, so the panel says so: no switches to flip, nothing to accept.
  * It uses the native popover (no script needed: Esc and clicking outside close it); browsers
  * without popover support follow the button to the cookie policy instead.
  */
-import printMask from '../assets/brand/fingerprint-line.svg?url';
+import HeadMark from './HeadMark.astro';
 import { withBase } from '../config/paths';
 
 const policy = withBase('/cookies/');
@@ -28,7 +28,7 @@ const rows = [
   title="Cookies on this site"
   data-policy={policy}
 >
-  <span class="cookie-fab__print logo-led" style={`--logo-mask:url("${printMask}")`}></span>
+  <HeadMark class="cookie-fab__print" />
 </button>
 
 <div
@@ -108,10 +108,9 @@ const rows = [
   }
 
   /* The print flows through the palette like the footer logo (.logo-led, base.css): the lighter colours, which glow on Ink. */
-  .cookie-fab__print {
+  .cookie-fab :global(.cookie-fab__print) {
     --led-colours: #cea4ee, #93aee0, #4a9bb0, #edd1a8, #f8cea2, #e79569, #e85e8f, #db92db, #cea4ee;
-    width: 28px;
-    aspect-ratio: 1;
+    height: 40px;
   }
 
   .cookie-panel {
