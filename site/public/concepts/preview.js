@@ -20,10 +20,12 @@
 
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  const HERO_DWELL = 4500; // ms on the hero before scrolling
-  const END_DWELL = 1600; // ms at the bottom
-  const SPEED = 0.32; // viewport heights per second, going down
-  const RETURN = 1400; // ms to glide back to the top
+  // ?preview&pace=2 runs the whole loop faster (the /start/ background clip, scripts/record-wall.mjs).
+  const PACE = Math.min(4, Math.max(1, Number(new URLSearchParams(location.search).get('pace')) || 1));
+  const HERO_DWELL = 4500 / PACE; // ms on the hero before scrolling
+  const END_DWELL = 1600 / PACE; // ms at the bottom
+  const SPEED = 0.32 * PACE; // viewport heights per second, going down
+  const RETURN = 1400 / PACE; // ms to glide back to the top
   const REAL_HOLD = 1800; // ms the real cursor keeps control after its last move
 
   let paused = false;

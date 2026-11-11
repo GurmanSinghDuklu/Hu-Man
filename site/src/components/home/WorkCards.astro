@@ -41,16 +41,18 @@ const cards = projects.map((p) => ({ ...p, ...shots[p.id] }));
               <i></i>
               <i></i>
             </span>
-            <Image
-              src={c.src}
-              alt={c.alt}
-              width={640}
-              format="webp"
-              quality={70}
-              loading="lazy"
-              decoding="async"
-              class="card__shot"
-            />
+            <div class="card__pic" data-zoom>
+              <Image
+                src={c.src}
+                alt={c.alt}
+                width={640}
+                format="webp"
+                quality={70}
+                loading="lazy"
+                decoding="async"
+                class="card__shot"
+              />
+            </div>
           </div>
           <h3 class="card__name">{c.name}</h3>
           <p class="card__blurb">
@@ -78,6 +80,10 @@ const cards = projects.map((p) => ({ ...p, ...shots[p.id] }));
     display: grid;
     gap: 2.5rem max(12px, calc(var(--u) * 0.33));
     margin-top: clamp(2rem, calc(var(--u) * 0.75), 4.5rem);
+  }
+
+  .card__pic {
+    line-height: 0;
   }
 
   .card__window {
@@ -137,6 +143,12 @@ const cards = projects.map((p) => ({ ...p, ...shots[p.id] }));
   @media (min-width: 48rem) {
     .cards__list {
       grid-template-columns: repeat(3, 1fr);
+    }
+
+    /* With two projects, the second sits at the right edge (Gurman, 2026-11-10); a third would
+         fill the row as normal. */
+    .card:nth-child(2):last-child {
+      grid-column: 3;
     }
   }
 

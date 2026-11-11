@@ -14,7 +14,7 @@ const { tone = 'on-block' } = Astro.props;
 ---
 
 <div class:list={['method', `method--${tone}`]}>
-  <ol class="method__steps">
+  <ol class="method__steps" data-pin-steps>
     {method.map((s, i) => (
       <li
         class:list={['method__step', `method__step--${s.shape}`]}

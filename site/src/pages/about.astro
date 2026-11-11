@@ -65,7 +65,7 @@ import { mission, rules, promises, founderNote } from '../data/about';
           high-performing software and the kind of care you only get from a person who knows your
           project. AI helps us build faster. People make sure it’s right.
         </p>
-        <ul class="mission__cards">
+        <ul class="mission__cards" data-pin-steps>
           {mission.map((m, i) => (
             <li
               class:list={['mission__card', `fill--${m.style}`, `mission__card--${m.style}`]}
@@ -90,7 +90,7 @@ import { mission, rules, promises, founderNote } from '../data/about';
       <h2 id="rules-title" class="display" data-reveal="lines">
         Four rules we build by.
       </h2>
-      <ul class="rules__cards">
+      <ul class="rules__cards" data-pin-steps>
         {rules.map((r, i) => (
           <li
             class:list={['rule', `rule--${r.style}`]}
@@ -116,7 +116,7 @@ import { mission, rules, promises, founderNote } from '../data/about';
         <br />
         it right.
       </h2>
-      <ol class="promise__list">
+      <ol class="promise__list" data-pin-steps>
         {promises.map((p, i) => (
           <li class="promise__row" data-reveal>
             <span class:list={['promise__icon', `promise__icon--${i + 1}`]} aria-hidden="true">

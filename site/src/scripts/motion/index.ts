@@ -33,6 +33,10 @@ const onFirstInteraction = (fn: () => void): void => {
 
 if (!reduceMotion) {
   whenIdle(async () => {
+    const { startScrollFx } = await import('./scroll-fx');
+    startScrollFx();
+  });
+  whenIdle(async () => {
     const [{ gsap }, { SplitText }] = await Promise.all([import('gsap'), import('gsap/SplitText')]);
     await document.fonts.ready;
     useGsap(gsap, SplitText);
@@ -41,6 +45,21 @@ if (!reduceMotion) {
       startSmoothScroll();
     }
   });
+  if (finePointer) {
+    window.addEventListener(
+      'pointermove',
+      async (e) => {
+        if (e.pointerType !== 'mouse') return;
+        const [{ startCursor }, { startPointerFx }] = await Promise.all([
+          import('./cursor'),
+          import('./pointer-fx'),
+        ]);
+        startCursor();
+        startPointerFx();
+      },
+      { once: true, passive: true },
+    );
+  }
   onFirstInteraction(async () => {
     const { startShaders } = await import('./shaders');
     startShaders();

@@ -80,7 +80,7 @@ const sample = [
         <h2 id="checks-title" class="display display--m" data-reveal="lines">
           Six things AI looks at.
         </h2>
-        <ul class="checks__cards">
+        <ul class="checks__cards" data-pin-steps>
           {checks.map((c, i) => (
             <li
               class:list={['checks__card', `fill--${c.style}`, `checks__card--${c.style}`]}
@@ -108,7 +108,7 @@ const sample = [
           <br />
           list of fixes.
         </h2>
-        <ol class="get__steps">
+        <ol class="get__steps" data-pin-steps>
           <li>
             <strong>Send your website address.</strong> Use the form below. It takes a minute.
           </li>

@@ -86,7 +86,7 @@ import MethodSteps from '../components/sections/MethodSteps.astro';
         <h2 id="bonnet-title" class="display" data-reveal="lines">
           What’s under the bonnet.
         </h2>
-        <ul class="bonnet__cards">
+        <ul class="bonnet__cards" data-pin-steps>
           {bonnet.map((b, i) => (
             <li
               class:list={['bonnet__card', `fill--${b.style}`, `bonnet__card--${b.style}`]}
@@ -116,7 +116,7 @@ import MethodSteps from '../components/sections/MethodSteps.astro';
       <p class="checklist__tag">
         <span class="pill">Human-checked, not just automated</span>
       </p>
-      <ul class="checklist__list">
+      <ul class="checklist__list" data-pin-steps>
         {checklist.map((item) => (
           <li data-reveal>
             <span class="checklist__tick" aria-hidden="true">

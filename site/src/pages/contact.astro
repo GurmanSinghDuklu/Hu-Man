@@ -104,7 +104,7 @@ const tel = `tel:${site.contact.phone.replace(/\s+/g, '')}`;
           <br />
           into the void.
         </h2>
-        <ol class="next__steps">
+        <ol class="next__steps" data-pin-steps>
           {steps.map((step) => (
             <li data-reveal>
               <strong>{step.title}</strong> {step.text}

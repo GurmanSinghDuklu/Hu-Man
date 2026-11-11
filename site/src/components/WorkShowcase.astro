@@ -131,15 +131,15 @@ const pic = (w: Win, width: number) => ({
           )}
         </div>
         <div class="sheet project__windows">
-          <figure class="win win--tall" data-reveal>
+          <figure class="win win--tall" data-reveal="unmask">
             <Image {...pic(tall, 520)} />
             <figcaption>{tall.caption}</figcaption>
           </figure>
-          <figure class="win win--wide" data-reveal style="--reveal-delay:0.06s">
+          <figure class="win win--wide" data-reveal="unmask" style="--reveal-delay:0.06s">
             <Image {...pic(wide, 780)} />
             <figcaption>{wide.caption}</figcaption>
           </figure>
-          <div class="win win--circles" data-reveal style="--reveal-delay:0.12s">
+          <div class="win win--circles" data-reveal="unmask" style="--reveal-delay:0.12s">
             <div class="win__stack">
               <Image {...pic(c1, 420)} class="win__circle" />
               <p class="win__cap">{c1.caption}</p>
@@ -147,7 +147,7 @@ const pic = (w: Win, width: number) => ({
             </div>
             <p class="win__cap">{c2.caption}</p>
           </div>
-          <figure class="win win--narrow" data-reveal style="--reveal-delay:0.18s">
+          <figure class="win win--narrow" data-reveal="unmask" style="--reveal-delay:0.18s">
             <Image {...pic(narrow, 480)} />
             <figcaption>{narrow.caption}</figcaption>
           </figure>

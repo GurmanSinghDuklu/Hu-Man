@@ -59,7 +59,8 @@ const { n } = Astro.props;
       clamp(1.25rem, calc(var(--u) * 0.33), 2rem);
     border-top-right-radius: calc(var(--u) * 2.56);
     color: var(--paper);
-    overflow: hidden;
+    /* clip, not hidden: hidden makes a scroll box, which stops the pinned method steps sticking. */
+    overflow: clip;
   }
 
   .ideas__copy {

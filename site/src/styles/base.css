@@ -438,6 +438,101 @@ ol {
   translate: none;
 }
 
+/* unmask: an image frame opens from the bottom edge up. */
+.js [data-reveal='unmask'] {
+  opacity: 1;
+  translate: none;
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 1.1s cubic-bezier(0.7, 0, 0.2, 1);
+  transition-delay: var(--reveal-delay, 0s);
+}
+
+.js [data-reveal='unmask'].is-in {
+  clip-path: inset(0 0 0 0);
+}
+
+/* ---------- motion: scroll-linked (scripts/motion/scroll-fx.ts sets the variables) ---------- */
+/* [data-zoom]: the picture inside eases from a slight zoom to rest as the frame crosses the view. */
+[data-zoom] {
+  overflow: hidden;
+}
+
+[data-zoom] img {
+  scale: var(--zoom, 1);
+  will-change: scale;
+}
+
+/* Pinned lists ([data-pin-steps]): the runway is made taller by the script, the stage sticks, the
+   items light up in turn. Unlit items keep 72% strength through `filter`, not `opacity`, so the
+   reveal's own opacity never fights it. */
+.pin-runway.is-on .pin-stage {
+  position: sticky;
+}
+
+.pin-bar {
+  display: none;
+}
+
+.pin-runway.is-on .pin-bar {
+  display: block;
+  height: 4px;
+  margin-bottom: max(12px, calc(var(--u) * 0.22));
+  background: linear-gradient(90deg, #4e28df, #e85e8f, #4a9bb0, #ce3d10, #db92db);
+  transform: scaleX(var(--p, 0));
+  transform-origin: left;
+}
+
+.pin-runway.is-on [data-pin-steps] > * {
+  filter: saturate(0.6) opacity(0.72);
+  transition:
+    filter 0.45s var(--ease-out),
+    scale 0.45s var(--ease-out),
+    opacity 0.8s var(--ease-out),
+    translate 0.8s var(--ease-out);
+}
+
+.pin-runway.is-on [data-pin-steps] > .is-lit {
+  filter: none;
+}
+
+.pin-runway.is-on .pin-stage--grid [data-pin-steps] > .is-current {
+  scale: 1.025;
+}
+
+/* The soft light on a tilting card (scripts/motion/pointer-fx.ts), centred on the pointer. */
+.tilt-glare {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  background: radial-gradient(
+    circle at var(--gx, 50%) var(--gy, 50%),
+    rgb(255 255 255 / 0.28),
+    transparent 55%
+  );
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s var(--ease-out);
+}
+
+.tilt-glare.is-on {
+  opacity: 1;
+}
+
+/* A thin line along the top of the window showing how far down the page you are. */
+.scroll-line {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 2147483001;
+  height: 3px;
+  background: linear-gradient(90deg, #4e28df, #e85e8f, #4a9bb0, #ce3d10, #db92db, #4e28df) 0 0 /
+    720px 100% repeat-x;
+  transform: scaleX(var(--progress, 0));
+  transform-origin: left;
+  pointer-events: none;
+  animation: logo-led 14s linear infinite;
+}
+
 /* ---------- motion: gentle loops that keep going while people read ---------- */
 @media (prefers-reduced-motion: no-preference) {
   .amb-spin {
@@ -549,6 +644,48 @@ html.lenis body {
   }
 }
 
+/* The fingerprint that trails the cursor (scripts/motion/cursor.ts). Mid-tone colours, so it reads
+   on Paper and on Ink; a 240px tile (a third of the logo's) so the colour visibly flows through a
+   small print, still seamless as the keyframes move it by 720px. */
+.print-cursor {
+  --led-colours: #4e28df, #e85e8f, #4a9bb0, #ce3d10, #db92db, #4e28df;
+  position: fixed;
+  top: -13px;
+  left: -11px;
+  z-index: 2147483000;
+  width: 22px;
+  height: 26px;
+  background-size: 240px 100%;
+  pointer-events: none;
+  opacity: 0;
+  scale: 0.6;
+  transition:
+    opacity 0.2s,
+    scale 0.25s var(--ease-out);
+}
+
+.print-cursor.is-on {
+  opacity: 0.9;
+  scale: 1;
+}
+
+.print-cursor.is-on.is-over {
+  opacity: 0.45;
+  scale: 1.5;
+}
+
+.print-cursor.is-press {
+  animation:
+    logo-led 14s linear infinite,
+    print-press 0.35s var(--ease-out);
+}
+
+@keyframes print-press {
+  40% {
+    scale: 0.7;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -569,7 +706,8 @@ html.lenis body {
   }
 
   /* The logo's colour flow isn't motion: keep it going. */
-  .logo-led {
+  .logo-led,
+  .brand-mark {
     animation-duration: 14s !important;
     animation-iteration-count: infinite !important;
   }

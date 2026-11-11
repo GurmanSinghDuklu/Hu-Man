@@ -72,7 +72,7 @@ const selfCheck = [
       <h2 id="takes-title" class="display display--m" data-reveal="lines">
         Eight things, done properly.
       </h2>
-      <ol class="takes__list">
+      <ol class="takes__list" data-pin-steps>
         {ingredients.map((item, i) => (
           <li class="takes__item" data-reveal style={`--reveal-delay:${(i % 4) * 0.05}s`}>
             <span class="takes__n">{String(i + 1).padStart(2, '0')}</span>
@@ -106,7 +106,7 @@ const selfCheck = [
           Get my free AI check
         </a>
       </div>
-      <ol class="self__list">
+      <ol class="self__list" data-pin-steps>
         {selfCheck.map((q) => (
           <li>{q}</li>
         ))}
