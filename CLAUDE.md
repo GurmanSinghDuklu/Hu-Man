@@ -489,9 +489,10 @@ following a link closes an open menu; focus returns to the toggle on Esc. `scrol
 
 ## Landing page and site-wide interactivity (2026-11-10, uncommitted)
 - **`/start/`** (noindex landing page for ads and links, rebuilt 2026-11-11 on Shopify's start-page
-  layout): a playlist of three videos in `public/landing/` (all H.264 + AAC, play everywhere), in turn
-  then looping: `reel.mp4` (82 s, 16:9, 20 MB), `portfolio-ad.mp4` (48 s, 9:16 vertical, 13 MB) and
-  `found.mp4` (51 s, 16:9, 25.5 MB, compressed from 143 MB). The list is `playlist` in start.astro; the
+  layout): a playlist of four videos in `public/landing/` (all H.264 + AAC, play everywhere), in turn
+  then looping: `reel.mp4` (82 s, 16:9, 20 MB), `portfolio-seen.mp4` ("Be seen", 28 s, 9:16, 10.4 MB,
+  from 16.8 MB at crf 26), `portfolio-ad.mp4` (48 s, 9:16, 13 MB) and `found.mp4` (51 s, 16:9, 25.5 MB,
+  from 143 MB at crf 27). The list is `playlist` in start.astro; the
   frame takes each video's shape (--ar), so vertical ones show as a tall screen, uncropped (full bleed on
   phones). Compress new videos with `npm run compress-video -- in.mp4 out.mp4 [crf]` (ffmpeg-static,
   dev dependency added 2026-11-11 with approval; crf 27 looked identical to the original for Found).

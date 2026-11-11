@@ -6,9 +6,9 @@
  * the contact form (worker/enquiry.js accepts `service` in place of a message) and is sent in place by
  * scripts/enquiry-form.ts. Noindex: /contact/ is the indexable way in.
  *
- * Three videos play in turn and then start again (public/landing/, all H.264 + AAC): the reel (82 s,
- * 16:9), the portfolio-pages ad (48 s, 9:16 vertical) and "Built to be found" (51 s, 16:9; compressed
- * from 143 MB with `npm run compress-video`). The frame takes each video's own shape (--ar), so a
+ * Four videos play in turn and then start again (public/landing/, all H.264 + AAC): the reel (82 s,
+ * 16:9), the "Be seen" portfolio ad (28 s, 9:16), the portfolio-pages ad (48 s, 9:16) and "Built to
+ * be found" (51 s, 16:9). Big ones were shrunk with `npm run compress-video`. The frame takes each video's own shape (--ar), so a
  * vertical one shows as a tall screen, uncropped. The next video starts loading near the end of the
  * current one. To change the list, edit `playlist` below.
  *
@@ -35,6 +35,12 @@ const year = new Date().getFullYear();
 /** Played in this order, then from the top again. w/h: the video's own size, for the frame shape. */
 const playlist = [
   { src: withBase('/landing/reel.mp4'), w: 1920, h: 1080, label: 'The Hu/man showreel' },
+  {
+    src: withBase('/landing/portfolio-seen.mp4'),
+    w: 1080,
+    h: 1920,
+    label: 'Be seen: portfolio sites by Hu/man, from £156',
+  },
   {
     src: withBase('/landing/portfolio-ad.mp4'),
     w: 1080,
