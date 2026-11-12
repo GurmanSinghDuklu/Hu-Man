@@ -40,6 +40,10 @@ async function run() {
         // 'load', not 'networkidle': /start/ streams a long video, so the network never goes quiet.
         await page.goto(SITE_URL + path, { waitUntil: 'load' });
         await page.waitForTimeout(800);
+        // /contact/'s falling-tiles intro: scan the page it leaves behind, not the cover.
+        await page.waitForFunction(() => !document.querySelector('[data-intro]'), null, {
+          timeout: 15000,
+        });
         // Scroll-reveal content starts at opacity 0 and axe skips invisible
         // elements, so force every reveal on before scanning. Transitions go first, so staggered
         // reveals (up to ~1.6 s) are measured finished, not half faded.

@@ -1,0 +1,86 @@
+---
+/**
+ * The /contact/ intro: the first time someone opens the contact page in a browser session they see
+ * the old contact page (site header and "Talk to a human." hero), it cracks into tiles on the
+ * site's grid, the tiles fall into black, and the landing screen fades in with its video.
+ * Animation: scripts/contact-intro.ts.
+ *
+ * The cover sits in a <template>, so nothing renders until the inline script below stamps it into
+ * the page, before first paint, and only when the intro should play: not on a second contact visit
+ * in the same session (sessionStorage), not under reduced motion, never without JavaScript. That
+ * also keeps it out of <main>, so the Markdown copy and llms-full.txt never see it.
+ * While the class `contact-intro` is on <html> the page cannot scroll. If the animation script
+ * never starts, a failsafe timer uncovers the page after 6 seconds.
+ */
+import SiteHeader from '../SiteHeader.astro';
+import InnerHero from '../InnerHero.astro';
+// Inlined verbatim; astro.config.mjs hashes the same file into the CSP.
+import gate from '../../scripts/inline/contact-intro-gate.js?raw';
+---
+
+<template>
+  <div class="intro" data-intro aria-hidden="true" inert>
+    <div class="intro__page" data-intro-page>
+      <SiteHeader />
+      <InnerHero label="Contact" lens="Lens 09 / Talk to a human" as="div">
+        <Fragment slot="title">
+          Talk to
+          <br />a human.
+        </Fragment>
+        <Fragment slot="lede">
+          Tell us about your website, app or idea. A real person reads every message and replies by
+          email. No sales team, no bots.
+        </Fragment>
+      </InnerHero>
+    </div>
+  </div>
+</template>
+<script is:inline set:html={gate}></script>
+<script>
+  import '../../scripts/contact-intro.ts';
+</script>
+
+<style is:global>
+  /* No scrolling while the intro plays; the gutter stays so nothing shifts when it ends. */
+  html.contact-intro {
+    overflow: hidden;
+    scrollbar-gutter: stable;
+  }
+
+  .intro {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    overflow: hidden;
+    background: #000;
+  }
+
+  .intro__page {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    background: var(--paper);
+  }
+
+  .intro__tiles {
+    position: absolute;
+    inset: 0;
+    visibility: hidden;
+  }
+
+  .intro__tiles.is-ready {
+    visibility: visible;
+  }
+
+  .intro__tile {
+    position: absolute;
+    overflow: hidden;
+    backface-visibility: hidden;
+    will-change: transform, opacity;
+  }
+
+  /* Each tile holds a copy of the page, shifted so the pieces line up into the whole screen. */
+  .intro__tile > .intro__page {
+    inset: auto;
+  }
+</style>

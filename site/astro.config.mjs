@@ -4,6 +4,14 @@ import { productionUrl } from './src/config/domain.ts';
 import { lastModified, pageFile } from './src/lib/lastModified.ts';
 import aiReadable from './src/integrations/ai-readable.mjs';
 import devFolderIndex from './src/integrations/dev-folder-index.mjs';
+import { readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+
+/** CSP hash of a script that a page inlines verbatim (`<script is:inline set:html={…}>`). */
+const inlineHash = (file) =>
+  `sha256-${createHash('sha256')
+    .update(readFileSync(new URL(file, import.meta.url), 'utf8'))
+    .digest('base64')}`;
 
 const base = process.env.SITE_BASE ?? '/';
 
@@ -44,6 +52,10 @@ export default defineConfig({
         "form-action 'self' mailto:",
         'upgrade-insecure-requests',
       ],
+      // Astro hashes the scripts it bundles, not is:inline ones: those are hashed here from their files.
+      scriptDirective: {
+        hashes: [inlineHash('./src/scripts/inline/contact-intro-gate.js')],
+      },
       styleDirective: {
         resources: ["'self'", { resource: "'unsafe-inline'", kind: 'attribute' }],
         // The one <style> Paper Shaders inserts (its canvas defaults, @paper-design/shaders

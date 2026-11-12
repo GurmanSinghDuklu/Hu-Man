@@ -10,6 +10,7 @@
  * Under reduced motion none of them load.
  */
 import { startReveals, useGsap } from './reveals';
+import { introDone } from '../contact-intro-state';
 
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
@@ -33,6 +34,8 @@ const onFirstInteraction = (fn: () => void): void => {
 
 if (!reduceMotion) {
   whenIdle(async () => {
+    // Its first measuring pass is a long task: keep it out of the /contact/ intro.
+    await introDone();
     const { startScrollFx } = await import('./scroll-fx');
     startScrollFx();
   });
@@ -41,6 +44,8 @@ if (!reduceMotion) {
     await document.fonts.ready;
     useGsap(gsap, SplitText);
     if (finePointer) {
+      // Lenis scrolls by script, which `overflow: hidden` doesn't stop: wait for the contact intro.
+      await introDone();
       const { startSmoothScroll } = await import('./smooth');
       startSmoothScroll();
     }

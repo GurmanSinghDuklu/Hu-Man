@@ -21,26 +21,33 @@ const browser = await engine.launch(
 const failures = [];
 const fail = (where, what) => failures.push(`${where}: ${what}`);
 
+/**
+ * The CSP's upgrade-insecure-requests makes WebKit fetch http://localhost files over https, which
+ * this plain-http test server can't answer. Drop that one directive for WebKit here; the live site
+ * is https, so it never applies there.
+ */
+async function fixCsp(page) {
+  if (engine !== webkit) return;
+  await page.route('**/*', async (route) => {
+    const response = await route.fetch();
+    const type = response.headers()['content-type'] ?? '';
+    if (!type.includes('text/html')) return route.fulfill({ response });
+    const body = (await response.text()).replace(/\s*upgrade-insecure-requests;?/, '');
+    return route.fulfill({ response, body });
+  });
+}
+
 for (const path of PAGES) {
   const url = `http://localhost:${PORT}/${path}`;
 
   // Normal motion.
   const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
-  // The CSP's upgrade-insecure-requests makes WebKit fetch http://localhost files over https,
-  // which this plain-http test server can't answer. Drop that one directive for WebKit here; the
-  // live site is https, so it never applies there.
-  if (engine === webkit) {
-    await page.route('**/*', async (route) => {
-      const response = await route.fetch();
-      const type = response.headers()['content-type'] ?? '';
-      if (!type.includes('text/html')) return route.fulfill({ response });
-      const body = (await response.text()).replace(/\s*upgrade-insecure-requests;?/, '');
-      return route.fulfill({ response, body });
-    });
-  }
+  await fixCsp(page);
   const errors = [];
   page.on('console', (m) => m.type() === 'error' && errors.push(m.text()));
   page.on('pageerror', (e) => errors.push(e.message));
+  // Skip /contact/'s first-visit intro here; it has its own checks below.
+  await page.addInitScript(() => sessionStorage.setItem('hm-contact-intro', '1'));
   await page.goto(url, { waitUntil: 'load' });
   await page.evaluate(async () => {
     for (let y = 0; y < document.body.scrollHeight; y += 600) {
@@ -53,8 +60,9 @@ for (const path of PAGES) {
   // The logos' colour flow: the gradient behind each logo mask moves along.
   const logoColours = () =>
     page.evaluate(() =>
-      ['.site-header__brand', '.site-footer__mark'].map((sel) => {
-        const el = document.querySelector(sel);
+      // /contact/ has no site header: its landing screen's logo stands in for the navbar's.
+      [['.site-header__brand', '.lp__mark'], ['.site-footer__mark']].map((sels) => {
+        const el = sels.map((sel) => document.querySelector(sel)).find(Boolean);
         return el ? getComputedStyle(el).backgroundPositionX : '';
       }),
     );
@@ -110,6 +118,57 @@ for (const path of PAGES) {
   if (state.canvases) fail(path || '/', 'reduced motion: shader canvases mounted');
   if (state.lenis) fail(path || '/', 'reduced motion: Lenis is on');
   if (state.hidden) fail(path || '/', `reduced motion: ${state.hidden} reveals still hidden`);
+  await calm.close();
+}
+
+// /contact/'s falling-tiles intro: plays on the first visit only, the page can't scroll until the
+// landing screen shows, then it can, and the video starts. Never under reduced motion.
+{
+  const where = '/contact/ intro';
+  const url = `http://localhost:${PORT}/contact/`;
+  const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+  await fixCsp(page);
+  const errors = [];
+  page.on('console', (m) => m.type() === 'error' && errors.push(m.text()));
+  page.on('pageerror', (e) => errors.push(e.message));
+  await page.goto(url);
+  const started = await page.evaluate(
+    () =>
+      !!document.querySelector('[data-intro]') &&
+      document.documentElement.classList.contains('contact-intro'),
+  );
+  if (!started) fail(where, 'did not start on the first visit');
+  await page.waitForTimeout(1700);
+  if (!(await page.locator('.intro__tile').count())) fail(where, 'no tiles were built');
+  await page.mouse.move(640, 450);
+  await page.mouse.wheel(0, 1500);
+  await page.keyboard.press('PageDown');
+  await page.waitForTimeout(400);
+  if ((await page.evaluate(() => window.scrollY)) !== 0) fail(where, 'the page scrolled during it');
+  const ended = await page
+    .waitForFunction(() => !document.querySelector('[data-intro]'), null, { timeout: 9000 })
+    .then(
+      () => true,
+      () => false,
+    );
+  if (!ended) fail(where, 'the cover never went away');
+  await page.waitForTimeout(600);
+  if (await page.evaluate(() => document.querySelector('video')?.paused ?? true))
+    fail(where, 'the video did not start');
+  await page.mouse.wheel(0, 900);
+  await page.waitForTimeout(1200);
+  if ((await page.evaluate(() => window.scrollY)) === 0) fail(where, 'cannot scroll afterwards');
+  await page.goto(url);
+  if (await page.evaluate(() => !!document.querySelector('[data-intro]')))
+    fail(where, 'played again on a second visit');
+  if (errors.length) fail(where, `console errors: ${errors.join(' | ')}`);
+  await page.close();
+
+  const calm = await browser.newPage({ reducedMotion: 'reduce' });
+  await fixCsp(calm);
+  await calm.goto(url);
+  if (await calm.evaluate(() => !!document.querySelector('[data-intro]')))
+    fail(where, 'played under reduced motion');
   await calm.close();
 }
 

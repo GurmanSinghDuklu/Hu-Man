@@ -1,8 +1,15 @@
 ---
+/**
+ * /contact/: the landing screen (videos, short form) with the full contact content below it, in
+ * the landing's own look: Ink ground, rounded white and dark boxes, pill fields. The first contact
+ * visit in a browser session opens with the falling-tiles intro (components/landing/
+ * ContactIntro.astro): the old contact page breaks into tiles that fall into black, then this
+ * appears. No site header (it is a landing page); the logo links home and the footer has the nav.
+ */
 import BaseLayout from '../layouts/BaseLayout.astro';
-import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
-import InnerHero from '../components/InnerHero.astro';
+import ContactIntro from '../components/landing/ContactIntro.astro';
+import Landing from '../components/landing/Landing.astro';
 import EnquiryForm from '../components/EnquiryForm.astro';
 import Sparkle from '../components/Sparkle.astro';
 import { site } from '../config/site';
@@ -33,161 +40,207 @@ const tel = `tel:${site.contact.phone.replace(/\s+/g, '')}`;
 ---
 
 <BaseLayout page="contact">
-  <SiteHeader slot="header" />
+  <ContactIntro slot="header" />
 
-  <InnerHero label="Contact" lens="Lens 09 / Talk to a human">
-    <Fragment slot="title">
-      Talk to
-      <br />a human.
-    </Fragment>
-    <Fragment slot="lede">
-      Tell us about your website, app or idea. A real person reads every message and replies by
-      email. No sales team, no bots.
-    </Fragment>
-  </InnerHero>
+  <Landing
+    title="Talk to a human."
+    lede="Tell us about your website, app or idea. A real person reads every message and replies by email. No sales team, no bots."
+    via="Contact page"
+    legal={false}
+    tierField
+  />
 
-  <section class="band band--paper-2 contact section" aria-labelledby="contact-title">
-    <div class="sheet contact__sheet">
-      <div class="contact__form">
-        <p class="label">01 / Write to us</p>
-        <h2 id="contact-title" class="display display--s">
-          Send us a message
-        </h2>
-        <EnquiryForm variant="contact" />
+  <div class="cx">
+    <section class="cx__band cx-write" aria-labelledby="contact-title">
+      <div class="sheet cx-write__sheet">
+        <div class="cx-box cx-box--dark">
+          <p class="label cx__label">01 / Write to us</p>
+          <h2 id="contact-title" class="cx__title">
+            Tell us more
+          </h2>
+          <p class="cx__intro">
+            Got more to say than the short form takes? Write as much or as little as you like.
+          </p>
+          <EnquiryForm variant="contact" tone="ink" />
+        </div>
+
+        <aside class="cx-box cx-box--light cx-direct" aria-labelledby="other-title">
+          <h2 id="other-title" class="label">
+            Or reach us directly
+          </h2>
+          <dl>
+            <div>
+              <dt>Email</dt>
+              <dd>
+                <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
+              </dd>
+            </div>
+            <div>
+              <dt>Phone</dt>
+              <dd>
+                <a href={tel}>{site.contact.phone}</a>
+              </dd>
+            </div>
+            <div>
+              <dt>Instagram</dt>
+              <dd>
+                <a href={site.contact.instagram} target="_blank" rel="noopener noreferrer">
+                  @humansoftwareagency<span class="visually-hidden"> (opens in a new tab)</span>
+                </a>
+              </dd>
+            </div>
+            <div>
+              <dt>Where</dt>
+              <dd>
+                {site.location.town}, {site.location.region}. In person across West Yorkshire,
+                remote across the UK and worldwide.
+              </dd>
+            </div>
+          </dl>
+        </aside>
       </div>
+    </section>
 
-      <aside class="contact__other" aria-labelledby="other-title">
-        <h2 id="other-title" class="label">
-          Or reach us directly
+    <section class="cx__band cx-next" aria-labelledby="next-title">
+      <div class="sheet cx-next__sheet">
+        <div>
+          <p class="label cx__label" data-reveal>
+            02 / What happens next
+          </p>
+          <h2 id="next-title" class="cx__title cx__title--big" data-reveal="lines">
+            No forms
+            <br />
+            into the void.
+          </h2>
+          <ol class="cx-next__steps">
+            {steps.map((step) => (
+              <li data-reveal>
+                <strong>{step.title}</strong> {step.text}
+              </li>
+            ))}
+          </ol>
+        </div>
+
+        <aside class="cx-box cx-box--light cx-ready" aria-labelledby="ready-title">
+          <Sparkle class="cx-ready__star" />
+          <h3 id="ready-title">Not ready to talk yet?</h3>
+          <p>
+            Start with a free AI check. Send your website address and a person checks whether AI
+            assistants recommend you, and what to fix. Findings within 48 hours.
+          </p>
+          <a class="pill-btn cx-ready__cta" href={withBase('/free-ai-check/')}>
+            Get your free AI check
+          </a>
+          <p class="cx-ready__or">Or look around first:</p>
+          <ul class="cx-ready__links">
+            {lookAround.map((link) => (
+              <li>
+                <a href={link.href}>{link.label}</a>
+              </li>
+            ))}
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <section class="cx__band cx-faq" aria-labelledby="faq-title">
+      <div class="sheet">
+        <p class="label cx__label">03 / Questions</p>
+        <h2 id="faq-title" class="cx__title">
+          Before you get in touch
         </h2>
-        <dl>
-          <div>
-            <dt>Email</dt>
-            <dd>
-              <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
-            </dd>
-          </div>
-          <div>
-            <dt>Phone</dt>
-            <dd>
-              <a href={tel}>{site.contact.phone}</a>
-            </dd>
-          </div>
-          <div>
-            <dt>Instagram</dt>
-            <dd>
-              <a href={site.contact.instagram} target="_blank" rel="noopener noreferrer">
-                @humansoftwareagency<span class="visually-hidden"> (opens in a new tab)</span>
-              </a>
-            </dd>
-          </div>
-          <div>
-            <dt>Where</dt>
-            <dd>
-              {site.location.town}, {site.location.region}. In person across West Yorkshire, remote
-              across the UK and worldwide.
-            </dd>
-          </div>
+        <dl class="cx-faq__list">
+          {contactFaq.map((item) => (
+            <div class="cx-box cx-box--dark cx-faq__item">
+              <dt>{item.q}</dt>
+              <dd>{item.a}</dd>
+            </div>
+          ))}
         </dl>
-      </aside>
-    </div>
-  </section>
-
-  <section class="band grid next section" aria-labelledby="next-title">
-    <div class="sheet next__sheet">
-      <div>
-        <p class="label" data-reveal>
-          02 / What happens next
-        </p>
-        <h2 id="next-title" class="display display--m" data-reveal="lines">
-          No forms
-          <br />
-          into the void.
-        </h2>
-        <ol class="next__steps" data-pin-steps>
-          {steps.map((step) => (
-            <li data-reveal>
-              <strong>{step.title}</strong> {step.text}
-            </li>
-          ))}
-        </ol>
       </div>
-
-      <aside class="next__card" aria-labelledby="ready-title">
-        <Sparkle class="next__star" />
-        <h3 id="ready-title">Not ready to talk yet?</h3>
-        <p>
-          Start with a free AI check. Send your website address and a person checks whether AI
-          assistants recommend you, and what to fix. Findings within 48 hours.
-        </p>
-        <a class="pill-btn next__cta" href={withBase('/free-ai-check/')}>
-          Get your free AI check
-        </a>
-        <p class="next__or">Or look around first:</p>
-        <ul class="next__links">
-          {lookAround.map((link) => (
-            <li>
-              <a href={link.href}>{link.label}</a>
-            </li>
-          ))}
-        </ul>
-      </aside>
-    </div>
-  </section>
-
-  <section class="band band--paper-2 faq section" aria-labelledby="faq-title">
-    <div class="sheet">
-      <p class="label">03 / Questions</p>
-      <h2 id="faq-title" class="display display--s">
-        Before you get in touch
-      </h2>
-      <dl class="faq__list">
-        {contactFaq.map((item) => (
-          <div class="faq__item">
-            <dt>{item.q}</dt>
-            <dd>{item.a}</dd>
-          </div>
-        ))}
-      </dl>
-    </div>
-  </section>
+    </section>
+  </div>
 
   <SiteFooter slot="footer" />
 </BaseLayout>
 
 <style>
-  .contact__sheet {
-    display: grid;
-    gap: var(--space-6) var(--space-5);
+  /* The landing screen's ground and boxes, carried on down the page. */
+  .cx {
+    background: var(--ink);
+    color: var(--paper);
   }
 
-  .contact__form {
-    display: grid;
-    gap: clamp(1.5rem, calc(var(--u) * 0.4), 2.5rem);
+  .cx__band {
+    padding-block: clamp(2.5rem, 7vw, 5.5rem);
   }
 
-  .contact__other {
-    align-self: start;
-    padding: clamp(1.5rem, calc(var(--u) * 0.4), 2.5rem);
-    border: 1px solid var(--ink);
-    border-top-right-radius: calc(var(--u) * 1.1);
+  .cx__band + .cx__band {
+    padding-top: 0;
+  }
+
+  .cx__label {
+    color: var(--muted-on-ink);
+  }
+
+  .cx__title {
+    margin-top: 0.5rem;
+    font-size: clamp(1.75rem, 4vw, 3rem);
+    line-height: 0.95;
+    text-transform: uppercase;
+  }
+
+  .cx__title--big {
+    font-size: clamp(2.2rem, 6vw, 4.6rem);
+  }
+
+  .cx__intro {
+    max-width: 34rem;
+    margin: 0.75rem 0 1.5rem;
+    color: var(--muted-on-ink);
+    line-height: 1.5;
+  }
+
+  /* The two boxes from the landing screen: white like the pitch, dark like the form. */
+  .cx-box {
+    border-radius: 22px;
+    padding: clamp(1.25rem, 3vw, 2.25rem);
+  }
+
+  .cx-box--light {
     background: var(--paper);
+    color: var(--ink);
   }
 
-  .contact__other dl {
+  .cx-box--dark {
+    border: 1px solid rgb(241 242 236 / 0.16);
+    background: #121410;
+  }
+
+  /* ---------- write to us ---------- */
+  .cx-write__sheet {
+    display: grid;
+    gap: 8px;
+  }
+
+  .cx-direct {
+    align-self: start;
+  }
+
+  .cx-direct dl {
     display: grid;
     gap: 1.1rem;
     margin: 1.25rem 0 0;
   }
 
-  .contact__other dt {
+  .cx-direct dt {
     font: 500 0.75rem/1.3 var(--font-mono);
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--muted);
   }
 
-  .contact__other dd {
+  .cx-direct dd {
     margin: 0.25rem 0 0;
     overflow-wrap: anywhere;
     font-size: 1.05rem;
@@ -195,28 +248,28 @@ const tel = `tel:${site.contact.phone.replace(/\s+/g, '')}`;
   }
 
   /* ---------- what happens next ---------- */
-  .next__sheet {
+  .cx-next__sheet {
     display: grid;
-    gap: var(--space-5);
+    gap: 2rem 8px;
   }
 
-  .next__steps {
+  .cx-next__steps {
     display: grid;
     gap: 1.1rem;
     max-width: 38rem;
-    margin-top: clamp(1.5rem, calc(var(--u) * 0.5), 3rem);
+    margin-top: clamp(1.5rem, 4vw, 2.5rem);
     counter-reset: step;
   }
 
-  .next__steps li {
+  .cx-next__steps li {
     position: relative;
     padding-left: 3.25rem;
-    font-size: clamp(1rem, calc(var(--u) * 0.19), 1.15rem);
+    font-size: clamp(1rem, 1.5vw, 1.15rem);
     line-height: 1.5;
     counter-increment: step;
   }
 
-  .next__steps li::before {
+  .cx-next__steps li::before {
     content: counter(step, decimal-leading-zero);
     position: absolute;
     left: 0;
@@ -226,109 +279,85 @@ const tel = `tel:${site.contact.phone.replace(/\s+/g, '')}`;
     width: 2.25rem;
     aspect-ratio: 1;
     border-radius: 50%;
-    background: var(--ink);
-    color: var(--paper);
+    background: var(--paper);
+    color: var(--ink);
     font: 500 0.75rem var(--font-mono);
   }
 
-  .next__card {
+  .cx-ready {
     align-self: start;
-    padding: clamp(1.5rem, calc(var(--u) * 0.45), 2.5rem);
-    border-top-left-radius: calc(var(--u) * 1.1);
-    background: var(--ink);
-    color: var(--paper);
   }
 
-  .next__card :global(.next__star) {
-    width: clamp(1.1rem, calc(var(--u) * 0.27), 1.6rem);
-    margin-bottom: 1.25rem;
-    fill: var(--lilac);
+  .cx-ready :global(.cx-ready__star) {
+    width: 1.5rem;
+    margin-bottom: 1rem;
+    fill: var(--indigo);
   }
 
-  .next__card h3 {
-    font: 800 clamp(1.35rem, calc(var(--u) * 0.31), 1.9rem) / 1.05 var(--font-display);
+  .cx-ready h3 {
+    font-size: clamp(1.35rem, 2.4vw, 1.9rem);
+    line-height: 1.05;
     text-transform: uppercase;
   }
 
-  .next__card p {
+  .cx-ready p {
     margin-top: 0.75rem;
     line-height: 1.55;
   }
 
-  .next__cta {
+  .cx-ready__cta {
     margin-top: 1.5rem;
-    border-color: var(--paper);
-    background: var(--paper);
-    color: var(--ink);
   }
 
-  .next__cta:hover {
-    border-color: var(--lilac);
-    background: var(--lilac);
-    color: var(--ink);
-  }
-
-  .next__or {
-    color: var(--muted-on-ink);
+  .cx-ready__or {
+    color: var(--muted);
     font-size: 0.9375rem;
   }
 
-  .next__links {
+  .cx-ready__links {
     display: grid;
     gap: 0.35rem;
     margin-top: 0.5rem;
   }
 
-  .next__links a {
-    color: var(--paper);
+  .cx-ready__links a {
     font-weight: 700;
     text-underline-offset: 0.25em;
   }
 
   /* ---------- FAQ ---------- */
-  .faq__list {
+  .cx-faq__list {
     display: grid;
-    gap: 1rem max(16px, calc(var(--u) * 0.33));
-    margin: clamp(2rem, calc(var(--u) * 0.6), 3.5rem) 0 0;
+    gap: 8px;
+    margin: clamp(1.5rem, 4vw, 2.5rem) 0 0;
   }
 
-  .faq__item {
-    padding: clamp(1.25rem, calc(var(--u) * 0.33), 2rem);
-    border: 1px solid var(--ink);
-    border-top-right-radius: calc(var(--u) * 0.72);
-    background: var(--paper);
-  }
-
-  .faq__item dt {
-    font: 800 clamp(1.05rem, calc(var(--u) * 0.22), 1.35rem) / 1.05 var(--font-display);
+  .cx-faq__item dt {
+    font: 800 clamp(1.05rem, 1.6vw, 1.3rem) / 1.05 var(--font-display);
     text-transform: uppercase;
   }
 
-  .faq__item dd {
+  .cx-faq__item dd {
     margin: 0.6rem 0 0;
-    font-size: clamp(0.95rem, calc(var(--u) * 0.17), 1.05rem);
+    color: #d6d7d1;
+    font-size: 1rem;
     line-height: 1.5;
   }
 
   @media (min-width: 48rem) {
-    .faq__list {
-      grid-template-columns: repeat(2, 1fr);
+    .cx-faq__list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 
   @media (min-width: 64rem) {
-    .next__sheet {
-      grid-template-columns: 1fr calc(var(--u) * 5.4);
-      gap: calc(var(--u) * 0.66);
+    .cx-write__sheet {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 24rem);
     }
 
-    .next__card {
-      margin-top: calc(var(--u) * 0.6);
-    }
-
-    .contact__sheet {
-      grid-template-columns: 1fr calc(var(--u) * 4.6);
-      gap: calc(var(--u) * 0.66);
+    .cx-next__sheet {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 24rem);
+      align-items: start;
     }
   }
 </style>

@@ -7,18 +7,20 @@ interface Props {
   lens: string;
   /** The title has a very long word ("recommending"): set it smaller on phones so it fits. */
   longWords?: boolean;
+  /** 'div' for a decorative copy that must not add a second h1 (the /contact/ intro). */
+  as?: 'h1' | 'div';
 }
 
-const { label, lens, longWords = false } = Astro.props;
+const { label, lens, longWords = false, as: Title = 'h1' } = Astro.props;
 ---
 
 <section class="band grid ihero" aria-labelledby="ihero-title">
   <div class="sheet ihero__sheet">
     <div class="ihero__copy">
       <p class="label">{label}</p>
-      <h1 id="ihero-title" class:list={['ihero__title', { 'ihero__title--long': longWords }]}>
+      <Title id="ihero-title" class:list={['ihero__title', { 'ihero__title--long': longWords }]}>
         <slot name="title" />
-      </h1>
+      </Title>
       <p class="ihero__lede">
         <slot name="lede" />
       </p>
@@ -46,9 +48,14 @@ const { label, lens, longWords = false } = Astro.props;
     gap: 1rem;
   }
 
+  /* The h1 look spelled out, so the 'div' version matches it exactly. */
   .ihero__title {
+    font-family: var(--font-display);
     font-size: clamp(2.6rem, 11vw, 5.4rem);
+    font-weight: 800;
     line-height: 0.88;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
   }
 
   /* Up to tablet width, so "recommending" never runs past the screen. */

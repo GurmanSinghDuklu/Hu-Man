@@ -15,9 +15,11 @@ import { tiers, portfolioTiers } from '../data/pricing';
 
 interface Props {
   variant: 'contact' | 'check';
+  /** 'ink': dark, rounded fields like the landing screen's form (the contact page). */
+  tone?: 'paper' | 'ink';
 }
 
-const { variant } = Astro.props;
+const { variant, tone = 'paper' } = Astro.props;
 const mailtoMode = import.meta.env.PUBLIC_FORM_MODE === 'mailto';
 const action = mailtoMode ? `mailto:${site.contact.email}` : withBase('/api/enquiry');
 const id = (name: string) => `${variant}-${name}`;
@@ -25,7 +27,7 @@ const isCheck = variant === 'check';
 ---
 
 <form
-  class="enquiry"
+  class:list={['enquiry', { 'enquiry--ink': tone === 'ink' }]}
   action={action}
   method="post"
   enctype={mailtoMode ? 'text/plain' : 'application/x-www-form-urlencoded'}
@@ -294,6 +296,110 @@ const isCheck = variant === 'check';
     max-width: 30rem;
     color: var(--muted);
     font-size: 0.875rem;
+  }
+
+  /* ---------- ink tone: the landing screen's dark box, pill fields and flowing send button ---------- */
+  .enquiry--ink .enquiry__field label {
+    color: var(--muted-on-ink);
+  }
+
+  .enquiry--ink .enquiry__field label span,
+  .enquiry--ink .enquiry__note {
+    color: var(--muted-on-ink);
+  }
+
+  .enquiry--ink input,
+  .enquiry--ink select,
+  .enquiry--ink textarea {
+    border: 1px solid rgb(241 242 236 / 0.28);
+    border-radius: 999px;
+    background: var(--ink-2);
+    color: var(--paper);
+  }
+
+  .enquiry--ink textarea {
+    border-radius: 18px;
+  }
+
+  .enquiry--ink select {
+    appearance: none;
+    padding-right: 2.75rem;
+    background:
+      linear-gradient(45deg, transparent 50%, var(--paper) 50%) calc(100% - 22px) 50% / 6px 6px
+        no-repeat,
+      linear-gradient(-45deg, transparent 50%, var(--paper) 50%) calc(100% - 16px) 50% / 6px 6px
+        no-repeat,
+      var(--ink-2);
+  }
+
+  .enquiry--ink option,
+  .enquiry--ink optgroup {
+    background: var(--ink-2);
+    color: var(--paper);
+  }
+
+  .enquiry--ink input::placeholder,
+  .enquiry--ink textarea::placeholder {
+    color: var(--muted-on-ink);
+  }
+
+  .enquiry--ink input:focus-visible,
+  .enquiry--ink select:focus-visible,
+  .enquiry--ink textarea:focus-visible {
+    outline-color: var(--lilac);
+  }
+
+  .enquiry--ink [aria-invalid='true'] {
+    border-color: #ff8fb1;
+    box-shadow: inset 0 0 0 1px #ff8fb1;
+  }
+
+  .enquiry--ink .enquiry__error {
+    color: #ff8fb1;
+  }
+
+  .enquiry--ink .enquiry__status {
+    border: 0;
+    border-radius: 18px;
+    background: var(--paper);
+    color: var(--ink);
+  }
+
+  .enquiry--ink .enquiry__note a {
+    color: var(--paper);
+  }
+
+  .enquiry--ink .enquiry__actions .pill-btn {
+    border: 0;
+    border-radius: 999px;
+    background: linear-gradient(
+        90deg,
+        #cea4ee,
+        #93aee0,
+        #edd1a8,
+        #f8cea2,
+        #e79569,
+        #e85e8f,
+        #db92db,
+        #cea4ee
+      )
+      0 0 / 720px 100% repeat-x;
+    color: var(--ink);
+    font: 800 0.9375rem/1 var(--font-display);
+    letter-spacing: 0;
+    text-transform: uppercase;
+    animation: logo-led 14s linear infinite;
+  }
+
+  .enquiry--ink .enquiry__actions .pill-btn:focus-visible {
+    outline: 2px solid var(--paper);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .enquiry--ink .enquiry__actions .pill-btn {
+      animation: none;
+    }
   }
 
   @media (min-width: 48rem) {
