@@ -17,8 +17,7 @@ import { withBase } from '../../config/paths';
       {serviceAreas.map((s, i) => (
         <li
           class:list={['roof__tile', `fill--${s.style}`, `roof__tile--${s.style}`]}
-          data-reveal
-          style={`--reveal-delay:${(i % 3) * 0.08}s`}
+          data-rise={i % 3}
         >
           <span class="roof__n">{String(i + 1).padStart(2, '0')}</span>
           <h3>{s.title}</h3>
@@ -106,17 +105,18 @@ import { withBase } from '../../config/paths';
     }
   }
 
-  /* Hover: the tile lifts and its gradient drifts. */
+  /* Hover: the tile lifts and its gradient drifts. The lift is a transform, so the scroll rise
+     (translate, scale) keeps running under it. */
   .roof__tile {
     background-size: 140% 140%;
     background-position: 0% 0%;
     transition:
-      translate 0.35s var(--ease-out),
+      transform 0.35s var(--ease-out),
       background-position 0.8s var(--ease-out);
   }
 
   .roof__tiles .roof__tile:hover {
-    translate: 0 -8px;
+    transform: translateY(-8px);
     background-position: 100% 100%;
   }
 </style>

@@ -462,6 +462,47 @@ ol {
   will-change: scale;
 }
 
+/* ---------- scroll story (scripts/motion/scroll-story.ts) ---------- */
+
+/* Bands are opaque, so a section sinking under the next one ([data-handoff]) never shows through.
+   Zero specificity: any band's own background wins. */
+:where(main > .band) {
+  background-color: var(--paper);
+}
+
+.handoff-shade {
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+  background: var(--ink);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Statements that darken word by word start from a grey that still passes AA on their band. */
+[data-scrub='words'] {
+  --scrub-from: #696b66;
+}
+
+.band--paper-2 [data-scrub='words'] {
+  --scrub-from: #60625d;
+}
+
+:is(.band--ink, .night, .plum, .fill--ink) [data-scrub='words'] {
+  --scrub-from: #8a8c88;
+}
+
+/* Rising elements: their own translate and scale, so a card's tilt (transform) still applies. */
+[data-rise] {
+  translate: 0 var(--rise-y, 0);
+  scale: var(--rise-s, 1);
+}
+
+/* Line drawings: drawn without JavaScript; the script winds each stroke back and draws it on. */
+[data-draw] [pathLength] {
+  stroke-dasharray: 1;
+}
+
 /* Pinned lists ([data-pin-steps]): the runway is made taller by the script, the stage sticks, the
    items light up in turn. Unlit items keep 72% strength through `filter`, not `opacity`, so the
    reveal's own opacity never fights it. */

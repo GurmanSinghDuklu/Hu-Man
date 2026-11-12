@@ -43,9 +43,15 @@ if (!reduceMotion) {
     const [{ gsap }, { SplitText }] = await Promise.all([import('gsap'), import('gsap/SplitText')]);
     await document.fonts.ready;
     useGsap(gsap, SplitText);
+    // Lenis scrolls by script, which `overflow: hidden` doesn't stop, and the scroll story measures
+    // the page: both wait for the contact intro.
+    await introDone();
+    const [{ ScrollTrigger }, { startScrollStory }] = await Promise.all([
+      import('gsap/ScrollTrigger'),
+      import('./scroll-story'),
+    ]);
+    startScrollStory(gsap, ScrollTrigger, SplitText);
     if (finePointer) {
-      // Lenis scrolls by script, which `overflow: hidden` doesn't stop: wait for the contact intro.
-      await introDone();
       const { startSmoothScroll } = await import('./smooth');
       startSmoothScroll();
     }

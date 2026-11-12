@@ -3,6 +3,7 @@
 import { withBase } from '../../config/paths';
 import { fromPrice } from '../../data/pricing';
 import RingOrb from '../RingOrb.astro';
+import DrawWireframe from '../DrawWireframe.astro';
 
 interface Props {
   n: string;
@@ -22,7 +23,7 @@ const { n } = Astro.props;
         <br />
         as standard.
       </h2>
-      <p class="agent__text" data-reveal>
+      <p class="agent__text" data-reveal data-scrub="words">
         Everything we build is fast, secure and structured so people, search engines and AI agents
         can read it and act on it. It comes as standard on every tier, from {fromPrice}.
       </p>
@@ -35,6 +36,9 @@ const { n } = Astro.props;
       <RingOrb tone="indigo" star class="agent__orb amb-float" />
       <span class="agent__square amb-pulse"></span>
     </div>
+
+    <!-- From a sketch to a page people and AI agents can read: draws itself as you scroll. -->
+    <DrawWireframe class="agent__draw" />
   </div>
 </section>
 
@@ -53,6 +57,11 @@ const { n } = Astro.props;
 
   .agent__link {
     margin-top: clamp(2rem, calc(var(--u) * 1.05), 6rem);
+  }
+
+  .agent__sheet > :global(.agent__draw) {
+    grid-column: 1 / -1;
+    margin-top: clamp(1.5rem, calc(var(--u) * 0.6), 3.5rem);
   }
 
   .agent__art {

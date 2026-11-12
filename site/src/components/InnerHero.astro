@@ -14,7 +14,7 @@ interface Props {
 const { label, lens, longWords = false, as: Title = 'h1' } = Astro.props;
 ---
 
-<section class="band grid ihero" aria-labelledby="ihero-title">
+<section class="band grid ihero" data-handoff aria-labelledby="ihero-title">
   <div class="sheet ihero__sheet">
     <div class="ihero__copy">
       <p class="label">{label}</p>

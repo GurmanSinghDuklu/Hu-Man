@@ -11,7 +11,7 @@ import { withBase } from '../config/paths';
 
 <ul class="hcards">
   {tiers.map((c, i) => (
-    <li class:list={['hcard', `hcard--${c.id}`]} data-reveal style={`--reveal-delay:${i * 0.08}s`}>
+    <li class:list={['hcard', `hcard--${c.id}`]} data-rise={i % 5}>
       <p class="hcard__name">
         {c.name}
         {c.tag && <span class="hcard__tag">{c.tag}</span>}
