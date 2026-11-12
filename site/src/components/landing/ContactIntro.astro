@@ -2,7 +2,8 @@
 /**
  * The /contact/ intro: the first time someone opens the contact page in a browser session they see
  * the old contact page (site header and "Talk to a human." hero), it cracks into tiles on the
- * site's grid, the tiles fall into black, and the landing screen fades in with its video.
+ * site's grid, the tiles fall into black, and after a beat of black the landing switches on like
+ * an old TV, with its video playing. A Skip intro button (and Esc, Enter or a click) ends it early.
  * Animation: scripts/contact-intro.ts.
  *
  * The cover sits in a <template>, so nothing renders until the inline script below stamps it into
@@ -19,8 +20,8 @@ import gate from '../../scripts/inline/contact-intro-gate.js?raw';
 ---
 
 <template>
-  <div class="intro" data-intro aria-hidden="true" inert>
-    <div class="intro__page" data-intro-page>
+  <div class="intro" data-intro>
+    <div class="intro__page" data-intro-page aria-hidden="true" inert>
       <SiteHeader />
       <InnerHero label="Contact" lens="Lens 09 / Talk to a human" as="div">
         <Fragment slot="title">
@@ -33,6 +34,11 @@ import gate from '../../scripts/inline/contact-intro-gate.js?raw';
         </Fragment>
       </InnerHero>
     </div>
+    <!-- The old-TV switch-on's light: a full-screen white layer, scaled to a dot, then a line. -->
+    <div class="intro__beam" data-intro-beam aria-hidden="true"></div>
+    <button class="intro__skip" type="button" data-intro-skip>
+      Skip intro
+    </button>
   </div>
 </template>
 <script is:inline set:html={gate}></script>
@@ -55,6 +61,58 @@ import gate from '../../scripts/inline/contact-intro-gate.js?raw';
     background: #000;
   }
 
+  /* The TV switching on: the cover turns see-through and the page behind it goes black, so the
+     landing (squashed to a line) can open up under the beam. */
+  .intro.is-on {
+    background: transparent;
+  }
+
+  html.crt-on,
+  html.crt-on body {
+    background: #000;
+  }
+
+  html.crt-on .cookie-fab {
+    visibility: hidden;
+  }
+
+  .intro__beam {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: #fff;
+    opacity: 0;
+    pointer-events: none;
+    will-change: transform, opacity;
+  }
+
+  .intro__skip {
+    position: absolute;
+    right: clamp(16px, 3vw, 40px);
+    bottom: clamp(16px, 4svh, 40px);
+    z-index: 3;
+    min-height: 40px;
+    padding: 0 16px;
+    border: 1px solid rgb(241 242 236 / 0.6);
+    border-radius: 999px;
+    background: var(--ink);
+    color: var(--paper);
+    font: 500 0.6875rem/1 var(--font-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  .intro__skip:hover,
+  .intro__skip:focus-visible {
+    border-color: var(--paper);
+  }
+
+  .intro__skip:focus-visible {
+    outline: 2px solid var(--lilac);
+    outline-offset: 3px;
+  }
+
   .intro__page {
     position: absolute;
     inset: 0;
@@ -65,6 +123,7 @@ import gate from '../../scripts/inline/contact-intro-gate.js?raw';
   .intro__tiles {
     position: absolute;
     inset: 0;
+    z-index: 1;
     visibility: hidden;
   }
 

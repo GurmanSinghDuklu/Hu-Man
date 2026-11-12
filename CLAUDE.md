@@ -553,7 +553,9 @@ Spec `docs/superpowers/specs/2026-11-12-contact-landing-design.md`. /contact/ is
 (`components/landing/Landing.astro`, shared with /start/; behaviour in `scripts/landing.ts`) with the full
 contact form, direct details, "What happens next", AI check card and FAQ below in the landing's look, then
 the footer. No site header. The first contact visit in a browser session opens with the old contact page
-breaking into tiles that fall into black (`ContactIntro.astro`, `scripts/contact-intro.ts`). Things worth knowing:
+breaking into tiles that fall into black, 1.6 s of black, then the landing switching on like an old TV
+(dot, bright line, picture springing open under a fading flash; no static), with a Skip intro button
+(`ContactIntro.astro`, `scripts/contact-intro.ts`). Things worth knowing:
 1. **`is:inline` scripts are not hashed into the CSP by Astro.** The intro's gate script lives in
    `src/scripts/inline/` and `astro.config.mjs` hashes that file (`inlineHash`); inline it verbatim with
    `set:html`. BaseLayout's `.js` class script is blocked for this reason on every page (pre-existing,
@@ -564,7 +566,11 @@ breaking into tiles that fall into black (`ContactIntro.astro`, `scripts/contact
 3. **Each tile is a live copy of the cover**, so the tile count is capped (48, 32 on phones) and tiles are
    built a row per frame during the hold; one big build cost Lighthouse 20 points.
 4. The cover's hero is `<InnerHero as="div">`: an h1 inside the `<template>` still counts for seo-check.
-5. Tests: `motion-check` has intro checks; `axe` waits for the cover to go. Pass
+5. **Two events**: `screenOn()` (the TV moment: the video starts) and `introDone()` (scroll unlocks;
+   Lenis and scroll-fx start). Fallen tiles are set to `display: none` before the black.
+6. **Software GL crawls through the intro** (about a frame a second; GSAP stretches the timeline to
+   match), so motion-check runs the intro checks in a normal Chromium, not its swiftshader one.
+7. Tests: `motion-check` has intro checks; `axe` waits for the cover to go. Pass
    `sessionStorage.setItem('hm-contact-intro', '1')` in an init script to skip it.
 Lighthouse /contact/ 95 (intro included), /start/ 99, home 96; axe 0 violations; motion-check clear in
 Chromium, WebKit and Firefox.

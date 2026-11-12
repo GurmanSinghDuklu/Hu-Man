@@ -1,10 +1,10 @@
 /**
  * The landing page's video, playlist, sound and fold button (components/landing/Landing.astro,
- * used by /start/ and /contact/). On /contact/ the falling-tiles intro (contact-intro.ts) may be
- * covering the page: the video then waits for its `hm:intro-done` event before it starts.
+ * used by /start/ and /contact/). On /contact/ the intro (contact-intro.ts) may be covering the
+ * page: the video then waits for its old-TV switch-on (`screenOn()`) before it starts.
  */
 import './enquiry-form.ts';
-import { introDone } from './contact-intro-state';
+import { screenOn } from './contact-intro-state';
 
 const video = document.querySelector<HTMLVideoElement>('[data-lp-video]');
 const playBtn = document.querySelector<HTMLButtonElement>('[data-lp-play]');
@@ -136,8 +136,8 @@ if (video && playBtn && soundBtn) {
     showPlaying();
     showSound();
   } else {
-    // On /contact/ the falling-tiles intro may still be covering the page: start once it is gone.
-    void introDone().then(start);
+    // On /contact/ the intro may still be playing: start as its old-TV switch-on begins.
+    void screenOn().then(start);
   }
 }
 

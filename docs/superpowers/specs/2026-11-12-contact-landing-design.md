@@ -9,7 +9,10 @@ Date: 2026-11-12. Branch `contact-landing`. Approved in chat by Gurman ("build")
 2. After about 1.3 s from the start of the load it cracks into square tiles on the site grid (2 units on
    desktop, 1 below; at most 48 tiles, 32 on phones), shudders, and the tiles fall into black from the
    centre outwards.
-3. A beat of black, then the landing screen fades in and its video starts. Scrolling unlocks.
+3. 1.6 s of black, then the landing switches on like an old TV (Gurman, 2026-11-12, "without the fuzz"):
+   a dot of light, stretched into a thin bright line, then the picture springs open from it, overshooting
+   a touch, under a white flash that fades fast. The video starts as it opens; scrolling unlocks after.
+   A "Skip intro" button shows while it plays (the intro runs about 6.5 s).
 4. Below the video: the full contact form ("Tell us more"), "Or reach us directly", "What happens
    next", the free AI check card and the contact FAQ, in the landing's look (Ink ground, 22px rounded
    white and dark boxes, pill fields, flowing send button), then the site footer.

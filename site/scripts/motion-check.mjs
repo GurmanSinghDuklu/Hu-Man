@@ -122,11 +122,15 @@ for (const path of PAGES) {
 }
 
 // /contact/'s falling-tiles intro: plays on the first visit only, the page can't scroll until the
-// landing screen shows, then it can, and the video starts. Never under reduced motion.
+// landing screen shows, then it can, and the video starts. Never under reduced motion. A Skip
+// intro button is there while it plays.
 {
   const where = '/contact/ intro';
   const url = `http://localhost:${PORT}/contact/`;
-  const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+  // Its own browser on normal rendering: the software GL the shaders need above runs this intro
+  // (a playing video and 48 page copies) at about one frame a second, which GSAP slows to match.
+  const introBrowser = engine === chromium ? await chromium.launch() : browser;
+  const page = await introBrowser.newPage({ viewport: { width: 1280, height: 900 } });
   await fixCsp(page);
   const errors = [];
   page.on('console', (m) => m.type() === 'error' && errors.push(m.text()));
@@ -140,13 +144,14 @@ for (const path of PAGES) {
   if (!started) fail(where, 'did not start on the first visit');
   await page.waitForTimeout(1700);
   if (!(await page.locator('.intro__tile').count())) fail(where, 'no tiles were built');
+  if (!(await page.locator('[data-intro-skip]').isVisible())) fail(where, 'no Skip intro button');
   await page.mouse.move(640, 450);
   await page.mouse.wheel(0, 1500);
   await page.keyboard.press('PageDown');
   await page.waitForTimeout(400);
   if ((await page.evaluate(() => window.scrollY)) !== 0) fail(where, 'the page scrolled during it');
   const ended = await page
-    .waitForFunction(() => !document.querySelector('[data-intro]'), null, { timeout: 9000 })
+    .waitForFunction(() => !document.querySelector('[data-intro]'), null, { timeout: 12000 })
     .then(
       () => true,
       () => false,
@@ -164,12 +169,13 @@ for (const path of PAGES) {
   if (errors.length) fail(where, `console errors: ${errors.join(' | ')}`);
   await page.close();
 
-  const calm = await browser.newPage({ reducedMotion: 'reduce' });
+  const calm = await introBrowser.newPage({ reducedMotion: 'reduce' });
   await fixCsp(calm);
   await calm.goto(url);
   if (await calm.evaluate(() => !!document.querySelector('[data-intro]')))
     fail(where, 'played under reduced motion');
   await calm.close();
+  if (introBrowser !== browser) await introBrowser.close();
 }
 
 await browser.close();

@@ -1,7 +1,8 @@
 /**
  * The /contact/ intro (components/landing/ContactIntro.astro): the contact page holds for a moment,
- * cracks into tiles on the site's grid, the tiles fall into black, then the landing screen fades in
- * and its video starts. Only transform and opacity move. Scrolling stays locked until the landing
+ * cracks into tiles on the site's grid, the tiles fall into black, the screen stays black for a
+ * beat, then the landing switches on like an old TV (a dot, a bright line, the picture springing
+ * open from it) and its video starts. Only transform and opacity move. Scrolling stays locked until the landing
  * shows; a click, Escape or Enter skips straight to it (a swipe or wheel does nothing).
  *
  * Each tile is a live copy of the cover page, shifted into place, so the pieces look exactly like
@@ -9,7 +10,7 @@
  * flowing logo, the collage) are frozen at the same moment as the original, so the seams never
  * show a jump.
  */
-import { INTRO_CLASS, INTRO_DONE, introPlaying } from './contact-intro-state';
+import { INTRO_CLASS, INTRO_DONE, INTRO_ON, introPlaying } from './contact-intro-state';
 
 const root = document.documentElement;
 const cover = document.querySelector<HTMLElement>('[data-intro]');
@@ -17,6 +18,8 @@ const page = cover?.querySelector<HTMLElement>('[data-intro-page]');
 
 /** How long the contact page shows before it breaks, counted from the start of the page load. */
 const HOLD_MS = 1300;
+/** Seconds of black between the last tile falling and the TV switching on. */
+const BLACK = 1.6;
 /** Tiles at most (each is a copy of the page): fewer on phones, which have less to spare. */
 const maxTiles = (width: number) => (width < 640 ? 32 : 48);
 
@@ -44,30 +47,33 @@ async function play(cover: HTMLElement, page: HTMLElement): Promise<void> {
   window.addEventListener('keydown', stopKeys);
   window.addEventListener('click', skip);
 
-  let revealed = false;
+  let on = false;
   let finished = false;
   let timeline: gsap.core.Timeline | null = null;
 
-  /** The landing is showing: unlock scrolling and start the video (scripts/landing.ts). */
-  function reveal(): void {
-    if (revealed) return;
-    revealed = true;
+  /** The TV switches on: the landing shows through and its video starts (scripts/landing.ts). */
+  function switchOn(): void {
+    if (on) return;
+    on = true;
+    root.classList.add('crt-on');
+    cover.classList.add('is-on');
+    if (main) main.inert = false;
+    window.dispatchEvent(new Event(INTRO_ON));
+  }
+
+  /** The intro is over: unlock scrolling and let Lenis and the scroll effects start. */
+  function finish(): void {
+    if (finished) return;
+    finished = true;
+    switchOn();
     window.removeEventListener('wheel', stopScroll);
     window.removeEventListener('touchmove', stopScroll);
     window.removeEventListener('keydown', stopKeys);
     window.removeEventListener('click', skip);
-    root.classList.remove(INTRO_CLASS);
-    if (main) main.inert = false;
-    cover.style.pointerEvents = 'none';
-    window.dispatchEvent(new Event(INTRO_DONE));
-  }
-
-  function finish(): void {
-    if (finished) return;
-    finished = true;
-    reveal();
+    root.classList.remove(INTRO_CLASS, 'crt-on');
     cover.remove();
     delete root.dataset.introRunning;
+    window.dispatchEvent(new Event(INTRO_DONE));
   }
 
   function skip(): void {
@@ -86,7 +92,7 @@ async function play(cover: HTMLElement, page: HTMLElement): Promise<void> {
     if (finished) return;
     await showTiles(page, tiles);
     if (finished) return;
-    timeline = animate(gsap, tiles, cover, reveal, finish);
+    timeline = animate(gsap, tiles, cover, switchOn, finish);
   } catch {
     finish();
   }
@@ -184,7 +190,7 @@ function animate(
   gsap: typeof import('gsap').gsap,
   { els, cols, rows, size, height }: Tiles,
   cover: HTMLElement,
-  reveal: () => void,
+  switchOn: () => void,
   finish: () => void,
 ): gsap.core.Timeline {
   const random = gsap.utils.random;
@@ -199,13 +205,7 @@ function animate(
   });
   const lastDrop = Math.max(...delays);
 
-  // The landing pieces start just below and transparent, under the black, then rise in.
-  const landing = ['.lp__brand', '.lp__video', '.lp__boxes', '.lp__corner']
-    .map((s) => document.querySelector<HTMLElement>(s))
-    .filter((el): el is HTMLElement => el !== null);
-
   const tl = gsap.timeline({ onComplete: finish });
-  tl.set(landing, { opacity: 0, y: 24 });
 
   // 1. Crack: every tile shrinks a hair, so black seams open along the grid, and twitches.
   tl.to(els, {
@@ -254,22 +254,58 @@ function animate(
     fall,
   );
 
-  // 4. A beat of black, then the landing fades in and its video starts.
-  const show = 'show';
-  tl.addLabel(show, `${fall}+=${lastDrop + 1.15}`);
-  tl.call(reveal, [], show);
-  tl.to(cover, { opacity: 0, duration: 0.7, ease: 'power2.out' }, show);
-  tl.to(
-    landing,
-    {
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-      ease: 'power3.out',
-      stagger: 0.08,
-      clearProps: 'opacity,transform',
-    },
-    `${show}+=0.1`,
-  );
+  // 4. Black for a beat or two, then the TV switches on.
+  const tv = 'tv';
+  const fallen = `${fall}+=${lastDrop + 1.3}`;
+  // Every tile is off the screen by now: drop them, so the black and the switch-on cost nothing.
+  tl.set(els, { display: 'none' }, fallen);
+  tl.addLabel(tv, `${fallen}+=${BLACK}`);
+  switchOnTv(gsap, tl, tv, cover, switchOn);
   return tl;
+}
+
+/**
+ * The old-TV switch-on, without the static: a dot of light in the middle of the black, stretched
+ * into a thin bright line, then the picture (the landing screen, squashed to that line) springs
+ * open top and bottom under a white flash that fades as it settles. The white beam is one
+ * full-screen element scaled down, so only transform and opacity change.
+ */
+function switchOnTv(
+  gsap: typeof import('gsap').gsap,
+  tl: gsap.core.Timeline,
+  at: string,
+  cover: HTMLElement,
+  switchOn: () => void,
+): void {
+  const screen = document.querySelector<HTMLElement>('.lp');
+  const beam = cover.querySelector<HTMLElement>('[data-intro-beam]');
+  const skipButton = cover.querySelector<HTMLElement>('[data-intro-skip]');
+  const height = window.innerHeight;
+  const line = 3 / height; // the bright line, about 3px tall
+  const dot = 8 / window.innerWidth; // the first dot, about 8px wide
+
+  if (skipButton) tl.to(skipButton, { opacity: 0, duration: 0.3 }, `${at}-=0.4`);
+  if (!screen || !beam) {
+    tl.call(switchOn, [], at);
+    return;
+  }
+
+  // The picture waits squashed to a line in the middle of the window, out of sight.
+  tl.set(screen, { scaleY: 0.004, opacity: 0, transformOrigin: `50% ${height / 2}px` }, at);
+  // A dot of light, then the line stretching out to both edges.
+  tl.fromTo(
+    beam,
+    { scaleX: dot, scaleY: line, opacity: 0 },
+    { opacity: 1, duration: 0.08, ease: 'none' },
+    at,
+  );
+  tl.to(beam, { scaleX: 1, duration: 0.24, ease: 'power4.out' }, `${at}+=0.16`);
+  // The picture opens from the line, overshooting a touch the way old tubes did, under a flash.
+  const open = `${at}+=0.5`;
+  tl.call(switchOn, [], open);
+  tl.to(screen, { opacity: 1, duration: 0.05, ease: 'none' }, open);
+  tl.to(screen, { scaleY: 1, duration: 0.55, ease: 'back.out(1.6)', clearProps: 'all' }, open);
+  // The flash opens with the picture but fades fast, so the picture is seen springing open.
+  tl.to(beam, { scaleY: 0.6, duration: 0.4, ease: 'expo.out' }, open);
+  tl.fromTo(beam, { opacity: 1 }, { opacity: 0, duration: 0.32, ease: 'power3.out' }, open);
 }
