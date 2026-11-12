@@ -494,7 +494,7 @@ following a link closes an open menu; focus returns to the toggle on Esc. `scrol
   order (2026-11-11) then looping: `portfolio-seen.mp4` ("Be seen", 28 s, 9:16, 10.4 MB, from 16.8 MB at
   crf 26), `found.mp4` (51 s, 16:9, 25.5 MB, from 143 MB at crf 27), `reel.mp4` (82 s, 16:9, 20 MB) and
   `portfolio-ad.mp4` (48 s, 9:16, 13 MB). The poster is playlist[0]'s first frame
-  (`src/assets/landing/seen-poster.jpg`): recapture it if the first video changes. The list is `playlist` in start.astro; the
+  (`src/assets/landing/seen-poster.jpg`): recapture it if the first video changes. The list is `playlist` in `components/landing/Landing.astro` (shared with /contact/); the
   frame takes each video's shape (--ar), so vertical ones show as a tall screen, uncropped (full bleed on
   phones). Compress new videos with `npm run compress-video -- in.mp4 out.mp4 [crf]` (ffmpeg-static,
   dev dependency added 2026-11-11 with approval; crf 27 looked identical to the original for Found).
@@ -547,3 +547,24 @@ following a link closes an open menu; focus returns to the toggle on Esc. `scrol
   --led-colours. The footer's is `.site-footer__mark` (`.site-footer__brand` is the footer column).
   The cookie button uses `HeadMark.astro` alone. If a vector or higher-resolution original turns up,
   swap the PNG. `npm run motion-check` now works on Windows (it used URL.pathname, so every page 404'd).
+
+## Contact page = landing page, falling-tiles intro (2026-11-12, branch `contact-landing`)
+Spec `docs/superpowers/specs/2026-11-12-contact-landing-design.md`. /contact/ is now the landing screen
+(`components/landing/Landing.astro`, shared with /start/; behaviour in `scripts/landing.ts`) with the full
+contact form, direct details, "What happens next", AI check card and FAQ below in the landing's look, then
+the footer. No site header. The first contact visit in a browser session opens with the old contact page
+breaking into tiles that fall into black (`ContactIntro.astro`, `scripts/contact-intro.ts`). Things worth knowing:
+1. **`is:inline` scripts are not hashed into the CSP by Astro.** The intro's gate script lives in
+   `src/scripts/inline/` and `astro.config.mjs` hashes that file (`inlineHash`); inline it verbatim with
+   `set:html`. BaseLayout's `.js` class script is blocked for this reason on every page (pre-existing,
+   harmless: reveals.ts adds the class).
+2. **Scripts that scroll or measure wait for `introDone()`** (`scripts/contact-intro-state.ts`): the
+   landing video, Lenis (it scrolls by script, which `overflow: hidden` doesn't stop) and scroll-fx (its
+   first pass was a 250 ms long task during the intro).
+3. **Each tile is a live copy of the cover**, so the tile count is capped (48, 32 on phones) and tiles are
+   built a row per frame during the hold; one big build cost Lighthouse 20 points.
+4. The cover's hero is `<InnerHero as="div">`: an h1 inside the `<template>` still counts for seo-check.
+5. Tests: `motion-check` has intro checks; `axe` waits for the cover to go. Pass
+   `sessionStorage.setItem('hm-contact-intro', '1')` in an init script to skip it.
+Lighthouse /contact/ 95 (intro included), /start/ 99, home 96; axe 0 violations; motion-check clear in
+Chromium, WebKit and Firefox.
