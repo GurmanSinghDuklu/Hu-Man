@@ -1,16 +1,17 @@
 ---
 /** "Talk to a human": the banner that closes most pages (id="audit"). */
 import { withBase } from '../config/paths';
-import Sparkle from './Sparkle.astro';
 import BookingLink from './BookingLink.astro';
+import Clip from './Clip.astro';
 ---
 
 <section class="band talk-band" id="audit" aria-labelledby="audit-title">
   <div class="sheet">
     <div class="talk" data-reveal>
       <span class="shader-layer" data-shader="talk" aria-hidden="true"></span>
+      <!-- The human you'll talk to: our fingerprint head, in a paper ring (from our reel). -->
       <span class="talk__orb" aria-hidden="true">
-        <Sparkle class="talk__star amb-spin" color="var(--ink)" />
+        <Clip id="head" fill sizes="(min-width: 64rem) 16vw, 8rem" />
       </span>
       <div class="talk__copy">
         <p class="label">Free call · No obligation</p>
@@ -56,13 +57,12 @@ import BookingLink from './BookingLink.astro';
     display: grid;
     place-items: center;
     width: clamp(7rem, calc(var(--u) * 2.66), 16rem);
+    position: relative;
+    overflow: hidden;
     aspect-ratio: 1;
+    border: clamp(5px, calc(var(--u) * 0.08), 8px) solid var(--paper);
     border-radius: 50%;
     background: var(--paper);
-  }
-
-  .talk__orb :global(.talk__star) {
-    width: 30%;
   }
 
   .talk__copy {

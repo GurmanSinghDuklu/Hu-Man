@@ -5,6 +5,7 @@
  * it takes, Draft copy (2026-10-26) for Gurman's sign-off.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Clip from '../components/Clip.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import InnerHero from '../components/InnerHero.astro';
@@ -47,6 +48,10 @@ const selfCheck = [
           <h2 id="why-title" class="display display--m" data-reveal="lines">
             Customers are asking AI first.
           </h2>
+          <!-- Your site at the centre, reached by Google, AI search and AI agents (from our reel). -->
+          <div class="why__clip" data-reveal>
+            <Clip id="constellation" sizes="(min-width: 64rem) 34vw, 100vw" />
+          </div>
         </div>
         <div class="why__text" data-reveal data-scrub="words">
           <p>
@@ -137,6 +142,14 @@ const selfCheck = [
 </BaseLayout>
 
 <style>
+  .why__clip {
+    max-width: 30rem;
+    margin-top: clamp(1.5rem, calc(var(--u) * 0.5), 3rem);
+    overflow: hidden;
+    border: 1px solid rgb(241 242 236 / 0.25);
+    border-radius: 18px;
+  }
+
   /* ---------- why ---------- */
   .why .label,
   .why .display,

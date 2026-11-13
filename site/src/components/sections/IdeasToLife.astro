@@ -7,6 +7,7 @@ import Sparkle from '../Sparkle.astro';
 import Arrow from '../Arrow.astro';
 import BookingLink from '../BookingLink.astro';
 import MethodSteps from './MethodSteps.astro';
+import Clip from '../Clip.astro';
 
 interface Props {
   n: string;
@@ -38,6 +39,11 @@ const { n } = Astro.props;
         <BookingLink class="pill-btn ideas__btn" data-reveal>
           Book a free 1-hour call <Arrow class="ideas__arrow" />
         </BookingLink>
+      </div>
+
+      <!-- Every business begins as an idea: two people talking one through (from our reel). -->
+      <div class="ideas__clip" data-reveal>
+        <Clip id="cafe" sizes="(min-width: 64rem) 62vw, 100vw" />
       </div>
 
       <MethodSteps />
@@ -99,6 +105,11 @@ const { n } = Astro.props;
     width: 0.9rem;
   }
 
+  .ideas__clip {
+    overflow: hidden;
+    border-radius: 18px;
+  }
+
   /* The two thin rings and the star, top right. */
   .ideas__rings {
     display: none;
@@ -130,6 +141,13 @@ const { n } = Astro.props;
       min-height: calc(var(--u) * 0.56);
       padding: 0 calc(var(--u) * 0.33);
       font-size: calc(var(--u) * 0.135);
+    }
+
+    /* A wide pill-ended window under the copy, left of the rings. */
+    .ideas__clip {
+      width: calc(var(--u) * 10);
+      margin-left: calc(var(--u) * 0.33);
+      border-radius: calc(var(--u) * 1.45);
     }
 
     .ideas__rings {

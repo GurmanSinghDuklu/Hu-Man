@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Clip from '../components/Clip.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import InnerHero from '../components/InnerHero.astro';
@@ -39,6 +40,10 @@ import { mission, rules, promises, founderNote } from '../data/about';
         <h2 id="founder-title" class="display display--m" data-reveal="lines">
           {founderNote.title}
         </h2>
+        <!-- Planned by hand before it's built: a map being drawn (a still from our reel). -->
+        <div class="founder__clip" data-reveal>
+          <Clip id="map" sizes="(min-width: 64rem) 34vw, 100vw" />
+        </div>
       </div>
       <div class="founder__body" data-reveal>
         {founderNote.lines.map((line) => (
@@ -65,6 +70,10 @@ import { mission, rules, promises, founderNote } from '../data/about';
           high-performing software and the kind of care you only get from a person who knows your
           project. AI helps us build faster. People make sure it’s right.
         </p>
+        <!-- Work that outlasts the algorithm: hills at sunrise (from our reel). -->
+        <div class="mission__clip" data-reveal>
+          <Clip id="tuscany" sizes="100vw" />
+        </div>
         <ul class="mission__cards" data-pin-steps>
           {mission.map((m, i) => (
             <li
@@ -174,6 +183,19 @@ import { mission, rules, promises, founderNote } from '../data/about';
 </BaseLayout>
 
 <style>
+  .founder__clip {
+    max-width: 34rem;
+    margin-top: clamp(1.5rem, calc(var(--u) * 0.5), 3rem);
+    overflow: hidden;
+    border-radius: 18px;
+  }
+
+  .mission__clip {
+    margin-top: clamp(2rem, calc(var(--u) * 0.6), 3.5rem);
+    overflow: hidden;
+    border-radius: clamp(18px, calc(var(--u) * 1.1), 120px);
+  }
+
   /* ---------- founder ---------- */
   .founder__sheet {
     display: grid;

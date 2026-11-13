@@ -574,3 +574,18 @@ breaking into tiles that fall into black, 1.6 s of black, then the landing switc
    `sessionStorage.setItem('hm-contact-intro', '1')` in an init script to skip it.
 Lighthouse /contact/ 95 (intro included), /start/ 99, home 96; axe 0 violations; motion-check clear in
 Chromium, WebKit and Firefox.
+
+## Scroll story, 3D projects and reel footage (2026-11-12/13, branch `scroll-story`)
+- **Scroll story** (`scripts/motion/scroll-story.ts`): hanusek-style motion on every page under the
+  hybrid rule (moving and filling follow the scroll; switching content never does, except below).
+  `[data-handoff]` sections shrink back as the next one slides over, `[data-scrub="words"]` darkens
+  text as you read, `[data-rise]` lifts cards in, `[data-draw]` builds SVG line drawings.
+- **Home projects = a 3D laptop** (`components/home/ProjectsStage.astro`, `scripts/projects-stage/`,
+  three.js 0.186): the section pins and each project drops onto the screen as you scroll, the one
+  place scrolling switches content (Gurman, 2026-11-12). three.js loads only near the section;
+  reduced motion, Data Saver, low memory or no WebGL get plain cards. Number buttons jump to a project.
+- **Reel footage everywhere** (spec `docs/superpowers/specs/2026-11-13-site-media-design.md`): clips
+  are listed in `src/data/clips.ts` and cut by `npm run cut-clips` from our own reels; `<Clip id>`
+  shows the still, then plays the loop only while visible (max three at once), never under reduced
+  motion or Data Saver. Every crop leaves out the reels' burned-in words: check the contact sheet in
+  `reports/clips/` after cutting. Mood only: no person in the footage is ever presented as a client.

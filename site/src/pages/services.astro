@@ -9,6 +9,8 @@ import AgentReady from '../components/sections/AgentReady.astro';
 import AtTheCentre from '../components/sections/AtTheCentre.astro';
 import TalkBanner from '../components/TalkBanner.astro';
 import Sparkle from '../components/Sparkle.astro';
+import Clip from '../components/Clip.astro';
+import type { ClipId } from '../data/clips';
 import { serviceAreas } from '../data/services';
 
 // "Projects and care": what is paid once and what a care plan covers (from the design).
@@ -28,6 +30,16 @@ const care = [
   'Small fixes, no extra bill',
   'Technical support from a real person',
 ];
+
+// Each area's header shows a moving picture from our reels in a pill window (mood only).
+const clipFor: Record<string, ClipId> = {
+  websites: 'constellation',
+  'e-commerce': 'shop',
+  'mobile-apps': 'mirror',
+  'design-branding': 'map',
+  'custom-software': 'software',
+  'hosting-support': 'tuscany',
+};
 
 // The darker header bands carry paper type, as in the design.
 const lightNumber = new Set(['indigo', 'dusk']);
@@ -80,7 +92,13 @@ const lightNumber = new Set(['indigo', 'dusk']);
               ]}
             >
               <span class="svc__n">{String(i + 1).padStart(2, '0')}</span>
-              <Sparkle class="svc__star" />
+              {clipFor[s.id] ? (
+                <span class="svc__clip">
+                  <Clip id={clipFor[s.id]!} fill sizes="(min-width: 64rem) 22vw, 50vw" />
+                </span>
+              ) : (
+                <Sparkle class="svc__star" />
+              )}
             </div>
             <div class="svc__body">
               <h3>{s.title}</h3>
@@ -229,6 +247,17 @@ const lightNumber = new Set(['indigo', 'dusk']);
   .svc__n {
     font: 800 clamp(2.2rem, calc(var(--u) * 0.63), 3.8rem) / 1 var(--font-display);
     letter-spacing: -0.02em;
+  }
+
+  /* A pill window of footage on the right of the header. */
+  .svc__clip {
+    position: relative;
+    overflow: hidden;
+    width: min(55%, calc(var(--u) * 3.8));
+    height: clamp(48px, calc(var(--u) * 0.74), 74px);
+    border: 1px solid var(--ink);
+    border-radius: 999px;
+    background: var(--ink);
   }
 
   .svc__head :global(.svc__star) {
