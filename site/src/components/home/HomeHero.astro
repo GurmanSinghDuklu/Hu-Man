@@ -1,5 +1,5 @@
 ---
-import Collage from '../Collage.astro';
+import HeroVideo from '../HeroVideo.astro';
 import BookingLink from '../BookingLink.astro';
 import { withBase } from '../../config/paths';
 import { site } from '../../config/site';
@@ -28,8 +28,9 @@ const offer = [
       ))}
     </ul>
 
-    <div class="hero__collage">
-      <Collage variant="home" lens="Lens 01 / Built by people" />
+    <!-- The showreel (Gurman, 2026-11-13: one video per hero, in place of the collage). -->
+    <div class="hero__media">
+      <HeroVideo video="reel" />
     </div>
 
     <div class="hero__intro">
@@ -51,9 +52,9 @@ const offer = [
 </section>
 
 <style>
-  /* The hero fits one window: on phones a tight stack with the collage capped by the window height; on desktop the whole layout shrinks with the window (see the media query). */
+  /* The hero fits one window: on phones a tight stack with the video capped by the window height; on desktop the whole layout shrinks with the window (see the media query). */
   .hero {
-    --collage-h: 20svh;
+    --hv-h: 22svh;
   }
 
   .hero__sheet {
@@ -164,10 +165,17 @@ const offer = [
       font-size: calc(var(--u) * 0.15);
     }
 
-    .hero__collage {
+    /* Right of the headline, between the offer list and the buttons. */
+    .hero__media {
+      --hv-w: calc(var(--u) * 7.3);
+      --hv-h: calc(var(--u) * 6.6);
       position: absolute;
-      left: calc(var(--u) * 6);
-      top: var(--u);
+      left: calc(var(--u) * 8.2);
+      top: calc(var(--u) * 1.1);
+      display: grid;
+      place-items: center end;
+      width: var(--hv-w);
+      height: var(--hv-h);
     }
 
     .hero__intro {

@@ -39,7 +39,9 @@ export function startScrollStory(
       .timeline({
         scrollTrigger: {
           trigger: section,
-          start: 'bottom bottom',
+          // clamp(): a hero shorter than the window would otherwise start part-way through,
+          // sunk and shaded before any scrolling. Clamped, it starts at the top of the page.
+          start: 'clamp(bottom bottom)',
           end: 'bottom top',
           scrub: true,
           invalidateOnRefresh: true,

@@ -574,3 +574,18 @@ breaking into tiles that fall into black, 1.6 s of black, then the landing switc
    `sessionStorage.setItem('hm-contact-intro', '1')` in an init script to skip it.
 Lighthouse /contact/ 95 (intro included), /start/ 99, home 96; axe 0 violations; motion-check clear in
 Chromium, WebKit and Firefox.
+
+## Scroll story, 3D projects, hero videos (2026-11-12/13, branch `scroll-story`)
+- **Scroll story** (`scripts/motion/scroll-story.ts`): hanusek-style motion under the hybrid rule.
+  `[data-handoff]` sections sink and dim as the next slides over (start is `clamp()`ed, so a hero
+  shorter than the window isn't half-shaded at load), `[data-scrub="words"]` darkens text as you read,
+  `[data-rise]` lifts cards in, `[data-draw]` builds SVG line drawings.
+- **Home projects = a 3D laptop** (`components/home/ProjectsStage.astro`, `scripts/projects-stage/`,
+  three.js 0.186): the one place scrolling switches content. Plain cards for reduced motion, Data
+  Saver, low memory or no WebGL.
+- **One video per hero on Home, About, Work and Pricing** (Gurman, 2026-11-13), in place of the
+  collage: `HeroVideo.astro` + `scripts/hero-video.ts`, the four landing videos (Home: reel, About:
+  found, Work: portfolio-seen, Pricing: portfolio-ad). Muted loop from the poster's moment, starts
+  after page load, pauses off screen, Pause and Sound buttons; nothing loads under reduced motion or
+  Data Saver until Play. Posters: `src/assets/hero-video/`. Other pages keep the collage. Clips
+  scattered through sections were tried and rejected (same day): keep video to the heroes.

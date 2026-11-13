@@ -1,0 +1,214 @@
+---
+/**
+ * One of our four videos (public/landing/, the same ones the contact and /start/ landing plays) in
+ * a page's hero, where the portrait collage sits on other pages (Gurman, 2026-11-13): Home, About,
+ * Work and Pricing get one each.
+ *
+ * Plays muted and on a loop once the page has loaded, and pauses while it is off screen
+ * (scripts/hero-video.ts). Pause and Sound buttons sit on the frame. Under reduced motion or Data
+ * Saver nothing loads until Play is pressed. The poster is a strong frame from the video, and
+ * playback starts from that moment (`start`), so the swap from poster to video doesn't jump.
+ * The frame takes the video's own shape: wide or tall, never cropped.
+ */
+import type { ImageMetadata } from 'astro';
+import { getImage } from 'astro:assets';
+import { withBase } from '../config/paths';
+import reelPoster from '../assets/hero-video/reel.jpg';
+import foundPoster from '../assets/hero-video/found.jpg';
+import seenPoster from '../assets/hero-video/portfolio-seen.jpg';
+import adPoster from '../assets/hero-video/portfolio-ad.jpg';
+
+interface Video {
+  src: string;
+  w: number;
+  h: number;
+  poster: ImageMetadata;
+  /** Seconds: where playback starts (the poster's moment). Loops go back to 0. */
+  start: number;
+  label: string;
+}
+
+const videos = {
+  reel: {
+    src: '/landing/reel.mp4',
+    w: 1920,
+    h: 1080,
+    poster: reelPoster,
+    start: 9.3,
+    label: 'The Hu/man showreel',
+  },
+  found: {
+    src: '/landing/found.mp4',
+    w: 1920,
+    h: 1080,
+    poster: foundPoster,
+    start: 0,
+    label: 'Built to be found, by Hu/man',
+  },
+  'portfolio-seen': {
+    src: '/landing/portfolio-seen.mp4',
+    w: 1080,
+    h: 1920,
+    poster: seenPoster,
+    start: 0,
+    label: 'Be seen: portfolio sites by Hu/man, from £156',
+  },
+  'portfolio-ad': {
+    src: '/landing/portfolio-ad.mp4',
+    w: 1080,
+    h: 1920,
+    poster: adPoster,
+    start: 2.3,
+    label: 'Portfolio pages by Hu/man, from £156',
+  },
+} satisfies Record<string, Video>;
+
+interface Props {
+  video: keyof typeof videos;
+  class?: string;
+}
+
+const { video, class: className } = Astro.props;
+const v: Video = videos[video];
+const poster = await getImage({
+  src: v.poster,
+  width: v.w > v.h ? 1280 : 720,
+  format: 'webp',
+  quality: 72,
+});
+---
+
+<figure
+  class:list={['hv', v.w > v.h ? 'hv--wide' : 'hv--tall', className]}
+  style={`--ar:${(v.w / v.h).toFixed(4)}`}
+  data-hv
+>
+  <video
+    class="hv__video"
+    muted
+    loop
+    playsinline
+    preload="none"
+    disablepictureinpicture
+    poster={poster.src}
+    width={v.w}
+    height={v.h}
+    aria-label={v.label}
+    data-hv-src={withBase(v.src)}
+    data-hv-start={v.start}
+  ></video>
+  <div class="hv__controls">
+    <button type="button" class="hv__btn" data-hv-play aria-label="Pause video">
+      <svg
+        class="hv__icon hv__icon--pause"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <path d="M8 5h3v14H8zM13 5h3v14h-3z"></path>
+      </svg>
+      <svg class="hv__icon hv__icon--play" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M8 5l11 7-11 7z"></path>
+      </svg>
+    </button>
+    <button type="button" class="hv__btn" data-hv-sound aria-label="Turn sound on">
+      <svg
+        class="hv__icon hv__icon--muted"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <path d="M4 9h4l5-4v14l-5-4H4z"></path>
+        <path d="M16 9l5 6M21 9l-5 6" fill="none" stroke="currentColor" stroke-width="2"></path>
+      </svg>
+      <svg
+        class="hv__icon hv__icon--sound"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <path d="M4 9h4l5-4v14l-5-4H4z"></path>
+        <path
+          d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        ></path>
+      </svg>
+    </button>
+  </div>
+</figure>
+
+<script>
+  import '../scripts/hero-video.ts';
+</script>
+
+<style>
+  /* The frame fits inside --hv-w by --hv-h (set by the hero) in the video's own shape. */
+  .hv {
+    position: relative;
+    width: min(var(--hv-w, 100%), calc(var(--hv-h, 60svh) * var(--ar)));
+    aspect-ratio: var(--ar);
+    margin: 0;
+    overflow: hidden;
+    border: 1px solid var(--ink);
+    border-radius: 18px;
+    background: var(--ink);
+  }
+
+  .hv__video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .hv__controls {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    display: flex;
+    gap: 8px;
+  }
+
+  .hv__btn {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: rgb(241 242 236 / 0.92);
+    color: var(--ink);
+    cursor: pointer;
+  }
+
+  .hv__btn:hover {
+    background: var(--paper);
+  }
+
+  .hv__btn:focus-visible {
+    outline: 2px solid var(--paper);
+    outline-offset: 3px;
+  }
+
+  .hv__icon {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+  }
+
+  /* Which icon shows follows the state the script sets on the figure. */
+  .hv__icon--play,
+  .hv__icon--sound,
+  .hv.is-paused .hv__icon--pause,
+  .hv.has-sound .hv__icon--muted {
+    display: none;
+  }
+
+  .hv.is-paused .hv__icon--play,
+  .hv.has-sound .hv__icon--sound {
+    display: block;
+  }
+</style>

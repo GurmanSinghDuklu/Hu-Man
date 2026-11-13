@@ -1,6 +1,7 @@
 ---
 /** Hero for the Services and Pricing pages: label, headline, lede and the "inner" collage. */
 import Collage from './Collage.astro';
+import HeroVideo from './HeroVideo.astro';
 
 interface Props {
   label: string;
@@ -9,9 +10,11 @@ interface Props {
   longWords?: boolean;
   /** 'div' for a decorative copy that must not add a second h1 (the /contact/ intro). */
   as?: 'h1' | 'div';
+  /** One of our videos in place of the collage (About, Work, Pricing; Gurman, 2026-11-13). */
+  video?: 'reel' | 'found' | 'portfolio-seen' | 'portfolio-ad';
 }
 
-const { label, lens, longWords = false, as: Title = 'h1' } = Astro.props;
+const { label, lens, longWords = false, as: Title = 'h1', video } = Astro.props;
 ---
 
 <section class="band grid ihero" data-handoff aria-labelledby="ihero-title">
@@ -25,9 +28,15 @@ const { label, lens, longWords = false, as: Title = 'h1' } = Astro.props;
         <slot name="lede" />
       </p>
     </div>
-    <div class="ihero__collage">
-      <Collage variant="inner" lens={lens} />
-    </div>
+    {video ? (
+      <div class="ihero__media">
+        <HeroVideo video={video} />
+      </div>
+    ) : (
+      <div class="ihero__collage">
+        <Collage variant="inner" lens={lens} />
+      </div>
+    )}
   </div>
 </section>
 
@@ -35,6 +44,7 @@ const { label, lens, longWords = false, as: Title = 'h1' } = Astro.props;
   /* Fits one window, like the home hero: a tight stack on phones with the collage capped by the window height; on desktop the layout shrinks with the window (see the media query). */
   .ihero {
     --collage-h: 26svh;
+    --hv-h: 36svh;
   }
 
   .ihero__sheet {
@@ -112,6 +122,19 @@ const { label, lens, longWords = false, as: Title = 'h1' } = Astro.props;
       position: absolute;
       left: calc(var(--u) * 9);
       top: 0;
+    }
+
+    /* The collage's place: the video centred in it, in its own shape. */
+    .ihero__media {
+      --hv-w: calc(var(--u) * 6.4);
+      --hv-h: calc(var(--u) * 6.7);
+      position: absolute;
+      left: calc(var(--u) * 9.1);
+      top: calc(var(--u) * 0.4);
+      display: grid;
+      place-items: center;
+      width: var(--hv-w);
+      height: var(--hv-h);
     }
   }
 </style>
