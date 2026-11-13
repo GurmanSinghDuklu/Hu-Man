@@ -139,8 +139,7 @@ const { label, lens, longWords = false, as: Title = 'h1', video } = Astro.props;
     }
 
     /* Behind the text: the video sits at the right of the hero (HeroVideo.astro). */
-    /* The video sits behind the sheet, whose empty box would otherwise catch clicks meant for the
-         video's Pause and Sound buttons: the box lets clicks through, its contents still take them. */
+    /* The sheet's empty box sits above the video: let clicks through it to Pause and Sound. */
     .ihero__sheet {
       pointer-events: none;
     }
