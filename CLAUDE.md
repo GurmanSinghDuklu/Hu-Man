@@ -590,3 +590,7 @@ Chromium, WebKit and Firefox.
   after page load, pauses off screen, Pause and Sound buttons; nothing loads under reduced motion or
   Data Saver until Play. Posters: `src/assets/hero-video/`. Other pages keep the collage. Clips
   scattered through sections were tried and rejected (same day): keep video to the heroes.
+- **Header hides while scrolling down** (Gurman, 2026-11-13; script in `SiteHeader.astro`): it slides
+  up once you scroll past it and returns after scrolling up 60px, at the top, or when keyboard focus
+  or an open menu is in it. Nav label "CV portfolio" for /portfolio/; between 64 and 80rem the nav
+  tightens so every link stays on one line.

@@ -14,7 +14,7 @@ const workPath = withBase('/work/');
 const navLinks: { href: string; label: string; menu?: 'services' | 'work' }[] = [
   { href: servicesPath, label: 'Services', menu: 'services' },
   { href: workPath, label: 'Work', menu: 'work' },
-  { href: withBase('/portfolio/'), label: 'Portfolio' },
+  { href: withBase('/portfolio/'), label: 'CV portfolio' },
   { href: withBase('/pricing/'), label: 'Pricing' },
   { href: withBase('/about/'), label: 'About' },
   { href: withBase('/how-we-build/'), label: 'How we build' },
@@ -156,6 +156,49 @@ const workItems = projects.map((p) => ({
 </header>
 
 <script>
+  // Out of the way while reading (Gurman, 2026-11-13): the header slides up once you scroll down
+  // past it, and comes back when you scroll up a little (UP_PX) or reach the top. It stays while a
+  // menu is open or something in it has keyboard focus.
+  const UP_PX = 60;
+  const header = document.querySelector<HTMLElement>('.site-header');
+  if (header) {
+    let lastY = window.scrollY;
+    let upBy = 0;
+    let queued = false;
+    // :focus-visible, so a link clicked with the mouse (which keeps focus) doesn't pin it open.
+    const busy = () =>
+      Boolean(header.querySelector(':focus-visible, details[open], .nav-drop.is-open'));
+    const update = () => {
+      queued = false;
+      const y = Math.max(0, window.scrollY);
+      const delta = y - lastY;
+      lastY = y;
+      if (y <= header.offsetHeight || busy()) {
+        upBy = 0;
+        header.classList.remove('is-hidden');
+      } else if (delta > 0) {
+        upBy = 0;
+        header.classList.add('is-hidden');
+      } else if (delta < 0) {
+        upBy -= delta;
+        if (upBy >= UP_PX) header.classList.remove('is-hidden');
+      }
+    };
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (!queued) {
+          queued = true;
+          requestAnimationFrame(update);
+        }
+      },
+      { passive: true },
+    );
+    header.addEventListener('focusin', () => {
+      if (header.querySelector(':focus-visible')) header.classList.remove('is-hidden');
+    });
+  }
+
   // Close the menu after following one of its links (same-page anchors would otherwise leave
   // the panel open over the section).
   document.querySelectorAll<HTMLDetailsElement>('.site-header__menu').forEach((menu) => {
@@ -240,6 +283,18 @@ const workItems = projects.map((p) => ({
     z-index: 50;
     background: var(--paper);
     border-bottom: 1px solid var(--grid-line);
+    transition: translate 0.35s var(--ease-out);
+  }
+
+  /* Scrolled down: tucked away above the window (see the script). */
+  .site-header.is-hidden {
+    translate: 0 -100%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .site-header {
+      transition: none;
+    }
   }
 
   .site-header__inner {
@@ -272,6 +327,7 @@ const workItems = projects.map((p) => ({
     padding-block: 0.75rem;
     font: 400 0.8125rem var(--font-mono);
     letter-spacing: 0.14em;
+    white-space: nowrap;
     text-transform: uppercase;
     text-decoration: none;
     /* The underline sweeps in from the left on hover. */
@@ -598,5 +654,16 @@ const workItems = projects.map((p) => ({
     --gap: clamp(6px, calc(var(--u) * 0.1), 10px);
     --led-colours:
       #4e28df, #8f6fe6, #db92db, #e85e8f, #d2133c, #ce3d10, #d9545a, #4a9bb0, #2c4477, #4e28df;
+  }
+  /* Small desktops: tighter nav so every link stays on one line. */
+  @media (min-width: 64rem) and (max-width: 79.99rem) {
+    .site-header__nav > ul {
+      gap: 0.9rem;
+    }
+
+    .site-header__nav > ul > li > a {
+      letter-spacing: 0.08em;
+      font-size: 0.75rem;
+    }
   }
 </style>
