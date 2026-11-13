@@ -3,7 +3,7 @@
  * moves or fills follows the scroll; nothing that switches content ever does. GSAP ScrollTrigger,
  * loaded on idle with GSAP by index.ts, after the /contact/ intro, never under reduced motion.
  *
- * - [data-handoff] sections (every page's hero, and the band before some dark bands): as the next
+ * - [data-handoff] sections (some bands before a dark one; never a page hero: Gurman, 2026-11-13): as the next
  *   section scrolls up over it, the section sinks at under half speed, shrinks a touch and dims, so
  *   the next one seems to slide over it. Bands are opaque (base.css), so the sinking part is hidden.
  * - [data-scrub="words"] statements darken word by word as they move up the window, from
