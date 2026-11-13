@@ -185,6 +185,16 @@ const offer = [
     }
 
     /* Behind the text: the video sits at the right of the hero (HeroVideo.astro). */
+    /* The video sits behind the sheet, whose empty box would otherwise catch clicks meant for the
+         video's Pause and Sound buttons: the box lets clicks through, its contents still take them. */
+    .hero__sheet {
+      pointer-events: none;
+    }
+
+    .hero__sheet > * {
+      pointer-events: auto;
+    }
+
     .hero__media {
       --hv-dw: calc(var(--u) * 8.2);
       position: absolute;

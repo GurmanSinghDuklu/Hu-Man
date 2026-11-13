@@ -227,9 +227,11 @@ const poster = await getImage({
       bottom: 16px;
     }
 
+    /* Just under the picture, so they never cover the video's own words. */
     .hv--wide .hv__controls {
-      right: 8%;
-      bottom: 14%;
+      top: calc(100% + 8px);
+      right: 6%;
+      bottom: auto;
     }
   }
 
