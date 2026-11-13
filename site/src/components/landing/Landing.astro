@@ -38,9 +38,11 @@ interface Props {
   legal?: boolean;
   /** Carry a pricing button's ?tier= with the short form (the contact page). */
   tierField?: boolean;
+  /** Sink under the content that follows as the page scrolls (the contact page; scroll story). */
+  handoff?: boolean;
 }
 
-const { title, lede, via, legal = true, tierField = false } = Astro.props;
+const { title, lede, via, legal = true, tierField = false, handoff = false } = Astro.props;
 
 const poster = await getImage({ src: firstStill, width: 1080, format: 'webp', quality: 70 });
 const mailtoMode = import.meta.env.PUBLIC_FORM_MODE === 'mailto';
@@ -68,7 +70,7 @@ const playlist = [
 const first = playlist[0]!;
 ---
 
-<section class="lp" aria-labelledby="lp-title">
+<section class="lp" aria-labelledby="lp-title" data-handoff={handoff ? '' : undefined}>
   <video
     class="lp__video"
     data-lp-video

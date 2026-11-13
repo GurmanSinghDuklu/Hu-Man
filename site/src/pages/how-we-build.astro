@@ -58,7 +58,7 @@ import MethodSteps from '../components/sections/MethodSteps.astro';
     </div>
   </section>
 
-  <section class="band grid stages section" aria-labelledby="stages-title">
+  <section class="band grid stages section" data-handoff aria-labelledby="stages-title">
     <div class="sheet">
       <p class="label" data-reveal>
         02 / Every build
@@ -68,7 +68,7 @@ import MethodSteps from '../components/sections/MethodSteps.astro';
         <br />
         Launch. Stay.
       </h2>
-      <p class="stages__text" data-reveal>
+      <p class="stages__text" data-reveal data-scrub="words">
         One method for every build, and a human signs off each step.
       </p>
       <div class="stages__method">
@@ -142,7 +142,7 @@ import MethodSteps from '../components/sections/MethodSteps.astro';
           <br />
           what’s next.
         </h2>
-        <p class="next__text" data-reveal>
+        <p class="next__text" data-reveal data-scrub="words">
           AI agents are starting to search, compare and book for people. We do the back-end work
           now, so your site is ready when they arrive.
         </p>

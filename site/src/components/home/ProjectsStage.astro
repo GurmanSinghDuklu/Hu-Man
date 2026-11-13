@@ -1,0 +1,314 @@
+---
+/**
+ * "Portfolio" (home 06) as a 3D stage (Gurman, 2026-11-12, from his screen recording): the section
+ * pins while a graphite laptop opens and each project drops onto its screen as you scroll, then
+ * plays its walkthrough. The one place where scrolling switches content. Behaviour:
+ * scripts/projects-stage/ (three.js loads only when the section is near the screen).
+ *
+ * Without the 3D stage (reduced motion, Data Saver, low-memory devices, no WebGL, no JavaScript)
+ * the projects show as two plain cards with stills. The text is the same either way, and all of it
+ * stays readable by screen readers and search. Facts and wording: src/data/projects.ts.
+ */
+import { getImage, Image } from 'astro:assets';
+import { withBase } from '../../config/paths';
+import { projects } from '../../data/projects';
+import essencePoster from '../../assets/work-clips/essence.jpg';
+import calculatorPoster from '../../assets/work-clips/calculator.jpg';
+
+const stills = { essence: essencePoster, calculator: calculatorPoster };
+const items = await Promise.all(
+  projects.map(async (p, i) => ({
+    ...p,
+    n: String(i + 1).padStart(2, '0'),
+    still: stills[p.id],
+    // The 3D sheet's picture: the walkthrough's first frame, so the landing hands over seamlessly.
+    poster: (await getImage({ src: stills[p.id], width: 1280, format: 'webp', quality: 72 })).src,
+    clip: withBase(`/video/${p.id}-walk.mp4`),
+  })),
+);
+const count = String(items.length).padStart(2, '0');
+---
+
+<section class="band band--ink ps" aria-labelledby="ps-title" data-ps>
+  <div class="ps__runway" data-ps-runway>
+    <div class="ps__stage">
+      <canvas class="ps__canvas" aria-hidden="true" data-ps-canvas></canvas>
+
+      <div class="sheet ps__sheet">
+        <div class="ps__intro">
+          <p class="label">06 / Our work</p>
+          <h2 id="ps-title" class="display display--m">
+            Portfolio
+          </h2>
+          <a class="more-link ps__more" href={withBase('/work/')}>
+            See all our work <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+
+        <ol class="ps__list">
+          {items.map((p) => (
+            <li class="ps__item" data-ps-item data-poster={p.poster} data-clip={p.clip}>
+              <div class="ps__still">
+                <Image
+                  src={p.still}
+                  alt={`${p.name}: the live site's home page`}
+                  width={640}
+                  format="webp"
+                  quality={70}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <p class="ps__count label">
+                {p.n} / {count}
+                {p.live && <span class="ps__live">Live</span>}
+              </p>
+              <h3 class="ps__name">{p.name}</h3>
+              <p class="ps__blurb">
+                {p.blurb}
+                {p.linkText && p.url &&
+                  /* prettier-ignore */
+                  <><a href={p.url} target="_blank" rel="noopener noreferrer">{p.linkText}<span class="visually-hidden"> (opens in a new tab)</span></a>.</>}
+              </p>
+            </li>
+          ))}
+        </ol>
+
+        <div class="ps__jumps" role="group" aria-label="Show a project">
+          {items.map((p) => (
+            <button type="button" class="ps__jump" data-ps-go aria-current="false">
+              <span aria-hidden="true">{p.n}</span>
+              <span class="visually-hidden">Show {p.name}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import '../../scripts/projects-stage/index.ts';
+</script>
+
+<style>
+  .ps {
+    position: relative;
+    background:
+      radial-gradient(60% 55% at 62% 62%, rgb(78 40 223 / 0.28), transparent 70%), var(--ink);
+  }
+
+  /* ---------- plain cards (no 3D) ---------- */
+  .ps__runway {
+    padding-block: clamp(3.5rem, calc(var(--u) * 1.05), 6.5rem);
+  }
+
+  .ps__canvas,
+  .ps__jumps {
+    display: none;
+  }
+
+  .ps__list {
+    display: grid;
+    gap: clamp(1.5rem, calc(var(--u) * 0.5), 3rem);
+    margin-top: clamp(1.75rem, calc(var(--u) * 0.6), 3.5rem);
+  }
+
+  .ps__still {
+    overflow: hidden;
+    margin-bottom: 1rem;
+    border: 1px solid rgb(241 242 236 / 0.25);
+    border-radius: 18px;
+  }
+
+  .ps__still img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+  }
+
+  .ps__count {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: var(--muted-on-ink);
+  }
+
+  .ps__live {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--paper);
+  }
+
+  .ps__live::before {
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #3ad07a;
+  }
+
+  .ps__name {
+    margin-top: 0.6rem;
+    font-size: clamp(1.8rem, calc(var(--u) * 0.55), 3.2rem);
+    line-height: 0.95;
+  }
+
+  .ps__blurb {
+    max-width: 26rem;
+    margin-top: 0.75rem;
+    color: #d6d7d1;
+    font-size: 0.975rem;
+    line-height: 1.5;
+  }
+
+  .ps__blurb a {
+    color: var(--paper);
+    font-weight: 600;
+  }
+
+  .ps__more {
+    margin-top: 1.25rem;
+    color: var(--paper);
+  }
+
+  @media (min-width: 48rem) {
+    .ps__list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  /* ---------- the 3D stage ---------- */
+  /* The runway sets how far the section scrolls while pinned (scripts/projects-stage). */
+  .ps.ps--3d .ps__runway {
+    height: calc(var(--ps-units, 2.6) * 70svh + 100svh);
+    padding: 0;
+  }
+
+  .ps--3d .ps__stage {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    overflow: hidden;
+  }
+
+  .ps--3d .ps__canvas {
+    display: block;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.8s var(--ease-out);
+  }
+
+  .ps--ready .ps__canvas {
+    opacity: 1;
+  }
+
+  .ps--3d .ps__sheet {
+    position: relative;
+    height: 100%;
+    pointer-events: none;
+  }
+
+  .ps--3d .ps__sheet a,
+  .ps--3d .ps__sheet button {
+    pointer-events: auto;
+  }
+
+  .ps--3d .ps__intro {
+    padding-top: calc(var(--u) * 1.5);
+  }
+
+  .ps--3d .ps__still {
+    display: none;
+  }
+
+  /* One project's text at a time; the others stay readable by screen readers. */
+  .ps--3d .ps__list {
+    position: absolute;
+    right: var(--pad);
+    bottom: max(48px, 12svh);
+    display: block;
+    width: min(23rem, 34%);
+    margin: 0;
+  }
+
+  .ps--3d .ps__item:not(.is-active) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .ps--3d .ps__item.is-active {
+    animation: ps-in 0.6s var(--ease-out) both;
+  }
+
+  @keyframes ps-in {
+    from {
+      opacity: 0;
+      translate: 0 14px;
+    }
+  }
+
+  .ps--3d .ps__jumps {
+    position: absolute;
+    left: var(--pad);
+    bottom: max(48px, 12svh);
+    display: flex;
+    gap: 8px;
+  }
+
+  .ps__jump {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0 12px;
+    border: 1px solid rgb(241 242 236 / 0.45);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--paper);
+    font: 500 0.75rem/1 var(--font-mono);
+    letter-spacing: 0.14em;
+    cursor: pointer;
+  }
+
+  .ps__jump[aria-current='true'] {
+    border-color: var(--paper);
+    background: var(--paper);
+    color: var(--ink);
+  }
+
+  .ps__jump:focus-visible {
+    outline: 2px solid var(--lilac);
+    outline-offset: 3px;
+  }
+
+  /* Phones and tablets: the laptop in the middle, the project's text along the foot. */
+  @media (max-width: 63.99rem) {
+    .ps--3d .ps__intro {
+      padding-top: 88px;
+    }
+
+    .ps--3d .ps__list {
+      left: var(--pad);
+      right: var(--pad);
+      bottom: 92px;
+      width: auto;
+    }
+
+    .ps--3d .ps__jumps {
+      bottom: 28px;
+    }
+
+    .ps--3d .ps__name {
+      font-size: clamp(1.6rem, 7vw, 2.4rem);
+    }
+  }
+</style>

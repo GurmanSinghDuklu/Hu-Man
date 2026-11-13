@@ -48,12 +48,13 @@ const tel = `tel:${site.contact.phone.replace(/\s+/g, '')}`;
     via="Contact page"
     legal={false}
     tierField
+    handoff
   />
 
   <div class="cx">
     <section class="cx__band cx-write" aria-labelledby="contact-title">
       <div class="sheet cx-write__sheet">
-        <div class="cx-box cx-box--dark">
+        <div class="cx-box cx-box--dark" data-rise>
           <p class="label cx__label">01 / Write to us</p>
           <h2 id="contact-title" class="cx__title">
             Tell us more
@@ -64,7 +65,7 @@ const tel = `tel:${site.contact.phone.replace(/\s+/g, '')}`;
           <EnquiryForm variant="contact" tone="ink" />
         </div>
 
-        <aside class="cx-box cx-box--light cx-direct" aria-labelledby="other-title">
+        <aside class="cx-box cx-box--light cx-direct" aria-labelledby="other-title" data-rise="1">
           <h2 id="other-title" class="label">
             Or reach us directly
           </h2>
@@ -121,7 +122,7 @@ const tel = `tel:${site.contact.phone.replace(/\s+/g, '')}`;
           </ol>
         </div>
 
-        <aside class="cx-box cx-box--light cx-ready" aria-labelledby="ready-title">
+        <aside class="cx-box cx-box--light cx-ready" aria-labelledby="ready-title" data-rise="1">
           <Sparkle class="cx-ready__star" />
           <h3 id="ready-title">Not ready to talk yet?</h3>
           <p>
@@ -150,8 +151,8 @@ const tel = `tel:${site.contact.phone.replace(/\s+/g, '')}`;
           Before you get in touch
         </h2>
         <dl class="cx-faq__list">
-          {contactFaq.map((item) => (
-            <div class="cx-box cx-box--dark cx-faq__item">
+          {contactFaq.map((item, i) => (
+            <div class="cx-box cx-box--dark cx-faq__item" data-rise={i % 2}>
               <dt>{item.q}</dt>
               <dd>{item.a}</dd>
             </div>
@@ -164,9 +165,18 @@ const tel = `tel:${site.contact.phone.replace(/\s+/g, '')}`;
   <SiteFooter slot="footer" />
 </BaseLayout>
 
+<style is:global>
+  /* Dark behind the landing screen, so its edges never show the pale page as it shrinks away. */
+  main:has(> .cx) {
+    background: var(--ink);
+  }
+</style>
+
 <style>
   /* The landing screen's ground and boxes, carried on down the page. */
+  /* Positioned, so it slides over the landing screen as that sinks (scroll story hand-off). */
   .cx {
+    position: relative;
     background: var(--ink);
     color: var(--paper);
   }
