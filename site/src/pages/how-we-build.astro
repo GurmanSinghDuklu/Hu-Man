@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Clip from '../components/Clip.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import InnerHero from '../components/InnerHero.astro';
@@ -72,10 +71,6 @@ import MethodSteps from '../components/sections/MethodSteps.astro';
       <p class="stages__text" data-reveal data-scrub="words">
         One method for every build, and a human signs off each step.
       </p>
-      <!-- Every build starts as a sketch on paper (from our reel). -->
-      <div class="stages__clip" data-reveal>
-        <Clip id="wireframe" sizes="(min-width: 64rem) 40vw, 100vw" />
-      </div>
       <div class="stages__method">
         <MethodSteps tone="on-page" />
       </div>
@@ -91,10 +86,6 @@ import MethodSteps from '../components/sections/MethodSteps.astro';
         <h2 id="bonnet-title" class="display" data-reveal="lines">
           What’s under the bonnet.
         </h2>
-        <!-- The parts behind a build: client, API, database, auth, payments, AI agent (a still from our reel). -->
-        <div class="bonnet__clip" data-reveal>
-          <Clip id="software" sizes="100vw" />
-        </div>
         <ul class="bonnet__cards" data-pin-steps>
           {bonnet.map((b, i) => (
             <li
@@ -172,21 +163,6 @@ import MethodSteps from '../components/sections/MethodSteps.astro';
 </BaseLayout>
 
 <style>
-  .stages__clip {
-    max-width: 36rem;
-    margin-top: clamp(1.5rem, calc(var(--u) * 0.5), 3rem);
-    overflow: hidden;
-    border: 1px solid var(--ink);
-    border-radius: 18px;
-  }
-
-  .bonnet__clip {
-    margin-block: clamp(1.5rem, calc(var(--u) * 0.5), 3rem);
-    overflow: hidden;
-    border: 1px solid rgb(241 242 236 / 0.25);
-    border-radius: 18px;
-  }
-
   /* ---------- comparison ---------- */
   .cmp__table {
     width: 100%;

@@ -12,8 +12,6 @@ import { getImage } from 'astro:assets';
 import face from '../assets/portrait/source.jpg';
 import eye from '../assets/portrait/eye.jpg';
 import Sparkle from './Sparkle.astro';
-import Clip from './Clip.astro';
-import type { ClipId } from '../data/clips';
 
 interface Props {
   variant: 'home' | 'inner';
@@ -22,10 +20,9 @@ interface Props {
 
 const { variant, lens } = Astro.props;
 
-type Kind = 'face' | 'ink' | 'pink' | 'indigo' | 'orb' | 'clip';
-// [kind, column, row] on the page grid (column 0 is the page's left edge, row 0 its top). A 'clip'
-// cell plays one of our reel clips (src/data/clips.ts) where an Ink block used to be.
-type Cell = [Kind, number, number] | ['clip', number, number, ClipId];
+type Kind = 'face' | 'ink' | 'pink' | 'indigo' | 'orb';
+// [kind, column, row] on the page grid (column 0 is the page's left edge, row 0 its top).
+type Cell = [Kind, number, number];
 
 interface Layout {
   /** The collage box on the page grid: first column and row, and its size in cells. */
@@ -49,7 +46,7 @@ const layouts: Record<Props['variant'], Layout> = {
       ['face', 8, 3],
       ['face', 9, 3],
       ['face', 9, 4],
-      ['clip', 10, 4, 'veil-tile'],
+      ['ink', 10, 4],
       ['ink', 6, 5],
       ['orb', 7, 5],
       ['pink', 9, 5],
@@ -58,7 +55,7 @@ const layouts: Record<Props['variant'], Layout> = {
       ['face', 8, 6],
       ['face', 10, 6],
       ['face', 11, 6],
-      ['clip', 12, 6, 'cove-tile'],
+      ['ink', 12, 6],
       ['ink', 8, 7],
       ['face', 11, 7],
       ['ink', 7, 8],
@@ -78,11 +75,11 @@ const layouts: Record<Props['variant'], Layout> = {
     face: [8.62, -1.51, 9.2],
     cells: [
       ['face', 10, 2],
-      ['clip', 11, 2, 'veil-tile'],
+      ['ink', 11, 2],
       ['pink', 10, 3],
       ['face', 11, 3],
       ['face', 12, 4],
-      ['clip', 10, 5, 'cove-tile'],
+      ['ink', 10, 5],
       ['face', 11, 5],
       ['face', 12, 5],
       ['orb', 13, 5],
@@ -112,13 +109,11 @@ const px = (n: number) => `calc(${n.toFixed(3)} * var(--cu))`;
   aria-hidden="true"
   style={`--bw:${bw};--bh:${bh};--bc:${bc};--br:${br};--face:url(${faceImg.src});--fx:${L.face[0] - bc};--fy:${L.face[1] - br};--fw:${L.face[2]}`}
 >
-  {L.cells.map(([kind, c, r, clip]) => (
-    <div
+  {L.cells.map(([kind, c, r]) => (
+    <span
       class:list={['collage__cell', `collage__cell--${kind}`]}
       style={`--c:${c - bc};--r:${r - br}`}
-    >
-      {clip && <Clip id={clip} fill zoom={false} sizes="8rem" />}
-    </div>
+    />
   ))}
   <span
     class="collage__arch"
@@ -172,13 +167,8 @@ const px = (n: number) => `calc(${n.toFixed(3)} * var(--cu))`;
       calc((var(--fy) - var(--r)) * var(--cu));
   }
 
-  .collage__cell--ink,
-  .collage__cell--clip {
+  .collage__cell--ink {
     background: var(--ink);
-  }
-
-  .collage__cell--clip {
-    overflow: hidden;
   }
 
   .collage__cell--pink {

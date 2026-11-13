@@ -4,7 +4,6 @@ import { withBase } from '../../config/paths';
 import { fromPrice } from '../../data/pricing';
 import RingOrb from '../RingOrb.astro';
 import DrawWireframe from '../DrawWireframe.astro';
-import Clip from '../Clip.astro';
 
 interface Props {
   n: string;
@@ -35,10 +34,7 @@ const { n } = Astro.props;
 
     <div class="agent__art" aria-hidden="true">
       <RingOrb tone="indigo" star class="agent__orb amb-float" />
-      <!-- Your site at the centre, found by Google, AI search and AI agents (from our reel). -->
-      <span class="agent__square">
-        <Clip id="constellation" fill sizes="(min-width: 64rem) 16vw, 40vw" />
-      </span>
+      <span class="agent__square amb-pulse"></span>
     </div>
 
     <!-- From a sketch to a page people and AI agents can read: draws itself as you scroll. -->
@@ -80,12 +76,11 @@ const { n } = Astro.props;
 
   .agent__square {
     position: absolute;
-    /* Overhangs the orb, but stays inside the page padding on phones. */
-    right: 0;
+    /* Overhangs the orb, but never past the page padding. */
+    right: max(-8%, -1 * var(--pad));
     bottom: -6%;
-    width: 52%;
+    width: 33%;
     aspect-ratio: 1;
-    overflow: hidden;
     background: var(--ink);
   }
 
@@ -111,9 +106,9 @@ const { n } = Astro.props;
     }
 
     .agent__square {
-      right: calc(var(--u) * -0.9);
-      bottom: calc(var(--u) * -0.45);
-      width: calc(var(--u) * 1.9);
+      right: calc(var(--u) * -0.42);
+      bottom: calc(var(--u) * -0.17);
+      width: calc(var(--u) * 1.17);
     }
   }
 </style>

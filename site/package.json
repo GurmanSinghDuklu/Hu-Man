@@ -23,8 +23,7 @@
     "test": "node --test worker/enquiry.test.js tests/palettes.test.mjs",
     "build:site": "astro build",
     "concept-posters": "node scripts/concept-posters.mjs",
-    "compress-video": "node scripts/compress-video.mjs",
-    "cut-clips": "node scripts/cut-clips.mjs"
+    "compress-video": "node scripts/compress-video.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.10",

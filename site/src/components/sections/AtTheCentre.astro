@@ -3,8 +3,6 @@
  * "At the centre of it all, we're human" (home 07, services 06): copy on the left, and three
  * overlapping rings (grounded, technical, creative) around a rose "human" circle.
  */
-import Clip from '../Clip.astro';
-
 interface Props {
   n: string;
 }
@@ -30,10 +28,6 @@ const { n } = Astro.props;
           We’re not a fee you pay and forget. We work through the problems with you, find the right
           solution, and stay with you until you’re where you want to be, as a business and online.
         </p>
-        <!-- Our fingerprint head: the human at the centre (from our reel). -->
-        <div class="centre__clip" data-reveal>
-          <Clip id="head" sizes="(min-width: 64rem) 16vw, 40vw" />
-        </div>
       </div>
 
       <svg
@@ -94,14 +88,6 @@ const { n } = Astro.props;
     line-height: 1.55;
   }
 
-  /* An arch, like the hero collage's. */
-  .centre__clip {
-    width: min(11rem, 42vw);
-    margin-top: 2rem;
-    overflow: hidden;
-    border-radius: 999px 999px 0 0;
-  }
-
   .centre__venn {
     width: min(100%, 33rem);
     height: auto;
@@ -128,11 +114,6 @@ const { n } = Astro.props;
 
     .centre__text {
       max-width: calc(var(--u) * 6.8);
-    }
-
-    .centre__clip {
-      width: calc(var(--u) * 2.2);
-      margin-top: calc(var(--u) * 0.6);
     }
 
     .centre__venn {
