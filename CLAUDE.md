@@ -584,7 +584,8 @@ Chromium, WebKit and Firefox.
   three.js 0.186): the one place scrolling switches content. Plain cards for reduced motion, Data
   Saver, low memory or no WebGL.
 - **One video per hero on Home, About, Work and Pricing** (Gurman, 2026-11-13), in place of the
-  collage: `HeroVideo.astro` + `scripts/hero-video.ts`, the four landing videos (Home: reel, About:
+  collage. Those heroes are Ink with white text, and the video sits on the right with no frame (a
+  wide one fades into the Ink at its edges; a tall one runs the full hero height): `HeroVideo.astro` + `scripts/hero-video.ts`, the four landing videos (Home: reel, About:
   found, Work: portfolio-seen, Pricing: portfolio-ad). Muted loop from the poster's moment, starts
   after page load, pauses off screen, Pause and Sound buttons; nothing loads under reduced motion or
   Data Saver until Play. Posters: `src/assets/hero-video/`. Other pages keep the collage. Clips

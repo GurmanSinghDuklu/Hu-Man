@@ -17,7 +17,11 @@ interface Props {
 const { label, lens, longWords = false, as: Title = 'h1', video } = Astro.props;
 ---
 
-<section class="band grid ihero" data-handoff aria-labelledby="ihero-title">
+<section
+  class:list={['band', 'ihero', video ? 'ihero--video' : 'grid']}
+  data-handoff
+  aria-labelledby="ihero-title"
+>
   <div class="sheet ihero__sheet">
     <div class="ihero__copy">
       <p class="label">{label}</p>
@@ -44,7 +48,18 @@ const { label, lens, longWords = false, as: Title = 'h1', video } = Astro.props;
   /* Fits one window, like the home hero: a tight stack on phones with the collage capped by the window height; on desktop the layout shrinks with the window (see the media query). */
   .ihero {
     --collage-h: 26svh;
-    --hv-h: 36svh;
+    --hv-h: 56svh;
+  }
+
+  /* With a video: like the contact page, the video behind and the text in white on Ink. */
+  .ihero--video {
+    isolation: isolate;
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .ihero__media {
+    margin-inline: calc(-1 * var(--pad));
   }
 
   .ihero__sheet {
@@ -124,17 +139,13 @@ const { label, lens, longWords = false, as: Title = 'h1', video } = Astro.props;
       top: 0;
     }
 
-    /* The collage's place: the video centred in it, in its own shape. */
+    /* Behind the text: the video sits at the right of the hero (HeroVideo.astro). */
     .ihero__media {
-      --hv-w: calc(var(--u) * 6.4);
-      --hv-h: calc(var(--u) * 6.7);
+      --hv-dw: calc(var(--u) * 8.2);
       position: absolute;
-      left: calc(var(--u) * 9.1);
-      top: calc(var(--u) * 0.4);
-      display: grid;
-      place-items: center;
-      width: var(--hv-w);
-      height: var(--hv-h);
+      inset: 0;
+      z-index: -1;
+      margin: 0;
     }
   }
 </style>

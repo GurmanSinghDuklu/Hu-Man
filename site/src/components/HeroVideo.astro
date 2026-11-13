@@ -1,8 +1,13 @@
 ---
 /**
- * One of our four videos (public/landing/, the same ones the contact and /start/ landing plays) in
- * a page's hero, where the portrait collage sits on other pages (Gurman, 2026-11-13): Home, About,
- * Work and Pricing get one each.
+ * One of our four videos (public/landing/, the same ones the contact and /start/ landing plays)
+ * behind a page's hero, like the contact page (Gurman, 2026-11-13): Home, About, Work and Pricing
+ * get one each, with the hero's text in white over it and no frame around the video.
+ *
+ * Desktop: the hero is Ink and the video sits on its right, shown whole, with no frame: a wide
+ * video's edges fade into the Ink, a tall one runs the hero's full height (the hero gives this
+ * component's wrapper `position: absolute; inset: 0` behind the text). Phones and tablets: a block
+ * in the hero's stack, edge to edge.
  *
  * Plays muted and on a loop once the page has loaded, and pauses while it is off screen
  * (scripts/hero-video.ts). Pause and Sound buttons sit on the frame. Under reduced motion or Data
@@ -83,59 +88,66 @@ const poster = await getImage({
   style={`--ar:${(v.w / v.h).toFixed(4)}`}
   data-hv
 >
-  <video
-    class="hv__video"
-    muted
-    loop
-    playsinline
-    preload="none"
-    disablepictureinpicture
-    poster={poster.src}
-    width={v.w}
-    height={v.h}
-    aria-label={v.label}
-    data-hv-src={withBase(v.src)}
-    data-hv-start={v.start}
-  ></video>
-  <div class="hv__controls">
-    <button type="button" class="hv__btn" data-hv-play aria-label="Pause video">
-      <svg
-        class="hv__icon hv__icon--pause"
-        viewBox="0 0 24 24"
-        aria-hidden="true"
-        focusable="false"
-      >
-        <path d="M8 5h3v14H8zM13 5h3v14h-3z"></path>
-      </svg>
-      <svg class="hv__icon hv__icon--play" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-        <path d="M8 5l11 7-11 7z"></path>
-      </svg>
-    </button>
-    <button type="button" class="hv__btn" data-hv-sound aria-label="Turn sound on">
-      <svg
-        class="hv__icon hv__icon--muted"
-        viewBox="0 0 24 24"
-        aria-hidden="true"
-        focusable="false"
-      >
-        <path d="M4 9h4l5-4v14l-5-4H4z"></path>
-        <path d="M16 9l5 6M21 9l-5 6" fill="none" stroke="currentColor" stroke-width="2"></path>
-      </svg>
-      <svg
-        class="hv__icon hv__icon--sound"
-        viewBox="0 0 24 24"
-        aria-hidden="true"
-        focusable="false"
-      >
-        <path d="M4 9h4l5-4v14l-5-4H4z"></path>
-        <path
-          d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-        ></path>
-      </svg>
-    </button>
+  <div class="hv__frame">
+    <video
+      class="hv__video"
+      muted
+      loop
+      playsinline
+      preload="none"
+      disablepictureinpicture
+      poster={poster.src}
+      width={v.w}
+      height={v.h}
+      aria-label={v.label}
+      data-hv-src={withBase(v.src)}
+      data-hv-start={v.start}
+    ></video>
+    <div class="hv__controls">
+      <button type="button" class="hv__btn" data-hv-play aria-label="Pause video">
+        <svg
+          class="hv__icon hv__icon--pause"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <path d="M8 5h3v14H8zM13 5h3v14h-3z"></path>
+        </svg>
+        <svg
+          class="hv__icon hv__icon--play"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <path d="M8 5l11 7-11 7z"></path>
+        </svg>
+      </button>
+      <button type="button" class="hv__btn" data-hv-sound aria-label="Turn sound on">
+        <svg
+          class="hv__icon hv__icon--muted"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <path d="M4 9h4l5-4v14l-5-4H4z"></path>
+          <path d="M16 9l5 6M21 9l-5 6" fill="none" stroke="currentColor" stroke-width="2"></path>
+        </svg>
+        <svg
+          class="hv__icon hv__icon--sound"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <path d="M4 9h4l5-4v14l-5-4H4z"></path>
+          <path
+            d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          ></path>
+        </svg>
+      </button>
+    </div>
   </div>
 </figure>
 
@@ -144,16 +156,25 @@ const poster = await getImage({
 </script>
 
 <style>
-  /* The frame fits inside --hv-w by --hv-h (set by the hero) in the video's own shape. */
   .hv {
     position: relative;
-    width: min(var(--hv-w, 100%), calc(var(--hv-h, 60svh) * var(--ar)));
-    aspect-ratio: var(--ar);
     margin: 0;
-    overflow: hidden;
-    border: 1px solid var(--ink);
-    border-radius: 18px;
     background: var(--ink);
+  }
+
+  /* The video's own shape: wide ones full width, tall ones at --hv-h high (phones, tablets). */
+  .hv__frame {
+    position: relative;
+    aspect-ratio: var(--ar);
+  }
+
+  .hv--wide .hv__frame {
+    width: 100%;
+  }
+
+  .hv--tall .hv__frame {
+    height: var(--hv-h, 56svh);
+    margin-inline: auto;
   }
 
   .hv__video {
@@ -169,6 +190,47 @@ const poster = await getImage({
     bottom: 12px;
     display: flex;
     gap: 8px;
+  }
+
+  @media (min-width: 64rem) {
+    /* Behind the whole hero; the video sits at the right, level with the page's right edge. */
+    .hv {
+      position: absolute;
+      inset: 0;
+    }
+
+    .hv__frame {
+      position: absolute;
+      right: var(--pad);
+    }
+
+    .hv--wide .hv__frame {
+      top: 50%;
+      width: var(--hv-dw, 52vw);
+      translate: 0 -50%;
+    }
+
+    /* No box: the picture fades into the Ink on every side, most on the left (towards the text). */
+    .hv--wide .hv__video {
+      mask-image:
+        linear-gradient(90deg, transparent 0%, #000 28%, #000 94%, transparent 100%),
+        linear-gradient(transparent 0%, #000 12%, #000 88%, transparent 100%);
+      mask-composite: intersect;
+    }
+
+    .hv--tall .hv__frame {
+      top: 0;
+      height: 100%;
+    }
+
+    .hv__controls {
+      bottom: 16px;
+    }
+
+    .hv--wide .hv__controls {
+      right: 8%;
+      bottom: 14%;
+    }
   }
 
   .hv__btn {

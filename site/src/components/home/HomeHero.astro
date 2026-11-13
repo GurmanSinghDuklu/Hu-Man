@@ -28,7 +28,7 @@ const offer = [
       ))}
     </ul>
 
-    <!-- The showreel (Gurman, 2026-11-13: one video per hero, in place of the collage). -->
+    <!-- The showreel behind the hero, white text over it (Gurman, 2026-11-13). -->
     <div class="hero__media">
       <HeroVideo video="reel" />
     </div>
@@ -53,8 +53,27 @@ const offer = [
 
 <style>
   /* The hero fits one window: on phones a tight stack with the video capped by the window height; on desktop the whole layout shrinks with the window (see the media query). */
+  /* Like the contact page: the video behind, the text in white (on Ink where the video isn't). */
   .hero {
-    --hv-h: 22svh;
+    isolation: isolate;
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .hero__media {
+    margin-inline: calc(-1 * var(--pad));
+  }
+
+  .hero .hero__body {
+    color: #d6d7d1;
+  }
+
+  .hero__actions .btn--outline {
+    --btn: var(--paper);
+  }
+
+  .hero__actions .btn--outline:hover {
+    color: var(--ink);
   }
 
   .hero__sheet {
@@ -165,17 +184,13 @@ const offer = [
       font-size: calc(var(--u) * 0.15);
     }
 
-    /* Right of the headline, between the offer list and the buttons. */
+    /* Behind the text: the video sits at the right of the hero (HeroVideo.astro). */
     .hero__media {
-      --hv-w: calc(var(--u) * 7.3);
-      --hv-h: calc(var(--u) * 6.6);
+      --hv-dw: calc(var(--u) * 8.2);
       position: absolute;
-      left: calc(var(--u) * 8.2);
-      top: calc(var(--u) * 1.1);
-      display: grid;
-      place-items: center end;
-      width: var(--hv-w);
-      height: var(--hv-h);
+      inset: 0;
+      z-index: -1;
+      margin: 0;
     }
 
     .hero__intro {
