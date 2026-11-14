@@ -9,7 +9,7 @@ import { projects } from '../data/projects';
 const servicesPath = withBase('/services/');
 const workPath = withBase('/work/');
 
-// The FAQ lives on the pricing page, so that link carries the page path and works from anywhere.
+// The FAQ is at the foot of /about/ (#faq): one nav link, About, covers both.
 // Services and Work open a menu: every service area with its items, and every project.
 const navLinks: { href: string; label: string; menu?: 'services' | 'work' }[] = [
   { href: servicesPath, label: 'Services', menu: 'services' },
@@ -18,7 +18,6 @@ const navLinks: { href: string; label: string; menu?: 'services' | 'work' }[] = 
   { href: withBase('/pricing/'), label: 'Pricing' },
   { href: withBase('/about/'), label: 'About' },
   { href: withBase('/how-we-build/'), label: 'How we build' },
-  { href: `${withBase('/about/')}#faq`, label: 'FAQ' },
   { href: withBase('/contact/'), label: 'Contact' },
 ];
 
