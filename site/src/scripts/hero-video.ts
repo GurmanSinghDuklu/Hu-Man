@@ -4,6 +4,8 @@
  * Pause and Sound buttons; browsers allow sound because pressing the button is a user gesture.
  * Reduced motion or Data Saver: nothing loads or plays until Play is pressed.
  */
+import { introWanted, runIntro } from './hero-intro';
+
 const fig = document.querySelector<HTMLElement>('[data-hv]');
 
 if (fig) {
@@ -17,6 +19,8 @@ if (fig) {
   // `wanted`: playing unless the visitor paused it (or, without autoplay, until they press Play).
   let wanted = auto;
   let onScreen = true;
+  // `holding`: the opening tiles (About only) are still playing; the video starts when they end.
+  let holding = false;
 
   const load = () => {
     if (video.src) return;
@@ -35,6 +39,7 @@ if (fig) {
     soundBtn.setAttribute('aria-label', video.muted ? 'Turn sound on' : 'Turn sound off');
     if (wanted && onScreen) {
       load();
+      if (holding) return;
       void video.play().catch(() => {
         // Refused (rare when muted): show it as paused so Play is one press away.
         wanted = false;
@@ -55,6 +60,20 @@ if (fig) {
     if (!video.muted) wanted = true;
     sync();
   });
+
+  // The About hero's opening runs over the frame first (never under reduced motion or Data Saver).
+  if (auto && fig.hasAttribute('data-hv-intro') && introWanted()) {
+    const frame = fig.querySelector<HTMLElement>('.hv__frame');
+    if (frame) {
+      holding = true;
+      void runIntro(frame, video)
+        .catch(() => undefined)
+        .then(() => {
+          holding = false;
+          sync();
+        });
+    }
+  }
 
   new IntersectionObserver(([entry]) => {
     onScreen = Boolean(entry?.isIntersecting);

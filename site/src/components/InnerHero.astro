@@ -12,9 +12,11 @@ interface Props {
   as?: 'h1' | 'div';
   /** One of our videos in place of the collage (About, Work, Pricing; Gurman, 2026-11-13). */
   video?: 'reel' | 'found' | 'portfolio-seen' | 'portfolio-ad';
+  /** Opens the video with the tile intro (About only). */
+  intro?: boolean;
 }
 
-const { label, lens, longWords = false, as: Title = 'h1', video } = Astro.props;
+const { label, lens, longWords = false, as: Title = 'h1', video, intro = false } = Astro.props;
 ---
 
 <section
@@ -33,7 +35,7 @@ const { label, lens, longWords = false, as: Title = 'h1', video } = Astro.props;
     </div>
     {video ? (
       <div class="ihero__media">
-        <HeroVideo video={video} />
+        <HeroVideo video={video} intro={intro} />
       </div>
     ) : (
       <div class="ihero__collage">

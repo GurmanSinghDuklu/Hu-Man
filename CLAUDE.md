@@ -625,3 +625,22 @@ Chromium, WebKit and Firefox.
      the sideways parallax so they stay square with their label.
 - **"From idea to online business" (`IdeasToLife`) is off the home page and on /about/ as 04**
   (Gurman); /services/ keeps it. Home sections renumbered 01 to 07.
+
+## About + FAQ, care plans live, About intro (2026-11-14, branch `about-faq`)
+- **Care plans are live on /pricing** (five plans, rules line and fix promise from docs/02; data in
+  `carePlans`, `careRules`, `careFixPromise` in `src/data/pricing.ts`). They feed the page, llms output,
+  an OfferCatalog (UnitPriceSpecification, monthly) in the pricing schema, and the "from £29/mo" mentions
+  on /about/ and /services/. Buttons link `contactPath({ tier: 'Care plan: <name>' })`. Edit docs/02 first.
+- **The FAQ lives at the foot of /about/ (`#faq`)**; /pricing keeps one "Questions? Read our FAQ" line.
+  Header, footer, `smooth.ts`, FAQPage schema (About is typed `['AboutPage', 'FAQPage']`) and the
+  seo-check FAQ comparison all point at /about/.
+- **About hero intro** (`scripts/hero-intro.ts`, opt-in with `intro` on `InnerHero`/`HeroVideo`): neon tiles
+  drop in, a scan line sweeps, each column flips to its slice of the poster, seams close, layer removed,
+  then the video plays. Once per session (`hm-about-intro`); not under reduced motion or Data Saver; any
+  click or key finishes it. `hero-video.ts` holds playback (`holding`) until it ends.
+  1. **An opacity animation flattens 3D.** The cell wrapper animates translate/opacity/scale; the tile
+     inside only rotates. With both on one element the back faces never showed.
+  2. Slices line up because each back face is the poster at cols x rows size shifted to its cell, and
+     cells are exact grid cells (the seam is a `scale` of 0.93, not a gap). Back faces overlap by 0.5px.
+  3. Tile count is derived from the frame (5 x 3 on desktop, 3 x 2 on phones; max 32); colours are
+     mostly Signal with one or two each of the other neons. Starts when the frame is 40% on screen.

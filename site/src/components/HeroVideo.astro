@@ -71,9 +71,11 @@ const videos = {
 interface Props {
   video: keyof typeof videos;
   class?: string;
+  /** Opens with the tile intro over the frame (scripts/hero-intro.ts); only /about/ uses it. */
+  intro?: boolean;
 }
 
-const { video, class: className } = Astro.props;
+const { video, class: className, intro = false } = Astro.props;
 const v: Video = videos[video];
 const poster = await getImage({
   src: v.poster,
@@ -87,6 +89,7 @@ const poster = await getImage({
   class:list={['hv', v.w > v.h ? 'hv--wide' : 'hv--tall', className]}
   style={`--ar:${(v.w / v.h).toFixed(4)}`}
   data-hv
+  data-hv-intro={intro ? '' : undefined}
 >
   <div class="hv__frame">
     <video
@@ -211,7 +214,8 @@ const poster = await getImage({
     }
 
     /* No box: the picture fades into the Ink on every side, most on the left (towards the text). */
-    .hv--wide .hv__video {
+    .hv--wide .hv__video,
+    .hv--wide :global(.hv-intro) {
       mask-image:
         linear-gradient(90deg, transparent 0%, #000 28%, #000 94%, transparent 100%),
         linear-gradient(transparent 0%, #000 12%, #000 88%, transparent 100%);
@@ -233,6 +237,54 @@ const poster = await getImage({
       right: 6%;
       bottom: auto;
     }
+  }
+
+  /* The opening tiles (scripts/hero-intro.ts) sit over the video, under the buttons: Ink with a
+     grid of square tiles; no shadows, glows or gradients. */
+  :global(.hv-intro) {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-columns: repeat(var(--cols), 1fr);
+    grid-template-rows: repeat(var(--rows), 1fr);
+    overflow: clip;
+    background: var(--ink);
+    pointer-events: none;
+  }
+
+  :global(.hv-cell) {
+    scale: 0.93;
+  }
+
+  :global(.hv-tile) {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+  }
+
+  :global(.hv-tile__face) {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    background-repeat: no-repeat;
+  }
+
+  :global(.hv-tile__back) {
+    /* A half pixel over, so no hairline shows between slices once the seams close. */
+    inset: -0.5px;
+    transform: rotateY(180deg);
+  }
+
+  :global(.hv-scan) {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 3px;
+    background: #39ff14;
+    opacity: 0;
   }
 
   .hv__btn {
