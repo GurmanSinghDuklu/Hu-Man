@@ -32,6 +32,7 @@ const { label, lens, longWords = false, as: Title = 'h1', video, intro = false }
       <p class="ihero__lede">
         <slot name="lede" />
       </p>
+      <slot name="after" />
     </div>
     {video ? (
       <div class="ihero__media">

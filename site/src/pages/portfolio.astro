@@ -29,9 +29,17 @@ const choose = (name: string) => withBase(contactPath({ tier: `Portfolio: ${name
       Personal portfolio and CV websites for job seekers, graduates, creatives and freelancers. For
       individuals, not businesses.
     </Fragment>
+    <a slot="after" class="pscroll" href="#concepts">
+      <span>See all {portfolioConcepts.length} concepts below</span>
+      <span class="pscroll__arrow" aria-hidden="true">
+        <svg viewBox="0 0 24 24" focusable="false">
+          <path d="M12 4v15M5 12l7 7 7-7"></path>
+        </svg>
+      </span>
+    </a>
   </InnerHero>
 
-  <section class="band pconcepts" aria-labelledby="concepts-title">
+  <section id="concepts" class="band pconcepts" aria-labelledby="concepts-title">
     <div class="sheet">
       <p class="label" data-reveal>
         {portfolioConceptsIntro.label} · {portfolioConcepts.length}
@@ -115,6 +123,62 @@ const choose = (name: string) => withBase(contactPath({ tier: `Portfolio: ${name
   @media (max-width: 63.99rem) {
     :global(.ihero.ihero--video) {
       --hv-h: 46svh;
+    }
+  }
+
+  /* Scroll cue under the lede: points down to the concept wall; the arrow drops on a loop (off under reduced motion). */
+  .pscroll {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75em;
+    margin-top: 1.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #f2f2ec;
+    text-decoration: none;
+  }
+  .pscroll:hover span:first-child,
+  .pscroll:focus-visible span:first-child {
+    text-decoration: underline;
+    text-underline-offset: 0.3em;
+  }
+  .pscroll__arrow {
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 1px solid #39ff14;
+    color: #39ff14;
+  }
+  .pscroll__arrow svg {
+    width: 1.1rem;
+    height: 1.1rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: square;
+    animation: pscroll-drop 1.6s cubic-bezier(0.6, 0, 0.4, 1) infinite;
+  }
+  @keyframes pscroll-drop {
+    0% {
+      translate: 0 -0.35rem;
+      opacity: 0;
+    }
+    30%,
+    70% {
+      translate: 0 0;
+      opacity: 1;
+    }
+    100% {
+      translate: 0 0.45rem;
+      opacity: 0;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pscroll__arrow svg {
+      animation: none;
     }
   }
 
