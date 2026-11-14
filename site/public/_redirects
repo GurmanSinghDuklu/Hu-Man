@@ -8,7 +8,25 @@
 /faq          /pricing/#faq   301
 /faqs         /pricing/#faq   301
 /prices       /pricing/       301
-/portfolio    /work/          301
 /projects     /work/          301
 /process      /how-we-build/  301
 /about-us     /about/         301
+
+# Each page without its final slash -> the page, permanently (Cloudflare's own handling uses a
+# temporary 307). Exact-match rules, so the slash version is never redirected again. Add a line
+# here when you add a page. /portfolio used to go to /work/; it is its own page now (2026-11-11).
+/about             /about/             301
+/services          /services/          301
+/pricing           /pricing/           301
+/work              /work/              301
+/portfolio         /portfolio/         301
+/how-we-build      /how-we-build/      301
+/agentic-ai-ready  /agentic-ai-ready/  301
+/free-ai-check     /free-ai-check/     301
+/contact           /contact/           301
+/start             /start/             301
+/privacy           /privacy/           301
+/terms             /terms/             301
+/cookies           /cookies/           301
+/user-agreement    /user-agreement/    301
+/thanks            /thanks/            301
