@@ -7,6 +7,7 @@
  * land it under the sticky header once the reveal plays. We measure where it will settle instead.
  */
 import Lenis from 'lenis';
+import { useScroller } from './scroller';
 
 /** The element's page offset once every pending reveal on it or its ancestors has played. */
 function settledTop(el: HTMLElement): number {
@@ -30,6 +31,10 @@ function targetOf(hash: string): HTMLElement | null {
 
 export function startSmoothScroll(): void {
   const lenis = new Lenis({ autoRaf: true });
+  useScroller({
+    to: (y) => lenis.scrollTo(y, { duration: 0.8 }),
+    target: () => lenis.targetScroll,
+  });
   const headerHeight = () => document.querySelector<HTMLElement>('.site-header')?.offsetHeight ?? 0;
   const go = (target: HTMLElement, immediate = false) =>
     lenis.scrollTo(settledTop(target) - headerHeight(), { immediate });

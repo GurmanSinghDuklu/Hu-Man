@@ -9,10 +9,19 @@
  *   middle of the window while its items light up one by one, with a progress bar. A list that is
  *   too tall to fit the window is left as it is. Items are lit cumulatively and unlit ones stay
  *   readable (a light filter, base.css), so nothing is hidden from anyone who scrolls fast.
+ *   With a wheel or trackpad, each scroll gesture moves exactly one item (Gurman, 2026-11-14):
+ *   the first gesture into the runway lands on the first item, each next one glides to the next
+ *   item, and one more past the last item carries on down the page. The rest of a gesture (a
+ *   trackpad's inertia) is swallowed, so one swipe never skips items. Scrollbar, keys and touch
+ *   still scroll freely, and the items light by position as before.
  * - Decorative shapes (.orb, free-standing .sparkle) drift at their own speed: depth. Any shape
  *   whose own animation already moves it is left alone.
  */
+import { scroller } from './scroller';
+
 const WIDE = window.matchMedia('(min-width: 64rem)');
+const STEP_MS = 650; // after a step, wheel input is held this long before the next one counts
+const GESTURE_GAP_MS = 140; // a pause this long, then a push at least as hard, is a new gesture
 const RUNWAY_PER_ITEM = 0.3; // window heights of scrolling per item while pinned
 const FITS = 0.82; // a list pins only if it is at most this share of the window height
 
@@ -38,6 +47,25 @@ function makePin(list: HTMLElement): Pin {
   runway.append(stage);
   const items = [...list.children].filter((c): c is HTMLElement => c instanceof HTMLElement);
   return { runway, stage, bar, list, items, on: false };
+}
+
+/** Page offset of an element from layout alone, so a moving ancestor (a handoff's sink and
+ * shrink, a reveal) never shifts it. */
+function layoutTop(el: HTMLElement): number {
+  let top = 0;
+  for (let n: HTMLElement | null = el; n; n = n.offsetParent as HTMLElement | null) {
+    top += n.offsetTop;
+  }
+  return top;
+}
+
+/**
+ * Scroll offsets where a pin starts (first item current) and ends (last item current). Item i is
+ * current at start + (end - start) * i / (items - 1).
+ */
+function pinSpan(pin: Pin): { start: number; end: number } {
+  const start = layoutTop(pin.runway) - parseFloat(pin.stage.style.top);
+  return { start, end: start + pin.runway.offsetHeight - pin.stage.offsetHeight };
 }
 
 function movesItself(el: Element): boolean {
@@ -160,11 +188,11 @@ export function startScrollFx(): void {
 
     for (const pin of pins) {
       if (!pin.on) continue;
-      const r = pin.runway.getBoundingClientRect();
-      const runway = r.height - pin.stage.offsetHeight;
-      const p = Math.min(1, Math.max(0, (parseFloat(pin.stage.style.top) - r.top) / runway));
+      const { start, end } = pinSpan(pin);
+      const p = Math.min(1, Math.max(0, (y - start) / Math.max(1, end - start)));
       pin.bar.style.setProperty('--p', p.toFixed(4));
-      const lit = Math.min(pin.items.length, Math.floor(p * pin.items.length * 0.999) + 1);
+      // Item i is current at its own step position (pinSpan), switching halfway between.
+      const lit = Math.round(p * (pin.items.length - 1)) + 1;
       pin.items.forEach((s, i) => {
         s.classList.toggle('is-lit', i < lit);
         s.classList.toggle('is-current', i === lit - 1);
@@ -191,4 +219,73 @@ export function startScrollFx(): void {
 
   window.addEventListener('scroll', wake, { passive: true });
   wake();
+
+  // Wheel stepping through pinned lists.
+  let gesture = 0; // counts wheel gestures
+  let lastWheel = 0;
+  let lastAbs = 0;
+  let stepGesture = -1;
+  let stepAt = -Infinity;
+  let aimY = 0; // where the last step is gliding to (the page may not be there yet)
+
+  const go = (y: number, now: number) => {
+    aimY = y;
+    stepAt = now;
+    stepGesture = gesture;
+    scroller.to(y);
+  };
+
+  const onWheel = (e: WheelEvent) => {
+    if (e.ctrlKey || Math.abs(e.deltaX) > Math.abs(e.deltaY) || !e.deltaY) return;
+    const now = performance.now();
+    const unit = e.deltaMode === 1 ? 40 : e.deltaMode === 2 ? window.innerHeight : 1;
+    const delta = e.deltaY * unit;
+    const abs = Math.abs(delta);
+    // A new gesture: a long pause, a short pause followed by a push at least as hard (a wheel
+    // notch, a fresh swipe), or a sudden harder push during a trackpad's fading inertia. A short
+    // pause in a fading push is the same gesture: a busy page (a shader compiling) can delay
+    // inertia events.
+    const gap = now - lastWheel;
+    if (gap > 400 || (gap > GESTURE_GAP_MS && abs >= lastAbs) || abs > lastAbs * 1.4 + 4) {
+      gesture += 1;
+    }
+    lastWheel = now;
+    lastAbs = abs;
+
+    const dir = Math.sign(delta);
+    const y = now - stepAt < 900 ? aimY : scroller.target();
+    const held = gesture === stepGesture || now - stepAt < STEP_MS;
+
+    for (const pin of pins) {
+      if (!pin.on) continue;
+      const { start, end } = pinSpan(pin);
+      const last = pin.items.length - 1;
+      let to: number | null = null;
+      if (y < start - 2) {
+        if (dir > 0 && y + delta >= start)
+          to = start; // arriving from above: the first item
+        else continue;
+      } else if (y > end + 2) {
+        if (dir < 0 && y + delta <= end)
+          to = end; // arriving from below: the last item
+        else continue;
+      } else {
+        const at = Math.round(((y - start) / Math.max(1, end - start)) * last);
+        const next = at + dir;
+        // Past either end: let the page carry on, unless this is still the gesture that stepped.
+        if (next < 0 || next > last) {
+          if (!held) return;
+        } else {
+          to = start + ((end - start) * next) / last;
+        }
+      }
+      // Lenis skips events flagged like this; the page doesn't move by itself either.
+      (e as WheelEvent & { lenisStopPropagation?: boolean }).lenisStopPropagation = true;
+      e.preventDefault();
+      if (!held && to !== null) go(to, now);
+      return;
+    }
+  };
+  // Capture on window runs before Lenis's own wheel listener (bubble, on window).
+  window.addEventListener('wheel', onWheel, { passive: false, capture: true });
 }

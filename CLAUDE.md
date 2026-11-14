@@ -596,3 +596,16 @@ Chromium, WebKit and Firefox.
   up once you scroll past it and returns after scrolling up 60px, at the top, or when keyboard focus
   or an open menu is in it. Nav label "CV portfolio" for /portfolio/; between 64 and 80rem the nav
   tightens so every link stays on one line.
+
+## Card lists step one per swipe; method block moved to About (2026-11-14, branch `scroll-story`)
+- **Pinned lists (`data-pin-steps`) step one item per wheel or trackpad gesture** (Gurman): the first
+  swipe into the runway lands on the first item, each next swipe glides to the next, and one more
+  past the last carries on down the page (`scripts/motion/scroll-fx.ts`). Scrollbar, keys and touch
+  still scroll freely. It highlights cards that are all visible; it never swaps content.
+  1. **Measure pins from layout (`offsetTop`), not `getBoundingClientRect`**: a `data-handoff`
+     section sinks and shrinks while its pinned list is still stuck, which threw the steps off.
+  2. **A busy page delays wheel events** (the indigo panel's shader), so a short gap in a fading
+     push is still the same gesture; only a gap followed by an equal or harder push is a new one.
+  3. Script scrolls go through `scripts/motion/scroller.ts`, which Lenis takes over when it starts.
+- **"From idea to online business" (`IdeasToLife`) is off the home page and on /about/ as 04**
+  (Gurman); /services/ keeps it. Home sections renumbered 01 to 07.
