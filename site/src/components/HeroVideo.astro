@@ -71,11 +71,12 @@ const videos = {
 interface Props {
   video: keyof typeof videos;
   class?: string;
-  /** Opens with the tile intro over the frame (scripts/hero-intro.ts); only /about/ uses it. */
-  intro?: boolean;
+  /** Opens with an intro over the frame: true or 'tiles' (About, scripts/hero-intro.ts) or 'cv' (Portfolio, scripts/hero-intro-cv.ts). */
+  intro?: boolean | 'tiles' | 'cv';
 }
 
 const { video, class: className, intro = false } = Astro.props;
+const introVariant = intro === 'cv' ? 'cv' : intro ? 'tiles' : undefined;
 const v: Video = videos[video];
 const poster = await getImage({
   src: v.poster,
@@ -89,7 +90,7 @@ const poster = await getImage({
   class:list={['hv', v.w > v.h ? 'hv--wide' : 'hv--tall', className]}
   style={`--ar:${(v.w / v.h).toFixed(4)}`}
   data-hv
-  data-hv-intro={intro ? '' : undefined}
+  data-hv-intro={introVariant}
 >
   <div class="hv__frame">
     <video
@@ -250,6 +251,63 @@ const poster = await getImage({
     overflow: clip;
     background: var(--ink);
     pointer-events: none;
+  }
+
+  /* The CV opening (scripts/hero-intro-cv.ts): a plain Paper sheet over the frame, then cut into
+     strips that fall. Sized in container units so each strip's copy lines up; square, flat, no
+     shadows, glows or gradients. The poster shows through behind it. */
+  :global(.hv-cv) {
+    position: absolute;
+    inset: 0;
+    overflow: clip;
+    container-type: size;
+    pointer-events: none;
+  }
+
+  :global(.hv-cv__strip) {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    overflow: clip;
+  }
+
+  :global(.cv-sheet) {
+    position: absolute;
+    top: 0;
+    width: 100cqw;
+    height: 100cqh;
+    box-sizing: border-box;
+    border: 2px solid var(--ink);
+    background: var(--paper);
+  }
+
+  :global(.cv-sheet > .cv-bar) {
+    position: absolute;
+    left: 10cqw;
+    display: block;
+    height: 1.3cqh;
+    background: #bdbfb5;
+    transform-origin: left;
+  }
+
+  :global(.cv-sheet > .cv-bar--name) {
+    height: 3.4cqh;
+    background: var(--ink);
+  }
+
+  :global(.cv-sheet > .cv-bar--head) {
+    height: 1.6cqh;
+    background: #6b6e66;
+  }
+
+  :global(.hv-cv__scan) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: #39ff14;
+    opacity: 0;
   }
 
   :global(.hv-cell) {

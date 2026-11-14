@@ -4,7 +4,8 @@
  * Pause and Sound buttons; browsers allow sound because pressing the button is a user gesture.
  * Reduced motion or Data Saver: nothing loads or plays until Play is pressed.
  */
-import { introWanted, runIntro } from './hero-intro';
+import { INTRO_KEYS, introWanted, runIntro } from './hero-intro';
+import { runCvIntro } from './hero-intro-cv';
 
 const fig = document.querySelector<HTMLElement>('[data-hv]');
 
@@ -19,7 +20,7 @@ if (fig) {
   // `wanted`: playing unless the visitor paused it (or, without autoplay, until they press Play).
   let wanted = auto;
   let onScreen = true;
-  // `holding`: the opening tiles (About only) are still playing; the video starts when they end.
+  // `holding`: the opening (About or Portfolio) are still playing; the video starts when they end.
   let holding = false;
 
   const load = () => {
@@ -61,12 +62,14 @@ if (fig) {
     sync();
   });
 
-  // The About hero's opening runs over the frame first (never under reduced motion or Data Saver).
-  if (auto && fig.hasAttribute('data-hv-intro') && introWanted()) {
+  // A page's opening runs over the frame first: 'tiles' (About) or 'cv' (Portfolio). Never under
+  // reduced motion or Data Saver, and once per browser session for each.
+  const variant = fig.dataset.hvIntro === 'cv' ? 'cv' : 'tiles';
+  if (auto && fig.hasAttribute('data-hv-intro') && introWanted(INTRO_KEYS[variant])) {
     const frame = fig.querySelector<HTMLElement>('.hv__frame');
     if (frame) {
       holding = true;
-      void runIntro(frame, video)
+      void (variant === 'cv' ? runCvIntro(frame) : runIntro(frame, video))
         .catch(() => undefined)
         .then(() => {
           holding = false;

@@ -10,6 +10,8 @@
  * motion, not Data Saver). Any click or key press finishes it at once.
  */
 const KEY = 'hm-about-intro';
+/** Session keys: each page's intro plays once per browser session. */
+export const INTRO_KEYS = { tiles: KEY, cv: 'hm-portfolio-intro' } as const;
 const MAX_TILES = 32;
 
 // Brand neons. Signal is the main colour; the others are one or two tiles each.
@@ -29,10 +31,10 @@ const HARD = 'cubic-bezier(0.7, 0, 0.2, 1)';
 const SNAP = 'cubic-bezier(0.2, 0.9, 0.3, 1)';
 
 /** Whether the intro should run in this browser session (and mark it as seen). */
-export function introWanted(): boolean {
+export function introWanted(key: string = KEY): boolean {
   try {
-    if (sessionStorage.getItem(KEY)) return false;
-    sessionStorage.setItem(KEY, '1');
+    if (sessionStorage.getItem(key)) return false;
+    sessionStorage.setItem(key, '1');
   } catch {
     // Storage blocked: still run it, once per page view.
   }
@@ -186,8 +188,20 @@ export function runIntro(frame: HTMLElement, video: HTMLVideoElement): Promise<v
     { duration: SCAN_FOR, delay: SCAN_AT, easing: 'linear' },
   );
 
-  const total = lastFlip.end + SEAL;
+  return playWhenSeen(frame, layer, animations, lastFlip.end + SEAL);
+}
 
+/**
+ * Shared by every intro variant: waits until the frame is 40% on screen (a phone's video sits
+ * below the text), plays the paused animations, and settles when they end. Any click or key press
+ * finishes it at once (it never blocks the buttons underneath). The layer is removed, not hidden.
+ */
+export function playWhenSeen(
+  frame: HTMLElement,
+  layer: HTMLElement,
+  animations: Animation[],
+  total: number,
+): Promise<void> {
   return new Promise<void>((resolve) => {
     let finished = false;
     const finish = () => {
@@ -203,12 +217,10 @@ export function runIntro(frame: HTMLElement, video: HTMLVideoElement): Promise<v
     const begin = () => {
       animations.forEach((a) => a.play());
       window.setTimeout(finish, total + 60);
-      // Any click or key press finishes it at once (never blocks the buttons underneath).
       document.addEventListener('pointerdown', finish, { once: true });
       document.addEventListener('keydown', finish, { once: true });
     };
 
-    // Start when the frame is on screen; a phone's video sits below the text.
     const io = new IntersectionObserver(
       ([entry]) => {
         if (!entry?.isIntersecting) return;
