@@ -10,7 +10,7 @@
 import { site } from '../config/site';
 import { pages, type PageKey } from './pages';
 import { serviceAreas } from './services';
-import { tiers, portfolioTiers } from './pricing';
+import { tiers, portfolioTiers, carePlans } from './pricing';
 import { faq, agenticFaq, checkFaq } from './faq';
 import { term, definition } from './agentic';
 import { method, methodName } from './process';
@@ -215,11 +215,34 @@ export function buildSchema(key: PageKey, abs: AbsUrl): Node {
         };
       }),
     });
-    webPage.mainEntity = faq.map((item) => ({
-      '@type': 'Question',
-      name: item.q,
-      acceptedAnswer: { '@type': 'Answer', text: item.a },
-    }));
+    // Care plans: monthly prices shown on the page, as their own catalogue.
+    graph.push({
+      '@type': 'OfferCatalog',
+      '@id': `${url}#care-plans`,
+      name: 'Care plans',
+      url: `${url}#care-title`,
+      itemListElement: carePlans.map((plan) => ({
+        '@type': 'Offer',
+        name: `${plan.name} care plan`,
+        description: `${plan.includes.join('; ')}. For: ${plan.forWho.toLowerCase()}.`,
+        url: `${url}#care-title`,
+        seller: { '@id': ids.org },
+        priceCurrency: 'GBP',
+        priceSpecification: {
+          '@type': 'UnitPriceSpecification',
+          price: amount(plan.price),
+          priceCurrency: 'GBP',
+          billingDuration: 1,
+          billingIncrement: 1,
+          unitCode: 'MON',
+        },
+        itemOffered: {
+          '@type': 'Service',
+          name: `${plan.name} care plan`,
+          provider: { '@id': ids.org },
+        },
+      })),
+    });
   }
 
   if (key === 'portfolio') {
@@ -259,7 +282,7 @@ export function buildSchema(key: PageKey, abs: AbsUrl): Node {
     };
   }
 
-  if (key === 'about' || key === 'contact') {
+  if (key === 'contact') {
     webPage.mainEntity = { '@id': ids.org };
   }
 
@@ -269,6 +292,12 @@ export function buildSchema(key: PageKey, abs: AbsUrl): Node {
       name: item.q,
       acceptedAnswer: { '@type': 'Answer', text: item.a },
     }));
+
+  // About holds the FAQ (moved from /pricing, 2026-11-14): the page is both an AboutPage and a FAQPage.
+  if (key === 'about') {
+    webPage['@type'] = ['AboutPage', 'FAQPage'];
+    webPage.mainEntity = questions(faq);
+  }
 
   if (key === 'agentic-ai-ready') {
     graph.push({

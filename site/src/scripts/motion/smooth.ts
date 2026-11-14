@@ -54,7 +54,7 @@ export function startSmoothScroll(): void {
     target.focus({ preventScroll: true });
   });
 
-  // Arriving on /pricing/#faq from another page: land below the header too.
+  // Arriving on /about/#faq from another page: land below the header too.
   const arrived = targetOf(location.hash);
   if (arrived) go(arrived, true);
 }

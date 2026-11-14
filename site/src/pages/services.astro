@@ -10,6 +10,7 @@ import AtTheCentre from '../components/sections/AtTheCentre.astro';
 import TalkBanner from '../components/TalkBanner.astro';
 import Sparkle from '../components/Sparkle.astro';
 import { serviceAreas } from '../data/services';
+import { carePlanFrom } from '../data/pricing';
 
 // "Projects and care": what is paid once and what a care plan covers (from the design).
 const projects = [
@@ -139,7 +140,7 @@ const lightNumber = new Set(['indigo', 'dusk']);
             </ul>
           </div>
           <p>
-            <span class="care-pill paid__pill">Care plan prices being finalised</span>
+            <span class="care-pill paid__pill">Care plans from {carePlanFrom}</span>
           </p>
         </div>
       </div>

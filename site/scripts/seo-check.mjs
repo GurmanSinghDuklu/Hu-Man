@@ -217,10 +217,12 @@ for (const [, tier, price] of llmsFull.matchAll(/^\| ([^|]+) \| (£[\d,]+) \|/gm
     fail('pricing', `tier "${tier.trim()} ${price}" is in llms-full.txt but not in the page text`);
   }
 }
+const aboutText = rawText(html['about/index.html'] ?? '');
 const faqBlock = llmsFull.split('## Frequently asked questions')[1]?.split('\n## ')[0] ?? '';
 for (const [, q, a] of faqBlock.matchAll(/### (.+)\n\n(.+)/g)) {
-  if (!pricingText.includes(q) || !pricingText.includes(a))
-    fail('pricing', `FAQ "${q}" differs from llms-full.txt`);
+  // The FAQ lives on /about/ (moved from /pricing, 2026-11-14).
+  if (!aboutText.includes(q) || !aboutText.includes(a))
+    fail('about', `FAQ "${q}" differs from llms-full.txt`);
 }
 if (!llmsFull.includes('# Every page, word for word')) fail('llms-full.txt', 'no full page text');
 for (const file of htmlFiles.filter((f) => !NOINDEX_FILES.has(f))) {

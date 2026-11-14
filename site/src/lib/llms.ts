@@ -15,7 +15,9 @@ import {
   portfolioTiers,
   portfolioAddOns,
   portfolioExpress,
-  carePlansNote,
+  carePlans,
+  careRules,
+  careFixPromise,
 } from '../data/pricing';
 import { faq, agenticFaq, checkFaq, contactFaq } from '../data/faq';
 import { definition, ingredients } from '../data/agentic';
@@ -166,7 +168,15 @@ export function llmsFullTxt(): string {
     '',
     `${fastTrack.title}: ${fastTrack.text}`,
     '',
-    `Care plans: launching soon, with no prices yet. ${carePlansNote}`,
+    '### Care plans (monthly)',
+    '',
+    '| Plan | Price | What is included | For |',
+    '| --- | --- | --- | --- |',
+    ...carePlans.map((c) => `| ${c.name} | ${c.price} | ${c.includes.join('; ')} | ${c.forWho} |`),
+    '',
+    careRules,
+    '',
+    `Fix promise: ${careFixPromise}`,
     '',
     `## Portfolio and CV websites (${link('portfolio')})`,
     '',

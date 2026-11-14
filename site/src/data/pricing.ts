@@ -93,11 +93,82 @@ export const tiers: Tier[] = [
 ];
 
 /**
- * Care plans have no published prices until they are final (change list, Nov 2026). The working
- * figures stay in docs/02-offer-and-pricing.md and must not be copied here.
+ * Care plans (docs/02 "Care plans"; prices live from 2026-11-14, agreed by Gurman as launch
+ * figures). Monthly, rolling, any time to cancel. Edit the doc first, then mirror it here.
  */
-export const carePlansNote =
-  'Monthly care plans for hosting, security, backups and updates are launching soon.';
+export interface CarePlan {
+  id: string;
+  name: string;
+  price: string;
+  /** What is in it, one item per line on the cards. */
+  includes: string[];
+  /** Who it is for. */
+  forWho: string;
+}
+
+export const carePlans: CarePlan[] = [
+  {
+    id: 'basic',
+    name: 'Basic',
+    price: '£29/mo',
+    includes: [
+      'Hosting, SSL, security, backups, uptime monitoring and fixes',
+      'Up to 15 minutes of small changes a month (a price, hours, a line of text)',
+    ],
+    forWho: 'Any website',
+  },
+  {
+    id: 'care',
+    name: 'Care',
+    price: '£49/mo',
+    includes: ['Everything in Basic', '1 hour of edits a month'],
+    forWho: 'Any website',
+  },
+  {
+    id: 'grow',
+    name: 'Grow',
+    price: '£99/mo',
+    includes: [
+      'Everything in Basic',
+      '3 hours of edits a month',
+      'Monthly Google and AI visibility check',
+      'Monthly report',
+    ],
+    forWho: 'Any website',
+  },
+  {
+    id: 'software-care',
+    name: 'Software care',
+    price: '£185/mo',
+    includes: [
+      'Everything in Grow',
+      'Up to 3 hours on the software',
+      'Dependency and security updates',
+      'Error monitoring',
+      'Reply within 2 working days',
+    ],
+    forWho: 'Custom builds only',
+  },
+  {
+    id: 'software-care-plus',
+    name: 'Software care plus',
+    price: '£350/mo',
+    includes: [
+      'Software care with up to 6 hours',
+      'Next-working-day replies',
+      'App store updates if mobile',
+    ],
+    forWho: 'Custom builds only',
+  },
+];
+
+/** The rules under the care plans (docs/02 "Rules"). */
+export const careRules =
+  'Rolling monthly: cancel any time. Included time does not carry over to the next month. Extra work is £45/hr for care plan clients and £55/hr otherwise, always quoted before we start.';
+
+/** The fix promise (docs/02 "Fix promise"); the terms page defines it. */
+export const careFixPromise =
+  'If something breaks because of our work, we fix it free, care plan or not.';
 
 /** A tier's price by id, for copy such as "from our £446 Start tier up". */
 export const priceOf = (id: string): string => {
@@ -105,6 +176,9 @@ export const priceOf = (id: string): string => {
   if (!tier) throw new Error(`Unknown tier: ${id}`);
   return tier.price;
 };
+
+/** The cheapest care plan, for copy such as "care plans from £29/mo". */
+export const carePlanFrom = carePlans[0].price;
 
 /** The lowest fixed price, for copy such as "Start at £318". */
 export const fromPrice = tiers[0].price;

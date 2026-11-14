@@ -1,5 +1,5 @@
 /**
- * The FAQs on the pricing, agentic AI-ready, free AI check and contact pages. One copy feeds each page, its
+ * The FAQs on the About, agentic AI-ready, free AI check and contact pages. One copy feeds each page, its
  * FAQPage schema and llms-full.txt, so the answer an AI tool reads is always the one a visitor sees.
  * The two newer lists are drafts (2026-10-26) awaiting Gurman's sign-off.
  */

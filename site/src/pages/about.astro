@@ -10,6 +10,8 @@ import IdeasToLife from '../components/sections/IdeasToLife.astro';
 import { withBase } from '../config/paths';
 import { site } from '../config/site';
 import { mission, rules, promises, founderNote } from '../data/about';
+import { carePlanFrom } from '../data/pricing';
+import { faq } from '../data/faq';
 ---
 
 <BaseLayout page="about">
@@ -147,14 +149,11 @@ import { mission, rules, promises, founderNote } from '../data/about';
           the same way.
         </h2>
         <p class="careway__text" data-reveal data-scrub="words">
-          Our care plans are being reworked. The rule doesn’t change: fair prices, real people, and
-          no surprise bills for small things.
-        </p>
-        <p class="careway__soon">
-          <span class="pill">Coming soon</span>
+          Care plans start at {carePlanFrom} and run month to month. The rule stays the same: fair
+          prices, real people, and no surprise bills for small things.
         </p>
         <a class="more-link careway__link" href={withBase('/pricing/')}>
-          See current pricing <span aria-hidden="true">↗</span>
+          See care plans and pricing <span aria-hidden="true">↗</span>
         </a>
       </div>
 
@@ -168,6 +167,30 @@ import { mission, rules, promises, founderNote } from '../data/about';
         <span class="careway__peach"></span>
         <span class="careway__dot"></span>
       </div>
+    </div>
+  </section>
+
+  <section class="band band--paper-2 faq" id="faq" aria-labelledby="faq-title">
+    <div class="sheet">
+      <p class="label" data-reveal>
+        06 / Questions
+      </p>
+      <h2 id="faq-title" class="display faq__title" data-reveal="lines">
+        FAQ
+      </h2>
+      <ul class="faq__list">
+        {faq.map((item, i) => (
+          <li data-rise={i % 2}>
+            <details class="faq__item" open>
+              <summary>
+                <span class="faq__q">{item.q}</span>
+                <span class="faq__toggle" aria-hidden="true" />
+              </summary>
+              <p class="faq__a">{item.a}</p>
+            </details>
+          </li>
+        ))}
+      </ul>
     </div>
   </section>
 
@@ -392,14 +415,6 @@ import { mission, rules, promises, founderNote } from '../data/about';
     line-height: 1.5;
   }
 
-  .careway__soon {
-    margin-top: 1.5rem;
-  }
-
-  .careway__soon .pill {
-    background: var(--peach);
-  }
-
   .careway__link {
     margin-top: 1.75rem;
   }
@@ -522,6 +537,123 @@ import { mission, rules, promises, founderNote } from '../data/about';
     .careway__art {
       --cu: var(--u);
       justify-self: start;
+    }
+  }
+
+  /* ---------- FAQ ---------- */
+  .faq {
+    padding-block: clamp(3.5rem, calc(var(--u) * 0.9), 5.5rem)
+      clamp(3rem, calc(var(--u) * 0.8), 5rem);
+  }
+
+  .faq__title {
+    margin-top: 0.3rem;
+  }
+
+  .faq__list {
+    display: grid;
+    gap: 1rem;
+    margin-top: clamp(2rem, calc(var(--u) * 0.6), 3.5rem);
+  }
+
+  .faq__item {
+    position: relative;
+    min-height: 100%;
+    padding: clamp(1.25rem, calc(var(--u) * 0.38), 2.25rem);
+    border: 1px solid var(--ink);
+    border-radius: 0 calc(var(--u) * 0.72) calc(var(--u) * 0.72) 0;
+    background: var(--paper);
+  }
+
+  .faq__item summary {
+    display: block;
+    padding-right: 3.5rem;
+    list-style: none;
+    cursor: pointer;
+  }
+
+  .faq__item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq__q {
+    font: 800 clamp(1.05rem, calc(var(--u) * 0.225), 1.4rem) / 1.05 var(--font-display);
+    text-transform: uppercase;
+  }
+
+  /* The toggle sits centred on the card's right, as in the design. */
+  .faq__toggle {
+    position: absolute;
+    right: clamp(1.25rem, calc(var(--u) * 0.34), 2.25rem);
+    top: 50%;
+    translate: 0 -50%;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--ink);
+  }
+
+  .faq__toggle::before,
+  .faq__toggle::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 12px;
+    height: 1.5px;
+    background: var(--paper);
+    transform: translate(-50%, -50%);
+  }
+
+  .faq__toggle::after {
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+
+  .faq__item:not([open]) .faq__toggle {
+    top: clamp(1.25rem, calc(var(--u) * 0.38), 2.25rem);
+    translate: none;
+  }
+
+  /* Open shows the minus; the first card is pink, as in the design. */
+  .faq__item[open] .faq__toggle::after {
+    display: none;
+  }
+
+  .faq__list li:first-child .faq__toggle {
+    background: var(--pink);
+  }
+
+  .faq__a {
+    max-width: 36rem;
+    margin-top: 0.5rem;
+    padding-right: 3.5rem;
+    font-size: clamp(0.9rem, calc(var(--u) * 0.165), 1rem);
+    line-height: 1.5;
+  }
+
+  .faq__a a {
+    font-weight: 600;
+  }
+
+  @media (min-width: 48rem) {
+    .faq__list {
+      grid-template-columns: repeat(2, 1fr);
+      gap: calc(var(--u) * 0.22) calc(var(--u) * 0.33);
+    }
+
+    .faq__list li:nth-child(odd) .faq__item {
+      border-radius: calc(var(--u) * 0.72) calc(var(--u) * 0.72) calc(var(--u) * 0.72) 0;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .faq__item {
+      min-height: calc(var(--u) * 1.44);
+    }
+
+    .faq__toggle {
+      width: calc(var(--u) * 0.49);
+      height: calc(var(--u) * 0.49);
     }
   }
 </style>

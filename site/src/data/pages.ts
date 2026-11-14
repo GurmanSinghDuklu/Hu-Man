@@ -87,7 +87,7 @@ export const pages: Record<PageKey, PageInfo> = {
     description: `Website prices from ${fromPrice} to ${priceOf('growth')} in ${tierCount} fixed tiers, plus custom apps and portals. Pay once, own it, and move up a tier by paying the difference.`,
     label: 'Pricing',
     ogHeadline: `Start at ${fromPrice}. Grow from there.`,
-    schemaType: 'FAQPage',
+    schemaType: 'WebPage',
   },
   portfolio: {
     key: 'portfolio',
@@ -111,9 +111,9 @@ export const pages: Record<PageKey, PageInfo> = {
   about: {
     key: 'about',
     path: '/about/',
-    title: 'About Hu/man, a software studio in Leeds',
+    title: 'About Hu/man, a Leeds software studio, and FAQ',
     description:
-      'Hu/man is a software studio in Leeds building fast, secure, agentic AI-ready websites and apps, with a real person beside you long after launch.',
+      'Hu/man is a Leeds software studio building fast, secure, agentic AI-ready websites and apps, with a real person beside you. Plus your questions answered.',
     label: 'About',
     ogHeadline: 'Built by humans. Made to last.',
     schemaType: 'AboutPage',
