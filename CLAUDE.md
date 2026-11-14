@@ -644,3 +644,20 @@ Chromium, WebKit and Firefox.
      cells are exact grid cells (the seam is a `scale` of 0.93, not a gap). Back faces overlap by 0.5px.
   3. Tile count is derived from the frame (5 x 3 on desktop, 3 x 2 on phones; max 32); colours are
      mostly Signal with one or two each of the other neons. Starts when the frame is 40% on screen.
+
+## Portfolio hero + CV intro, header FAQ link gone (2026-11-14, branch `portfolio-hero`)
+- **The header has no FAQ link** (Gurman): "About" covers it; the FAQ stays at /about/#faq and in the footer.
+- **/portfolio's hero plays the "Be seen" video** (`video="portfolio-seen"`, h1 and lede unchanged) with its
+  own opening, `intro="cv"` (`scripts/hero-intro-cv.ts`; About keeps `intro` / `'tiles'`). A plain Paper CV
+  sheet (name bar and twelve grey bars, no words) draws on, a Signal scan line passes down it, then it
+  cuts into 8 strips (5 on phones) that fall under gravity, centre first, over the poster; the video
+  starts after (~1.7 s in all). Transform, scale and opacity only.
+  1. **Gating is shared**: `playWhenSeen()` and `introWanted(key)` in `hero-intro.ts` (once per session,
+     key `hm-portfolio-intro`; 40% on screen; click or key finishes; layer removed). `hero-video.ts`
+     picks the variant from `data-hv-intro`.
+  2. **Sizes are container units**: `.hv-cv` is a size container and every bar uses `cqw`/`cqh`, so each
+     strip's copy of the sheet lines up with the whole sheet. The full sheet sits on top and vanishes at
+     the cut, revealing identical strips beneath.
+  3. **Phone hero**: the four-line headline pushed the hero past one window, so portfolio.astro sets
+     `--hv-h: 46svh` up to tablet width (`.ihero.ihero--video` needed for specificity).
+Lighthouse /portfolio/ 99/100/100/100, axe 0 violations, motion-check clear.

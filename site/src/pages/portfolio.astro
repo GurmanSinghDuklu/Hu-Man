@@ -111,6 +111,13 @@ const choose = (name: string) => withBase(contactPath({ tier: `Portfolio: ${name
 </BaseLayout>
 
 <style>
+  /* The headline runs to four lines on phones: a shorter tall video keeps the hero in one window. */
+  @media (max-width: 63.99rem) {
+    :global(.ihero.ihero--video) {
+      --hv-h: 46svh;
+    }
+  }
+
   .ptitle {
     display: block;
     max-width: 12em;
