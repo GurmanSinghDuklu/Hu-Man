@@ -13,9 +13,28 @@ them from `site/src/data/pricing.ts`, so edit here, then there. Start is the old
 | Custom | Bespoke (price on application) | Apps, portals, software | Web apps, client portals, marketplaces, call answering and automations | Quoted after the call |
 
 Care plans: **shown on the site as "Care plans · launching soon", with no prices, until the prices are
-final** (change list, Nov 2026). Working figures only, not for publishing: Basic £29/mo (hosting,
-security, backups); Care £59/mo (+ updates, 30 min edits a month); Grow £119/mo (+ monthly AI
-visibility check, 2 hrs work); Partner £249/mo (+ priority replies, monthly report, 5 hrs work).
+final** (change list, Nov 2026). Agreed by Gurman 14 Nov 2026 as launch figures, to review after
+first uptake; still not published until he says so. Research: project doc
+`claude/care-plans-research-nov-2026.md`.
+
+| Plan | Price | Includes | For |
+|---|---|---|---|
+| Basic | £29/mo | Hosting, SSL, security, backups, uptime monitoring, fixes · up to 15 min of small changes a month (a price, hours, a line of text) | Any website |
+| Care | £49/mo | Basic + 1 hour of edits a month | Any website |
+| Grow | £99/mo | Basic + 3 hours of edits a month · monthly Google and AI visibility check · monthly report | Any website |
+| Software care | £185/mo | Grow + up to 3 hours on the software · dependency and security updates · error monitoring · reply within 2 working days | Custom builds only |
+| Software care plus | £350/mo | Software care with up to 6 hours · next-working-day replies · app store updates if mobile | Custom builds only |
+
+Rules: rolling monthly, cancel any time. Included time does not roll over. Extra work £45/hr for
+care clients, £55/hr otherwise, quoted before starting. Hosting, third-party and AI usage fees on
+custom builds billed at cost. Quote software care above the floor when the app has logins,
+payments or personal data (guide: 10 to 12% of the build price a year). Partner (£249) dropped.
+
+**Fix promise** (matches "We fix our mistakes" in `site/src/data/about.ts`): if something breaks
+because of our work, we fix it free, care plan or not. Breakages from anything else (client or
+third-party edits, outside services such as Stripe or Google changing, new requests) use the
+plan's included time, then the hourly rate. The terms page should define "because of our work"
+before care plans go on sale.
 
 Add-ons are **not published** on the site (change list, Nov 2026): the add-ons section was removed
 from /pricing, the FAQ and llms output. Working figures only, not for publishing: extra page £75; logo
