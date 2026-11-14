@@ -31,7 +31,26 @@ interface Pin {
   bar: HTMLElement;
   list: HTMLElement;
   items: HTMLElement[];
+  /** The section's label and headline (and anything between them and the list), held in place
+   * with the list when they fit the window together; empty when the headline sits elsewhere. */
+  head: HTMLElement[];
   on: boolean;
+}
+
+/** The label, headline and anything else between them and the list, if the headline is one of the
+ * list's earlier siblings. */
+function headOf(list: HTMLElement): HTMLElement[] {
+  const before: HTMLElement[] = [];
+  for (let n = list.previousElementSibling; n; n = n.previousElementSibling) {
+    if (!(n instanceof HTMLElement)) continue;
+    before.unshift(n);
+    if (n.matches('h2')) {
+      const label = n.previousElementSibling;
+      if (label instanceof HTMLElement && label.matches('.label')) before.unshift(label);
+      return before;
+    }
+  }
+  return [];
 }
 
 function makePin(list: HTMLElement): Pin {
@@ -42,11 +61,12 @@ function makePin(list: HTMLElement): Pin {
   const bar = document.createElement('span');
   bar.className = 'pin-bar';
   bar.setAttribute('aria-hidden', 'true');
+  const head = headOf(list);
   list.before(runway);
   stage.append(bar, list);
   runway.append(stage);
   const items = [...list.children].filter((c): c is HTMLElement => c instanceof HTMLElement);
-  return { runway, stage, bar, list, items, on: false };
+  return { runway, stage, bar, list, items, head, on: false };
 }
 
 /** Page offset of an element from layout alone, so a moving ancestor (a handoff's sink and
@@ -125,12 +145,22 @@ export function startScrollFx(): void {
   /** Measure every pin: pin it only on wide screens and when it fits in the window. */
   const layoutPins = () => {
     const vh = window.innerHeight;
+    // The stage sits clear of the header, which comes back when you scroll up.
+    const clear = (document.querySelector<HTMLElement>('.site-header')?.offsetHeight ?? 72) + 16;
+    const fits = (h: number) => h <= Math.min(vh * FITS, vh - clear - 16);
     for (const pin of pins) {
       pin.runway.classList.remove('is-on');
       pin.runway.style.height = '';
       pin.stage.style.top = '';
+      // Hold the headline with the list when both fit; otherwise the headline scrolls by as before.
+      if (pin.head.length) {
+        // After the progress line, which then runs above the label like a rule.
+        pin.bar.after(...pin.head);
+        if (!fits(pin.stage.offsetHeight)) pin.runway.before(...pin.head);
+      }
       const h = pin.stage.offsetHeight;
-      pin.on = WIDE.matches && h <= vh * FITS && pin.items.length > 1;
+      pin.on = WIDE.matches && fits(h) && pin.items.length > 1;
+      if (!pin.on && pin.head[0]?.parentElement === pin.stage) pin.runway.before(...pin.head);
       // Side-by-side items get a small lift on the current one; full-width rows don't (it would
       // push past the page edge).
       const [first, second] = pin.items;
@@ -141,7 +171,7 @@ export function startScrollFx(): void {
       if (pin.on) {
         pin.runway.classList.add('is-on');
         pin.runway.style.height = `${h + pin.items.length * RUNWAY_PER_ITEM * vh}px`;
-        pin.stage.style.top = `${Math.max(72, (vh - h) / 2)}px`;
+        pin.stage.style.top = `${Math.max(clear, (vh - h) / 2)}px`;
       } else {
         pin.items.forEach((s) => s.classList.remove('is-lit', 'is-current'));
       }
@@ -200,6 +230,12 @@ export function startScrollFx(): void {
     }
 
     for (const d of drifters) {
+      // A headline held with its pinned list stays square with its label.
+      if (d.el.closest('.pin-runway.is-on')) {
+        if (d.cur) d.el.style.translate = '';
+        d.cur = 0;
+        continue;
+      }
       const r = d.el.getBoundingClientRect();
       // Where the element would be without its own drift, so the offset never feeds back on itself.
       const top = d.axis === 'y' ? r.top - d.cur : r.top;

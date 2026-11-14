@@ -610,5 +610,9 @@ Chromium, WebKit and Firefox.
   2. **A busy page delays wheel events** (the indigo panel's shader), so a short gap in a fading
      push is still the same gesture; only a gap followed by an equal or harder push is a new one.
   3. Script scrolls go through `scripts/motion/scroller.ts`, which Lenis takes over when it starts.
+  4. **The section's label and headline are held with the cards** (Gurman, 2026-11-14) when they
+     are earlier siblings of the list and everything fits the window below the header; otherwise
+     only the list is held. The progress line then sits above the label, and held headlines skip
+     the sideways parallax so they stay square with their label.
 - **"From idea to online business" (`IdeasToLife`) is off the home page and on /about/ as 04**
   (Gurman); /services/ keeps it. Home sections renumbered 01 to 07.
