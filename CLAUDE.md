@@ -598,10 +598,13 @@ Chromium, WebKit and Firefox.
   tightens so every link stays on one line.
 
 ## Card lists step one per swipe; method block moved to About (2026-11-14, branch `scroll-story`)
-- **Pinned lists (`data-pin-steps`) step one item per wheel or trackpad gesture** (Gurman): the first
-  swipe into the runway lands on the first item, each next swipe glides to the next, and one more
-  past the last carries on down the page (`scripts/motion/scroll-fx.ts`). Scrollbar, keys and touch
-  still scroll freely. It highlights cards that are all visible; it never swaps content.
+- **Pinned lists (`data-pin-steps`) step one item per wheel or trackpad gesture and per press of
+  an arrow, Page or Space key** (Gurman; he scrolls with the arrow keys and didn't want to hold one
+  down): the first move into the runway lands on the first item, each next one glides to the next,
+  and one more past the last carries on down the page (`scripts/motion/scroll-fx.ts`). A held key
+  steps once per 650 ms. Keys in fields, buttons, links, menus and the header are left alone. The
+  scrollbar and touch still scroll freely. It highlights cards that are all visible; it never
+  swaps content.
   1. **Measure pins from layout (`offsetTop`), not `getBoundingClientRect`**: a `data-handoff`
      section sinks and shrinks while its pinned list is still stuck, which threw the steps off.
   2. **A busy page delays wheel events** (the indigo panel's shader), so a short gap in a fading

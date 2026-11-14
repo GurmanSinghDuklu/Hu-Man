@@ -9,10 +9,10 @@
  *   middle of the window while its items light up one by one, with a progress bar. A list that is
  *   too tall to fit the window is left as it is. Items are lit cumulatively and unlit ones stay
  *   readable (a light filter, base.css), so nothing is hidden from anyone who scrolls fast.
- *   With a wheel or trackpad, each scroll gesture moves exactly one item (Gurman, 2026-11-14):
- *   the first gesture into the runway lands on the first item, each next one glides to the next
- *   item, and one more past the last item carries on down the page. The rest of a gesture (a
- *   trackpad's inertia) is swallowed, so one swipe never skips items. Scrollbar, keys and touch
+ *   Each wheel or trackpad gesture, and each press of an arrow, Page or Space key, moves exactly
+ *   one item (Gurman, 2026-11-14): the first move into the runway lands on the first item, each
+ *   next one glides to the next item, and one more past the last item carries on down the page. The rest of a gesture (a
+ *   trackpad's inertia) is swallowed, so one swipe never skips items. The scrollbar and touch
  *   still scroll freely, and the items light by position as before.
  * - Decorative shapes (.orb, free-standing .sparkle) drift at their own speed: depth. Any shape
  *   whose own animation already moves it is left alone.
@@ -220,7 +220,7 @@ export function startScrollFx(): void {
   window.addEventListener('scroll', wake, { passive: true });
   wake();
 
-  // Wheel stepping through pinned lists.
+  // Wheel and key stepping through pinned lists.
   let gesture = 0; // counts wheel gestures
   let lastWheel = 0;
   let lastAbs = 0;
@@ -234,6 +234,39 @@ export function startScrollFx(): void {
     stepGesture = gesture;
     scroller.to(y);
   };
+
+  /**
+   * Where a move of `delta` px from `y` should go if it touches a pinned list: a page offset to
+   * glide to, `'hold'` to stay put, or null to let the page scroll as normal. `held` is true while
+   * the last step is still settling (or it is the same gesture), so nothing moves twice.
+   */
+  const decide = (y: number, delta: number, held: boolean): number | 'hold' | null => {
+    const dir = Math.sign(delta);
+    for (const pin of pins) {
+      if (!pin.on) continue;
+      const { start, end } = pinSpan(pin);
+      const last = pin.items.length - 1;
+      let to: number;
+      if (y < start - 2) {
+        if (dir > 0 && y + delta >= start)
+          to = start; // arriving from above: the first item
+        else continue;
+      } else if (y > end + 2) {
+        if (dir < 0 && y + delta <= end)
+          to = end; // arriving from below: the last item
+        else continue;
+      } else {
+        const at = Math.round(((y - start) / Math.max(1, end - start)) * last);
+        const next = at + dir;
+        // Past either end: let the page carry on, unless this is still the move that stepped.
+        if (next < 0 || next > last) return held ? 'hold' : null;
+        to = start + ((end - start) * next) / last;
+      }
+      return held ? 'hold' : to;
+    }
+    return null;
+  };
+  const aim = (now: number) => (now - stepAt < 900 ? aimY : scroller.target());
 
   const onWheel = (e: WheelEvent) => {
     if (e.ctrlKey || Math.abs(e.deltaX) > Math.abs(e.deltaY) || !e.deltaY) return;
@@ -252,40 +285,43 @@ export function startScrollFx(): void {
     lastWheel = now;
     lastAbs = abs;
 
-    const dir = Math.sign(delta);
-    const y = now - stepAt < 900 ? aimY : scroller.target();
-    const held = gesture === stepGesture || now - stepAt < STEP_MS;
+    const to = decide(aim(now), delta, gesture === stepGesture || now - stepAt < STEP_MS);
+    if (to === null) return;
+    // Lenis skips events flagged like this; the page doesn't move by itself either.
+    (e as WheelEvent & { lenisStopPropagation?: boolean }).lenisStopPropagation = true;
+    e.preventDefault();
+    if (to !== 'hold') go(to, now);
+  };
 
-    for (const pin of pins) {
-      if (!pin.on) continue;
-      const { start, end } = pinSpan(pin);
-      const last = pin.items.length - 1;
-      let to: number | null = null;
-      if (y < start - 2) {
-        if (dir > 0 && y + delta >= start)
-          to = start; // arriving from above: the first item
-        else continue;
-      } else if (y > end + 2) {
-        if (dir < 0 && y + delta <= end)
-          to = end; // arriving from below: the last item
-        else continue;
-      } else {
-        const at = Math.round(((y - start) / Math.max(1, end - start)) * last);
-        const next = at + dir;
-        // Past either end: let the page carry on, unless this is still the gesture that stepped.
-        if (next < 0 || next > last) {
-          if (!held) return;
-        } else {
-          to = start + ((end - start) * next) / last;
-        }
-      }
-      // Lenis skips events flagged like this; the page doesn't move by itself either.
-      (e as WheelEvent & { lenisStopPropagation?: boolean }).lenisStopPropagation = true;
-      e.preventDefault();
-      if (!held && to !== null) go(to, now);
+  // Keys: one press of an arrow, Page Up/Down or Space moves one item. Holding a key down moves
+  // one item per settle time rather than racing through.
+  const KEY_MOVES: Record<string, (vh: number) => number> = {
+    ArrowDown: () => 120,
+    ArrowUp: () => -120,
+    PageDown: (vh) => vh * 0.85,
+    PageUp: (vh) => -vh * 0.85,
+    ' ': (vh) => vh * 0.85,
+  };
+  const onKey = (e: KeyboardEvent) => {
+    const move = KEY_MOVES[e.key];
+    if (!move || e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey) return;
+    const t = e.target as HTMLElement | null;
+    // Leave keys alone where they do something else: fields, buttons, links (Space), menus.
+    if (
+      t?.closest(
+        'input, textarea, select, button, a, [contenteditable], [role="menu"], [role="listbox"], [role="tablist"], [role="slider"], .site-header, dialog, [popover]',
+      )
+    ) {
       return;
     }
+    const now = performance.now();
+    const delta = move(window.innerHeight) * (e.key === ' ' && e.shiftKey ? -1 : 1);
+    const to = decide(aim(now), delta, e.repeat && now - stepAt < STEP_MS);
+    if (to === null) return;
+    e.preventDefault();
+    if (to !== 'hold') go(to, now);
   };
+  window.addEventListener('keydown', onKey);
   // Capture on window runs before Lenis's own wheel listener (bubble, on window).
   window.addEventListener('wheel', onWheel, { passive: false, capture: true });
 }
