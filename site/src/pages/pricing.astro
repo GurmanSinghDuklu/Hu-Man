@@ -102,6 +102,13 @@ import { withBase } from '../config/paths';
 </BaseLayout>
 
 <style>
+  /* The tall ad video plus a three-line headline ran past one window on phones and tablets. */
+  @media (max-width: 63.99rem) {
+    :global(.ihero.ihero--video) {
+      --hv-h: 49svh;
+    }
+  }
+
   /* ---------- headline cards ---------- */
   .cards {
     padding-block: clamp(2.5rem, calc(var(--u) * 0.6), 3.5rem)

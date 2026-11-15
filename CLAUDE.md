@@ -594,8 +594,8 @@ Chromium, WebKit and Firefox.
   Saver, low memory or no WebGL.
 - **One video per hero on Home, About, Work and Pricing** (Gurman, 2026-11-13), in place of the
   collage. Those heroes are Ink with white text, and the video sits on the right with no frame (a
-  wide one fades into the Ink at its edges; a tall one runs the full hero height): `HeroVideo.astro` + `scripts/hero-video.ts`, the four landing videos (Home: reel, About:
-  found, Work: portfolio-seen, Pricing: portfolio-ad). Muted loop from the poster's moment, starts
+  wide one fades into the Ink at its edges; a tall one runs the full hero height): `HeroVideo.astro` + `scripts/hero-video.ts`, the landing videos (Home: reel, About:
+  found, Work: portfolio-seen, Pricing: pricing, a 43.7 s 9:16 ad made for the page; portfolio-ad stays for /start/ and /contact/). Muted loop from the poster's moment, starts
   after page load, pauses off screen, Pause and Sound buttons; nothing loads under reduced motion or
   Data Saver until Play. Posters: `src/assets/hero-video/`. Other pages keep the collage. Clips
   scattered through sections were tried and rejected (same day): keep video to the heroes.
@@ -661,3 +661,9 @@ Chromium, WebKit and Firefox.
   3. **Phone hero**: the four-line headline pushed the hero past one window, so portfolio.astro sets
      `--hv-h: 46svh` up to tablet width (`.ihero.ihero--video` needed for specificity).
 Lighthouse /portfolio/ 99/100/100/100, axe 0 violations, motion-check clear.
+
+## Pricing hero video + receipt intro (2026-11-15, branch `pricing-video`)
+- /pricing's hero plays `public/landing/pricing.mp4` (the pricing ad, 7.8 MB, faststart, loops whole; poster is the settled Essential £318 card at 6.5 s, `src/assets/hero-video/pricing.jpg`, `start: 6.5`). Phones and tablets set `--hv-h: 49svh` in pricing.astro so the hero fits one window.
+- **`intro="receipt"`** (`scripts/hero-intro-receipt.ts`, key `hm-pricing-intro`, same shared gating as 'tiles' and 'cv'): a Paper receipt feeds down, prints a header bar and five rows (label bar plus a price that rolls like an odometer, then a Signal total bar), a Signal scan line passes, then it tears along a zigzag and the halves leave up and down over the poster; about 1.6 s.
+  1. **Only real tier prices appear**: each row rolls through the prices before it (£318, £446, £932, £2,240, "Quote"); if tier prices change in `pricing.ts`, change `PRICES` in the script too.
+  2. The halves are clones of the finished receipt (default CSS state is the final state; animations supply the printing), clipped with a zigzag `clip-path` and shown only from the tear on. Sizes are container units (`.hv-rc` is a size container).
