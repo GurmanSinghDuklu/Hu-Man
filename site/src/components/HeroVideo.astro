@@ -22,6 +22,7 @@ import reelPoster from '../assets/hero-video/reel.jpg';
 import foundPoster from '../assets/hero-video/found.jpg';
 import seenPoster from '../assets/hero-video/portfolio-seen.jpg';
 import adPoster from '../assets/hero-video/portfolio-ad.jpg';
+import pricingPoster from '../assets/hero-video/pricing.jpg';
 
 interface Video {
   src: string;
@@ -66,17 +67,26 @@ const videos = {
     start: 2.3,
     label: 'Portfolio pages by Hu/man, from £156',
   },
+  pricing: {
+    src: '/landing/pricing.mp4',
+    w: 1080,
+    h: 1920,
+    poster: pricingPoster,
+    start: 6.5,
+    label: 'Hu/man pricing: websites from £318, care plans from £29 a month, portfolios from £156',
+  },
 } satisfies Record<string, Video>;
 
 interface Props {
   video: keyof typeof videos;
   class?: string;
-  /** Opens with an intro over the frame: true or 'tiles' (About, scripts/hero-intro.ts) or 'cv' (Portfolio, scripts/hero-intro-cv.ts). */
-  intro?: boolean | 'tiles' | 'cv';
+  /** Opens with an intro over the frame: true or 'tiles' (About, scripts/hero-intro.ts) or 'cv' (Portfolio, scripts/hero-intro-cv.ts) or 'receipt' (Pricing, scripts/hero-intro-receipt.ts). */
+  intro?: boolean | 'tiles' | 'cv' | 'receipt';
 }
 
 const { video, class: className, intro = false } = Astro.props;
-const introVariant = intro === 'cv' ? 'cv' : intro ? 'tiles' : undefined;
+const introVariant =
+  intro === 'cv' ? 'cv' : intro === 'receipt' ? 'receipt' : intro ? 'tiles' : undefined;
 const v: Video = videos[video];
 const poster = await getImage({
   src: v.poster,
@@ -305,6 +315,106 @@ const poster = await getImage({
     top: 0;
     left: 0;
     right: 0;
+    height: 3px;
+    background: #39ff14;
+    opacity: 0;
+  }
+
+  /* The receipt opening (scripts/hero-intro-receipt.ts): a narrow Paper receipt over the frame,
+     torn in two. Sized in container units so the clipped halves line up; square, flat, no shadows,
+     glows or gradients. The poster shows through behind it. */
+  :global(.hv-rc) {
+    position: absolute;
+    inset: 0;
+    overflow: clip;
+    container-type: size;
+    pointer-events: none;
+  }
+
+  :global(.rc-paper) {
+    position: absolute;
+    top: 10cqh;
+    left: 18cqw;
+    width: 64cqw;
+    height: 80cqh;
+    box-sizing: border-box;
+    border: 2px solid var(--ink);
+    background: var(--paper);
+  }
+
+  :global(.rc-paper .rc-bar) {
+    position: absolute;
+    display: block;
+    background: #bdbfb5;
+    transform-origin: left;
+  }
+
+  :global(.rc-paper .rc-bar--head) {
+    top: 3cqh;
+    left: 5cqw;
+    width: 40cqw;
+    height: 3.6cqh;
+    background: var(--ink);
+  }
+
+  :global(.rc-row) {
+    position: absolute;
+    left: 5cqw;
+    right: 5cqw;
+    height: 8cqh;
+    border-bottom: 1px solid #bdbfb5;
+  }
+
+  :global(.rc-row .rc-bar--label) {
+    top: 0.6cqh;
+    left: 0;
+    height: 1.7cqh;
+    background: #6b6e66;
+  }
+
+  :global(.rc-row .rc-bar--sub) {
+    top: 3.6cqh;
+    left: 0;
+    height: 1.1cqh;
+  }
+
+  :global(.rc-win) {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: block;
+    height: 1.25em;
+    overflow: clip;
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-size: 5.4cqw;
+    line-height: 1.25;
+    color: var(--ink);
+    text-align: right;
+  }
+
+  :global(.rc-roll) {
+    display: block;
+  }
+
+  :global(.rc-roll > span) {
+    display: block;
+    height: 1.25em;
+  }
+
+  :global(.rc-paper .rc-bar--total) {
+    top: 69cqh;
+    left: 5cqw;
+    width: 54cqw;
+    height: 6cqh;
+    background: #39ff14;
+  }
+
+  :global(.hv-rc__scan) {
+    position: absolute;
+    top: 10cqh;
+    left: 18cqw;
+    width: 64cqw;
     height: 3px;
     background: #39ff14;
     opacity: 0;

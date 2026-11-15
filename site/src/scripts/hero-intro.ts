@@ -11,7 +11,11 @@
  */
 const KEY = 'hm-about-intro';
 /** Session keys: each page's intro plays once per browser session. */
-export const INTRO_KEYS = { tiles: KEY, cv: 'hm-portfolio-intro' } as const;
+export const INTRO_KEYS = {
+  tiles: KEY,
+  cv: 'hm-portfolio-intro',
+  receipt: 'hm-pricing-intro',
+} as const;
 const MAX_TILES = 32;
 
 // Brand neons. Signal is the main colour; the others are one or two tiles each.

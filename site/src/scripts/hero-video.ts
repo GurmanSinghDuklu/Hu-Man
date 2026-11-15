@@ -6,6 +6,7 @@
  */
 import { INTRO_KEYS, introWanted, runIntro } from './hero-intro';
 import { runCvIntro } from './hero-intro-cv';
+import { runReceiptIntro } from './hero-intro-receipt';
 
 const fig = document.querySelector<HTMLElement>('[data-hv]');
 
@@ -62,14 +63,21 @@ if (fig) {
     sync();
   });
 
-  // A page's opening runs over the frame first: 'tiles' (About) or 'cv' (Portfolio). Never under
+  // A page's opening runs over the frame first: 'tiles' (About), 'cv' (Portfolio) or 'receipt' (Pricing). Never under
   // reduced motion or Data Saver, and once per browser session for each.
-  const variant = fig.dataset.hvIntro === 'cv' ? 'cv' : 'tiles';
+  const variant =
+    fig.dataset.hvIntro === 'cv' ? 'cv' : fig.dataset.hvIntro === 'receipt' ? 'receipt' : 'tiles';
   if (auto && fig.hasAttribute('data-hv-intro') && introWanted(INTRO_KEYS[variant])) {
     const frame = fig.querySelector<HTMLElement>('.hv__frame');
     if (frame) {
       holding = true;
-      void (variant === 'cv' ? runCvIntro(frame) : runIntro(frame, video))
+      const run =
+        variant === 'cv'
+          ? runCvIntro(frame)
+          : variant === 'receipt'
+            ? runReceiptIntro(frame)
+            : runIntro(frame, video);
+      void run
         .catch(() => undefined)
         .then(() => {
           holding = false;
