@@ -4,6 +4,8 @@ import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import InnerHero from '../components/InnerHero.astro';
 import TalkBanner from '../components/TalkBanner.astro';
+import { Image } from 'astro:assets';
+import { withBase } from '../config/paths';
 import { businessConcepts } from '../data/businessConcepts';
 
 // Three ways a business website can land. Wording is a draft awaiting Gurman's sign-off.
@@ -112,15 +114,22 @@ const steps = [
               </h3>
               <p>{c.fit}</p>
               <div class="bconcept__pair">
+                {c.before && (
+                  <figure>
+                    <Image src={c.before.src} alt={c.before.alt} width={800} loading="lazy" />
+                    <figcaption class="label">Before</figcaption>
+                  </figure>
+                )}
                 <figure>
-                  <img src={c.before.src} alt={c.before.alt} loading="lazy" />
-                  <figcaption class="label">Before</figcaption>
-                </figure>
-                <figure>
-                  <img src={c.after.src} alt={c.after.alt} loading="lazy" />
-                  <figcaption class="label">After</figcaption>
+                  <Image src={c.after.src} alt={c.after.alt} width={800} loading="lazy" />
+                  {c.before && <figcaption class="label">After</figcaption>}
                 </figure>
               </div>
+              {c.href && (
+                <a class="btn" href={withBase(c.href)}>
+                  {c.hrefLabel ?? 'Open the concept'}
+                </a>
+              )}
             </article>
           ))}
         </div>
@@ -190,7 +199,7 @@ const steps = [
     gap: var(--space-3);
   }
 
-  .bconcept__pair img {
+  .bconcept__pair :global(img) {
     display: block;
     width: 100%;
     height: auto;
@@ -206,6 +215,10 @@ const steps = [
 
     .bconcept__pair {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .bconcept__pair:has(> figure:only-child) {
+      grid-template-columns: minmax(0, 24rem);
     }
   }
 </style>
