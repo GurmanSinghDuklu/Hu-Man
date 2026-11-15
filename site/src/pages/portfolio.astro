@@ -10,6 +10,7 @@ import { withBase } from '../config/paths';
 import ScrollCue from '../components/ScrollCue.astro';
 import ConceptWall from '../components/ConceptWall.astro';
 import { portfolioConcepts, portfolioConceptsIntro } from '../data/portfolioConcepts';
+import { ats } from '../data/ats';
 
 const choose = (name: string) => withBase(contactPath({ tier: `Portfolio: ${name}` }));
 ---
@@ -47,6 +48,50 @@ const choose = (name: string) => withBase(contactPath({ tier: `Portfolio: ${name
       </h2>
       <p class="pconcepts__text">{portfolioConceptsIntro.text}</p>
       <ConceptWall />
+    </div>
+  </section>
+
+  <section class="band grid ats" aria-labelledby="ats-title">
+    <div class="sheet ats__sheet">
+      <div class="ats__intro">
+        <p class="label" data-reveal>
+          {ats.label}
+        </p>
+        <h2 id="ats-title" class="display display--s" data-reveal="lines">
+          {ats.title}
+        </h2>
+        {ats.text.map((p) => (
+          <p class="ats__text">{p}</p>
+        ))}
+        <h3 class="ats__sub">{ats.tripsTitle}</h3>
+        <ul class="ats__trips">
+          {ats.trips.map((t) => (
+            <li>
+              <strong>{t.title}.</strong> {t.text}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="ats__side">
+        <ul class="ats__offers" data-pin-steps>
+          {ats.offers.map((o, i) => (
+            <li
+              class:list={['ats__offer', `ats__offer--${i + 1}`]}
+              data-reveal
+              style={`--reveal-delay:${i * 0.08}s`}
+            >
+              <p class="ats__tag">{o.tag}</p>
+              <h3>{o.title}</h3>
+              <p>{o.text}</p>
+            </li>
+          ))}
+        </ul>
+        <p class="ats__note">{ats.note}</p>
+        <a class="pill-btn ats__btn" href={withBase(contactPath({ topic: 'other' }))}>
+          {ats.button}
+        </a>
+      </div>
     </div>
   </section>
 
@@ -249,6 +294,99 @@ const choose = (name: string) => withBase(contactPath({ tier: `Portfolio: ${name
     line-height: 1.5;
   }
 
+  /* ---------- CVs and applicant tracking systems ---------- */
+  .ats {
+    padding-block: clamp(3rem, calc(var(--u) * 0.9), 5.5rem);
+  }
+
+  .ats__sheet {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .ats__text {
+    max-width: 38rem;
+    margin-top: 1rem;
+    font-size: clamp(1rem, calc(var(--u) * 0.18), 1.1rem);
+    line-height: 1.55;
+  }
+
+  .ats__sub {
+    margin-top: clamp(1.75rem, calc(var(--u) * 0.4), 2.5rem);
+    font: 400 0.8125rem var(--font-mono);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .ats__trips {
+    display: grid;
+    gap: 0.6rem;
+    max-width: 38rem;
+    margin-top: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .ats__trips li {
+    padding-left: 1rem;
+    border-left: 2px solid var(--pink);
+  }
+
+  .ats__offers {
+    display: grid;
+    gap: max(12px, calc(var(--u) * 0.2));
+  }
+
+  .ats__offer {
+    display: grid;
+    align-content: start;
+    gap: 0.5rem;
+    padding: clamp(1.25rem, calc(var(--u) * 0.3), 2rem);
+    border: 1px solid var(--ink);
+    background: var(--paper);
+    line-height: 1.5;
+  }
+
+  .ats__offer h3 {
+    font: 800 clamp(1.2rem, calc(var(--u) * 0.26), 1.6rem) / 1.05 var(--font-display);
+    text-transform: uppercase;
+  }
+
+  .ats__offer--1 {
+    border-top-right-radius: calc(var(--u) * 0.9);
+  }
+
+  .ats__offer--2 {
+    background: var(--peach);
+  }
+
+  .ats__offer--3 {
+    background: var(--ink);
+    color: var(--paper);
+    border-bottom-left-radius: calc(var(--u) * 0.9);
+  }
+
+  .ats__tag {
+    justify-self: start;
+    padding: 0.2rem 0.6rem;
+    border: 1px solid currentColor;
+    border-radius: 999px;
+    font: 400 0.6875rem var(--font-mono);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .ats__note {
+    max-width: 36rem;
+    margin-top: 1.25rem;
+    color: var(--muted);
+    font-size: 0.9375rem;
+    line-height: 1.5;
+  }
+
+  .ats__btn {
+    margin-top: 1rem;
+  }
+
   .pextras {
     padding-block: clamp(3rem, calc(var(--u) * 0.9), 5.5rem);
   }
@@ -309,6 +447,12 @@ const choose = (name: string) => withBase(contactPath({ tier: `Portfolio: ${name
 
     .pextras__sheet {
       grid-template-columns: 7fr 4fr;
+      align-items: start;
+    }
+
+    .ats__sheet {
+      grid-template-columns: 6fr 5fr;
+      gap: calc(var(--u) * 0.66);
       align-items: start;
     }
   }

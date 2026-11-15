@@ -252,8 +252,11 @@ export const portfolioTiers: PortfolioTier[] = [
   },
 ];
 
+/** The CV rewrite add-on (docs/02), also offered in the ATS section on /portfolio/. */
+export const cvRewrite = { name: 'CV rewrite to match the site', price: '£54' };
+
 export const portfolioAddOns = [
-  'CV rewrite to match the site £54',
+  `${cvRewrite.name} ${cvRewrite.price}`,
   'Keep-it-live hosting and two content updates a year £64/year',
 ];
 
