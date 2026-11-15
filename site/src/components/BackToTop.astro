@@ -1,0 +1,75 @@
+---
+/**
+ * "Back to the top": a round button fixed to the bottom right of every page (Gurman, 2026-11-15),
+ * in the corner the cookie button used to hold (that one sits just above it now). It appears once
+ * you have scrolled a little and follows you down the page.
+ */
+---
+
+<button type="button" class="to-top" aria-label="Back to the top" hidden>
+  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <path d="M12 20V5M5 12l7-7 7 7"></path>
+  </svg>
+</button>
+
+<script>
+  import { scroller } from '../scripts/motion/scroller';
+
+  const btn = document.querySelector<HTMLButtonElement>('.to-top');
+  if (btn) {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const update = () => {
+      btn.hidden = window.scrollY < 400;
+    };
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+    btn.addEventListener('click', () => {
+      if (reduce.matches) window.scrollTo({ top: 0, behavior: 'instant' });
+      else scroller.to(0);
+      // Keyboard users land back at the start of the page too.
+      document.getElementById('main')?.focus({ preventScroll: true });
+    });
+  }
+</script>
+
+<style>
+  .to-top {
+    position: fixed;
+    right: max(16px, env(safe-area-inset-right));
+    bottom: max(16px, env(safe-area-inset-bottom));
+    z-index: 60;
+    display: grid;
+    place-items: center;
+    width: 52px;
+    aspect-ratio: 1;
+    padding: 0;
+    border: 1px solid var(--ink);
+    border-radius: 50%;
+    background: var(--paper);
+    color: var(--ink);
+    cursor: pointer;
+    transition: scale 0.25s var(--ease-out);
+  }
+
+  .to-top[hidden] {
+    display: none;
+  }
+
+  .to-top:hover {
+    scale: 1.08;
+  }
+
+  .to-top:focus-visible {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 3px;
+  }
+
+  .to-top svg {
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: square;
+  }
+</style>

@@ -676,3 +676,16 @@ Lighthouse /portfolio/ 99/100/100/100, axe 0 violations, motion-check clear.
 - **Scroll cue** (`ScrollCue.astro`: "Scroll down" and a dropping arrow, links to `#after-hero`): `InnerHero` adds it
   to every video hero unless the page fills the `after` slot itself (Portfolio's "See all 16 concepts below" does);
   Home sets it beside the buttons (`.hero__cue`). Video heroes end with an empty `#after-hero` anchor.
+
+## About gets Our work, Business websites page, back to top, click-to-pick cards (2026-11-15, branch `about-work-nav`)
+- **/work/ is gone**: its content (Selected work walkthroughs and the project windows) is section 05 on /about/ (`#work`);
+  `/work` and `/projects` redirect to `/about/#work` in `public/_redirects`; the header "Work" link and its dropdown are removed.
+- **"Business websites" (/business-websites/)** is in the header (page key `business-websites`): the right-fit message
+  (too basic, too much, just right; human contact first). Gurman adds before/after concepts in `src/data/businessConcepts.ts`;
+  the "Before and after" section appears once the list has an entry. Copy is a draft awaiting his sign-off.
+- **Pinned scroll lists are removed** (scroll-fx no longer pins or steps). `data-pick` lists (about, services, how-we-build,
+  free-ai-check, agentic-ai-ready, method) show every card; one click (or an arrow key on a focused card) highlights it and
+  softens the others, a second click clears it (`scripts/card-pick.ts`, loaded on every page, works under reduced motion).
+  Cards are `tabindex=0` list items with `aria-current` on the picked one (a `role` on `li` fails axe).
+- **Back to the top** (`BackToTop.astro`): fixed bottom-right, appears after 400px of scroll; the cookie button sits just above it.
+  `main` has `tabindex="-1"` so the button can return focus to the top.

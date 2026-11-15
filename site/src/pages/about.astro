@@ -7,6 +7,8 @@ import TalkBanner from '../components/TalkBanner.astro';
 import Sparkle from '../components/Sparkle.astro';
 import RingOrb from '../components/RingOrb.astro';
 import IdeasToLife from '../components/sections/IdeasToLife.astro';
+import SelectedWork from '../components/SelectedWork.astro';
+import WorkShowcase from '../components/WorkShowcase.astro';
 import { withBase } from '../config/paths';
 import { site } from '../config/site';
 import { mission, rules, promises, founderNote } from '../data/about';
@@ -68,7 +70,7 @@ import { faq } from '../data/faq';
           high-performing software and the kind of care you only get from a person who knows your
           project. AI helps us build faster. People make sure it’s right.
         </p>
-        <ul class="mission__cards" data-pin-steps>
+        <ul class="mission__cards" data-pick>
           {mission.map((m, i) => (
             <li
               class:list={['mission__card', `fill--${m.style}`, `mission__card--${m.style}`]}
@@ -93,7 +95,7 @@ import { faq } from '../data/faq';
       <h2 id="rules-title" class="display" data-reveal="lines">
         Four rules we build by.
       </h2>
-      <ul class="rules__cards" data-pin-steps>
+      <ul class="rules__cards" data-pick>
         {rules.map((r, i) => (
           <li
             class:list={['rule', `rule--${r.style}`]}
@@ -119,7 +121,7 @@ import { faq } from '../data/faq';
         <br />
         it right.
       </h2>
-      <ol class="promise__list" data-pin-steps>
+      <ol class="promise__list" data-pick>
         {promises.map((p, i) => (
           <li class="promise__row" data-reveal>
             <span class:list={['promise__icon', `promise__icon--${i + 1}`]} aria-hidden="true">
@@ -137,11 +139,15 @@ import { faq } from '../data/faq';
 
   <IdeasToLife n="04" />
 
+  <div id="work"></div>
+  <SelectedWork label="05 / Our work" title="Our work" />
+  <WorkShowcase />
+
   <section class="band careway section" aria-labelledby="careway-title">
     <div class="sheet careway__sheet">
       <div>
         <p class="label" data-reveal>
-          05 / Support that stays
+          06 / Support that stays
         </p>
         <h2 id="careway-title" class="display display--m" data-reveal="lines">
           Care plans, made
@@ -173,7 +179,7 @@ import { faq } from '../data/faq';
   <section class="band band--paper-2 faq" id="faq" aria-labelledby="faq-title">
     <div class="sheet">
       <p class="label" data-reveal>
-        06 / Questions
+        07 / Questions
       </p>
       <h2 id="faq-title" class="display faq__title" data-reveal="lines">
         FAQ

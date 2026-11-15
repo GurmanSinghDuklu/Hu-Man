@@ -4,31 +4,20 @@ import { withBase } from '../config/paths';
 import BrandMark from './BrandMark.astro';
 import BookingLink from './BookingLink.astro';
 import { serviceAreas } from '../data/services';
-import { projects } from '../data/projects';
 
 const servicesPath = withBase('/services/');
-const workPath = withBase('/work/');
 
 // The FAQ is at the foot of /about/ (#faq): one nav link, About, covers both.
-// Services and Work open a menu: every service area with its items, and every project.
-const navLinks: { href: string; label: string; menu?: 'services' | 'work' }[] = [
+// Services opens a menu: every service area with its items. Work lives on /about/#work now.
+const navLinks: { href: string; label: string; menu?: 'services' }[] = [
   { href: servicesPath, label: 'Services', menu: 'services' },
-  { href: workPath, label: 'Work', menu: 'work' },
+  { href: withBase('/business-websites/'), label: 'Business websites' },
   { href: withBase('/portfolio/'), label: 'CV portfolio' },
   { href: withBase('/pricing/'), label: 'Pricing' },
   { href: withBase('/about/'), label: 'About' },
   { href: withBase('/how-we-build/'), label: 'How we build' },
   { href: withBase('/contact/'), label: 'Contact' },
 ];
-
-// The first sentence of each project's card line, and where it sits on /work/.
-const workItems = projects.map((p) => ({
-  name: p.name,
-  status: p.live ? 'Live' : 'Concept',
-  line: p.blurb.split(/(?<=\.)\s/)[0],
-  href: `${workPath}#${p.id}`,
-  swatch: `var(--grad-${p.id})`,
-}));
 ---
 
 <header class="site-header">
@@ -55,50 +44,30 @@ const workItems = projects.map((p) => ({
                 </svg>
               </button>
               <div id={`menu-${link.menu}`} class="nav-drop__panel">
-                {link.menu === 'services' ? (
-                  <div class="sheet">
-                    <ul class="nav-drop__areas">
-                      {serviceAreas.map((area) => (
-                        <li>
-                          <a class="nav-drop__area" href={`${servicesPath}#${area.id}`}>
-                            <span class:list={['nav-drop__swatch', `fill--${area.style}`]} />
-                            {area.title}
-                          </a>
-                          <ul class="nav-drop__items">
-                            {area.items.map((item) => (
-                              <li>
-                                <a href={`${servicesPath}#${area.id}`} tabindex="-1">
-                                  {item.text}
-                                </a>
-                              </li>
-                            ))}
-                          </ul>
-                        </li>
-                      ))}
-                    </ul>
-                    <a class="more-link nav-drop__more" href={servicesPath}>
-                      See everything we do <span aria-hidden="true">↗</span>
-                    </a>
-                  </div>
-                ) : (
-                  <div class="sheet">
-                    <ul class="nav-drop__projects">
-                      {workItems.map((item) => (
-                        <li>
-                          <a class="nav-drop__project" href={item.href}>
-                            <span class="nav-drop__thumb" style={`background:${item.swatch}`} />
-                            <span class="nav-drop__name">{item.name}</span>
-                            <span class="nav-drop__status">{item.status}</span>
-                            <span class="nav-drop__line">{item.line}</span>
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                    <a class="more-link nav-drop__more" href={workPath}>
-                      See all our work <span aria-hidden="true">↗</span>
-                    </a>
-                  </div>
-                )}
+                <div class="sheet">
+                  <ul class="nav-drop__areas">
+                    {serviceAreas.map((area) => (
+                      <li>
+                        <a class="nav-drop__area" href={`${servicesPath}#${area.id}`}>
+                          <span class:list={['nav-drop__swatch', `fill--${area.style}`]} />
+                          {area.title}
+                        </a>
+                        <ul class="nav-drop__items">
+                          {area.items.map((item) => (
+                            <li>
+                              <a href={`${servicesPath}#${area.id}`} tabindex="-1">
+                                {item.text}
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      </li>
+                    ))}
+                  </ul>
+                  <a class="more-link nav-drop__more" href={servicesPath}>
+                    See everything we do <span aria-hidden="true">↗</span>
+                  </a>
+                </div>
               </div>
             </li>
           ) : (
@@ -129,15 +98,6 @@ const workItems = projects.map((p) => ({
                   {serviceAreas.map((area) => (
                     <li>
                       <a href={`${servicesPath}#${area.id}`}>{area.title}</a>
-                    </li>
-                  ))}
-                </ul>
-              )}
-              {link.menu === 'work' && (
-                <ul class="site-header__sub">
-                  {workItems.map((item) => (
-                    <li>
-                      <a href={item.href}>{item.name}</a>
                     </li>
                   ))}
                 </ul>
@@ -454,59 +414,6 @@ const workItems = projects.map((p) => ({
 
   .site-header__nav .nav-drop__area:hover,
   .site-header__nav .nav-drop__items a:hover,
-  .site-header__nav .nav-drop__project:hover .nav-drop__name {
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
-    color: var(--ink);
-  }
-
-  .nav-drop__projects {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: calc(var(--u) * 0.3);
-  }
-
-  .nav-drop__projects > li {
-    flex: 0 1 calc((100% - 2 * calc(var(--u) * 0.3)) / 3);
-  }
-
-  .site-header__nav .nav-drop__project {
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    align-items: center;
-    gap: 0.35rem 0.75rem;
-    padding: 0;
-  }
-
-  .nav-drop__thumb {
-    grid-row: span 2;
-    width: calc(var(--u) * 0.8);
-    aspect-ratio: 1;
-    border-top-right-radius: calc(var(--u) * 0.4);
-  }
-
-  .nav-drop__name {
-    font: 800 max(0.875rem, calc(var(--u) * 0.15)) / 1.1 var(--font-display);
-    text-transform: uppercase;
-  }
-
-  .nav-drop__status {
-    padding: 0.2rem 0.55rem;
-    border: 1px solid var(--ink);
-    border-radius: 999px;
-    font: 500 0.6875rem/1 var(--font-mono);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-  }
-
-  .nav-drop__line {
-    grid-column: 2 / -1;
-    align-self: start;
-    font: 400 0.875rem/1.4 var(--font-text);
-    color: var(--muted);
-  }
-
   .site-header__nav .nav-drop__more {
     margin-top: calc(var(--u) * 0.35);
     padding-block: 0 0.3rem;

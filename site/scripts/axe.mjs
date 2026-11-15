@@ -11,7 +11,7 @@ const PAGES = [
   'pricing/',
   'about/',
   'how-we-build/',
-  'work/',
+  'business-websites/',
   'agentic-ai-ready/',
   'free-ai-check/',
   'portfolio/',

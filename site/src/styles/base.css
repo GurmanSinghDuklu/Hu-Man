@@ -503,41 +503,30 @@ ol {
   stroke-dasharray: 1;
 }
 
-/* Pinned lists ([data-pin-steps]): the runway is made taller by the script, the stage sticks, the
-   items light up in turn. Unlit items keep 72% strength through `filter`, not `opacity`, so the
-   reveal's own opacity never fights it. */
-.pin-runway.is-on .pin-stage {
-  position: sticky;
-}
-
-.pin-bar {
-  display: none;
-}
-
-.pin-runway.is-on .pin-bar {
-  display: block;
-  height: 4px;
-  margin-bottom: max(12px, calc(var(--u) * 0.22));
-  background: linear-gradient(90deg, #4e28df, #e85e8f, #4a9bb0, #ce3d10, #db92db);
-  transform: scaleX(var(--p, 0));
-  transform-origin: left;
-}
-
-.pin-runway.is-on [data-pin-steps] > * {
-  filter: saturate(0.6) opacity(0.72);
+/* Pick lists ([data-pick], scripts/card-pick.ts): all cards show; clicking one (or an arrow key
+   while one is focused) lifts it and softens the others. Softened ones keep 72% strength through
+   `filter`, not `opacity`, so the reveal's own opacity never fights it. */
+[data-pick] > * {
+  cursor: pointer;
   transition:
-    filter 0.45s var(--ease-out),
-    scale 0.45s var(--ease-out),
+    filter 0.3s var(--ease-out),
+    scale 0.3s var(--ease-out),
     opacity 0.8s var(--ease-out),
     translate 0.8s var(--ease-out);
 }
 
-.pin-runway.is-on [data-pin-steps] > .is-lit {
-  filter: none;
+[data-pick].has-pick > * {
+  filter: saturate(0.6) opacity(0.72);
 }
 
-.pin-runway.is-on .pin-stage--grid [data-pin-steps] > .is-current {
+[data-pick].has-pick > .is-picked {
+  filter: none;
   scale: 1.025;
+}
+
+[data-pick] > :focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
 }
 
 /* The soft light on a tilting card (scripts/motion/pointer-fx.ts), centred on the pointer. */
@@ -752,4 +741,7 @@ html.lenis body {
     animation-duration: 14s !important;
     animation-iteration-count: infinite !important;
   }
+}
+main:focus {
+  outline: none;
 }

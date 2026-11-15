@@ -9,7 +9,7 @@
  */
 const MAGNET = '.btn, .pill-btn, .lp__cta, .cwall__next-btn, .ticker__toggle';
 const TILT = [
-  '[data-pin-steps] > *',
+  '[data-pick] > *',
   '.card',
   '.cards__grid > *',
   '.ptiers__list > li',

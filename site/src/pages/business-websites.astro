@@ -1,0 +1,211 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import InnerHero from '../components/InnerHero.astro';
+import TalkBanner from '../components/TalkBanner.astro';
+import { businessConcepts } from '../data/businessConcepts';
+
+// Three ways a business website can land. Wording is a draft awaiting Gurman's sign-off.
+const fits = [
+  {
+    tag: 'Too basic',
+    title: 'A template with your name on it',
+    text: 'Generic, obviously made in minutes, and nothing about it says who you are. It gets you online and no further.',
+  },
+  {
+    tag: 'The right fit',
+    title: 'Built for your business and your customers',
+    text: 'Exactly what you need to be found, trusted and contacted, in a look and feel that is yours. Nothing missing and nothing you will never use.',
+  },
+  {
+    tag: 'Too much',
+    title: 'Overkill for what you do',
+    text: 'Heavy animation, 3D and effects a small business does not need. It costs more, loads slower and puts your customers second.',
+  },
+];
+
+const steps = [
+  {
+    n: '01',
+    title: 'We listen',
+    text: 'A free call, with a real person. What you do, who your customers are, and what you want the website to do for you.',
+  },
+  {
+    n: '02',
+    title: 'We choose the fit',
+    text: 'We agree how much your business needs, and what it does not. You approve the plan and the design before any code.',
+  },
+  {
+    n: '03',
+    title: 'We build it for the people who use it',
+    text: 'Fast, secure, clear on a phone, and set up so search and AI tools can read it. Then we stay with you after launch.',
+  },
+];
+---
+
+<BaseLayout page="business-websites">
+  <SiteHeader slot="header" />
+
+  <InnerHero label="Business websites" lens="Lens 07 / The right fit">
+    <Fragment slot="title">The right fit, not the biggest.</Fragment>
+    <Fragment slot="lede">
+      A mechanic with a small workshop who wants to be found online does not need a 3D, high-end
+      animated site. They need the right one. We find it by talking to you first.
+    </Fragment>
+  </InnerHero>
+
+  <section class="band band--paper-2 bfit section" aria-labelledby="bfit-title">
+    <div class="sheet">
+      <p class="label" data-reveal>
+        01 / Getting it right
+      </p>
+      <h2 id="bfit-title" class="display display--s" data-reveal="lines">
+        Too basic, too much, or just right.
+      </h2>
+      <ul class="bfit__cards" data-pick>
+        {fits.map((f, i) => (
+          <li class:list={['bfit__card', { 'bfit__card--fit': i === 1 }]} data-rise>
+            <p class="label">{f.tag}</p>
+            <h3 class="bfit__title">{f.title}</h3>
+            <p>{f.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="band bsteps section" aria-labelledby="bsteps-title">
+    <div class="sheet">
+      <p class="label" data-reveal>
+        02 / How we find it
+      </p>
+      <h2 id="bsteps-title" class="display display--s" data-reveal="lines">
+        Human contact first. Then the build.
+      </h2>
+      <ol class="bsteps__list">
+        {steps.map((s) => (
+          <li data-rise>
+            <span class="bsteps__n">{s.n}</span>
+            <h3 class="bsteps__title">{s.title}</h3>
+            <p>{s.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  {businessConcepts.length > 0 && (
+    <section class="band band--paper-2 bconcepts section" aria-labelledby="bconcepts-title">
+      <div class="sheet">
+        <p class="label" data-reveal>
+          03 / Before and after
+        </p>
+        <h2 id="bconcepts-title" class="display display--s" data-reveal="lines">
+          The same business, the right fit.
+        </h2>
+        <div class="bconcepts__list">
+          {businessConcepts.map((c) => (
+            <article class="bconcept" data-rise>
+              <h3 class="bconcept__name">
+                {c.business} <span class="label">Concept</span>
+              </h3>
+              <p>{c.fit}</p>
+              <div class="bconcept__pair">
+                <figure>
+                  <img src={c.before.src} alt={c.before.alt} loading="lazy" />
+                  <figcaption class="label">Before</figcaption>
+                </figure>
+                <figure>
+                  <img src={c.after.src} alt={c.after.alt} loading="lazy" />
+                  <figcaption class="label">After</figcaption>
+                </figure>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <TalkBanner />
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+  .bfit__cards,
+  .bsteps__list {
+    display: grid;
+    gap: var(--space-3);
+    margin-top: var(--space-4);
+    padding: 0;
+    list-style: none;
+  }
+
+  .bfit__card,
+  .bsteps__list > li {
+    display: grid;
+    align-content: start;
+    gap: 0.75rem;
+    padding: var(--space-3);
+    border: 1px solid var(--ink);
+    background: var(--paper);
+  }
+
+  .bfit__card--fit {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .bfit__title,
+  .bsteps__title,
+  .bconcept__name {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.5rem;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .bsteps__n {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 2.5rem;
+  }
+
+  .bconcepts__list {
+    display: grid;
+    gap: var(--space-5);
+    margin-top: var(--space-4);
+  }
+
+  .bconcept {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .bconcept__pair {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .bconcept__pair img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--ink);
+  }
+
+  @media (min-width: 48rem) {
+    .bfit__cards,
+    .bsteps__list,
+    .bconcept__pair {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .bconcept__pair {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>

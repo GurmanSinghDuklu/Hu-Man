@@ -12,7 +12,7 @@ export type PageKey =
   | 'index'
   | 'services'
   | 'pricing'
-  | 'work'
+  | 'business-websites'
   | 'portfolio'
   | 'about'
   | 'how-we-build'
@@ -98,15 +98,15 @@ export const pages: Record<PageKey, PageInfo> = {
     ogHeadline: 'Be remembered, not just screened.',
     schemaType: 'WebPage',
   },
-  work: {
-    key: 'work',
-    path: '/work/',
-    title: 'Our work: websites and web apps | Hu/man',
+  'business-websites': {
+    key: 'business-websites',
+    path: '/business-websites/',
+    title: 'Business websites that fit your business | Hu/man',
     description:
-      'Live websites built by Hu/man: Essence Hair, a salon redesign, and The Calculator App, a web app with 130+ free calculators.',
-    label: 'Our work',
-    ogHeadline: 'Portfolio',
-    schemaType: 'CollectionPage',
+      'Not too basic, not too much. We talk to you first, then build the website and software that suits your business and the people who use it.',
+    label: 'Business websites',
+    ogHeadline: 'The right fit, not the biggest.',
+    schemaType: 'WebPage',
   },
   about: {
     key: 'about',

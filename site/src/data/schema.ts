@@ -14,7 +14,6 @@ import { tiers, portfolioTiers, carePlans } from './pricing';
 import { faq, agenticFaq, checkFaq } from './faq';
 import { term, definition } from './agentic';
 import { method, methodName } from './process';
-import { projects } from './projects';
 import { lastModified, pageFile } from '../lib/lastModified';
 
 type Node = Record<string, unknown>;
@@ -332,24 +331,6 @@ export function buildSchema(key: PageKey, abs: AbsUrl): Node {
       },
     });
     webPage.mainEntity = questions(checkFaq);
-  }
-
-  if (key === 'work') {
-    webPage.mainEntity = {
-      '@type': 'ItemList',
-      itemListElement: projects.map((project, i) => ({
-        '@type': 'ListItem',
-        position: i + 1,
-        item: {
-          '@type': project.live ? 'WebSite' : 'CreativeWork',
-          name: project.name,
-          description: project.summary,
-          creator: { '@id': ids.org },
-          ...(project.url && { url: project.url }),
-          ...(!project.live && { creativeWorkStatus: 'Concept, not live' }),
-        },
-      })),
-    };
   }
 
   return { '@context': 'https://schema.org', '@graph': graph };

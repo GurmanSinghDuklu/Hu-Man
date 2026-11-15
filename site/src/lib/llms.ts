@@ -51,7 +51,7 @@ const pageKeys: PageKey[] = [
   'agentic-ai-ready',
   'free-ai-check',
   'how-we-build',
-  'work',
+  'business-websites',
   'portfolio',
   'about',
   'contact',
@@ -219,7 +219,7 @@ export function llmsFullTxt(): string {
     '',
     'AI tools are useful, and we use them too. The difference is the work around them. No one can guarantee a place in AI answers; we do the groundwork properly.',
     '',
-    `## Our work (${link('work')})`,
+    `## Our work (${link('about')}, section Our work)`,
     '',
     ...projects.map(
       (p) =>

@@ -2,6 +2,7 @@
 import '../styles/base.css';
 import Seo from '../components/Seo.astro';
 import CookieButton from '../components/CookieButton.astro';
+import BackToTop from '../components/BackToTop.astro';
 import { withBase } from '../config/paths';
 import { pages, type PageKey } from '../data/pages';
 import montserrat800 from '../fonts/montserrat-latin-800-normal.woff2?url';
@@ -38,13 +39,15 @@ const { title, description } = pages[page];
       Skip to main content
     </a>
     <slot name="header" />
-    <main id="main">
+    <main id="main" tabindex="-1">
       <slot />
     </main>
     <slot name="footer" />
     <CookieButton />
+    <BackToTop />
     <script>
       import '../scripts/motion/index.ts';
+      import '../scripts/card-pick.ts';
     </script>
   </body>
 </html>

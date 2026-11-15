@@ -8,7 +8,8 @@
 /faq          /pricing/#faq   301
 /faqs         /pricing/#faq   301
 /prices       /pricing/       301
-/projects     /work/          301
+/projects     /about/#work    301
+/work/        /about/#work    301
 /process      /how-we-build/  301
 /about-us     /about/         301
 
@@ -18,7 +19,8 @@
 /about             /about/             301
 /services          /services/          301
 /pricing           /pricing/           301
-/work              /work/              301
+/work              /about/#work        301
+/business-websites /business-websites/ 301
 /portfolio         /portfolio/         301
 /how-we-build      /how-we-build/      301
 /agentic-ai-ready  /agentic-ai-ready/  301

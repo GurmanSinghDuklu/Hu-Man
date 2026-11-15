@@ -16,7 +16,7 @@ const pages = [
   ['pricing', 'pricing/'],
   ['about', 'about/'],
   ['how-we-build', 'how-we-build/'],
-  ['work', 'work/'],
+  ['business-websites', 'business-websites/'],
   ['agentic-ai-ready', 'agentic-ai-ready/'],
   ['free-ai-check', 'free-ai-check/'],
   ['portfolio', 'portfolio/'],
