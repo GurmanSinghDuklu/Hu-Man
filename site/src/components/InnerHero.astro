@@ -2,6 +2,7 @@
 /** Hero for the Services and Pricing pages: label, headline, lede and the "inner" collage. */
 import Collage from './Collage.astro';
 import HeroVideo from './HeroVideo.astro';
+import ScrollCue from './ScrollCue.astro';
 
 interface Props {
   label: string;
@@ -33,6 +34,7 @@ const { label, lens, longWords = false, as: Title = 'h1', video, intro = false }
         <slot name="lede" />
       </p>
       <slot name="after" />
+      {video && !Astro.slots.has('after') && <ScrollCue />}
     </div>
     {video ? (
       <div class="ihero__media">
@@ -45,6 +47,7 @@ const { label, lens, longWords = false, as: Title = 'h1', video, intro = false }
     )}
   </div>
 </section>
+{video && <div id="after-hero" aria-hidden="true"></div>}
 
 <style>
   /* Fits one window, like the home hero: a tight stack on phones with the collage capped by the window height; on desktop the layout shrinks with the window (see the media query). */

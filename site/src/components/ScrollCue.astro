@@ -1,0 +1,78 @@
+---
+/**
+ * The scroll cue under a hero video (Gurman, 2026-11-15): a short label and an arrow that drops on
+ * a loop, linking to what is below. The arrow stops under reduced motion.
+ */
+interface Props {
+  href?: string;
+  label?: string;
+  class?: string;
+}
+const { href = '#after-hero', label = 'Scroll down', class: className } = Astro.props;
+---
+
+<a class:list={['scroll-cue', className]} href={href}>
+  <span class="scroll-cue__text">{label}</span>
+  <span class="scroll-cue__arrow" aria-hidden="true">
+    <svg viewBox="0 0 24 24" focusable="false">
+      <path d="M12 4v15M5 12l7 7 7-7"></path>
+    </svg>
+  </span>
+</a>
+
+<style>
+  .scroll-cue {
+    display: inline-flex;
+    align-items: center;
+    justify-self: start;
+    gap: 0.75em;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #f2f2ec;
+    text-decoration: none;
+  }
+  .scroll-cue:hover .scroll-cue__text,
+  .scroll-cue:focus-visible .scroll-cue__text {
+    text-decoration: underline;
+    text-underline-offset: 0.3em;
+  }
+  .scroll-cue__arrow {
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 1px solid #39ff14;
+    color: #39ff14;
+  }
+  .scroll-cue__arrow svg {
+    width: 1.1rem;
+    height: 1.1rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: square;
+    animation: scroll-cue-drop 1.6s cubic-bezier(0.6, 0, 0.4, 1) infinite;
+  }
+  @keyframes scroll-cue-drop {
+    0% {
+      translate: 0 -0.35rem;
+      opacity: 0;
+    }
+    30%,
+    70% {
+      translate: 0 0;
+      opacity: 1;
+    }
+    100% {
+      translate: 0 0.45rem;
+      opacity: 0;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-cue__arrow svg {
+      animation: none;
+    }
+  }
+</style>

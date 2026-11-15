@@ -667,3 +667,12 @@ Lighthouse /portfolio/ 99/100/100/100, axe 0 violations, motion-check clear.
 - **`intro="receipt"`** (`scripts/hero-intro-receipt.ts`, key `hm-pricing-intro`, same shared gating as 'tiles' and 'cv'): a Paper receipt feeds down, prints a header bar and five rows (label bar plus a price that rolls like an odometer, then a Signal total bar), a Signal scan line passes, then it tears along a zigzag and the halves leave up and down over the poster; about 1.6 s.
   1. **Only real tier prices appear**: each row rolls through the prices before it (£318, £446, £932, £2,240, "Quote"); if tier prices change in `pricing.ts`, change `PRICES` in the script too.
   2. The halves are clones of the finished receipt (default CSS state is the final state; animations supply the printing), clipped with a zigzag `clip-path` and shown only from the tear on. Sizes are container units (`.hv-rc` is a size container).
+
+## Audio pop-up and scroll cue on every hero video (2026-11-15, branch `hero-audio-cue`)
+- **"Click here for audio"** (`.hv__cue` in `HeroVideo.astro`, logic in `hero-video.ts`): a bordered pop-up beside the
+  Sound button, shown once the muted video is really playing; gone after 14 s, on sound, or on pause, and not shown
+  again this page view once dismissed. Clicking it presses Sound. The Sound button now comes before Pause so the
+  pop-up points at it. On narrow tall frames (phones) it wraps to four short lines and drops the icon, to stay in the corner.
+- **Scroll cue** (`ScrollCue.astro`: "Scroll down" and a dropping arrow, links to `#after-hero`): `InnerHero` adds it
+  to every video hero unless the page fills the `after` slot itself (Portfolio's "See all 16 concepts below" does);
+  Home sets it beside the buttons (`.hero__cue`). Video heroes end with an empty `#after-hero` anchor.

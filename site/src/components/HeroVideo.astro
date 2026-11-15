@@ -118,23 +118,17 @@ const poster = await getImage({
       data-hv-start={v.start}
     ></video>
     <div class="hv__controls">
-      <button type="button" class="hv__btn" data-hv-play aria-label="Pause video">
-        <svg
-          class="hv__icon hv__icon--pause"
-          viewBox="0 0 24 24"
-          aria-hidden="true"
-          focusable="false"
-        >
-          <path d="M8 5h3v14H8zM13 5h3v14h-3z"></path>
+      <button type="button" class="hv__cue" data-hv-cue hidden>
+        <svg class="hv__cue-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M4 9h4l5-4v14l-5-4H4z"></path>
+          <path
+            d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          ></path>
         </svg>
-        <svg
-          class="hv__icon hv__icon--play"
-          viewBox="0 0 24 24"
-          aria-hidden="true"
-          focusable="false"
-        >
-          <path d="M8 5l11 7-11 7z"></path>
-        </svg>
+        Click here for audio
       </button>
       <button type="button" class="hv__btn" data-hv-sound aria-label="Turn sound on">
         <svg
@@ -159,6 +153,24 @@ const poster = await getImage({
             stroke="currentColor"
             stroke-width="2"
           ></path>
+        </svg>
+      </button>
+      <button type="button" class="hv__btn" data-hv-play aria-label="Pause video">
+        <svg
+          class="hv__icon hv__icon--pause"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <path d="M8 5h3v14H8zM13 5h3v14h-3z"></path>
+        </svg>
+        <svg
+          class="hv__icon hv__icon--play"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <path d="M8 5l11 7-11 7z"></path>
         </svg>
       </button>
     </div>
@@ -466,6 +478,113 @@ const poster = await getImage({
     background: rgb(241 242 236 / 0.92);
     color: var(--ink);
     cursor: pointer;
+  }
+
+  /* The audio pop-up (Gurman, 2026-11-15): browsers won't start sound by themselves, so a label points
+     at the Sound button while the video plays muted. Shown by hero-video.ts; gone once sound is on. */
+  .hv__cue {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: calc(100% + 14px);
+    height: fit-content;
+    margin-block: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    padding: 0.6em 0.9em;
+    border: 1px solid #39ff14;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-align: left;
+    white-space: nowrap;
+    cursor: pointer;
+    animation: hv-cue-in 0.25s steps(4) both;
+  }
+
+  .hv__cue[hidden] {
+    display: none;
+  }
+
+  /* A small square tail pointing right at the Sound button, which sits first in the row. */
+  .hv__cue::after {
+    content: '';
+    position: absolute;
+    right: -6px;
+    top: calc(50% - 5px);
+    width: 10px;
+    height: 10px;
+    border-top: 1px solid #39ff14;
+    border-right: 1px solid #39ff14;
+    background: var(--ink);
+    rotate: 45deg;
+  }
+
+  /* On a narrow tall frame (a phone) it wraps to two lines and drops the icon, so it only covers the
+     bottom corner beside the buttons. */
+  @media (max-width: 63.99rem) {
+    .hv--tall .hv__cue {
+      white-space: normal;
+      max-width: 5.6rem;
+      padding: 0.5em 0.6em;
+      font-size: 0.625rem;
+      letter-spacing: 0.06em;
+    }
+
+    .hv--tall .hv__cue-icon {
+      display: none;
+    }
+  }
+
+  .hv__cue-icon {
+    width: 1.3em;
+    height: 1.3em;
+    fill: #39ff14;
+    animation: hv-cue-pulse 1.2s steps(2) infinite;
+  }
+
+  .hv__cue:hover,
+  .hv__cue:focus-visible {
+    background: #39ff14;
+    color: var(--ink);
+  }
+
+  .hv__cue:hover::after,
+  .hv__cue:focus-visible::after {
+    background: #39ff14;
+  }
+
+  .hv__cue:hover .hv__cue-icon,
+  .hv__cue:focus-visible .hv__cue-icon {
+    fill: var(--ink);
+  }
+
+  .hv__cue:focus-visible {
+    outline: 2px solid var(--paper);
+    outline-offset: 3px;
+  }
+
+  @keyframes hv-cue-in {
+    from {
+      opacity: 0;
+    }
+  }
+
+  @keyframes hv-cue-pulse {
+    50% {
+      opacity: 0.35;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hv__cue,
+    .hv__cue-icon {
+      animation: none;
+    }
   }
 
   .hv__btn:hover {

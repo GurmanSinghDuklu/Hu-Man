@@ -1,5 +1,6 @@
 ---
 import HeroVideo from '../HeroVideo.astro';
+import ScrollCue from '../ScrollCue.astro';
 import BookingLink from '../BookingLink.astro';
 import { withBase } from '../../config/paths';
 import { site } from '../../config/site';
@@ -48,8 +49,11 @@ const offer = [
         Free AI check
       </a>
     </div>
+
+    <ScrollCue class="hero__cue" />
   </div>
 </section>
+<div id="after-hero" aria-hidden="true"></div>
 
 <style>
   /* The hero fits one window: on phones a tight stack with the video capped by the window height; on desktop the whole layout shrinks with the window (see the media query). */
@@ -220,6 +224,12 @@ const offer = [
 
     .hero__body {
       font-size: max(0.875rem, calc(var(--u) * 0.19));
+    }
+
+    .hero :global(.hero__cue) {
+      position: absolute;
+      left: calc(var(--u) * 5.4);
+      top: calc(var(--u) * 8.02);
     }
 
     .hero__actions {

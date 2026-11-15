@@ -14,6 +14,7 @@ if (fig) {
   const video = fig.querySelector<HTMLVideoElement>('video')!;
   const playBtn = fig.querySelector<HTMLButtonElement>('[data-hv-play]')!;
   const soundBtn = fig.querySelector<HTMLButtonElement>('[data-hv-sound]')!;
+  const cue = fig.querySelector<HTMLButtonElement>('[data-hv-cue]')!;
   const nav = navigator as Navigator & { connection?: { saveData?: boolean } };
   const auto =
     !window.matchMedia('(prefers-reduced-motion: reduce)').matches && !nav.connection?.saveData;
@@ -34,10 +35,28 @@ if (fig) {
     }
   };
 
+  // The "Click here for audio" pop-up: appears once the video is really playing muted, goes after
+  // 14 s, when sound is on, or when the video is paused. Once dismissed it stays away this visit.
+  let cueDone = false;
+  let cueTimer = 0;
+  const hideCue = (done = false) => {
+    cue.hidden = true;
+    window.clearTimeout(cueTimer);
+    if (done) cueDone = true;
+  };
+  video.addEventListener('playing', () => {
+    if (cueDone || !video.muted || !cue.hidden) return;
+    cue.hidden = false;
+    cueTimer = window.setTimeout(() => hideCue(true), 14000);
+  });
+  video.addEventListener('pause', () => hideCue());
+  cue.addEventListener('click', () => soundBtn.click());
+
   const sync = () => {
     fig.classList.toggle('is-paused', !wanted);
     playBtn.setAttribute('aria-label', wanted ? 'Pause video' : 'Play video');
     fig.classList.toggle('has-sound', !video.muted);
+    if (!video.muted) hideCue(true);
     soundBtn.setAttribute('aria-label', video.muted ? 'Turn sound on' : 'Turn sound off');
     if (wanted && onScreen) {
       load();
