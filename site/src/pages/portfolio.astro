@@ -63,14 +63,6 @@ const choose = (name: string) => withBase(contactPath({ tier: `Portfolio: ${name
         {ats.text.map((p) => (
           <p class="ats__text">{p}</p>
         ))}
-        <h3 class="ats__sub">{ats.tripsTitle}</h3>
-        <ul class="ats__trips">
-          {ats.trips.map((t) => (
-            <li>
-              <strong>{t.title}.</strong> {t.text}
-            </li>
-          ))}
-        </ul>
       </div>
 
       <div class="ats__side">
@@ -91,6 +83,31 @@ const choose = (name: string) => withBase(contactPath({ tier: `Portfolio: ${name
         <a class="pill-btn ats__btn" href={withBase(contactPath({ topic: 'other' }))}>
           {ats.button}
         </a>
+      </div>
+
+      <div class="ats__guide">
+        <h3 class="ats__sub">{ats.guideTitle}</h3>
+        <ol class="ats__stages">
+          {ats.stages.map((st, i) => (
+            <li class="ats__stage" data-reveal style={`--reveal-delay:${i * 0.08}s`}>
+              <p class="ats__stage-n">
+                {String(i + 1).padStart(2, '0')} · {st.stage}
+              </p>
+              <h4>{st.title}</h4>
+              <ul class="ats__tips">
+                {st.tips.map((t) => (
+                  <li>
+                    <strong>{t.title}.</strong> {t.text}
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ))}
+        </ol>
+        <div class="ats__check" data-reveal>
+          <h4>{ats.check.title}</h4>
+          <p>{ats.check.text}</p>
+        </div>
       </div>
     </div>
   </section>
@@ -318,17 +335,71 @@ const choose = (name: string) => withBase(contactPath({ tier: `Portfolio: ${name
     text-transform: uppercase;
   }
 
-  .ats__trips {
+  /* The three-stage guide, full width under the intro and the offers. */
+  .ats__guide {
+    min-width: 0;
+  }
+
+  .ats__guide .ats__sub {
+    margin-top: 0;
+  }
+
+  .ats__stages {
     display: grid;
-    gap: 0.6rem;
-    max-width: 38rem;
-    margin-top: 0.9rem;
+    gap: max(12px, calc(var(--u) * 0.2));
+    margin-top: 1rem;
+  }
+
+  .ats__stage {
+    display: grid;
+    align-content: start;
+    gap: 0.75rem;
+    padding: clamp(1.25rem, calc(var(--u) * 0.3), 2rem);
+    border: 1px solid var(--ink);
+    background: var(--paper);
+  }
+
+  .ats__stage-n {
+    font: 400 0.75rem var(--font-mono);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .ats__stage h4 {
+    font: 800 clamp(1.2rem, calc(var(--u) * 0.26), 1.6rem) / 1.05 var(--font-display);
+    text-transform: uppercase;
+  }
+
+  .ats__tips {
+    display: grid;
+    gap: 0.75rem;
+    margin-top: 0.25rem;
     line-height: 1.5;
   }
 
-  .ats__trips li {
+  .ats__tips li {
     padding-left: 1rem;
     border-left: 2px solid var(--pink);
+  }
+
+  .ats__check {
+    display: grid;
+    gap: 0.4rem;
+    margin-top: max(12px, calc(var(--u) * 0.2));
+    padding: clamp(1.25rem, calc(var(--u) * 0.3), 2rem);
+    background: var(--ink);
+    color: var(--paper);
+    border-bottom-right-radius: calc(var(--u) * 0.9);
+    line-height: 1.5;
+  }
+
+  .ats__check h4 {
+    font: 800 clamp(1.1rem, calc(var(--u) * 0.22), 1.4rem) / 1.1 var(--font-display);
+    text-transform: uppercase;
+  }
+
+  .ats__check p {
+    max-width: 52rem;
   }
 
   .ats__offers {
@@ -454,6 +525,14 @@ const choose = (name: string) => withBase(contactPath({ tier: `Portfolio: ${name
       grid-template-columns: 6fr 5fr;
       gap: calc(var(--u) * 0.66);
       align-items: start;
+    }
+
+    .ats__guide {
+      grid-column: 1 / -1;
+    }
+
+    .ats__stages {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
 </style>
