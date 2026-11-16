@@ -11,6 +11,9 @@ import TalkBanner from '../components/TalkBanner.astro';
 import Sparkle from '../components/Sparkle.astro';
 import { serviceAreas } from '../data/services';
 import { carePlanFrom } from '../data/pricing';
+import Shape from '../components/play/Shape.astro';
+import Sticker from '../components/play/Sticker.astro';
+import MorphShape from '../components/play/MorphShape.astro';
 
 // "Projects and care": what is paid once and what a care plan covers (from the design).
 const projects = [
@@ -56,6 +59,9 @@ const lightNumber = new Set(['indigo', 'dusk']);
     <div class="sheet">
       <p class="label" data-reveal>
         03 / Our services
+        <Sticker tone="lilac" tilt={5}>
+          Six areas
+        </Sticker>
       </p>
       <h2 id="svc-title" class="display display--m" data-reveal="lines">
         Everything under one roof.
@@ -81,7 +87,17 @@ const lightNumber = new Set(['indigo', 'dusk']);
               ]}
             >
               <span class="svc__n">{String(i + 1).padStart(2, '0')}</span>
-              <Sparkle class="svc__star" />
+              <MorphShape
+                class="svc__star"
+                forms={(['sparkle', 'circle', 'arch', 'pill', 'drop', 'square'] as const)
+                  .slice(i % 6)
+                  .concat(
+                    (['sparkle', 'circle', 'arch', 'pill', 'drop', 'square'] as const).slice(
+                      0,
+                      i % 6,
+                    ),
+                  )}
+              />
             </div>
             <div class="svc__body">
               <h3>{s.title}</h3>
@@ -107,7 +123,7 @@ const lightNumber = new Set(['indigo', 'dusk']);
         04 / How it’s paid for
       </p>
       <h2 id="paid-title" class="display" data-reveal="lines">
-        Projects and care.
+        Projects <Shape kind="pill" tone="lilac" /> and care.
       </h2>
 
       <div class="paid__cards" data-pick>

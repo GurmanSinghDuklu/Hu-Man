@@ -1,0 +1,226 @@
+---
+/**
+ * A small brand shape (gsap.com-style "living" shape) that sits inline in a headline, a line of
+ * words or a banner, and loops gently by itself. Decorative (aria-hidden, no text), so a headline's
+ * text and its SplitText label are unchanged. The outer span pops in (when inside a revealed
+ * [data-reveal], or when play.ts pops it); the inner body loops. Loops are CSS, so they survive
+ * SplitText rebuilding a headline, and they stop under reduced motion.
+ */
+import sparkleUrl from '../../assets/brand/sparkle.svg?url';
+
+export type ShapeKind = 'sparkle' | 'orb' | 'arch' | 'pill' | 'ring' | 'square';
+export type ShapeTone =
+  'lilac' | 'indigo' | 'rose' | 'dusk' | 'peach' | 'teal' | 'signal' | 'ink' | 'paper';
+export type ShapeLoop = 'spin' | 'bob' | 'squash' | 'wobble' | 'pulse' | 'none';
+
+interface Props {
+  kind: ShapeKind;
+  tone?: ShapeTone;
+  /** Defaults per kind: sparkle spins, orb bobs, arch squashes, pill wobbles, ring pulses. */
+  loop?: ShapeLoop;
+  /** Height, in any CSS length; em keeps it in step with the text around it. */
+  size?: string;
+  /** Extra pop-in delay in seconds, to stagger several shapes. */
+  delay?: number;
+  class?: string;
+  [attr: string]: unknown;
+}
+
+const defaults: Record<ShapeKind, ShapeLoop> = {
+  sparkle: 'spin',
+  orb: 'bob',
+  arch: 'squash',
+  pill: 'wobble',
+  ring: 'pulse',
+  square: 'wobble',
+};
+const {
+  kind,
+  tone = 'indigo',
+  loop = defaults[kind],
+  size = '0.8em',
+  delay = 0,
+  class: className,
+  ...rest
+} = Astro.props;
+---
+
+<span
+  class:list={['shape', `shape--${kind}`, `shape--${tone}`, className]}
+  style={`--s:${size};--d:${delay}s;--sparkle:url("${sparkleUrl}")`}
+  aria-hidden="true"
+  data-shape
+  {...rest}
+>
+  <span class:list={['shape__body', `shape__body--${loop}`]}></span>
+</span>
+
+<style>
+  .shape {
+    --w: var(--s);
+    display: inline-block;
+    position: relative;
+    width: var(--w);
+    height: var(--s);
+    margin-inline: 0.08em;
+    vertical-align: -0.08em;
+    pointer-events: none;
+  }
+
+  .shape--pill {
+    --w: calc(var(--s) * 1.7);
+  }
+
+  .shape--arch {
+    --w: calc(var(--s) * 0.78);
+  }
+
+  .shape__body {
+    position: absolute;
+    inset: 0;
+    background: var(--tone);
+  }
+
+  .shape--sparkle .shape__body {
+    mask: var(--sparkle) center / contain no-repeat;
+  }
+
+  .shape--orb .shape__body {
+    border-radius: 50%;
+  }
+
+  .shape--arch .shape__body {
+    border-radius: 999px 999px 0 0;
+    transform-origin: 50% 100%;
+  }
+
+  .shape--pill .shape__body {
+    inset: 18% 0;
+    border-radius: 999px;
+  }
+
+  .shape--ring .shape__body {
+    border-radius: 50%;
+    mask: radial-gradient(closest-side, transparent 56%, #000 58%);
+  }
+
+  .shape--square .shape__body {
+    inset: 10%;
+  }
+
+  .shape--lilac {
+    --tone: var(--grad-lilac);
+  }
+
+  .shape--indigo {
+    --tone: var(--grad-indigo);
+  }
+
+  .shape--rose {
+    --tone: var(--grad-rose);
+  }
+
+  .shape--dusk {
+    --tone: var(--grad-dusk);
+  }
+
+  .shape--peach {
+    --tone: linear-gradient(150deg, #fbe2c2 0%, #f3a96f 60%, #e2734a 100%);
+  }
+
+  .shape--teal {
+    --tone: linear-gradient(150deg, #a9e3df 0%, #4a9bb0 70%, #2f6f86 100%);
+  }
+
+  .shape--signal {
+    --tone: linear-gradient(150deg, #d9ffc4 0%, #39ff14 70%);
+  }
+
+  .shape--ink {
+    --tone: var(--ink);
+  }
+
+  .shape--paper {
+    --tone: var(--paper);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    /* Pop in with the headline or label it sits in. */
+    :global(.js [data-reveal]:not(.is-in)) .shape {
+      scale: 0;
+    }
+
+    :global(.is-in) .shape {
+      animation: shape-pop 0.9s cubic-bezier(0.34, 1.9, 0.5, 1) calc(0.35s + var(--d)) both;
+    }
+
+    .shape__body--spin {
+      animation: shape-spin 7s linear infinite;
+    }
+
+    .shape__body--bob {
+      animation: shape-bob 1.6s ease-in-out infinite alternate;
+    }
+
+    .shape__body--squash {
+      animation: shape-squash 1.3s cubic-bezier(0.5, 0, 0.5, 1) infinite alternate;
+    }
+
+    .shape__body--wobble {
+      animation: shape-wobble 2.2s ease-in-out infinite alternate;
+    }
+
+    .shape__body--pulse {
+      animation: shape-pulse 2.4s ease-in-out infinite alternate;
+    }
+  }
+
+  @keyframes shape-pop {
+    from {
+      scale: 0;
+      rotate: -40deg;
+    }
+  }
+
+  @keyframes shape-spin {
+    to {
+      rotate: 360deg;
+    }
+  }
+
+  @keyframes shape-bob {
+    from {
+      translate: 0 0.08em;
+    }
+    to {
+      translate: 0 -0.12em;
+    }
+  }
+
+  @keyframes shape-squash {
+    from {
+      scale: 1.12 0.86;
+    }
+    to {
+      scale: 0.92 1.1;
+    }
+  }
+
+  @keyframes shape-wobble {
+    from {
+      rotate: -16deg;
+    }
+    to {
+      rotate: 14deg;
+    }
+  }
+
+  @keyframes shape-pulse {
+    from {
+      scale: 0.82;
+    }
+    to {
+      scale: 1.08;
+    }
+  }
+</style>

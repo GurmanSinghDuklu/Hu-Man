@@ -11,6 +11,8 @@ import ScrollCue from '../components/ScrollCue.astro';
 import ConceptWall from '../components/ConceptWall.astro';
 import { portfolioConcepts, portfolioConceptsIntro } from '../data/portfolioConcepts';
 import { ats } from '../data/ats';
+import Shape from '../components/play/Shape.astro';
+import WordLine from '../components/play/WordLine.astro';
 
 const choose = (name: string) => withBase(contactPath({ tier: `Portfolio: ${name}` }));
 ---
@@ -44,7 +46,7 @@ const choose = (name: string) => withBase(contactPath({ tier: `Portfolio: ${name
         {portfolioConceptsIntro.label} · {portfolioConcepts.length}
       </p>
       <h2 id="concepts-title" class="display display--s" data-reveal="lines">
-        {portfolioConceptsIntro.title}
+        {portfolioConceptsIntro.title} <Shape kind="sparkle" tone="signal" />
       </h2>
       <p class="pconcepts__text">{portfolioConceptsIntro.text}</p>
       <ConceptWall />
@@ -58,7 +60,7 @@ const choose = (name: string) => withBase(contactPath({ tier: `Portfolio: ${name
           {ats.label}
         </p>
         <h2 id="ats-title" class="display display--s" data-reveal="lines">
-          {ats.title}
+          {ats.title} <Shape kind="orb" tone="indigo" />
         </h2>
         {ats.text.map((p) => (
           <p class="ats__text">{p}</p>
@@ -157,7 +159,7 @@ const choose = (name: string) => withBase(contactPath({ tier: `Portfolio: ${name
           Add-ons
         </p>
         <h2 id="extras-title" class="display display--s" data-reveal="lines">
-          Add what you need.
+          Add what <Shape kind="pill" tone="peach" /> you need.
         </h2>
         <ul class="pextras__list">
           {portfolioAddOns.map((a) => (
@@ -172,6 +174,14 @@ const choose = (name: string) => withBase(contactPath({ tier: `Portfolio: ${name
       </div>
     </div>
   </section>
+
+  <WordLine
+    words={['Your work.', 'Your name.', 'Your page.']}
+    shapes={[
+      { kind: 'arch', tone: 'lilac' },
+      { kind: 'sparkle', tone: 'signal' },
+    ]}
+  />
 
   <TalkBanner />
 

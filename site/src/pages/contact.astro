@@ -15,6 +15,7 @@ import Sparkle from '../components/Sparkle.astro';
 import { site } from '../config/site';
 import { withBase } from '../config/paths';
 import { contactFaq } from '../data/faq';
+import Shape from '../components/play/Shape.astro';
 
 // What happens after someone gets in touch (draft copy, 2026-10-27).
 const steps = [
@@ -109,7 +110,7 @@ const tel = `tel:${site.contact.phone.replace(/\s+/g, '')}`;
             02 / What happens next
           </p>
           <h2 id="next-title" class="cx__title cx__title--big" data-reveal="lines">
-            No forms
+            No forms <Shape kind="ring" tone="indigo" />
             <br />
             into the void.
           </h2>

@@ -4,6 +4,8 @@ import { withBase } from '../../config/paths';
 import { fromPrice } from '../../data/pricing';
 import RingOrb from '../RingOrb.astro';
 import DrawWireframe from '../DrawWireframe.astro';
+import Shape from '../play/Shape.astro';
+import Sticker from '../play/Sticker.astro';
 
 interface Props {
   n: string;
@@ -17,14 +19,18 @@ const { n } = Astro.props;
     <div class="agent__copy">
       <p class="label" data-reveal>
         {n} / Future-proofed
+        <Sticker tone="peach" tilt={-4}>
+          As standard
+        </Sticker>
       </p>
       <h2 id={`agent-title-${n}`} class="display display--m" data-reveal="lines">
-        Agentic AI-ready,
+        Agentic <Shape kind="orb" tone="indigo" /> AI-ready,
         <br />
         as standard.
       </h2>
       <p class="agent__text" data-reveal data-scrub="words">
-        Everything we build is fast, secure and structured so people, search engines and AI agents
+        Everything we build is fast, secure and structured so people, search engines and{' '}
+        <span data-land>AI agents</span>
         can read it and act on it. It comes as standard on every tier, from {fromPrice}.
       </p>
       <a class="more-link agent__link" href={withBase('/how-we-build/')}>

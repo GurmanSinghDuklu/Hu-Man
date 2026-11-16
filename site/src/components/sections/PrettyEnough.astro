@@ -1,4 +1,6 @@
 ---
+import Shape from '../play/Shape.astro';
+import Sticker from '../play/Sticker.astro';
 /**
  * "Pretty isn't enough" (home 02, services 01): the headline on the left, and on the right a
  * dashed "Looks good" pill where a one-prompt site stops, then the three layers we add.
@@ -23,15 +25,18 @@ const layers = [
       <div class="pretty__copy">
         <p class="label" data-reveal>
           {n} / Be honest
+          <Sticker tone="pink" tilt={6}>
+            Looks good?
+          </Sticker>
         </p>
         <h2 id={`pretty-title-${n}`} class="display pretty__title" data-reveal="lines">
-          Pretty isn’t
+          Pretty <Shape kind="arch" tone="rose" /> isn’t
           <br />
           enough.
         </h2>
         <p class="pretty__text" data-reveal data-scrub="words">
           A nice-looking site from one prompt won’t move the needle. What gets a business where it
-          wants to be is everything underneath.
+          wants to be is <span data-land>everything underneath</span>.
         </p>
       </div>
 

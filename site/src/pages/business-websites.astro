@@ -18,6 +18,8 @@ import { withBase } from '../config/paths';
 import { tiers, carePlans, fastTrack } from '../data/pricing';
 import { businessSiteConcepts, businessConceptsIntro } from '../data/portfolioConcepts';
 import { businessConcepts } from '../data/businessConcepts';
+import Shape from '../components/play/Shape.astro';
+import WordLine from '../components/play/WordLine.astro';
 
 // Three ways a business website can land.
 const fits = [
@@ -97,7 +99,7 @@ const pairs = businessConcepts.filter((c) => c.before);
           Getting it right
         </p>
         <h2 id="bfit-title" class="display display--s" data-reveal="lines">
-          Too basic, too much, or just right.
+          Too basic, too much, or just <Shape kind="sparkle" tone="indigo" /> right.
         </h2>
         <p class="bfit__text">
           A small business is usually offered one of two things: a quick template that looks like
@@ -180,7 +182,7 @@ const pairs = businessConcepts.filter((c) => c.before);
           Care plans
         </p>
         <h2 id="extras-title" class="display display--s" data-reveal="lines">
-          Keep it running.
+          Keep it <Shape kind="orb" tone="indigo" /> running.
         </h2>
         <ul class="bextras__list">
           {carePlans.map((p) => (
@@ -241,6 +243,14 @@ const pairs = businessConcepts.filter((c) => c.before);
       </div>
     </section>
   )}
+
+  <WordLine
+    words={['Not too basic.', 'Not too much.', 'Just right.']}
+    shapes={[
+      { kind: 'square', tone: 'peach' },
+      { kind: 'orb', tone: 'indigo' },
+    ]}
+  />
 
   <TalkBanner />
 

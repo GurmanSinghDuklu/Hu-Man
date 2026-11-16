@@ -1,0 +1,121 @@
+---
+/**
+ * A tilted sticker tag (gsap.com-style) that pops on with a bounce when its label is revealed, and
+ * wobbles on hover. Put it inside a section's `.label` line, never inside a headline (SplitText
+ * would read its words into the headline's label). It repeats words already in the section, so it
+ * is hidden from screen readers and from the AI-readable copy.
+ */
+interface Props {
+  tone?: 'signal' | 'indigo' | 'peach' | 'lilac' | 'pink' | 'teal' | 'paper';
+  /** Tilt in degrees. */
+  tilt?: number;
+  /** Extra pop-in delay in seconds. */
+  delay?: number;
+  class?: string;
+}
+const { tone = 'signal', tilt = -5, delay = 0, class: className } = Astro.props;
+---
+
+<span
+  class:list={['sticker', `sticker--${tone}`, className]}
+  style={`--tilt:${tilt}deg;--d:${delay}s`}
+  aria-hidden="true"
+>
+  <span class="sticker__in">
+    <slot />
+  </span>
+</span>
+
+<style>
+  .sticker {
+    display: inline-block;
+    margin-left: 0.9em;
+    vertical-align: middle;
+    rotate: var(--tilt);
+  }
+
+  .sticker__in {
+    display: block;
+    padding: 0.32em 0.7em 0.36em;
+    border: 1.5px solid var(--ink);
+    border-radius: 0.45em;
+    background: var(--sticker);
+    color: var(--ink);
+    font: 700 clamp(0.95rem, calc(var(--u) * 0.2), 1.3rem) / 1.1 var(--font-text);
+    letter-spacing: 0;
+    text-transform: none;
+    white-space: nowrap;
+  }
+
+  .sticker--signal {
+    --sticker: #39ff14;
+  }
+
+  .sticker--indigo {
+    --sticker: var(--indigo);
+  }
+
+  .sticker--indigo .sticker__in {
+    color: var(--paper);
+  }
+
+  .sticker--peach {
+    --sticker: var(--peach);
+  }
+
+  .sticker--lilac {
+    --sticker: var(--lilac);
+  }
+
+  .sticker--pink {
+    --sticker: var(--pink);
+  }
+
+  .sticker--teal {
+    --sticker: #8fd3d6;
+  }
+
+  .sticker--paper {
+    --sticker: var(--paper);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js [data-reveal]:not(.is-in)) .sticker {
+      opacity: 0;
+    }
+
+    :global(.is-in) .sticker {
+      animation: sticker-pop 0.85s cubic-bezier(0.34, 1.9, 0.5, 1) calc(0.45s + var(--d)) both;
+    }
+
+    @media (hover: hover) {
+      .sticker:hover .sticker__in {
+        animation: sticker-wobble 0.55s ease-in-out;
+      }
+    }
+  }
+
+  @keyframes sticker-pop {
+    from {
+      opacity: 0;
+      scale: 0.3;
+      rotate: calc(var(--tilt) + 28deg);
+    }
+    40% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes sticker-wobble {
+    25% {
+      rotate: 7deg;
+      scale: 1.06;
+    }
+    55% {
+      rotate: -5deg;
+    }
+    80% {
+      rotate: 2deg;
+    }
+  }
+</style>

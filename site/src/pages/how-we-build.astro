@@ -7,6 +7,7 @@ import TalkBanner from '../components/TalkBanner.astro';
 import Sparkle from '../components/Sparkle.astro';
 import RingOrb from '../components/RingOrb.astro';
 import { checklist, compare, bonnet } from '../data/process';
+import Shape from '../components/play/Shape.astro';
 import MethodSteps from '../components/sections/MethodSteps.astro';
 ---
 
@@ -64,12 +65,12 @@ import MethodSteps from '../components/sections/MethodSteps.astro';
         02 / Every build
       </p>
       <h2 id="stages-title" class="display" data-reveal="lines">
-        Talk. Shape. Build.
+        Talk. <Shape kind="sparkle" tone="indigo" /> Shape. <Shape kind="orb" tone="peach" /> Build.
         <br />
-        Launch. Stay.
+        Launch. <Shape kind="arch" tone="rose" /> Stay.
       </h2>
       <p class="stages__text" data-reveal data-scrub="words">
-        One method for every build, and a human signs off each step.
+        One method for every build, and a <span data-land>human signs off</span> each step.
       </p>
       <div class="stages__method">
         <MethodSteps tone="on-page" />
@@ -84,7 +85,7 @@ import MethodSteps from '../components/sections/MethodSteps.astro';
           03 / Our technology
         </p>
         <h2 id="bonnet-title" class="display" data-reveal="lines">
-          What’s under the bonnet.
+          What’s under <Shape kind="square" tone="indigo" /> the bonnet.
         </h2>
         <ul class="bonnet__cards" data-pick>
           {bonnet.map((b, i) => (
@@ -111,7 +112,7 @@ import MethodSteps from '../components/sections/MethodSteps.astro';
       <h2 id="checklist-title" class="display display--m" data-reveal="lines">
         Every site passes this
         <br />
-        checklist.
+        checklist. <Shape kind="sparkle" tone="signal" />
       </h2>
       <p class="checklist__tag">
         <span class="pill">Human-checked, not just automated</span>
@@ -138,12 +139,13 @@ import MethodSteps from '../components/sections/MethodSteps.astro';
           05 / Ready for what’s next
         </p>
         <h2 id="next-title" class="display display--s" data-reveal="lines">
-          Ready for
+          Ready <Shape kind="orb" tone="indigo" /> for
           <br />
           what’s next.
         </h2>
         <p class="next__text" data-reveal data-scrub="words">
-          AI agents are starting to search, compare and book for people. We do the back-end work
+          AI agents are starting to search, compare and book for people. We do the{' '}
+          <span data-land>back-end work</span>
           now, so your site is ready when they arrive.
         </p>
         <p class="next__note">

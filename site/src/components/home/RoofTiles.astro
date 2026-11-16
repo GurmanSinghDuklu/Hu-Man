@@ -1,6 +1,9 @@
 ---
 /** "Everything under one roof" (home 05): the six service areas as tiles, linking to /services/. */
 import { serviceAreas } from '../../data/services';
+import Shape from '../play/Shape.astro';
+import Sticker from '../play/Sticker.astro';
+import MorphShape from '../play/MorphShape.astro';
 import { withBase } from '../../config/paths';
 ---
 
@@ -8,9 +11,12 @@ import { withBase } from '../../config/paths';
   <div class="sheet">
     <p class="label" data-reveal>
       04 / What we do
+      <Sticker tone="lilac" tilt={5}>
+        Six areas
+      </Sticker>
     </p>
     <h2 id="roof-title" class="display display--m" data-reveal="lines">
-      Everything under one roof.
+      Everything under <Shape kind="arch" tone="dusk" /> one roof.
     </h2>
 
     <ul class="roof__tiles">
@@ -21,6 +27,14 @@ import { withBase } from '../../config/paths';
         >
           <span class="roof__n">{String(i + 1).padStart(2, '0')}</span>
           <h3>{s.title}</h3>
+          <MorphShape
+            class="roof__morph"
+            forms={(['circle', 'arch', 'sparkle', 'pill', 'square', 'drop'] as const)
+              .slice(i % 6)
+              .concat(
+                (['circle', 'arch', 'sparkle', 'pill', 'square', 'drop'] as const).slice(0, i % 6),
+              )}
+          />
         </li>
       ))}
     </ul>
@@ -45,6 +59,23 @@ import { withBase } from '../../config/paths';
     min-height: 9.5rem;
     padding: clamp(1.1rem, calc(var(--u) * 0.33), 1.75rem);
     border: 1px solid var(--ink);
+  }
+
+  /* A brand shape in the corner that changes form (MorphShape, play.ts). */
+  .roof__tile {
+    position: relative;
+  }
+
+  .roof__tile :global(.roof__morph) {
+    position: absolute;
+    top: clamp(1.1rem, calc(var(--u) * 0.33), 1.75rem);
+    right: clamp(1.1rem, calc(var(--u) * 0.31), 1.75rem);
+    width: clamp(1.7rem, calc(var(--u) * 0.44), 2.7rem);
+    color: var(--ink);
+  }
+
+  .roof__tile--dusk :global(.roof__morph) {
+    color: var(--paper);
   }
 
   .roof__n {

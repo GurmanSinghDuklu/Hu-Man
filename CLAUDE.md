@@ -702,3 +702,26 @@ Track, then TalkBanner. Copy is a draft awaiting his sign-off.
 2. Business concept pages link back to `../../business-websites/` (seo-check accepts either page).
 3. `src/data/businessConcepts.ts` is now only for real before-and-after pairs; the section stays
    hidden until an entry has a `before`.
+
+## Play: gsap.com-style shapes, no pinning (2026-11-16, branch `gsap-play`)
+Gurman asked for gsap.com's moving shapes and animations, made from Hu/man's own assets, on every page,
+without its pinned sideways strip. Pieces live in `src/components/play/` and `scripts/motion/play.ts`
+(loaded on idle after GSAP, never under reduced motion; each part imports its plugin only if the page has it):
+- `Shape` (sparkle, orb, arch, pill, ring, square in the brand gradients) sits inline in section headlines
+  and loops by CSS (spin, bob, squash, wobble, pulse). It has no text, so a headline's words and SplitText
+  label are unchanged. Line reveals open their masks when done (`reveals.ts`) so shapes can move past the line.
+- `Sticker`: tilted tag that pops on with its label. Put it in the `.label` line, never in a headline
+  (SplitText builds the headline's aria-label from all its text). Repeats words already in the section;
+  aria-hidden.
+- `[data-land]` on a phrase: a sparkle flies to it on a curve (MotionPath), bursts, and underlines it.
+- `WordLine`: big line of words that unscramble (ScrambleText), shapes pop between, a curve draws (DrawSVG).
+  Size is capped from its longest entry so each entry fits one line at every width. Words state activities,
+  not outcomes (hard rule 3).
+- `MorphShape` (forms in `src/data/morphForms.ts`): changes form on arrival, every few seconds on screen and
+  on card hover (MorphSVG). On service cards and home's What we do tiles.
+- Talk banner toys: throwable shapes (Draggable + Inertia), mouse and trackpad only.
+1. **Never let GSAP transform an element that has a CSS `scale`/`rotate` animation.** GSAP folds the CSS
+   individual transforms into its own transform when it first touches the element, so a shape caught at
+   its pop-in start froze at scale 0. Drag or animate a plain wrapper instead (see TalkBanner).
+2. The banner copy passes pointer presses through to the toys behind it (buttons and links stay clickable).
+Lighthouse 96-99 / 100 / 100 / 100 (home, services, about, pricing); axe 0 on 17 pages; motion-check clear.

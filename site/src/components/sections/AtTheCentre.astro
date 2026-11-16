@@ -1,4 +1,6 @@
 ---
+import Shape from '../play/Shape.astro';
+import Sticker from '../play/Sticker.astro';
 /**
  * "At the centre of it all, we're human" (home 07, services 06): copy on the left, and three
  * overlapping rings (grounded, technical, creative) around a rose "human" circle.
@@ -16,17 +18,21 @@ const { n } = Astro.props;
       <div>
         <p class="label" data-reveal>
           {n} / At the centre
+          <Sticker tone="signal" tilt={-6}>
+            Not a fee you forget
+          </Sticker>
         </p>
         <h2 id={`centre-title-${n}`} class="display display--m centre__title" data-reveal="lines">
           At the centre
           <br />
           of it all, we’re
           <br />
-          human.
+          <Shape kind="orb" tone="rose" /> human.
         </h2>
         <p class="centre__text" data-reveal data-scrub="words">
           We’re not a fee you pay and forget. We work through the problems with you, find the right
-          solution, and stay with you until you’re where you want to be, as a business and online.
+          solution, and <span data-land>stay with you</span> until you’re where you want to be, as a
+          business and online.
         </p>
       </div>
 

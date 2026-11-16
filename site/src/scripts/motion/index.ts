@@ -1,7 +1,8 @@
 /**
  * Boots the site's motion. Reveals start straight away (they are cheap). The libraries never
  * compete with first paint:
- * - GSAP (heading line reveals) loads when the page is idle;
+ * - GSAP (heading line reveals) loads when the page is idle, then the playful shapes (play.ts),
+ *   each part with its own plugin, only on pages that have them;
  * - Lenis (smooth wheel scrolling) loads when idle too, but only with a mouse or trackpad: touch
  *   screens keep native scrolling, so it would be dead weight there;
  * - Paper Shaders start on the first scroll, tap, pointer move or key press. Compiling the shaders
@@ -51,6 +52,8 @@ if (!reduceMotion) {
       import('./scroll-story'),
     ]);
     startScrollStory(gsap, ScrollTrigger, SplitText);
+    const { startPlay } = await import('./play');
+    void startPlay(gsap, ScrollTrigger);
     if (finePointer) {
       const { startSmoothScroll } = await import('./smooth');
       startSmoothScroll();

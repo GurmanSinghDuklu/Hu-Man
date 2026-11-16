@@ -7,6 +7,7 @@ import Sparkle from '../Sparkle.astro';
 import Arrow from '../Arrow.astro';
 import BookingLink from '../BookingLink.astro';
 import MethodSteps from './MethodSteps.astro';
+import Shape from '../play/Shape.astro';
 
 interface Props {
   n: string;
@@ -27,9 +28,10 @@ const { n } = Astro.props;
           {n} / From idea to online business
         </p>
         <h2 id={`ideas-title-${n}`} class="ideas__title" data-reveal="lines">
-          Talk. Shape. Build.
+          Talk. <Shape kind="sparkle" tone="signal" size="0.6em" /> Shape.{' '}
+          <Shape kind="orb" tone="peach" /> Build.
           <br />
-          Launch. Stay.
+          Launch. <Shape kind="arch" tone="paper" /> Stay.
         </h2>
         <p class="ideas__text" data-reveal>
           That idea you’ve had on your mind for years? The one you can’t quite put together? Speak

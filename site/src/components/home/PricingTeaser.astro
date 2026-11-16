@@ -1,16 +1,21 @@
 ---
 import HeadlineCards from '../HeadlineCards.astro';
 import { withBase } from '../../config/paths';
-import { portfolioTiers } from '../../data/pricing';
+import Shape from '../play/Shape.astro';
+import Sticker from '../play/Sticker.astro';
+import { portfolioTiers, fromPrice } from '../../data/pricing';
 ---
 
 <section class="band teaser" aria-labelledby="teaser-title">
   <div class="sheet">
     <p class="label" data-reveal>
       07 / Pricing
+      <Sticker tone="signal" tilt={-5}>
+        From {fromPrice}
+      </Sticker>
     </p>
     <h2 id="teaser-title" class="display display--m teaser__title" data-reveal="lines">
-      Start small. Add
+      Start small. <Shape kind="pill" tone="peach" /> Add
       <br />
       as you grow.
     </h2>

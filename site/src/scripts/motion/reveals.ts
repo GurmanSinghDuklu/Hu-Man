@@ -26,7 +26,16 @@ function playLines(el: HTMLElement): void {
     mask: 'lines',
     autoSplit: true,
     onSplit: (self) =>
-      gsap.from(self.lines, { yPercent: 105, duration: 0.9, stagger: 0.09, ease: 'power3.out' }),
+      gsap.from(self.lines, {
+        yPercent: 105,
+        duration: 0.9,
+        stagger: 0.09,
+        ease: 'power3.out',
+        // Once the lines are in, open the masks so a shape in the headline can bob and spin
+        // past the line's edges (play/Shape.astro).
+        onComplete: () =>
+          self.masks.forEach((m) => ((m as HTMLElement).style.overflow = 'visible')),
+      }),
   });
 }
 

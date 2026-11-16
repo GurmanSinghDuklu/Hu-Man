@@ -13,6 +13,7 @@ import { agenticFaq } from '../data/faq';
 import { definition, ingredients } from '../data/agentic';
 import { fromPrice } from '../data/pricing';
 import { withBase } from '../config/paths';
+import Shape from '../components/play/Shape.astro';
 
 const selfCheck = [
   'Ask ChatGPT about your business. Does it get your prices, hours and area right?',
@@ -45,7 +46,7 @@ const selfCheck = [
             01 / Why it matters
           </p>
           <h2 id="why-title" class="display display--m" data-reveal="lines">
-            Customers are asking AI first.
+            Customers are asking <Shape kind="sparkle" tone="indigo" /> AI first.
           </h2>
         </div>
         <div class="why__text" data-reveal data-scrub="words">
@@ -70,7 +71,7 @@ const selfCheck = [
         02 / What it takes
       </p>
       <h2 id="takes-title" class="display display--m" data-reveal="lines">
-        Eight things, done properly.
+        Eight <Shape kind="square" tone="rose" /> things, done properly.
       </h2>
       <ol class="takes__list" data-pick>
         {ingredients.map((item, i) => (
@@ -96,7 +97,7 @@ const selfCheck = [
           03 / Check your own
         </p>
         <h2 id="self-title" class="display display--m" data-reveal="lines">
-          Five quick questions.
+          Five quick <Shape kind="pill" tone="peach" /> questions.
         </h2>
         <p class="self__text" data-scrub="words">
           If any answer is “no” or “not sure”, the{' '}

@@ -1,0 +1,129 @@
+---
+/**
+ * A big line of words (gsap.com-style, without its pinned strip): when it comes into view each
+ * word unscrambles into place, brand shapes pop in between, and a curve draws itself under one
+ * word (scripts/motion/play.ts). It then sits still, the shapes looping. Nothing is tied to the
+ * scroll. Without the script, or under reduced motion, the line simply shows in full.
+ * Words must say only what is true (hard rule 3): activities, not outcomes.
+ */
+import Shape, { type ShapeKind, type ShapeTone } from './Shape.astro';
+
+interface Props {
+  words: string[];
+  /** One shape after each word but the last. */
+  shapes: { kind: ShapeKind; tone: ShapeTone }[];
+  /** Index of the word the curve draws under. */
+  draw?: number;
+  ground?: 'ink' | 'paper' | 'paper-2';
+}
+const { words, shapes, draw = words.length - 1, ground = 'ink' } = Astro.props;
+// The size is capped so the longest entry (and its shape) always fits on one line.
+const longest = Math.max(...words.map((w) => w.length)) + 1;
+---
+
+<div class:list={['band', 'wordline', `wordline--${ground}`]}>
+  <div class="sheet">
+    <p class="wordline__line" style={`--longest:${longest}`} data-wordline>
+      {words.map((w, i) => (
+        <>
+          {/* A word and the shape after it never split across lines. */}
+          <span class="wordline__unit">
+            <span class:list={['wordline__w', { 'wordline__w--drawn': i === draw }]}>
+              <span class="wordline__t" data-wl-word>
+                {w}
+              </span>
+              {i === draw && (
+                <svg
+                  class="wordline__curve"
+                  viewBox="0 0 200 20"
+                  preserveAspectRatio="none"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <path d="M3 13C38 5 76 4 112 9S178 17 197 6" data-wl-curve />
+                </svg>
+              )}
+            </span>
+            {i < words.length - 1 && shapes[i] && (
+              <Shape
+                kind={shapes[i].kind}
+                tone={shapes[i].tone}
+                size="0.62em"
+                class="wordline__shape"
+                data-wl-shape
+              />
+            )}
+          </span>{' '}
+        </>
+      ))}
+    </p>
+  </div>
+</div>
+
+<style>
+  .wordline {
+    padding-block: clamp(3.5rem, calc(var(--u) * 1.2), 8rem);
+    overflow: clip;
+  }
+
+  .wordline--ink {
+    background: var(--ink);
+    color: var(--paper);
+    --curve: #39ff14;
+  }
+
+  .wordline--paper {
+    background: var(--paper);
+    --curve: var(--indigo);
+  }
+
+  .wordline--paper-2 {
+    background: var(--paper-2);
+    --curve: var(--indigo);
+  }
+
+  .wordline__line {
+    font: 800 min(clamp(2rem, calc(var(--u) * 1.02), 7.4rem), calc(86vw / (var(--longest) * 0.8))) /
+      1.08 var(--font-display);
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    text-wrap: balance;
+  }
+
+  .wordline__unit {
+    white-space: nowrap;
+  }
+
+  .wordline__w {
+    display: inline-block;
+    position: relative;
+    white-space: nowrap;
+  }
+
+  .wordline__t {
+    display: inline-block;
+  }
+
+  .wordline__curve {
+    position: absolute;
+    left: -3%;
+    bottom: -0.16em;
+    width: 106%;
+    height: 0.3em;
+    overflow: visible;
+    fill: none;
+    stroke: var(--curve);
+    stroke-width: 7;
+    stroke-linecap: round;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .wordline__curve path {
+    vector-effect: non-scaling-stroke;
+  }
+
+  :global(.wordline__shape) {
+    margin-inline: 0.18em;
+    vertical-align: 0.02em;
+  }
+</style>

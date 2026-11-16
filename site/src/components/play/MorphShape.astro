@@ -1,0 +1,32 @@
+---
+/**
+ * A brand shape that changes form (MorphSVG, scripts/motion/play.ts): as it comes into view, every
+ * few seconds while it is on screen, and when the card around it is hovered. Without the script,
+ * or under reduced motion, it simply shows its first form. Decorative.
+ */
+import { morphForms, type MorphForm } from '../../data/morphForms';
+
+interface Props {
+  forms: MorphForm[];
+  class?: string;
+}
+const { forms, class: className } = Astro.props;
+---
+
+<svg
+  class:list={['morph', className]}
+  viewBox="0 0 100 100"
+  aria-hidden="true"
+  focusable="false"
+  data-morph={forms.join(',')}
+>
+  <path d={morphForms[forms[0]]}></path>
+</svg>
+
+<style>
+  .morph {
+    display: block;
+    overflow: visible;
+    fill: currentColor;
+  }
+</style>

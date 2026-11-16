@@ -7,6 +7,7 @@ import EnquiryForm from '../components/EnquiryForm.astro';
 import Sparkle from '../components/Sparkle.astro';
 import { checkFaq } from '../data/faq';
 import { withBase } from '../config/paths';
+import Shape from '../components/play/Shape.astro';
 
 // What the check covers (draft copy, 2026-10-26).
 const checks = [
@@ -78,7 +79,7 @@ const sample = [
           01 / What we check
         </p>
         <h2 id="checks-title" class="display display--m" data-reveal="lines">
-          Six things AI looks at.
+          Six things <Shape kind="ring" tone="indigo" /> AI looks at.
         </h2>
         <ul class="checks__cards" data-pick>
           {checks.map((c, i) => (
@@ -106,7 +107,7 @@ const sample = [
         <h2 id="get-title" class="display display--m" data-reveal="lines">
           A plain-English
           <br />
-          list of fixes.
+          list <Shape kind="pill" tone="lilac" /> of fixes.
         </h2>
         <ol class="get__steps" data-pick>
           <li>

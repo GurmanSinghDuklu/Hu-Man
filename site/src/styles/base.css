@@ -745,3 +745,48 @@ html.lenis body {
 main:focus {
   outline: none;
 }
+
+/* ---------- play (scripts/motion/play.ts): the flying sparkle and the phrase it lands on ---------- */
+.fly-spark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 60;
+  width: 34px;
+  height: 34px;
+  fill: #39ff14;
+  pointer-events: none;
+}
+
+.fly-dot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 60;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+[data-land] {
+  --land: var(--indigo);
+  background: linear-gradient(var(--land), var(--land)) no-repeat 0 100% / 0% 0.14em;
+  padding-bottom: 0.08em;
+  transition: background-size 0.7s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+:is(.band--ink, .night, .plum, .fill--ink) [data-land] {
+  --land: #39ff14;
+}
+
+.is-landed [data-land] {
+  background-size: 100% 0.14em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-land] {
+    background-size: 100% 0.14em;
+    transition: none;
+  }
+}

@@ -3,12 +3,29 @@
 import { withBase } from '../config/paths';
 import Sparkle from './Sparkle.astro';
 import BookingLink from './BookingLink.astro';
+import Shape, { type ShapeKind, type ShapeTone } from './play/Shape.astro';
+
+// Shapes to grab and throw (mouse and trackpad; scripts/motion/play.ts). Elsewhere they just float.
+const toys: { kind: ShapeKind; tone: ShapeTone }[] = [
+  { kind: 'orb', tone: 'indigo' },
+  { kind: 'arch', tone: 'dusk' },
+  { kind: 'pill', tone: 'paper' },
+  { kind: 'sparkle', tone: 'signal' },
+  { kind: 'ring', tone: 'ink' },
+];
 ---
 
 <section class="band talk-band" id="audit" aria-labelledby="audit-title">
   <div class="sheet">
-    <div class="talk" data-reveal>
+    <div class="talk" data-reveal data-toybox>
       <span class="shader-layer" data-shader="talk" aria-hidden="true"></span>
+      {/* GSAP drags the plain wrapper: the shape's own CSS scale (its pop-in) stays out of
+          Draggable's transform, which would otherwise freeze it at its starting size of 0. */}
+      {toys.map((t, i) => (
+        <span class={`talk__toy talk__toy--${i + 1}`} data-toy aria-hidden="true">
+          <Shape kind={t.kind} tone={t.tone} size="var(--toy)" delay={0.15 * i} />
+        </span>
+      ))}
       <span class="talk__orb" aria-hidden="true">
         <Sparkle class="talk__star amb-spin" color="var(--ink)" />
       </span>
@@ -50,6 +67,104 @@ import BookingLink from './BookingLink.astro';
     overflow: hidden;
     /* The gradient runs through indigo and pinks: indigo buttons would vanish or fail contrast. */
     --btn: var(--ink);
+  }
+
+  /* Throwable shapes: behind the copy, so they never cover a button or the text. */
+  .talk {
+    --toy: clamp(2.6rem, calc(var(--u) * 0.72), 5.5rem);
+  }
+
+  .talk__toy {
+    position: absolute;
+    z-index: 1;
+    line-height: 0;
+  }
+
+  .talk__toy :global(.shape) {
+    margin: 0;
+  }
+
+  /* Phones and tablets: two shapes in the empty corner beside the circle. */
+  .talk__toy--1 {
+    top: 5%;
+    right: 7%;
+  }
+
+  .talk__toy--2 {
+    top: 13%;
+    right: 26%;
+  }
+
+  .talk__toy--3,
+  .talk__toy--4,
+  .talk__toy--5 {
+    display: none;
+  }
+
+  /* Desktop: all five along the empty strip under the buttons, clear of the text. */
+  @media (min-width: 64rem) {
+    .talk__toy--3,
+    .talk__toy--4,
+    .talk__toy--5 {
+      display: block;
+    }
+
+    .talk__toy--1 {
+      top: auto;
+      bottom: 9%;
+      right: 4%;
+    }
+
+    .talk__toy--2 {
+      top: auto;
+      bottom: 6%;
+      right: 15%;
+    }
+
+    .talk__toy--3 {
+      bottom: 12%;
+      right: 25%;
+    }
+
+    .talk__toy--4 {
+      bottom: 5%;
+      right: 35%;
+    }
+
+    .talk__toy--5 {
+      bottom: 10%;
+      right: 46%;
+    }
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .talk__toy {
+      pointer-events: auto;
+      cursor: grab;
+      touch-action: none;
+    }
+
+    .talk__toy.is-held {
+      cursor: grabbing;
+    }
+  }
+
+  .talk__orb,
+  .talk__copy {
+    position: relative;
+    z-index: 2;
+  }
+
+  /* The copy box spans the banner: let a press through it to the shapes, except on its buttons. */
+  @media (hover: hover) and (pointer: fine) {
+    .talk__copy {
+      pointer-events: none;
+    }
+
+    .talk__copy :global(a),
+    .talk__copy :global(button) {
+      pointer-events: auto;
+    }
   }
 
   .talk__orb {

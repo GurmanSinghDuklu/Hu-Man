@@ -7,6 +7,9 @@ import HeadlineCards from '../components/HeadlineCards.astro';
 import TalkBanner from '../components/TalkBanner.astro';
 import { tiers, carePlans, careRules, careFixPromise, fromPrice, fastTrack } from '../data/pricing';
 import { contactPath } from '../config/links';
+import Shape from '../components/play/Shape.astro';
+import Sticker from '../components/play/Sticker.astro';
+import WordLine from '../components/play/WordLine.astro';
 import { withBase } from '../config/paths';
 ---
 
@@ -49,9 +52,12 @@ import { withBase } from '../config/paths';
     <div class="sheet">
       <p class="label" data-reveal>
         Support that stays
+        <Sticker tone="signal" tilt={-5}>
+          From {carePlans[0].price}
+        </Sticker>
       </p>
       <h2 id="care-title" class="display care__title" data-reveal="lines">
-        Care plans
+        Care plans <Shape kind="ring" tone="indigo" />
       </h2>
       <p class="care__text" data-reveal data-scrub="words">
         Monthly plans for hosting, security, backups and fixes, with time for edits on top. Add one
@@ -95,6 +101,14 @@ import { withBase } from '../config/paths';
       </p>
     </div>
   </section>
+
+  <WordLine
+    words={['Pay once.', 'Own it.', 'Move up any time.']}
+    shapes={[
+      { kind: 'pill', tone: 'peach' },
+      { kind: 'sparkle', tone: 'signal' },
+    ]}
+  />
 
   <TalkBanner />
 

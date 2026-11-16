@@ -12,6 +12,7 @@ import RoofTiles from '../components/home/RoofTiles.astro';
 import ProjectsStage from '../components/home/ProjectsStage.astro';
 import AtTheCentre from '../components/sections/AtTheCentre.astro';
 import PricingTeaser from '../components/home/PricingTeaser.astro';
+import WordLine from '../components/play/WordLine.astro';
 import TalkBanner from '../components/TalkBanner.astro';
 ---
 
@@ -27,6 +28,14 @@ import TalkBanner from '../components/TalkBanner.astro';
   <RoofTiles />
   <ProjectsStage />
   <AtTheCentre n="06" />
+  <WordLine
+    words={['Designed.', 'Built.', 'Tested.', 'Looked after.']}
+    shapes={[
+      { kind: 'sparkle', tone: 'signal' },
+      { kind: 'orb', tone: 'indigo' },
+      { kind: 'arch', tone: 'rose' },
+    ]}
+  />
   <PricingTeaser />
   <TalkBanner />
 
