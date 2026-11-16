@@ -1,0 +1,707 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Aiko Tan, facilities manager (concept portfolio)</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="description" content="Aiko Tan, facilities manager in Bristol. Keeping buildings safe, compliant and running.">
+<style>
+@font-face{font-family:"Barlow Condensed";src:url(../fonts/barlow-condensed-latin-800-normal.woff2) format("woff2");font-weight:800;font-display:swap}
+@font-face{font-family:Barlow;src:url(../fonts/barlow-latin-400-normal.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:Barlow;src:url(../fonts/barlow-latin-600-normal.woff2) format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:Barlow;src:url(../fonts/barlow-latin-700-normal.woff2) format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:"IBM Plex Mono";src:url(../fonts/ibm-plex-mono-latin-400-normal.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"IBM Plex Mono";src:url(../fonts/ibm-plex-mono-latin-500-normal.woff2) format("woff2");font-weight:500;font-display:swap}
+:root{--bg:#EAE8E3;--ink:#1D1F1E;--o:#FF5B1F;--g:#13A35A;--hv:#FFD60A;
+--o-ink:#B33A08;--o-lg:#B33A08;--g-ink:#0A6E38;--muted:#4F4C46;--line:#1D1F1E;
+--pad:clamp(16px,2.8vw,40px);--rail:clamp(0px,4vw,60px)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{background:var(--bg);color:var(--ink);font-family:Barlow,system-ui,sans-serif;font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:clip}
+main{overflow-x:clip}
+a{color:inherit}img{display:block;max-width:100%}
+.ico{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-weight:500;font-size:11px;letter-spacing:.05em;text-transform:uppercase;line-height:1.7}
+.caps{font-family:"Barlow Condensed",Impact,sans-serif;font-weight:800;text-transform:uppercase;line-height:.9;letter-spacing:.005em}
+.skip{position:absolute;left:-999px}.skip:focus{left:8px;top:8px;background:var(--ink);color:#fff;padding:8px 12px;z-index:99}
+.haz{height:10px;background:repeating-linear-gradient(-45deg,var(--hv) 0 9px,var(--ink) 9px 18px)}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:50;background:var(--bg);border-bottom:2px solid var(--ink);display:grid;grid-template-columns:auto auto 1fr auto auto;align-items:stretch;height:58px}
+.nav>*{display:flex;align-items:center;padding:0 var(--pad)}
+.logo{font-family:"Barlow Condensed";font-weight:800;font-size:28px;letter-spacing:.03em;text-decoration:none;text-transform:uppercase;gap:10px;padding-right:20px}
+.logo i{width:28px;height:28px;background:var(--o);display:grid;place-items:center;font-style:normal}
+.logo i svg{width:18px;height:18px}
+.nav .desc{border-right:2px solid var(--ink);padding-left:0;font-size:10px;max-width:190px;line-height:1.4}
+.nav ul{list-style:none;display:flex;gap:30px;justify-content:center}
+.nav ul a{font-size:14px;font-weight:600;text-decoration:none;border-bottom:2px solid transparent;padding-bottom:1px}
+.nav ul a:hover{border-color:var(--o)}
+.nav .time{border-left:2px solid var(--ink);border-right:2px solid var(--ink);gap:10px}
+.lvl{background:var(--ink);color:var(--bg);padding:1px 7px}
+.nav .cta{background:var(--o);font-weight:700;font-size:14px;text-decoration:none;gap:8px;text-transform:uppercase;letter-spacing:.04em}
+.nav .cta:hover{background:var(--ink);color:var(--bg)}
+
+/* sections, floor rail and door signs */
+.sec{position:relative;background:var(--bg);z-index:2;border-bottom:2px solid var(--ink);padding:0 var(--pad) 0 calc(var(--pad) + var(--rail))}
+.fl{position:absolute;left:var(--pad);top:14px;width:30px;height:30px;background:var(--ink);color:var(--bg);display:grid;place-items:center;font-family:"Barlow Condensed";font-weight:800;font-size:18px;z-index:6}
+.sec::before{content:"";position:absolute;left:calc(var(--pad) + 14px);top:44px;bottom:0;width:2px;background:var(--ink);display:var(--railshow,block)}
+.plate{position:absolute;left:calc(var(--pad) + var(--rail));top:14px;z-index:6;display:inline-flex;align-items:stretch;border:2px solid var(--ink);background:var(--bg);height:30px}
+.plate b{background:var(--o);width:30px;display:grid;place-items:center;border-right:2px solid var(--ink);font-size:16px}
+.plate span{padding:0 12px;display:flex;align-items:center;font-size:10.5px}
+.plate.g b{background:var(--g)}.plate.k{background:var(--ink);color:var(--bg)}.plate.k b{border-color:var(--bg)}
+.dim{position:absolute;pointer-events:none;color:var(--ink);z-index:5}
+.x{position:absolute;width:15px;height:15px;pointer-events:none;z-index:5}
+.x::before,.x::after{content:"";position:absolute;background:var(--ink)}
+.x::before{left:7px;top:0;width:1px;height:15px}.x::after{top:7px;left:0;height:1px;width:15px}
+
+/* hero */
+.hero{z-index:1;overflow:hidden;transform-origin:50% 100%;min-height:920px;padding-top:56px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);position:relative}
+.hero h1{font-size:clamp(130px,15vw,224px);margin-top:20px;position:relative;z-index:3;letter-spacing:-.005em}
+.hero h1 span{display:block}
+.hero h1 .r{color:var(--o-lg)}
+.hero .intro{position:absolute;left:calc(var(--pad) + var(--rail));bottom:60px;max-width:340px;z-index:4}
+.hero .intro p{font-size:17px;font-weight:700;line-height:1.3;margin-bottom:18px}
+.hero .intro .meta{display:block;margin-bottom:20px}
+.link{font-size:14px;font-weight:700;text-decoration:none;border-bottom:2px solid var(--ink);padding-bottom:2px;display:inline-block}
+.link:hover{background:var(--o)}
+.orange{position:absolute;left:51%;top:70px;width:34.5%;height:640px;background:var(--o);overflow:hidden;z-index:1}
+.orange svg.bgp{position:absolute;inset:0;width:100%;height:100%}
+.orange .tag{position:absolute;left:12px;top:12px;z-index:3}
+.orange .tag span{background:var(--ink);color:var(--hv);padding:2px 8px;display:inline-block}
+.pers{position:absolute;inset:0 0 -14px 0;z-index:2;filter:drop-shadow(3px 0 0 var(--bg)) drop-shadow(-3px 0 0 var(--bg)) drop-shadow(0 3px 0 var(--bg)) drop-shadow(14px 0 0 var(--ink))}
+.pers img{width:100%;height:100%;object-fit:cover;object-position:50% 12%;filter:url(#key);clip-path:inset(0 0 0 8px)}
+.gpan{position:absolute;right:0;top:120px;width:7%;height:520px;background:var(--g);z-index:1;overflow:hidden}
+.gpan svg{position:absolute;left:-60px;top:20px;width:190px;height:480px}
+.gb{position:absolute;left:41.5%;top:660px;width:21%;height:300px;background:var(--g);z-index:2}
+.cut{position:absolute;z-index:4;filter:drop-shadow(3px 0 0 var(--bg)) drop-shadow(-3px 0 0 var(--bg)) drop-shadow(0 3px 0 var(--bg)) drop-shadow(0 -3px 0 var(--bg)) drop-shadow(12px 9px 0 var(--ink))}
+.cut img{clip-path:polygon(47% 3%,60% 4%,70% 10%,86% 18%,89% 24%,86% 30%,90% 40%,87% 46%,76% 52%,72% 58%,86% 70%,100% 80%,100% 100%,0 100%,0 88%,12% 76%,28% 66%,30% 58%,22% 40%,21% 24%,28% 10%,37% 5%)}
+.cut.h{left:42.5%;top:700px;width:19%;aspect-ratio:3/4;transform:rotate(-2deg)}
+.cut.h img{width:100%;height:100%;object-fit:cover}
+.hero .fig{position:absolute;left:30.5%;top:690px;z-index:5}
+.hero .fig .mono{font-size:10px}
+.hero .coord{position:absolute;right:calc(var(--pad) + 36px);bottom:60px;text-align:right;z-index:4}
+.exitsign{position:absolute;left:63%;top:742px;z-index:5;display:flex;border:2px solid var(--ink);background:var(--g);height:34px}
+
+/* statement */
+.state{padding-top:76px}
+.state-top{display:grid;grid-template-columns:minmax(0,2.1fr) minmax(0,1fr);gap:60px;align-items:center;padding-bottom:40px}
+.state h2{font-family:"Barlow Condensed";font-weight:800;text-transform:uppercase;font-size:clamp(46px,6.2vw,92px);line-height:.95;letter-spacing:0}
+.state h2 em{font-style:normal;color:var(--g-ink)}
+.state-top p{font-size:16px;line-height:1.5;max-width:300px;font-weight:600;border-left:4px solid var(--o);padding-left:16px}
+.line{display:grid;grid-template-columns:repeat(4,1fr);gap:0;padding-bottom:30px}
+.line a{display:flex;align-items:center;gap:10px;text-decoration:none;white-space:nowrap}
+.line .pg{width:38px;height:38px;background:var(--ink);color:var(--bg);display:grid;place-items:center;font-size:22px}
+.line b{font-family:"Barlow Condensed";font-weight:800;font-size:24px}
+.line i{flex:1;height:0;border-top:2px dashed var(--ink);margin:0 12px}
+.line a:last-child i{margin-right:0}
+.line a:last-child::after{content:"→";font-size:22px;font-weight:700}
+.line a:hover .pg{background:var(--o);color:var(--ink)}
+
+/* about */
+.about-sec{border-top:0;padding-top:0}
+.about{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.2fr);gap:60px;padding-top:80px;padding-bottom:70px;align-items:start}
+.about h2{font-size:clamp(60px,7.4vw,112px);margin-bottom:34px}
+.about h2 span{color:var(--o-lg)}
+.door{position:relative;max-width:360px;border:2px solid var(--ink);background:var(--g);padding:14px 14px 0}
+.door .ph{aspect-ratio:3/4;overflow:hidden}
+.door img{width:100%;height:118%;object-fit:cover;object-position:50% 10%}
+.door .cap{display:flex;justify-content:space-between;padding:8px 0}
+.door .haz{margin:0 -14px}
+.about .copy p{font-size:18px;max-width:560px;margin-bottom:18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+.chip{border:2px solid var(--ink);padding:4px 12px;font-family:"IBM Plex Mono";font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:.04em;display:inline-flex;gap:8px;align-items:center}
+.chip.f{background:var(--g);}
+.chip .ico{font-size:14px}
+
+/* cards */
+.work{padding:0}
+.work-head{display:flex;justify-content:space-between;align-items:flex-end;padding:80px var(--pad) 22px calc(var(--pad) + var(--rail))}
+.work-head h2{font-size:clamp(54px,6.6vw,100px)}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);margin-left:calc(var(--pad) + var(--rail));border-top:2px solid var(--ink)}
+.card{position:relative;min-height:620px;padding:30px 24px 24px;display:flex;flex-direction:column;overflow:hidden;border-right:2px solid var(--ink)}
+.card:last-child{border-right:0}
+.c1{background:var(--bg)}.c2{background:var(--o)}.c3{background:var(--g)}.c4{background:var(--ink);color:var(--bg)}
+.card .rm{display:flex;justify-content:space-between;align-items:center}
+.card .rm .mono span{border:2px solid currentColor;padding:1px 8px}
+.card .k{font-family:"Barlow Condensed";font-weight:800;font-size:46px;line-height:1;margin-top:8px}
+.card h3{font-size:56px;margin:2px 0 10px;position:relative;z-index:2}
+.card .mono{position:relative;z-index:2}
+.card .art{position:absolute;left:0;right:0;bottom:60px;top:268px}
+.card .art svg{width:100%;height:100%}
+.card .go{margin-top:auto;position:relative;z-index:2;font-size:26px;font-weight:700;text-decoration:none;line-height:1;transition:transform .2s}
+.card:hover .go{transform:translateX(6px)}
+.c3 .cut{position:absolute;left:19%;top:262px;width:62%;aspect-ratio:3/4;filter:drop-shadow(2px 0 0 var(--bg)) drop-shadow(-2px 0 0 var(--bg)) drop-shadow(0 2px 0 var(--bg)) drop-shadow(12px 8px 0 var(--ink))}
+.c3 .cut img{clip-path:polygon(50% 2%,63% 4%,68% 13%,69% 26%,75% 30%,79% 36%,92% 42%,100% 70%,100% 100%,0 100%,0 70%,8% 44%,22% 36%,30% 29%,32% 14%,38% 5%);width:100%;height:100%;object-fit:cover}
+
+/* LED notice board */
+.board{background:#101211;color:var(--o);border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:30px;padding:16px var(--pad) 16px calc(var(--pad) + var(--rail));overflow:hidden}
+.board .bh{display:flex;flex-direction:column;gap:6px}
+.board .bh .mono{background:var(--hv);color:var(--ink);padding:2px 10px;display:inline-block;width:max-content}
+.led{white-space:nowrap;overflow:hidden;background:radial-gradient(circle,#2b2e2c 0 1.1px,transparent 1.6px) 0 0/5px 5px;padding:8px 0;position:relative}
+.led-in{display:flex;width:max-content}.lg{display:flex;gap:4vw;padding-right:4vw}
+.led span{font-family:"Barlow Condensed";font-weight:800;text-transform:uppercase;font-size:clamp(48px,6.4vw,96px);line-height:1;color:transparent;background:radial-gradient(circle,var(--o) 0 1.7px,transparent 2.1px) 0 0/5px 5px;-webkit-background-clip:text;background-clip:text;display:inline-block}
+.led span:nth-child(3n){background-image:radial-gradient(circle,#2CE57F 0 1.7px,transparent 2.1px)}
+.dir{margin-top:44px;background:var(--ink);color:var(--bg);max-width:560px;border:2px solid var(--ink)}
+.dir h3{font-family:'Barlow Condensed';font-weight:800;text-transform:uppercase;font-size:22px;padding:12px 18px;background:var(--hv);color:var(--ink);display:flex;justify-content:space-between;align-items:center;letter-spacing:.04em}
+.dir a{display:grid;grid-template-columns:44px 1fr auto;gap:12px;align-items:center;padding:9px 18px;text-decoration:none;border-top:1px solid #4a4d4b}
+.dir a b{font-family:'Barlow Condensed';font-weight:800;font-size:28px;color:var(--o)}
+.dir a span{font-family:'Barlow Condensed';font-weight:700;font-size:22px;text-transform:uppercase;letter-spacing:.03em}
+.dir a:hover{background:var(--o);color:var(--ink)}.dir a:hover b{color:var(--ink)}
+.dir a.e b{color:#2CE57F}.dir a.e:hover b{color:var(--ink)}
+.board .r{color:#fff;max-width:190px;font-size:10px}
+.board .r b{color:var(--hv);font-weight:500}
+
+/* experience */
+.exp{padding-top:84px;padding-bottom:70px}
+.sec-h{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:36px;gap:30px}
+.sec-h h2{font-size:clamp(54px,6.6vw,100px)}
+.sec-h p{max-width:310px;font-size:15px;font-weight:600}
+.role{display:grid;grid-template-columns:150px minmax(0,1.1fr) minmax(0,1.4fr);gap:40px;padding:30px 0;border-top:2px solid var(--ink);position:relative}
+.role:last-child{border-bottom:2px solid var(--ink)}
+.role .d b{display:block;font-family:"Barlow Condensed";font-weight:800;font-size:28px;line-height:1.05;margin-top:6px;text-transform:uppercase}
+.role .d .rn{background:var(--ink);color:var(--bg);padding:1px 8px;display:inline-block}
+.role h3{font-family:"Barlow Condensed";font-weight:800;text-transform:uppercase;font-size:42px;line-height:1}
+.role h3+p{margin-top:6px;font-weight:700}
+.role ul{list-style:none}
+.role li{padding-left:24px;position:relative;margin-bottom:9px;font-size:16px}
+.role li::before{content:"";position:absolute;left:0;top:.45em;width:10px;height:10px;background:var(--o)}
+.role:nth-of-type(even) li::before{background:var(--g)}
+.role:hover h3{color:var(--o-ink)}
+
+/* skills */
+.skills{display:grid;grid-template-columns:repeat(12,1fr);border-bottom:2px solid var(--ink);padding:0 var(--pad) 0 calc(var(--pad) + var(--rail));position:relative}
+.sk{padding:84px 28px 44px}
+.sk h2{font-size:52px;margin-bottom:6px}
+.sk .mono{margin-bottom:24px;display:block}
+.sk-a{grid-column:span 5;background:var(--ink);color:var(--bg)}
+.sk-b{grid-column:span 4;background:var(--bg);border-left:2px solid var(--ink)}
+.sk-c{grid-column:span 3;background:var(--g);border-left:2px solid var(--ink)}
+.cert{display:grid;grid-template-columns:44px 1fr;gap:14px;padding:16px 0;}
+.cert{border-top:2px solid #4a4d4b}
+.cert .pg{width:44px;height:44px;background:var(--o);color:var(--ink);display:grid;place-items:center;font-size:24px}
+.cert h3{font-family:"Barlow Condensed";font-weight:800;font-size:28px;text-transform:uppercase;line-height:1.05}
+.cert p{font-size:14px;color:#D0CDC6;margin-top:2px}
+.bar{margin-bottom:16px}
+.bar div{display:flex;justify-content:space-between;font-size:15px;font-weight:700;margin-bottom:5px}
+.bar span.t{height:12px;border:2px solid var(--ink);display:block;background:repeating-linear-gradient(90deg,transparent 0 11px,var(--ink) 11px 12px)}
+.bar span.t i{display:block;height:100%;background:var(--o)}
+.bar:nth-of-type(even) span.t i{background:var(--g)}
+.lang{padding:18px 0;border-top:2px solid var(--ink)}
+.lang:last-child{border-bottom:2px solid var(--ink)}
+.lang b{font-family:"Barlow Condensed";font-weight:800;font-size:50px;text-transform:uppercase;display:block;line-height:1}
+.comp{margin-top:26px}
+.comp li{list-style:none;font-size:15px;padding:7px 0;border-top:2px solid var(--ink);font-weight:700;display:flex;gap:10px;align-items:center}
+.comp li::before{content:"";width:8px;height:8px;background:var(--g)}
+
+/* education */
+.edu{display:grid;grid-template-columns:repeat(3,1fr);padding:0 var(--pad) 0 calc(var(--pad) + var(--rail))}
+.edu>div{padding:78px 28px 44px 0;border-right:2px solid var(--ink)}
+.edu>div+div{padding-left:28px}
+.edu>div:last-child{border:0}
+.edu h2{font-size:44px;margin-bottom:14px}
+.edu p{font-size:16px;margin-bottom:12px}
+.edu b{display:block}
+
+/* contact */
+.contact{display:grid;grid-template-columns:240px minmax(0,1.4fr) minmax(0,1fr);padding:0 0 0 calc(var(--pad) + var(--rail));border-bottom:0;padding-top:0}
+.exitp{background:var(--g);border-right:2px solid var(--ink);margin-top:0;display:flex;flex-direction:column;justify-content:flex-end;padding:20px;min-height:380px;position:relative}
+.exitp .runner{position:absolute;left:30px;top:70px;width:170px;height:170px;color:var(--ink)}
+.exitp .ex{background:var(--ink);color:#fff;font-family:"Barlow Condensed";font-weight:800;font-size:44px;letter-spacing:.1em;text-align:center;padding:2px 0;line-height:1.1}
+.contact .mid{padding:88px 40px 44px}
+.contact h2{font-size:clamp(50px,5.8vw,88px);margin-bottom:26px}
+.contact h2 span{color:var(--o-lg)}
+.btn{display:inline-flex;gap:12px;align-items:center;background:var(--o);color:var(--ink);padding:15px 26px;text-decoration:none;font-weight:700;font-size:16px;text-transform:uppercase;letter-spacing:.04em;border:2px solid var(--ink)}
+.btn:hover{background:var(--ink);color:var(--bg)}
+.btn.o{background:transparent;margin-left:10px}
+.btn.o:hover{background:var(--hv);color:var(--ink)}
+.contact .rt{border-left:2px solid var(--ink);padding:88px var(--pad) 30px 30px;display:flex;flex-direction:column;gap:20px}
+.contact .rt a{text-decoration:none;border-bottom:2px solid var(--ink);display:inline-block}
+.contact .rt a:hover{background:var(--o)}
+.foot{padding:16px var(--pad);display:flex;justify-content:space-between;gap:20px;border-top:2px solid var(--ink)}.foot span+span{text-align:right;max-width:560px}
+
+@media (max-width:1100px){
+ .nav{grid-template-columns:auto 1fr auto auto}.nav .desc{display:none}.nav ul{gap:18px}.nav .time{display:none}
+}
+@media (max-width:800px){
+ :root{--rail:0px;--railshow:none}
+ .nav{grid-template-columns:1fr auto;height:54px}.nav ul{display:none}
+ .sec{padding-top:56px}
+ .hero{display:block;min-height:0;padding-top:56px;padding-bottom:20px}
+ .hero h1{font-size:clamp(110px,33vw,160px);margin-top:0}
+ .hero .intro,.hero .coord,.hero .fig{position:static}
+ .hero .intro{margin:26px 0 30px;max-width:none;padding-right:44%}
+ .hero .intro p{font-size:15px}.hero .intro .meta{font-size:10px}
+ .hero .coord{text-align:left;margin-bottom:20px}
+ .orange{position:relative;left:auto;top:auto;width:calc(100% + var(--pad));height:430px;margin:18px calc(var(--pad)*-1) 0 0}
+ .gpan,.gb,.exitsign,.hero .dim{display:none}
+ .cut.h{left:auto;right:12px;top:auto;bottom:70px;width:40%;position:absolute}
+ .state{padding-top:76px}
+ .state-top,.about{grid-template-columns:1fr;gap:20px}
+ .line{grid-template-columns:1fr 1fr;row-gap:14px;column-gap:14px}.line i{display:none}.line a:last-child::after{content:none}
+ .cards{grid-template-columns:1fr 1fr;margin-left:0}
+ .work-head{padding:80px var(--pad) 20px;flex-direction:column;align-items:flex-start;gap:12px}
+ .work-head h2{font-size:clamp(48px,15vw,70px)}
+ .card{min-height:540px;padding:20px 14px 16px;border-bottom:2px solid var(--ink)}
+ .card h3{font-size:40px}.card .k{font-size:34px}.card .art{top:240px}
+ .board{grid-template-columns:1fr;padding-left:var(--pad)}
+ .role{grid-template-columns:1fr;gap:12px}
+ .sec-h{flex-direction:column;align-items:flex-start}
+ .skills{grid-template-columns:1fr;padding:0}
+ .sk{grid-column:1/-1!important;border-left:0!important;padding:76px var(--pad) 36px}
+ .edu{grid-template-columns:1fr;padding-left:var(--pad)}
+ .edu>div,.edu>div+div{padding:30px 0;border-right:0;border-bottom:2px solid var(--ink)}
+ .edu>div:first-of-type{padding-top:76px}
+ .contact{grid-template-columns:1fr;padding-left:0}
+ .exitp{min-height:260px;border-right:0;border-bottom:2px solid var(--ink)}
+ .contact .mid{padding:32px var(--pad)}
+ .contact .rt{border-left:0;border-top:2px solid var(--ink);padding:30px var(--pad)}
+ .btn.o{margin:10px 0 0}
+ .foot{flex-direction:column;gap:6px}
+}
+.badge{position:fixed;z-index:90;left:max(12px, env(safe-area-inset-left, 0px));bottom:max(12px, env(safe-area-inset-bottom, 0px));display:inline-flex;align-items:center;gap:8px;background:#121317;color:#EDECE6;border-radius:99px;padding:8px 14px 8px 11px;font-size:12px;font-weight:600;line-height:1.2;box-shadow:0 0 0 1.5px #EDECE6,0 10px 24px -8px rgba(18,19,23,.5);max-width:calc(100vw - 24px);pointer-events:none}
+.badge i{width:9px;height:9px;border-radius:50%;background:#FFD23F;flex:none}
+/* HU/MAN concept badge */
+.badge{display:flex;flex-wrap:wrap;align-items:center;gap:2px 12px;pointer-events:auto;border-radius:18px;line-height:1.3}
+.badge a{color:inherit;font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.badge a:focus-visible{outline:2px solid currentColor;outline-offset:3px;border-radius:3px}
+@media (max-width:640px){.badge{position:static;margin:24px max(16px,env(safe-area-inset-left,0px)) max(16px,env(safe-area-inset-bottom,0px));max-width:none;justify-content:center;text-align:center;border-radius:14px}footer{padding-bottom:26px!important}}
+
+.badge-made{display:inline-flex;align-items:center;gap:6px}
+.badge-logo{display:block;height:11px;width:auto;flex:none}
+.badge-logo path{animation:badge-logo-fade 14s linear infinite}
+@keyframes badge-logo-fade{0%{fill:#cea4ee}12.5%{fill:#93aee0}25%{fill:#4a9bb0}37.5%{fill:#edd1a8}50%{fill:#f8cea2}62.5%{fill:#e79569}75%{fill:#e85e8f}87.5%{fill:#db92db}100%{fill:#cea4ee}}
+@media (prefers-reduced-motion: reduce){.badge-logo path{animation-duration:14s!important;animation-iteration-count:infinite!important}}
+
+/* ---- final build additions ---- */
+.prog{position:fixed;left:0;right:0;top:58px;height:4px;z-index:49;pointer-events:none}
+.prog i{display:block;height:100%;background:linear-gradient(90deg,var(--o) 0 50%,var(--g) 50%);transform-origin:0 50%;transform:scaleX(0)}
+.lift{position:fixed;right:10px;top:50%;transform:translateY(-50%);z-index:70;display:none;flex-direction:column;gap:6px}
+.lift::before{content:"";position:absolute;left:14px;top:-14px;bottom:-14px;width:2px;background:var(--ink);z-index:-1}
+.lift a{position:relative;width:30px;height:30px;background:var(--ink);color:var(--bg);display:grid;place-items:center;font-family:"Barlow Condensed";font-weight:800;font-size:16px;text-decoration:none;border:2px solid var(--bg)}
+.lift a em{position:absolute;right:38px;top:50%;transform:translateY(-50%);background:var(--ink);color:var(--bg);font-style:normal;font-family:"IBM Plex Mono";font-weight:500;font-size:10px;letter-spacing:.05em;text-transform:uppercase;padding:3px 8px;white-space:nowrap;opacity:0;pointer-events:none}
+.lift a.on{background:var(--o);color:var(--ink)}
+.lift a:focus-visible em,.lift a.hv em{opacity:1}
+.lift a:focus-visible{outline:3px solid var(--g);outline-offset:2px}
+@media (min-width:1200px){.lift{display:flex}}
+.is-preview .lift,.is-preview .prog{display:none}
+a:focus-visible,.btn:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.nav ul a[aria-current="true"]{border-color:var(--o)}
+.hv-bg{}
+/* big type band */
+.bigtype{background:var(--bg);position:relative;z-index:2;border-bottom:2px solid var(--ink);overflow:hidden;padding:18px 0 10px}
+.bigtype .row{display:flex;align-items:center;gap:3vw;width:max-content;white-space:nowrap;font-family:"Barlow Condensed";font-weight:800;text-transform:uppercase;font-size:clamp(70px,11vw,170px);line-height:1;padding:0 3vw}
+.bigtype .r2{color:transparent;-webkit-text-stroke:2px var(--ink)}
+.bigtype i{width:.34em;height:.34em;background:var(--o);flex:none;display:block}
+.bigtype .r2 i{background:var(--g)}
+/* hover (css + js class) */
+.nav ul a.hv{border-color:var(--o)}
+.nav .cta.hv,.btn.hv{background:var(--ink);color:var(--bg)}
+.btn.o.hv{background:var(--hv);color:var(--ink)}
+.link.hv{background:var(--o)}
+.line a.hv .pg{background:var(--o);color:var(--ink)}
+.line a.hv .pg svg{animation:wig .6s ease both}
+@keyframes wig{0%{transform:rotate(0)}30%{transform:rotate(-18deg) scale(1.1)}60%{transform:rotate(12deg)}100%{transform:rotate(0)}}
+.card.hv .go{transform:translateX(8px)}
+.card.hv{filter:saturate(1.08)}
+.card .fan{transform-box:fill-box;transform-origin:center}
+.card.hv .fan{animation:spin 1.6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.card.hv .march{animation:march .6s linear infinite}
+@keyframes march{to{stroke-dashoffset:-26}}
+.card.hv .exit-sv{animation:blink .9s steps(2,jump-none) infinite}
+@keyframes blink{50%{opacity:.25}}
+.lamp{transform-box:fill-box;transform-origin:50% 0}
+.card.hv .lamp{animation:swing 1.4s ease-in-out infinite alternate}
+.card.hv .lamp.l2{animation-delay:-.4s}.card.hv .lamp.l3{animation-delay:-.8s}
+@keyframes swing{from{transform:rotate(-7deg)}to{transform:rotate(7deg)}}
+.role.hv h3{color:var(--o-ink)}
+.role.hv li::before{width:18px}
+.role li::before{transition:width .2s}
+.dir a.hv{background:var(--o);color:var(--ink)}.dir a.hv b{color:var(--ink)}
+.chip.hv{background:var(--ink);color:var(--bg)}
+.contact .rt a.hv{background:var(--o)}
+/* horizontal experience (JS adds .h-on on wide screens) */
+.hbar{display:none}
+.exp.h-on{padding-top:72px;padding-bottom:30px;min-height:calc(100vh - 58px);display:flex;flex-direction:column;justify-content:center}
+.exp.h-on .sec-h{margin-bottom:22px}
+.exp.h-on .sec-h h2{font-size:clamp(48px,5vw,76px)}
+.exp.h-on .hwrap{overflow:hidden;margin-right:calc(var(--pad)*-1)}
+.exp.h-on .htrack{display:flex;gap:22px;width:max-content;padding-right:64px}
+.exp.h-on .role{display:flex;flex-direction:column;gap:10px;width:min(500px,36vw);flex:none;border:2px solid var(--ink);padding:18px 22px;background:var(--bg)}
+.exp.h-on .role:last-child{border-bottom:2px solid var(--ink)}
+.exp.h-on .role:nth-child(1){background:var(--o)}
+.exp.h-on .role:nth-child(3){background:var(--g)}
+.exp.h-on .role:nth-child(4){background:var(--ink);color:var(--bg)}
+.exp.h-on .role:nth-child(4) .rn{background:var(--bg);color:var(--ink)}
+.exp.h-on .role:nth-child(1) li::before,.exp.h-on .role:nth-child(3) li::before{background:var(--ink)}
+.exp.h-on .role.hv h3{color:inherit}
+.exp.h-on .role h3{font-size:32px}
+.exp.h-on .role li{font-size:14.5px;line-height:1.4;margin-bottom:5px}
+.exp.h-on .role .d b{font-size:24px}
+.exp.h-on .hbar{display:block;height:8px;border:2px solid var(--ink);margin-top:18px;margin-right:var(--pad)}
+.exp.h-on .hbar i{display:block;height:100%;background:var(--o);transform-origin:0 50%;transform:scaleX(0)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.hero{transform:none!important}}
+@media (max-width:800px){.prog{top:54px}.bigtype .row{font-size:clamp(56px,18vw,96px)}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="key" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  6 0 -6 0 1.72"/></filter>
+  <symbol id="i-wrench" viewBox="0 0 24 24"><path d="M14.5 4.5a5 5 0 0 0-4.6 6.9L3.5 17.8a2 2 0 0 0 2.8 2.8l6.4-6.4a5 5 0 0 0 6.9-4.6l-3 2.4-2.6-.8-.8-2.6z"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.800-3.400 7.800-8 9-4.600-1.200-8-4.200-8-9V6z"/><path d="M12 8v8M8 12h8"/></symbol>
+  <symbol id="i-hat" viewBox="0 0 24 24"><path d="M3 17h18M5 17a7 7 0 0 1 14 0M12 6v6M8.500 8.500V12M15.500 8.500V12"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24"><rect x="3" y="10" width="10" height="9"/><rect x="13" y="14" width="8" height="5"/><path d="M8 10V5h9"/><path d="M15 3l2 2-2 2"/></symbol>
+  <symbol id="i-fire" viewBox="0 0 24 24"><path d="M12 3c1 3 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-5 1-9z"/></symbol>
+  <symbol id="i-stairs" viewBox="0 0 24 24"><path d="M3 20h5v-4h4v-4h4V8h5"/></symbol>
+  <symbol id="i-door" viewBox="0 0 24 24"><rect x="6" y="3" width="12" height="18"/><circle cx="15" cy="12" r="1"/></symbol>
+  <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="12" r="4"/><path d="M12 12h9M18 12v4M21 12v3"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.500"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5h7v14H4zM13 5h7v14h-7z"/></symbol>
+  <symbol id="i-person" viewBox="0 0 24 24"><circle cx="12" cy="6" r="3"/><path d="M5 21v-5a7 7 0 0 1 14 0v5"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.500"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></symbol>
+  <symbol id="i-cert" viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M8.500 14L7 22l5-3 5 3-1.500-8"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></symbol>
+</svg>
+<a class="skip" href="#main">Skip to content</a>
+
+<div class="prog" aria-hidden="true"><i></i></div>
+<nav class="lift" aria-label="Floors"><a href="#top"><span>G</span><em>Reception</em></a><a href="#about"><span>01</span><em>Staff room</em></a><a href="#work"><span>02</span><em>Plant room</em></a><a href="#experience"><span>03</span><em>Control room</em></a><a href="#skills"><span>04</span><em>Training room</em></a><a href="#education"><span>05</span><em>Library</em></a><a href="#contact"><span>E</span><em>Exit</em></a></nav>
+<header class="nav">
+  <a class="logo" href="#top"><i><svg class="ico"><use href="#i-door"/></svg></i>Aiko Tan</a>
+  <span class="desc mono">Facilities manager<br>Bristol, UK</span>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#work">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+  </ul>
+  <span class="time mono"><span class="lvl">Lvl G</span>Bristol / 13:42 local</span>
+  <a class="cta" href="#contact">Get in touch <span aria-hidden="true">↗</span></a>
+</header>
+
+<main id="main">
+<section class="sec hero" id="top" aria-labelledby="h1">
+  <span class="fl">G</span>
+  <span class="plate"><b><svg class="ico" style="font-size:16px"><use href="#i-door"/></svg></b><span class="mono">Level G · Reception</span></span>
+  <i class="x" style="left:48%;top:118px"></i><i class="x" style="left:86.5%;top:118px"></i>
+  <!-- blueprint dimension lines -->
+  <svg class="dim" style="left:51%;top:40px;width:34.5%;height:26px;overflow:visible" viewBox="0 0 497 26" preserveAspectRatio="none" aria-hidden="true">
+    <g stroke="#1D1F1E" stroke-width="1.5" fill="none"><path d="M1 6V26M496 6V26"/><path d="M0 16H497"/><path d="M0 16l9-5M0 16l9 5M497 16l-9-5M497 16l-9 5"/></g>
+  </svg>
+  <span class="dim mono" style="left:calc(51% + 14.5%);top:30px;background:var(--bg);padding:0 8px;font-size:10px">Grid A – B</span>
+  <svg class="dim" style="left:calc(51% + 34.5% + 22px);top:70px;width:34px;height:640px;overflow:visible" aria-hidden="true">
+    <g stroke="#1D1F1E" stroke-width="1.5" fill="none"><path d="M4 0H30M4 640H30"/><path d="M17 0V640"/><path d="M17 0l-5 9M17 0l5 9M17 640l-5-9M17 640l5-9"/></g>
+  </svg>
+  <h1 id="h1" class="caps"><span>Spaces</span><span>that</span><span class="r">work.</span></h1>
+  <div class="orange">
+    <svg class="bgp" viewBox="0 0 400 640" preserveAspectRatio="xMidYMid slice" aria-hidden="true" fill="none" stroke="#1D1F1E" stroke-opacity=".35" stroke-width="1.5">
+      <path d="M0 520H400M0 560H400M60 0V640M340 0V640"/><circle cx="200" cy="330" r="190"/><circle cx="200" cy="330" r="130"/><path d="M60 80H340M60 120H340" stroke-dasharray="6 6"/>
+    </svg>
+    <span class="tag mono"><span>Site 0 · AW / 26</span></span>
+    <div class="pers"><img src="img/aiko.webp" width="900" height="1200" alt="Aiko Tan in a red jacket"></div>
+  </div>
+  <div class="gpan" aria-hidden="true">
+    <svg viewBox="0 0 190 480" fill="none" stroke="#1D1F1E" stroke-width="2.5"><path d="M20 20H170V460H20zM20 160H100V300M100 300H170M70 160V20M20 380H110"/><path d="M100 300a30 30 0 0 1 -30 -30" stroke-width="1.8"/><rect x="110" y="40" width="40" height="30" fill="#EAE8E3" stroke="none"/><path d="M118 52h24M118 60h16" stroke="#1D1F1E" stroke-width="2"/></svg>
+  </div>
+  <div class="gb" aria-hidden="true"></div>
+  <div class="cut h"><img src="img/aiko-team1.webp" width="900" height="1200" alt=""></div>
+  <span class="exitsign mono"><span style="background:var(--ink);color:#fff;padding:0 10px;display:flex;align-items:center;letter-spacing:.14em">Exit</span><span style="display:flex;align-items:center;padding:0 10px">Fig. 02 · The teams I work with</span></span>
+  <div class="intro">
+    <p>Facilities manager in Bristol. I keep buildings safe, compliant and running, so the people inside can get on with their work.</p>
+    <span class="meta mono">Selected work / 2026<br>Maintenance · Safety · Contractors · Moves</span>
+    <a class="link" href="#work">View projects ↘</a>
+  </div>
+  <div class="coord mono">51.4545° N<br>2.5879° W</div>
+</section>
+
+<section class="sec state" id="about" aria-labelledby="h2s">
+  <span class="fl">01</span>
+  <span class="plate"><b><svg class="ico" style="font-size:16px"><use href="#i-person"/></svg></b><span class="mono">Level 01 · Staff room</span></span>
+  <div class="state-top">
+    <h2 id="h2s">I keep buildings <em>safe,</em> compliant and running.</h2>
+    <p>I work with landlords, tenants and contractors to make sure the lights are on, the checks are done and nobody is surprised on a Monday morning.</p>
+  </div>
+  <nav class="line" aria-label="What I do">
+    <a href="#experience"><span class="pg"><svg class="ico"><use href="#i-wrench"/></svg></span><b>01</b> <span class="mono">Maintenance</span><i></i></a>
+    <a href="#experience"><span class="pg"><svg class="ico"><use href="#i-shield"/></svg></span><b>02</b> <span class="mono">Health &amp; safety</span><i></i></a>
+    <a href="#experience"><span class="pg"><svg class="ico"><use href="#i-hat"/></svg></span><b>03</b> <span class="mono">Contractors</span><i></i></a>
+    <a href="#experience"><span class="pg"><svg class="ico"><use href="#i-box"/></svg></span><b>04</b> <span class="mono">Workplace moves</span><i></i></a>
+  </nav>
+</section>
+
+<div class="bigtype" aria-hidden="true">
+  <div class="row r1"><span>Facilities</span><i></i><span>Health &amp; safety</span><i></i><span>Contractors</span><i></i><span>Facilities</span><i></i><span>Health &amp; safety</span><i></i></div>
+  <div class="row r2"><span>Maintenance</span><i></i><span>Workplace moves</span><i></i><span>Compliance</span><i></i><span>Maintenance</span><i></i><span>Workplace moves</span><i></i></div>
+</div>
+
+<section class="sec about-sec" id="hello">
+  <div class="about">
+    <div>
+      <h2 class="caps">Hello, <span>I’m Aiko.</span></h2>
+      <figure class="door"><div class="ph"><img src="img/aiko-2.webp" width="900" height="1200" alt="Aiko Tan holding a clipboard in an office corridor"></div>
+        <figcaption class="cap mono"><span>On site, 2026</span><span>Corridor, level 02</span></figcaption><div class="haz"></div></figure>
+    </div>
+    <div class="copy">
+      <p>I have spent my career in commercial buildings, from small offices to multi-tenant sites. My work sits between people, plant and paperwork: planning maintenance, running safety checks and managing the contractors who do the hands-on jobs.</p>
+      <p>I like calm, well-documented sites where problems are found early. I write clear handovers, keep asset registers honest and talk to everyone from the board to the night cleaner.</p>
+      <div class="chips"><span class="chip f"><svg class="ico"><use href="#i-key"/></svg>Available for new roles</span><span class="chip"><svg class="ico"><use href="#i-pin"/></svg>Bristol &amp; hybrid</span><span class="chip"><svg class="ico"><use href="#i-globe"/></svg>Japanese / English</span></div>
+      <nav class="dir" aria-label="Page directory"><h3>Directory <span class="mono" style="font-size:10px">Lifts and stairs</span></h3>
+        <a href="#top"><b>G</b><span>Reception</span><i class="mono" style="font-style:normal">Welcome</i></a>
+        <a href="#about"><b>01</b><span>Staff room</span><i class="mono" style="font-style:normal">About</i></a>
+        <a href="#work"><b>02</b><span>Plant room</span><i class="mono" style="font-style:normal">Projects</i></a>
+        <a href="#experience"><b>03</b><span>Control room</span><i class="mono" style="font-style:normal">Experience</i></a>
+        <a href="#skills"><b>04</b><span>Training room</span><i class="mono" style="font-style:normal">Skills</i></a>
+        <a class="e" href="#contact"><b>E</b><span>Exit</span><i class="mono" style="font-style:normal">Contact</i></a></nav>
+    </div>
+  </div>
+</section>
+
+<section class="sec work" id="work" aria-labelledby="h2w">
+  <span class="fl">02</span>
+  <span class="plate k"><b><svg class="ico" style="font-size:16px"><use href="#i-gear"/></svg></b><span class="mono">Level 02 · Plant room</span></span>
+  <div class="work-head"><h2 id="h2w" class="caps">Selected projects</h2><span class="mono">Sample projects / 2026<br>Plain descriptions, no figures</span></div>
+  <div class="haz" style="margin-left:calc(var(--pad) + var(--rail))"></div>
+  <div class="cards">
+    <article class="card c1">
+      <div class="rm mono"><span>Room 01</span><svg class="ico" style="font-size:22px"><use href="#i-box"/></svg></div>
+      <span class="k">01</span>
+      <h3 class="caps">Office<br>move</h3>
+      <span class="mono">Workplace move<br>Sample · 2026</span>
+      <div class="art"><svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMax meet" fill="none" stroke="#1D1F1E" stroke-width="2.5" aria-hidden="true">
+        <path d="M16 20H284V290H16z" stroke-width="5"/><path d="M16 140H120M170 140H284M150 20V108M150 172V290"/>
+        <rect x="30" y="36" width="44" height="26" fill="#1D1F1E"/><rect x="84" y="36" width="44" height="26" fill="#1D1F1E"/><rect x="30" y="78" width="44" height="26" fill="#1D1F1E"/><rect x="84" y="78" width="44" height="26"/>
+        <rect x="170" y="36" width="44" height="26" fill="#FF5B1F"/><rect x="226" y="36" width="44" height="26" fill="#FF5B1F"/><rect x="170" y="78" width="44" height="26"/><rect x="226" y="78" width="44" height="26"/>
+        <rect x="30" y="172" width="100" height="50"/><circle cx="80" cy="197" r="14"/>
+        <rect x="170" y="186" width="100" height="86" fill="#13A35A"/><path d="M180 196l30 30M240 196l-30 30" stroke-width="2"/>
+        <path d="M120 140a22 22 0 0 0 22 -22M170 140a22 22 0 0 1-22 -22" stroke-width="2"/>
+        <path d="M112 80C130 62 148 62 166 54" class="march" stroke="#FF5B1F" stroke-width="4" stroke-dasharray="7 6"/><path d="M160 45l9 8-10 5" stroke="#FF5B1F" stroke-width="4"/>
+        <g stroke-width="1.5"><path d="M16 8H284M16 3V13M284 3V13"/></g></svg></div>
+      <a class="go" href="#experience" aria-label="Office move project">→</a>
+    </article>
+    <article class="card c2">
+      <div class="rm mono"><span>Room 02</span><svg class="ico" style="font-size:22px"><use href="#i-gear"/></svg></div>
+      <span class="k">02</span>
+      <h3 class="caps">HVAC<br>replacement</h3>
+      <span class="mono">Plant upgrade<br>Sample · 2026</span>
+      <div class="art"><svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMax meet" fill="none" stroke="#1D1F1E" stroke-width="2.5" aria-hidden="true">
+        <rect x="30" y="140" width="240" height="130" stroke-width="4"/><path d="M30 182H270M30 226H270" stroke-width="1.5"/>
+        <g class="fan"><circle cx="90" cy="206" r="36"/><circle cx="90" cy="206" r="6" fill="#1D1F1E"/><path d="M90 170V242M54 206H126M64 180L116 232M116 180L64 232" stroke-width="1.5"/></g>
+        <rect x="170" y="154" width="80" height="102" fill="#EAE8E3"/><path d="M178 168H242M178 184H242M178 200H242M178 216H242M178 232H242M178 246H242" stroke-width="2"/>
+        <path d="M60 140V80H210V30" stroke-width="14" stroke-linejoin="round"/><path d="M60 140V80H210V30" stroke="#FF5B1F" stroke-width="8" stroke-linejoin="round"/>
+        <path d="M30 284H270M60 284V270M240 284V270"/>
+        <path class="march" d="M236 90h28M236 108h28" stroke-dasharray="4 5" stroke-width="3"/><path d="M262 84l8 6-8 6" stroke-width="3"/>
+        <rect x="222" y="22" width="56" height="26" fill="#FFD60A" stroke-width="2"/><path d="M232 31h36M232 40h24" stroke-width="2"/></svg></div>
+      <a class="go" href="#experience" aria-label="HVAC replacement project">→</a>
+    </article>
+    <article class="card c3">
+      <div class="rm mono"><span>Room 03</span><svg class="ico" style="font-size:22px"><use href="#i-fire"/></svg></div>
+      <span class="k">03</span>
+      <h3 class="caps">Fire safety<br>review</h3>
+      <span class="mono">Risk &amp; compliance<br>Sample · 2026</span>
+      <div class="cut"><img src="img/aiko-team2.webp" width="900" height="1200" alt=""></div>
+      <svg style="position:absolute;left:14px;bottom:62px;width:68px;z-index:3" viewBox="0 0 70 100" fill="none" stroke="#1D1F1E" stroke-width="2.5" aria-hidden="true"><rect x="14" y="30" width="34" height="60" rx="6" fill="#FF5B1F"/><rect x="24" y="14" width="14" height="16"/><path d="M38 20C52 20 56 30 56 40"/><path d="M22 50h18M22 58h18" stroke-width="2"/></svg>
+      <svg class="exit-sv" style="position:absolute;right:14px;top:252px;width:90px;z-index:3" viewBox="0 0 90 46" aria-hidden="true"><rect width="90" height="46" fill="#1D1F1E"/><rect x="3" y="3" width="84" height="40" fill="#FFD60A"/><text x="48" y="32" text-anchor="middle" font-family="Barlow Condensed" font-weight="800" font-size="26" fill="#1D1F1E">EXIT</text><path d="M10 14l-4 8 4 8" stroke="#1D1F1E" stroke-width="2" fill="none"/></svg>
+      <a class="go" href="#experience" aria-label="Fire-safety review project">→</a>
+    </article>
+    <article class="card c4">
+      <div class="rm mono"><span>Room 04</span><svg class="ico" style="font-size:22px"><use href="#i-door"/></svg></div>
+      <span class="k">04</span>
+      <h3 class="caps">New<br>reception</h3>
+      <span class="mono">Fit-out<br>Sample · 2026</span>
+      <div class="art"><svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMax meet" fill="none" stroke="#EAE8E3" stroke-width="2.5" aria-hidden="true">
+        <g class="lamp"><path d="M70 0V54"/><circle cx="70" cy="68" r="14" fill="#FF5B1F" stroke="#FF5B1F"/></g><g class="lamp l2"><path d="M150 0V36"/><circle cx="150" cy="50" r="14" fill="#FF5B1F" stroke="#FF5B1F"/></g><g class="lamp l3"><path d="M230 0V66"/><circle cx="230" cy="80" r="14" fill="#FF5B1F" stroke="#FF5B1F"/></g>
+        <path d="M20 290V190H200C230 190 250 210 250 240V290" fill="#13A35A" stroke="#EAE8E3"/><path d="M20 190H200" stroke="#FFD60A" stroke-width="5"/><path d="M10 290H290" stroke-width="4"/>
+        <rect x="34" y="146" width="70" height="44" fill="#EAE8E3" stroke="#EAE8E3"/><path d="M44 160H94M44 172H80" stroke="#1D1F1E"/>
+        <rect x="236" y="130" width="42" height="160" stroke="#EAE8E3"/><rect x="236" y="130" width="42" height="160" fill="#FF5B1F" stroke="none"/><circle cx="257" cy="170" r="8" fill="#1D1F1E" stroke="none"/>
+        <path d="M60 220H190M60 240H190M60 260H150" stroke="#1D1F1E" stroke-width="3"/></svg></div>
+      <a class="go" href="#experience" aria-label="New reception project">→</a>
+    </article>
+  </div>
+</section>
+
+<div class="board" role="region" aria-label="Notice board: checked, fixed, ready">
+  <div class="bh"><span class="mono">Notice board</span><span class="mono">Level 02 · Lobby</span></div>
+  <div class="led" aria-hidden="true"><div class="led-in"><div class="lg"><span>Checked</span><span>Fixed</span><span>Ready</span></div><div class="lg"><span>Checked</span><span>Fixed</span><span>Ready</span></div></div></div>
+  <div class="r mono">Buildings that keep people working.<br><b>Aiko / Tan</b> · Bristol 2026</div>
+</div>
+
+<section class="sec exp" id="experience" aria-labelledby="h2e">
+  <span class="fl">03</span>
+  <span class="plate g"><b><svg class="ico" style="font-size:16px"><use href="#i-stairs"/></svg></b><span class="mono">Level 03 · Control room</span></span>
+  <div class="sec-h"><h2 id="h2e" class="caps">Experience</h2><p>Four roles across offices, mixed-use sites and a university-style campus. Employers are sample names.</p></div>
+  <div class="hwrap"><div class="htrack">
+  <article class="role"><div class="d mono"><span class="rn">Now</span> 2023 —<b>Facilities<br>manager</b></div><div><h3>Harbourside Offices</h3><p>Multi-tenant office building, Bristol</p></div>
+    <ul><li>Run planned and reactive maintenance across the building with a small in-house team and outside contractors.</li><li>Lead the annual fire-risk review and track every action to close.</li><li>Plan tenant moves and fit-outs with the landlord, tenants and the contractor.</li><li>Report on the building’s condition to the property director each month.</li></ul></article>
+  <article class="role"><div class="d mono"><span class="rn">2020 — 2023</span><b>Senior facilities<br>coordinator</b></div><div><h3>Clifton Works Group</h3><p>Regional workplace services provider</p></div>
+    <ul><li>Coordinated service contracts for six client sites, including cleaning, security and mechanical servicing.</li><li>Introduced a shared CAFM system and trained site staff to log work properly.</li><li>Managed the HVAC replacement for a client’s head office from specification to handover.</li><li>Kept asset registers and compliance certificates up to date.</li></ul></article>
+  <article class="role"><div class="d mono"><span class="rn">2017 — 2020</span><b>Facilities<br>officer</b></div><div><h3>Severn Row Property</h3><p>Commercial property management</p></div>
+    <ul><li>Carried out weekly site inspections and logged defects for the contractors.</li><li>Supported health and safety audits, from risk assessments to staff briefings.</li><li>Handled out-of-hours call-outs and kept tenants informed.</li><li>Helped plan a reception refurbishment while the building stayed open.</li></ul></article>
+  <article class="role"><div class="d mono"><span class="rn">2015 — 2017</span><b>Office<br>administrator</b></div><div><h3>Brunel Court Management</h3><p>Serviced offices</p></div>
+    <ul><li>Looked after rooms, keys, deliveries and visitor access for a busy serviced office.</li><li>Raised repair requests and followed them up with suppliers.</li><li>Learned the basics of site safety, fire marshal duties and first aid cover.</li></ul></article>
+</div><div class="hbar" aria-hidden="true"><i></i></div></div>
+</section>
+
+<section class="skills" id="skills" aria-label="Skills and qualifications">
+  <span class="fl">04</span>
+  <span class="plate k" style="background:var(--bg);color:var(--ink)"><b><svg class="ico" style="font-size:16px"><use href="#i-cert"/></svg></b><span class="mono">Level 04 · Training room</span></span>
+  <div class="sk sk-a"><h2 class="caps">Certified</h2><span class="mono">Safety and facilities qualifications</span>
+    <div class="cert"><span class="pg"><svg class="ico"><use href="#i-hat"/></svg></span><div><h3>IOSH Managing Safely</h3><p>Managing safety responsibilities for teams and sites.</p></div></div>
+    <div class="cert"><span class="pg"><svg class="ico"><use href="#i-shield"/></svg></span><div><h3>NEBOSH</h3><p>General certificate in occupational health and safety.</p></div></div>
+    <div class="cert"><span class="pg"><svg class="ico"><use href="#i-door"/></svg></span><div><h3>IWFM Level 4</h3><p>Facilities management qualification.</p></div></div>
+    <div class="cert"><span class="pg"><svg class="ico"><use href="#i-gear"/></svg></span><div><h3>CAFM systems</h3><p>Computer-aided facilities management, day to day.</p></div></div>
+  </div>
+  <div class="sk sk-b"><h2 class="caps">Skills</h2><span class="mono">Self-rated, for fun, not a test</span>
+    <div class="bar"><div><span>Planned maintenance</span><span class="mono"><b class="cnt" data-n="9">9</b> / 10</span></div><span class="t"><i data-w="90" style="width:90%"></i></span></div>
+    <div class="bar"><div><span>Health and safety</span><span class="mono"><b class="cnt" data-n="8">8</b> / 10</span></div><span class="t"><i data-w="80" style="width:80%"></i></span></div>
+    <div class="bar"><div><span>Contractor management</span><span class="mono"><b class="cnt" data-n="9">9</b> / 10</span></div><span class="t"><i data-w="90" style="width:90%"></i></span></div>
+    <div class="bar"><div><span>CAFM and asset registers</span><span class="mono"><b class="cnt" data-n="8">8</b> / 10</span></div><span class="t"><i data-w="80" style="width:80%"></i></span></div>
+    <div class="bar"><div><span>Workplace moves</span><span class="mono"><b class="cnt" data-n="7">7</b> / 10</span></div><span class="t"><i data-w="70" style="width:70%"></i></span></div>
+    <ul class="comp"><li>Budgets and purchase orders</li><li>Risk assessments</li><li>Supplier relationships</li><li>Clear written handovers</li></ul>
+  </div>
+  <div class="sk sk-c"><h2 class="caps">Languages</h2><span class="mono">Spoken and written</span>
+    <div class="lang"><b>Japanese</b><span class="mono">Native</span></div>
+    <div class="lang"><b>English</b><span class="mono">Fluent, professional</span></div>
+  </div>
+</section>
+
+<section class="sec edu" id="education" aria-label="Education and approach">
+  <span class="fl">05</span>
+  <span class="plate"><b><svg class="ico" style="font-size:16px"><use href="#i-book"/></svg></b><span class="mono">Level 05 · Library</span></span>
+  <div><h2 class="caps">Education</h2><p><b>BSc (Hons) Facilities and Property Management</b>West Country University (sample), 2011 — 2014</p><p><b>IWFM Level 4</b>Awarding body course, 2019</p></div>
+  <div><h2 class="caps">Approach</h2><p>Find problems early. Write things down. Tell people what is happening before they have to ask.</p><p>Treat contractors as part of the team, with clear scopes and sign-off.</p></div>
+  <div><h2 class="caps">Memberships</h2><p><b>IWFM</b>Member, sample entry</p><p><b>First aid at work</b>Certificate, in date</p></div>
+</section>
+
+<section class="sec contact" id="contact" aria-labelledby="h2c" style="border-top:2px solid var(--ink)">
+  <span class="fl" style="background:var(--g);color:var(--ink);border:2px solid var(--ink)">E</span>
+  <span class="plate g" style="left:calc(var(--pad) + var(--rail) + 260px)"><b><svg class="ico" style="font-size:16px"><use href="#i-door"/></svg></b><span class="mono">Exit · Reception desk</span></span>
+  <div class="exitp" aria-hidden="true">
+    <svg class="runner" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="15" cy="4.500" r="2"/><path d="M13 8l-3 3 3 3-2 6M10 11l-4 1M13 8l4 3 3 0M13 14l4 2 0 4"/></svg>
+    <div class="ex">EXIT</div>
+  </div>
+  <div class="mid"><h2 id="h2c" class="caps">Let’s keep your building <span>running.</span></h2>
+    <a class="btn" href="mailto:hello@aikotan.example">Email Aiko <span aria-hidden="true">↗</span></a><a class="btn o" href="#top">Back to top ↑</a></div>
+  <div class="rt mono"><div>hello@aikotan.example<br>Bristol / United Kingdom</div><div>aikotan.example</div><div><a href="#">LinkedIn</a><br><a href="#">CV (PDF)</a></div></div>
+</section>
+<div class="haz"></div>
+<footer class="foot mono"><span>© 2026 Aiko Tan</span><span>This is a concept site designed by HU/MAN. The person, projects and companies shown are part of the concept.</span></footer>
+</main>
+
+<div class="badge" role="note"><a href="../../portfolio/">&larr; Back to HU/MAN</a><span class="badge-made">Made by <svg class="badge-logo" role="img" aria-label="Hu/man" viewBox="0 0 2054.33 438.67" focusable="false"><path fill-rule="evenodd" d="M928.67,21.00 L845.00,21.00 L843.67,22.00 L677.67,437.33 L678.33,438.33 L762.67,437.67 L928.67,23.00Z M1735.00,0.33 L1734.67,390.33 L1815.67,390.00 L1816.33,154.33 L1991.67,390.67 L2053.67,390.67 L2054.00,0.33 L1973.67,0.00 L1973.00,1.00 L1973.00,231.33 L1969.00,227.33 L1796.67,0.00Z M1488.00,0.33 L1355.67,390.00 L1443.67,390.67 L1469.33,312.33 L1471.00,310.67 L1612.33,310.67 L1614.33,313.33 L1639.67,390.67 L1727.33,390.67 L1728.00,390.00 L1718.00,360.00 L1711.00,341.67 L1695.00,292.00 L1688.00,273.67 L1672.00,224.00 L1665.00,205.67 L1596.00,0.33Z M1541.33,90.33 L1542.67,91.00 L1550.33,114.33 L1554.33,129.00 L1576.00,193.67 L1576.33,197.00 L1590.33,238.33 L1590.00,240.33 L1493.00,240.00 L1493.00,237.67Z M940.67,0.00 L940.67,390.67 L1020.67,390.67 L1021.67,389.67 L1022.00,134.67 L1139.67,291.00 L1149.67,291.00 L1152.67,288.00 L1268.00,139.33 L1268.33,390.33 L1349.33,390.00 L1348.67,0.00 L1271.67,0.00 L1269.67,1.00 L1147.00,168.67 L1138.00,158.33 L1018.67,0.00Z M345.33,0.33 L345.33,261.00 L348.33,281.00 L353.33,299.00 L361.33,317.00 L370.67,332.00 L382.67,347.00 L391.67,356.00 L412.67,372.00 L440.67,386.00 L469.67,394.00 L483.67,396.00 L508.67,397.00 L525.67,396.00 L548.33,392.33 L575.33,383.33 L590.67,375.67 L604.33,367.00 L614.67,359.00 L625.67,348.67 L635.67,337.00 L644.67,324.00 L649.67,315.00 L657.00,297.33 L660.67,285.00 L663.67,269.00 L665.00,250.00 L664.67,0.33 L584.00,0.33 L584.00,242.67 L581.33,264.33 L577.33,276.33 L572.33,286.33 L564.33,297.33 L555.00,306.67 L545.00,313.67 L533.67,319.00 L520.33,322.67 L508.33,323.67 L494.00,323.33 L484.00,321.33 L473.33,317.67 L460.33,310.67 L450.00,302.00 L443.00,294.33 L435.00,281.67 L428.67,264.67 L426.00,242.67 L426.00,0.67Z M0.33,0.33 L0.00,390.00 L81.00,390.33 L81.00,240.33 L82.00,239.33 L232.33,239.33 L233.33,240.33 L233.33,390.33 L314.33,390.33 L314.33,0.33 L233.33,0.67 L233.33,168.33 L232.33,169.00 L81.33,168.67 L81.00,0.67Z "/></svg></span></div>
+
+<script src="../vendor/gsap.min.js"></script>
+<script src="../vendor/ScrollTrigger.min.js"></script>
+<script src="../vendor/SplitText.min.js"></script>
+<script>
+(function(){
+  var $=function(s,r){return (r||document).querySelector(s)},$$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* JS-driven hover (works with synthetic preview events too) */
+  var HS='.card,.role,.dir a,.btn,.link,.line a,.nav ul a,.chip,.contact .rt a,.nav .cta,.lift a',cur=null;
+  document.addEventListener('mouseover',function(e){var t=e.target.closest&&e.target.closest(HS);if(t===cur)return;if(cur)cur.classList.remove('hv');cur=t;if(t)t.classList.add('hv')});
+  document.addEventListener('mouseout',function(e){if(!e.relatedTarget&&cur){cur.classList.remove('hv');cur=null}});
+  if(!window.gsap||!window.ScrollTrigger)return;
+  gsap.registerPlugin(ScrollTrigger,SplitText);
+
+  /* floor indicator and nav highlight (state only, no motion) */
+  var floors=[['#top',0],['#about',1],['#work',2],['#experience',3],['#skills',4],['#education',5],['#contact',6]];
+  var lifts=$$('.lift a'),navs=$$('.nav ul a');
+  function setFloor(i){lifts.forEach(function(a,k){a.classList.toggle('on',k===i);if(k===i)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current')});
+    navs.forEach(function(a){a.removeAttribute('aria-current')});
+    var h=floors[i][0],m=navs.filter(function(a){return a.getAttribute('href')===h})[0];if(m)m.setAttribute('aria-current','true')}
+  function floorTriggers(){floors.forEach(function(f){var el=$(f[0]);if(!el)return;ScrollTrigger.create({trigger:el,start:'top 55%',end:'bottom 55%',onToggle:function(self){if(self.isActive)setFloor(f[1])}})})}
+
+  document.fonts.ready.then(function(){
+    var mm=gsap.matchMedia();
+    mm.add('(prefers-reduced-motion: reduce)',function(){floorTriggers();setFloor(0)});
+    mm.add('(prefers-reduced-motion: no-preference)',function(){
+      /* 10. progress bar */
+      gsap.to('.prog i',{scaleX:1,ease:'none',scrollTrigger:{start:0,end:'max',scrub:.2}});
+
+      /* hero: masked line rise, then idle loop */
+      SplitText.create('.hero h1',{type:'lines',mask:'lines',autoSplit:true,onSplit:function(self){return gsap.from(self.lines,{yPercent:115,duration:.9,stagger:.12,ease:'power4.out'})}});
+      gsap.from('.orange',{clipPath:'inset(100% 0 0 0)',duration:1,ease:'power3.inOut'});
+      gsap.from('.pers',{yPercent:12,duration:1.1,delay:.35,ease:'power3.out'});
+      gsap.from('.cut.h,.gb,.gpan',{opacity:0,y:50,duration:.9,delay:.6,stagger:.12,ease:'power3.out'});
+      gsap.from('.hero .intro > *',{opacity:0,y:24,duration:.7,stagger:.1,delay:.7});
+      gsap.to('.pers',{y:-9,duration:3.2,repeat:-1,yoyo:true,ease:'sine.inOut'});
+      gsap.to('.cut.h',{rotation:2,duration:3.6,repeat:-1,yoyo:true,ease:'sine.inOut'});
+      gsap.set('.bgp circle',{transformOrigin:'50% 50%'});
+      gsap.to('.bgp circle',{scale:1.05,duration:2.6,repeat:-1,yoyo:true,ease:'sine.inOut',stagger:.5});
+      gsap.to('.bgp path',{strokeDashoffset:-48,duration:3,repeat:-1,ease:'none'});
+      gsap.to('.hero .x',{opacity:.15,duration:.7,repeat:-1,yoyo:true,stagger:.25,ease:'steps(1)'});
+      gsap.to('.exitsign',{opacity:.55,duration:.5,repeat:-1,yoyo:true,repeatDelay:2.2,ease:'steps(1)'});
+      /* hero mouse parallax (window pointermove) */
+      var qa=gsap.quickTo('.pers','x',{duration:.9,ease:'power3'}),qb=gsap.quickTo('.bgp','x',{duration:1.1,ease:'power3'}),qc=gsap.quickTo('.bgp','y',{duration:1.1,ease:'power3'}),qd=gsap.quickTo('.cut.h','x',{duration:1,ease:'power3'});
+      function mv(e){var nx=e.clientX/innerWidth-.5,ny=e.clientY/innerHeight-.5;qa(nx*22);qb(nx*-26);qc(ny*-20);qd(nx*-30)}
+      addEventListener('pointermove',mv);
+
+      /* 3. push-out: hero shrinks and dims as the next floor slides over it */
+      gsap.to('.hero',{scale:.9,opacity:.35,ease:'none',scrollTrigger:{trigger:'.hero',start:'bottom bottom',end:function(){return '+='+Math.round(innerHeight*.9)},scrub:true,pin:true,pinSpacing:false}});
+
+      /* 1. split-text reveals for every heading */
+      $$('.sec h2,.skills h2,.work-head h2').forEach(function(h){
+        if(h.closest('.hero'))return;
+        SplitText.create(h,{type:'lines,chars',mask:'lines',autoSplit:true,onSplit:function(self){return gsap.from(self.chars,{yPercent:120,duration:.7,stagger:.018,ease:'power3.out',scrollTrigger:{trigger:h,start:'top 90%',once:true}})}});
+      });
+
+      /* 2. scrubbed moving type, rows in opposite directions */
+      gsap.fromTo('.bigtype .r1',{xPercent:0},{xPercent:-38,ease:'none',scrollTrigger:{trigger:'.bigtype',start:'top bottom',end:'bottom top',scrub:true}});
+      gsap.fromTo('.bigtype .r2',{xPercent:-38},{xPercent:0,ease:'none',scrollTrigger:{trigger:'.bigtype',start:'top bottom',end:'bottom top',scrub:true}});
+
+      /* 6. image reveal: wipe + inner parallax */
+      gsap.fromTo('.door .ph',{clipPath:'inset(0 0 100% 0)'},{clipPath:'inset(0 0 0% 0)',ease:'none',scrollTrigger:{trigger:'.door',start:'top 88%',end:'top 38%',scrub:true}});
+      gsap.fromTo('.door .ph img',{yPercent:-6},{yPercent:2,ease:'none',scrollTrigger:{trigger:'.door',start:'top bottom',end:'bottom top',scrub:true}});
+      gsap.from('.state-top p',{xPercent:8,opacity:0,duration:.8,scrollTrigger:{trigger:'.state-top p',start:'top 90%',once:true}});
+
+      /* 7. scrubbed text fill */
+      $$('.about .copy p,.edu p').forEach(function(p){
+        SplitText.create(p,{type:'words',autoSplit:true,onSplit:function(self){return gsap.fromTo(self.words,{opacity:.18},{opacity:1,stagger:.06,ease:'none',scrollTrigger:{trigger:p,start:'top 86%',end:'bottom 58%',scrub:true}})}});
+      });
+
+      /* 9. batch reveals */
+      function batch(sel,y){var els=$$(sel);if(!els.length)return;gsap.set(els,{opacity:0,y:y||40});ScrollTrigger.batch(els,{start:'top 90%',once:true,onEnter:function(b){gsap.to(b,{opacity:1,y:0,duration:.7,stagger:.1,ease:'power3.out',overwrite:true})}})}
+      batch('.chip',20);batch('.line a',24);batch('.dir a',24);batch('.cert',30);batch('.lang',30);batch('.comp li',16);batch('.card',70);batch('.edu > div',40);
+
+      /* 8. SVG line drawing on cards, bars and counters */
+      $$('.card').forEach(function(card){
+        var ps=$$('.art svg path',card).filter(function(p){return !p.getAttribute('fill')&&!p.getAttribute('stroke-dasharray')&&!p.classList.contains('march')});
+        ps.forEach(function(p){var L=0;try{L=p.getTotalLength()}catch(e){}if(L){p.style.strokeDasharray=L;p.style.strokeDashoffset=L;p._L=L}});
+        var run=ps.filter(function(p){return p._L});
+        ScrollTrigger.create({trigger:card,start:'top 82%',once:true,onEnter:function(){gsap.to(run,{strokeDashoffset:0,duration:1.4,stagger:.04,ease:'power2.inOut',onComplete:function(){run.forEach(function(p){p.style.strokeDasharray='';p.style.strokeDashoffset=''})}})}});
+      });
+            $$('.bar').forEach(function(b){
+        var i=$('.t i',b),n=$('.cnt',b),w=+i.getAttribute('data-w'),to=+n.getAttribute('data-n'),o={v:0};
+        gsap.set(i,{width:0});n.textContent='0';
+        ScrollTrigger.create({trigger:b,start:'top 90%',once:true,onEnter:function(){
+          gsap.to(i,{width:w+'%',duration:1.2,ease:'steps(10)'});
+          gsap.to(o,{v:to,duration:1.2,ease:'steps(10)',onUpdate:function(){n.textContent=Math.round(o.v)}});}});
+      });
+
+      /* LED notice board: endless marquee that speeds up with scroll */
+      var led=gsap.to('.led-in',{xPercent:-50,duration:22,ease:'none',repeat:-1});
+      ScrollTrigger.create({start:0,end:'max',onUpdate:function(self){var v=Math.min(6,1+Math.abs(self.getVelocity())/500);led.timeScale(v)}});
+      gsap.from('.board .bh .mono',{xPercent:-120,duration:.8,stagger:.15,scrollTrigger:{trigger:'.board',start:'top 85%',once:true}});
+
+      floorTriggers();setFloor(0);
+      return function(){removeEventListener('pointermove',mv)};
+    });
+
+    /* 4. pinned horizontal scroll for experience (wide screens, motion allowed) */
+    mm.add('(min-width: 900px) and (prefers-reduced-motion: no-preference)',function(){
+      var sec=$('.exp'),wrap=$('.hwrap'),track=$('.htrack');
+      sec.classList.add('h-on');
+      var dist=function(){return Math.max(0,track.scrollWidth-wrap.clientWidth)};
+      var st={trigger:sec,start:'top top+=58',end:function(){return '+='+dist()},scrub:true,invalidateOnRefresh:true};
+      gsap.to(track,{x:function(){return -dist()},ease:'none',scrollTrigger:Object.assign({pin:true,anticipatePin:1},st)});
+      gsap.to('.hbar i',{scaleX:1,ease:'none',scrollTrigger:st});
+      return function(){sec.classList.remove('h-on')};
+    });
+    setTimeout(function(){ScrollTrigger.refresh()},400);
+  });
+})();
+</script>
+<script src="../preview.js" defer></script>
+</body>
+</html>

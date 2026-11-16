@@ -725,3 +725,19 @@ without its pinned sideways strip. Pieces live in `src/components/play/` and `sc
    its pop-in start froze at scale 0. Drag or animate a plain wrapper instead (see TalkBanner).
 2. The banner copy passes pointer presses through to the toys behind it (buttons and links stay clickable).
 Lighthouse 96-99 / 100 / 100 / 100 (home, services, about, pricing); axe 0 on 17 pages; motion-check clear.
+
+## Six everyday-job CV concepts, business concepts removed (2026-11-16, branch `cv-concepts`)
+- **Six new CV concepts on /portfolio** (22 in all), first on the wall: imran (customer service team leader),
+  lucia (sales account manager), ivy (payroll administrator), nadia (data analyst), aiko (facilities manager),
+  clara (store manager). Each is a one-page CV built from a reference PDF/template layout (kept ~75%; colours and
+  design language moved further from the reference and tied to the job: queue tickets, deal stages, payslip,
+  spreadsheet, building signage, boutique). Fields `Sales` and `Retail` added.
+- **People are muapi avatars** (flux-2-pro, then flux-2-pro-edit for extra shots of the same face) in
+  `<slug>/img/`; styled like the reference, never lookalikes of the real models.
+- **Motion is GSAP scroll animation** (gsap.com style, no floating toys): SplitText masked reveals, scrubbed
+  opposite-direction type bands, hero push-out, pinned sideways tracks, stacked cards, clip-path image wipes
+  with parallax, scrubbed word fill, counters and draws, batch reveals, progress bar. `SplitText.min.js` added
+  to `public/concepts/vendor/`. All under `gsap.matchMedia()`: reduced motion gets no pins, scrubs or loops.
+- **The six business concepts (offcut, ember, plump, fernlea, linework) are deleted** and Ellie is off the
+  business wall (still on /portfolio). `businessSiteConcepts` is empty; /business-websites/ hides its wall
+  section and scroll cue until it has an entry.

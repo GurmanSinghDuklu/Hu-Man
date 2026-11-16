@@ -71,26 +71,30 @@ const pairs = businessConcepts.filter((c) => c.before);
       A mechanic with a small workshop who wants to be found online does not need a 3D, high-end
       animated site. They need the right one. We find it by talking to you first.
     </Fragment>
-    <ScrollCue
-      slot="after"
-      class="bcue"
-      href="#concepts"
-      label={`See all ${businessSiteConcepts.length} concepts below`}
-    />
+    {businessSiteConcepts.length > 0 && (
+      <ScrollCue
+        slot="after"
+        class="bcue"
+        href="#concepts"
+        label={`See all ${businessSiteConcepts.length} concepts below`}
+      />
+    )}
   </InnerHero>
 
-  <section id="concepts" class="band bconcepts" aria-labelledby="concepts-title">
-    <div class="sheet">
-      <p class="label" data-reveal>
-        {businessConceptsIntro.label} · {businessSiteConcepts.length}
-      </p>
-      <h2 id="concepts-title" class="display display--s" data-reveal="lines">
-        {businessConceptsIntro.title}
-      </h2>
-      <p class="bconcepts__text">{businessConceptsIntro.text}</p>
-      <ConceptWall concepts={businessSiteConcepts} intro={businessConceptsIntro} />
-    </div>
-  </section>
+  {businessSiteConcepts.length > 0 && (
+    <section id="concepts" class="band bconcepts" aria-labelledby="concepts-title">
+      <div class="sheet">
+        <p class="label" data-reveal>
+          {businessConceptsIntro.label} · {businessSiteConcepts.length}
+        </p>
+        <h2 id="concepts-title" class="display display--s" data-reveal="lines">
+          {businessConceptsIntro.title}
+        </h2>
+        <p class="bconcepts__text">{businessConceptsIntro.text}</p>
+        <ConceptWall concepts={businessSiteConcepts} intro={businessConceptsIntro} />
+      </div>
+    </section>
+  )}
 
   <section class="band grid bfit" aria-labelledby="bfit-title">
     <div class="sheet bfit__sheet">
