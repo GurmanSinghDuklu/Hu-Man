@@ -24,7 +24,9 @@ export interface PortfolioConcept {
     | 'Graduate'
     | 'Marketing'
     | 'Engineering'
-    | 'Pets';
+    | 'Pets'
+    | 'Sales'
+    | 'Retail';
   /** One factual line about what the page shows. */
   shows: string;
   /** Alt text for the poster: what is in the picture. */
@@ -52,6 +54,72 @@ export const portfolioConceptsIntro = {
 };
 
 export const portfolioConcepts: PortfolioConcept[] = [
+  {
+    slug: 'imran',
+    name: 'Imran Shah',
+    role: 'Customer service team leader, Bradford',
+    field: 'Operations',
+    shows:
+      'A scrapbook of speech bubbles and queue tickets, with moving type bands and a before-and-after script.',
+    alt: 'The Imran Shah concept portfolio: his name in chunky black type on sage dotted paper, with his photo in queue-ticket frames and tomato-red tags.',
+    domain: 'imranshah.example',
+    device: 'desktop',
+  },
+  {
+    slug: 'lucia',
+    name: 'Lucía Ferro',
+    role: 'Sales account manager, Manchester',
+    field: 'Sales',
+    shows:
+      'Giant italic type that slides as you scroll, a deal-stage pipeline and a pinned sideways run through her jobs.',
+    alt: 'The Lucía Ferro concept portfolio: ACCOUNTS in huge cream letters on aubergine beside a black and white cut-out portrait and tangerine bars.',
+    domain: 'luciaferro.example',
+    device: 'desktop',
+  },
+  {
+    slug: 'ivy',
+    name: 'Ivy Laurent',
+    role: 'Payroll administrator, Brighton',
+    field: 'Finance',
+    shows:
+      'A résumé laid out like a payslip: tear-off sections, pay-reference bands that scroll past and dials that fill.',
+    alt: 'The Ivy Laurent concept portfolio: IVY in huge white letters on navy over a coral RESUME block, beside a warm photo of her.',
+    domain: 'ivylaurent.example',
+    device: 'desktop',
+  },
+  {
+    slug: 'nadia',
+    name: 'Nadia Kerr',
+    role: 'Data analyst, Leeds',
+    field: 'Tech',
+    shows:
+      'A spreadsheet-style CV: a cell cursor that walks the cover, a ring chart that draws and cards that stack as you scroll.',
+    alt: 'The Nadia Kerr concept portfolio: .ANAL-YSIS in heavy black letters on a graph-paper grid with electric blue and mint panels.',
+    domain: 'nadiakerr.example',
+    device: 'desktop',
+  },
+  {
+    slug: 'aiko',
+    name: 'Aiko Tan',
+    role: 'Facilities manager, Bristol',
+    field: 'Operations',
+    shows:
+      'Building signage throughout: floor numbers, a directory board, an LED notice band and an exit sign.',
+    alt: 'The Aiko Tan concept portfolio: SPACES THAT WORK in black and orange capitals beside her portrait on a safety-orange panel.',
+    domain: 'aikotan.example',
+    device: 'desktop',
+  },
+  {
+    slug: 'clara',
+    name: 'Clara Voss',
+    role: 'Store manager, York',
+    field: 'Retail',
+    shows:
+      'A boutique look: her portrait in a shop-window arch, swing-tag project cards and a timeline printed like a receipt.',
+    alt: 'The Clara Voss concept portfolio: I run stores people love in cream and brass serif on navy beside her portrait in a brass arch.',
+    domain: 'claravoss.example',
+    device: 'desktop',
+  },
   {
     slug: 'priya',
     name: 'Priya Nair',
@@ -223,11 +291,8 @@ export const portfolioConcepts: PortfolioConcept[] = [
 /**
  * The business concept sites on /business-websites/, on the same live wall. Same rules: "Concept"
  * only, `.example` domains, no reviews, ratings or results. `shows` here says why the site is the
- * right fit for that kind of business. Ellie (a sole trader) is on both walls, so it is borrowed
- * from the list above rather than repeated (seo-check counts each slug once).
+ * right fit for that kind of business.
  */
-const ellie = portfolioConcepts.find((c) => c.slug === 'ellie')!;
-
 export const businessConceptsIntro = {
   ...portfolioConceptsIntro,
   label: 'Concept business sites',
@@ -241,65 +306,5 @@ export const businessConceptsIntro = {
   },
 };
 
-export const businessSiteConcepts: PortfolioConcept[] = [
-  {
-    ...ellie,
-    shows:
-      'A small, friendly business that needs to feel trustworthy and easy to book. So the site is warm, quick and simple, with one playful touch (throw a ball to get in) and nothing heavier.',
-  },
-  {
-    slug: 'offcut',
-    name: 'Offcut Studio',
-    role: 'Creative design studio, Leeds',
-    field: 'Creative',
-    shows:
-      'A small studio selling taste and process. So the site works like a short deck: what they do, how a project runs and sample work, with one clear way to start a project.',
-    alt: 'The Offcut Studio concept: a heavy black name on cream with a tangerine underline, beside an orange and teal deck graphic.',
-    domain: 'offcutstudio.example',
-    device: 'desktop',
-  },
-  {
-    slug: 'ember',
-    name: 'Ember Street Kitchen',
-    role: 'Burger and loaded-fries takeaway, Manchester',
-    field: 'Hospitality',
-    shows:
-      'Hungry people on a phone want the menu, the hours and an order button. So the site is bold but short: dishes, how ordering works, when they are open and one big Order now.',
-    alt: 'The Ember Street Kitchen concept: big white and mint condensed capitals on black beside a violet ESK monogram ringed by chevrons, with a mint Order now button.',
-    domain: 'emberstreet.example',
-    device: 'desktop',
-  },
-  {
-    slug: 'plump',
-    name: 'Plump Bakehouse',
-    role: 'Bakery and cake shop, Sheffield',
-    field: 'Hospitality',
-    shows:
-      'A local bakery with a big personality. So the name is huge and friendly, then the useful parts: what is baked each day, how to order a cake and how much notice it needs.',
-    alt: 'The Plump Bakehouse concept: huge pale pink PLUMP letters on deep red beside a drawn pink celebration cake in an arch.',
-    domain: 'plumpbakehouse.example',
-    device: 'desktop',
-  },
-  {
-    slug: 'fernlea',
-    name: 'Fernlea Dental',
-    role: 'Dental practice, York',
-    field: 'Care',
-    shows:
-      'Many patients arrive nervous. So the site is calm and plain: what each treatment is, what happens on a first visit, how to get there and a clear Book an appointment button.',
-    alt: 'The Fernlea Dental concept: a cream serif headline on forest green beside an arched FD monogram over soft painted brushstrokes.',
-    domain: 'fernleadental.example',
-    device: 'desktop',
-  },
-  {
-    slug: 'linework',
-    name: 'Linework Architects',
-    role: 'Architecture practice, Newcastle',
-    field: 'Creative',
-    shows:
-      'People planning an extension want to see the work and know the steps. So the site is a clean drawing-board grid: sample projects, the four stages from brief to build, and a free first chat.',
-    alt: 'The Linework Architects concept: ROOM TO DRAW IT BETTER in black and emerald on cream beside a cut-paper LW monogram over a drawn house.',
-    domain: 'linework.example',
-    device: 'desktop',
-  },
-];
+/** Empty since 16 Nov 2026 (the six business concepts were removed); the section hides while empty. */
+export const businessSiteConcepts: PortfolioConcept[] = [];

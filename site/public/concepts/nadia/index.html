@@ -1,0 +1,912 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nadia Kerr, data analyst (concept portfolio)</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="description" content="Concept portfolio for Nadia Kerr, data analyst based in Leeds.">
+<style>
+@font-face{font-family:"Unbounded";src:url(../fonts/unbounded-latin-800-normal.woff2) format("woff2");font-weight:800;font-display:swap}
+@font-face{font-family:"Unbounded";src:url(../fonts/unbounded-latin-900-normal.woff2) format("woff2");font-weight:900;font-display:swap}
+@font-face{font-family:"Archivo";src:url(../fonts/archivo-latin-400-normal.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Archivo";src:url(../fonts/archivo-latin-700-normal.woff2) format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:"IBM Plex Mono";src:url(../fonts/ibm-plex-mono-latin-500-normal.woff2) format("woff2");font-weight:500;font-display:swap}
+</style>
+<style>
+:root{
+  --paper:#F4F5F2;--ink:#111418;--ink2:#1B2128;--blue:#2D5BFF;--mint:#5FE3B4;--grey:#565c63;--track:#E1E4DE;--bg:#E4E7E1;
+  --gap:10px;
+  --grid-fine:linear-gradient(rgba(17,20,24,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(17,20,24,.07) 1px,transparent 1px);
+  --grid-big:linear-gradient(rgba(17,20,24,.13) 1px,transparent 1px),linear-gradient(90deg,rgba(17,20,24,.13) 1px,transparent 1px);
+}
+*,*::before,*::after{box-sizing:border-box}
+h1,h2,h3,p,dl,dd,dt,ul,ol,figure,body{margin:0;padding:0}
+ul,ol{list-style:none}
+html{scroll-padding-top:84px;-webkit-text-size-adjust:100%;background:var(--bg)}
+body{background:var(--bg);background-image:var(--grid-fine),var(--grid-big);background-size:20px 20px,100px 100px;color:var(--ink);font:400 16px/1.55 "Archivo",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+.dark :focus-visible,.blue :focus-visible,.nav :focus-visible{outline-color:var(--mint)}
+.d{font-family:"Unbounded","Archivo",sans-serif;font-weight:800;text-transform:uppercase;line-height:.98;letter-spacing:-.02em}
+.m{font:500 11px/1.4 "IBM Plex Mono",monospace;text-transform:uppercase;letter-spacing:.08em}
+.wrap{max-width:1400px;margin:0 auto;padding:0 max(var(--gap),env(safe-area-inset-left,0px));overflow-x:clip}
+.slide{background:var(--paper);background-image:var(--grid-fine),var(--grid-big);background-size:20px 20px,100px 100px;background-position:-1px -1px;position:relative;overflow:hidden;border:1.5px solid var(--ink)}
+.slide::before,.slide::after{content:"";position:absolute;pointer-events:none;z-index:2;opacity:.55}
+.slide::before{left:0;right:0;top:0;height:7px;background:repeating-linear-gradient(90deg,currentColor 0 1px,transparent 1px 20px)}
+.slide::after{top:0;bottom:0;left:0;width:7px;background:repeating-linear-gradient(0deg,currentColor 0 1px,transparent 1px 20px)}
+.dark{background-color:var(--ink);background-image:linear-gradient(rgba(255,255,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px);background-size:20px 20px;color:var(--paper)}
+.blue{background-color:var(--blue);background-image:linear-gradient(rgba(255,255,255,.14) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.14) 1px,transparent 1px);background-size:20px 20px;color:#fff}
+.blue .m,.blue p,.blue li,.blue small{color:#fff}
+section,div[id]{scroll-margin-top:84px}
+.g{width:44px;height:18px;vertical-align:-3px;margin-right:8px;color:currentColor}
+.g.mint{color:var(--mint)}
+.pad{padding:clamp(18px,2.4vw,34px)}
+.h2{font-size:clamp(28px,3.5vw,50px)}
+.h2.big{font-size:clamp(32px,5.2vw,76px)}
+.idx-head{display:flex;justify-content:space-between;align-items:flex-end;gap:12px}
+.idx-head .m{text-align:right}
+.frame{position:relative;overflow:hidden}
+.frame img{position:absolute;left:0;top:-8%;width:100%;height:116%;object-fit:cover;filter:grayscale(1) contrast(1.1)}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:60;background:var(--ink);color:var(--paper);border-bottom:1px solid #333}
+.nav .in{max-width:1400px;margin:0 auto;padding:0 var(--gap);display:flex;align-items:center;gap:20px;height:54px}
+.nav .logo{font:800 17px "Unbounded";text-decoration:none;text-transform:uppercase;letter-spacing:-.03em}
+.nav .logo i{color:var(--mint);font-style:normal}
+.tag{align-self:center;background:var(--mint);color:var(--ink);padding:5px 9px;font:500 10px "IBM Plex Mono",monospace;text-transform:uppercase;letter-spacing:.1em}
+.nav ul{display:flex;gap:2px;margin-left:auto}
+.nav ul a{display:block;padding:8px 10px;text-decoration:none;font:500 11px "IBM Plex Mono",monospace;text-transform:uppercase;letter-spacing:.08em;color:#cfd3d8}
+.nav ul a.hot,.nav ul a.act{background:var(--mint);color:var(--ink)}
+.nav .cta{background:var(--blue);color:#fff;padding:9px 14px;text-decoration:none;font:500 11px "IBM Plex Mono",monospace;text-transform:uppercase;letter-spacing:.08em;border:1px solid var(--blue)}
+.nav .cta.hot{background:#fff;color:var(--blue)}
+.prog{position:absolute;left:0;right:0;bottom:-1px;height:3px;background:var(--mint);transform:scaleX(0);transform-origin:0 50%}
+
+/* spreadsheet column header: also the section progress indicator */
+.cols{position:sticky;top:54px;z-index:40;display:grid;grid-template-columns:repeat(12,1fr);margin-top:var(--gap);border:1.5px solid var(--ink);background:var(--ink);color:var(--paper)}
+.cols span{font:500 10px "IBM Plex Mono",monospace;letter-spacing:.1em;padding:4px 0;text-align:center;border-left:1px solid #3a3f46}
+.cols span:first-child{border-left:0}
+.cols span.on{background:var(--mint);color:var(--ink)}
+
+/* cover */
+.cover{margin-top:6px}
+.cover>*{position:relative;z-index:1}
+.cover>.sel,.cover>.hl-c,.cover>.hl-r,.cover>.dimmer{position:absolute}
+.hl-c,.hl-r{pointer-events:none;background:rgba(45,91,255,.07);z-index:0;opacity:0}
+.hl-c{top:0;bottom:0;width:20px;left:0}.hl-r{left:0;right:0;height:20px;top:0}
+.sel{left:0;top:0;width:20px;height:20px;border:2px solid var(--blue);background:rgba(95,227,180,.55);z-index:3;pointer-events:none;opacity:0}
+.sel b{position:absolute;left:-2px;bottom:100%;margin-bottom:2px;background:var(--blue);color:#fff;padding:1px 6px;font:500 10px/1.5 "IBM Plex Mono",monospace;letter-spacing:.08em;white-space:nowrap}
+.dimmer{inset:0;background:var(--ink);opacity:0;z-index:5;pointer-events:none}
+.cover-top{display:grid;grid-template-columns:auto 1fr auto;border-bottom:1.5px solid var(--ink);align-items:stretch}
+.barcode{width:96px;margin:14px 0 14px 16px;height:42px;background:repeating-linear-gradient(90deg,#111418 0 2px,transparent 2px 4px,#111418 4px 5px,transparent 5px 9px,#111418 9px 12px,transparent 12px 14px,#111418 14px 15px,transparent 15px 18px)}
+.cover-top .prep{padding:14px 16px;align-self:center}
+.cover-top .prep b{display:block;font:700 12px "Archivo";text-transform:uppercase}
+.cover-top .yr{align-self:center;padding:14px 20px;font-size:24px}
+.cover-spark{width:min(30vw,420px);border-left:1.5px solid var(--ink);background:var(--mint);display:flex;align-items:flex-end;padding:10px 14px;gap:12px;color:var(--ink)}
+.cover-spark svg{flex:1;height:70px}
+.cover-spark .m{font-size:10px;white-space:nowrap;align-self:flex-start}
+.cover-body{padding:clamp(18px,3vw,44px) clamp(16px,3vw,44px) clamp(22px,3vw,40px);display:grid;gap:12px}
+.mark{font-weight:900;font-size:clamp(50px,min(19.2vw,23.5vh),272px);line-height:.92;letter-spacing:-.04em;margin-left:-.03em}
+.mark>span{display:block;clip-path:inset(0 -8% 0 -8%)}
+.mark .dot{display:inline-block;width:.17em;height:.17em;background:var(--blue);margin-right:.05em;vertical-align:baseline}
+.mark .hy{color:var(--blue)}
+.cover-row{display:flex;gap:clamp(14px,3vw,48px);align-items:flex-end;flex-wrap:wrap;margin-top:6px}
+.cover-name{font-size:clamp(22px,3.8vw,56px);line-height:.95}
+.cover-name sup{font-size:.28em;vertical-align:top}
+.cover-tag{font-size:clamp(15px,2.2vw,32px);line-height:1.02}
+.cover-meta{max-width:330px;margin-left:auto;font-size:14px}
+.cover-meta .m{display:block;margin-bottom:6px}
+
+/* everything after the cover slides over it */
+.rest{position:relative;z-index:3;background-color:var(--bg);background-image:var(--grid-fine),var(--grid-big);background-size:20px 20px,100px 100px;padding-top:var(--gap)}
+.mosaic{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--gap)}
+.c-index{grid-column:span 5}.c-about{grid-column:span 7}
+
+/* index */
+.th{display:grid;background:var(--ink);color:var(--paper);font:500 10px "IBM Plex Mono",monospace;text-transform:uppercase;letter-spacing:.1em}
+.th span{padding:6px 10px;border-left:1px solid #3a3f46}.th span:first-child{border-left:0}
+.idx-list{margin:18px 0 0;border:1.5px solid var(--ink)}
+.idx-list .th{grid-template-columns:54px 1fr 70px}
+.idx-list li a{display:grid;grid-template-columns:54px 1fr 70px;background:var(--blue);color:#fff;border-top:1px solid #fff;text-decoration:none;font:700 13px "Archivo";text-transform:uppercase;letter-spacing:.02em;align-items:center}
+.idx-list li a>*{padding:9px 10px}
+.idx-list li a .m{font-size:11px;background:rgba(0,0,0,.2);align-self:stretch;display:flex;align-items:center}
+.idx-list li a svg{width:46px;height:16px;padding:0}
+.idx-list li a.hot{background:var(--mint);color:var(--ink)}
+.sample{font:500 10px "IBM Plex Mono";letter-spacing:.1em;text-transform:uppercase;color:var(--grey);margin-top:10px;display:block}
+
+/* about */
+.about{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);height:100%}
+.about .frame{min-height:420px}
+.about .txt{padding:clamp(18px,2.4vw,32px);display:flex;flex-direction:column;gap:16px}
+.about .who b{display:block;font:700 15px "Archivo";text-transform:uppercase}
+.about p{font-size:14.5px;max-width:46ch}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);margin-top:auto;border:1.5px solid var(--ink);background:var(--paper)}
+.facts div{padding:12px 10px}
+.facts div+div{border-left:1px solid var(--ink)}
+.facts .d{font-size:clamp(22px,2.6vw,36px);display:block;margin-bottom:6px}
+.facts .m{font-size:10px;color:var(--grey)}
+.facts .hd{background:var(--mint);color:var(--ink);padding:3px 8px;font-size:10px;display:block;margin-bottom:8px}
+.facts .d{margin-top:0}
+
+/* bands: scrubbed moving type */
+.bands{margin-top:var(--gap);background:var(--ink);border:1.5px solid var(--ink);overflow:hidden;padding:clamp(10px,1.6vw,22px) 0}
+.band{display:flex;white-space:nowrap;width:max-content;font:900 clamp(40px,9vw,130px)/1.05 "Unbounded",sans-serif;text-transform:uppercase;letter-spacing:-.04em;color:var(--paper)}
+.band span{padding-right:.5em}
+.band.b1 span:nth-child(3n){color:var(--mint)}
+.band.b2{color:transparent;-webkit-text-stroke:2px var(--paper)}
+.band.b2 span:nth-child(2n){color:var(--blue);-webkit-text-stroke:0}
+
+/* how: stacked cards */
+.how{margin-top:var(--gap);display:grid;grid-template-columns:clamp(200px,22vw,300px) minmax(0,1fr);overflow:clip}
+.how .frame{min-height:320px;border-right:1.5px solid var(--paper)}
+.how .frame span{position:absolute;left:0;bottom:0;z-index:3;background:var(--mint);color:var(--ink);padding:5px 9px}
+.how .body{padding:clamp(18px,2.4vw,34px)}
+.how-head{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap}
+.how-head h2{font-size:clamp(34px,5.6vw,84px)}
+.how-head .m{color:#c3c8ce;text-align:right}
+.cards{margin-top:clamp(20px,2.6vw,34px)}
+.card{position:relative;padding:22px 24px 24px;border:1.5px solid var(--paper);margin-bottom:16px;min-height:250px;display:grid;align-content:start;gap:8px;transform-origin:50% 0}
+.card .n{font:500 12px "IBM Plex Mono";letter-spacing:.08em;display:flex;justify-content:space-between}
+.card h3{font:800 clamp(24px,3vw,44px)/1 "Unbounded";letter-spacing:-.03em;text-transform:uppercase}
+.card p{font-size:14.5px;max-width:52ch}
+.card .tool{justify-self:start;margin-top:8px;padding:4px 8px;border:1.5px solid currentColor}
+.c1{background:var(--paper);color:var(--ink)}
+.c2{background:var(--mint);color:var(--ink)}
+.c3{background:var(--blue);color:#fff}
+.c4{background:var(--ink2);color:var(--paper)}
+.c4 .tool,.c4 .n{color:var(--mint)}
+.card.hot{outline:3px solid var(--mint);outline-offset:-3px}
+.c2.hot{outline-color:var(--ink)}
+.s-on .how-ph{position:sticky;top:96px;height:calc(100vh - 116px);align-self:start}
+.s-on .card{position:sticky;top:calc(96px + var(--i) * 16px)}
+.s-on .card{min-height:min(52vh,340px)}
+
+/* stack donut */
+.stack{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--gap);margin-top:var(--gap)}
+.rings{display:grid;grid-template-columns:1.1fr 1fr;align-items:center;gap:clamp(12px,3vw,40px);margin-top:22px}
+.rings svg{width:100%;height:auto;display:block}
+.rings li{padding:12px 0 12px 16px;border-top:1px solid var(--ink);position:relative}
+.rings li:last-child{border-bottom:1px solid var(--ink)}
+.rings li::before{content:"";position:absolute;left:0;top:16px;width:9px;height:9px;background:var(--k)}
+.rings li b{display:block;font:800 17px/1 "Unbounded";letter-spacing:-.025em;text-transform:uppercase}
+.rings li span{font-size:13.5px;display:block;margin-top:4px;color:#2b3036}
+.rings li .m{color:var(--grey);font-size:10px;margin:0 0 4px}
+.rings li.hot{background:var(--mint)}
+.rg{transition:opacity .25s}
+.ringsvg[data-on] .rg{opacity:.22}
+.ringsvg[data-on="1"] .r1,.ringsvg[data-on="2"] .r2,.ringsvg[data-on="3"] .r3,.ringsvg[data-on="4"] .r4{opacity:1}
+.comp ul{margin-top:18px;border:1.5px solid var(--ink);background:var(--paper)}
+.comp li.th{grid-template-columns:46px 1fr;font:500 10px "IBM Plex Mono",monospace;background:var(--ink);color:var(--paper)}
+.comp li.th span{padding:6px 10px}
+.comp li{display:grid;grid-template-columns:46px 1fr;border-top:1px solid var(--ink);font-size:14.5px;align-items:stretch}
+.comp li:first-child{border-top:0}
+.comp li .m{background:var(--mint);color:var(--ink);padding:16px 10px;border-right:1px solid var(--ink)}
+.comp li span:last-child{padding:15px 14px}
+.comp li b{font-weight:700}
+
+/* experience: horizontal pin on wide screens */
+.exp{margin-top:var(--gap)}
+.exp-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:22px}
+.exp .bar{display:none;height:4px;background:var(--track);margin-bottom:14px}
+.exp .bar i{display:block;height:100%;background:var(--blue);transform:scaleX(0);transform-origin:0 50%}
+.h-on .bar{display:block}
+.roles{border:1.5px solid var(--ink);background:var(--paper)}
+.roles .th{grid-template-columns:190px 1.1fr 1.6fr}
+.role{display:grid;grid-template-columns:190px 1.1fr 1.6fr;border-top:1px solid var(--ink);align-items:stretch}
+.role>*{padding:20px clamp(12px,1.6vw,22px)}
+.role>*+*{border-left:1px solid var(--ink)}
+.role .yrs{font:800 clamp(22px,2.4vw,34px)/.95 "Unbounded";letter-spacing:-.03em}
+.role .yrs small{display:block;font:500 11px "IBM Plex Mono";letter-spacing:.08em;margin-top:8px;text-transform:uppercase;color:var(--grey)}
+.role h3{font:800 clamp(16px,1.7vw,24px)/1.02 "Unbounded";letter-spacing:-.025em;text-transform:uppercase}
+.role h3+p{font:500 11px "IBM Plex Mono";text-transform:uppercase;letter-spacing:.08em;margin-top:8px;color:var(--grey)}
+.role ul{font-size:14.5px}
+.role li{padding:5px 0 5px 20px;position:relative}
+.role li::before{content:"";position:absolute;left:0;top:13px;width:9px;height:9px;background:var(--ink)}
+.role.cur{background:var(--blue);color:#fff}
+.role.cur>*+*{border-color:rgba(255,255,255,.7)}
+.role.cur .yrs small,.role.cur h3+p{color:#fff}
+.role.cur li::before{background:var(--mint)}
+.exp.h-on{min-height:calc(100vh - 100px);display:flex;flex-direction:column;justify-content:center}
+.h-on .roles{border:0;background:none;overflow:visible}
+.h-on .roles .th{display:none}
+.h-on .track{display:flex;gap:16px;width:max-content;will-change:transform}
+.h-on .role{flex:0 0 min(70vw,760px);grid-template-columns:1fr;border:1.5px solid var(--ink);background:var(--paper);min-height:340px;grid-template-rows:auto auto 1fr}
+.h-on .role>*+*{border-left:0;border-top:1px solid var(--ink)}
+.h-on .role.cur{background:var(--blue)}
+.h-on .role.cur>*+*{border-top-color:rgba(255,255,255,.7)}
+.h-on .role .yrs{font-size:clamp(34px,4vw,60px)}
+.h-on .role.hot{outline:3px solid var(--mint);outline-offset:-3px}
+.h-on .role.cur.hot{outline-color:#fff}
+.h-on .clipx{overflow:hidden}
+
+/* find */
+.find{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);margin-top:var(--gap);gap:var(--gap)}
+.find-l{display:grid;grid-template-rows:auto auto}
+.find-l .art{aspect-ratio:5/3.7;border-bottom:1.5px solid var(--ink)}
+.find-l .art svg{position:absolute;left:14px;bottom:14px;width:46%;height:auto;z-index:1;background:var(--paper);border:1.5px solid var(--ink)}
+.find-l .ttl{padding:20px 22px;text-align:right}
+.find-l .ttl .h2{font-size:clamp(30px,4.4vw,62px);line-height:.95}
+.find-r{padding:clamp(18px,2.4vw,34px);display:flex;flex-direction:column}
+.find-r .lead{font-size:15px;max-width:44ch;margin-top:14px}
+.find-r .items{display:grid;grid-template-columns:repeat(3,1fr);margin-top:auto;border:1.5px solid #fff}
+.find-r .items .th{grid-column:1/-1;grid-template-columns:repeat(3,1fr);background:var(--mint);color:var(--ink)}
+.find-r .items .th span{border-color:rgba(17,20,24,.25)}
+.find-r .items article{padding:14px;border-top:1px solid #fff;border-left:1px solid #fff}
+.find-r .items .th+article{border-left:0}
+.find-r .n{font:500 12px "IBM Plex Mono";letter-spacing:.08em}
+.find-r h3{font:800 clamp(13px,1.2vw,17px)/1.05 "Unbounded";letter-spacing:-.02em;text-transform:uppercase;margin:6px 0 10px}
+.find-r p{font-size:13px;line-height:1.5}
+
+/* skills */
+.skills{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--gap);margin-top:var(--gap)}
+.sk{grid-column:span 7}.sk-r{grid-column:span 5}
+.tbl{width:100%;border-collapse:collapse;margin-top:18px;border:1.5px solid var(--ink);background:var(--paper)}
+.tbl th{font:500 10px "IBM Plex Mono";text-align:left;text-transform:uppercase;letter-spacing:.1em;padding:7px 10px;background:var(--ink);color:var(--paper)}
+.tbl td{padding:11px 10px;border-top:1px solid var(--ink);font-size:14px;vertical-align:middle}
+.tbl td+td{border-left:1px solid rgba(17,20,24,.25)}
+.tbl td:first-child{font:700 13px "Archivo";text-transform:uppercase}
+.tbl td:first-child .m{color:var(--grey);margin-right:8px;font-size:10px}
+.dots{display:inline-flex;gap:3px;align-items:flex-end}
+.dots i{width:12px;height:14px;border:1.5px solid var(--ink);display:block;transform-origin:50% 100%}
+.dots i.on{background:var(--mint)}
+.dots i:nth-child(1){height:8px}.dots i:nth-child(2){height:10px}.dots i:nth-child(3){height:12px}.dots i:nth-child(4){height:14px}.dots i:nth-child(5){height:16px}
+.note{margin-top:10px;color:var(--grey)}
+.lang{margin-top:22px;border:1.5px solid #fff}
+.lang li{display:flex;justify-content:space-between;border-top:1px solid #fff;padding:10px 12px;font-size:14.5px}
+.lang li:first-child{border-top:0}
+.tools{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
+.chip{border:1.5px solid #fff;padding:5px 10px;font:500 11px "IBM Plex Mono";text-transform:uppercase;letter-spacing:.06em;color:#fff}
+.chip.f{background:var(--mint);color:var(--ink);border-color:var(--mint)}
+
+/* audience */
+.aud{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.4fr);margin-top:var(--gap)}
+.aud .frame{min-height:420px}
+.aud .frame span{position:absolute;left:0;bottom:0;background:var(--ink);color:var(--paper);padding:6px 10px;z-index:2}
+.aud .body{padding:clamp(18px,2.6vw,38px);display:flex;flex-direction:column;gap:18px}
+.aud .sub{font:800 clamp(15px,1.5vw,21px)/1.05 "Unbounded";letter-spacing:-.02em;text-transform:uppercase;max-width:24ch}
+.aud h2.big{font-size:clamp(30px,4.2vw,60px)}
+.prof{display:grid;grid-template-columns:150px 1fr;margin-top:auto;border:1.5px solid var(--ink)}
+.prof dt,.prof dd{padding:12px 14px;border-top:1px solid var(--ink)}
+.prof dt:first-of-type,.prof dd:first-of-type{border-top:0}
+.prof dt{background:var(--mint);font:500 11px "IBM Plex Mono";text-transform:uppercase;letter-spacing:.08em}
+.prof dd{border-top-color:#3a3f46;background:var(--ink);color:var(--paper);text-align:right;font:500 12px "IBM Plex Mono";text-transform:uppercase;letter-spacing:.06em}
+.prof dd:first-of-type{border-top:0}
+
+/* manifesto */
+.mani{margin-top:var(--gap);display:grid;grid-template-columns:minmax(0,.55fr) minmax(0,1.45fr)}
+.mani .l{padding:clamp(18px,2.4vw,34px);display:flex;flex-direction:column;justify-content:flex-end}
+.mani .r{margin:clamp(12px,1.6vw,24px) clamp(12px,1.6vw,24px) clamp(12px,1.6vw,24px) 0;padding:clamp(18px,2.4vw,32px);display:grid;grid-template-columns:1.1fr repeat(3,1fr);gap:clamp(12px,1.6vw,24px);border:1.5px solid var(--ink)}
+.mani .shout{font:800 clamp(13px,1.45vw,20px)/1.15 "Unbounded";letter-spacing:-.02em;text-transform:uppercase}
+.mani article{border-top:1px solid #fff;padding-top:10px}
+.mani article .n{font:500 12px "IBM Plex Mono";letter-spacing:.08em}
+.mani article h3{font:800 clamp(13px,1.2vw,17px)/1.05 "Unbounded";letter-spacing:-.02em;text-transform:uppercase;margin:6px 0 10px}
+.mani article p{font-size:12.5px;line-height:1.5}
+.mani .h2{font-size:clamp(30px,4.4vw,64px);margin-top:20px}
+
+/* edu */
+.edu{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--gap);margin-top:var(--gap)}
+.e1{grid-column:span 7}.e2{grid-column:span 5;display:flex;flex-direction:column}
+.edu .rows{margin-top:18px;border:1.5px solid var(--ink);background:var(--paper)}
+.edu .rows .th{grid-template-columns:110px 1fr}
+.edu .row{display:grid;grid-template-columns:110px 1fr;border-top:1px solid var(--ink);align-items:stretch}
+.edu .row>*{padding:14px}
+.edu .row .d{font-size:clamp(18px,2vw,26px);background:var(--mint);display:flex;align-items:center}
+.edu .row h3{font:700 15px "Archivo";text-transform:uppercase}
+.edu .row p{font-size:13.5px;color:#2b3036;margin-top:2px}
+.pct{display:grid;grid-template-columns:1fr 1fr;margin-top:22px;border:1.5px solid #fff}
+.pct div{padding:14px}
+.pct div:nth-child(even){border-left:1px solid #fff}.pct div:nth-child(n+3){border-top:1px solid #fff}
+.pct .d{font-size:clamp(26px,3.4vw,48px);display:block}
+.e2 .bc{margin-top:auto;display:flex;justify-content:space-between;align-items:flex-end;padding-top:24px}
+.e2 .bc svg{width:55%;height:70px;color:var(--mint)}
+
+/* contact */
+.contact{margin-top:var(--gap);display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr)}
+.contact .l{padding:clamp(20px,3vw,46px);border-right:1px solid #4a5058}
+.contact .big{font-size:clamp(34px,8vw,116px);line-height:.95;letter-spacing:-.04em;font-weight:900;margin-top:18px}
+.contact .big em{font-style:normal;color:var(--mint)}
+.contact .r{padding:clamp(20px,3vw,46px);display:flex;flex-direction:column}
+.contact .r a.row{display:grid;grid-template-columns:70px 1fr auto;padding:16px 0;border-top:1px solid #5a6068;text-decoration:none;align-items:baseline;gap:10px}
+.contact .r a.row:last-of-type{border-bottom:1px solid #5a6068}
+.contact .r a.row b{font:800 clamp(12px,1.35vw,18px) "Unbounded";letter-spacing:-.02em;text-transform:uppercase;word-break:break-word}
+.contact .r a.row.hot{background:var(--mint);color:var(--ink);padding-left:10px;padding-right:10px}
+.contact .r .m{color:#c3c8ce}
+.contact .r a.row.hot .m{color:var(--ink)}
+.btn{display:inline-block;background:var(--blue);color:#fff;padding:16px 22px;font:800 13px "Unbounded";letter-spacing:-.02em;text-transform:uppercase;text-decoration:none;border:2px solid #fff;margin-top:28px;align-self:flex-start}
+.btn.hot{background:#fff;color:var(--blue)}
+.btn.arrow::after{content:" →"}
+footer{padding:22px 0 40px;color:#3b4047}
+footer .in{max-width:1400px;margin:0 auto;padding:0 var(--gap);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+@media (max-width:1100px){
+  .nav ul{display:none}.nav .cta{margin-left:auto}
+  .c-index,.c-about{grid-column:1/-1}
+  .how{grid-template-columns:1fr}.how .frame{min-height:300px;border-right:0}
+  .stack,.find{grid-template-columns:1fr}
+  .sk,.sk-r,.e1,.e2{grid-column:1/-1}
+  .role,.roles .th{grid-template-columns:130px 1fr}
+  .roles .th span:nth-child(3){display:none}
+  .role ul{grid-column:1/-1;border-left:0!important;border-top:1px solid rgba(17,20,24,.4)}
+  .mani{grid-template-columns:1fr}
+  .mani .r{margin:0 clamp(12px,1.6vw,24px) clamp(12px,1.6vw,24px)}
+  .contact{grid-template-columns:1fr}.contact .l{border-right:0;border-bottom:1px solid #4a5058}
+}
+@media (max-width:720px){
+  body{font-size:15px}
+  .cols span{font-size:9px;letter-spacing:0}
+  .cover-top{grid-template-columns:auto 1fr}.cover-top .yr,.cover-spark{display:none}
+  .barcode{width:64px}.cover-meta{margin-left:0}
+  .mark{font-size:20.5vw}
+  .about{grid-template-columns:1fr}.about .frame{min-height:340px;order:-1}
+  .rings{grid-template-columns:1fr}
+  .role,.roles .th{grid-template-columns:1fr}.roles .th span:nth-child(n+2){display:none}
+  .role>*+*{border-left:0}
+  .role .yrs{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}.role .yrs small{margin:0}
+  .find-r .items{grid-template-columns:1fr}.find-r .items .th{display:none}
+  .find-r .items article{border-left:0}
+  .tbl .hide-s{display:none}
+  .aud{grid-template-columns:1fr}.aud .frame{min-height:340px}
+  .mani .r{grid-template-columns:1fr}
+  .edu .row{grid-template-columns:1fr}.edu .rows .th{display:none}
+  .prof{grid-template-columns:110px 1fr}
+  .contact .r a.row{grid-template-columns:1fr auto}.contact .r a.row .m:first-child{grid-column:1/-1}
+  .card{min-height:0}
+}
+@media (prefers-reduced-motion:no-preference){
+  .mark .hy{animation:blink 1.6s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+/* HU/MAN concept badge */
+.badge{position:fixed;z-index:90;left:max(12px, env(safe-area-inset-left, 0px));bottom:max(12px, env(safe-area-inset-bottom, 0px));display:inline-flex;align-items:center;gap:8px;background:#111418;color:#F4F5F2;border-radius:99px;padding:8px 14px 8px 11px;font-size:12px;font-weight:600;line-height:1.2;box-shadow:0 0 0 1.5px #F4F5F2,0 10px 24px -8px rgba(17,20,24,.5);max-width:calc(100vw - 24px);pointer-events:none}
+.badge i{width:9px;height:9px;border-radius:50%;background:#5FE3B4;flex:none}
+.badge{display:flex;flex-wrap:wrap;align-items:center;gap:2px 12px;pointer-events:auto;border-radius:18px;line-height:1.3}
+.badge a{color:inherit;font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.badge a:focus-visible{outline:2px solid currentColor;outline-offset:3px;border-radius:3px}
+@media (max-width:640px){.badge{position:static;margin:24px max(16px,env(safe-area-inset-left,0px)) max(16px,env(safe-area-inset-bottom,0px));max-width:none;justify-content:center;text-align:center;border-radius:14px}footer{padding-bottom:26px!important}}
+
+.badge-made{display:inline-flex;align-items:center;gap:6px}
+.badge-logo{display:block;height:11px;width:auto;flex:none}
+.badge-logo path{animation:badge-logo-fade 14s linear infinite}
+@keyframes badge-logo-fade{0%{fill:#cea4ee}12.5%{fill:#93aee0}25%{fill:#4a9bb0}37.5%{fill:#edd1a8}50%{fill:#f8cea2}62.5%{fill:#e79569}75%{fill:#e85e8f}87.5%{fill:#db92db}100%{fill:#cea4ee}}
+@media (prefers-reduced-motion: reduce){.badge-logo path{animation-duration:14s!important;animation-iteration-count:infinite!important}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="sp1" viewBox="0 0 44 18"><path d="M1 14 L9 9 L16 12 L24 5 L31 8 L43 2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="43" cy="2" r="2" fill="currentColor"/></symbol>
+  <symbol id="sp2" viewBox="0 0 44 18"><path d="M2 18V11M10 18V6M18 18V9M26 18V3M34 18V8M42 18V12" stroke="currentColor" stroke-width="5" fill="none"/></symbol>
+  <symbol id="sp3" viewBox="0 0 44 18"><path d="M1 16H12V10H22V13H32V4H43" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+</svg>
+
+<header class="nav" id="nav">
+  <div class="in">
+    <a class="logo" href="#top">.NK<i>/</i>26</a><span class="tag">Concept</span>
+    <ul>
+      <li><a href="#index" data-hot>Index</a></li>
+      <li><a href="#about" data-hot>About</a></li>
+      <li><a href="#how" data-hot>How I work</a></li>
+      <li><a href="#experience" data-hot>Experience</a></li>
+      <li><a href="#skills" data-hot>Skills</a></li>
+      <li><a href="#manifesto" data-hot>Principles</a></li>
+      <li><a href="#education" data-hot>Education</a></li>
+    </ul>
+    <a class="cta" href="#contact" data-hot>Get in touch</a>
+  </div>
+  <div class="prog" id="prog" aria-hidden="true"></div>
+</header>
+
+<main class="wrap" id="top">
+
+<div class="cols" id="cols" aria-hidden="true"><span>A</span><span>B</span><span>C</span><span>D</span><span>E</span><span>F</span><span>G</span><span>H</span><span>I</span><span>J</span><span>K</span><span>L</span></div>
+
+<section class="slide cover" id="cover" aria-label="Cover">
+  <div class="hl-c" aria-hidden="true"></div><div class="hl-r" aria-hidden="true"></div>
+  <div class="sel" id="sel" aria-hidden="true"><b id="selref">A1</b></div>
+  <div class="cover-top">
+    <div class="barcode" role="presentation"></div>
+    <div class="prep m"><span>Prepared by:</span><b>Nadia Kerr, data analyst</b><span>Leeds, West Yorkshire</span></div>
+    <div style="display:flex">
+      <div class="yr d">&copy;2026/27</div>
+      <div class="cover-spark" role="img" aria-label="Decorative sample chart">
+        <span class="m">Sample data</span>
+        <svg viewBox="0 0 120 60" preserveAspectRatio="none"><g stroke="#111418" stroke-width=".6" opacity=".4"><path d="M0 15H120M0 30H120M0 45H120"/></g><path id="spline" d="M0 48 L18 38 L34 42 L52 24 L70 30 L88 14 L104 20 L120 6" fill="none" stroke="#111418" stroke-width="2.2"/><g fill="#111418" class="sbars"><rect x="8" y="50" width="8" height="10"/><rect x="40" y="46" width="8" height="14"/><rect x="76" y="40" width="8" height="20"/><rect x="108" y="36" width="8" height="24"/></g></svg>
+      </div>
+    </div>
+  </div>
+  <div class="cover-body">
+    <h1 class="mark d" aria-label="Analysis">
+      <span><i class="dot"></i>ANAL<span class="hy">-</span></span>
+      <span>YSIS</span>
+    </h1>
+    <div class="cover-row">
+      <div class="cover-name d">Nadia<br>Kerr<sup>&reg;</sup></div>
+      <div class="cover-tag d">Data an-<br>alyst for<br>teams that<br>decide.</div>
+      <p class="cover-meta"><span class="m">Open to new roles &middot; Leeds &amp; hybrid</span>I turn messy tables into clear answers, then explain them to the people who have to act on them. SQL, Python and Power BI, in that order.</p>
+    </div>
+  </div>
+  <div class="dimmer" id="dimmer" aria-hidden="true"></div>
+</section>
+
+<div class="rest" id="rest">
+
+<div class="mosaic">
+  <section class="slide c-index pad" id="index" aria-labelledby="idx-h">
+    <div class="idx-head">
+      <h2 class="h2 d" id="idx-h">Index</h2>
+      <span class="m"><svg class="g" aria-hidden="true"><use href="#sp2"/></svg>A1:J10</span>
+    </div>
+    <ol class="idx-list">
+      <li class="th" style="display:grid"><span>Cell</span><span>Section</span><span>Trend</span></li>
+      <li><a href="#about" data-hot><span class="m">A1</span><span>About</span><svg aria-hidden="true"><use href="#sp1"/></svg></a></li>
+      <li><a href="#how" data-hot><span class="m">B2</span><span>How I work</span><svg aria-hidden="true"><use href="#sp3"/></svg></a></li>
+      <li><a href="#stack" data-hot><span class="m">C3</span><span>The stack</span><svg aria-hidden="true"><use href="#sp2"/></svg></a></li>
+      <li><a href="#experience" data-hot><span class="m">D4</span><span>Experience</span><svg aria-hidden="true"><use href="#sp1"/></svg></a></li>
+      <li><a href="#findings" data-hot><span class="m">E5</span><span>Selected work</span><svg aria-hidden="true"><use href="#sp3"/></svg></a></li>
+      <li><a href="#skills" data-hot><span class="m">F6</span><span>Skills &amp; languages</span><svg aria-hidden="true"><use href="#sp2"/></svg></a></li>
+      <li><a href="#stakeholders" data-hot><span class="m">G7</span><span>Stakeholder profile</span><svg aria-hidden="true"><use href="#sp1"/></svg></a></li>
+      <li><a href="#manifesto" data-hot><span class="m">H8</span><span>Principles</span><svg aria-hidden="true"><use href="#sp3"/></svg></a></li>
+      <li><a href="#education" data-hot><span class="m">I9</span><span>Education</span><svg aria-hidden="true"><use href="#sp2"/></svg></a></li>
+      <li><a href="#contact" data-hot><span class="m">J10</span><span>Contact</span><svg aria-hidden="true"><use href="#sp1"/></svg></a></li>
+    </ol>
+    <span class="sample">Trend glyphs are decorative sample data</span>
+  </section>
+
+  <section class="slide c-about" id="about" aria-labelledby="about-h">
+    <div class="about">
+      <div class="frame" role="img" aria-label="Nadia Kerr, black and white portrait"><img src="img/nadia.webp" alt="" width="900" height="1200" data-px></div>
+      <div class="txt">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px">
+          <h2 class="h2 d" id="about-h">About</h2>
+          <span class="m"><svg class="g" aria-hidden="true"><use href="#sp1"/></svg>A1</span>
+        </div>
+        <div class="who"><span class="m">Nadia Kerr</span><b>Data analyst &middot; Leeds</b></div>
+        <p data-fill>I'm a data analyst who likes the unglamorous part first: finding out where a number really comes from. Most of my week is SQL and Python, cleaning and joining data so that a dashboard can be trusted by people who never see the query behind it.</p>
+        <p>I've worked in retail, housing and health-sector teams. I'm happiest when an analyst sits next to the people asking the questions, so the question gets sharper before any chart is drawn.</p>
+        <div class="facts">
+          <div><span class="hd m">A2</span><span class="d" data-count="4" data-pad="2">04</span><span class="m">steps in every piece of work</span></div>
+          <div><span class="hd m">B2</span><span class="d" data-count="3" data-pad="2">03</span><span class="m">teams since 2018</span></div>
+          <div><span class="hd m">C2</span><span class="d">LS</span><span class="m">based in Leeds</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="bands" aria-hidden="true">
+  <div class="band b1" data-band="-1"><span>SQL</span><span>Python</span><span>Power BI</span><span>DAX</span><span>SQL</span><span>Python</span><span>Power BI</span><span>DAX</span></div>
+  <div class="band b2" data-band="1"><span>Ask</span><span>Clean</span><span>Model</span><span>Explain</span><span>Ask</span><span>Clean</span><span>Model</span><span>Explain</span></div>
+</div>
+
+<section class="slide dark how" id="how" aria-labelledby="how-h">
+  <div class="frame how-ph" role="img" aria-label="Nadia drawing a diagram on a glass wall, black and white"><img src="img/nadia-3.webp" alt="" width="900" height="1200" data-px style="object-position:40% 20%"><span class="m">B2 &middot; Whiteboard</span></div>
+  <div class="body">
+    <div class="how-head">
+      <h2 class="d" id="how-h">.How I<br>work</h2>
+      <span class="m"><svg class="g mint" aria-hidden="true"><use href="#sp3"/></svg>B2 &mdash; Four steps, same order, every time</span>
+    </div>
+    <div class="cards">
+      <article class="card c1" style="--i:0" data-hot>
+        <span class="n"><span>01.</span><span>B3</span></span><h3>Ask</h3>
+        <p>Start with the decision, not the dataset. Who needs to choose what, by when, and what would change their mind? I write that down before touching a table.</p>
+        <span class="m tool">Workshop &middot; brief</span>
+      </article>
+      <article class="card c2" style="--i:1" data-hot>
+        <span class="n"><span>02.</span><span>C3</span></span><h3>Clean</h3>
+        <p>Trace every field back to its source. Fix duplicates, gaps and odd dates in SQL and Python, and keep a plain-English log of every choice made.</p>
+        <span class="m tool">SQL &middot; Python</span>
+      </article>
+      <article class="card c3" style="--i:2" data-hot>
+        <span class="n"><span>03.</span><span>D3</span></span><h3>Model</h3>
+        <p>Build the smallest model that answers the question. Test it against numbers the team already trusts, and say clearly where it is weak.</p>
+        <span class="m tool">Python &middot; DAX</span>
+      </article>
+      <article class="card c4" style="--i:3" data-hot>
+        <span class="n"><span>04.</span><span>E3</span></span><h3>Ex-<br>plain</h3>
+        <p>Turn it into one page a busy person can read in two minutes. A dashboard if it will be used again, a short note if it won't.</p>
+        <span class="m tool">Power BI &middot; write-up</span>
+      </article>
+    </div>
+  </div>
+</section>
+
+<div class="stack" id="stack">
+  <section class="slide pad" aria-labelledby="stack-h">
+    <div class="idx-head">
+      <h2 class="h2 d" id="stack-h">.The<br>stack</h2>
+      <span class="m"><svg class="g" aria-hidden="true"><use href="#sp2"/></svg>C3 &mdash; From raw data<br>outwards</span>
+    </div>
+    <div class="rings">
+      <svg class="ringsvg" id="ringsvg" viewBox="0 0 400 400" role="img" aria-label="Layered ring chart with four rings: SQL innermost, then Python, Power BI, and stakeholders outermost. Decorative sample data.">
+        <g stroke="#111418" stroke-width=".8" opacity=".35"><path d="M200 0V400M0 200H400"/></g>
+        <g fill="none" stroke-width="30" transform="rotate(-90 200 200)">
+          <g class="rg r1" data-hot data-ring="1"><circle cx="200" cy="200" r="170" stroke="#E1E4DE"/><circle class="arc" cx="200" cy="200" r="170" stroke="#2D5BFF" stroke-dasharray="688 1068" data-len="688" data-tot="1068"/></g>
+          <g class="rg r2" data-hot data-ring="2"><circle cx="200" cy="200" r="130" stroke="#E1E4DE"/><circle class="arc" cx="200" cy="200" r="130" stroke="#111418" stroke-dasharray="520 817" data-len="520" data-tot="817"/></g>
+          <g class="rg r3" data-hot data-ring="3"><circle cx="200" cy="200" r="90" stroke="#E1E4DE"/><circle class="arc" cx="200" cy="200" r="90" stroke="#5FE3B4" stroke-dasharray="340 566" data-len="340" data-tot="566"/></g>
+          <g class="rg r4" data-hot data-ring="4"><circle cx="200" cy="200" r="50" stroke="#E1E4DE"/><circle class="arc" cx="200" cy="200" r="50" stroke="#2D5BFF" stroke-dasharray="190 314" data-len="190" data-tot="314"/></g>
+        </g>
+        <g stroke="#111418" stroke-width="1.5"><path d="M200 15v10M200 55v10M200 95v10M200 135v10M395 200h-10M5 200h10M200 385v-10"/></g>
+        <g font-family="IBM Plex Mono,monospace" font-weight="500" font-size="13" text-anchor="start">
+          <text x="209" y="35" fill="#fff">D1</text><text x="209" y="75" fill="#fff">D2</text><text x="209" y="115" fill="#111418">D3</text><text x="209" y="155" fill="#fff">D4</text>
+        </g>
+        <text x="200" y="198" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" letter-spacing="1" fill="#565c63">SAMPLE</text>
+        <text x="200" y="212" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" letter-spacing="1" fill="#565c63">DATA</text>
+      </svg>
+      <ol>
+        <li style="--k:#2D5BFF" data-hot data-ring="1"><span class="m">D1 &middot; outermost</span><b>Stakeholders</b><span>The reason for all of it. Everything inside is built to be understood here.</span></li>
+        <li style="--k:#111418" data-hot data-ring="2"><span class="m">D2</span><b>Power BI</b><span>Models and dashboards that other people can open and trust.</span></li>
+        <li style="--k:#5FE3B4" data-hot data-ring="3"><span class="m">D3</span><b>Python</b><span>Cleaning, modelling and anything too fiddly for a query.</span></li>
+        <li style="--k:#2D5BFF" data-hot data-ring="4"><span class="m">D4 &middot; centre</span><b>SQL</b><span>Where the truth lives. Joins, windows and checks against source systems.</span></li>
+      </ol>
+    </div>
+    <span class="sample">Ring lengths are decorative, not measured</span>
+  </section>
+
+  <section class="slide pad comp" aria-labelledby="comp-h">
+    <div class="idx-head">
+      <h2 class="h2 d" id="comp-h">.Compe-<br>tencies</h2>
+      <span class="m"><svg class="g" aria-hidden="true"><use href="#sp3"/></svg>C4:C9 &mdash; What I'm trusted with</span>
+    </div>
+    <ul>
+      <li class="th"><span>Ref</span><span>Competency</span></li>
+      <li><span class="m">C4</span><span><b>Data cleaning and checking.</b> Reconciling sources, writing tests for data, documenting decisions.</span></li>
+      <li><span class="m">C5</span><span><b>Dashboard design.</b> Layouts that lead with the question, with plain labels and few colours.</span></li>
+      <li><span class="m">C6</span><span><b>Metric definitions.</b> Agreeing what a number means before it appears in a report.</span></li>
+      <li><span class="m">C7</span><span><b>Ad hoc analysis.</b> Quick, careful answers to one-off questions, with caveats stated.</span></li>
+      <li><span class="m">C8</span><span><b>Presenting to non-analysts.</b> Short briefings, written notes and walk-throughs.</span></li>
+      <li><span class="m">C9</span><span><b>Data protection habits.</b> Working with anonymised extracts and least-access permissions.</span></li>
+    </ul>
+  </section>
+</div>
+
+<section class="slide exp pad" id="experience" aria-labelledby="exp-h">
+  <div class="exp-head">
+    <h2 class="d h2 big" id="exp-h">Experience</h2>
+    <span class="m"><svg class="g" aria-hidden="true"><use href="#sp1"/></svg>D4 &mdash; Three roles, newest first</span>
+  </div>
+  <div class="bar" aria-hidden="true"><i id="expbar"></i></div>
+  <div class="clipx" id="clipx">
+  <div class="roles">
+    <div class="th" aria-hidden="true"><span>Years</span><span>Role &middot; employer</span><span>What I did</span></div>
+    <div class="track" id="track">
+    <article class="role cur" data-hot>
+      <div class="yrs">2023<small>to present &middot; Leeds</small></div>
+      <div><h3>Senior data analyst</h3><p>Calder Row Housing</p></div>
+      <ul>
+        <li>Own the reporting model for repairs and tenancy, built in SQL and Power BI.</li>
+        <li>Agree metric definitions with operations managers and write them into a shared glossary.</li>
+        <li>Review colleagues' queries and mentor two junior analysts.</li>
+        <li>Present the monthly performance pack to the leadership team.</li>
+      </ul>
+    </article>
+    <article class="role" data-hot>
+      <div class="yrs">2020<small>to 2023 &middot; Leeds</small></div>
+      <div><h3>Data analyst</h3><p>Halden &amp; Pryce Logistics</p></div>
+      <ul>
+        <li>Moved weekly spreadsheet reports into scheduled SQL and Python jobs.</li>
+        <li>Built route and depot dashboards used in daily planning meetings.</li>
+        <li>Documented source tables so new starters could find their way around.</li>
+      </ul>
+    </article>
+    <article class="role" data-hot>
+      <div class="yrs">2018<small>to 2020 &middot; Wakefield</small></div>
+      <div><h3>Junior analyst</h3><p>Fenwick Health Partners</p></div>
+      <ul>
+        <li>Prepared anonymised extracts for service planning teams.</li>
+        <li>Wrote and checked SQL queries under the guidance of senior analysts.</li>
+        <li>Produced fortnightly summary notes for non-technical managers.</li>
+      </ul>
+    </article>
+    </div>
+  </div>
+  </div>
+</section>
+
+<div class="find" id="findings">
+  <section class="slide find-l" aria-labelledby="find-h">
+    <div class="frame art" role="img" aria-label="Nadia at her two monitors, black and white photo, with a small sample chart card">
+      <img src="img/nadia-2.webp" alt="" width="900" height="1200" data-px style="object-position:50% 28%">
+      <svg viewBox="0 0 200 110" aria-hidden="true">
+        <rect width="200" height="16" fill="#111418"/><text x="8" y="11" font-family="IBM Plex Mono,monospace" font-size="8" fill="#5FE3B4" letter-spacing="1">E5 SAMPLE DATA</text>
+        <g stroke="#111418" stroke-width=".5" opacity=".3"><path d="M0 40H200M0 62H200M0 84H200"/></g>
+        <g fill="#2D5BFF"><rect x="14" y="70" width="22" height="30"/><rect x="46" y="52" width="22" height="48"/><rect x="78" y="62" width="22" height="38"/><rect x="110" y="36" width="22" height="64"/></g>
+        <path d="M14 66 L57 44 L89 54 L121 30 L162 24" fill="none" stroke="#111418" stroke-width="2"/>
+        <rect x="142" y="52" width="44" height="48" fill="#5FE3B4"/><path d="M148 90V80M158 90V70M168 90V76M178 90V62" stroke="#111418" stroke-width="6"/>
+      </svg>
+    </div>
+    <div class="ttl"><h2 class="h2 d" id="find-h">Selected<br>work.</h2><span class="m"><svg class="g" aria-hidden="true"><use href="#sp2"/></svg>E5 &mdash; Described plainly</span></div>
+  </section>
+  <section class="slide blue find-r" aria-label="Selected projects">
+    <span class="m">&copy;2026 &middot; Projects &amp; process</span>
+    <p class="lead">Three pieces of work I'm happy to talk through in an interview. Each is described by what was built and why, not by a headline number.</p>
+    <div class="items">
+      <div class="th" aria-hidden="true"><span>E6 Model</span><span>F6 Dashboard</span><span>G6 Glossary</span></div>
+      <article><span class="n">01.</span><h3>Repairs reporting model</h3><p>Replaced four spreadsheets with one Power BI model over a clean SQL layer, so that every team looked at the same repairs data.</p></article>
+      <article><span class="n">02.</span><h3>Depot planning dashboard</h3><p>Designed a one-screen daily view for depot managers, built after sitting in on their morning planning meeting for a week.</p></article>
+      <article><span class="n">03.</span><h3>Data glossary</h3><p>Wrote and maintained a shared list of metric definitions, with an owner and a source for each, so reports stopped disagreeing.</p></article>
+    </div>
+  </section>
+</div>
+
+<div class="skills" id="skills">
+  <section class="slide sk pad" aria-labelledby="sk-h">
+    <div class="idx-head"><h2 class="d h2" id="sk-h">.Skills</h2><span class="m"><svg class="g" aria-hidden="true"><use href="#sp2"/></svg>F6 &mdash; Self-rated, out of five</span></div>
+    <table class="tbl">
+      <thead><tr><th scope="col">Tool</th><th scope="col" class="hide-s">Used for</th><th scope="col">Self-rated</th></tr></thead>
+      <tbody>
+        <tr><td><span class="m">F7</span>SQL</td><td class="hide-s">Modelling, windows, checks</td><td><span class="dots" role="img" aria-label="5 out of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></td></tr>
+        <tr><td><span class="m">F8</span>Python</td><td class="hide-s">Cleaning, analysis, automation</td><td><span class="dots" role="img" aria-label="4 out of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></td></tr>
+        <tr><td><span class="m">F9</span>Power BI</td><td class="hide-s">Models, DAX, dashboards</td><td><span class="dots" role="img" aria-label="4 out of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></td></tr>
+        <tr><td><span class="m">F10</span>Excel</td><td class="hide-s">Quick analysis, hand-offs</td><td><span class="dots" role="img" aria-label="4 out of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></td></tr>
+        <tr><td><span class="m">F11</span>Git</td><td class="hide-s">Version control for queries</td><td><span class="dots" role="img" aria-label="3 out of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></td></tr>
+        <tr><td><span class="m">F12</span>Statistics</td><td class="hide-s">Testing, regression, sampling</td><td><span class="dots" role="img" aria-label="3 out of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></td></tr>
+      </tbody>
+    </table>
+    <p class="m note">Ratings are my own view, not a test result.</p>
+  </section>
+  <section class="slide blue sk-r pad" aria-labelledby="lang-h">
+    <div class="idx-head"><h2 class="d h2" id="lang-h" style="font-size:clamp(24px,2.8vw,40px)">.Lang-<br>uages</h2><span class="m">G6 &mdash; Spoken</span></div>
+    <ul class="lang">
+      <li><b>English</b><span class="m">Native</span></li>
+      <li><b>French</b><span class="m">Conversational</span></li>
+      <li><b>Urdu</b><span class="m">Basic</span></li>
+    </ul>
+    <div class="tools">
+      <span class="chip f">dbt basics</span><span class="chip">Pandas</span><span class="chip">Azure Data Studio</span><span class="chip">Jupyter</span><span class="chip">DAX</span><span class="chip">Power Query</span>
+    </div>
+    <p class="m note">Also used day to day</p>
+  </section>
+</div>
+
+<section class="slide aud" id="stakeholders" aria-labelledby="st-h">
+  <div class="frame" role="img" aria-label="Black and white portrait of a colleague in an operations role"><img src="img/nadia-team.webp" alt="" width="900" height="1200" data-px style="object-position:50% 15%"><span class="m">Colleague role: head of operations</span></div>
+  <div class="body">
+    <div class="idx-head"><h2 class="d h2 big" id="st-h">.Stake-<br>holder<br>profile</h2><span class="m"><svg class="g" aria-hidden="true"><use href="#sp1"/></svg>G7 &mdash; Who I report to</span></div>
+    <p class="sub">Operations leads and service managers.</p>
+    <p style="font-size:14.5px;max-width:58ch">A typical stakeholder is a manager with a target, not time to read a spreadsheet. Sample profile of the people I work for most often.</p>
+    <dl class="prof">
+      <dt>Role</dt><dd>Head of operations</dd>
+      <dt>Reports to</dt><dd>Director of services</dd>
+      <dt>Needs</dt><dd>Clear weekly view</dd>
+      <dt>Channel</dt><dd>Monthly pack &middot; chat</dd>
+      <dt>Rhythm</dt><dd>Weekly check-in</dd>
+      <dt>Goals</dt><dd>Fewer surprises</dd>
+    </dl>
+  </div>
+</section>
+
+<section class="slide mani" id="manifesto" aria-labelledby="mani-h">
+  <div class="l">
+    <span class="m"><svg class="g" aria-hidden="true"><use href="#sp3"/></svg>H8 &mdash; Principles</span>
+    <h2 class="d h2" id="mani-h">.Mani-<br>festo</h2>
+  </div>
+  <div class="r blue">
+    <p class="shout" data-fill>Ask the dull questions first. Show the working. Say what you don't know.</p>
+    <article><span class="n">H9.</span><h3>Definitions first</h3><p>If two people can read one number two ways, it isn't finished. Write the definition next to the chart.</p></article>
+    <article><span class="n">H10.</span><h3>Show the working</h3><p>Every figure traces to a query someone else can run. If I can't explain it, I don't publish it.</p></article>
+    <article><span class="n">H11.</span><h3>Plain over clever</h3><p>The simplest chart that answers the question wins. Decoration is a cost to the reader.</p></article>
+  </div>
+</section>
+
+<div class="edu" id="education">
+  <section class="slide e1 pad" aria-labelledby="edu-h">
+    <div class="idx-head"><h2 class="d h2" id="edu-h">.Educa-<br>tion</h2><span class="m"><svg class="g" aria-hidden="true"><use href="#sp2"/></svg>I9 &mdash; Study &amp; certification</span></div>
+    <div class="rows">
+      <div class="th" aria-hidden="true"><span>Year</span><span>Qualification</span></div>
+      <div class="row"><span class="d" data-count="2024" data-from="1990">2024</span><div><h3>Microsoft PL-300</h3><p>Power BI Data Analyst certification.</p></div></div>
+      <div class="row"><span class="d" data-count="2022" data-from="1990">2022</span><div><h3>Statistics for data analysis</h3><p>Part-time evening course, Leeds. Sampling, testing and regression.</p></div></div>
+      <div class="row"><span class="d" data-count="2018" data-from="1990">2018</span><div><h3>BSc Mathematics</h3><p>Northern Counties University, second-class honours.</p></div></div>
+    </div>
+  </section>
+  <section class="slide blue e2 pad" aria-label="Dates and counts">
+    <span class="m">&copy;2026/27 &middot; I10 &middot; At a glance</span>
+    <div class="pct">
+      <div><span class="d" data-count="2018" data-from="1990">2018</span><span class="m">first analyst role</span></div>
+      <div><span class="d" data-count="4" data-pad="2">04</span><span class="m">steps, always</span></div>
+      <div><span class="d" data-count="3" data-pad="2">03</span><span class="m">core tools</span></div>
+      <div><span class="d" data-count="1" data-pad="2">01</span><span class="m">question per project</span></div>
+    </div>
+    <div class="bc"><svg viewBox="0 0 120 60" aria-hidden="true"><path class="draw" d="M0 50 L20 40 L40 44 L60 26 L80 32 L100 14 L120 8" fill="none" stroke="currentColor" stroke-width="3"/><path d="M0 58H120" stroke="#fff" stroke-width="1"/></svg><span class="m">Sample data</span></div>
+  </section>
+</div>
+
+<section class="slide dark contact" id="contact" aria-labelledby="ct-h">
+  <div class="l">
+    <span class="m" style="color:#c3c8ce"><svg class="g mint" aria-hidden="true"><use href="#sp1"/></svg>J10 &mdash; Contact</span>
+    <h2 class="d big" id="ct-h">.Let's<br>talk<em>.</em></h2>
+  </div>
+  <div class="r">
+    <p style="font-size:15px;max-width:44ch;color:#d6dadf;margin-bottom:20px">Open to analyst roles in Leeds and hybrid across Yorkshire. Send a question or a brief and I'll reply within two working days.</p>
+    <a class="row" href="mailto:hello@nadiakerr.example" data-hot><span class="m">Email</span><b>hello@nadiakerr.example</b><span class="m">&rarr;</span></a>
+    <a class="row" href="#top" data-hot><span class="m">Base</span><b>Leeds, UK</b><span class="m">&uarr;</span></a>
+    <a class="btn arrow" href="mailto:hello@nadiakerr.example" data-hot>Send an email</a>
+  </div>
+</section>
+
+</div><!-- /rest -->
+</main>
+<footer><div class="in m"><span>&copy;2026/27 Nadia Kerr</span><span>Concept</span><span>.NK/26</span></div></footer>
+
+<div class="badge" role="note"><a href="../../portfolio/">&larr; Back to HU/MAN</a><span class="badge-made">Made by <svg class="badge-logo" role="img" aria-label="Hu/man" viewBox="0 0 2054.33 438.67" focusable="false"><path fill-rule="evenodd" d="M928.67,21.00 L845.00,21.00 L843.67,22.00 L677.67,437.33 L678.33,438.33 L762.67,437.67 L928.67,23.00Z M1735.00,0.33 L1734.67,390.33 L1815.67,390.00 L1816.33,154.33 L1991.67,390.67 L2053.67,390.67 L2054.00,0.33 L1973.67,0.00 L1973.00,1.00 L1973.00,231.33 L1969.00,227.33 L1796.67,0.00Z M1488.00,0.33 L1355.67,390.00 L1443.67,390.67 L1469.33,312.33 L1471.00,310.67 L1612.33,310.67 L1614.33,313.33 L1639.67,390.67 L1727.33,390.67 L1728.00,390.00 L1718.00,360.00 L1711.00,341.67 L1695.00,292.00 L1688.00,273.67 L1672.00,224.00 L1665.00,205.67 L1596.00,0.33Z M1541.33,90.33 L1542.67,91.00 L1550.33,114.33 L1554.33,129.00 L1576.00,193.67 L1576.33,197.00 L1590.33,238.33 L1590.00,240.33 L1493.00,240.00 L1493.00,237.67Z M940.67,0.00 L940.67,390.67 L1020.67,390.67 L1021.67,389.67 L1022.00,134.67 L1139.67,291.00 L1149.67,291.00 L1152.67,288.00 L1268.00,139.33 L1268.33,390.33 L1349.33,390.00 L1348.67,0.00 L1271.67,0.00 L1269.67,1.00 L1147.00,168.67 L1138.00,158.33 L1018.67,0.00Z M345.33,0.33 L345.33,261.00 L348.33,281.00 L353.33,299.00 L361.33,317.00 L370.67,332.00 L382.67,347.00 L391.67,356.00 L412.67,372.00 L440.67,386.00 L469.67,394.00 L483.67,396.00 L508.67,397.00 L525.67,396.00 L548.33,392.33 L575.33,383.33 L590.67,375.67 L604.33,367.00 L614.67,359.00 L625.67,348.67 L635.67,337.00 L644.67,324.00 L649.67,315.00 L657.00,297.33 L660.67,285.00 L663.67,269.00 L665.00,250.00 L664.67,0.33 L584.00,0.33 L584.00,242.67 L581.33,264.33 L577.33,276.33 L572.33,286.33 L564.33,297.33 L555.00,306.67 L545.00,313.67 L533.67,319.00 L520.33,322.67 L508.33,323.67 L494.00,323.33 L484.00,321.33 L473.33,317.67 L460.33,310.67 L450.00,302.00 L443.00,294.33 L435.00,281.67 L428.67,264.67 L426.00,242.67 L426.00,0.67Z M0.33,0.33 L0.00,390.00 L81.00,390.33 L81.00,240.33 L82.00,239.33 L232.33,239.33 L233.33,240.33 L233.33,390.33 L314.33,390.33 L314.33,0.33 L233.33,0.67 L233.33,168.33 L232.33,169.00 L81.33,168.67 L81.00,0.67Z "/></svg></span></div>
+
+<script src="../vendor/gsap.min.js"></script>
+<script src="../vendor/ScrollTrigger.min.js"></script>
+<script src="../vendor/SplitText.min.js"></script>
+<script>
+(function(){
+  var $=function(s,r){return (r||document).querySelector(s)}, $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+  var cover=$('#cover'), sel=$('#sel'), selref=$('#selref'), hlc=$('.hl-c'), hlr=$('.hl-r');
+
+  /* ---------- JS-driven hover (works with synthetic preview events) ---------- */
+  var hotEl=null, ringsvg=$('#ringsvg');
+  function setHot(el){
+    if(el===hotEl) return;
+    $$('.hot').forEach(function(n){n.classList.remove('hot')});
+    if(ringsvg) ringsvg.removeAttribute('data-on');
+    hotEl=el;
+    if(!el) return;
+    el.classList.add('hot');
+    var r=el.getAttribute('data-ring');
+    if(r){ $$('[data-ring="'+r+'"]').forEach(function(n){ if(n.tagName!=='g') n.classList.add('hot') }); ringsvg.setAttribute('data-on',r); }
+  }
+  document.addEventListener('mouseover',function(e){ setHot(e.target.closest ? e.target.closest('[data-hot]') : null) });
+  document.addEventListener('mouseout',function(e){ if(!e.relatedTarget) setHot(null) });
+  document.addEventListener('focusin',function(e){ var t=e.target.closest&&e.target.closest('[data-hot]'); if(t&&t.matches(':focus-visible')) setHot(t) });
+  document.addEventListener('focusout',function(){ setHot(null) });
+
+  /* ---------- spreadsheet cell cursor on the cover (idle loop + pointer) ---------- */
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function letters(n){var s='';n++;while(n>0){var m=(n-1)%26;s=String.fromCharCode(65+m)+s;n=Math.floor((n-1)/26)}return s}
+  function put(x,y,fast){
+    var cx=Math.max(0,Math.floor(x/20)), cy=Math.max(0,Math.floor(y/20));
+    var o={duration:fast?.12:.3,ease:'power2.out',overwrite:true};
+    gsap.to(sel,Object.assign({x:cx*20+1,y:cy*20+1,opacity:1},o));
+    gsap.to(hlc,Object.assign({x:cx*20+1,opacity:1},o));
+    gsap.to(hlr,Object.assign({y:cy*20+1,opacity:1},o));
+    selref.textContent=letters(cx)+(cy+1);
+  }
+  var lastPtr=-1e9, pts=[[.08,.35],[.3,.18],[.62,.3],[.85,.55],[.55,.72],[.2,.62],[.7,.12],[.9,.3]], pi=0;
+  function idle(){
+    if(performance.now()-lastPtr<2500) return;
+    var r=cover.getBoundingClientRect(); if(r.bottom<0||r.top>innerHeight) return;
+    var p=pts[pi++%pts.length]; put(p[0]*r.width,p[1]*r.height);
+  }
+  window.addEventListener('pointermove',function(e){
+    var r=cover.getBoundingClientRect();
+    if(e.clientX>=r.left&&e.clientX<=r.right&&e.clientY>=r.top&&e.clientY<=r.bottom){
+      lastPtr=performance.now(); put(e.clientX-r.left,e.clientY-r.top,true);
+    }
+  },{passive:true});
+
+  /* ---------- progress + section tracking (no GSAP needed) ---------- */
+  var refs={about:0,how:1,stack:2,experience:3,findings:4,skills:5,stakeholders:6,manifesto:7,education:8,contact:9};
+  var colEls=$$('#cols span'), navLinks=$$('.nav ul a');
+
+  if(!window.gsap||!window.ScrollTrigger||!window.SplitText){ return }
+  gsap.registerPlugin(ScrollTrigger,SplitText);
+
+  /* section tracker + page progress */
+  Object.keys(refs).forEach(function(id){
+    var el=document.getElementById(id); if(!el) return;
+    ScrollTrigger.create({trigger:el,start:'top 55%',end:'bottom 55%',onToggle:function(s){
+      colEls.forEach(function(c,i){c.classList.toggle('on',s.isActive&&i===refs[id])});
+      if(s.isActive) navLinks.forEach(function(a){a.classList.toggle('act',a.getAttribute('href')==='#'+id)});
+    }});
+  });
+  ScrollTrigger.create({start:0,end:'max',onUpdate:function(s){ gsap.set('#prog',{scaleX:s.progress}) }});
+
+  var mm=gsap.matchMedia();
+
+  mm.add('(prefers-reduced-motion: no-preference)',function(){
+    var wide=matchMedia('(min-width:700px)').matches;
+
+    /* hero entrance: chars cut up through a clipped line */
+    var h1lines=$$('.mark>span');
+    h1lines.forEach(function(l,i){
+      var sp=SplitText.create(l,{type:'chars'});
+      gsap.from(sp.chars,{yPercent:115,duration:.9,ease:'power4.out',stagger:.045,delay:.1+i*.25});
+    });
+    gsap.from('.cover-name,.cover-tag,.cover-meta,.cover-top',{opacity:0,y:18,duration:.8,ease:'power2.out',delay:.7,stagger:.1});
+
+    /* hero idle loop: cell cursor walks the sheet, sample chart redraws */
+    var iv=setInterval(idle,1300); setTimeout(idle,500);
+    var sp=$('#spline'); var L=sp.getTotalLength();
+    gsap.timeline({repeat:-1,repeatDelay:2.2,delay:1})
+      .fromTo(sp,{strokeDasharray:L,strokeDashoffset:L},{strokeDashoffset:0,duration:1.6,ease:'power1.inOut'})
+      .fromTo('.sbars rect',{scaleY:0,transformOrigin:'50% 100%'},{scaleY:1,duration:.5,stagger:.12,ease:'back.out(2)'},'-=1.2');
+
+    var pinStart=function(){return cover.offsetHeight+84>innerHeight?'bottom bottom':'top top+=84'};
+    /* push-out: cover recedes, dims and drifts up as the page slides over it */
+    ScrollTrigger.create({trigger:cover,start:pinStart,end:function(){return '+='+cover.offsetHeight},pin:true,pinSpacing:false,anticipatePin:1});
+    gsap.to(cover,{scale:.93,yPercent:-4,transformOrigin:'50% 100%',ease:'none',scrollTrigger:{trigger:cover,start:pinStart,end:function(){return '+='+cover.offsetHeight},scrub:true}});
+    gsap.to('#dimmer',{opacity:.7,ease:'none',scrollTrigger:{trigger:cover,start:pinStart,end:function(){return '+='+cover.offsetHeight},scrub:true}});
+
+    /* split-text reveals on every section heading */
+    $$('.rest h2').forEach(function(h){
+      SplitText.create(h,{type:'lines',mask:'lines',autoSplit:true,onSplit:function(self){
+        return gsap.from(self.lines,{yPercent:110,duration:.9,ease:'power4.out',stagger:.12,scrollTrigger:{trigger:h,start:'top 88%',toggleActions:'play none none none'}});
+      }});
+    });
+
+    /* scrubbed text fill */
+    $$('[data-fill]').forEach(function(p){
+      var st=SplitText.create(p,{type:'words'});
+      gsap.fromTo(st.words,{opacity:.22},{opacity:1,stagger:.1,ease:'none',scrollTrigger:{trigger:p,start:'top 85%',end:'bottom 45%',scrub:true}});
+    });
+
+    /* scrubbed moving type bands, opposite directions */
+    $$('.band').forEach(function(b){
+      var dir=+b.getAttribute('data-band'), half=function(){return b.scrollWidth/2};
+      gsap.fromTo(b,{x:function(){return dir<0?0:-half()}},{x:function(){return dir<0?-half():0},ease:'none',scrollTrigger:{trigger:'.bands',start:'top bottom',end:'bottom top',scrub:true,invalidateOnRefresh:true}});
+    });
+
+    /* image reveals (clip wipe) + inner parallax */
+    $$('.frame').forEach(function(f){
+      var img=$('img',f);
+      gsap.fromTo(f,{clipPath:'inset(0% 0% 100% 0%)'},{clipPath:'inset(0% 0% 0% 0%)',duration:1.1,ease:'power3.inOut',scrollTrigger:{trigger:f,start:'top 88%'},clearProps:'clipPath'});
+      if(img) gsap.fromTo(img,{yPercent:-6},{yPercent:6,ease:'none',scrollTrigger:{trigger:f,start:'top bottom',end:'bottom top',scrub:true}});
+    });
+
+    /* batch reveals */
+    var bt=['.idx-list li:not(.th)','.comp li:not(.th)','.chip','.tbl tbody tr','.edu .row','.facts>div','.find-r .items article','.mani article','.lang li','.prof dt','.contact .r .row'];
+    bt.forEach(function(sel){
+      var t=$$(sel); if(!t.length) return;
+      gsap.set(t,{autoAlpha:0,y:22});
+      ScrollTrigger.batch(t,{start:'top 92%',once:true,onEnter:function(b){gsap.to(b,{autoAlpha:1,y:0,duration:.6,stagger:.07,ease:'power2.out',overwrite:true})}});
+    });
+    gsap.set('.prof dd',{autoAlpha:0});
+    ScrollTrigger.batch('.prof dd',{start:'top 92%',once:true,onEnter:function(b){gsap.to(b,{autoAlpha:1,duration:.5,stagger:.1})}});
+
+    /* counters: real, non-claim values (dates, step counts) */
+    $$('[data-count]').forEach(function(el){
+      var to=+el.getAttribute('data-count'), from=+(el.getAttribute('data-from')||0), pad=+(el.getAttribute('data-pad')||0), o={v:from};
+      var fmt=function(v){var s=String(Math.round(v));while(s.length<pad)s='0'+s;return s};
+      el.textContent=fmt(from);
+      gsap.to(o,{v:to,duration:1.4,ease:'power2.out',onUpdate:function(){el.textContent=fmt(o.v)},scrollTrigger:{trigger:el,start:'top 92%',once:true}});
+    });
+
+    /* rings draw clockwise, outer ring last; skills bars grow; sample line draws */
+    $$('.arc').reverse().forEach(function(c,i){
+      var len=c.getAttribute('data-len'), tot=c.getAttribute('data-tot');
+      gsap.fromTo(c,{attr:{'stroke-dasharray':'0 '+tot}},{attr:{'stroke-dasharray':len+' '+tot},duration:1.2,delay:i*.18,ease:'power2.out',scrollTrigger:{trigger:'#ringsvg',start:'top 80%',once:true}});
+    });
+    $$('.tbl tbody tr').forEach(function(r){
+      gsap.from($$('.dots i',r),{scaleY:0,duration:.45,stagger:.08,ease:'back.out(2)',scrollTrigger:{trigger:r,start:'top 92%',once:true}});
+    });
+    var dp=$('.draw'); if(dp){var dl=dp.getTotalLength(); gsap.fromTo(dp,{strokeDasharray:dl,strokeDashoffset:dl},{strokeDashoffset:0,duration:1.6,ease:'power2.inOut',scrollTrigger:{trigger:dp,start:'top 92%',once:true}})}
+
+    /* stacked cards: each card pushes the previous one back */
+    var cards=$$('.card');
+    if(wide){
+      $('.how').classList.add('s-on');
+      cards.forEach(function(c,i){
+        if(i===cards.length-1) return;
+        gsap.to(c,{scale:.94,filter:'brightness(.62)',ease:'none',scrollTrigger:{trigger:cards[i+1],start:'top 82%',end:'top '+(96+(i+1)*16+60),scrub:true}});
+      });
+    } else {
+      gsap.from(cards,{y:40,opacity:0,duration:.7,stagger:.12,scrollTrigger:{trigger:'.cards',start:'top 85%'}});
+    }
+
+    /* pinned horizontal scroll: experience */
+    var exp=$('#experience'), track=$('#track');
+    if(wide){
+      exp.classList.add('h-on');
+      var dist=function(){return Math.max(0,track.scrollWidth-$('#clipx').clientWidth)};
+      var tl=gsap.timeline({defaults:{ease:'none'},scrollTrigger:{trigger:exp,start:'top 84px',end:function(){return '+='+dist()},pin:true,scrub:true,anticipatePin:1,invalidateOnRefresh:true}});
+      tl.to(track,{x:function(){return -dist()}},0).to('#expbar',{scaleX:1},0);
+    }
+
+    return function(){ clearInterval(iv); exp.classList.remove('h-on'); $('.how').classList.remove('s-on') };
+  });
+
+  /* reduced motion: nothing moves, everything is visible */
+  mm.add('(prefers-reduced-motion: reduce)',function(){ idle(); });
+
+  window.addEventListener('load',function(){ ScrollTrigger.refresh() });
+  if(document.fonts&&document.fonts.ready) document.fonts.ready.then(function(){ ScrollTrigger.refresh() });
+})();
+</script>
+<script src="../preview.js" defer></script>
+</body>
+</html>
