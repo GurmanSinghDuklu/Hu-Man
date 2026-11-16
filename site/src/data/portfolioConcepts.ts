@@ -217,4 +217,59 @@ export const portfolioConcepts: PortfolioConcept[] = [
     domain: 'amirahussain.example',
     device: 'desktop',
   },
+  {
+    slug: 'offcut',
+    name: 'Offcut Studio',
+    role: 'Creative design studio, Leeds',
+    field: 'Creative',
+    shows:
+      'A design studio site laid out like a deck: index cards that tilt to your cursor, sample work and how a project runs.',
+    alt: 'The Offcut Studio concept: a heavy black name on cream with a tangerine underline, beside an orange and teal deck graphic.',
+    domain: 'offcutstudio.example',
+    device: 'desktop',
+  },
+  {
+    slug: 'ember',
+    name: 'Ember Street Kitchen',
+    role: 'Burger and loaded-fries takeaway, Manchester',
+    field: 'Hospitality',
+    shows:
+      'A takeaway site with a turning ring around its monogram, a short menu and dish tags that pull towards your cursor.',
+    alt: 'The Ember Street Kitchen concept: big white and mint condensed capitals on black beside a violet ESK monogram ringed by chevrons, with a mint Order now button.',
+    domain: 'emberstreet.example',
+    device: 'desktop',
+  },
+  {
+    slug: 'plump',
+    name: 'Plump Bakehouse',
+    role: 'Bakery and cake shop, Sheffield',
+    field: 'Hospitality',
+    shows:
+      'A bakery site with giant soft letters that swell near your cursor, a daily bake list and how to order a cake.',
+    alt: 'The Plump Bakehouse concept: huge pale pink PLUMP letters on deep red beside a drawn pink celebration cake in an arch.',
+    domain: 'plumpbakehouse.example',
+    device: 'desktop',
+  },
+  {
+    slug: 'fernlea',
+    name: 'Fernlea Dental',
+    role: 'Dental practice, York',
+    field: 'Care',
+    shows:
+      'A calm practice site with a painted brushstroke, plain treatment notes and a first-visit timeline.',
+    alt: 'The Fernlea Dental concept: a cream serif headline on forest green beside an arched FD monogram over soft painted brushstrokes.',
+    domain: 'fernleadental.example',
+    device: 'desktop',
+  },
+  {
+    slug: 'linework',
+    name: 'Linework Architects',
+    role: 'Architecture practice, Newcastle',
+    field: 'Creative',
+    shows:
+      'An architects site on a numbered grid, with a cut-paper monogram that drifts and a crosshair that reads out coordinates.',
+    alt: 'The Linework Architects concept: ROOM TO DRAW IT BETTER in black and emerald on cream beside a cut-paper LW monogram over a drawn house.',
+    domain: 'linework.example',
+    device: 'desktop',
+  },
 ];

@@ -120,8 +120,8 @@ const steps = [
                     <figcaption class="label">Before</figcaption>
                   </figure>
                 )}
-                <figure>
-                  <Image src={c.after.src} alt={c.after.alt} width={800} loading="lazy" />
+                <figure class:list={{ bconcept__wide: c.after.src.width > c.after.src.height }}>
+                  <Image src={c.after.src} alt={c.after.alt} width={1200} loading="lazy" />
                   {c.before && <figcaption class="label">After</figcaption>}
                 </figure>
               </div>
@@ -219,6 +219,10 @@ const steps = [
 
     .bconcept__pair:has(> figure:only-child) {
       grid-template-columns: minmax(0, 24rem);
+    }
+
+    .bconcept__pair:has(> .bconcept__wide:only-child) {
+      grid-template-columns: minmax(0, 48rem);
     }
   }
 </style>
