@@ -412,8 +412,13 @@ const navLinks: { href: string; label: string; menu?: 'services' }[] = [
     color: var(--muted);
   }
 
+  /* Hover keeps each link's own font: it only darkens and the underline thickens. */
   .site-header__nav .nav-drop__area:hover,
-  .site-header__nav .nav-drop__items a:hover,
+  .site-header__nav .nav-drop__items a:hover {
+    color: var(--ink);
+    text-decoration-thickness: 2px;
+  }
+
   .site-header__nav .nav-drop__more {
     margin-top: calc(var(--u) * 0.35);
     padding-block: 0 0.3rem;
