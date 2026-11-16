@@ -4,10 +4,16 @@
  * nears the viewport, an iframe of the concept in preview mode (public/concepts/preview.js) mounts
  * over the poster, scrolls itself and follows the cursor. Columns drift at different speeds while the
  * page scrolls. Reduced motion, Data Saver or no JS: posters only. Script: src/scripts/concept-wall.ts.
+ * /portfolio shows the portfolios; /business-websites/ passes `concepts` and `intro` for its own.
+ * One wall per page (the script finds the first [data-cwall]).
  */
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
-import { portfolioConcepts, portfolioConceptsIntro } from '../data/portfolioConcepts';
+import {
+  portfolioConcepts,
+  portfolioConceptsIntro,
+  type PortfolioConcept,
+} from '../data/portfolioConcepts';
 import { withBase } from '../config/paths';
 import BookingLink from './BookingLink.astro';
 
@@ -19,18 +25,22 @@ const posterFor = (slug: string) =>
   Object.entries(posters).find(([path]) => path.split('/').pop()?.split('.')[0] === slug)?.[1]
     .default;
 
+interface Props {
+  concepts?: PortfolioConcept[];
+  intro?: typeof portfolioConceptsIntro;
+}
+const { concepts = portfolioConcepts, intro = portfolioConceptsIntro } = Astro.props;
+
 const COLS = 3;
 const columns = Array.from({ length: COLS }, (_, c) =>
-  portfolioConcepts
-    .map((concept, index) => ({ concept, index }))
-    .filter(({ index }) => index % COLS === c),
+  concepts.map((concept, index) => ({ concept, index })).filter(({ index }) => index % COLS === c),
 );
 const size = { desktop: { w: 1440, h: 900 }, phone: { w: 390, h: 844 } };
 ---
 
 <div class="cwall" data-cwall>
   <p class="cwall__static" data-cwall-static hidden>
-    {portfolioConceptsIntro.staticNote}
+    {intro.staticNote}
   </p>
   <div class="cwall__cols">
     {columns.map((col, c) => (
@@ -92,7 +102,7 @@ const size = { desktop: { w: 1440, h: 900 }, phone: { w: 390, h: 844 } };
               </div>
               <div class="ctile__body">
                 <p class="ctile__note">
-                  {portfolioConceptsIntro.note} · {concept.field}
+                  {intro.note} · {concept.field}
                 </p>
                 <h3 class="ctile__name" id={`ctile-${concept.slug}`}>
                   {concept.name}
@@ -100,7 +110,7 @@ const size = { desktop: { w: 1440, h: 900 }, phone: { w: 390, h: 844 } };
                 <p class="ctile__role">{concept.role}</p>
                 <p class="ctile__shows">{concept.shows}</p>
                 <a class="ctile__link" href={href}>
-                  {portfolioConceptsIntro.linkText}
+                  {intro.linkText}
                   <span class="visually-hidden"> for {concept.name}</span>
                 </a>
               </div>
@@ -108,11 +118,11 @@ const size = { desktop: { w: 1440, h: 900 }, phone: { w: 390, h: 844 } };
           );
         })}
         {c === COLS - 1 && (
-          <BookingLink class="cwall__next" style={`order:${portfolioConcepts.length}`}>
-            <span class="cwall__next-label">{portfolioConceptsIntro.next.label}</span>
-            <span class="cwall__next-title">{portfolioConceptsIntro.next.title}</span>
-            <span class="cwall__next-text">{portfolioConceptsIntro.next.text}</span>
-            <span class="cwall__next-btn">{portfolioConceptsIntro.next.button}</span>
+          <BookingLink class="cwall__next" style={`order:${concepts.length}`}>
+            <span class="cwall__next-label">{intro.next.label}</span>
+            <span class="cwall__next-title">{intro.next.title}</span>
+            <span class="cwall__next-text">{intro.next.text}</span>
+            <span class="cwall__next-btn">{intro.next.button}</span>
           </BookingLink>
         )}
       </div>

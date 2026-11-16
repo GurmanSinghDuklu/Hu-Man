@@ -1,5 +1,6 @@
 /**
- * The concept portfolio sites on /portfolio (each lives in public/concepts/<slug>/).
+ * The concept sites on the live walls (each lives in public/concepts/<slug>/): portfolios on
+ * /portfolio, business sites (businessSiteConcepts, below) on /business-websites/.
  * All are concepts for fictional people. The line under each name says only what the page shows:
  * no results, no clients, no awards. Order here is the order on the wall.
  *
@@ -215,6 +216,90 @@ export const portfolioConcepts: PortfolioConcept[] = [
       'A striped monogram that bends to your cursor, and a skills finder that re-sorts itself.',
     alt: 'The Amira Hussain concept portfolio: a striped AH monogram beside colour-coded skill chips.',
     domain: 'amirahussain.example',
+    device: 'desktop',
+  },
+];
+
+/**
+ * The business concept sites on /business-websites/, on the same live wall. Same rules: "Concept"
+ * only, `.example` domains, no reviews, ratings or results. `shows` here says why the site is the
+ * right fit for that kind of business. Ellie (a sole trader) is on both walls, so it is borrowed
+ * from the list above rather than repeated (seo-check counts each slug once).
+ */
+const ellie = portfolioConcepts.find((c) => c.slug === 'ellie')!;
+
+export const businessConceptsIntro = {
+  ...portfolioConceptsIntro,
+  label: 'Concept business sites',
+  title: 'The right fit, running live.',
+  text: 'Six kinds of business, six different answers. Each site is built around what its customers need, and no bigger. Move your mouse over any of them: they are running live.',
+  next: {
+    label: 'Your business',
+    title: 'Yours next.',
+    text: 'Tell us what you do and who your customers are. On a free 1-hour call we work out the right fit, then build it.',
+    button: 'Book a free 1-hour call',
+  },
+};
+
+export const businessSiteConcepts: PortfolioConcept[] = [
+  {
+    ...ellie,
+    shows:
+      'A small, friendly business that needs to feel trustworthy and easy to book. So the site is warm, quick and simple, with one playful touch (throw a ball to get in) and nothing heavier.',
+  },
+  {
+    slug: 'offcut',
+    name: 'Offcut Studio',
+    role: 'Creative design studio, Leeds',
+    field: 'Creative',
+    shows:
+      'A small studio selling taste and process. So the site works like a short deck: what they do, how a project runs and sample work, with one clear way to start a project.',
+    alt: 'The Offcut Studio concept: a heavy black name on cream with a tangerine underline, beside an orange and teal deck graphic.',
+    domain: 'offcutstudio.example',
+    device: 'desktop',
+  },
+  {
+    slug: 'ember',
+    name: 'Ember Street Kitchen',
+    role: 'Burger and loaded-fries takeaway, Manchester',
+    field: 'Hospitality',
+    shows:
+      'Hungry people on a phone want the menu, the hours and an order button. So the site is bold but short: dishes, how ordering works, when they are open and one big Order now.',
+    alt: 'The Ember Street Kitchen concept: big white and mint condensed capitals on black beside a violet ESK monogram ringed by chevrons, with a mint Order now button.',
+    domain: 'emberstreet.example',
+    device: 'desktop',
+  },
+  {
+    slug: 'plump',
+    name: 'Plump Bakehouse',
+    role: 'Bakery and cake shop, Sheffield',
+    field: 'Hospitality',
+    shows:
+      'A local bakery with a big personality. So the name is huge and friendly, then the useful parts: what is baked each day, how to order a cake and how much notice it needs.',
+    alt: 'The Plump Bakehouse concept: huge pale pink PLUMP letters on deep red beside a drawn pink celebration cake in an arch.',
+    domain: 'plumpbakehouse.example',
+    device: 'desktop',
+  },
+  {
+    slug: 'fernlea',
+    name: 'Fernlea Dental',
+    role: 'Dental practice, York',
+    field: 'Care',
+    shows:
+      'Many patients arrive nervous. So the site is calm and plain: what each treatment is, what happens on a first visit, how to get there and a clear Book an appointment button.',
+    alt: 'The Fernlea Dental concept: a cream serif headline on forest green beside an arched FD monogram over soft painted brushstrokes.',
+    domain: 'fernleadental.example',
+    device: 'desktop',
+  },
+  {
+    slug: 'linework',
+    name: 'Linework Architects',
+    role: 'Architecture practice, Newcastle',
+    field: 'Creative',
+    shows:
+      'People planning an extension want to see the work and know the steps. So the site is a clean drawing-board grid: sample projects, the four stages from brief to build, and a free first chat.',
+    alt: 'The Linework Architects concept: ROOM TO DRAW IT BETTER in black and emerald on cream beside a cut-paper LW monogram over a drawn house.',
+    domain: 'linework.example',
     device: 'desktop',
   },
 ];

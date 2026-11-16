@@ -243,6 +243,8 @@ const conceptSlugs = [
     await readFile(new URL('../src/data/portfolioConcepts.ts', import.meta.url), 'utf8')
   ).matchAll(/slug: '([^']+)'/g),
 ].map((m) => m[1]);
+if (new Set(conceptSlugs).size !== conceptSlugs.length)
+  fail('concepts', 'a slug is listed twice in portfolioConcepts.ts (borrow the entry instead)');
 for (const slug of conceptSlugs)
   if (!conceptFiles.includes(`concepts/${slug}/index.html`))
     fail('concepts', `no page for ${slug}`);
@@ -254,7 +256,8 @@ for (const f of conceptFiles) {
   if (!/<html lang="en-GB"/.test(doc)) fail(f, 'html lang is not en-GB');
   if (/googleapis|gstatic|cdnjs|jsdelivr|unpkg|https?:\/\/(?!www\.w3\.org)/.test(doc))
     fail(f, 'references an outside host');
-  if (!/href="\.\.\/\.\.\/portfolio\/"/.test(doc)) fail(f, 'no link back to the portfolio page');
+  if (!/href="\.\.\/\.\.\/(?:portfolio|business-websites)\/"/.test(doc))
+    fail(f, 'no link back to the portfolio or business websites page');
   if (!/<script src="\.\.\/preview\.js" defer><\/script>/.test(doc)) fail(f, 'no preview script');
   for (const [, ref] of doc.matchAll(/(?:src|url)\(?=?["']?(\.\.\/(?:fonts|vendor)\/[^"')\s]+)/g)) {
     if (!fileSet.has(`concepts/${ref.slice(3)}`)) fail(f, `missing asset ${ref}`);

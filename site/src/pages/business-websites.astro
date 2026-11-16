@@ -1,14 +1,25 @@
 ---
+/**
+ * Business websites: the right-fit message. Laid out like /portfolio (Gurman, 2026-11-16): hero and
+ * scroll cue, the live concept wall, a guide (intro and three cards, then three steps and a last
+ * check), the tiers, then extras (care plans and Fast Track). Copy is a draft awaiting his sign-off.
+ */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import InnerHero from '../components/InnerHero.astro';
 import TalkBanner from '../components/TalkBanner.astro';
+import ScrollCue from '../components/ScrollCue.astro';
+import ConceptWall from '../components/ConceptWall.astro';
+import HeadlineCards from '../components/HeadlineCards.astro';
+import BookingLink from '../components/BookingLink.astro';
 import { Image } from 'astro:assets';
 import { withBase } from '../config/paths';
+import { tiers, carePlans, fastTrack } from '../data/pricing';
+import { businessSiteConcepts, businessConceptsIntro } from '../data/portfolioConcepts';
 import { businessConcepts } from '../data/businessConcepts';
 
-// Three ways a business website can land. Wording is a draft awaiting Gurman's sign-off.
+// Three ways a business website can land.
 const fits = [
   {
     tag: 'Too basic',
@@ -29,21 +40,24 @@ const fits = [
 
 const steps = [
   {
-    n: '01',
+    stage: 'First',
     title: 'We listen',
     text: 'A free call, with a real person. What you do, who your customers are, and what you want the website to do for you.',
   },
   {
-    n: '02',
+    stage: 'Then',
     title: 'We choose the fit',
     text: 'We agree how much your business needs, and what it does not. You approve the plan and the design before any code.',
   },
   {
-    n: '03',
+    stage: 'Last',
     title: 'We build it for the people who use it',
     text: 'Fast, secure, clear on a phone, and set up so search and AI tools can read it. Then we stay with you after launch.',
   },
 ];
+
+// Real before-and-after pairs only (src/data/businessConcepts.ts); the section stays hidden until one exists.
+const pairs = businessConcepts.filter((c) => c.before);
 ---
 
 <BaseLayout page="business-websites">
@@ -55,65 +69,156 @@ const steps = [
       A mechanic with a small workshop who wants to be found online does not need a 3D, high-end
       animated site. They need the right one. We find it by talking to you first.
     </Fragment>
+    <ScrollCue
+      slot="after"
+      class="bcue"
+      href="#concepts"
+      label={`See all ${businessSiteConcepts.length} concepts below`}
+    />
   </InnerHero>
 
-  <section class="band band--paper-2 bfit section" aria-labelledby="bfit-title">
+  <section id="concepts" class="band bconcepts" aria-labelledby="concepts-title">
     <div class="sheet">
       <p class="label" data-reveal>
-        01 / Getting it right
+        {businessConceptsIntro.label} · {businessSiteConcepts.length}
       </p>
-      <h2 id="bfit-title" class="display display--s" data-reveal="lines">
-        Too basic, too much, or just right.
+      <h2 id="concepts-title" class="display display--s" data-reveal="lines">
+        {businessConceptsIntro.title}
       </h2>
-      <ul class="bfit__cards" data-pick>
-        {fits.map((f, i) => (
-          <li class:list={['bfit__card', { 'bfit__card--fit': i === 1 }]} data-rise>
-            <p class="label">{f.tag}</p>
-            <h3 class="bfit__title">{f.title}</h3>
-            <p>{f.text}</p>
-          </li>
-        ))}
-      </ul>
+      <p class="bconcepts__text">{businessConceptsIntro.text}</p>
+      <ConceptWall concepts={businessSiteConcepts} intro={businessConceptsIntro} />
     </div>
   </section>
 
-  <section class="band bsteps section" aria-labelledby="bsteps-title">
-    <div class="sheet">
-      <p class="label" data-reveal>
-        02 / How we find it
-      </p>
-      <h2 id="bsteps-title" class="display display--s" data-reveal="lines">
-        Human contact first. Then the build.
-      </h2>
-      <ol class="bsteps__list">
-        {steps.map((s) => (
-          <li data-rise>
-            <span class="bsteps__n">{s.n}</span>
-            <h3 class="bsteps__title">{s.title}</h3>
-            <p>{s.text}</p>
-          </li>
-        ))}
-      </ol>
+  <section class="band grid bfit" aria-labelledby="bfit-title">
+    <div class="sheet bfit__sheet">
+      <div class="bfit__intro">
+        <p class="label" data-reveal>
+          Getting it right
+        </p>
+        <h2 id="bfit-title" class="display display--s" data-reveal="lines">
+          Too basic, too much, or just right.
+        </h2>
+        <p class="bfit__text">
+          A small business is usually offered one of two things: a quick template that looks like
+          everyone else's, or a showpiece built to impress other designers. Neither is built around
+          your customers.
+        </p>
+        <p class="bfit__text">
+          The right fit sits between them, and it is different for every business. A takeaway needs
+          an order button, a dental practice needs calm, a studio needs its work on show. So we
+          start by asking.
+        </p>
+      </div>
+
+      <div class="bfit__side">
+        <ul class="bfit__cards" data-pick>
+          {fits.map((f, i) => (
+            <li
+              class:list={['bfit__card', `bfit__card--${i + 1}`]}
+              tabindex="0"
+              data-reveal
+              style={`--reveal-delay:${i * 0.08}s`}
+            >
+              <p class="bfit__tag">{f.tag}</p>
+              <h3>{f.title}</h3>
+              <p>{f.text}</p>
+            </li>
+          ))}
+        </ul>
+        <p class="bfit__note">
+          We don't promise rankings or sales. We build what your business needs, and a person stays
+          on hand after launch.
+        </p>
+        <BookingLink class="pill-btn bfit__btn" />
+      </div>
+
+      <div class="bfit__guide">
+        <h3 class="bfit__sub">How we find the right fit</h3>
+        <ol class="bfit__stages">
+          {steps.map((st, i) => (
+            <li class="bfit__stage" data-reveal style={`--reveal-delay:${i * 0.08}s`}>
+              <p class="bfit__stage-n">
+                {String(i + 1).padStart(2, '0')} · {st.stage}
+              </p>
+              <h4>{st.title}</h4>
+              <p>{st.text}</p>
+            </li>
+          ))}
+        </ol>
+        <div class="bfit__check" data-reveal>
+          <h4>Our check: the phone test</h4>
+          <p>
+            Before anything goes live, we ask one question: can a customer on a phone find what they
+            came for in a few seconds? If not, the site is either missing something or carrying too
+            much, and we fix it.
+          </p>
+        </div>
+      </div>
     </div>
   </section>
 
-  {businessConcepts.length > 0 && (
-    <section class="band band--paper-2 bconcepts section" aria-labelledby="bconcepts-title">
+  <section class="band grid btiers" aria-labelledby="tiers-title">
+    <div class="sheet">
+      <h2 id="tiers-title" class="label">
+        {tiers.length} tiers · Pay once · Timelines on every card
+      </h2>
+      <p class="btiers__text">
+        Every tier includes a human from first call to launch, three revision rounds and full
+        ownership. Move up any time and only pay the difference.
+      </p>
+      <div class="btiers__grid">
+        <HeadlineCards />
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--paper-2 bextras" aria-labelledby="extras-title">
+    <div class="sheet bextras__sheet">
+      <div>
+        <p class="label" data-reveal>
+          Care plans
+        </p>
+        <h2 id="extras-title" class="display display--s" data-reveal="lines">
+          Keep it running.
+        </h2>
+        <ul class="bextras__list">
+          {carePlans.map((p) => (
+            <li class="pill">
+              {p.name} · {p.price}
+            </li>
+          ))}
+        </ul>
+        <p class="bextras__more">
+          Hosting, security, backups and fixes, with time for edits on top.{' '}
+          <a href={withBase('/pricing/')}>See what each plan includes</a>.
+        </p>
+      </div>
+      <div class="bextras__fast" data-reveal>
+        <p class="label">{fastTrack.title}</p>
+        <p class="bextras__price">+50%</p>
+        <p>{fastTrack.text}</p>
+      </div>
+    </div>
+  </section>
+
+  {pairs.length > 0 && (
+    <section class="band band--paper-2 bpairs" aria-labelledby="bpairs-title">
       <div class="sheet">
         <p class="label" data-reveal>
-          03 / Before and after
+          Before and after
         </p>
-        <h2 id="bconcepts-title" class="display display--s" data-reveal="lines">
+        <h2 id="bpairs-title" class="display display--s" data-reveal="lines">
           The same business, the right fit.
         </h2>
-        <div class="bconcepts__list">
-          {businessConcepts.map((c) => (
-            <article class="bconcept" data-rise>
-              <h3 class="bconcept__name">
+        <div class="bpairs__list">
+          {pairs.map((c) => (
+            <article class="bpair" data-rise>
+              <h3 class="bpair__name">
                 {c.business} <span class="label">Concept</span>
               </h3>
               <p>{c.fit}</p>
-              <div class="bconcept__pair">
+              <div class="bpair__imgs">
                 {c.before && (
                   <figure>
                     <Image src={c.before.src} alt={c.before.alt} width={800} loading="lazy" />
@@ -122,7 +227,7 @@ const steps = [
                 )}
                 <figure>
                   <Image src={c.after.src} alt={c.after.alt} width={800} loading="lazy" />
-                  {c.before && <figcaption class="label">After</figcaption>}
+                  <figcaption class="label">After</figcaption>
                 </figure>
               </div>
               {c.href && (
@@ -143,63 +248,254 @@ const steps = [
 </BaseLayout>
 
 <style>
-  .bfit__cards,
-  .bsteps__list {
-    display: grid;
-    gap: var(--space-3);
-    margin-top: var(--space-4);
-    padding: 0;
-    list-style: none;
+  /* The scroll cue is drawn for Ink video heroes; this hero is Paper. */
+  :global(.scroll-cue.bcue) {
+    margin-top: 1.5rem;
+    color: var(--ink);
   }
 
-  .bfit__card,
-  .bsteps__list > li {
-    display: grid;
-    align-content: start;
-    gap: 0.75rem;
-    padding: var(--space-3);
-    border: 1px solid var(--ink);
-    background: var(--paper);
+  :global(.scroll-cue.bcue .scroll-cue__arrow) {
+    border-color: var(--ink);
+    color: var(--ink);
   }
 
-  .bfit__card--fit {
+  /* ---------- the live wall ---------- */
+  .bconcepts {
+    overflow: clip;
+    padding-block: clamp(3rem, calc(var(--u) * 0.9), 5.5rem) clamp(4rem, calc(var(--u) * 1.6), 9rem);
     background: var(--ink);
     color: var(--paper);
   }
 
-  .bfit__title,
-  .bsteps__title,
-  .bconcept__name {
-    font-family: var(--font-display);
-    font-weight: 800;
-    font-size: 1.5rem;
-    line-height: 1;
+  .bconcepts .label {
+    color: var(--muted-on-ink);
+  }
+
+  .bconcepts__text {
+    max-width: 42rem;
+    margin-top: 1rem;
+    font-size: clamp(1rem, calc(var(--u) * 0.18), 1.1rem);
+    line-height: 1.5;
+  }
+
+  /* ---------- the guide: intro and cards, then the steps ---------- */
+  .bfit {
+    padding-block: clamp(3rem, calc(var(--u) * 0.9), 5.5rem);
+  }
+
+  .bfit__sheet {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .bfit__text {
+    max-width: 38rem;
+    margin-top: 1rem;
+    font-size: clamp(1rem, calc(var(--u) * 0.18), 1.1rem);
+    line-height: 1.55;
+  }
+
+  .bfit__cards {
+    display: grid;
+    gap: max(12px, calc(var(--u) * 0.2));
+  }
+
+  .bfit__card {
+    display: grid;
+    align-content: start;
+    gap: 0.5rem;
+    padding: clamp(1.25rem, calc(var(--u) * 0.3), 2rem);
+    border: 1px solid var(--ink);
+    background: var(--paper);
+    line-height: 1.5;
+  }
+
+  .bfit__card h3 {
+    font: 800 clamp(1.2rem, calc(var(--u) * 0.26), 1.6rem) / 1.05 var(--font-display);
     text-transform: uppercase;
   }
 
-  .bsteps__n {
-    font-family: var(--font-display);
-    font-weight: 800;
-    font-size: 2.5rem;
+  .bfit__card--1 {
+    border-top-right-radius: calc(var(--u) * 0.9);
   }
 
-  .bconcepts__list {
+  /* The right fit stands out. */
+  .bfit__card--2 {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .bfit__card--3 {
+    background: var(--peach);
+    border-bottom-left-radius: calc(var(--u) * 0.9);
+  }
+
+  .bfit__tag {
+    justify-self: start;
+    padding: 0.2rem 0.6rem;
+    border: 1px solid currentColor;
+    border-radius: 999px;
+    font: 400 0.6875rem var(--font-mono);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .bfit__note {
+    max-width: 36rem;
+    margin-top: 1.25rem;
+    color: var(--muted);
+    font-size: 0.9375rem;
+    line-height: 1.5;
+  }
+
+  :global(.bfit__btn) {
+    margin-top: 1rem;
+  }
+
+  .bfit__guide {
+    min-width: 0;
+  }
+
+  .bfit__sub {
+    font: 400 0.8125rem var(--font-mono);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .bfit__stages {
+    display: grid;
+    gap: max(12px, calc(var(--u) * 0.2));
+    margin-top: 1rem;
+  }
+
+  .bfit__stage {
+    display: grid;
+    align-content: start;
+    gap: 0.75rem;
+    padding: clamp(1.25rem, calc(var(--u) * 0.3), 2rem);
+    border: 1px solid var(--ink);
+    background: var(--paper);
+    line-height: 1.5;
+  }
+
+  .bfit__stage-n {
+    font: 400 0.75rem var(--font-mono);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .bfit__stage h4 {
+    font: 800 clamp(1.2rem, calc(var(--u) * 0.26), 1.6rem) / 1.05 var(--font-display);
+    text-transform: uppercase;
+  }
+
+  .bfit__stage > p:last-child {
+    padding-left: 1rem;
+    border-left: 2px solid var(--pink);
+  }
+
+  .bfit__check {
+    display: grid;
+    gap: 0.4rem;
+    margin-top: max(12px, calc(var(--u) * 0.2));
+    padding: clamp(1.25rem, calc(var(--u) * 0.3), 2rem);
+    background: var(--ink);
+    color: var(--paper);
+    border-bottom-right-radius: calc(var(--u) * 0.9);
+    line-height: 1.5;
+  }
+
+  .bfit__check h4 {
+    font: 800 clamp(1.1rem, calc(var(--u) * 0.22), 1.4rem) / 1.1 var(--font-display);
+    text-transform: uppercase;
+  }
+
+  .bfit__check p {
+    max-width: 52rem;
+  }
+
+  /* ---------- tiers ---------- */
+  .btiers {
+    padding-block: clamp(2.5rem, calc(var(--u) * 0.6), 3.5rem)
+      clamp(3rem, calc(var(--u) * 0.66), 4rem);
+    border-top: 1px solid var(--grid-line);
+  }
+
+  .btiers__text {
+    max-width: 42rem;
+    margin-top: 0.5rem;
+    font-size: clamp(1rem, calc(var(--u) * 0.18), 1.1rem);
+    line-height: 1.5;
+  }
+
+  .btiers__grid {
+    margin-top: clamp(2rem, calc(var(--u) * 0.6), 3.5rem);
+  }
+
+  /* ---------- care plans and Fast Track ---------- */
+  .bextras {
+    padding-block: clamp(3rem, calc(var(--u) * 0.9), 5.5rem);
+  }
+
+  .bextras__sheet {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .bextras__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .bextras__list .pill {
+    padding: 0.65rem 1rem;
+    background: transparent;
+    font-size: 0.75rem;
+    white-space: normal;
+  }
+
+  .bextras__more {
+    max-width: 36rem;
+    margin-top: 1.25rem;
+    line-height: 1.5;
+  }
+
+  .bextras__fast {
+    display: grid;
+    align-content: start;
+    gap: 0.5rem;
+    padding: clamp(1.25rem, calc(var(--u) * 0.3), 2rem);
+    border: 1px solid var(--ink);
+    background: var(--paper);
+    line-height: 1.45;
+  }
+
+  .bextras__price {
+    font: 800 clamp(2.2rem, calc(var(--u) * 0.55), 3.2rem) / 1 var(--font-display);
+    letter-spacing: -0.03em;
+  }
+
+  /* ---------- real before and after pairs (hidden until one exists) ---------- */
+  .bpairs__list {
     display: grid;
     gap: var(--space-5);
     margin-top: var(--space-4);
   }
 
-  .bconcept {
+  .bpair,
+  .bpair__imgs {
     display: grid;
     gap: 1rem;
   }
 
-  .bconcept__pair {
-    display: grid;
-    gap: var(--space-3);
+  .bpair__name {
+    font: 800 1.5rem / 1 var(--font-display);
+    text-transform: uppercase;
   }
 
-  .bconcept__pair :global(img) {
+  .bpair__imgs :global(img) {
     display: block;
     width: 100%;
     height: auto;
@@ -207,18 +503,29 @@ const steps = [
   }
 
   @media (min-width: 48rem) {
-    .bfit__cards,
-    .bsteps__list,
-    .bconcept__pair {
+    .bpair__imgs {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .bfit__sheet {
+      grid-template-columns: 6fr 5fr;
+      gap: calc(var(--u) * 0.66);
+      align-items: start;
+    }
+
+    .bfit__guide {
+      grid-column: 1 / -1;
+    }
+
+    .bfit__stages {
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
-    .bconcept__pair {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .bconcept__pair:has(> figure:only-child) {
-      grid-template-columns: minmax(0, 24rem);
+    .bextras__sheet {
+      grid-template-columns: 7fr 4fr;
+      align-items: start;
     }
   }
 </style>

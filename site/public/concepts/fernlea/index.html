@@ -1,0 +1,601 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fernlea Dental, dental practice (concept)</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="description" content="Concept website for Fernlea Dental, an independent dental practice in York.">
+<style>
+@font-face{font-family:'Gloock';font-style:normal;font-weight:400;font-display:swap;src:url(../fonts/gloock-latin-400-normal.woff2) format('woff2')}
+@font-face{font-family:'Instrument Serif';font-style:italic;font-weight:400;font-display:swap;src:url(../fonts/instrument-serif-latin-400-italic.woff2) format('woff2')}
+@font-face{font-family:'Figtree';font-style:normal;font-weight:400;font-display:swap;src:url(../fonts/figtree-latin-400-normal.woff2) format('woff2')}
+@font-face{font-family:'Figtree';font-style:normal;font-weight:500;font-display:swap;src:url(../fonts/figtree-latin-500-normal.woff2) format('woff2')}
+@font-face{font-family:'Figtree';font-style:normal;font-weight:700;font-display:swap;src:url(../fonts/figtree-latin-700-normal.woff2) format('woff2')}
+</style>
+<style>
+:root{
+  --forest:#1F4D3A; --deep:#14352A; --moss:#5E8F70; --sage:#BFD0C3; --sage2:#8DB59B;
+  --ivory:#F4EEE1; --ivory2:#EAE2D0; --ink:#17251E; --mute:#4A5A50;
+  --clay:#A64B30; --clay-t:#9A4229; --clay-l:#E6A98F;
+  --serif:"Gloock","Iowan Old Style","Palatino Linotype",Georgia,serif;
+  --ital:"Instrument Serif","Iowan Old Style",Georgia,serif;
+  --sans:"Figtree","Helvetica Neue",Arial,sans-serif;
+  --pad:clamp(20px,5vw,72px);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{background:var(--ivory);scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--ivory);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4,p,dl,dd,dt,ul,ol,figure{margin:0;padding:0}
+ul,ol{list-style:none}
+a{color:inherit}
+img{display:block;max-width:100%}
+:focus-visible{outline:3px solid var(--clay);outline-offset:4px;border-radius:3px}
+.dk :focus-visible{outline-color:var(--clay-l)}
+.page{overflow-x:clip;position:relative}
+.wrap{padding-left:var(--pad);padding-right:var(--pad);max-width:1480px;margin:0 auto;position:relative}
+.dk{background:var(--forest);color:var(--ivory)}
+.dp{background:var(--deep);color:var(--ivory)}
+.eyebrow{font-family:var(--sans);font-size:13px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--clay-t);display:flex;align-items:center;gap:12px}
+.eyebrow::before{content:"";width:34px;height:2px;background:currentColor;display:block;flex:none}
+.dk .eyebrow,.dp .eyebrow{color:var(--clay-l)}
+h2{font-family:var(--serif);font-weight:400;font-size:clamp(2.1rem,4.6vw,3.9rem);line-height:1.04;letter-spacing:-.012em}
+h2 em,h1 em{font-family:var(--ital);font-style:italic;font-weight:400;letter-spacing:0}
+.btn{display:inline-flex;align-items:center;gap:12px;font:700 14px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;text-decoration:none;padding:17px 24px;border:2px solid transparent;border-radius:2px;transition:background .25s,color .25s,border-color .25s,transform .25s}
+.btn svg{width:18px;height:18px;transition:transform .25s}
+.btn-clay{background:var(--clay);color:#fff}
+.btn-clay:hover,.btn-clay.on{background:#B95A3D;transform:translateY(-2px)}
+.btn-clay:hover svg,.btn-clay.on svg{transform:translateX(4px)}
+.btn-line{border-color:rgba(244,238,225,.55);color:var(--ivory)}
+.btn-line:hover,.btn-line.on{background:var(--ivory);color:var(--forest)}
+
+/* ---------- HERO ---------- */
+.hero{position:relative;overflow:hidden;min-height:min(100svh,900px);display:flex;flex-direction:column}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(70% 80% at 78% 38%,rgba(94,143,112,.28),transparent 70%),radial-gradient(60% 60% at 0% 100%,rgba(20,53,42,.7),transparent 70%);pointer-events:none}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:20px;padding-top:22px;position:relative;z-index:5}
+.mono{display:inline-flex;align-items:center;gap:12px;text-decoration:none;font-weight:700;font-size:14px;letter-spacing:.06em}
+.mono b{width:46px;height:46px;border:1.5px solid var(--ivory);border-radius:50%;display:grid;place-items:center;font:400 18px/1 var(--serif);letter-spacing:0;position:relative}
+.mono b::after{content:"";position:absolute;right:-3px;bottom:5px;width:9px;height:9px;border-radius:50%;background:var(--clay)}
+.nav ul{display:flex;gap:clamp(14px,2.6vw,36px);font-size:14px;font-weight:500}
+.nav ul a{text-decoration:none;padding:6px 0;background:linear-gradient(var(--clay-l),var(--clay-l)) 0 100%/0 2px no-repeat;transition:background-size .3s}
+.nav ul a:hover,.nav ul a.on{background-size:100% 2px}
+.tag{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;border:1.5px solid rgba(244,238,225,.5);border-radius:99px;padding:6px 12px;white-space:nowrap}
+.hero-in{flex:1;display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);align-items:center;gap:clamp(8px,3vw,40px);position:relative;z-index:2;padding-top:clamp(20px,4vh,44px);padding-bottom:clamp(30px,5vh,60px)}
+.kicker{font-size:13px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--clay-l);display:flex;gap:12px;align-items:center;margin-bottom:clamp(14px,2.4vw,26px)}
+.kicker i{width:34px;height:2px;background:var(--clay-l);display:block}
+h1{font-family:var(--serif);font-weight:400;font-size:clamp(3.3rem,8.6vw,8.6rem);line-height:.94;letter-spacing:-.02em;position:relative;z-index:3}
+h1 .l{display:block;overflow:hidden;padding:.04em .06em .1em;margin:-.04em -.06em -.1em}
+h1 .l>span{display:block}
+h1 em{color:var(--sage);font-size:1.08em;line-height:.8}
+.lede{max-width:34ch;font-size:clamp(17px,1.5vw,20px);line-height:1.5;margin-top:clamp(18px,2.6vw,32px);color:#E7EADB}
+.cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:clamp(22px,3vw,38px)}
+.art{position:relative;align-self:stretch;min-height:clamp(430px,56vw,760px);display:flex;align-items:center;justify-content:center}
+.brush{position:absolute;left:-14%;top:-3%;width:128%;height:106%;pointer-events:none;z-index:0;will-change:transform}
+.brush svg,.brush-f svg{width:100%;height:100%;overflow:visible;display:block}
+.brush path,.brush-f path{fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1 2;stroke-dashoffset:1.1}
+.brush-f{position:absolute;left:-14%;top:-3%;width:128%;height:106%;pointer-events:none;z-index:3;will-change:transform}
+.arch{position:relative;z-index:1;width:min(78%,400px);aspect-ratio:2/3;border-radius:999px 999px 6px 6px;overflow:hidden;background:#0f2a21;box-shadow:0 30px 60px -28px rgba(0,0,0,.6);will-change:transform}
+.arch .mk{position:absolute;inset:-6%;will-change:transform}.arch .mk svg{width:100%;height:100%;display:block}
+.vert{position:absolute;right:calc(var(--pad) * .35);top:50%;transform:translateY(-50%) rotate(180deg);writing-mode:vertical-rl;font-size:12px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--sage);z-index:4;display:none}
+@media (min-width:1200px){.vert{display:block}}
+.scrollcue{position:absolute;left:var(--pad);bottom:18px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--sage);z-index:4;display:none}
+
+/* hero entrance */
+.js .hero h1 .l>span{transform:translateY(105%);animation:rise 1s cubic-bezier(.2,.8,.2,1) forwards}
+.js .hero h1 .l:nth-child(2)>span{animation-delay:.12s}.js .hero h1 .l:nth-child(3)>span{animation-delay:.24s}
+.js .hero .kicker,.js .hero .lede,.js .hero .cta,.js .hero .nav{opacity:0;animation:fadeup .9s .5s ease-out forwards}
+.js .hero .lede{animation-delay:.65s}.js .hero .cta{animation-delay:.8s}.js .hero .nav{animation-delay:.1s}
+@keyframes rise{to{transform:none}}
+@keyframes fadeup{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+/* ---------- PROFILE ---------- */
+.profile{padding:clamp(70px,10vw,140px) 0 clamp(60px,8vw,110px);background:var(--ivory);position:relative}
+.pgrid{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(30px,6vw,100px);align-items:center}
+.pfig{position:relative;max-width:480px;padding:0 0 clamp(80px,9vw,120px) 34px}
+.pfig .mg{position:absolute;left:0;bottom:6px;font-family:var(--serif);font-size:clamp(6rem,13vw,11rem);line-height:.8;color:transparent;-webkit-text-stroke:2px var(--forest);z-index:0;letter-spacing:.01em;pointer-events:none}
+.pfig .box{position:relative;aspect-ratio:1;background:#C3D3C2;overflow:hidden;z-index:1}
+.pfig .box svg{width:100%;height:100%;display:block;transform:scale(1.04);transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
+.pfig.on .box svg{transform:scale(1.1) translate(-1.5%,1%)}
+.pfig .slab{position:absolute;right:-6px;bottom:calc(clamp(80px,9vw,120px) - 34px);width:58%;height:22%;background:var(--forest);z-index:0;transform:translate(0,0)}
+.pfig .tape{position:absolute;right:-18px;top:46%;width:46%;height:16px;background:var(--clay);z-index:2;transform:rotate(-3deg);border-radius:2px 8px 3px 6px;opacity:.95}
+.splat{position:absolute;right:6%;top:-22px;width:70px;height:70px;z-index:3}
+.ptxt h2{margin:16px 0 22px}
+.ptxt p{max-width:58ch;color:var(--ink);margin-bottom:16px}
+.ptxt p.big{font-family:var(--ital);font-size:clamp(1.5rem,2.3vw,2.1rem);line-height:1.2;color:var(--forest);max-width:30ch;margin-bottom:22px}
+.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 26px;margin-top:28px;border-top:1.5px solid var(--forest)}
+.facts div{padding:13px 0;border-bottom:1px solid rgba(31,77,58,.28)}
+.facts dt{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+.facts dd{font-family:var(--serif);font-size:1.15rem;line-height:1.3;margin-top:2px}
+
+/* ---------- HOW I WORK ---------- */
+.how{padding:clamp(60px,8vw,110px) 0;position:relative;overflow:hidden}
+.how .head{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;flex-wrap:wrap;margin-bottom:clamp(34px,5vw,64px)}
+.how h2{margin-top:14px}
+.how .head>p{max-width:36ch;color:var(--sage)}
+.prin{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border-top:1px solid rgba(191,208,195,.35)}
+.pr{padding:30px clamp(14px,1.6vw,26px) 34px;border-left:1px solid rgba(191,208,195,.28);position:relative;transition:background .35s}
+.pr:first-child{border-left:0;padding-left:0}
+.pr::before{content:"";position:absolute;left:0;top:-1px;height:3px;width:0;background:var(--clay-l);transition:width .5s cubic-bezier(.2,.7,.2,1)}
+.pr:first-child::before{left:0}
+.pr.on::before{width:100%}
+.pr.on{background:rgba(94,143,112,.14)}
+.pr .n{font-family:var(--ital);font-size:1.4rem;color:var(--clay-l);line-height:1}
+.pr svg{width:44px;height:44px;margin:16px 0 14px;stroke:var(--ivory);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;display:block;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.pr.on svg{transform:translateY(-4px) rotate(-4deg)}
+.pr h3{font-family:var(--serif);font-weight:400;font-size:1.35rem;line-height:1.15;margin-bottom:10px}
+.pr p{font-size:15.5px;line-height:1.55;color:#D5E0D7}
+
+/* ---------- EXPERIENCE ---------- */
+.exp{padding:clamp(70px,9vw,130px) 0;background:var(--ivory);position:relative}
+.exp .head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:30px;align-items:end;margin-bottom:clamp(36px,5vw,70px)}
+.exp .head h2{margin-top:14px}
+.exp .head>p{color:var(--mute);max-width:44ch;justify-self:end}
+.tl{position:relative;--p:0}
+.tl::before{content:"";position:absolute;left:calc(clamp(110px,14vw,200px) + 14px);top:10px;bottom:10px;width:2px;background:rgba(31,77,58,.2)}
+.tl::after{content:"";position:absolute;left:calc(clamp(110px,14vw,200px) + 14px);top:10px;height:calc((100% - 20px) * var(--p));width:2px;background:var(--forest)}
+.role{display:grid;grid-template-columns:clamp(110px,14vw,200px) 30px minmax(0,1fr);column-gap:0;padding:0 0 clamp(34px,5vw,64px);position:relative}
+.role:last-child{padding-bottom:0}
+.when{font-family:var(--ital);font-size:clamp(1.25rem,1.9vw,1.7rem);line-height:1.15;color:var(--forest);padding-top:3px;padding-right:14px;text-align:right}
+.when small{display:block;font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);margin-top:6px}
+.node{position:relative}
+.node::before{content:"";position:absolute;left:8px;top:10px;width:14px;height:14px;border-radius:50%;background:var(--ivory);border:2px solid var(--forest);transition:background .3s,transform .3s,border-color .3s;z-index:2}
+.role.on .node::before,.role.cur .node::before{background:var(--clay);border-color:var(--clay);transform:scale(1.35)}
+.rbody{padding:0 0 0 clamp(10px,2vw,30px);transition:transform .4s cubic-bezier(.2,.7,.2,1)}
+.role.on .rbody{transform:translateX(8px)}
+.rbody h3{font-family:var(--serif);font-weight:400;font-size:clamp(1.5rem,2.5vw,2.2rem);line-height:1.1}
+.org{font-size:15px;font-weight:500;color:var(--mute);margin:6px 0 14px}
+.org a{text-decoration:none;border-bottom:1.5px solid var(--clay);padding-bottom:1px}
+.rbody li{position:relative;padding-left:22px;margin-bottom:8px;max-width:64ch}
+.rbody li::before{content:"";position:absolute;left:0;top:.72em;width:12px;height:2px;background:var(--clay)}
+
+/* ---------- SKILLS + EDU ---------- */
+.sk{padding:clamp(60px,8vw,110px) 0;background:var(--ivory2);position:relative}
+.skg{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(34px,6vw,96px)}
+.sk h2{margin:14px 0 8px}
+.note{font-size:14px;color:var(--mute);margin-bottom:22px}
+.scale .tx{display:block;font-size:15px;color:var(--mute);margin-top:2px}
+.scale li{display:block;padding:13px 0;border-bottom:1px solid rgba(31,77,58,.25);transition:padding .3s}
+.scale li:first-child{border-top:1.5px solid var(--forest)}
+.scale li.on{padding-left:10px}
+.scale b{font-weight:500;font-size:17px}
+.dots{display:flex;gap:7px}
+.dots i{width:15px;height:15px;border-radius:50%;border:2px solid var(--forest);display:block;transition:transform .3s}
+.dots i.f{background:var(--forest)}
+.scale li.on .dots i.f{transform:scale(1.18);background:var(--clay);border-color:var(--clay)}
+.edu h3.sub{font-family:var(--serif);font-weight:400;font-size:1.5rem;margin:6px 0 16px}
+.edu ul{margin-bottom:34px}
+.edu li{padding:16px 0;border-bottom:1px solid rgba(31,77,58,.25)}
+.edu li:first-child{border-top:1.5px solid var(--forest)}
+.edu li b{display:block;font-family:var(--serif);font-weight:400;font-size:1.2rem;line-height:1.25}
+.edu li span{display:block;font-size:15px;color:var(--mute);margin-top:3px}
+
+/* ---------- CONTACT ---------- */
+.contact{position:relative;overflow:hidden;padding:clamp(70px,9vw,130px) 0}
+.cgrid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(30px,6vw,90px);align-items:center;position:relative;z-index:2}
+.contact h2{font-size:clamp(2.4rem,5.6vw,5rem);margin-top:16px}
+.contact h2 em{color:var(--sage)}
+.cbox{border-left:1.5px solid rgba(191,208,195,.45);padding-left:clamp(20px,4vw,56px)}
+.cbox p{color:#D5E0D7;max-width:40ch}
+.mail{display:block;font-family:var(--serif);font-size:clamp(1.35rem,2.6vw,2.3rem);line-height:1.15;margin:18px 0 6px;text-decoration:none;word-break:break-word;border-bottom:2px solid var(--clay-l);padding-bottom:6px;transition:color .25s}
+.mail:hover,.mail.on{color:var(--clay-l)}
+.cmeta{display:flex;flex-wrap:wrap;gap:8px 28px;margin:20px 0 26px;font-size:15px}
+.cmeta span{color:var(--sage)}
+.eye{position:relative;margin-bottom:22px;width:clamp(84px,9vw,112px);aspect-ratio:1;border-radius:50%;overflow:hidden;border:2px solid var(--ivory);z-index:3}
+.eye svg{width:100%;height:100%;display:block}
+.cbrush{position:absolute;right:-6%;bottom:-18%;width:min(62%,760px);aspect-ratio:3/2;z-index:1;pointer-events:none;opacity:.9}
+.cbrush svg{width:100%;height:100%;overflow:visible;display:block}
+.cbrush path{fill:none;stroke-linecap:round;stroke-dasharray:1 2;stroke-dashoffset:1.1}
+footer{background:var(--deep);color:var(--sage);padding:26px 0 70px;font-size:14px}
+footer .wrap{display:flex;justify-content:space-between;gap:12px 30px;flex-wrap:wrap;align-items:center}
+footer b{font-family:var(--serif);font-weight:400;color:var(--ivory);font-size:17px}
+
+/* reveal */
+.js .rv{opacity:0;transform:translateY(22px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0s)}
+.js .rv.in{opacity:1;transform:none}
+
+/* ---------- CALMER BUSINESS TONE ---------- */
+body{font-size:18px;line-height:1.65}
+h2{font-size:clamp(1.9rem,3.5vw,2.9rem);line-height:1.1}
+.contact h2{font-size:clamp(2rem,4vw,3.3rem)}
+h1{font-size:clamp(2.5rem,5.3vw,4.8rem);line-height:1.04;letter-spacing:-.015em}
+h1 em{font-size:1em;line-height:1}
+h1 .l{padding:.04em .06em .08em;margin:-.04em -.06em -.08em}
+.hero{min-height:0}
+.hero::before{display:none}
+.hero-in{padding-top:clamp(28px,5vh,56px);padding-bottom:clamp(44px,7vh,80px);gap:clamp(20px,4vw,56px)}
+.lede{font-size:clamp(18px,1.5vw,20px);max-width:46ch;color:var(--ivory)}
+.art{min-height:clamp(380px,40vw,540px)}
+.arch{width:min(74%,340px);box-shadow:none}
+.brush-f,.cbrush,.vert,.pfig .splat,.pfig .tape,.pfig .slab,.pfig .mg{display:none!important}
+.pfig{padding:0}
+.nav-cta{padding:12px 18px;font-size:13px}
+.nav .r{display:flex;align-items:center;gap:14px}
+.profile,.how,.exp,.sk,.contact{padding-top:clamp(56px,7vw,96px);padding-bottom:clamp(56px,7vw,96px)}
+.how .head,.exp .head{margin-bottom:clamp(28px,4vw,48px)}
+.pr.on svg,.role.on .rbody,.pfig.on .box svg{transform:none!important}
+.scale li.on{padding-left:0}
+.scale li.on .dots i.f{transform:none}
+.ptxt p.big{font-size:clamp(1.4rem,2vw,1.8rem)}
+.pr p,.rbody li,.scale .tx{font-size:16.5px}
+.btn:hover,.btn.on{transform:none}
+@media (max-width:900px){.art{min-height:clamp(300px,80vw,420px)}.nav ul{display:none}}
+@media (max-width:700px){.nav-cta{padding:11px 14px;font-size:12px}}
+/* ---------- BADGE ---------- */
+.badge{position:fixed;z-index:90;left:max(12px,env(safe-area-inset-left,0px));bottom:max(12px,env(safe-area-inset-bottom,0px));display:inline-flex;align-items:center;gap:8px;background:#0f2a21;color:var(--ivory);border-radius:99px;padding:8px 14px 8px 11px;font-size:12px;font-weight:600;line-height:1.2;box-shadow:0 0 0 1.5px var(--ivory),0 10px 24px -8px rgba(10,30,22,.6);max-width:calc(100vw - 24px)}
+.badge a:focus-visible{outline-color:var(--clay-l)}
+/* HU/MAN concept badge */
+.badge{display:flex;flex-wrap:wrap;align-items:center;gap:2px 12px;pointer-events:auto;border-radius:18px;line-height:1.3}
+.badge a{color:inherit;font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.badge a:focus-visible{outline:2px solid currentColor;outline-offset:3px;border-radius:3px}
+@media (max-width:640px){.badge{position:static;margin:24px max(16px,env(safe-area-inset-left,0px)) max(16px,env(safe-area-inset-bottom,0px));max-width:none;justify-content:center;text-align:center;border-radius:14px}footer{padding-bottom:26px!important}}
+
+.badge-made{display:inline-flex;align-items:center;gap:6px}
+.badge-logo{display:block;height:11px;width:auto;flex:none}
+.badge-logo path{animation:badge-logo-fade 14s linear infinite}
+@keyframes badge-logo-fade{0%{fill:#cea4ee}12.5%{fill:#93aee0}25%{fill:#4a9bb0}37.5%{fill:#edd1a8}50%{fill:#f8cea2}62.5%{fill:#e79569}75%{fill:#e85e8f}87.5%{fill:#db92db}100%{fill:#cea4ee}}
+@media (prefers-reduced-motion: reduce){.badge-logo path{animation-duration:14s!important;animation-iteration-count:infinite!important}}
+
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width:1100px){
+  .prin{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .pr:nth-child(4){border-left:0;padding-left:0}
+  .pr:nth-child(n+4){border-top:1px solid rgba(191,208,195,.28)}
+}
+@media (max-width:900px){
+  .hero-in{grid-template-columns:1fr}
+  .art{min-height:clamp(420px,110vw,620px);margin-top:10px}
+  .nav ul{display:none}
+  .pgrid,.skg,.cgrid,.exp .head{grid-template-columns:1fr}
+  .exp .head>p{justify-self:start}
+  .pfig{margin:0 auto 10px;width:100%;max-width:420px}
+  .cbox{border-left:0;border-top:1.5px solid rgba(191,208,195,.45);padding:28px 0 0}
+}
+@media (max-width:700px){
+  body{font-size:16.5px}
+  .prin{grid-template-columns:1fr 1fr}
+  .pr,.pr:nth-child(4){border-left:1px solid rgba(191,208,195,.28);padding-left:clamp(14px,3vw,22px)}
+  .pr:nth-child(odd){border-left:0;padding-left:0}
+  .pr:nth-child(n+3){border-top:1px solid rgba(191,208,195,.28)}
+  .pr:first-child::before,.pr:nth-child(odd)::before{left:0}
+  .tl::before,.tl::after{left:9px}
+  .role{grid-template-columns:20px minmax(0,1fr);row-gap:4px}
+  .when{grid-column:2;grid-row:1;text-align:left;padding:0 0 0 12px;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px}
+  .when small{margin:0}
+  .node{grid-column:1;grid-row:1/span 2}
+  .node::before{left:2px;top:7px}
+  .rbody{grid-column:2;grid-row:2;padding-left:12px}
+  .facts{grid-template-columns:1fr}
+  .tag{display:none}
+  .cbrush{width:90%;bottom:-8%}
+}
+@media (max-width:420px){.prin{grid-template-columns:1fr}.pr:nth-child(n){border-left:0;padding-left:0}.pr:nth-child(n+2){border-top:1px solid rgba(191,208,195,.28)}}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .js .rv,.js .hero .kicker,.js .hero .lede,.js .hero .cta,.js .hero .nav{opacity:1!important;transform:none!important}
+  .js .hero h1 .l>span{transform:none!important}
+  .badge-logo path{animation:badge-logo-fade 14s linear infinite!important}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<header class="hero dk" id="top">
+  <div class="wrap" style="width:100%">
+    <nav class="nav" aria-label="Main">
+      <a class="mono" href="#top" aria-label="Fernlea Dental, back to top"><b aria-hidden="true">FD</b><span>Fernlea Dental</span></a>
+      <ul>
+        <li><a href="#profile">The practice</a></li>
+        <li><a href="#treatments">Treatments</a></li>
+        <li><a href="#first-visit">First visit</a></li>
+        <li><a href="#visit">Visit us</a></li>
+        <li><a href="#contact">Book</a></li>
+      </ul>
+      <span class="r"><a class="btn btn-clay nav-cta" href="#contact">Book an appointment</a><span class="tag">Concept</span></span>
+    </nav>
+  </div>
+  <div class="wrap hero-in" style="width:100%">
+    <div class="copy">
+      <p class="kicker"><i></i>Independent dental practice &middot; York</p>
+      <h1><span class="l"><span>Dental care</span></span><span class="l"><span>at a calmer</span></span><span class="l"><span><em>pace.</em></span></span></h1>
+      <p class="lede">Fernlea is a small independent practice in York. Plain explanations, unhurried appointments and a team who know your name.</p>
+      <div class="cta">
+        <a class="btn btn-clay" href="#contact">Book an appointment <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+        <a class="btn btn-line" href="#treatments">See treatments</a>
+      </div>
+    </div>
+    <div class="art" id="art">
+      <div class="brush" id="brush" aria-hidden="true">
+        <svg viewBox="0 0 600 760" preserveAspectRatio="none" focusable="false">
+          <defs>
+            <filter id="rough" x="-15%" y="-15%" width="130%" height="130%"><feTurbulence type="fractalNoise" baseFrequency=".022 .05" numOctaves="3" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="30" xChannelSelector="R" yChannelSelector="G"/></filter>
+            <filter id="dry" x="-15%" y="-15%" width="130%" height="130%"><feTurbulence type="fractalNoise" baseFrequency=".6 .02" numOctaves="2" seed="2" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="16" xChannelSelector="R" yChannelSelector="G"/></filter>
+          </defs>
+          <g filter="url(#rough)">
+            <path data-k="m" data-delay="0" pathLength="1" stroke="#5E8F70" stroke-width="128" d="M70 660 C150 480 480 560 440 340 C410 180 190 250 300 120 C360 50 470 60 540 40"/>
+          </g>
+          <g filter="url(#dry)">
+            <path data-k="m" data-delay=".18" data-dx="22" data-dy="-12" transform="translate(22 -12)" pathLength="1" stroke="#8DB59B" stroke-width="30" opacity=".85" d="M70 660 C150 480 480 560 440 340 C410 180 190 250 300 120 C360 50 470 60 540 40"/>
+            <path data-k="m" data-delay=".32" data-dx="-30" data-dy="18" transform="translate(-30 18)" pathLength="1" stroke="#F4EEE1" stroke-width="10" opacity=".5" d="M70 660 C150 480 480 560 440 340 C410 180 190 250 300 120 C360 50 470 60 540 40"/>
+          </g>
+        </svg>
+      </div>
+      <div class="arch" id="arch" aria-hidden="true"><div class="mk" id="avimg"><svg viewBox="0 0 400 600" preserveAspectRatio="xMidYMid slice" focusable="false">
+<defs><linearGradient id="ag" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2F6D52"/><stop offset=".6" stop-color="#1F4D3A"/><stop offset="1" stop-color="#14352A"/></linearGradient></defs>
+<rect width="400" height="600" fill="url(#ag)"/>
+<circle cx="255" cy="190" r="118" fill="#5E8F70" opacity=".55"/>
+<circle cx="255" cy="190" r="118" fill="none" stroke="#BFD0C3" stroke-width="1.5" opacity=".5"/>
+<g filter="url(#dry)" fill="none" stroke-linecap="round"><path d="M-20 470 C90 410 190 500 300 430 C350 400 390 410 430 380" stroke="#8DB59B" stroke-width="46" opacity=".55"/><path d="M-20 540 C110 490 200 570 420 500" stroke="#0f2a21" stroke-width="60" opacity=".7"/><path d="M40 120 C120 80 170 140 250 90" stroke="#F4EEE1" stroke-width="5" opacity=".35"/></g>
+<circle cx="96" cy="94" r="9" fill="#C2674A"/>
+<text x="200" y="395" text-anchor="middle" font-family="Gloock,Georgia,serif" font-size="215" fill="#F4EEE1" letter-spacing="-6">FD</text>
+<path d="M70 430 H330" stroke="#F4EEE1" stroke-width="1.5" opacity=".6"/>
+<text x="200" y="468" text-anchor="middle" font-family="Instrument Serif,Georgia,serif" font-style="italic" font-size="34" fill="#BFD0C3">dental practice</text>
+</svg></div></div>
+      <div class="brush-f" id="brushf" aria-hidden="true">
+        <svg viewBox="0 0 600 760" preserveAspectRatio="none" focusable="false">
+          <g filter="url(#dry)"><path data-k="c" data-delay=".5" pathLength="1" stroke="#C2674A" stroke-width="20" d="M20 690 C150 668 300 706 470 676"/></g>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <span class="vert" aria-hidden="true">York &middot; United Kingdom &middot; Dental practice</span>
+</header>
+
+<main>
+<section class="profile" id="profile" aria-labelledby="h-profile">
+  <div class="wrap pgrid">
+    <figure class="pfig rv" id="pfig">
+      <span class="mg" aria-hidden="true">FD</span>
+      <div class="slab" aria-hidden="true"></div>
+      <div class="box" aria-hidden="true"><svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice" focusable="false">
+<rect width="400" height="400" fill="#C3D3C2"/>
+<circle cx="140" cy="150" r="104" fill="#1F4D3A"/>
+<circle cx="250" cy="230" r="104" fill="#5E8F70" opacity=".85" style="mix-blend-mode:multiply"/>
+<path d="M0 400 V300 C80 250 150 330 240 290 C310 260 360 280 400 250 V400Z" fill="#14352A"/>
+<g filter="url(#dry)" fill="none" stroke-linecap="round"><path d="M30 80 C130 30 250 110 370 50" stroke="#F4EEE1" stroke-width="12" opacity=".8"/><path d="M30 340 C120 310 230 370 380 320" stroke="#8DB59B" stroke-width="16"/></g>
+<path d="M286 70 a46 46 0 0 1 0 92z" fill="#A64B30"/>
+</svg></div>
+      <span class="tape" aria-hidden="true"></span>
+      <svg class="splat" viewBox="0 0 70 70" aria-hidden="true" focusable="false"><g fill="#A64B30"><circle cx="30" cy="38" r="9"/><circle cx="52" cy="22" r="5"/><circle cx="14" cy="16" r="3.5"/><circle cx="58" cy="50" r="2.6"/><circle cx="40" cy="60" r="3"/><circle cx="8" cy="48" r="2"/></g></svg>
+    </figure>
+    <div class="ptxt">
+      <p class="eyebrow rv">The practice</p>
+      <h2 id="h-profile" class="rv" style="--d:.06s">A small practice, <em>unhurried</em> appointments.</h2>
+      <p class="big rv" style="--d:.1s">We keep the surgery quiet, the explanations plain and the diary a little looser than most.</p>
+      <p class="rv" style="--d:.14s">Fernlea is an independent practice in York, run by a small team who like to see familiar faces. We explain what we see, talk through the options and leave the decision with you.</p>
+      <p class="rv" style="--d:.18s">Whether you come for a routine check-up or for something that has been worrying you for a while, you will not be rushed or lectured.</p>
+      <dl class="facts rv" style="--d:.22s">
+        <div><dt>Based in</dt><dd>York, United Kingdom</dd></div>
+        <div><dt>Practice</dt><dd>Independent dental practice</dd></div>
+        <div><dt>Access</dt><dd>Step-free entrance</dd></div>
+        <div><dt>Booking</dt><dd>By email, with a reply in working hours</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section class="how dp" id="treatments" aria-labelledby="h-how">
+  <div class="wrap">
+    <div class="head">
+      <div><p class="eyebrow rv">Treatments</p><h2 id="h-how" class="rv" style="--d:.06s">Five kinds of appointment, <em>plainly</em> put.</h2></div>
+      <p class="rv" style="--d:.1s">Your dentist will talk you through what suits you before anything starts.</p>
+    </div>
+    <ol class="prin">
+      <li class="pr rv" style="--d:0s"><span class="n">01</span>
+        <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false"><circle cx="19" cy="19" r="11"/><path d="M27 27l14 14"/><path d="M14 17a6 6 0 0 1 5-4" opacity=".6"/></svg>
+        <h3>Check-ups</h3><p>A routine look at your teeth and gums, with time to ask questions and agree how often to come back.</p></li>
+      <li class="pr rv" style="--d:.07s"><span class="n">02</span>
+        <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false"><path d="M12 38L34 16M30 12l8 8M10 40l-3 3"/><path d="M36 6v6M33 9h6" opacity=".7"/></svg>
+        <h3>Hygienist visits</h3><p>A thorough clean and friendly advice on looking after your teeth and gums at home.</p></li>
+      <li class="pr rv" style="--d:.14s"><span class="n">03</span>
+        <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false"><path d="M14 8c-5 0-8 4-8 9 0 6 3 8 4 14 1 6 3 11 6 11 3 0 3-8 8-8s5 8 8 8c3 0 5-5 6-11 1-6 4-8 4-14 0-5-3-9-8-9-4 0-6 2-10 2s-6-2-10-2z" transform="translate(2 -2) scale(.92)"/></svg>
+        <h3>Fillings</h3><p>Repairing a tooth that has a cavity or a chip, explained step by step before we begin.</p></li>
+      <li class="pr rv" style="--d:.21s"><span class="n">04</span>
+        <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false"><path d="M24 6v10M24 32v10M6 24h10M32 24h10M12 12l6 6M30 30l6 6M36 12l-6 6M18 30l-6 6" opacity=".75"/><circle cx="24" cy="24" r="4"/></svg>
+        <h3>Whitening</h3><p>A cosmetic option for those who would like lighter teeth. We talk through what is and is not suitable.</p></li>
+      <li class="pr rv" style="--d:.28s"><span class="n">05</span>
+        <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false"><circle cx="24" cy="24" r="16"/><path d="M24 14v10l7 5"/></svg>
+        <h3>Emergency appointments</h3><p>Sudden pain or a broken tooth. We hold time free each day for urgent problems, so get in touch as early as you can.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section class="exp" id="first-visit" aria-labelledby="h-exp">
+  <div class="wrap">
+    <div class="head">
+      <div><p class="eyebrow rv">Your first visit</p><h2 id="h-exp" class="rv" style="--d:.06s">Four steps, <em>no</em> surprises.</h2></div>
+      <p class="rv" style="--d:.1s">This is what usually happens, in order. Ask us if you would like anything done differently.</p>
+    </div>
+    <div class="tl" id="tl">
+      <article class="role cur rv">
+        <div class="when">Step one<br>Before you come<small>Booking</small></div><div class="node" aria-hidden="true"></div>
+        <div class="rbody"><h3>Get in touch</h3><p class="org">By email, at a time that suits you</p>
+          <ul><li>Send a short message with the days that work best for you.</li><li>Tell us if you feel nervous or have worries about a particular treatment.</li><li>If you like, we will send a short health form to fill in at home.</li></ul></div>
+      </article>
+      <article class="role rv">
+        <div class="when">Step two<br>On the day<small>Arriving</small></div><div class="node" aria-hidden="true"></div>
+        <div class="rbody"><h3>Arrive and settle</h3><p class="org">A step-free entrance and a quiet waiting area</p>
+          <ul><li>Arrive a few minutes early so there is no rush.</li><li>Meet the person looking after you and ask anything you like.</li><li>Take the time you need. Nobody will hurry you.</li></ul></div>
+      </article>
+      <article class="role rv">
+        <div class="when">Step three<br>In the chair<small>Check-up</small></div><div class="node" aria-hidden="true"></div>
+        <div class="rbody"><h3>Your check-up</h3><p class="org">Unhurried, with plain explanations</p>
+          <ul><li>Your dentist looks at your teeth and gums and asks about your health history.</li><li>Anything we find is explained in plain words, with the options set out.</li><li>Nothing starts without your agreement.</li></ul></div>
+      </article>
+      <article class="role rv">
+        <div class="when">Step four<br>Before you go<small>Afterwards</small></div><div class="node" aria-hidden="true"></div>
+        <div class="rbody"><h3>Plan the next step</h3><p class="org">Written down, so you do not have to remember</p>
+          <ul><li>We note what was discussed and give you a copy.</li><li>We suggest when to come back, and you can book before you leave.</li></ul></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="sk" id="visit" aria-labelledby="h-sk">
+  <div class="wrap skg">
+    <div>
+      <p class="eyebrow rv">Nervous patients</p>
+      <h2 id="h-sk" class="rv" style="--d:.06s">If you feel <em>nervous</em>, say so.</h2>
+      <p class="note rv" style="--d:.1s">Plenty of people do. Here is what we can do to help.</p>
+      <ul class="scale rv" style="--d:.12s" id="scale">
+        <li><b>Say stop at any time</b><span class="tx">Agree a hand signal and we pause straight away.</span></li>
+        <li><b>We explain before we start</b><span class="tx">You will hear what is happening and why, in plain words.</span></li>
+        <li><b>Longer appointments on request</b><span class="tx">Ask when you book and we will leave extra time.</span></li>
+        <li><b>Bring someone with you</b><span class="tx">A friend or family member is welcome in the surgery.</span></li>
+        <li><b>A short, quiet first visit</b><span class="tx">Come to look around and meet us before any treatment.</span></li>
+      </ul>
+    </div>
+    <div class="edu">
+      <p class="eyebrow rv">Practice details</p>
+      <h3 class="sub rv" style="--d:.06s">Sample opening hours</h3>
+      <ul class="rv" style="--d:.1s">
+        <li><b>Monday to Thursday</b><span>8.30am to 5.30pm</span></li>
+        <li><b>Friday</b><span>8.30am to 4.00pm</span></li>
+        <li><b>Saturday and Sunday</b><span>Closed, apart from arranged emergency appointments</span></li>
+        <li><b>Hours shown are an example</b><span>This is a concept, so real times would be confirmed at booking</span></li>
+      </ul>
+      <p class="eyebrow rv">Find us</p>
+      <p class="rv" style="margin-top:12px">Fernlea Dental, York, United Kingdom. The entrance is step-free from the street, and the surgeries are on the ground floor.</p>
+    </div>
+  </div>
+</section>
+
+<section class="contact dk" id="contact" aria-labelledby="h-c">
+  <div class="cbrush" id="cbrush" aria-hidden="true">
+    <svg viewBox="0 0 600 400" preserveAspectRatio="none" focusable="false">
+      <g filter="url(#rough)"><path data-k="m" data-delay="0" pathLength="1" stroke="#2B6A50" stroke-width="96" d="M30 330 C150 250 260 360 360 230 C430 140 520 190 580 60"/></g>
+      <g filter="url(#dry)"><path data-k="m" data-delay=".2" pathLength="1" stroke="#C2674A" stroke-width="14" transform="translate(10 40)" d="M30 330 C150 250 260 360 360 230 C430 140 520 190 580 60"/></g>
+    </svg>
+  </div>
+  <div class="wrap cgrid">
+    <div>
+      <p class="eyebrow rv">Book an appointment</p>
+      <h2 id="h-c" class="rv" style="--d:.06s">Ready to book? <em>Send us a note</em>.</h2>
+    </div>
+    <div class="cbox rv" style="--d:.12s;position:relative">
+      <div class="eye" id="eye" aria-hidden="true"><svg viewBox="0 0 100 100" focusable="false"><rect width="100" height="100" fill="#2B6A50"/><circle cx="50" cy="50" r="34" fill="none" stroke="#BFD0C3" stroke-width="1.5"/><circle cx="50" cy="50" r="22" fill="#14352A"/><circle cx="58" cy="42" r="7" fill="#C2674A"/><text x="50" y="60" text-anchor="middle" font-family="Gloock,Georgia,serif" font-size="26" fill="#F4EEE1">FD</text></svg></div>
+      <p>Email is the best way to book. Tell us a little about what you need and the days that suit you.</p>
+      <a class="mail" id="mail" href="mailto:hello@fernleadental.example?subject=Appointment%20request">hello@fernleadental.example</a>
+      <div class="cmeta"><span>York, United Kingdom</span><span>Booking by email</span></div>
+      <a class="btn btn-clay" id="mailbtn" href="mailto:hello@fernleadental.example?subject=Appointment%20request">Book an appointment <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+    </div>
+  </div>
+</section>
+</main>
+
+
+<footer>
+  <div class="wrap">
+    <b>Fernlea Dental</b>
+    <p>This is a concept site designed by HU/MAN. The practice, team and details shown are part of the concept.</p>
+  </div>
+</footer>
+</div>
+
+<div class="badge" role="note"><a href="../../business-websites/">&larr; Back to HU/MAN</a><span class="badge-made">Made by <svg class="badge-logo" role="img" aria-label="Hu/man" viewBox="0 0 2054.33 438.67" focusable="false"><path fill-rule="evenodd" d="M928.67,21.00 L845.00,21.00 L843.67,22.00 L677.67,437.33 L678.33,438.33 L762.67,437.67 L928.67,23.00Z M1735.00,0.33 L1734.67,390.33 L1815.67,390.00 L1816.33,154.33 L1991.67,390.67 L2053.67,390.67 L2054.00,0.33 L1973.67,0.00 L1973.00,1.00 L1973.00,231.33 L1969.00,227.33 L1796.67,0.00Z M1488.00,0.33 L1355.67,390.00 L1443.67,390.67 L1469.33,312.33 L1471.00,310.67 L1612.33,310.67 L1614.33,313.33 L1639.67,390.67 L1727.33,390.67 L1728.00,390.00 L1718.00,360.00 L1711.00,341.67 L1695.00,292.00 L1688.00,273.67 L1672.00,224.00 L1665.00,205.67 L1596.00,0.33Z M1541.33,90.33 L1542.67,91.00 L1550.33,114.33 L1554.33,129.00 L1576.00,193.67 L1576.33,197.00 L1590.33,238.33 L1590.00,240.33 L1493.00,240.00 L1493.00,237.67Z M940.67,0.00 L940.67,390.67 L1020.67,390.67 L1021.67,389.67 L1022.00,134.67 L1139.67,291.00 L1149.67,291.00 L1152.67,288.00 L1268.00,139.33 L1268.33,390.33 L1349.33,390.00 L1348.67,0.00 L1271.67,0.00 L1269.67,1.00 L1147.00,168.67 L1138.00,158.33 L1018.67,0.00Z M345.33,0.33 L345.33,261.00 L348.33,281.00 L353.33,299.00 L361.33,317.00 L370.67,332.00 L382.67,347.00 L391.67,356.00 L412.67,372.00 L440.67,386.00 L469.67,394.00 L483.67,396.00 L508.67,397.00 L525.67,396.00 L548.33,392.33 L575.33,383.33 L590.67,375.67 L604.33,367.00 L614.67,359.00 L625.67,348.67 L635.67,337.00 L644.67,324.00 L649.67,315.00 L657.00,297.33 L660.67,285.00 L663.67,269.00 L665.00,250.00 L664.67,0.33 L584.00,0.33 L584.00,242.67 L581.33,264.33 L577.33,276.33 L572.33,286.33 L564.33,297.33 L555.00,306.67 L545.00,313.67 L533.67,319.00 L520.33,322.67 L508.33,323.67 L494.00,323.33 L484.00,321.33 L473.33,317.67 L460.33,310.67 L450.00,302.00 L443.00,294.33 L435.00,281.67 L428.67,264.67 L426.00,242.67 L426.00,0.67Z M0.33,0.33 L0.00,390.00 L81.00,390.33 L81.00,240.33 L82.00,239.33 L232.33,239.33 L233.33,240.33 L233.33,390.33 L314.33,390.33 L314.33,0.33 L233.33,0.67 L233.33,168.33 L232.33,169.00 L81.33,168.67 L81.00,0.67Z "/></svg></span></div>
+
+<script>
+(function(){
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var $ = function(s,r){return (r||document).querySelector(s)};
+  var $$ = function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+  
+
+  /* ---- self-painting brushstroke ---- */
+  var HERO_V = {
+    m:["M70 660 C150 480 480 560 440 340 C410 180 190 250 300 120 C360 50 470 60 540 40",
+       "M540 690 C430 520 120 600 170 380 C200 220 430 280 330 140 C290 80 170 80 70 60",
+       "M90 700 C60 500 300 470 330 330 C360 190 120 190 250 70 C330 10 450 40 520 90"],
+    c:["M20 690 C150 668 300 706 470 676","M130 700 C260 716 380 682 560 702","M30 706 C200 690 330 712 440 690"]
+  };
+  var BAND_V = { m:["M30 330 C150 250 260 360 360 230 C430 140 520 190 580 60",
+                    "M20 100 C140 190 250 70 360 190 C440 270 520 210 590 340",
+                    "M40 250 C170 340 240 200 370 270 C460 320 520 140 585 90"] };
+  function Brush(root, V, o){
+    this.paths=$$('path[data-k]',root); this.V=V; this.vi=0; this.t0=null;
+    this.paint=o.paint||2.3; this.hold=o.hold||6; this.wipe=o.wipe||1.5; this.gap=o.gap||.6;
+    this.apply();
+  }
+  Brush.prototype.apply=function(){var V=this.V,vi=this.vi;this.paths.forEach(function(p){var a=V[p.getAttribute('data-k')]||V.m;p.setAttribute('d',a[vi%a.length])})};
+  var ease=function(x){return x<0?0:x>1?1:1-Math.pow(1-x,3)};
+  Brush.prototype.draw=function(now){
+    if(this.t0==null) this.t0=now;
+    var e=(now-this.t0)/1000, per=this.paint+this.hold+this.wipe+this.gap;
+    if(e>=per){this.t0=now;e=0;this.vi++;this.apply()}
+    var self=this;
+    this.paths.forEach(function(p){
+      var l=e-parseFloat(p.getAttribute('data-delay')||0), off;
+      if(l<0) off=1.1;
+      else if(l<self.paint) off=(1-ease(l/self.paint))*1.1;
+      else if(l<self.paint+self.hold) off=0;
+      else if(l<self.paint+self.hold+self.wipe) off=-ease((l-self.paint-self.hold)/self.wipe)*1.1;
+      else off=-1.1;
+      p.style.strokeDashoffset=off.toFixed(4);
+    });
+  };
+  var hero = new Brush($('#brush'), HERO_V, {paint:2.4,hold:6.5,wipe:1.6});
+  var heroF = new Brush($('#brushf'), HERO_V, {paint:2.4,hold:6.5,wipe:1.6});
+  var band = new Brush($('#cbrush'), BAND_V, {paint:2.6,hold:7,wipe:1.6});
+  if(reduce){[hero,heroF,band].forEach(function(b){b.paths.forEach(function(p){p.style.strokeDashoffset=0})})}
+  /* keep the front clay stroke in step with the main one */
+  var bandOn = false;
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es){es.forEach(function(e){bandOn=e.isIntersecting;if(bandOn&&band.t0==null)band.t0=null})},{threshold:.15}).observe($('#contact'));
+  } else bandOn=true;
+
+  /* ---- mouse parallax: portrait shifts, stroke follows ---- */
+  var tx=0,ty=0,cx=0,cy=0,lastMove=-1e9,heroEl=$('#top');
+  function pm(e){
+    tx=(e.clientX/innerWidth-.5)*2; ty=(e.clientY/innerHeight-.5)*2;
+    lastMove=performance.now();
+  }
+  window.addEventListener('pointermove',pm,{passive:true});
+  window.addEventListener('mousemove',pm,{passive:true});
+  var arch=$('#arch'),img=$('#avimg'),br=$('#brush'),brf=$('#brushf'),eye=$('#eye'),pfig=$('#pfig');
+  var tl=$('#tl');
+  function tlUpdate(){
+    if(!tl) return; var r=tl.getBoundingClientRect(), h=innerHeight;
+    var p=(h*.62-r.top)/r.height; p=p<0?0:p>1?1:p; tl.style.setProperty('--p',p.toFixed(4));
+  }
+  if(reduce) tl.style.setProperty('--p',1); else {addEventListener('scroll',tlUpdate,{passive:true});addEventListener('resize',tlUpdate);tlUpdate()}
+
+  function frame(now){
+    var t=now/1000;
+    var idle = now-lastMove>2500;
+    var ax = idle ? Math.sin(t*.55)*.45 : tx, ay = idle ? Math.cos(t*.4)*.3 : ty;
+    cx+=(ax-cx)*.07; cy+=(ay-cy)*.07;
+    if(scrollY<innerHeight*1.3){
+      arch.style.transform='translate3d('+(cx*10).toFixed(2)+'px,'+(cy*6).toFixed(2)+'px,0)';
+      img.style.transform='translate3d('+(-cx*18).toFixed(2)+'px,'+(-cy*12).toFixed(2)+'px,0) scale(1.02)';
+      br.style.transform='translate3d('+(cx*38).toFixed(2)+'px,'+(cy*26).toFixed(2)+'px,0) rotate('+(cx*2.4).toFixed(2)+'deg)';
+      brf.style.transform='translate3d('+(cx*56).toFixed(2)+'px,'+(cy*30).toFixed(2)+'px,0)';
+      hero.draw(now); heroF.draw(now);
+    }
+    
+    requestAnimationFrame(frame);
+  }
+  if(!reduce) requestAnimationFrame(frame);
+
+  /* ---- reveals ---- */
+  if(!reduce && 'IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -6% 0px'});
+    $$('.rv').forEach(function(n){io.observe(n)});
+  } else $$('.rv').forEach(function(n){n.classList.add('in')});
+
+  /* ---- hover states driven from JS (mouseover/mouseout) ---- */
+  function hov(sel,cls){
+    document.addEventListener('mouseover',function(e){var n=e.target.closest&&e.target.closest(sel);if(n)n.classList.add(cls)});
+    document.addEventListener('mouseout',function(e){var n=e.target.closest&&e.target.closest(sel);if(n&&!(e.relatedTarget&&n.contains(e.relatedTarget)))n.classList.remove(cls)});
+  }
+  hov('.role','on'); hov('.pr','on'); hov('.scale li','on'); hov('#pfig','on');
+  hov('.nav ul a','on'); hov('.btn','on'); hov('.mail','on');
+  /* keyboard focus mirrors hover */
+  document.addEventListener('focusin',function(e){var n=e.target.closest&&e.target.closest('.role,.pr');if(n)n.classList.add('on')});
+  document.addEventListener('focusout',function(e){var n=e.target.closest&&e.target.closest('.role,.pr');if(n)n.classList.remove('on')});
+})();
+</script>
+<script src="../preview.js" defer></script>
+</body>
+</html>

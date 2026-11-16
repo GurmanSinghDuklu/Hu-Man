@@ -689,3 +689,16 @@ Lighthouse /portfolio/ 99/100/100/100, axe 0 violations, motion-check clear.
   Cards are `tabindex=0` list items with `aria-current` on the picked one (a `role` on `li` fails axe).
 - **Back to the top** (`BackToTop.astro`): fixed bottom-right, appears after 400px of scroll; the cookie button sits just above it.
   `main` has `tabindex="-1"` so the button can return focus to the top.
+
+## Business websites laid out like /portfolio (2026-11-16, branch `business-wall`)
+/business-websites/ now follows /portfolio's order (Gurman): hero with "See all 6 concepts below",
+an Ink live concept wall, a guide in the ATS layout (intro and the three fit cards, then the three
+steps and "Our check: the phone test"), the five tiers (`HeadlineCards`), then care plans and Fast
+Track, then TalkBanner. Copy is a draft awaiting his sign-off.
+1. **Business concepts have their own wall list**: `businessSiteConcepts` and `businessConceptsIntro`
+   in `src/data/portfolioConcepts.ts` (kept in that file so seo-check and concept-posters find every
+   slug). `ConceptWall` takes `concepts` and `intro` props; /portfolio uses the defaults. Ellie is on
+   both walls, borrowed by reference: seo-check fails if a slug is written twice.
+2. Business concept pages link back to `../../business-websites/` (seo-check accepts either page).
+3. `src/data/businessConcepts.ts` is now only for real before-and-after pairs; the section stays
+   hidden until an entry has a `before`.
