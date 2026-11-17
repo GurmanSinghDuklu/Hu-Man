@@ -9,9 +9,11 @@ import Sticker from '../play/Sticker.astro';
 
 interface Props {
   n: string;
+  /** The wireframe line drawing under the section (off on home, Gurman 2026-11-17). */
+  draw?: boolean;
 }
 
-const { n } = Astro.props;
+const { n, draw = true } = Astro.props;
 ---
 
 <section class="band agent" aria-labelledby={`agent-title-${n}`}>
@@ -44,7 +46,7 @@ const { n } = Astro.props;
     </div>
 
     <!-- From a sketch to a page people and AI agents can read: draws itself as you scroll. -->
-    <DrawWireframe class="agent__draw" />
+    {draw && <DrawWireframe class="agent__draw" />}
   </div>
 </section>
 
