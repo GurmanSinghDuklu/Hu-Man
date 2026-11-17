@@ -354,6 +354,12 @@ E-Commerce Regulations' geographic address is still missing: add a business addr
 address) when he has one. Terms: 50% deposit, 50% before launch (his choice); three revision rounds,
 "pay once" and "pay the difference" match the pricing page. Drafts, awaiting a solicitor's review;
 the 30-day quote validity, 30-days-late termination and liability cap are my defaults to confirm.
+Added 2026-11-17 (drafts, same review): terms 4 (client confirms CV content is accurate and consented;
+we don't verify), 7 (example designs stay ours and are non-exclusive; a custom design is the
+client's), 11 "Hosting and care" (no uptime promise, files handed over when hosting ends, takedown
+for fraud or unlawful use; later sections renumbered 12 to 15); privacy "If you become a client"
+(contract basis, Gmail/private GitHub/Cloudflare, 12-month retention defaults, one-month replies).
+Those storage claims must be true before the first client: client repos private, laptops encrypted.
 
 ## Motion (2026-10-27, "B · Alive", branch `motion`)
 Spec `docs/superpowers/specs/2026-10-27-motion-design.md` (see its "As built"), plan

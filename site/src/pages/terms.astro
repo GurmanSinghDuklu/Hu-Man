@@ -10,6 +10,8 @@ import { withBase } from '../config/paths';
 // Draft, 2026-10-27, awaiting a solicitor's review. Payment (50% deposit, 50% before launch) is
 // Gurman's choice; three revision rounds, "pay once" and "pay the difference" match the pricing
 // page. Keep them in step with docs/02-offer-and-pricing.md.
+// Added 2026-11-17 (draft, for the same review): your content (4), example designs (7) and
+// hosting (11; later sections renumbered). The 30-days-late hosting rule mirrors section 12's.
 ---
 
 <BaseLayout page="terms">
@@ -17,8 +19,8 @@ import { withBase } from '../config/paths';
 
   <LegalDoc
     title="Terms and conditions"
-    updated="27 October 2026"
-    note="These terms are new and are awaiting review. If anything here differs from the written quote you accept, your quote applies."
+    updated="17 November 2026"
+    note="These terms are new and are awaiting review. Sections 4, 7 and 11 had additions on 17 November 2026. If anything here differs from the written quote you accept, your quote applies."
   >
     <h2>1. About these terms</h2>
     <p>
@@ -70,6 +72,12 @@ import { withBase } from '../config/paths';
         Confirmation that you have the right to use everything you send us, such as photos, logos
         and text.
       </li>
+      <li>
+        Confirmation that what you give us for your site is accurate, such as your work history,
+        qualifications and anything you quote from other people, and that anyone you name or quote
+        has agreed to it. We don't check qualifications or employment history. We may refuse or
+        remove anything that is false, unlawful or uses someone else's work without permission.
+      </li>
       <li>Feedback in one place at each stage, so changes don't get lost.</li>
     </ul>
 
@@ -89,8 +97,16 @@ import { withBase } from '../config/paths';
     <h2>7. Who owns the work</h2>
     <ul>
       <li>
-        Once you have paid in full, you own your website's design and the content we create for you,
-        and we hand over everything you need to run it. Until then, the work remains ours.
+        Once you have paid in full, you own your website, the content we create for you and any
+        design we make just for you, and we hand over everything you need to run it. Until then, the
+        work remains ours.
+      </li>
+      <li>
+        If you choose one of our example designs, you own your content (your words, photos and
+        files) and your copy of the finished site, and you may use and change it as you like, for as
+        long as you like. The example design itself stays ours, so we may build sites for other
+        people from it too. If you want a design no one else will have, we can make one just for
+        you; that design is yours once it's paid for.
       </li>
       <li>
         Your domain name and accounts are set up in your name wherever possible, so they stay yours.
@@ -129,7 +145,29 @@ import { withBase } from '../config/paths';
       and never pass through our code.
     </p>
 
-    <h2>11. Cancelling</h2>
+    <h2>11. Hosting and care</h2>
+    <ul>
+      <li>
+        If we host your site for you, for example on a care plan or with yearly hosting, we use
+        established hosting companies and take reasonable care to keep it online, secure and backed
+        up. We can't promise it will never go offline: hosting companies have outages, and those are
+        covered by section 10. If something goes wrong on our side, we put it right as quickly as we
+        reasonably can.
+      </li>
+      <li>
+        If our hosting ends, because you cancel or a hosting payment is more than 30 days late, we
+        tell you in writing first and send you a copy of your site's files before we take it
+        offline. A domain in your name stays yours.
+      </li>
+      <li>
+        We may take a site we host offline straight away if it is used for fraud, phishing,
+        spreading harmful software or anything else unlawful, or if it shows content that breaks
+        section 4. We tell you why, and put it back once the problem is fixed, unless the law stops
+        us.
+      </li>
+    </ul>
+
+    <h2>12. Cancelling</h2>
     <ul>
       <li>
         If you are buying as an individual rather than for a business, you have 14 days from
@@ -151,7 +189,7 @@ import { withBase } from '../config/paths';
       </li>
     </ul>
 
-    <h2>12. Our responsibility to you</h2>
+    <h2>13. Our responsibility to you</h2>
     <ul>
       <li>
         If we break these terms, we are responsible for loss you suffer that was a foreseeable
@@ -170,7 +208,7 @@ import { withBase } from '../config/paths';
       </li>
     </ul>
 
-    <h2>13. If something goes wrong</h2>
+    <h2>14. If something goes wrong</h2>
     <p>
       Email <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a> and tell us what has
       happened. A person will reply and we will do our best to put it right.
@@ -190,7 +228,7 @@ import { withBase } from '../config/paths';
       </li>
     </ul>
 
-    <h2>14. Changes and law</h2>
+    <h2>15. Changes and law</h2>
     <p>
       We may update these terms. The version in place when you accept your quote applies to your
       project. These terms are governed by the law of England and Wales, and disputes go to the
