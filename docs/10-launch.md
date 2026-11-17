@@ -177,8 +177,10 @@ Steps:
 
 ## 5b. Security hardening (account side)
 The code side is done: TLS 1.2+ only (1.3 offered), HSTS, CSP with hashed scripts, no cookies, no
-third-party scripts, a rate-limited and size-capped form endpoint, 0 known dependency
-vulnerabilities, a build that refuses to deploy if tests or the SEO/GEO check fail, Dependabot.
+third-party scripts, a rate-limited and size-capped form endpoint (reply addresses can't carry
+header characters; the automatic site look checks every redirect before following it), 0 known
+dependency vulnerabilities, a build that refuses to deploy if tests or the SEO/GEO check fail,
+GitHub Actions pinned to commit hashes, Dependabot.
 These need your logins:
 1. **Two-factor authentication** (an authenticator app or passkey, not SMS) on all four:
    Cloudflare, Namecheap, GitHub, and the humansoftwareagency@gmail.com Google account. Whoever
@@ -208,7 +210,8 @@ These need your logins:
 - Brand artwork changes → `npm run icons`.
 - `security.txt` renews its expiry on every build: rebuild at least once a year.
 - After six weeks with no problems, consider HSTS preload: add `; preload` to the
-  Strict-Transport-Security line in `site/public/_headers`, then submit at https://hstspreload.org.
+  Strict-Transport-Security line in `site/public/_headers` and in `SECURITY_HEADERS` in
+  `site/worker/index.js` (the form endpoint sets its own), then submit at https://hstspreload.org.
   Hard to undo, so only once HTTPS is certain on every subdomain.
 
 ## Next content (needs Gurman's copy approval)
