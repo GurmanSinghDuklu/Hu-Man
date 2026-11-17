@@ -1,7 +1,7 @@
 /**
  * Shared by the /contact/ intro and the scripts that must wait for it. The class is set before
- * first paint by the inline gate script (scripts/inline/contact-intro-gate.js), only on the first
- * contact visit in a browser session.
+ * first paint by the inline gate script (scripts/inline/contact-intro-gate.js), on each visit by link
+ * (not on a refresh or Back/Forward).
  * - `screenOn()`: the landing is switching on (the old-TV moment): the video starts here.
  * - `introDone()`: the intro is over and the page can scroll: Lenis and scroll-fx start here.
  * Skipping fires both; the gate's failsafe fires `hm:intro-done`, which settles both too.

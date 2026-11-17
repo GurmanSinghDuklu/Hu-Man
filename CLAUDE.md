@@ -561,7 +561,7 @@ following a link closes an open menu; focus returns to the toggle on Esc. `scrol
 Spec `docs/superpowers/specs/2026-11-12-contact-landing-design.md`. /contact/ is now the landing screen
 (`components/landing/Landing.astro`, shared with /start/; behaviour in `scripts/landing.ts`) with the full
 contact form, direct details, "What happens next", AI check card and FAQ below in the landing's look, then
-the footer. No site header. The first contact visit in a browser session opens with the old contact page
+the footer. No site header. Each visit by link (not a refresh or Back/Forward) opens with the old contact page
 breaking into tiles that fall into black, 1.6 s of black, then the landing switching on like an old TV
 (dot, bright line, picture springing open under a fading flash; no static), with a Skip intro button
 (`ContactIntro.astro`, `scripts/contact-intro.ts`). Things worth knowing:
@@ -579,8 +579,8 @@ breaking into tiles that fall into black, 1.6 s of black, then the landing switc
    Lenis and scroll-fx start). Fallen tiles are set to `display: none` before the black.
 6. **Software GL crawls through the intro** (about a frame a second; GSAP stretches the timeline to
    match), so motion-check runs the intro checks in a normal Chromium, not its swiftshader one.
-7. Tests: `motion-check` has intro checks; `axe` waits for the cover to go. Pass
-   `sessionStorage.setItem('hm-contact-intro', '1')` in an init script to skip it.
+7. Tests: `motion-check` has intro checks; `axe` waits for the cover to go. Reload the page to
+   skip it (a refresh never plays it).
 Lighthouse /contact/ 95 (intro included), /start/ 99, home 96; axe 0 violations; motion-check clear in
 Chromium, WebKit and Firefox.
 
@@ -636,7 +636,7 @@ Chromium, WebKit and Firefox.
   seo-check FAQ comparison all point at /about/.
 - **About hero intro** (`scripts/hero-intro.ts`, opt-in with `intro` on `InnerHero`/`HeroVideo`): neon tiles
   drop in, a scan line sweeps, each column flips to its slice of the poster, seams close, layer removed,
-  then the video plays. Once per session (`hm-about-intro`); not under reduced motion or Data Saver; any
+  then the video plays. On every visit by link (not on refresh or Back/Forward); not under reduced motion or Data Saver; any
   click or key finishes it. `hero-video.ts` holds playback (`holding`) until it ends.
   1. **An opacity animation flattens 3D.** The cell wrapper animates translate/opacity/scale; the tile
      inside only rotates. With both on one element the back faces never showed.
@@ -652,8 +652,8 @@ Chromium, WebKit and Firefox.
   sheet (name bar and twelve grey bars, no words) draws on, a Signal scan line passes down it, then it
   cuts into 8 strips (5 on phones) that fall under gravity, centre first, over the poster; the video
   starts after (~1.7 s in all). Transform, scale and opacity only.
-  1. **Gating is shared**: `playWhenSeen()` and `introWanted(key)` in `hero-intro.ts` (once per session,
-     key `hm-portfolio-intro`; 40% on screen; click or key finishes; layer removed). `hero-video.ts`
+  1. **Gating is shared**: `playWhenSeen()` and `introWanted()` in `hero-intro.ts` (every visit by
+     link, not refresh or Back/Forward; 40% on screen; click or key finishes; layer removed). `hero-video.ts`
      picks the variant from `data-hv-intro`.
   2. **Sizes are container units**: `.hv-cv` is a size container and every bar uses `cqw`/`cqh`, so each
      strip's copy of the sheet lines up with the whole sheet. The full sheet sits on top and vanishes at
@@ -664,7 +664,7 @@ Lighthouse /portfolio/ 99/100/100/100, axe 0 violations, motion-check clear.
 
 ## Pricing hero video + receipt intro (2026-11-15, branch `pricing-video`)
 - /pricing's hero plays `public/landing/pricing.mp4` (the pricing ad, 7.8 MB, faststart, loops whole; poster is the settled Essential £318 card at 6.5 s, `src/assets/hero-video/pricing.jpg`, `start: 6.5`). Phones and tablets set `--hv-h: 49svh` in pricing.astro so the hero fits one window.
-- **`intro="receipt"`** (`scripts/hero-intro-receipt.ts`, key `hm-pricing-intro`, same shared gating as 'tiles' and 'cv'): a Paper receipt feeds down, prints a header bar and five rows (label bar plus a price that rolls like an odometer, then a Signal total bar), a Signal scan line passes, then it tears along a zigzag and the halves leave up and down over the poster; about 1.6 s.
+- **`intro="receipt"`** (`scripts/hero-intro-receipt.ts`, same shared gating as 'tiles' and 'cv'): a Paper receipt feeds down, prints a header bar and five rows (label bar plus a price that rolls like an odometer, then a Signal total bar), a Signal scan line passes, then it tears along a zigzag and the halves leave up and down over the poster; about 1.6 s.
   1. **Only real tier prices appear**: each row rolls through the prices before it (£318, £446, £932, £2,240, "Quote"); if tier prices change in `pricing.ts`, change `PRICES` in the script too.
   2. The halves are clones of the finished receipt (default CSS state is the final state; animations supply the printing), clipped with a zigzag `clip-path` and shown only from the tear on. Sizes are container units (`.hv-rc` is a size container).
 
@@ -725,3 +725,11 @@ without its pinned sideways strip. Pieces live in `src/components/play/` and `sc
    its pop-in start froze at scale 0. Drag or animate a plain wrapper instead (see TalkBanner).
 2. The banner copy passes pointer presses through to the toys behind it (buttons and links stay clickable).
 Lighthouse 96-99 / 100 / 100 / 100 (home, services, about, pricing); axe 0 on 17 pages; motion-check clear.
+
+## No browser storage (2026-11-17, branch `security-hardening`)
+The site stores nothing in the browser: no cookies, no localStorage, no sessionStorage (UK PECR
+covers all of them, and /cookies/ promises none). The hero and /contact/ intros used session flags
+to play once per visit; they now play on every visit by link and skip on a refresh or Back/Forward,
+read from the browser's navigation record (`introWanted()` in `hero-intro.ts`, and the same rule in
+`scripts/inline/contact-intro-gate.js`). `motion-check` fails if any page stores anything. If
+something ever needs storage, change the cookies page first and ask whether it needs consent.

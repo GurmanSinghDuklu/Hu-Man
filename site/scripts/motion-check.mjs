@@ -46,9 +46,9 @@ for (const path of PAGES) {
   const errors = [];
   page.on('console', (m) => m.type() === 'error' && errors.push(m.text()));
   page.on('pageerror', (e) => errors.push(e.message));
-  // Skip /contact/'s first-visit intro here; it has its own checks below.
-  await page.addInitScript(() => sessionStorage.setItem('hm-contact-intro', '1'));
   await page.goto(url, { waitUntil: 'load' });
+  // Skip /contact/'s intro here (a refresh never plays it); it has its own checks below.
+  if (path.startsWith('contact')) await page.reload({ waitUntil: 'load' });
   await page.evaluate(async () => {
     for (let y = 0; y < document.body.scrollHeight; y += 600) {
       window.scrollTo(0, y);
@@ -85,6 +85,15 @@ for (const path of PAGES) {
     }
   }
   if (errors.length) fail(path || '/', `console errors: ${errors.join(' | ')}`);
+  // The cookies page promises nothing is stored in the browser: no cookies, no local or session
+  // storage. Checked after the page has run all its scripts (scrolled through, idle loads done).
+  const stored = await page.evaluate(() => ({
+    local: Object.keys(localStorage),
+    session: Object.keys(sessionStorage),
+    cookies: document.cookie,
+  }));
+  if (stored.local.length || stored.session.length || stored.cookies)
+    fail(path || '/', `stored in the browser: ${JSON.stringify(stored)}`);
   await page.close();
 
   // Reduced motion.
@@ -121,7 +130,8 @@ for (const path of PAGES) {
   await calm.close();
 }
 
-// /contact/'s falling-tiles intro: plays on the first visit only, the page can't scroll until the
+// /contact/'s falling-tiles intro: plays on every visit by link, not on a refresh, and nothing about
+// it is stored in the browser. The page can't scroll until the
 // landing screen shows, then it can, and the video starts. Never under reduced motion. A Skip
 // intro button is there while it plays.
 {
@@ -141,7 +151,7 @@ for (const path of PAGES) {
       !!document.querySelector('[data-intro]') &&
       document.documentElement.classList.contains('contact-intro'),
   );
-  if (!started) fail(where, 'did not start on the first visit');
+  if (!started) fail(where, 'did not start on a visit by link');
   await page.waitForTimeout(1700);
   if (!(await page.locator('.intro__tile').count())) fail(where, 'no tiles were built');
   if (!(await page.locator('[data-intro-skip]').isVisible())) fail(where, 'no Skip intro button');
@@ -163,9 +173,20 @@ for (const path of PAGES) {
   await page.mouse.wheel(0, 900);
   await page.waitForTimeout(1200);
   if ((await page.evaluate(() => window.scrollY)) === 0) fail(where, 'cannot scroll afterwards');
-  await page.goto(url);
+  await page.reload();
   if (await page.evaluate(() => !!document.querySelector('[data-intro]')))
-    fail(where, 'played again on a second visit');
+    fail(where, 'played again on a refresh');
+  await page.goto(`http://localhost:${PORT}/pricing/`);
+  await page.goBack();
+  if (await page.evaluate(() => !!document.querySelector('[data-intro]')))
+    fail(where, 'played again after Back');
+  const stored = await page.evaluate(() => ({
+    local: localStorage.length,
+    session: sessionStorage.length,
+    cookies: document.cookie,
+  }));
+  if (stored.local || stored.session || stored.cookies)
+    fail(where, `something was stored in the browser: ${JSON.stringify(stored)}`);
   if (errors.length) fail(where, `console errors: ${errors.join(' | ')}`);
   await page.close();
 

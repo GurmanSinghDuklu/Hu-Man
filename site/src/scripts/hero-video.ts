@@ -4,7 +4,7 @@
  * Pause and Sound buttons; browsers allow sound because pressing the button is a user gesture.
  * Reduced motion or Data Saver: nothing loads or plays until Play is pressed.
  */
-import { INTRO_KEYS, introWanted, runIntro } from './hero-intro';
+import { introWanted, runIntro } from './hero-intro';
 import { runCvIntro } from './hero-intro-cv';
 import { runReceiptIntro } from './hero-intro-receipt';
 
@@ -83,10 +83,10 @@ if (fig) {
   });
 
   // A page's opening runs over the frame first: 'tiles' (About), 'cv' (Portfolio) or 'receipt' (Pricing). Never under
-  // reduced motion or Data Saver, and once per browser session for each.
+  // reduced motion or Data Saver, and not on a refresh or Back/Forward (introWanted).
   const variant =
     fig.dataset.hvIntro === 'cv' ? 'cv' : fig.dataset.hvIntro === 'receipt' ? 'receipt' : 'tiles';
-  if (auto && fig.hasAttribute('data-hv-intro') && introWanted(INTRO_KEYS[variant])) {
+  if (auto && fig.hasAttribute('data-hv-intro') && introWanted()) {
     const frame = fig.querySelector<HTMLElement>('.hv__frame');
     if (frame) {
       holding = true;

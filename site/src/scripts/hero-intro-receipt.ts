@@ -10,7 +10,7 @@
  *
  * Web Animations on `translate`, `rotate`, `scale` and `opacity` only. The receipt is built once
  * and cloned for the two halves, so the element count stays small. The page's h1 and lede never
- * animate (LCP) and the frame's box never changes (no layout shift). Gating (session key, 40% on
+ * animate (LCP) and the frame's box never changes (no layout shift). Gating (every visit by link, 40% on
  * screen, click or key to finish, layer removed) is shared in hero-intro.ts.
  */
 import { playWhenSeen } from './hero-intro';

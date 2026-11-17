@@ -7,8 +7,8 @@ import LegalDoc from '../components/LegalDoc.astro';
 import { site } from '../config/site';
 import { withBase } from '../config/paths';
 
-// Checked 2026-11-02: no Set-Cookie on any page or the enquiry endpoint, and no localStorage,
-// sessionStorage or document.cookie anywhere in src/. Recheck before adding any script or embed.
+// Checked 2026-11-17: no Set-Cookie on any page or the enquiry endpoint, and no localStorage,
+// sessionStorage or document.cookie anywhere in src/ (motion-check fails if a page stores any).
 ---
 
 <BaseLayout page="cookies">
