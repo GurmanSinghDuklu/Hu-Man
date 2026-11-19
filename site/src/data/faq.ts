@@ -3,7 +3,7 @@
  * FAQPage schema and llms-full.txt, so the answer an AI tool reads is always the one a visitor sees.
  * The two newer lists are drafts (2026-10-26) awaiting Gurman's sign-off.
  */
-import { fromPrice, priceOf, tiers } from './pricing';
+import { fromPrice, priceOf, tiers, portfolioTiers, portfolioExpress, keepLive } from './pricing';
 
 export interface FaqItem {
   q: string;
@@ -114,5 +114,45 @@ export const contactFaq: FaqItem[] = [
   {
     q: 'What happens to my details?',
     a: 'We use them only to answer you. The form emails your message to us; the website stores nothing. The privacy notice has the details.',
+  },
+];
+
+/**
+ * The CV concepts on /portfolio/ (draft, 2026-11-18, awaiting Gurman's sign-off). Only what docs/02
+ * and the terms say: concepts are non-exclusive starting points (terms 7), the client confirms CV
+ * content (terms 4), and no promise of jobs, interviews or an ATS score.
+ */
+export const portfolioFaq: FaqItem[] = [
+  {
+    q: 'Can I use one of these concepts for my site?',
+    a: 'Yes. Any concept on this page can be the starting point for your site. We swap the sample content for your own words, photos, projects and links.',
+  },
+  {
+    q: 'Will anyone else have the same design?',
+    a: 'They might. The concepts are not exclusive, so more than one person may pick the same one, and the design stays ours. A design that’s yours alone comes with Portfolio Pro, or ask and we’ll quote it.',
+  },
+  {
+    q: 'Which tier do I need for a concept?',
+    a: `It depends on the concept. Some are one page; others have several pages, motion and video. Tell us which one you like and we’ll tell you the tier it needs before you pay anything. Tiers run from ${portfolioTiers[0].price} to ${portfolioTiers[portfolioTiers.length - 1].price}.`,
+  },
+  {
+    q: 'Are the people in the concepts real?',
+    a: 'No. Every concept is filled with sample content to show how the design works. Your site shows your own details.',
+  },
+  {
+    q: 'Will my site help me get past an applicant tracking system?',
+    a: 'An applicant tracking system reads your CV, not your website. Every tier comes with a downloadable PDF CV in a plain one-column layout that software can read. We don’t promise an ATS score, interviews or jobs.',
+  },
+  {
+    q: 'What do I need to send you?',
+    a: 'Your CV, the projects you want to show, any photos, and the links you want on the page. You confirm that what goes on your site is accurate, and that you have permission to share anything about other people or past employers.',
+  },
+  {
+    q: 'How long does it take?',
+    a: `${portfolioTiers.map((t) => `${t.name}: ${t.timeline}`).join('. ')}. Need it for an interview? ${portfolioExpress.title} on Profile is ${portfolioExpress.price}.`,
+  },
+  {
+    q: 'Can I change it myself afterwards?',
+    a: `With Portfolio Pro you get an owner dashboard to edit it yourself. On any tier, keep-it-live hosting with two content updates a year is ${keepLive.price}.`,
   },
 ];

@@ -19,7 +19,7 @@ import {
   careRules,
   careFixPromise,
 } from '../data/pricing';
-import { faq, agenticFaq, checkFaq, contactFaq } from '../data/faq';
+import { faq, agenticFaq, checkFaq, contactFaq, portfolioFaq } from '../data/faq';
 import { definition, ingredients } from '../data/agentic';
 import { method, methodName, methodNote, checklist, compare, bonnet } from '../data/process';
 import { projects } from '../data/projects';
@@ -194,6 +194,9 @@ export function llmsFullTxt(): string {
     '',
     `${portfolioExpress.title} (${portfolioExpress.price}): ${portfolioExpress.text}`,
     '',
+    '### Questions about the CV concepts',
+    '',
+    ...portfolioFaq.flatMap((item) => [`#### ${item.q}`, '', item.a, '']),
     `## How we build (${link('how-we-build')})`,
     '',
     `${methodName} A person signs off each step.`,

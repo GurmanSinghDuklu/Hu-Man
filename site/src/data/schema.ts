@@ -11,7 +11,7 @@ import { site } from '../config/site';
 import { pages, type PageKey } from './pages';
 import { serviceAreas } from './services';
 import { tiers, portfolioTiers, carePlans } from './pricing';
-import { faq, agenticFaq, checkFaq } from './faq';
+import { faq, agenticFaq, checkFaq, portfolioFaq } from './faq';
 import { term, definition } from './agentic';
 import { method, methodName } from './process';
 import { lastModified, pageFile } from '../lib/lastModified';
@@ -296,6 +296,12 @@ export function buildSchema(key: PageKey, abs: AbsUrl): Node {
   if (key === 'about') {
     webPage['@type'] = ['AboutPage', 'FAQPage'];
     webPage.mainEntity = questions(faq);
+  }
+
+  // The CV concepts FAQ on /portfolio/ (2026-11-18): the page is also a FAQPage.
+  if (key === 'portfolio') {
+    webPage['@type'] = ['WebPage', 'FAQPage'];
+    webPage.mainEntity = questions(portfolioFaq);
   }
 
   if (key === 'agentic-ai-ready') {

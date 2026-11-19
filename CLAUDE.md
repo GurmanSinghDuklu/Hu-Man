@@ -739,3 +739,10 @@ to play once per visit; they now play on every visit by link and skip on a refre
 read from the browser's navigation record (`introWanted()` in `hero-intro.ts`, and the same rule in
 `scripts/inline/contact-intro-gate.js`). `motion-check` fails if any page stores anything. If
 something ever needs storage, change the cookies page first and ask whether it needs consent.
+
+## CV concepts FAQ on /portfolio (2026-11-18)
+Eight questions about the CV concepts, under the ATS section (`#faq`, same open-card style as the About FAQ).
+Copy is a draft awaiting Gurman's sign-off: `portfolioFaq` in `src/data/faq.ts`, which feeds the page, a
+FAQPage `mainEntity` on the portfolio schema and llms-full.txt. Prices and timelines come from `pricing.ts`
+(`portfolioTiers`, `portfolioExpress`, new `keepLive`). Header and footer FAQ links still
+mean /about/#faq. Run tools as `./node_modules/.bin/astro` etc.: the `:` in "Hu:Man" breaks npm's PATH.
