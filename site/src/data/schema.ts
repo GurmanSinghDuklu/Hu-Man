@@ -14,7 +14,8 @@ import { tiers, portfolioTiers, carePlans } from './pricing';
 import { faq, agenticFaq, checkFaq, portfolioFaq } from './faq';
 import { term, definition } from './agentic';
 import { method, methodName } from './process';
-import { lastModified, pageFile } from '../lib/lastModified';
+import { lastModified, pageFile, firstAdded } from '../lib/lastModified';
+import { heroVideos, isoDuration, type HeroVideoKey } from './heroVideos';
 
 type Node = Record<string, unknown>;
 
@@ -45,7 +46,13 @@ const knowsAbout = [
   'Web hosting',
 ];
 
-export function buildSchema(key: PageKey, abs: AbsUrl): Node {
+/** A page's hero video, with its poster's shipped URL (Seo.astro resolves it: getImage is async). */
+export interface PageVideo {
+  key: HeroVideoKey;
+  thumbnailUrl: string;
+}
+
+export function buildSchema(key: PageKey, abs: AbsUrl, video?: PageVideo): Node {
   const page = pages[key];
   const url = abs(page.path);
   const ids = {
@@ -151,6 +158,28 @@ export function buildSchema(key: PageKey, abs: AbsUrl): Node {
   };
 
   const graph: Node[] = [organization, website, webPage];
+
+  // The hero video (Home, About, Portfolio, Pricing). Google needs an upload date, so with no git
+  // history (a bare export) the video is left out rather than given an invented date.
+  const uploadDate = video && firstAdded(`public${heroVideos[video.key].src}`);
+  if (video && uploadDate) {
+    const v = heroVideos[video.key];
+    graph.push({
+      '@type': 'VideoObject',
+      '@id': `${url}#video`,
+      name: v.label,
+      description: v.description,
+      thumbnailUrl: video.thumbnailUrl,
+      uploadDate,
+      duration: isoDuration(v.seconds),
+      contentUrl: abs(v.src),
+      width: v.w,
+      height: v.h,
+      inLanguage: 'en-GB',
+      publisher: { '@id': ids.org },
+    });
+    webPage.video = { '@id': `${url}#video` };
+  }
 
   if (key !== 'index') {
     graph.push({

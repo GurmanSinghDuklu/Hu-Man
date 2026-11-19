@@ -3,6 +3,7 @@ import sitemap from '@astrojs/sitemap';
 import { productionUrl } from './src/config/domain.ts';
 import { lastModified, pageFile } from './src/lib/lastModified.ts';
 import aiReadable from './src/integrations/ai-readable.mjs';
+import workerManifest from './src/integrations/worker-manifest.mjs';
 import devFolderIndex from './src/integrations/dev-folder-index.mjs';
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
@@ -76,6 +77,8 @@ export default defineConfig({
     }),
     // After the sitemap: Markdown copies of every page, full llms-full.txt, image sitemap.
     aiReadable(),
+    // After that: the pages, fonts and headers the Worker needs (worker/pages.json).
+    workerManifest({ base }),
     // Dev only: /concepts/<slug>/ serves its index.html, as every real host does.
     devFolderIndex(),
   ],

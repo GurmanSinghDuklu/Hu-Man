@@ -21,3 +21,20 @@ export function lastModified(pageFile: string): string | undefined {
 
 /** The source file of a page key, e.g. "about" -> "src/pages/about.astro". */
 export const pageFile = (key: string): string => `src/pages/${key}.astro`;
+
+/**
+ * When a file was first committed (e.g. a video's upload date for its schema). Follows renames.
+ * Returns undefined outside a git checkout or for a file not yet committed.
+ */
+export function firstAdded(file: string): string | undefined {
+  try {
+    const dates = execFileSync(
+      'git',
+      ['log', '--diff-filter=A', '--follow', '--format=%cI', '--', file],
+      { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] },
+    ).trim();
+    return dates.split('\n').pop() || undefined;
+  } catch {
+    return undefined;
+  }
+}

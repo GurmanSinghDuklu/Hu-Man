@@ -78,6 +78,13 @@ export function llmsTxt(): string {
       (key) =>
         `- ${link(key)}: ${pages[key].description} Markdown: ${abs(`${pages[key].path}index.html.md`)}`,
     ),
+    // The live Worker (worker/pages.js) answers this; the GitHub Pages preview has no Worker.
+    ...(import.meta.env.BASE_URL === '/'
+      ? [
+          '',
+          'Every page above also returns its Markdown copy when requested with `Accept: text/markdown`.',
+        ]
+      : []),
     '',
     '## Services',
     '',

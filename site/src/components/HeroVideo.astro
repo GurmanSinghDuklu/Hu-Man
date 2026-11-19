@@ -15,70 +15,11 @@
  * playback starts from that moment (`start`), so the swap from poster to video doesn't jump.
  * The frame takes the video's own shape: wide or tall, never cropped.
  */
-import type { ImageMetadata } from 'astro';
-import { getImage } from 'astro:assets';
 import { withBase } from '../config/paths';
-import reelPoster from '../assets/hero-video/reel.jpg';
-import foundPoster from '../assets/hero-video/found.jpg';
-import seenPoster from '../assets/hero-video/portfolio-seen.jpg';
-import adPoster from '../assets/hero-video/portfolio-ad.jpg';
-import pricingPoster from '../assets/hero-video/pricing.jpg';
-
-interface Video {
-  src: string;
-  w: number;
-  h: number;
-  poster: ImageMetadata;
-  /** Seconds: where playback starts (the poster's moment). Loops go back to 0. */
-  start: number;
-  label: string;
-}
-
-const videos = {
-  reel: {
-    src: '/landing/reel.mp4',
-    w: 1920,
-    h: 1080,
-    poster: reelPoster,
-    start: 9.3,
-    label: 'The Hu/man showreel',
-  },
-  found: {
-    src: '/landing/found.mp4',
-    w: 1920,
-    h: 1080,
-    poster: foundPoster,
-    start: 0,
-    label: 'Built to be found, by Hu/man',
-  },
-  'portfolio-seen': {
-    src: '/landing/portfolio-seen.mp4',
-    w: 1080,
-    h: 1920,
-    poster: seenPoster,
-    start: 0,
-    label: 'Be seen: portfolio sites by Hu/man, from £156',
-  },
-  'portfolio-ad': {
-    src: '/landing/portfolio-ad.mp4',
-    w: 1080,
-    h: 1920,
-    poster: adPoster,
-    start: 2.3,
-    label: 'Portfolio pages by Hu/man, from £156',
-  },
-  pricing: {
-    src: '/landing/pricing.mp4',
-    w: 1080,
-    h: 1920,
-    poster: pricingPoster,
-    start: 6.5,
-    label: 'Hu/man pricing: websites from £318, care plans from £29 a month, portfolios from £156',
-  },
-} satisfies Record<string, Video>;
+import { heroVideos, heroPoster, type HeroVideo, type HeroVideoKey } from '../data/heroVideos';
 
 interface Props {
-  video: keyof typeof videos;
+  video: HeroVideoKey;
   class?: string;
   /** Opens with an intro over the frame: true or 'tiles' (About, scripts/hero-intro.ts) or 'cv' (Portfolio, scripts/hero-intro-cv.ts) or 'receipt' (Pricing, scripts/hero-intro-receipt.ts). */
   intro?: boolean | 'tiles' | 'cv' | 'receipt';
@@ -87,13 +28,8 @@ interface Props {
 const { video, class: className, intro = false } = Astro.props;
 const introVariant =
   intro === 'cv' ? 'cv' : intro === 'receipt' ? 'receipt' : intro ? 'tiles' : undefined;
-const v: Video = videos[video];
-const poster = await getImage({
-  src: v.poster,
-  width: v.w > v.h ? 1280 : 720,
-  format: 'webp',
-  quality: 72,
-});
+const v: HeroVideo = heroVideos[video];
+const poster = await heroPoster(video);
 ---
 
 <figure

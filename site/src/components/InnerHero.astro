@@ -2,6 +2,7 @@
 /** Hero for the Services and Pricing pages: label, headline, lede and the "inner" collage. */
 import Collage from './Collage.astro';
 import HeroVideo from './HeroVideo.astro';
+import type { HeroVideoKey } from '../data/heroVideos';
 import ScrollCue from './ScrollCue.astro';
 
 interface Props {
@@ -12,7 +13,7 @@ interface Props {
   /** 'div' for a decorative copy that must not add a second h1 (the /contact/ intro). */
   as?: 'h1' | 'div';
   /** One of our videos in place of the collage (About, Work, Pricing; Gurman, 2026-11-13). */
-  video?: 'reel' | 'found' | 'portfolio-seen' | 'portfolio-ad' | 'pricing';
+  video?: HeroVideoKey;
   /** Opens the video with an intro: true or 'tiles' (About), 'cv' (Portfolio), 'receipt' (Pricing). */
   intro?: boolean | 'tiles' | 'cv' | 'receipt';
 }

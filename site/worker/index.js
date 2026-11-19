@@ -1,10 +1,13 @@
 /**
  * The Cloudflare Worker in front of the static site (wrangler.toml). Static files are served from
- * dist/ by Cloudflare before this runs; the Worker only sees requests that match no file, which
- * here means /api/enquiry. Anything else falls through to the site's 404 page.
+ * dist/ by Cloudflare before this runs, except the pages listed in `run_worker_first`, which come
+ * here first (worker/pages.js: Markdown on request, Link headers). Of the rest, the Worker only sees
+ * requests that match no file, which here means /api/enquiry; anything else falls through to the
+ * site's 404 page.
  */
 import { EmailMessage } from 'cloudflare:email';
 import { handleEnquiry } from './enquiry.js';
+import { servePage } from './pages.js';
 
 /** The same protective headers public/_headers gives every static file. */
 const SECURITY_HEADERS = {
@@ -21,7 +24,7 @@ export default {
     if (url.pathname === '/api/enquiry' || url.pathname === '/api/enquiry/') {
       response = await handleEnquiry(request, env, EmailMessage, ctx);
     } else {
-      response = await env.ASSETS.fetch(request);
+      response = (await servePage(request, env.ASSETS)) ?? (await env.ASSETS.fetch(request));
     }
     const headers = new Headers(response.headers);
     for (const [name, value] of Object.entries(SECURITY_HEADERS)) {

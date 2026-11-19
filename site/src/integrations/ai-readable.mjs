@@ -6,7 +6,8 @@
  *    "the same URL with .md appended"). Each page links to its copy with rel="alternate".
  * 2. The full wording of every page appended to llms-full.txt, so one file holds everything a
  *    visitor can read on the site, not just the structured facts.
- * 3. Every meaningful image (non-empty alt) added to the sitemap as <image:image>.
+ * 3. Every meaningful image (non-empty alt) added to the sitemap as <image:image>, and each video in
+ *    the page's schema as <video:video>.
  *
  * It reads the built HTML, so it can never miss or misquote anything on the pages. Decorative
  * parts (aria-hidden, empty alt) are left out, exactly as a screen reader would.
@@ -173,6 +174,32 @@ export function htmlToMarkdown(html, pageUrl) {
     .trim();
 }
 
+/** Every node in a page's JSON-LD @graph. */
+function schemaNodes(html) {
+  const nodes = [];
+  for (const [, json] of html.matchAll(
+    /<script type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g,
+  )) {
+    try {
+      const data = JSON.parse(json);
+      nodes.push(...(data['@graph'] ?? [data]));
+    } catch {
+      /* not ours to fix here: seo-check validates the schema */
+    }
+  }
+  return nodes;
+}
+
+/** Escapes text for an XML element. */
+const xml = (text) =>
+  String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+/** "PT1M22S" -> 82 (the video sitemap wants whole seconds). */
+const isoSeconds = (iso) => {
+  const [, m = 0, s = 0] = /^PT(?:(\d+)M)?(?:(\d+)S)?$/.exec(iso) ?? [];
+  return Number(m) * 60 + Number(s);
+};
+
 export default function aiReadable() {
   return {
     name: 'ai-readable',
@@ -219,15 +246,34 @@ export default function aiReadable() {
             `## Page: ${title}\n\nSource: ${url}\n\n${body.replace(/^(#{1,4}) /gm, '#$1 ').replace(/^#{5,} /gm, '###### ')}\n`,
           );
 
-          // Image sitemap entries for this page.
+          // Image and video sitemap entries for this page, after its <loc> and <lastmod> (the
+          // sitemap format puts extensions last in each <url>).
           const images = [...main.matchAll(/<img\s[^>]*>/g)]
             .map(([tag]) => ({ src: attr(tag, 'src'), alt: attr(tag, 'alt') }))
             .filter((img) => img.src && img.alt);
-          if (images.length) {
-            const entries = [...new Set(images.map((img) => new URL(img.src, url).toString()))]
-              .map((loc) => `<image:image><image:loc>${loc}</image:loc></image:image>`)
-              .join('');
-            sitemap = sitemap.replace(`<loc>${url}</loc>`, `<loc>${url}</loc>${entries}`);
+          const imageEntries = [...new Set(images.map((img) => new URL(img.src, url).toString()))]
+            .map((loc) => `<image:image><image:loc>${loc}</image:loc></image:image>`)
+            .join('');
+          // Videos come from the page's own schema (src/data/schema.ts), so the sitemap can only
+          // list what the page describes.
+          const videoEntries = schemaNodes(html)
+            .filter((node) => node['@type'] === 'VideoObject')
+            .map(
+              (v) =>
+                `<video:video><video:thumbnail_loc>${xml(v.thumbnailUrl)}</video:thumbnail_loc>` +
+                `<video:title>${xml(v.name)}</video:title>` +
+                `<video:description>${xml(v.description)}</video:description>` +
+                `<video:content_loc>${xml(v.contentUrl)}</video:content_loc>` +
+                `<video:duration>${isoSeconds(v.duration)}</video:duration>` +
+                `<video:publication_date>${xml(v.uploadDate)}</video:publication_date>` +
+                `<video:family_friendly>yes</video:family_friendly></video:video>`,
+            )
+            .join('');
+          const extras = imageEntries + videoEntries;
+          if (extras) {
+            const at = sitemap.indexOf(`<loc>${url}</loc>`);
+            const close = sitemap.indexOf('</url>', at);
+            sitemap = sitemap.slice(0, close) + extras + sitemap.slice(close);
           }
         }
 
@@ -239,7 +285,7 @@ export default function aiReadable() {
           `${curated.trimEnd()}\n\n# Every page, word for word\n\nThe complete visible text of each page, for tools that want all of it.\n\n${fullText.join('\n')}`,
         );
         logger.info(
-          `Markdown copies for ${fullText.length} pages, llms-full.txt and image sitemap written.`,
+          `Markdown copies for ${fullText.length} pages, llms-full.txt and image and video sitemap entries written.`,
         );
       },
     },

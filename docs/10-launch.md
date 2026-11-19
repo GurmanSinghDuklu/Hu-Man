@@ -35,7 +35,9 @@ site. Everything is set in `site/wrangler.toml`; `public/_headers` and `_redirec
    - Production branch: `hu-man-rebrand`
    - Root directory: `site`
    - Build command: `npm run build`
-   - Deploy command: `npx wrangler deploy`
+   - Deploy command: `npm run deploy` (since 2026-11-19; was `npx wrangler deploy`). It runs
+     `npx wrangler deploy`, then tells IndexNow which pages changed (`site/scripts/deploy.mjs`).
+     Leave the non-production branch deploy command as it is.
    - Node: read from `site/.node-version` (24). If not, set build variable `NODE_VERSION=24`.
    - No `PUBLIC_NOINDEX` or `PUBLIC_FORM_MODE` (those are for the GitHub preview only).
 3. `wrangler.toml` attaches the Worker to `humansoftwareagency.com` itself (Custom Domain), so no
@@ -107,6 +109,24 @@ curl -s https://humansoftwareagency.com/robots.txt | head -20   # must be ours, 
 ```
 Re-check after any Cloudflare change, and in the monthly AI visibility check.
 
+### See which crawlers visit (no code)
+Cloudflare → humansoftwareagency.com → AI Crawl Control (the same page as step 1 above). It lists each AI crawler (GPTBot, ClaudeBot, PerplexityBot and the rest), how
+often it fetches the site, and whether it is allowed. Every one should say **Allow**; set any that
+says Block back to Allow. Look at it in the monthly AI visibility check. The site itself logs
+nothing about visitors, bots included.
+
+### Early Hints (fonts start loading sooner)
+Cloudflare → humansoftwareagency.com → Speed → Settings → Content Optimization → **Early Hints: on**.
+The Worker already sends `Link: rel=preload` headers for each page's fonts (`site/worker/pages.js`),
+which is what Early Hints reads. Check after a deploy (load the page twice: the first visit
+teaches Cloudflare the hints):
+```sh
+curl -s -o /dev/null https://humansoftwareagency.com/
+curl -sv --http2 -o /dev/null https://humansoftwareagency.com/ 2>&1 | grep -E '< HTTP/2 (103|200)|< link'
+```
+A `103` line before the `200` means it works. If it never appears, nothing is lost: browsers
+still preload the fonts from the page itself.
+
 ### Email records (our checklist promises SPF, DKIM and DMARC, so our own domain has them)
 Email Routing (above) adds the MX records and an SPF record. Then add:
 
@@ -128,6 +148,13 @@ record, and keep DMARC.
       and pricing pages: no errors.
 - [ ] The crawler check above prints `200` for every crawler.
 - [ ] Each page's Markdown copy opens, e.g. `/index.html.md`, `/pricing/index.html.md`.
+- [ ] Asking for Markdown returns it at the page's own address, and a browser still gets the page:
+      `curl -sI -H 'Accept: text/markdown' https://humansoftwareagency.com/pricing/` shows
+      `content-type: text/markdown`, and `curl -sI https://humansoftwareagency.com/pricing/` shows
+      `content-type: text/html` with a `link:` header naming `/pricing/index.html.md`.
+- [ ] Rich Results Test on `/` and `/pricing/` lists a Video (VideoObject) with no errors. Google
+      may still not show the videos in video results: it mostly does that for pages where the
+      video is the main content, and these are hero videos.
 - [ ] `/api/enquiry` opens and shows the field list (that's what AI agents read).
 - [ ] A test message from `/contact/` and one from `/free-ai-check/` both reach the inbox, and
       Reply goes to the address typed in the form. Try once with JavaScript off too.
@@ -143,9 +170,10 @@ record, and keep DMARC.
 2. **Bing Webmaster Tools** (https://www.bing.com/webmasters): sign in, Import from Google Search
    Console (copies the site and sitemap). Bing's index feeds Copilot and ChatGPT search, so this
    matters for AI answers as much as for Bing.
-3. **IndexNow**, after every deploy that changes content, from `site/`:
-   `npm run build && npm run indexnow` (`-- --dry-run` first to see the list). Bing, Yandex and
-   others recrawl within hours.
+3. **IndexNow** runs by itself on every deploy (the `npm run deploy` deploy command in section 1):
+   it sends the pages whose date changed. Bing, Yandex and others recrawl within hours. The build
+   log shows what it sent ("IndexNow: N URLs"). To send every page by hand, from `site/`:
+   `npm run build && npm run indexnow` (`-- --dry-run` first to see the list).
 
 ## 5. Being found locally and by AI (the off-site half)
 AI answers about local businesses lean on the same sources as local search: the Business Profile,

@@ -746,3 +746,22 @@ Copy is a draft awaiting Gurman's sign-off: `portfolioFaq` in `src/data/faq.ts`,
 FAQPage `mainEntity` on the portfolio schema and llms-full.txt. Prices and timelines come from `pricing.ts`
 (`portfolioTiers`, `portfolioExpress`, new `keepLive`). Header and footer FAQ links still
 mean /about/#faq. Run tools as `./node_modules/.bin/astro` etc.: the `:` in "Hu:Man" breaks npm's PATH.
+
+## Backend SEO: IndexNow on deploy, video schema, Markdown on request (2026-11-19)
+- **Deploy command is `npm run deploy`** (`scripts/deploy.mjs`; Workers Builds deploy command, set in the
+  Cloudflare dashboard, docs/10-launch.md section 1). It reads the live sitemap, runs `npx wrangler deploy`,
+  then sends IndexNow every page whose lastmod changed. Page dates include shared components and data, so
+  most deploys send every page; that's accurate. `npm run indexnow` still sends all pages by hand.
+- **Hero videos have VideoObject schema and `<video:video>` sitemap entries.** One list,
+  `src/data/heroVideos.ts` (player data, description, measured `seconds`, `pageHeroVideo` map); uploadDate
+  is the mp4's first git commit. The sitemap entries are read back from each page's JSON-LD. seo-check
+  fails if a page plays a video its schema doesn't describe, or the reverse. Re-measure `seconds` if a file
+  is re-cut. Google may still not show them as video results (hero videos aren't a page's main content).
+- **The Worker serves the 15 indexable pages first** (`run_worker_first` in wrangler.toml, exact paths):
+  `worker/pages.js` returns the page's Markdown copy for `Accept: text/markdown`, and adds `Link` headers
+  (Markdown copy + font preloads for Cloudflare Early Hints) and the site-wide security headers.
+  `worker/pages.json` is written by the build (`src/integrations/worker-manifest.mjs`, base `/` builds
+  only) from the built pages and `public/_headers`' `/*` block: commit it after a build changes it.
+  **Adding a page: add it to `run_worker_first`** (seo-check fails otherwise). Tested in `wrangler dev`.
+- Dashboard-only steps (docs/10-launch.md): switch the deploy command, turn Early Hints on, look at AI
+  Crawl Control monthly.
