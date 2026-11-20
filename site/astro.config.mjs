@@ -55,7 +55,10 @@ export default defineConfig({
       ],
       // Astro hashes the scripts it bundles, not is:inline ones: those are hashed here from their files.
       scriptDirective: {
-        hashes: [inlineHash('./src/scripts/inline/contact-intro-gate.js')],
+        hashes: [
+          inlineHash('./src/scripts/inline/js-class.js'),
+          inlineHash('./src/scripts/inline/contact-intro-gate.js'),
+        ],
       },
       styleDirective: {
         resources: ["'self'", { resource: "'unsafe-inline'", kind: 'attribute' }],

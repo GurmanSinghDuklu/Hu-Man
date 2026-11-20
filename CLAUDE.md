@@ -400,7 +400,7 @@ Lighthouse 97-100 / 100 / 100 / 100 on ten pages, axe 0 violations on 15. Motion
   answering" is a client service and stays.
 
 ## Concept portfolios (2026-11-02, branch `portfolio-concepts`)
-Three standalone concept sites (Noor Haddad, Theo Lindqvist, Maya Okonkwo) live in `site/public/concepts/<slug>/index.html` and are shown as cards on `/portfolio` (data in `src/data/portfolioConcepts.ts`, screenshots in `src/assets/portfolio-concepts/`). They are plain HTML copied as is, not Astro pages: fonts are self-hosted woff2 in `public/concepts/fonts/` (from `@fontsource`, not added to package.json) and GSAP 3.15.0 (gsap, ScrollTrigger, Draggable) is copied from `node_modules` into `public/concepts/vendor/`, all via relative paths so the `/Hu-Man` preview base works. Gotchas: Astro's meta CSP does not cover public files, so `public/_headers` has a `/concepts/*` rule that detaches the global CSP (`! Content-Security-Policy`) and sets one that allows their inline scripts and styles; the pages are `noindex,nofollow`, not in the sitemap and not in `llms-full.txt`, and `seo-check.mjs` checks them separately (noindex, no outside hosts, assets exist, back link); ESLint and Prettier skip `public/concepts`. Each page has a fixed badge with a back link to `../../portfolio/` (static at the foot on phones). Known axe finding left: the Maya nav links over the pink circle fail colour contrast. The home Portfolio section (`WorkCards.astro`) shows the real projects from `projects.ts`, not these concepts (Gurman, 2026-11-02: the concept version was reverted).
+Three standalone concept sites (Noor Haddad, Theo Lindqvist, Maya Okonkwo) live in `site/public/concepts/<slug>/index.html` and are shown as cards on `/portfolio` (data in `src/data/portfolioConcepts.ts`, screenshots in `src/assets/portfolio-concepts/`). They are plain HTML copied as is, not Astro pages: fonts are self-hosted woff2 in `public/concepts/fonts/` (from `@fontsource`, not added to package.json) and GSAP 3.15.0 (gsap, ScrollTrigger, Draggable) is copied from `node_modules` into `public/concepts/vendor/`, all via relative paths so the `/Hu-Man` preview base works. Gotchas: Astro's meta CSP does not cover public files, so `public/_headers` has a `/concepts/*` rule that detaches the global CSP (`! Content-Security-Policy`) and sets one that allows their inline scripts and styles; the pages are `noindex,nofollow`, not in the sitemap and not in `llms-full.txt`, and `seo-check.mjs` checks them separately (noindex, no outside hosts, assets exist, back link); ESLint and Prettier skip `public/concepts`. Each page has a fixed badge with a back link to `../../portfolio/` (static at the foot on phones). Maya's contrast failures were fixed 2026-11-20 (nav pills on cream, deeper ink on the pink cards). The home Portfolio section (`WorkCards.astro`) shows the real projects from `projects.ts`, not these concepts (Gurman, 2026-11-02: the concept version was reverted).
 
 ## Live concept wall (2026-11-07, branch `portfolio-gallery`)
 /portfolio now opens with the concept portfolios (sixteen since 9 Nov) on a dark live wall (`ConceptWall.astro`,
@@ -418,8 +418,7 @@ mechanics from Gurman's Awwwards references but never their layouts, art or word
    seo-check matches pages to that file.
 4. **Framing**: `frame-src 'self'` in the CSP; `/concepts/*` drops `X-Frame-Options: DENY` for
    `SAMEORIGIN` and `frame-ancestors 'self'` in `_headers`.
-5. Concept pages say "Concept" and "sample", never "fictional" (hard rule 1). Known axe finding left:
-   Maya's nav over the pink circle (pre-existing).
+5. Concept pages say "Concept" and "sample", never "fictional" (hard rule 1).
 6. **Revision 2 (same night, Gurman's notes):** Hannah is now a bookcase (each book = a workplace that
    opens into its history; for people with many employers), Sofia uses a real muapi cabin clip
    (`sofia/img/cabin.mp4`, kling-v3.0-pro from an imagen4-ultra frame) and an old-school terminal (split-flap
@@ -573,8 +572,7 @@ breaking into tiles that fall into black, 1.6 s of black, then the landing switc
 (`ContactIntro.astro`, `scripts/contact-intro.ts`). Things worth knowing:
 1. **`is:inline` scripts are not hashed into the CSP by Astro.** The intro's gate script lives in
    `src/scripts/inline/` and `astro.config.mjs` hashes that file (`inlineHash`); inline it verbatim with
-   `set:html`. BaseLayout's `.js` class script is blocked for this reason on every page (pre-existing,
-   harmless: reveals.ts adds the class).
+   `set:html`. BaseLayout's `.js` class script works the same way (`inline/js-class.js`, 2026-11-20).
 2. **Scripts that scroll or measure wait for `introDone()`** (`scripts/contact-intro-state.ts`): the
    landing video, Lenis (it scrolls by script, which `overflow: hidden` doesn't stop) and scroll-fx (its
    first pass was a 250 ms long task during the intro).
@@ -765,3 +763,10 @@ mean /about/#faq. Run tools as `./node_modules/.bin/astro` etc.: the `:` in "Hu:
   **Adding a page: add it to `run_worker_first`** (seo-check fails otherwise). Tested in `wrangler dev`.
 - Dashboard-only steps (docs/10-launch.md): switch the deploy command, turn Early Hints on, look at AI
   Crawl Control monthly.
+
+## CI browser cache, Maya contrast (2026-11-20, branch `security-hardening`)
+- **CI keeps Playwright's Chromium between runs** (`actions/cache`, keyed by the Playwright version in the
+  lock file) and tries each browser or system-package install twice, so one slow download doesn't fail the
+  run. The `npm ci` failure before it was a lock file written by an older npm: refresh the lock with the npm
+  that CI's Node ships (`npx npm@<version> install --package-lock-only`) if `npm ci` reports missing packages.
+- `npm run axe` and a scan of every concept page are now clean; Maya's ink on pink is `#04262C` (4.9:1).

@@ -7,6 +7,7 @@ import { withBase } from '../config/paths';
 import { pages, type PageKey } from '../data/pages';
 import montserrat800 from '../fonts/montserrat-latin-800-normal.woff2?url';
 import archivo400 from '../fonts/archivo-latin-400-normal.woff2?url';
+import jsClass from '../scripts/inline/js-class.js?raw';
 
 interface Props {
   /** The page's key in src/data/pages.ts: its title, description and schema all come from there. */
@@ -28,9 +29,7 @@ const { title, description } = pages[page];
     <meta name="generator" content={Astro.generator} />
     <Seo page={page} />
     <meta name="theme-color" content="#F1F2EC" />
-    <script is:inline>
-      document.documentElement.classList.add('js');
-    </script>
+    <script is:inline set:html={jsClass}></script>
     <link rel="preload" href={montserrat800} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={archivo400} as="font" type="font/woff2" crossorigin />
   </head>

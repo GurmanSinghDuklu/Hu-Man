@@ -30,5 +30,20 @@ jobs:
       - run: npm audit --audit-level=high
       - run: npm run check
       - run: npm test
-      - run: npx playwright install --with-deps chromium
+      # The axe scan's browser. Chromium is kept between runs (keyed by the Playwright version in the
+      # lock file), so most runs only install its system packages. Each install is tried twice, so
+      # one slow download doesn't fail the run.
+      - id: playwright
+        run: echo "version=$(node -p "require('./package-lock.json').packages['node_modules/playwright'].version")" >> "$GITHUB_OUTPUT"
+      - id: browsers
+        uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ steps.playwright.outputs.version }}-chromium
+      - if: steps.browsers.outputs.cache-hit != 'true'
+        timeout-minutes: 12
+        run: npx playwright install --with-deps chromium || (sleep 20 && npx playwright install --with-deps chromium)
+      - if: steps.browsers.outputs.cache-hit == 'true'
+        timeout-minutes: 8
+        run: npx playwright install-deps chromium || (sleep 20 && npx playwright install-deps chromium)
       - run: npm run axe
