@@ -316,6 +316,65 @@ test('the look reports title, robots blocks and a missing llms.txt', async () =>
   assert.equal(look.llms, false, 'an HTML page at /llms.txt is not an llms.txt');
 });
 
+/** A fake fetch where every path on `from` redirects to `to`; `to` is served by fakeSite(). */
+const redirecting = (from, to, seen = []) => {
+  const site = fakeSite();
+  return async (target, init = {}) => {
+    seen.push({ target, redirect: init.redirect });
+    const url = new URL(target);
+    if (url.hostname === from)
+      return new Response(null, { status: 301, headers: { Location: `${to}${url.pathname}` } });
+    return site(target, init);
+  };
+};
+
+test('a redirect to a private address is not followed', async () => {
+  const seen = [];
+  const look = await lookAtSite('shop.co.uk', {
+    fetch: redirecting('shop.co.uk', 'http://127.0.0.1', seen),
+  });
+  assert.match(look.error, /not public, so it was not followed/);
+  assert.ok(
+    seen.every(({ target }) => new URL(target).hostname === 'shop.co.uk'),
+    'nothing was fetched from the private address',
+  );
+  assert.ok(seen.every(({ redirect }) => redirect === 'manual'));
+});
+
+test('a redirect to a public site is followed and the final address reported', async () => {
+  const look = await lookAtSite('old-shop.co.uk', {
+    fetch: redirecting('old-shop.co.uk', 'https://www.new-shop.co.uk'),
+  });
+  assert.equal(look.url, 'https://www.new-shop.co.uk/');
+  assert.equal(look.title, 'Ashby Electrical & Sons');
+  assert.deepEqual(look.blocked, ['GPTBot'], 'robots.txt is read after its redirect too');
+});
+
+test('a redirect loop stops instead of running on', async () => {
+  let calls = 0;
+  const loop = async (target) => {
+    calls += 1;
+    return new Response(null, { status: 302, headers: { Location: target } });
+  };
+  const look = await lookAtSite('loop.co.uk', { fetch: loop });
+  assert.match(look.error, /too many redirects/);
+  assert.ok(calls <= 3 * 6, `at most six fetches per address (made ${calls})`);
+});
+
+test('reply addresses may not carry header characters, but real addresses pass', () => {
+  for (const good of ["o'brien@shop.co.uk", 'sam+leads@mail.example.com', 'zoë@café.fr'])
+    assert.ok(validate({ name: 'A', email: good, message: 'Hi' }).data, good);
+  for (const bad of [
+    'a@b.co>,<c@d.co',
+    'a@b.co>',
+    '"a"@b.co',
+    'a@b.co;c@d.co',
+    'a(b)@c.co',
+    'a@b.c',
+  ])
+    assert.ok(validate({ name: 'A', email: bad, message: 'Hi' }).errors?.email, bad);
+});
+
 test('a site that never answers times out instead of holding the enquiry', async () => {
   const look = await lookAtSite('slow.co.uk', { fetch: fakeSite({ slow: true }), timeoutMs: 50 });
   assert.match(look.error, /timed out/);

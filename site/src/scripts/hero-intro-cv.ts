@@ -8,7 +8,7 @@
  * Web Animations on `translate`, `scale` and `opacity` only. The sheet is built once and copied
  * into each strip (5 on phones, 8 elsewhere), so the element count stays small. The page's h1 and
  * lede never animate (LCP) and the frame's box never changes (no layout shift). The gating
- * (session key, 40% on screen, click or key to finish, layer removed) is shared in hero-intro.ts.
+ * (every visit by link, 40% on screen, click or key to finish, layer removed) is shared in hero-intro.ts.
  */
 import { playWhenSeen } from './hero-intro';
 

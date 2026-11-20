@@ -69,6 +69,8 @@ const decode = (s) =>
     .replace(/&lt;/g, '<');
 
 const indexable = [];
+/** Page URL -> the video URLs its schema describes (for the sitemap check). */
+const pageVideos = new Map();
 
 for (const file of htmlFiles) {
   const doc = html[file];
@@ -149,6 +151,21 @@ for (const file of htmlFiles) {
         if (url.origin === origin && !fileFor(url.pathname))
           fail(where, `JSON-LD URL ${u} is missing`);
       }
+      // Hero videos (src/data/heroVideos.ts): the schema describes exactly the videos the page
+      // plays, each with what Google requires, and the sitemap lists the same ones (checked below).
+      const played = [...doc.matchAll(/\sdata-hv-src="([^"]+)"/g)].map((m) => `${origin}${m[1]}`);
+      const described = graph.filter((n) => n['@type'] === 'VideoObject');
+      const describedUrls = described.map((v) => v.contentUrl);
+      for (const u of played)
+        if (!describedUrls.includes(u))
+          fail(where, `plays ${u} but its schema has no VideoObject for it`);
+      for (const v of described) {
+        if (!played.includes(v.contentUrl))
+          fail(where, `schema describes ${v.contentUrl}, which the page does not play`);
+        for (const field of ['name', 'description', 'thumbnailUrl', 'uploadDate', 'duration'])
+          if (!v[field]) fail(where, `VideoObject has no ${field}`);
+      }
+      if (described.length) pageVideos.set(`${origin}${pagePath}`, describedUrls);
     }
   }
 
@@ -273,10 +290,42 @@ if (!noindexBuild) {
     if (!indexable.includes(u)) fail('sitemap', `lists ${u}, which is not an indexable page`);
   // Dates come from git history; a build machine without it (Cloudflare's) leaves them out, which
   // is harmless, so this warns rather than fails.
+  for (const [page, videos] of pageVideos) {
+    const entry = sitemap.slice(sitemap.indexOf(`<loc>${page}</loc>`)).split('</url>')[0];
+    for (const v of videos)
+      if (!entry.includes(`<video:content_loc>${v}</video:content_loc>`))
+        fail('sitemap', `${page} has no video entry for ${v}`);
+  }
   if (!/<lastmod>/.test(sitemap)) console.warn('SEO check: warning: sitemap has no lastmod dates');
 }
 
 const robots = await readFile(`${dist}robots.txt`, 'utf8');
+// The Worker (worker/pages.js) serves the indexable pages itself: its build manifest and
+// wrangler.toml's run_worker_first must both list exactly those pages. Preview builds under a base
+// path have no Worker.
+if (basePath === '/' && !noindexBuild) {
+  const manifest = JSON.parse(
+    await readFile(new URL('../worker/pages.json', import.meta.url), 'utf8'),
+  );
+  const wrangler = await readFile(new URL('../wrangler.toml', import.meta.url), 'utf8');
+  const firstBlock = (wrangler.match(/run_worker_first = \[([\s\S]*?)\]/) ?? [])[1] ?? '';
+  const first = [...firstBlock.matchAll(/"([^"]+)"/g)].map((m) => m[1]).sort();
+  const want = indexable.map((u) => new URL(u).pathname).sort();
+  const listed = Object.keys(manifest.pages).sort();
+  if (want.join() !== listed.join())
+    fail('worker/pages.json', `lists ${listed.join(' ')}, the site has ${want.join(' ')}`);
+  if (want.join() !== first.join())
+    fail(
+      'wrangler.toml',
+      `run_worker_first lists ${first.join(' ')}, the site has ${want.join(' ')}`,
+    );
+  for (const [path, page] of Object.entries(manifest.pages))
+    for (const link of page.preload) {
+      const href = (link.match(/^<([^>]+)>/) ?? [])[1];
+      if (!href || !fileFor(href)) fail('worker/pages.json', `${path} preloads missing ${href}`);
+    }
+}
+
 if (!robots.includes(`Sitemap: ${origin}${basePath}sitemap-index.xml`))
   fail('robots.txt', 'wrong or missing Sitemap line');
 if (/^Disallow:\s*\S/m.test(robots)) fail('robots.txt', 'disallows something');

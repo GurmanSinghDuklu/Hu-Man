@@ -1,14 +1,14 @@
 ---
 /**
- * The /contact/ intro: the first time someone opens the contact page in a browser session they see
+ * The /contact/ intro: each time someone follows a link to the contact page (or types it) they see
  * the old contact page (site header and "Talk to a human." hero), it cracks into tiles on the
  * site's grid, the tiles fall into black, and after a beat of black the landing switches on like
  * an old TV, with its video playing. A Skip intro button (and Esc, Enter or a click) ends it early.
  * Animation: scripts/contact-intro.ts.
  *
  * The cover sits in a <template>, so nothing renders until the inline script below stamps it into
- * the page, before first paint, and only when the intro should play: not on a second contact visit
- * in the same session (sessionStorage), not under reduced motion, never without JavaScript. That
+ * the page, before first paint, and only when the intro should play: not on a refresh or Back/Forward
+ * (nothing is stored in the browser), not under reduced motion, never without JavaScript. That
  * also keeps it out of <main>, so the Markdown copy and llms-full.txt never see it.
  * While the class `contact-intro` is on <html> the page cannot scroll. If the animation script
  * never starts, a failsafe timer uncovers the page after 6 seconds.

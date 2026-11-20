@@ -11,6 +11,7 @@ import ScrollCue from '../components/ScrollCue.astro';
 import ConceptWall from '../components/ConceptWall.astro';
 import { portfolioConcepts, portfolioConceptsIntro } from '../data/portfolioConcepts';
 import { ats } from '../data/ats';
+import { portfolioFaq } from '../data/faq';
 import Shape from '../components/play/Shape.astro';
 import WordLine from '../components/play/WordLine.astro';
 
@@ -114,6 +115,30 @@ const choose = (name: string) => withBase(contactPath({ tier: `Portfolio: ${name
     </div>
   </section>
 
+  <section class="band band--paper-2 faq" id="faq" aria-labelledby="faq-title">
+    <div class="sheet">
+      <p class="label" data-reveal>
+        CV concepts · Questions
+      </p>
+      <h2 id="faq-title" class="display display--s" data-reveal="lines">
+        Choosing a concept, <Shape kind="ring" tone="rose" /> answered.
+      </h2>
+      <ul class="faq__list">
+        {portfolioFaq.map((item, i) => (
+          <li data-rise={i % 2}>
+            <details class="faq__item" open>
+              <summary>
+                <span class="faq__q">{item.q}</span>
+                <span class="faq__toggle" aria-hidden="true" />
+              </summary>
+              <p class="faq__a">{item.a}</p>
+            </details>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
   <section class="band grid ptiers" aria-labelledby="tiers-title">
     <div class="sheet">
       <h2 id="tiers-title" class="label">
@@ -123,6 +148,11 @@ const choose = (name: string) => withBase(contactPath({ tier: `Portfolio: ${name
         A site you own, that works on a phone and that search and AI can read. We do not promise
         jobs, interviews or results with applicant tracking systems: a portfolio shows your work,
         and what happens next is up to you and the people reading it.
+      </p>
+      <p class="ptiers__text">
+        Any of the concepts above can be the starting point for your site, and more than one person
+        may pick the same one. A design that's yours alone comes with Portfolio Pro, or ask and
+        we'll quote it.
       </p>
       <ul class="ptiers__list">
         {portfolioTiers.map((t, i) => (
@@ -466,6 +496,112 @@ const choose = (name: string) => withBase(contactPath({ tier: `Portfolio: ${name
 
   .ats__btn {
     margin-top: 1rem;
+  }
+
+  /* ---------- CV concepts FAQ (same cards as the About FAQ) ---------- */
+  .faq {
+    padding-block: clamp(3rem, calc(var(--u) * 0.9), 5.5rem);
+  }
+
+  .faq__list {
+    display: grid;
+    gap: 1rem;
+    margin-top: clamp(2rem, calc(var(--u) * 0.6), 3.5rem);
+  }
+
+  .faq__item {
+    position: relative;
+    min-height: 100%;
+    padding: clamp(1.25rem, calc(var(--u) * 0.38), 2.25rem);
+    border: 1px solid var(--ink);
+    border-radius: 0 calc(var(--u) * 0.72) calc(var(--u) * 0.72) 0;
+    background: var(--paper);
+  }
+
+  .faq__item summary {
+    display: block;
+    padding-right: 3.5rem;
+    list-style: none;
+    cursor: pointer;
+  }
+
+  .faq__item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq__q {
+    font: 800 clamp(1.05rem, calc(var(--u) * 0.225), 1.4rem) / 1.05 var(--font-display);
+    text-transform: uppercase;
+  }
+
+  .faq__toggle {
+    position: absolute;
+    right: clamp(1.25rem, calc(var(--u) * 0.34), 2.25rem);
+    top: 50%;
+    translate: 0 -50%;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--ink);
+  }
+
+  .faq__toggle::before,
+  .faq__toggle::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 12px;
+    height: 1.5px;
+    background: var(--paper);
+    transform: translate(-50%, -50%);
+  }
+
+  .faq__toggle::after {
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+
+  .faq__item:not([open]) .faq__toggle {
+    top: clamp(1.25rem, calc(var(--u) * 0.38), 2.25rem);
+    translate: none;
+  }
+
+  .faq__item[open] .faq__toggle::after {
+    display: none;
+  }
+
+  .faq__list li:first-child .faq__toggle {
+    background: var(--pink);
+  }
+
+  .faq__a {
+    max-width: 36rem;
+    margin-top: 0.5rem;
+    padding-right: 3.5rem;
+    font-size: clamp(0.9rem, calc(var(--u) * 0.165), 1rem);
+    line-height: 1.5;
+  }
+
+  @media (min-width: 48rem) {
+    .faq__list {
+      grid-template-columns: repeat(2, 1fr);
+      gap: calc(var(--u) * 0.22) calc(var(--u) * 0.33);
+    }
+
+    .faq__list li:nth-child(odd) .faq__item {
+      border-radius: calc(var(--u) * 0.72) calc(var(--u) * 0.72) calc(var(--u) * 0.72) 0;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .faq__item {
+      min-height: calc(var(--u) * 1.44);
+    }
+
+    .faq__toggle {
+      width: calc(var(--u) * 0.49);
+      height: calc(var(--u) * 0.49);
+    }
   }
 
   .pextras {

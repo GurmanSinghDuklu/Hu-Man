@@ -1,0 +1,103 @@
+{
+  "headers": {
+    "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "DENY",
+    "Content-Security-Policy": "frame-ancestors 'none'; base-uri 'self'; object-src 'none'",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "Permissions-Policy": "camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()",
+    "Cross-Origin-Opener-Policy": "same-origin"
+  },
+  "pages": {
+    "/": {
+      "preload": [
+        "</_astro/montserrat-latin-800-normal.DIlMgMlR.woff2>; rel=preload; as=font; type=\"font/woff2\"; crossorigin",
+        "</_astro/archivo-latin-400-normal.Bq1okebX.woff2>; rel=preload; as=font; type=\"font/woff2\"; crossorigin"
+      ]
+    },
+    "/about/": {
+      "preload": [
+        "</_astro/montserrat-latin-800-normal.DIlMgMlR.woff2>; rel=preload; as=font; type=\"font/woff2\"; crossorigin",
+        "</_astro/archivo-latin-400-normal.Bq1okebX.woff2>; rel=preload; as=font; type=\"font/woff2\"; crossorigin"
+      ]
+    },
+    "/agentic-ai-ready/": {
+      "preload": [
+        "</_astro/montserrat-latin-800-normal.DIlMgMlR.woff2>; rel=preload; as=font; type=\"font/woff2\"; crossorigin",
+        "</_astro/archivo-latin-400-normal.Bq1okebX.woff2>; rel=preload; as=font; type=\"font/woff2\"; crossorigin"
+      ]
+    },
+    "/business-websites/": {
+      "preload": [
+        "</_astro/montserrat-latin-800-normal.DIlMgMlR.woff2>; rel=preload; as=font; type=\"font/woff2\"; crossorigin",
+        "</_astro/archivo-latin-400-normal.Bq1okebX.woff2>; rel=preload; as=font; type=\"font/woff2\"; crossorigin"
+      ]
+    },
+    "/contact/": {
+      "preload": [
+        "</_astro/montserrat-latin-800-normal.DIlMgMlR.woff2>; rel=preload; as=font; type=\"font/woff2\"; crossorigin",
+        "</_astro/archivo-latin-400-normal.Bq1okebX.woff2>; rel=preload; as=font; type=\"font/woff2\"; crossorigin"
+      ]
+    },
+    "/cookies/": {
+      "preload": [
+        "</_astro/montserrat-latin-800-normal.DIlMgMlR.woff2>; rel=preload; as=font; type=\"font/woff2\"; crossorigin",
+        "</_astro/archivo-latin-400-normal.Bq1okebX.woff2>; rel=preload; as=font; type=\"font/woff2\"; crossorigin"
+      ]
+    },
+    "/free-ai-check/": {
+      "preload": [
+        "</_astro/montserrat-latin-800-normal.DIlMgMlR.woff2>; rel=preload; as=font; type=\"font/woff2\"; crossorigin",
+        "</_astro/archivo-latin-400-normal.Bq1okebX.woff2>; rel=preload; as=font; type=\"font/woff2\"; crossorigin"
+      ]
+    },
+    "/how-we-build/": {
+      "preload": [
+        "</_astro/montserrat-latin-800-normal.DIlMgMlR.woff2>; rel=preload; as=font; type=\"font/woff2\"; crossorigin",
+        "</_astro/archivo-latin-400-normal.Bq1okebX.woff2>; rel=preload; as=font; type=\"font/woff2\"; crossorigin"
+      ]
+    },
+    "/portfolio/": {
+      "preload": [
+        "</_astro/montserrat-latin-800-normal.DIlMgMlR.woff2>; rel=preload; as=font; type=\"font/woff2\"; crossorigin",
+        "</_astro/archivo-latin-400-normal.Bq1okebX.woff2>; rel=preload; as=font; type=\"font/woff2\"; crossorigin"
+      ]
+    },
+    "/pricing/": {
+      "preload": [
+        "</_astro/montserrat-latin-800-normal.DIlMgMlR.woff2>; rel=preload; as=font; type=\"font/woff2\"; crossorigin",
+        "</_astro/archivo-latin-400-normal.Bq1okebX.woff2>; rel=preload; as=font; type=\"font/woff2\"; crossorigin"
+      ]
+    },
+    "/privacy/": {
+      "preload": [
+        "</_astro/montserrat-latin-800-normal.DIlMgMlR.woff2>; rel=preload; as=font; type=\"font/woff2\"; crossorigin",
+        "</_astro/archivo-latin-400-normal.Bq1okebX.woff2>; rel=preload; as=font; type=\"font/woff2\"; crossorigin"
+      ]
+    },
+    "/services/": {
+      "preload": [
+        "</_astro/montserrat-latin-800-normal.DIlMgMlR.woff2>; rel=preload; as=font; type=\"font/woff2\"; crossorigin",
+        "</_astro/archivo-latin-400-normal.Bq1okebX.woff2>; rel=preload; as=font; type=\"font/woff2\"; crossorigin"
+      ]
+    },
+    "/start/": {
+      "preload": [
+        "</_astro/montserrat-latin-800-normal.DIlMgMlR.woff2>; rel=preload; as=font; type=\"font/woff2\"; crossorigin",
+        "</_astro/archivo-latin-400-normal.Bq1okebX.woff2>; rel=preload; as=font; type=\"font/woff2\"; crossorigin"
+      ]
+    },
+    "/terms/": {
+      "preload": [
+        "</_astro/montserrat-latin-800-normal.DIlMgMlR.woff2>; rel=preload; as=font; type=\"font/woff2\"; crossorigin",
+        "</_astro/archivo-latin-400-normal.Bq1okebX.woff2>; rel=preload; as=font; type=\"font/woff2\"; crossorigin"
+      ]
+    },
+    "/user-agreement/": {
+      "preload": [
+        "</_astro/montserrat-latin-800-normal.DIlMgMlR.woff2>; rel=preload; as=font; type=\"font/woff2\"; crossorigin",
+        "</_astro/archivo-latin-400-normal.Bq1okebX.woff2>; rel=preload; as=font; type=\"font/woff2\"; crossorigin"
+      ]
+    }
+  }
+}

@@ -134,6 +134,13 @@ export async function readFields(request) {
   return flat([...form.entries()]);
 }
 
+/**
+ * A reply address. It goes into the Reply-To header, so it may not hold the characters that mean
+ * something there (<>()[]\,;:" and spaces), which would let one field add a second address.
+ * Apostrophes, plus signs and non-English letters stay allowed: real people use them.
+ */
+const EMAIL = /^[^\s@<>()[\]\\,;:"]+@[^\s@<>()[\]\\,;:"]+\.[^\s@<>()[\]\\,;:".]{2,}$/;
+
 /** Returns { data } when valid, { errors } when not. */
 export function validate(raw) {
   const data = {
@@ -154,8 +161,7 @@ export function validate(raw) {
   };
   const errors = {};
   if (!data.name) errors.name = 'Please add your name.';
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(data.email))
-    errors.email = 'Please add an email address we can reply to.';
+  if (!EMAIL.test(data.email)) errors.email = 'Please add an email address we can reply to.';
   if (data.topic === 'ai-check' && !data.website)
     errors.website = 'Please add the website to check.';
   // A chosen service is enough to start a conversation (the short /start/ form).

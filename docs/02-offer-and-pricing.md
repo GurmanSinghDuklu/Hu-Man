@@ -73,6 +73,10 @@ The slots-left count the change list asks for is not shown: there is no booking 
 | Portfolio (our pick) | £264 | A full portfolio website: everything in Profile · unlimited project case studies with images and files · a full multi-page site · light motion and interactive touches · testimonials · links to LinkedIn, GitHub, Behance or Dribbble · analytics | 7 to 10 working days |
 | Portfolio Pro | £932 | The full build (same price as business Launch): everything in Portfolio · custom design and graphics · motion graphics · video built in (showreels, YouTube and other embeds) · social media integration (Instagram, TikTok, LinkedIn and YouTube feeds) · media and third-party integrations · a writing or blog section · an owner dashboard so you edit it yourself | 2 to 3 weeks |
 
+Example designs (Gurman, 17 Nov 2026): the concepts on /portfolio are starting points, not
+exclusive: more than one person may pick the same one, and the design stays ours (terms section 7).
+A design of the client's own comes with Portfolio Pro, or is quoted. Said on /portfolio under the tiers.
+
 Add-ons: CV rewrite to match the site £54; keep-it-live hosting and two content updates a year
 £64/year. (The £25 extra case study add-on was removed: case studies are unlimited from Portfolio up.)
 48-hour Express on Profile: +£110 (for interview deadlines). Never promise jobs,

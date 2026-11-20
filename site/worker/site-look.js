@@ -3,7 +3,8 @@
  * reply can start from facts: does it load, over HTTPS, how fast, its title and description, and
  * whether robots.txt shuts AI crawlers out or an llms.txt exists.
  *
- * Only public http(s) hostnames are fetched (no IP addresses, ports or local names), each request
+ * Only public http(s) hostnames are fetched (no IP addresses, ports or local names), and every
+ * redirect is checked the same way before it is followed (at most five). Each request
  * has a short timeout, and at most the first 256 kB of the page is read. It never throws: anything
  * that goes wrong comes back as `error`, and the enquiry is sent regardless.
  */
@@ -21,6 +22,8 @@ const AI_AGENTS = [
 ];
 
 const MAX_PAGE_BYTES = 256 * 1024;
+/** Redirects followed per request, each one checked like the address itself. */
+const MAX_REDIRECTS = 5;
 const USER_AGENT = 'HumanSiteLook/1.0 (+https://humansoftwareagency.com/free-ai-check/)';
 
 /** The address as a URL we may fetch, or null. */
@@ -40,6 +43,35 @@ export function siteUrl(input) {
   if (!host.includes('.') || /^[\d.]+$/.test(host) || host.startsWith('[')) return null;
   if (/(^|\.)(localhost|local|internal|invalid|test|example)$/.test(host)) return null;
   return url;
+}
+
+/** Thrown when a redirect leads somewhere we would not fetch, or there are too many. */
+class RedirectRefused extends Error {}
+
+/**
+ * Fetches with redirects followed by hand, so every hop passes the same check as the address the
+ * sender typed (a public site could otherwise redirect to a local or private address). Returns
+ * { response, url } with the final address.
+ */
+async function fetchChecked(fetch, start, init) {
+  let target = start;
+  for (let hop = 0; ; hop += 1) {
+    const response = await fetch(target.toString(), { ...init, redirect: 'manual' });
+    const location =
+      response.status >= 300 && response.status < 400 ? response.headers.get('location') : null;
+    if (!location) return { response, url: target.toString() };
+    response.body?.cancel().catch(() => {});
+    if (hop >= MAX_REDIRECTS) throw new RedirectRefused('too many redirects');
+    let next;
+    try {
+      next = new URL(location, target);
+    } catch {
+      next = null;
+    }
+    const safe = next && ['http:', 'https:'].includes(next.protocol) ? siteUrl(next.href) : null;
+    if (!safe) throw new RedirectRefused('redirected to an address that is not public');
+    target = safe;
+  }
 }
 
 const clean = (text, max = 160) => {
@@ -119,24 +151,26 @@ async function look(input, { fetch = globalThis.fetch, timeoutMs = 3500 } = {}) 
   const url = siteUrl(input);
   if (!url) return { error: 'not a public web address, so it was not fetched' };
   const get = (target, accept) =>
-    fetch(target, {
-      redirect: 'follow',
+    fetchChecked(fetch, target, {
       signal: AbortSignal.timeout(timeoutMs),
       headers: { 'User-Agent': USER_AGENT, Accept: accept },
     });
 
   const started = Date.now();
   const [page, robots, llms] = await Promise.allSettled([
-    get(url.toString(), 'text/html'),
-    get(new URL('/robots.txt', url).toString(), 'text/plain'),
-    get(new URL('/llms.txt', url).toString(), 'text/plain'),
+    get(url, 'text/html'),
+    get(new URL('/robots.txt', url), 'text/plain'),
+    get(new URL('/llms.txt', url), 'text/plain'),
   ]);
 
   if (page.status === 'rejected') {
-    const reason = page.reason?.name === 'TimeoutError' ? 'timed out' : 'could not connect';
+    let reason = 'could not connect';
+    if (page.reason instanceof RedirectRefused)
+      reason = `${page.reason.message}, so it was not followed`;
+    else if (page.reason?.name === 'TimeoutError') reason = 'timed out';
     return { error: `${reason} (${url.hostname})` };
   }
-  const response = page.value;
+  const { response, url: finalUrl } = page.value;
   const ms = Date.now() - started;
   let head = '';
   try {
@@ -152,21 +186,21 @@ async function look(input, { fetch = globalThis.fetch, timeoutMs = 3500 } = {}) 
 
   const plainText = (result) =>
     result.status === 'fulfilled' &&
-    result.value.ok &&
-    !/html/i.test(result.value.headers.get('content-type') ?? '');
+    result.value.response.ok &&
+    !/html/i.test(result.value.response.headers.get('content-type') ?? '');
   let blocked = [];
   if (plainText(robots)) {
     try {
-      blocked = blockedAgents(await robots.value.text());
+      blocked = blockedAgents(await robots.value.response.text());
     } catch {
       blocked = [];
     }
   }
 
   return {
-    url: response.url || url.toString(),
+    url: finalUrl,
     status: response.status,
-    https: (response.url || url.toString()).startsWith('https:'),
+    https: finalUrl.startsWith('https:'),
     ms,
     title: clean(head.match(/<title[^>]*>([\s\S]*?)<\/title>/i)?.[1]),
     description: clean(meta('description'), 200),

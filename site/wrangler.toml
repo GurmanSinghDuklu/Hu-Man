@@ -16,6 +16,28 @@ binding = "ASSETS"
 # /about -> /about/, and unknown paths get the site's own 404 page.
 html_handling = "auto-trailing-slash"
 not_found_handling = "404-page"
+# The pages the Worker serves first (worker/pages.js): Markdown when a client asks for it, and Link
+# headers for the Markdown copy and preloaded fonts (Cloudflare Early Hints). Everything else (CSS,
+# fonts, images, video, llms.txt, concepts) stays a plain static file. Exact paths only: /about
+# (no slash) still gets its 301 from public/_redirects. seo-check fails if this list and the
+# built pages (worker/pages.json) differ, so add a line when you add a page.
+run_worker_first = [
+  "/",
+  "/about/",
+  "/agentic-ai-ready/",
+  "/business-websites/",
+  "/contact/",
+  "/cookies/",
+  "/free-ai-check/",
+  "/how-we-build/",
+  "/portfolio/",
+  "/pricing/",
+  "/privacy/",
+  "/services/",
+  "/start/",
+  "/terms/",
+  "/user-agreement/",
+]
 
 # Email for the enquiry form. The address must be verified in Cloudflare Email Routing first.
 [[send_email]]

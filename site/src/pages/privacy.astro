@@ -6,6 +6,11 @@ import TalkBanner from '../components/TalkBanner.astro';
 import LegalDoc from '../components/LegalDoc.astro';
 import { site } from '../config/site';
 import { withBase } from '../config/paths';
+
+// Draft. "If you become a client" was added 2026-11-17 for the solicitor's review. The retention
+// periods (12 months after launch, 12 months for enquiries) are defaults to confirm with Gurman;
+// HMRC's record-keeping rule for sole traders sets the invoice one. The storage it describes
+// (private GitHub repositories, encrypted computers) must be true before the first client.
 ---
 
 <BaseLayout page="privacy">
@@ -13,14 +18,15 @@ import { withBase } from '../config/paths';
 
   <LegalDoc
     title="Privacy notice"
-    updated="27 October 2026"
-    note="Draft: this notice has not been reviewed by a solicitor yet. It describes the site as it works today and will be updated before we collect any personal data beyond a direct enquiry."
+    updated="17 November 2026"
+    note="Draft: this notice has not been reviewed by a solicitor yet. It describes the site as it works today. The section on clients was added on 17 November 2026."
   >
     <h2>Who this covers</h2>
     <p>
-      This notice covers this website, run by {site.founder} trading as {site.name} (a working name
-      — see the footer for current contact details). Gurman has not yet registered as a sole trader;
-      that is planned before any paid work begins.
+      This notice covers this website and the information we handle for clients, run by{' '}
+      {site.founder} trading as {site.name} (a working name — see the footer for current contact
+      details). Gurman has not yet registered as a sole trader; that is planned before any paid work
+      begins.
     </p>
 
     <h2>This site itself</h2>
@@ -64,6 +70,26 @@ import { withBase } from '../config/paths';
 
     <h2>If you become a client</h2>
     <p>
+      To build your site we use what you send us. For a CV or portfolio site that is usually your
+      work history, qualifications, a photo and contact details, and sometimes the names or words of
+      people you quote. We use it only to build, launch and look after your site, and our lawful
+      basis is that we need it to carry out our contract with you. Anything you choose to show on
+      your finished site is public once it goes live.
+    </p>
+    <p>
+      Project files and messages are kept in our email (Gmail, run by Google), in private code
+      repositories on GitHub and on our own encrypted computers, and your live site is hosted by
+      Cloudflare. If a project needs any other service, we tell you which one first. Some of these
+      companies may process data outside the UK; where they do, they use the safeguards UK law
+      requires. We never put your photos or details into AI tools without asking you first.
+    </p>
+    <p>
+      We keep your project files for 12 months after your site goes live, so we can fix anything
+      that comes up, and then delete them. If we host or look after your site, we keep what we need
+      for as long as we do. Invoices and payment records are kept for as long as HMRC requires.
+      Enquiries that don't become projects are deleted within 12 months.
+    </p>
+    <p>
       Any project involving an AI assistant, booking system or similar tool will have its own,
       specific explanation of what data is collected, which providers process it, and how long it is
       kept, agreed with you before launch. Health-related businesses (for example dental or
@@ -74,8 +100,9 @@ import { withBase } from '../config/paths';
     <p>
       You can ask what information is held about you, ask for it to be corrected or deleted, or
       raise a concern, by contacting{' '}
-      <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>. If you're not satisfied
-      with the response, you can complain to the UK Information Commissioner's Office (ico.org.uk).
+      <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>. We reply within one month.
+      If you're not satisfied with the response, you can complain to the UK Information
+      Commissioner's Office (ico.org.uk).
     </p>
     <h2>Cookies</h2>
     <p>

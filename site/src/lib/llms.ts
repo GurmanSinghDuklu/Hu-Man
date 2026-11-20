@@ -19,7 +19,7 @@ import {
   careRules,
   careFixPromise,
 } from '../data/pricing';
-import { faq, agenticFaq, checkFaq, contactFaq } from '../data/faq';
+import { faq, agenticFaq, checkFaq, contactFaq, portfolioFaq } from '../data/faq';
 import { definition, ingredients } from '../data/agentic';
 import { method, methodName, methodNote, checklist, compare, bonnet } from '../data/process';
 import { projects } from '../data/projects';
@@ -78,6 +78,13 @@ export function llmsTxt(): string {
       (key) =>
         `- ${link(key)}: ${pages[key].description} Markdown: ${abs(`${pages[key].path}index.html.md`)}`,
     ),
+    // The live Worker (worker/pages.js) answers this; the GitHub Pages preview has no Worker.
+    ...(import.meta.env.BASE_URL === '/'
+      ? [
+          '',
+          'Every page above also returns its Markdown copy when requested with `Accept: text/markdown`.',
+        ]
+      : []),
     '',
     '## Services',
     '',
@@ -194,6 +201,9 @@ export function llmsFullTxt(): string {
     '',
     `${portfolioExpress.title} (${portfolioExpress.price}): ${portfolioExpress.text}`,
     '',
+    '### Questions about the CV concepts',
+    '',
+    ...portfolioFaq.flatMap((item) => [`#### ${item.q}`, '', item.a, '']),
     `## How we build (${link('how-we-build')})`,
     '',
     `${methodName} A person signs off each step.`,

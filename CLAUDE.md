@@ -354,6 +354,12 @@ E-Commerce Regulations' geographic address is still missing: add a business addr
 address) when he has one. Terms: 50% deposit, 50% before launch (his choice); three revision rounds,
 "pay once" and "pay the difference" match the pricing page. Drafts, awaiting a solicitor's review;
 the 30-day quote validity, 30-days-late termination and liability cap are my defaults to confirm.
+Added 2026-11-17 (drafts, same review): terms 4 (client confirms CV content is accurate and consented;
+we don't verify), 7 (example designs stay ours and are non-exclusive; a custom design is the
+client's), 11 "Hosting and care" (no uptime promise, files handed over when hosting ends, takedown
+for fraud or unlawful use; later sections renumbered 12 to 15); privacy "If you become a client"
+(contract basis, Gmail/private GitHub/Cloudflare, 12-month retention defaults, one-month replies).
+Those storage claims must be true before the first client: client repos private, laptops encrypted.
 
 ## Motion (2026-10-27, "B · Alive", branch `motion`)
 Spec `docs/superpowers/specs/2026-10-27-motion-design.md` (see its "As built"), plan
@@ -394,7 +400,7 @@ Lighthouse 97-100 / 100 / 100 / 100 on ten pages, axe 0 violations on 15. Motion
   answering" is a client service and stays.
 
 ## Concept portfolios (2026-11-02, branch `portfolio-concepts`)
-Three standalone concept sites (Noor Haddad, Theo Lindqvist, Maya Okonkwo) live in `site/public/concepts/<slug>/index.html` and are shown as cards on `/portfolio` (data in `src/data/portfolioConcepts.ts`, screenshots in `src/assets/portfolio-concepts/`). They are plain HTML copied as is, not Astro pages: fonts are self-hosted woff2 in `public/concepts/fonts/` (from `@fontsource`, not added to package.json) and GSAP 3.15.0 (gsap, ScrollTrigger, Draggable) is copied from `node_modules` into `public/concepts/vendor/`, all via relative paths so the `/Hu-Man` preview base works. Gotchas: Astro's meta CSP does not cover public files, so `public/_headers` has a `/concepts/*` rule that detaches the global CSP (`! Content-Security-Policy`) and sets one that allows their inline scripts and styles; the pages are `noindex,nofollow`, not in the sitemap and not in `llms-full.txt`, and `seo-check.mjs` checks them separately (noindex, no outside hosts, assets exist, back link); ESLint and Prettier skip `public/concepts`. Each page has a fixed badge with a back link to `../../portfolio/` (static at the foot on phones). Known axe finding left: the Maya nav links over the pink circle fail colour contrast. The home Portfolio section (`WorkCards.astro`) shows the real projects from `projects.ts`, not these concepts (Gurman, 2026-11-02: the concept version was reverted).
+Three standalone concept sites (Noor Haddad, Theo Lindqvist, Maya Okonkwo) live in `site/public/concepts/<slug>/index.html` and are shown as cards on `/portfolio` (data in `src/data/portfolioConcepts.ts`, screenshots in `src/assets/portfolio-concepts/`). They are plain HTML copied as is, not Astro pages: fonts are self-hosted woff2 in `public/concepts/fonts/` (from `@fontsource`, not added to package.json) and GSAP 3.15.0 (gsap, ScrollTrigger, Draggable) is copied from `node_modules` into `public/concepts/vendor/`, all via relative paths so the `/Hu-Man` preview base works. Gotchas: Astro's meta CSP does not cover public files, so `public/_headers` has a `/concepts/*` rule that detaches the global CSP (`! Content-Security-Policy`) and sets one that allows their inline scripts and styles; the pages are `noindex,nofollow`, not in the sitemap and not in `llms-full.txt`, and `seo-check.mjs` checks them separately (noindex, no outside hosts, assets exist, back link); ESLint and Prettier skip `public/concepts`. Each page has a fixed badge with a back link to `../../portfolio/` (static at the foot on phones). Maya's contrast failures were fixed 2026-11-20 (nav pills on cream, deeper ink on the pink cards). The home Portfolio section (`WorkCards.astro`) shows the real projects from `projects.ts`, not these concepts (Gurman, 2026-11-02: the concept version was reverted).
 
 ## Live concept wall (2026-11-07, branch `portfolio-gallery`)
 /portfolio now opens with the concept portfolios (sixteen since 9 Nov) on a dark live wall (`ConceptWall.astro`,
@@ -412,8 +418,7 @@ mechanics from Gurman's Awwwards references but never their layouts, art or word
    seo-check matches pages to that file.
 4. **Framing**: `frame-src 'self'` in the CSP; `/concepts/*` drops `X-Frame-Options: DENY` for
    `SAMEORIGIN` and `frame-ancestors 'self'` in `_headers`.
-5. Concept pages say "Concept" and "sample", never "fictional" (hard rule 1). Known axe finding left:
-   Maya's nav over the pink circle (pre-existing).
+5. Concept pages say "Concept" and "sample", never "fictional" (hard rule 1).
 6. **Revision 2 (same night, Gurman's notes):** Hannah is now a bookcase (each book = a workplace that
    opens into its history; for people with many employers), Sofia uses a real muapi cabin clip
    (`sofia/img/cabin.mp4`, kling-v3.0-pro from an imagen4-ultra frame) and an old-school terminal (split-flap
@@ -561,14 +566,13 @@ following a link closes an open menu; focus returns to the toggle on Esc. `scrol
 Spec `docs/superpowers/specs/2026-11-12-contact-landing-design.md`. /contact/ is now the landing screen
 (`components/landing/Landing.astro`, shared with /start/; behaviour in `scripts/landing.ts`) with the full
 contact form, direct details, "What happens next", AI check card and FAQ below in the landing's look, then
-the footer. No site header. The first contact visit in a browser session opens with the old contact page
+the footer. No site header. Each visit by link (not a refresh or Back/Forward) opens with the old contact page
 breaking into tiles that fall into black, 1.6 s of black, then the landing switching on like an old TV
 (dot, bright line, picture springing open under a fading flash; no static), with a Skip intro button
 (`ContactIntro.astro`, `scripts/contact-intro.ts`). Things worth knowing:
 1. **`is:inline` scripts are not hashed into the CSP by Astro.** The intro's gate script lives in
    `src/scripts/inline/` and `astro.config.mjs` hashes that file (`inlineHash`); inline it verbatim with
-   `set:html`. BaseLayout's `.js` class script is blocked for this reason on every page (pre-existing,
-   harmless: reveals.ts adds the class).
+   `set:html`. BaseLayout's `.js` class script works the same way (`inline/js-class.js`, 2026-11-20).
 2. **Scripts that scroll or measure wait for `introDone()`** (`scripts/contact-intro-state.ts`): the
    landing video, Lenis (it scrolls by script, which `overflow: hidden` doesn't stop) and scroll-fx (its
    first pass was a 250 ms long task during the intro).
@@ -579,8 +583,8 @@ breaking into tiles that fall into black, 1.6 s of black, then the landing switc
    Lenis and scroll-fx start). Fallen tiles are set to `display: none` before the black.
 6. **Software GL crawls through the intro** (about a frame a second; GSAP stretches the timeline to
    match), so motion-check runs the intro checks in a normal Chromium, not its swiftshader one.
-7. Tests: `motion-check` has intro checks; `axe` waits for the cover to go. Pass
-   `sessionStorage.setItem('hm-contact-intro', '1')` in an init script to skip it.
+7. Tests: `motion-check` has intro checks; `axe` waits for the cover to go. Reload the page to
+   skip it (a refresh never plays it).
 Lighthouse /contact/ 95 (intro included), /start/ 99, home 96; axe 0 violations; motion-check clear in
 Chromium, WebKit and Firefox.
 
@@ -636,7 +640,7 @@ Chromium, WebKit and Firefox.
   seo-check FAQ comparison all point at /about/.
 - **About hero intro** (`scripts/hero-intro.ts`, opt-in with `intro` on `InnerHero`/`HeroVideo`): neon tiles
   drop in, a scan line sweeps, each column flips to its slice of the poster, seams close, layer removed,
-  then the video plays. Once per session (`hm-about-intro`); not under reduced motion or Data Saver; any
+  then the video plays. On every visit by link (not on refresh or Back/Forward); not under reduced motion or Data Saver; any
   click or key finishes it. `hero-video.ts` holds playback (`holding`) until it ends.
   1. **An opacity animation flattens 3D.** The cell wrapper animates translate/opacity/scale; the tile
      inside only rotates. With both on one element the back faces never showed.
@@ -652,8 +656,8 @@ Chromium, WebKit and Firefox.
   sheet (name bar and twelve grey bars, no words) draws on, a Signal scan line passes down it, then it
   cuts into 8 strips (5 on phones) that fall under gravity, centre first, over the poster; the video
   starts after (~1.7 s in all). Transform, scale and opacity only.
-  1. **Gating is shared**: `playWhenSeen()` and `introWanted(key)` in `hero-intro.ts` (once per session,
-     key `hm-portfolio-intro`; 40% on screen; click or key finishes; layer removed). `hero-video.ts`
+  1. **Gating is shared**: `playWhenSeen()` and `introWanted()` in `hero-intro.ts` (every visit by
+     link, not refresh or Back/Forward; 40% on screen; click or key finishes; layer removed). `hero-video.ts`
      picks the variant from `data-hv-intro`.
   2. **Sizes are container units**: `.hv-cv` is a size container and every bar uses `cqw`/`cqh`, so each
      strip's copy of the sheet lines up with the whole sheet. The full sheet sits on top and vanishes at
@@ -664,7 +668,7 @@ Lighthouse /portfolio/ 99/100/100/100, axe 0 violations, motion-check clear.
 
 ## Pricing hero video + receipt intro (2026-11-15, branch `pricing-video`)
 - /pricing's hero plays `public/landing/pricing.mp4` (the pricing ad, 7.8 MB, faststart, loops whole; poster is the settled Essential £318 card at 6.5 s, `src/assets/hero-video/pricing.jpg`, `start: 6.5`). Phones and tablets set `--hv-h: 49svh` in pricing.astro so the hero fits one window.
-- **`intro="receipt"`** (`scripts/hero-intro-receipt.ts`, key `hm-pricing-intro`, same shared gating as 'tiles' and 'cv'): a Paper receipt feeds down, prints a header bar and five rows (label bar plus a price that rolls like an odometer, then a Signal total bar), a Signal scan line passes, then it tears along a zigzag and the halves leave up and down over the poster; about 1.6 s.
+- **`intro="receipt"`** (`scripts/hero-intro-receipt.ts`, same shared gating as 'tiles' and 'cv'): a Paper receipt feeds down, prints a header bar and five rows (label bar plus a price that rolls like an odometer, then a Signal total bar), a Signal scan line passes, then it tears along a zigzag and the halves leave up and down over the poster; about 1.6 s.
   1. **Only real tier prices appear**: each row rolls through the prices before it (£318, £446, £932, £2,240, "Quote"); if tier prices change in `pricing.ts`, change `PRICES` in the script too.
   2. The halves are clones of the finished receipt (default CSS state is the final state; animations supply the printing), clipped with a zigzag `clip-path` and shown only from the tear on. Sizes are container units (`.hv-rc` is a size container).
 
@@ -741,3 +745,44 @@ Lighthouse 96-99 / 100 / 100 / 100 (home, services, about, pricing); axe 0 on 17
 - **The six business concepts (offcut, ember, plump, fernlea, linework) are deleted** and Ellie is off the
   business wall (still on /portfolio). `businessSiteConcepts` is empty; /business-websites/ hides its wall
   section and scroll cue until it has an entry.
+
+## No browser storage (2026-11-17, branch `security-hardening`)
+The site stores nothing in the browser: no cookies, no localStorage, no sessionStorage (UK PECR
+covers all of them, and /cookies/ promises none). The hero and /contact/ intros used session flags
+to play once per visit; they now play on every visit by link and skip on a refresh or Back/Forward,
+read from the browser's navigation record (`introWanted()` in `hero-intro.ts`, and the same rule in
+`scripts/inline/contact-intro-gate.js`). `motion-check` fails if any page stores anything. If
+something ever needs storage, change the cookies page first and ask whether it needs consent.
+
+## CV concepts FAQ on /portfolio (2026-11-18)
+Eight questions about the CV concepts, under the ATS section (`#faq`, same open-card style as the About FAQ).
+Copy is a draft awaiting Gurman's sign-off: `portfolioFaq` in `src/data/faq.ts`, which feeds the page, a
+FAQPage `mainEntity` on the portfolio schema and llms-full.txt. Prices and timelines come from `pricing.ts`
+(`portfolioTiers`, `portfolioExpress`, new `keepLive`). Header and footer FAQ links still
+mean /about/#faq. Run tools as `./node_modules/.bin/astro` etc.: the `:` in "Hu:Man" breaks npm's PATH.
+
+## Backend SEO: IndexNow on deploy, video schema, Markdown on request (2026-11-19)
+- **Deploy command is `npm run deploy`** (`scripts/deploy.mjs`; Workers Builds deploy command, set in the
+  Cloudflare dashboard, docs/10-launch.md section 1). It reads the live sitemap, runs `npx wrangler deploy`,
+  then sends IndexNow every page whose lastmod changed. Page dates include shared components and data, so
+  most deploys send every page; that's accurate. `npm run indexnow` still sends all pages by hand.
+- **Hero videos have VideoObject schema and `<video:video>` sitemap entries.** One list,
+  `src/data/heroVideos.ts` (player data, description, measured `seconds`, `pageHeroVideo` map); uploadDate
+  is the mp4's first git commit. The sitemap entries are read back from each page's JSON-LD. seo-check
+  fails if a page plays a video its schema doesn't describe, or the reverse. Re-measure `seconds` if a file
+  is re-cut. Google may still not show them as video results (hero videos aren't a page's main content).
+- **The Worker serves the 15 indexable pages first** (`run_worker_first` in wrangler.toml, exact paths):
+  `worker/pages.js` returns the page's Markdown copy for `Accept: text/markdown`, and adds `Link` headers
+  (Markdown copy + font preloads for Cloudflare Early Hints) and the site-wide security headers.
+  `worker/pages.json` is written by the build (`src/integrations/worker-manifest.mjs`, base `/` builds
+  only) from the built pages and `public/_headers`' `/*` block: commit it after a build changes it.
+  **Adding a page: add it to `run_worker_first`** (seo-check fails otherwise). Tested in `wrangler dev`.
+- Dashboard-only steps (docs/10-launch.md): switch the deploy command, turn Early Hints on, look at AI
+  Crawl Control monthly.
+
+## CI browser cache, Maya contrast (2026-11-20, branch `security-hardening`)
+- **CI keeps Playwright's Chromium between runs** (`actions/cache`, keyed by the Playwright version in the
+  lock file) and tries each browser or system-package install twice, so one slow download doesn't fail the
+  run. The `npm ci` failure before it was a lock file written by an older npm: refresh the lock with the npm
+  that CI's Node ships (`npx npm@<version> install --package-lock-only`) if `npm ci` reports missing packages.
+- `npm run axe` and a scan of every concept page are now clean; Maya's ink on pink is `#04262C` (4.9:1).

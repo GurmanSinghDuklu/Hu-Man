@@ -6,16 +6,9 @@
  *
  * Plain Web Animations on `translate`, `opacity`, `transform` and `scale`, so it stays off the
  * main thread; at most 32 tiles, built once. The page's h1 and lede never animate (LCP). Runs
- * once per browser session; hero-video.ts only calls it when motion is allowed (not reduced
- * motion, not Data Saver). Any click or key press finishes it at once.
+ * on every visit by link (see introWanted); hero-video.ts only calls it when motion is allowed
+ * (not reduced motion, not Data Saver). Any click or key press finishes it at once.
  */
-const KEY = 'hm-about-intro';
-/** Session keys: each page's intro plays once per browser session. */
-export const INTRO_KEYS = {
-  tiles: KEY,
-  cv: 'hm-portfolio-intro',
-  receipt: 'hm-pricing-intro',
-} as const;
 const MAX_TILES = 32;
 
 // Brand neons. Signal is the main colour; the others are one or two tiles each.
@@ -34,15 +27,17 @@ const GAP = 0.93; // tile scale while the seams are open
 const HARD = 'cubic-bezier(0.7, 0, 0.2, 1)';
 const SNAP = 'cubic-bezier(0.2, 0.9, 0.3, 1)';
 
-/** Whether the intro should run in this browser session (and mark it as seen). */
-export function introWanted(key: string = KEY): boolean {
-  try {
-    if (sessionStorage.getItem(key)) return false;
-    sessionStorage.setItem(key, '1');
-  } catch {
-    // Storage blocked: still run it, once per page view.
-  }
-  return true;
+/**
+ * Whether this page view opens with its intro. The site stores nothing in the browser (no
+ * cookies, no local or session storage: see /cookies/), so it can't remember an intro was seen.
+ * Instead it plays on every visit by link or typed address, and not when the page is refreshed or
+ * reached with Back or Forward, which is how people return to a page they have just seen.
+ * The /contact/ intro's inline gate (scripts/inline/contact-intro-gate.js) uses the same rule.
+ */
+export function introWanted(): boolean {
+  const nav = performance.getEntriesByType?.('navigation')[0] as
+    PerformanceNavigationTiming | undefined;
+  return nav?.type !== 'reload' && nav?.type !== 'back_forward';
 }
 
 function gridFor(width: number, height: number): { cols: number; rows: number } {

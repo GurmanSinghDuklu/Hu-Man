@@ -1,15 +1,17 @@
 // Runs inline, straight after the /contact/ intro's <template> (components/landing/ContactIntro.astro),
-// before first paint. Stamps the cover into the page and locks scrolling, but only on the first
-// contact visit in this browser session and never under reduced motion. Its hash is added to the
+// before first paint. Stamps the cover into the page and locks scrolling on every visit by link or
+// typed address, but not on a refresh or Back/Forward, and never under reduced motion. Nothing is
+// stored in the browser (see /cookies/): the browser's own record of how the page was opened says
+// which it was, the same rule as introWanted() in scripts/hero-intro.ts. Its hash is added to the
 // CSP in astro.config.mjs from this same file, so editing it never breaks the policy.
 (function () {
   var template = document.currentScript && document.currentScript.previousElementSibling;
   var root = document.documentElement;
   if (!template || !template.content) return;
   try {
-    if (sessionStorage.getItem('hm-contact-intro')) return;
     if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    sessionStorage.setItem('hm-contact-intro', '1');
+    var nav = performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
+    if (nav && (nav.type === 'reload' || nav.type === 'back_forward')) return;
   } catch {
     return;
   }

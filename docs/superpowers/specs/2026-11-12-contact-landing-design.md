@@ -3,7 +3,7 @@
 Date: 2026-11-12. Branch `contact-landing`. Approved in chat by Gurman ("build").
 
 ## What the visitor sees
-1. First contact visit in a browser session (sessionStorage `hm-contact-intro`): `/contact/` opens looking
+1. Every visit by link (not a refresh or Back/Forward; changed 2026-11-17 from once per session, so nothing is stored): `/contact/` opens looking
    like the old contact page (site header, "Talk to a human." hero). The page cannot scroll (wheel, touch,
    keys).
 2. After about 1.3 s from the start of the load it cracks into square tiles on the site grid (2 units on
