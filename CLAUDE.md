@@ -786,3 +786,14 @@ mean /about/#faq. Run tools as `./node_modules/.bin/astro` etc.: the `:` in "Hu:
   run. The `npm ci` failure before it was a lock file written by an older npm: refresh the lock with the npm
   that CI's Node ships (`npx npm@<version> install --package-lock-only`) if `npm ci` reports missing packages.
 - `npm run axe` and a scan of every concept page are now clean; Maya's ink on pink is `#04262C` (4.9:1).
+
+## Before and after under Agentic AI-ready (2026-11-20, branch `before-after`, awaiting sign-off)
+The wireframe line drawing (`DrawWireframe.astro`, deleted) is replaced on Home and Services by
+`BeforeAfter.astro`: the docs/03 sample electrician (Ashby Electrical, `.example`, tagged "Concept")
+as a dated site and a rebuilt one, plus a phone view and "What an AI agent reads". Six numbered
+changes (secure address, phones, next step, prices, speed, AI-readable), all standard on every tier;
+picking or hovering one lights its markers in both windows (`card-pick.ts` + CSS `:has`, no new JS).
+Windows are aria-hidden; the list carries the content. Marker positions are % of each window
+(the pages inside scale with cqw, so they hold at every width): re-measure if the mock layout changes.
+The phone's screen and body are separate elements (an element can't size its font from its own cqw).
+Copy is a draft awaiting Gurman's sign-off.

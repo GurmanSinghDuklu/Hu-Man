@@ -1,19 +1,20 @@
 ---
-/** "Agentic AI-ready, as standard" (home 04, services 05), with the ringed sphere and Ink square. */
+/**
+ * "Agentic AI-ready, as standard" (home 03, services 05), with the ringed sphere and Ink square,
+ * then a before and after of a sample site showing what the rebuild changes (BeforeAfter.astro).
+ */
 import { withBase } from '../../config/paths';
 import { fromPrice } from '../../data/pricing';
 import RingOrb from '../RingOrb.astro';
-import DrawWireframe from '../DrawWireframe.astro';
+import BeforeAfter from '../BeforeAfter.astro';
 import Shape from '../play/Shape.astro';
 import Sticker from '../play/Sticker.astro';
 
 interface Props {
   n: string;
-  /** The wireframe line drawing under the section (off on home, Gurman 2026-11-17). */
-  draw?: boolean;
 }
 
-const { n, draw = true } = Astro.props;
+const { n } = Astro.props;
 ---
 
 <section class="band agent" aria-labelledby={`agent-title-${n}`}>
@@ -45,8 +46,10 @@ const { n, draw = true } = Astro.props;
       <span class="agent__square amb-pulse"></span>
     </div>
 
-    <!-- From a sketch to a page people and AI agents can read: draws itself as you scroll. -->
-    {draw && <DrawWireframe class="agent__draw" />}
+    <!-- What a rebuild changes, on a sample site (replaced the wireframe drawing, Gurman 2026-11-20). -->
+    <div class="agent__ba">
+      <BeforeAfter />
+    </div>
   </div>
 </section>
 
@@ -67,7 +70,7 @@ const { n, draw = true } = Astro.props;
     margin-top: clamp(2rem, calc(var(--u) * 1.05), 6rem);
   }
 
-  .agent__sheet > :global(.agent__draw) {
+  .agent__ba {
     grid-column: 1 / -1;
     margin-top: clamp(1.5rem, calc(var(--u) * 0.6), 3.5rem);
   }

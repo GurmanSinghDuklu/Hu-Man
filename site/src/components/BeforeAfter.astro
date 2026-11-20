@@ -1,0 +1,895 @@
+---
+/**
+ * Before and after of a sample site (the electrician from docs/03), under "Agentic AI-ready, as
+ * standard". Numbered markers on both windows match the numbered changes below; picking a change
+ * (card-pick.ts, [data-pick]) or hovering it lights its markers in both windows.
+ * The windows are decorative (aria-hidden): the list of changes carries the content.
+ * Draft copy, awaiting Gurman's sign-off. Every change listed is standard on every tier.
+ */
+interface Change {
+  title: string;
+  before: string;
+  after: string;
+}
+
+const changes: Change[] = [
+  {
+    title: 'A secure address',
+    before: 'The browser warns visitors the site is "Not secure".',
+    after: 'A secure https address, with security headers set.',
+  },
+  {
+    title: 'Built for phones',
+    before: 'A desktop page you have to pinch and zoom on a phone.',
+    after: 'Laid out for phones first, then scaled up for bigger screens.',
+  },
+  {
+    title: 'A clear next step',
+    before: '"Please call for prices", and a phone number at the bottom.',
+    after: 'One button to ask for a quote, and a short enquiry form.',
+  },
+  {
+    title: 'Services and prices in plain view',
+    before: '"A wide range of services at competitive prices."',
+    after: 'Each service named, with its starting price.',
+  },
+  {
+    title: 'Quick to load',
+    before: 'An oversized photo that holds up the rest of the page.',
+    after: 'Images compressed and sized for the screen, with very little code.',
+  },
+  {
+    title: 'Readable by AI agents',
+    before: 'The business name lives inside a banner image, with nothing structured.',
+    after: 'Structured data names the business, services, prices, hours and area.',
+  },
+];
+
+/** Marker 1 sits at the right end of the address bar, whatever the window's width. */
+const CHROME_X = 'calc(100% - 1.3rem)';
+const CHROME_Y = '1.1rem';
+const pos = (v: number | string) => (typeof v === 'number' ? `${v}%` : v);
+
+/** Marker positions (% of each window), keyed by change number. The pages inside scale with
+ * the window, so these hold at every width (measured at 1280px). */
+const beforeMarks: Record<number, [number | string, number | string]> = {
+  1: [CHROME_X, CHROME_Y],
+  2: [96, 19.5],
+  3: [34, 89],
+  4: [93, 72],
+  5: [33, 54],
+  6: [95, 41.8],
+};
+const afterMarks: Record<number, [number | string, number | string]> = {
+  1: [CHROME_X, CHROME_Y],
+  3: [26.5, 66.6],
+  4: [95, 81.5],
+  5: [95, 27],
+};
+---
+
+<div class="ba">
+  <div class="ba__stage">
+    <!-- Before: a typical dated small-business site (docs/03's before mock). -->
+    <div class="ba__col ba__col--before" data-reveal>
+      <p class="ba__tag" aria-hidden="true">
+        Before
+      </p>
+      <div class="ba__win ba__win--before" aria-hidden="true">
+        <div class="ba__chrome">
+          <span class="ba__dots">
+            <i></i>
+            <i></i>
+            <i></i>
+          </span>
+          <span class="ba__url ba__url--bad">
+            <b>Not secure</b> ashby-electrical.example
+          </span>
+        </div>
+        <div class="ba__screen">
+          <div class="old">
+            <div class="old__head">Ashby Electrical</div>
+            <div class="old__nav">
+              <u>Home</u>
+              <u>About Us</u>
+              <u>Services</u>
+              <u>Gallery</u>
+              <u>Links</u>
+              <u>Contact Us</u>
+            </div>
+            <div class="old__banner">WELCOME TO ASHBY ELECTRICAL</div>
+            <div class="old__body">
+              <div class="old__photo">
+                <span>Loading image...</span>
+                <span class="old__bar">
+                  <span></span>
+                </span>
+              </div>
+              <p class="old__text">
+                Ashby Electrical is a family run business established in 2004. We offer a wide range
+                of services at competitive prices. Please call for prices and availability.
+              </p>
+            </div>
+            <p class="old__tel">Tel: 01234 567890</p>
+            <p class="old__foot">Copyright 2014 Ashby Electrical. Site last updated 2016.</p>
+          </div>
+        </div>
+        {Object.entries(beforeMarks).map(([n, [x, y]]) => (
+          <span class="ba__mark" data-mark={n} style={`--x:${pos(x)};--y:${pos(y)};--i:${n}`}>
+            {n}
+          </span>
+        ))}
+      </div>
+      <p class="ba__caption">
+        <span class="ba__concept">Concept</span>A sample electrician's site, before and after a
+        rebuild. Pick a change below to see it in both.
+      </p>
+    </div>
+
+    <!-- After: the same business rebuilt, with a phone view and what an AI agent reads. -->
+    <div class="ba__col ba__col--after" data-reveal style="--reveal-delay:0.12s">
+      <p class="ba__tag ba__tag--after" aria-hidden="true">
+        After
+      </p>
+      <div class="ba__win ba__win--after" aria-hidden="true">
+        <div class="ba__chrome">
+          <span class="ba__dots">
+            <i></i>
+            <i></i>
+            <i></i>
+          </span>
+          <span class="ba__url">
+            <span class="ba__lock"></span> https://ashby-electrical.example
+          </span>
+        </div>
+        <div class="ba__screen">
+          <div class="new">
+            <div class="new__nav">
+              <span class="new__logo">
+                Ashby<b>.</b>
+              </span>
+              <span class="new__links">Services Prices Areas Contact</span>
+              <span class="new__btn new__btn--sm">Get a fixed quote</span>
+            </div>
+            <div class="new__hero">
+              <div>
+                <p class="new__h">Certified electricians. Fixed quotes within 24 hours.</p>
+                <p class="new__sub">
+                  Tell us about the job and send a photo. We reply with a fixed price.
+                </p>
+                <span class="new__btn">Get a fixed quote</span>
+              </div>
+              <div class="new__art">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+            <div class="new__cards">
+              <div>
+                <b>Safety inspection</b>
+                <span>from £120</span>
+              </div>
+              <div>
+                <b>Consumer unit upgrade</b>
+                <span>fixed quote</span>
+              </div>
+              <div>
+                <b>EV charger install</b>
+                <span>from £799</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        {Object.entries(afterMarks).map(([n, [x, y]]) => (
+          <span class="ba__mark" data-mark={n} style={`--x:${pos(x)};--y:${pos(y)};--i:${n}`}>
+            {n}
+          </span>
+        ))}
+      </div>
+
+      <div class="ba__extras" aria-hidden="true">
+        <div class="ba__phone">
+          <div class="ba__phone-screen">
+            <div class="ba__phone-body">
+              <span class="new__logo">
+                Ashby<b>.</b>
+              </span>
+              <p class="new__h">Certified electricians. Fixed quotes within 24 hours.</p>
+              <span class="new__btn">Get a fixed quote</span>
+              <div class="new__row">
+                <b>EV charger install</b>
+                <span>from £799</span>
+              </div>
+              <div class="new__row">
+                <b>Safety inspection</b>
+                <span>from £120</span>
+              </div>
+            </div>
+          </div>
+          <span class="ba__mark" data-mark="2" style="--x:50%;--y:-4%;--i:2">
+            2
+          </span>
+        </div>
+
+        <div class="ba__data">
+          <p class="ba__data-title">What an AI agent reads</p>
+          <dl>
+            <dt>Business</dt>
+            <dd>Ashby Electrical</dd>
+            <dt>Service</dt>
+            <dd>EV charger install, from £799</dd>
+            <dt>Service</dt>
+            <dd>Safety inspection, from £120</dd>
+            <dt>Area</dt>
+            <dd>Leeds</dd>
+            <dt>Hours</dt>
+            <dd>Mon to Fri, 8am to 6pm</dd>
+            <dt>Contact</dt>
+            <dd>Quote form</dd>
+          </dl>
+          <span class="ba__mark" data-mark="6" style="--x:97%;--y:-6%;--i:6">
+            6
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ol class="ba__changes" data-pick>
+    {changes.map((c, i) => (
+      <li data-mark={i + 1} data-reveal style={`--reveal-delay:${(i % 3) * 0.06}s`}>
+        <span class="ba__num" aria-hidden="true">
+          {i + 1}
+        </span>
+        <h3 class="ba__title">{c.title}</h3>
+        <p class="ba__line">
+          <span class="ba__when">Before</span> {c.before}
+        </p>
+        <p class="ba__line">
+          <span class="ba__when ba__when--after">After</span> {c.after}
+        </p>
+      </li>
+    ))}
+  </ol>
+</div>
+
+<style>
+  .ba {
+    --win-radius: 14px;
+    --sample-navy: #0b2545;
+    --sample-amber: #ffb703;
+    --sample-bg: #f3f6fa;
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .ba__stage {
+    margin: 0;
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .ba__col {
+    position: relative;
+    min-width: 0;
+  }
+
+  .ba__tag {
+    margin: 0 0 0.6rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .ba__tag--after {
+    color: var(--ink);
+  }
+
+  /* ---------- browser windows ---------- */
+  .ba__win {
+    position: relative;
+    border: 2px solid var(--ink);
+    border-radius: var(--win-radius);
+    background: #fff;
+  }
+
+  .ba__win--before {
+    background: #fff;
+  }
+
+  .ba__chrome {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 2.6rem 0.5rem 0.75rem;
+    border-bottom: 2px solid var(--ink);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+  }
+
+  .ba__dots {
+    display: flex;
+    gap: 0.3rem;
+    flex: none;
+  }
+
+  .ba__dots i {
+    width: 0.55rem;
+    aspect-ratio: 1;
+    border: 1.5px solid var(--ink);
+    border-radius: 50%;
+  }
+
+  .ba__url {
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding: 0.2rem 0.6rem;
+    border-radius: 99px;
+    background: var(--paper);
+    color: var(--ink);
+  }
+
+  .ba__url--bad b {
+    color: #a3102f;
+    font-weight: 600;
+    margin-right: 0.35rem;
+  }
+
+  .ba__lock {
+    display: inline-block;
+    width: 0.55rem;
+    height: 0.45rem;
+    margin-right: 0.2rem;
+    border-radius: 1px;
+    background: var(--ink);
+    position: relative;
+    top: 0.05rem;
+  }
+
+  .ba__lock::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 100%;
+    width: 0.35rem;
+    height: 0.3rem;
+    translate: -50% 0;
+    border: 1.5px solid var(--ink);
+    border-bottom: 0;
+    border-radius: 0.3rem 0.3rem 0 0;
+  }
+
+  /* The page inside each window scales with the window: 40em across. */
+  .ba__screen {
+    container-type: inline-size;
+    overflow: hidden;
+    border-radius: 0 0 calc(var(--win-radius) - 2px) calc(var(--win-radius) - 2px);
+  }
+
+  .old,
+  .new {
+    font-size: 2.5cqw;
+  }
+
+  /* ---------- before: dated site ---------- */
+  .old {
+    background: #fff;
+    color: #111;
+    font-family: 'Times New Roman', Times, serif;
+    padding-bottom: 0.8em;
+  }
+
+  .old__head {
+    background: #1a3d7c;
+    color: #fff;
+    font-size: 1.9em;
+    padding: 0.35em 0.5em;
+    font-style: italic;
+  }
+
+  .old__nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3em 0.9em;
+    padding: 0.45em 0.9em;
+    background: #e6e6e6;
+    color: #0000cc;
+    font-size: 0.85em;
+  }
+
+  .old__banner {
+    margin: 0.8em 0.9em 0;
+    padding: 0.9em;
+    background: #c5d3e0;
+    color: #1a3d7c;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-align: center;
+  }
+
+  .old__body {
+    display: grid;
+    grid-template-columns: 13em 1fr;
+    gap: 0.9em;
+    margin: 0.9em 0.9em 0;
+  }
+
+  .old__photo {
+    display: grid;
+    place-content: center;
+    gap: 0.5em;
+    aspect-ratio: 4 / 3;
+    background: #d4d4d4;
+    color: #333;
+    font-size: 0.8em;
+    text-align: center;
+  }
+
+  .old__bar {
+    display: block;
+    width: 9em;
+    height: 0.5em;
+    border: 1px solid #555;
+    background: #fff;
+  }
+
+  .old__bar span {
+    display: block;
+    width: 18%;
+    height: 100%;
+    background: #555;
+  }
+
+  .old__text {
+    margin: 0;
+    font-size: 0.85em;
+    line-height: 1.35;
+  }
+
+  .old__tel {
+    margin: 0.9em 0.9em 0;
+    font-size: 0.95em;
+    font-weight: 700;
+  }
+
+  .old__foot {
+    margin: 0.7em 0.9em 0;
+    font-size: 0.7em;
+    color: #444;
+  }
+
+  /* ---------- after: rebuilt site (the sample business's own palette) ---------- */
+  .new {
+    background: var(--sample-bg);
+    color: var(--sample-navy);
+    font-family: var(--font-text);
+    padding: 0 1.2em 1.2em;
+  }
+
+  .new__nav {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    padding: 0.8em 0;
+    font-size: 0.8em;
+  }
+
+  .new__logo {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.3em;
+  }
+
+  .new__logo b {
+    color: #b97f00;
+  }
+
+  .new__links {
+    margin-left: auto;
+    word-spacing: 0.8em;
+  }
+
+  .new__btn {
+    display: inline-block;
+    padding: 0.55em 1em;
+    border-radius: 99px;
+    background: var(--sample-amber);
+    color: var(--sample-navy);
+    font-weight: 700;
+    font-size: 0.85em;
+    white-space: nowrap;
+  }
+
+  .new__btn--sm {
+    font-size: 1em;
+    padding: 0.45em 0.9em;
+  }
+
+  .new__hero {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 1.2em;
+    align-items: center;
+    padding: 0.8em 0 1.2em;
+  }
+
+  .new__h {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.85em;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+
+  .new__sub {
+    margin: 0.6em 0 0.9em;
+    font-size: 0.85em;
+    line-height: 1.35;
+  }
+
+  /* The hero picture: light, drawn shapes, no heavy photo. */
+  .new__art {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: 1em;
+    background: var(--sample-navy);
+    overflow: hidden;
+  }
+
+  .new__art span {
+    position: absolute;
+    border-radius: 50%;
+  }
+
+  .new__art span:nth-child(1) {
+    inset: 18% 18% auto auto;
+    width: 46%;
+    aspect-ratio: 1;
+    background: var(--sample-amber);
+  }
+
+  .new__art span:nth-child(2) {
+    left: -12%;
+    bottom: -20%;
+    width: 70%;
+    aspect-ratio: 1;
+    background: #1d4f8a;
+  }
+
+  .new__art span:nth-child(3) {
+    left: 30%;
+    top: 42%;
+    width: 14%;
+    aspect-ratio: 1;
+    background: var(--sample-bg);
+  }
+
+  .new__cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.7em;
+  }
+
+  .new__cards div {
+    display: grid;
+    gap: 0.3em;
+    padding: 0.8em;
+    border-radius: 0.6em;
+    background: #fff;
+    border: 1px solid #c9d3e0;
+    font-size: 0.8em;
+  }
+
+  .new__cards span {
+    font-weight: 700;
+  }
+
+  /* ---------- phone view ---------- */
+  /* Under the after window: the phone view and what an AI agent reads. */
+  .ba__extras {
+    display: grid;
+    gap: 1.75rem;
+    margin-top: 1.75rem;
+  }
+
+  .ba__phone {
+    position: relative;
+    width: min(13rem, 60%);
+    justify-self: center;
+    border: 2px solid var(--ink);
+    border-radius: 22px;
+    padding: 7px;
+    background: var(--ink);
+  }
+
+  /* The screen is the container; its body takes its size from it (an element can't use its own cqw). */
+  .ba__phone-screen {
+    container-type: inline-size;
+    overflow: hidden;
+    border-radius: 16px;
+    background: var(--sample-bg);
+  }
+
+  .ba__phone-body {
+    display: grid;
+    gap: 0.6em;
+    align-content: start;
+    padding: 1.1em 0.9em 1.2em;
+    color: var(--sample-navy);
+    font-family: var(--font-text);
+    font-size: 6.5cqw;
+  }
+
+  .ba__phone-screen .new__h {
+    font-size: 1.35em;
+  }
+
+  .ba__phone-screen .new__btn {
+    justify-self: start;
+    font-size: 0.9em;
+  }
+
+  .new__row {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5em;
+    padding: 0.55em 0.6em;
+    border-radius: 0.5em;
+    background: #fff;
+    font-size: 0.8em;
+  }
+
+  /* ---------- what an AI agent reads ---------- */
+  .ba__data {
+    position: relative;
+    padding: 1rem 1.1rem 1.1rem;
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: var(--win-radius);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+  }
+
+  .ba__data-title {
+    margin: 0 0 0.6rem;
+    color: var(--lilac);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .ba__data dl {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 0.25rem 1rem;
+    margin: 0;
+  }
+
+  .ba__data dt {
+    color: var(--muted-on-ink);
+  }
+
+  .ba__data dd {
+    margin: 0;
+  }
+
+  /* ---------- markers ---------- */
+  .ba__mark {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    translate: -50% -50%;
+    display: grid;
+    place-items: center;
+    width: 1.6rem;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 2px solid var(--ink);
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    z-index: 2;
+    transition:
+      scale 0.25s var(--ease-out),
+      opacity 0.25s var(--ease-out),
+      background-color 0.25s var(--ease-out),
+      color 0.25s var(--ease-out);
+  }
+
+  /* Markers pop on, one after another, once their window is in view. */
+  :global(.js) .ba__col:not(:global(.is-in)) .ba__mark {
+    scale: 0;
+  }
+
+  :global(.js) .ba__col .ba__mark {
+    transition-delay: calc(0.35s + var(--i) * 0.07s);
+  }
+
+  /* A picked or hovered change lights its markers in both windows and dims the rest. */
+  .ba:has(.ba__changes > li:is(:hover, .is-picked)) .ba__mark {
+    opacity: 0.3;
+    transition-delay: 0s;
+  }
+
+  .ba:has(li[data-mark='1']:is(:hover, .is-picked)) .ba__mark[data-mark='1'],
+  .ba:has(li[data-mark='2']:is(:hover, .is-picked)) .ba__mark[data-mark='2'],
+  .ba:has(li[data-mark='3']:is(:hover, .is-picked)) .ba__mark[data-mark='3'],
+  .ba:has(li[data-mark='4']:is(:hover, .is-picked)) .ba__mark[data-mark='4'],
+  .ba:has(li[data-mark='5']:is(:hover, .is-picked)) .ba__mark[data-mark='5'],
+  .ba:has(li[data-mark='6']:is(:hover, .is-picked)) .ba__mark[data-mark='6'] {
+    opacity: 1;
+    scale: 1.3;
+    background: var(--indigo);
+    border-color: var(--indigo);
+    color: #fff;
+  }
+
+  /* ---------- caption ---------- */
+  .ba__caption {
+    margin: 1rem 0 0;
+    max-width: 30rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 0.75rem;
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+
+  .ba__concept {
+    padding: 0.2rem 0.65rem;
+    border: 1.5px solid var(--ink);
+    border-radius: 99px;
+    color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  /* ---------- the changes ---------- */
+  .ba__changes {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0;
+    border-top: 2px solid var(--ink);
+  }
+
+  .ba__changes > li {
+    position: relative;
+    display: grid;
+    grid-template-columns: 2rem 1fr;
+    column-gap: 0.9rem;
+    row-gap: 0.35rem;
+    padding: 1.1rem 0.25rem 1.25rem;
+    border-bottom: 1px solid var(--line-soft);
+    cursor: pointer;
+    transition:
+      background-color 0.25s var(--ease-out),
+      filter 0.25s var(--ease-out);
+  }
+
+  .ba__changes > li > :not(.ba__num) {
+    grid-column: 2;
+  }
+
+  .ba__changes > li:is(:hover, .is-picked) {
+    background: var(--paper-2);
+  }
+
+  .ba__changes > li:focus-visible {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: -3px;
+  }
+
+  .ba__num {
+    grid-row: 1 / span 3;
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 2px solid var(--ink);
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  li.is-picked .ba__num {
+    background: var(--indigo);
+    border-color: var(--indigo);
+    color: #fff;
+  }
+
+  .ba__title {
+    margin: 0.2rem 0 0.15rem;
+    font-family: var(--font-text);
+    font-size: 1.1rem;
+    font-weight: 700;
+    line-height: 1.25;
+  }
+
+  .ba__line {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.45;
+    color: var(--muted);
+  }
+
+  .ba__line + .ba__line {
+    color: var(--ink);
+  }
+
+  .ba__when {
+    display: inline-block;
+    min-width: 3.4rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .ba__when--after {
+    color: var(--indigo);
+    font-weight: 600;
+  }
+
+  @media (min-width: 48rem) {
+    .ba__extras {
+      grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+      align-items: start;
+    }
+
+    .ba__extras .ba__data {
+      grid-row: 1;
+      grid-column: 1;
+    }
+
+    .ba__phone {
+      width: 100%;
+      max-width: 13rem;
+      justify-self: end;
+      /* Rises into the gap under the window, beside the data panel. */
+      margin-top: -3.5rem;
+    }
+
+    .ba__changes {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: var(--space-5);
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .ba__stage {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      align-items: start;
+      gap: calc(var(--u) * 0.6);
+    }
+
+    /* The before window sits lower and smaller: the eye lands on the after. */
+    .ba__col--before {
+      margin-top: calc(var(--u) * 0.9);
+    }
+
+    .ba__changes {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      column-gap: calc(var(--u) * 0.4);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ba__mark,
+    .ba__changes > li {
+      transition: none;
+    }
+  }
+</style>
