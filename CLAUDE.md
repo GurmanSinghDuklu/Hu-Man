@@ -796,4 +796,11 @@ picking or hovering one lights its markers in both windows (`card-pick.ts` + CSS
 Windows are aria-hidden; the list carries the content. Marker positions are % of each window
 (the pages inside scale with cqw, so they hold at every width): re-measure if the mock layout changes.
 The phone's screen and body are separate elements (an element can't size its font from its own cqw).
+The after window is a sample page that plays itself (Gurman, 2026-11-21: animated and detailed like
+the CV concepts, but not clickable): `scripts/before-after.ts` loads GSAP when it's near, scrolls the
+page inside the window (a `--sy` CSS variable in em, so it holds at every width) through hero,
+services, steps, quote form and footer, animating each part, and loops while 35% on screen. Picking a
+change jumps the tour to its part and holds (`PART_FOR_CHANGE`); the data panel lights the rows for the
+part on show (`data-am-on`). The phone scrolls by a CSS animation while the tour plays. Reduced motion
+and Data Saver: nothing plays, a pick just shows the part. `pointer-events: none` on the mock.
 Copy is a draft awaiting Gurman's sign-off.

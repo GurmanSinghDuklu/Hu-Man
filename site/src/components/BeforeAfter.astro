@@ -3,7 +3,8 @@
  * Before and after of a sample site (the electrician from docs/03), under "Agentic AI-ready, as
  * standard". Numbered markers on both windows match the numbered changes below; picking a change
  * (card-pick.ts, [data-pick]) or hovering it lights its markers in both windows.
- * The windows are decorative (aria-hidden): the list of changes carries the content.
+ * The windows are decorative (aria-hidden): the list of changes carries the content. The after
+ * window is a sample page that plays itself while on screen (scripts/before-after.ts).
  * Draft copy, awaiting Gurman's sign-off. Every change listed is standard on every tier.
  */
 interface Change {
@@ -59,12 +60,6 @@ const beforeMarks: Record<number, [number | string, number | string]> = {
   4: [93, 72],
   5: [33, 54],
   6: [95, 41.8],
-};
-const afterMarks: Record<number, [number | string, number | string]> = {
-  1: [CHROME_X, CHROME_Y],
-  3: [26.5, 66.6],
-  4: [95, 81.5],
-  5: [95, 27],
 };
 ---
 
@@ -142,69 +137,247 @@ const afterMarks: Record<number, [number | string, number | string]> = {
             <span class="ba__lock"></span> https://ashby-electrical.example
           </span>
         </div>
-        <div class="ba__screen">
-          <div class="new">
-            <div class="new__nav">
-              <span class="new__logo">
+        <div class="ba__screen am">
+          <div class="am__view">
+            <div class="am__nav">
+              <span class="am__logo">
                 Ashby<b>.</b>
               </span>
-              <span class="new__links">Services Prices Areas Contact</span>
-              <span class="new__btn new__btn--sm">Get a fixed quote</span>
+              <span class="am__links">
+                <span>Services</span>
+                <span>Prices</span>
+                <span>Areas</span>
+                <span>Contact</span>
+              </span>
+              <span class="am__btn am__btn--sm">Get a fixed quote</span>
             </div>
-            <div class="new__hero">
-              <div>
-                <p class="new__h">Certified electricians. Fixed quotes within 24 hours.</p>
-                <p class="new__sub">
-                  Tell us about the job and send a photo. We reply with a fixed price.
+            <div class="am__page" data-am-page>
+              <div class="am__hero" data-am-at="hero">
+                <div>
+                  <span class="am__pill" data-am-fade>
+                    Electricians in Leeds
+                  </span>
+                  <p class="am__h">
+                    <span class="am__line">
+                      <span data-am-line>Certified electricians.</span>
+                    </span>
+                    <span class="am__line">
+                      <span data-am-line>Fixed quotes</span>
+                    </span>
+                    <span class="am__line">
+                      <span data-am-line>within 24 hours.</span>
+                    </span>
+                  </p>
+                  <p class="am__sub" data-am-fade>
+                    Tell us about the job and send a photo. We reply with a fixed price, not a
+                    guess.
+                  </p>
+                  <div class="am__ctas" data-am-fade>
+                    <span class="am__btn" data-am-cta>
+                      Get a fixed quote
+                      <span
+                        class="ba__mark"
+                        data-mark="3"
+                        style="--x:calc(100% - 0.2rem);--y:0;--i:3"
+                      >
+                        3
+                      </span>
+                    </span>
+                    <span class="am__btn am__btn--ghost">See prices</span>
+                  </div>
+                  <ul class="am__ticks" data-am-fade>
+                    <li>Fixed prices</li>
+                    <li>Tidy work</li>
+                    <li>Replies within 24 hours</li>
+                  </ul>
+                </div>
+                <div class="am__art">
+                  <span class="am__sun" data-am-sun></span>
+                  <span class="am__hill" data-am-hill></span>
+                  <svg class="am__bolt" viewBox="0 0 100 100">
+                    <path
+                      data-am-draw
+                      pathLength="1"
+                      d="M58 6 L26 54 H50 L40 94 L76 40 H52 Z"
+                    ></path>
+                  </svg>
+                  <svg class="am__wires" viewBox="0 0 200 60" preserveAspectRatio="none">
+                    <path
+                      data-am-draw
+                      pathLength="1"
+                      d="M0 40 H40 Q52 40 56 28 T76 16 H120 Q132 16 136 28 T156 44 H200"
+                    ></path>
+                  </svg>
+                  <span class="am__float" data-am-float>
+                    <i></i>Fixed price, no surprises
+                  </span>
+                  <span class="ba__mark" data-mark="5" style="--x:90%;--y:9%;--i:5">
+                    5
+                  </span>
+                </div>
+              </div>
+
+              <div class="am__section" data-am-at="services">
+                <p class="am__eyebrow">
+                  Services and prices
+                  <span
+                    class="ba__mark"
+                    data-mark="4"
+                    style="--x:calc(100% + 1.1rem);--y:50%;--i:4"
+                  >
+                    4
+                  </span>
                 </p>
-                <span class="new__btn">Get a fixed quote</span>
+                <p class="am__h2">Clear prices, before we start.</p>
+                <div class="am__cards">
+                  <div class="am__card" data-am-card>
+                    <span class="am__ico am__ico--check"></span>
+                    <b>Safety inspection</b>
+                    <p>A full check of your wiring, with a written report.</p>
+                    <span class="am__price">
+                      <small>from</small>£<span data-am-count="120">120</span>
+                    </span>
+                  </div>
+                  <div class="am__card" data-am-card>
+                    <span class="am__ico am__ico--box"></span>
+                    <b>Consumer unit upgrade</b>
+                    <p>A new fuse box, fitted and tested in a day.</p>
+                    <span class="am__price am__price--quote">Fixed quote</span>
+                  </div>
+                  <div class="am__card" data-am-card>
+                    <span class="am__ico am__ico--plug"></span>
+                    <b>EV charger install</b>
+                    <p>Home charging, fitted and registered for you.</p>
+                    <span class="am__price">
+                      <small>from</small>£<span data-am-count="799">799</span>
+                    </span>
+                  </div>
+                </div>
               </div>
-              <div class="new__art">
-                <span></span>
-                <span></span>
-                <span></span>
+
+              <div class="am__section" data-am-at="steps">
+                <p class="am__eyebrow">How it works</p>
+                <p class="am__h2">Three steps, no guesswork.</p>
+                <div class="am__track">
+                  <svg class="am__path" viewBox="0 0 300 4" preserveAspectRatio="none">
+                    <path data-am-draw pathLength="1" d="M0 2 H300"></path>
+                  </svg>
+                  <div class="am__step" data-am-step>
+                    <span class="am__dot">1</span>
+                    <b>Send a photo</b>
+                    <p>Tell us what's wrong and where you are.</p>
+                  </div>
+                  <div class="am__step" data-am-step>
+                    <span class="am__dot">2</span>
+                    <b>Get a fixed price</b>
+                    <p>We reply within 24 hours with one price.</p>
+                  </div>
+                  <div class="am__step" data-am-step>
+                    <span class="am__dot">3</span>
+                    <b>We do the job</b>
+                    <p>On the day we agree, and we tidy up after.</p>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div class="new__cards">
-              <div>
-                <b>Safety inspection</b>
-                <span>from £120</span>
+
+              <div class="am__section am__quote" data-am-at="form">
+                <div>
+                  <p class="am__eyebrow">Get a fixed quote</p>
+                  <p class="am__h2">Three questions and a photo.</p>
+                  <p class="am__sub">No call needed. We reply with one fixed price.</p>
+                </div>
+                <div class="am__form">
+                  <div class="am__field">
+                    <span>Name</span>
+                    <span class="am__input" data-am-type="Priya Sharma">
+                      Priya Sharma
+                    </span>
+                  </div>
+                  <div class="am__field">
+                    <span>Postcode</span>
+                    <span class="am__input" data-am-type="LS6">
+                      LS6
+                    </span>
+                  </div>
+                  <div class="am__field">
+                    <span>The job</span>
+                    <span class="am__input" data-am-type="Fuse box keeps tripping">
+                      Fuse box keeps tripping
+                    </span>
+                  </div>
+                  <span class="am__chip" data-am-chip>
+                    fusebox.jpg added
+                  </span>
+                  <span class="am__btn am__send" data-am-send>
+                    Send for a quote
+                  </span>
+                  <span class="am__toast" data-am-toast>
+                    Sent. We'll reply within 24 hours.
+                  </span>
+                </div>
               </div>
-              <div>
-                <b>Consumer unit upgrade</b>
-                <span>fixed quote</span>
-              </div>
-              <div>
-                <b>EV charger install</b>
-                <span>from £799</span>
+
+              <div class="am__foot" data-am-at="foot">
+                <div>
+                  <p class="am__k">Areas</p>
+                  <span class="am__chips">
+                    <span data-am-area>Leeds</span>
+                    <span data-am-area>Bradford</span>
+                    <span data-am-area>Wakefield</span>
+                    <span data-am-area>Harrogate</span>
+                  </span>
+                </div>
+                <div>
+                  <p class="am__k">Hours</p>
+                  <p>Mon to Fri, 8am to 6pm</p>
+                </div>
+                <div>
+                  <p class="am__k">Contact</p>
+                  <p>Quote form, replies within 24 hours</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
-        {Object.entries(afterMarks).map(([n, [x, y]]) => (
-          <span class="ba__mark" data-mark={n} style={`--x:${pos(x)};--y:${pos(y)};--i:${n}`}>
-            {n}
-          </span>
-        ))}
+        <span class="ba__mark" data-mark="1" style="--x:calc(100% - 1.3rem);--y:1.1rem;--i:1">
+          1
+        </span>
       </div>
 
       <div class="ba__extras" aria-hidden="true">
         <div class="ba__phone">
           <div class="ba__phone-screen">
-            <div class="ba__phone-body">
-              <span class="new__logo">
+            <div class="ba__phone-body" data-am-phone>
+              <span class="am__logo">
                 Ashby<b>.</b>
               </span>
-              <p class="new__h">Certified electricians. Fixed quotes within 24 hours.</p>
-              <span class="new__btn">Get a fixed quote</span>
-              <div class="new__row">
-                <b>EV charger install</b>
-                <span>from £799</span>
-              </div>
-              <div class="new__row">
+              <span class="am__pill">Electricians in Leeds</span>
+              <p class="am__h">Certified electricians. Fixed quotes within 24 hours.</p>
+              <span class="am__btn">Get a fixed quote</span>
+              <p class="am__k am__k--dark">Prices</p>
+              <div class="am__row">
                 <b>Safety inspection</b>
                 <span>from £120</span>
               </div>
+              <div class="am__row">
+                <b>Consumer unit</b>
+                <span>fixed quote</span>
+              </div>
+              <div class="am__row">
+                <b>EV charger</b>
+                <span>from £799</span>
+              </div>
+              <p class="am__k am__k--dark">How it works</p>
+              <div class="am__row">
+                <b>1 Send a photo</b>
+              </div>
+              <div class="am__row">
+                <b>2 Get a fixed price</b>
+              </div>
+              <div class="am__row">
+                <b>3 We do the job</b>
+              </div>
+              <span class="am__btn">Send for a quote</span>
             </div>
           </div>
           <span class="ba__mark" data-mark="2" style="--x:50%;--y:-4%;--i:2">
@@ -215,18 +388,30 @@ const afterMarks: Record<number, [number | string, number | string]> = {
         <div class="ba__data">
           <p class="ba__data-title">What an AI agent reads</p>
           <dl>
-            <dt>Business</dt>
-            <dd>Ashby Electrical</dd>
-            <dt>Service</dt>
-            <dd>EV charger install, from £799</dd>
-            <dt>Service</dt>
-            <dd>Safety inspection, from £120</dd>
-            <dt>Area</dt>
-            <dd>Leeds</dd>
-            <dt>Hours</dt>
-            <dd>Mon to Fri, 8am to 6pm</dd>
-            <dt>Contact</dt>
-            <dd>Quote form</dd>
+            <div class="ba__row" data-am-row="hero">
+              <dt>Business</dt>
+              <dd>Ashby Electrical</dd>
+            </div>
+            <div class="ba__row" data-am-row="services">
+              <dt>Service</dt>
+              <dd>EV charger install, from £799</dd>
+            </div>
+            <div class="ba__row" data-am-row="services">
+              <dt>Service</dt>
+              <dd>Safety inspection, from £120</dd>
+            </div>
+            <div class="ba__row" data-am-row="foot">
+              <dt>Area</dt>
+              <dd>Leeds, Bradford, Wakefield, Harrogate</dd>
+            </div>
+            <div class="ba__row" data-am-row="foot">
+              <dt>Hours</dt>
+              <dd>Mon to Fri, 8am to 6pm</dd>
+            </div>
+            <div class="ba__row" data-am-row="form">
+              <dt>Contact</dt>
+              <dd>Quote form, replies within 24 hours</dd>
+            </div>
           </dl>
           <span class="ba__mark" data-mark="6" style="--x:97%;--y:-6%;--i:6">
             6
@@ -254,12 +439,23 @@ const afterMarks: Record<number, [number | string, number | string]> = {
   </ol>
 </div>
 
+<script>
+  import '../scripts/before-after';
+</script>
+
 <style>
   .ba {
     --win-radius: 14px;
     --sample-navy: #0b2545;
     --sample-amber: #ffb703;
     --sample-bg: #f3f6fa;
+    /* The sample business's palette, shared by the after window and the phone. */
+    --am-navy: var(--sample-navy);
+    --am-amber: var(--sample-amber);
+    --am-mid: #1d4f8a;
+    --am-muted: #3d5470;
+    --am-line: #d5dde8;
+    --am-tint: #e2e9f3;
     display: grid;
     gap: var(--space-4);
   }
@@ -371,8 +567,7 @@ const afterMarks: Record<number, [number | string, number | string]> = {
     border-radius: 0 0 calc(var(--win-radius) - 2px) calc(var(--win-radius) - 2px);
   }
 
-  .old,
-  .new {
+  .old {
     font-size: 2.5cqw;
   }
 
@@ -463,134 +658,508 @@ const afterMarks: Record<number, [number | string, number | string]> = {
     color: #444;
   }
 
-  /* ---------- after: rebuilt site (the sample business's own palette) ---------- */
-  .new {
-    background: var(--sample-bg);
-    color: var(--sample-navy);
-    font-family: var(--font-text);
-    padding: 0 1.2em 1.2em;
+  /* ---------- after: the rebuilt site, a page that plays itself (scripts/before-after.ts) ---------- */
+  /* A sketch, not a site to click through: nothing inside reacts to the pointer. */
+  .ba__win--after,
+  .ba__extras {
+    pointer-events: none;
   }
 
-  .new__nav {
+  .am {
+    position: relative;
+    aspect-ratio: 16 / 10.5;
+    background: var(--sample-bg);
+  }
+
+  /* 40em across, so everything inside scales with the window. */
+  .am__view {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    font-size: 2.5cqw;
+    font-family: var(--font-text);
+    color: var(--am-navy);
+  }
+
+  .am__nav {
+    position: absolute;
+    inset: 0 0 auto;
+    z-index: 2;
     display: flex;
     align-items: center;
-    gap: 1em;
-    padding: 0.8em 0;
-    font-size: 0.8em;
-  }
-
-  .new__logo {
-    font-family: var(--font-display);
-    font-weight: 800;
-    font-size: 1.3em;
-  }
-
-  .new__logo b {
-    color: #b97f00;
-  }
-
-  .new__links {
-    margin-left: auto;
-    word-spacing: 0.8em;
-  }
-
-  .new__btn {
-    display: inline-block;
-    padding: 0.55em 1em;
-    border-radius: 99px;
-    background: var(--sample-amber);
-    color: var(--sample-navy);
-    font-weight: 700;
-    font-size: 0.85em;
-    white-space: nowrap;
-  }
-
-  .new__btn--sm {
-    font-size: 1em;
-    padding: 0.45em 0.9em;
-  }
-
-  .new__hero {
-    display: grid;
-    grid-template-columns: 1.4fr 1fr;
     gap: 1.2em;
-    align-items: center;
-    padding: 0.8em 0 1.2em;
+    height: 3.4em;
+    padding: 0 1.4em;
+    background: rgb(243 246 250 / 0.94);
+    border-bottom: 1px solid var(--am-line);
   }
 
-  .new__h {
-    margin: 0;
+  .am__logo {
     font-family: var(--font-display);
     font-weight: 800;
-    font-size: 1.85em;
-    line-height: 1.05;
+    font-size: 1.15em;
     letter-spacing: -0.02em;
   }
 
-  .new__sub {
-    margin: 0.6em 0 0.9em;
-    font-size: 0.85em;
-    line-height: 1.35;
+  .am__logo b {
+    color: #b97f00;
   }
 
-  /* The hero picture: light, drawn shapes, no heavy photo. */
-  .new__art {
+  .am__links {
+    display: flex;
+    gap: 1.4em;
+    margin-left: auto;
+    font-size: 0.72em;
+    font-weight: 500;
+  }
+
+  .am__btn {
     position: relative;
-    aspect-ratio: 1;
-    border-radius: 1em;
-    background: var(--sample-navy);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.62em 1.15em;
+    border-radius: 99px;
+    background: var(--am-amber);
+    color: var(--am-navy);
+    font-weight: 700;
+    font-size: 0.76em;
+    white-space: nowrap;
+  }
+
+  .am__btn--sm {
+    font-size: 0.66em;
+  }
+
+  .am__btn--ghost {
+    background: transparent;
+    box-shadow: inset 0 0 0 1.5px var(--am-navy);
+  }
+
+  /* The page scrolls inside the window by a CSS variable in em, so it holds at every width. */
+  .am__page {
+    position: relative;
+    padding: 3.4em 1.4em 0;
+    translate: 0 calc(var(--sy, 0) * -1em);
+  }
+
+  .am__hero {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 1.4em;
+    align-items: center;
+    min-height: 22.85em;
+    padding: 1em 0;
+  }
+
+  .am__pill {
+    display: inline-block;
+    padding: 0.4em 0.85em;
+    border-radius: 99px;
+    background: var(--am-tint);
+    font-size: 0.64em;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+
+  .am__h {
+    margin: 0.5em 0 0.55em;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.95em;
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+  }
+
+  .am__line {
+    display: block;
+    overflow: hidden;
+    padding-bottom: 0.06em;
+  }
+
+  .am__line > span {
+    display: block;
+  }
+
+  .am__sub {
+    margin: 0;
+    max-width: 24em;
+    font-size: 0.8em;
+    line-height: 1.45;
+    color: var(--am-muted);
+  }
+
+  .am__ctas {
+    display: flex;
+    gap: 0.6em;
+    margin-top: 1.1em;
+  }
+
+  .am__ticks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4em 1.2em;
+    margin: 1.2em 0 0;
+    padding: 0;
+    list-style: none;
+    font-size: 0.64em;
+    font-weight: 600;
+    color: var(--am-muted);
+  }
+
+  .am__ticks li::before {
+    content: '';
+    display: inline-block;
+    width: 0.65em;
+    height: 0.35em;
+    margin-right: 0.55em;
+    border-left: 2px solid var(--am-mid);
+    border-bottom: 2px solid var(--am-mid);
+    rotate: -45deg;
+    translate: 0 -0.2em;
+  }
+
+  .am__art {
+    position: relative;
+    aspect-ratio: 1 / 1.05;
+    border-radius: 1.2em;
+    background: var(--am-navy);
     overflow: hidden;
   }
 
-  .new__art span {
+  .am__sun,
+  .am__hill {
     position: absolute;
+    aspect-ratio: 1;
     border-radius: 50%;
   }
 
-  .new__art span:nth-child(1) {
-    inset: 18% 18% auto auto;
+  .am__sun {
+    right: 10%;
+    top: 10%;
     width: 46%;
-    aspect-ratio: 1;
-    background: var(--sample-amber);
+    background: var(--am-amber);
   }
 
-  .new__art span:nth-child(2) {
-    left: -12%;
-    bottom: -20%;
-    width: 70%;
-    aspect-ratio: 1;
-    background: #1d4f8a;
+  .am__hill {
+    left: -18%;
+    bottom: -34%;
+    width: 82%;
+    background: var(--am-mid);
   }
 
-  .new__art span:nth-child(3) {
-    left: 30%;
-    top: 42%;
-    width: 14%;
-    aspect-ratio: 1;
-    background: var(--sample-bg);
+  .am svg path {
+    fill: none;
+    stroke-dasharray: 1;
+    vector-effect: non-scaling-stroke;
   }
 
-  .new__cards {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.7em;
+  .am__bolt {
+    position: absolute;
+    left: 16%;
+    top: 20%;
+    width: 40%;
   }
 
-  .new__cards div {
-    display: grid;
-    gap: 0.3em;
-    padding: 0.8em;
-    border-radius: 0.6em;
+  .am__bolt path {
+    stroke: #fff;
+    stroke-width: 2.5;
+    stroke-linejoin: round;
+  }
+
+  .am__wires {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 26%;
+    width: 100%;
+    height: 18%;
+  }
+
+  .am__wires path {
+    stroke: var(--am-amber);
+    stroke-width: 2;
+  }
+
+  .am__float {
+    position: absolute;
+    left: 8%;
+    bottom: 8%;
+    display: flex;
+    align-items: center;
+    gap: 0.55em;
+    padding: 0.65em 0.85em;
+    border-radius: 0.7em;
     background: #fff;
-    border: 1px solid #c9d3e0;
+    font-size: 0.6em;
+    font-weight: 700;
+    box-shadow: 0 0.5em 1.4em rgb(11 37 69 / 0.28);
+  }
+
+  .am__float i {
+    flex: none;
+    width: 1.5em;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--am-amber) center / 55% no-repeat;
+    box-shadow:
+      inset 0 0 0 0.35em var(--am-amber),
+      inset 0 0 0 0.5em var(--am-navy);
+  }
+
+  .am__section {
+    padding: 2.6em 0 0.6em;
+  }
+
+  .am__eyebrow {
+    position: relative;
+    display: inline-block;
+    margin: 0;
+    font-size: 0.6em;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--am-mid);
+  }
+
+  .am__h2 {
+    margin: 0.35em 0 1em;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.5em;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+  }
+
+  .am__cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.8em;
+  }
+
+  .am__card {
+    display: grid;
+    gap: 0.5em;
+    align-content: start;
+    padding: 1em;
+    border: 1px solid var(--am-line);
+    border-radius: 0.9em;
+    background: #fff;
+  }
+
+  .am__card b {
     font-size: 0.8em;
   }
 
-  .new__cards span {
+  .am__card p {
+    margin: 0;
+    font-size: 0.64em;
+    line-height: 1.4;
+    color: var(--am-muted);
+  }
+
+  .am__ico {
+    position: relative;
+    width: 2em;
+    aspect-ratio: 1;
+    border-radius: 0.6em;
+    background: var(--am-tint);
+  }
+
+  .am__ico::after {
+    content: '';
+    position: absolute;
+    inset: 28%;
+    background: var(--am-amber);
+  }
+
+  .am__ico--check::after {
+    border-radius: 50%;
+  }
+
+  .am__ico--box::after {
+    border-radius: 0.15em;
+    inset: 26% 30%;
+  }
+
+  .am__ico--plug::after {
+    clip-path: polygon(55% 0, 15% 58%, 46% 58%, 38% 100%, 85% 40%, 54% 40%);
+    inset: 18%;
+  }
+
+  .am__price {
+    margin-top: 0.2em;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.2em;
+  }
+
+  .am__price small {
+    margin-right: 0.35em;
+    font-family: var(--font-text);
+    font-size: 0.5em;
+    font-weight: 600;
+    color: var(--am-muted);
+  }
+
+  .am__price--quote {
+    font-size: 0.95em;
+  }
+
+  .am__track {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1em;
+  }
+
+  .am__path {
+    position: absolute;
+    left: 1em;
+    right: 1em;
+    top: 0.9em;
+    width: calc(100% - 2em);
+    height: 0.25em;
+  }
+
+  .am__path path {
+    stroke: var(--am-navy);
+    stroke-width: 2;
+  }
+
+  .am__step {
+    position: relative;
+    display: grid;
+    gap: 0.4em;
+    align-content: start;
+  }
+
+  .am__step b {
+    margin-top: 0.3em;
+    font-size: 0.8em;
+  }
+
+  .am__step p {
+    margin: 0;
+    font-size: 0.64em;
+    line-height: 1.4;
+    color: var(--am-muted);
+  }
+
+  .am__dot {
+    display: grid;
+    place-items: center;
+    width: 1.8em;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--am-amber);
+    box-shadow: 0 0 0 0.35em var(--sample-bg);
+    font-weight: 800;
+    font-size: 0.8em;
+  }
+
+  .am__quote {
+    display: grid;
+    grid-template-columns: 1fr 1.25fr;
+    gap: 1.6em;
+    align-items: start;
+  }
+
+  .am__form {
+    display: grid;
+    gap: 0.45em;
+    padding: 0.9em 1em;
+    border: 1px solid var(--am-line);
+    border-radius: 1em;
+    background: #fff;
+  }
+
+  .am__field {
+    display: grid;
+    gap: 0.3em;
+  }
+
+  .am__field > span:first-child {
+    font-size: 0.56em;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--am-muted);
+  }
+
+  .am__input {
+    min-height: 2.2em;
+    padding: 0.45em 0.7em;
+    border: 1px solid #b8c4d4;
+    border-radius: 0.5em;
+    font-size: 0.72em;
+  }
+
+  .am__chip {
+    justify-self: start;
+    padding: 0.4em 0.8em;
+    border-radius: 99px;
+    background: var(--am-tint);
+    font-size: 0.62em;
     font-weight: 700;
   }
 
-  /* ---------- phone view ---------- */
+  .am__send {
+    justify-self: stretch;
+  }
+
+  .am__toast {
+    padding: 0.6em 0.8em;
+    border-radius: 0.6em;
+    background: #e3f2e7;
+    color: #14532d;
+    font-size: 0.64em;
+    font-weight: 700;
+  }
+
+  .am__foot {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 1.2em;
+    margin: 2.6em -1.4em 0;
+    padding: 1.8em 1.4em 2.2em;
+    background: var(--am-navy);
+    color: var(--sample-bg);
+  }
+
+  .am__foot p {
+    margin: 0;
+    font-size: 0.72em;
+    line-height: 1.4;
+  }
+
+  .am__k {
+    margin: 0 0 0.6em !important;
+    font-size: 0.56em !important;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--am-amber);
+  }
+
+  .am__k--dark {
+    color: var(--am-mid);
+  }
+
+  .am__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35em;
+  }
+
+  .am__chips span {
+    padding: 0.3em 0.7em;
+    border: 1px solid rgb(243 246 250 / 0.45);
+    border-radius: 99px;
+    font-size: 0.64em;
+  }
+
+  /* ---------- phone view: the same site laid out for a phone, scrolling through it ---------- */
   /* Under the after window: the phone view and what an AI agent reads. */
   .ba__extras {
     display: grid;
@@ -611,6 +1180,7 @@ const afterMarks: Record<number, [number | string, number | string]> = {
   /* The screen is the container; its body takes its size from it (an element can't use its own cqw). */
   .ba__phone-screen {
     container-type: inline-size;
+    aspect-ratio: 9 / 16;
     overflow: hidden;
     border-radius: 16px;
     background: var(--sample-bg);
@@ -620,29 +1190,64 @@ const afterMarks: Record<number, [number | string, number | string]> = {
     display: grid;
     gap: 0.6em;
     align-content: start;
-    padding: 1.1em 0.9em 1.2em;
+    padding: 1.1em 0.9em 1.4em;
     color: var(--sample-navy);
     font-family: var(--font-text);
     font-size: 6.5cqw;
   }
 
-  .ba__phone-screen .new__h {
+  .ba__phone-body .am__h {
+    margin: 0;
     font-size: 1.35em;
   }
 
-  .ba__phone-screen .new__btn {
+  .ba__phone-body .am__pill,
+  .ba__phone-body .am__btn {
     justify-self: start;
-    font-size: 0.9em;
   }
 
-  .new__row {
+  .ba__phone-body .am__btn {
+    font-size: 0.85em;
+  }
+
+  .ba__phone-body .am__k {
+    margin: 0.4em 0 0 !important;
+  }
+
+  .am__row {
     display: flex;
     justify-content: space-between;
     gap: 0.5em;
     padding: 0.55em 0.6em;
     border-radius: 0.5em;
     background: #fff;
-    font-size: 0.8em;
+    font-size: 0.78em;
+  }
+
+  /* While the after window plays, the phone scrolls through its page too, pausing at each part. */
+  @media (prefers-reduced-motion: no-preference) {
+    .ba__col--after[data-am-play] .ba__phone-body {
+      animation: am-phone 16s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+    }
+  }
+
+  @keyframes am-phone {
+    0%,
+    18% {
+      translate: 0 0;
+    }
+    30%,
+    48% {
+      translate: 0 -24%;
+    }
+    60%,
+    80% {
+      translate: 0 -44%;
+    }
+    92%,
+    100% {
+      translate: 0 0;
+    }
   }
 
   /* ---------- what an AI agent reads ---------- */
@@ -665,9 +1270,21 @@ const afterMarks: Record<number, [number | string, number | string]> = {
 
   .ba__data dl {
     display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    gap: 0.25rem 1rem;
+    gap: 0.15rem;
     margin: 0;
+  }
+
+  .ba__row {
+    position: relative;
+    display: grid;
+    grid-template-columns: 5.5rem minmax(0, 1fr);
+    gap: 1rem;
+    padding: 0.2rem 0.45rem;
+    margin-inline: -0.45rem;
+    border-radius: 6px;
+    transition:
+      background-color 0.35s var(--ease-out),
+      color 0.35s var(--ease-out);
   }
 
   .ba__data dt {
@@ -676,6 +1293,32 @@ const afterMarks: Record<number, [number | string, number | string]> = {
 
   .ba__data dd {
     margin: 0;
+  }
+
+  /* The rows the agent is reading light up with the part of the page on show. */
+  .ba__col--after:is(
+      [data-am-on='hero'],
+      [data-am-on='services'],
+      [data-am-on='form'],
+      [data-am-on='foot']
+    )
+    .ba__row {
+    color: var(--muted-on-ink);
+  }
+
+  .ba__col--after[data-am-on='hero'] .ba__row[data-am-row='hero'],
+  .ba__col--after[data-am-on='services'] .ba__row[data-am-row='services'],
+  .ba__col--after[data-am-on='form'] .ba__row[data-am-row='form'],
+  .ba__col--after[data-am-on='foot'] .ba__row[data-am-row='foot'] {
+    background: rgb(255 183 3 / 0.16);
+    color: var(--paper);
+  }
+
+  .ba__col--after[data-am-on='hero'] .ba__row[data-am-row='hero'] dt,
+  .ba__col--after[data-am-on='services'] .ba__row[data-am-row='services'] dt,
+  .ba__col--after[data-am-on='form'] .ba__row[data-am-row='form'] dt,
+  .ba__col--after[data-am-on='foot'] .ba__row[data-am-row='foot'] dt {
+    color: var(--sample-amber);
   }
 
   /* ---------- markers ---------- */
@@ -841,6 +1484,15 @@ const afterMarks: Record<number, [number | string, number | string]> = {
   .ba__when--after {
     color: var(--indigo);
     font-weight: 600;
+  }
+
+  /* Smaller markers on phones, where the windows themselves are small. */
+  @media (max-width: 47.99rem) {
+    .ba__win .ba__mark {
+      width: 1.25rem;
+      font-size: 0.65rem;
+      border-width: 1.5px;
+    }
   }
 
   @media (min-width: 48rem) {
