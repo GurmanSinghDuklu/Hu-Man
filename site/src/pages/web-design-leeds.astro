@@ -1,0 +1,13 @@
+---
+/** Web design in Leeds: the words are in src/data/cities.ts (draft copy, 21 Nov 2026). */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import CityPage from '../components/CityPage.astro';
+---
+
+<BaseLayout page="web-design-leeds">
+  <SiteHeader slot="header" />
+  <CityPage city="web-design-leeds" />
+  <SiteFooter slot="footer" />
+</BaseLayout>

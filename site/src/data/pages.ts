@@ -18,6 +18,8 @@ export type PageKey =
   | 'how-we-build'
   | 'agentic-ai-ready'
   | 'free-ai-check'
+  | 'web-design-leeds'
+  | 'web-design-manchester'
   | 'contact'
   | 'thanks'
   | 'start'
@@ -146,6 +148,24 @@ export const pages: Record<PageKey, PageInfo> = {
     label: 'Free AI check',
     ogHeadline: 'Is AI recommending your competitors?',
     schemaType: 'FAQPage',
+  },
+  'web-design-leeds': {
+    key: 'web-design-leeds',
+    path: '/web-design-leeds/',
+    title: 'Web design in Leeds, met in person | Hu/man',
+    description: `A Leeds software studio. We meet you in person across Leeds and West Yorkshire, then build a fast, agentic AI-ready website, from ${fromPrice}.`,
+    label: 'Web design in Leeds',
+    ogHeadline: 'Websites for Leeds businesses, made in Leeds.',
+    schemaType: 'WebPage',
+  },
+  'web-design-manchester': {
+    key: 'web-design-manchester',
+    path: '/web-design-manchester/',
+    title: 'Web design in Manchester, met in person | Hu/man',
+    description: `We meet Manchester businesses in person, then build fast, agentic AI-ready websites at fixed prices, from ${fromPrice}. A Leeds studio, an hour away.`,
+    label: 'Web design in Manchester',
+    ogHeadline: 'Manchester businesses, met in person.',
+    schemaType: 'WebPage',
   },
   contact: {
     key: 'contact',

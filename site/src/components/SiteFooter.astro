@@ -4,6 +4,11 @@ import { withBase } from '../config/paths';
 import BrandMark from './BrandMark.astro';
 
 const currentYear = new Date().getFullYear();
+// Each place we meet clients in person links to its own page.
+const cityPage: Record<string, string> = {
+  Leeds: '/web-design-leeds/',
+  Manchester: '/web-design-manchester/',
+};
 ---
 
 <footer class="site-footer">
@@ -13,7 +18,12 @@ const currentYear = new Date().getFullYear();
         <BrandMark label={site.name} class="site-footer__mark" />
       </div>
       <p>
-        {site.locations.join(' · ')}
+        {site.locations.map((place, i) => (
+          <>
+            {i > 0 && ' · '}
+            {cityPage[place] ? <a href={withBase(cityPage[place])}>{place}</a> : place}
+          </>
+        ))}
         <br />
         {site.reach.join(' · ')}
       </p>

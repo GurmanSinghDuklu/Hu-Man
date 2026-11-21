@@ -12,7 +12,7 @@ The base moved from Bradford to Leeds on 2026-10-19 (the site, schema and footer
 Primary: web designer Leeds; website design Leeds; website redesign Leeds; web design West Yorkshire.
 Secondary: web designer Manchester; website design Manchester (only with real, specific reasons on the page, never a swapped-name copy).
 Long tail (likely easier): AI chatbot for small business Leeds; Squarespace alternative Leeds; website with online booking Leeds; local SEO Leeds; Google Business Profile help Leeds; agentic AI-ready website; portfolio website UK.
-Never create near-duplicate town pages ("web designer in Halifax" with swapped city names). Create a location page only if it has unique, useful content and a real reason (a real client or meeting presence).
+Location pages built 2026-11-21: /web-design-leeds/ and /web-design-manchester/ (real reason: Gurman meets clients in person in both; each has its own copy and FAQ). Never create near-duplicate town pages ("web designer in Halifax" with swapped city names). Create a location page only if it has unique, useful content and a real reason (a real client or meeting presence).
 
 ## Technical checklist
 - Own domain, HTTPS, `www` and non-`www` redirect to one canonical version.

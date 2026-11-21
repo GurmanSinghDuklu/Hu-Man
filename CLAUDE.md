@@ -804,3 +804,18 @@ change jumps the tour to its part and holds (`PART_FOR_CHANGE`); the data panel 
 part on show (`data-am-on`). The phone scrolls by a CSS animation while the tour plays. Reduced motion
 and Data Saver: nothing plays, a pick just shows the part. `pointer-events: none` on the mock.
 Copy is a draft awaiting Gurman's sign-off.
+
+## Six business concepts and the city pages (2026-11-21, branch `business-concepts`, awaiting sign-off)
+- **/business-websites/ wall is back** with six drawn concepts (no photos, Gurman's choice), the docs/03
+  sample businesses: spiceroute (Essential, phone), ashby (Start), northgate (Launch), movewell (Launch,
+  Manchester), atelierrose (Growth, phone), brightsquare (Growth). Each `shows` line names its tier, so the
+  wall runs Essential to Growth. Fields `Food`, `Health`, `Beauty` added. Same rules as the CV concepts
+  (badge back to `../../business-websites/`, `preview.js`, GSAP under matchMedia, JS-driven hover). Sample
+  phone numbers are Ofcom drama numbers (0113 496 0xxx, 0161 496 0xxx, 01632 960xxx). Forms send nothing.
+- **City pages `/web-design-leeds/` and `/web-design-manchester/`** (`CityPage.astro`, words in
+  `src/data/cities.ts`, each with its own sections and FAQ, never a swapped-name copy). Gurman confirmed
+  (2026-11-21) in-person meetings in Manchester and, around Leeds, in Leeds, Bradford, Shipley, Keighley,
+  Wakefield, Huddersfield, Halifax, Harrogate and York. Schema: a Service with areaServed cities, an
+  AggregateOffer from the tiers, and FAQPage. Footer "Leeds · Manchester" link to them; `/leeds` and
+  `/manchester` redirect. Copy is a draft awaiting his sign-off.
+Lighthouse 95/100/100/100 on both city pages and /business-websites/, axe 0 on 19 pages and the six concepts.

@@ -12,6 +12,8 @@
 /work/        /about/#work    301
 /process      /how-we-build/  301
 /about-us     /about/         301
+/leeds        /web-design-leeds/       301
+/manchester   /web-design-manchester/  301
 
 # Each page without its final slash -> the page, permanently (Cloudflare's own handling uses a
 # temporary 307). Exact-match rules, so the slash version is never redirected again. Add a line
@@ -31,4 +33,6 @@
 /terms             /terms/             301
 /cookies           /cookies/           301
 /user-agreement    /user-agreement/    301
+/web-design-leeds       /web-design-leeds/       301
+/web-design-manchester  /web-design-manchester/  301
 /thanks            /thanks/            301

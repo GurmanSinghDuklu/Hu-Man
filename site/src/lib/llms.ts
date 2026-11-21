@@ -52,6 +52,8 @@ const pageKeys: PageKey[] = [
   'free-ai-check',
   'how-we-build',
   'business-websites',
+  'web-design-leeds',
+  'web-design-manchester',
   'portfolio',
   'about',
   'contact',

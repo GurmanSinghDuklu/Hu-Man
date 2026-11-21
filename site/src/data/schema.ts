@@ -13,6 +13,7 @@ import { serviceAreas } from './services';
 import { tiers, portfolioTiers, carePlans } from './pricing';
 import { faq, agenticFaq, checkFaq, portfolioFaq } from './faq';
 import { term, definition } from './agentic';
+import { cities, type CityKey } from './cities';
 import { method, methodName } from './process';
 import { lastModified, pageFile, firstAdded } from '../lib/lastModified';
 import { heroVideos, isoDuration, type HeroVideoKey } from './heroVideos';
@@ -366,6 +367,32 @@ export function buildSchema(key: PageKey, abs: AbsUrl, video?: PageVideo): Node 
       },
     });
     webPage.mainEntity = questions(checkFaq);
+  }
+
+  // The city pages (2026-11-21): a web design service in that area, and the page's own FAQ.
+  if (key === 'web-design-leeds' || key === 'web-design-manchester') {
+    const city = cities[key as CityKey];
+    const priced = tiers.map((t) => amount(t.price)).filter((v): v is string => Boolean(v));
+    graph.push({
+      '@type': 'Service',
+      '@id': `${url}#service`,
+      name: `Web design in ${city.name}`,
+      serviceType: 'Website design and build',
+      description: city.lede,
+      provider: { '@id': ids.org },
+      areaServed: city.areas.map((name) => ({ '@type': 'City', name })),
+      offers: {
+        '@type': 'AggregateOffer',
+        priceCurrency: 'GBP',
+        lowPrice: priced[0],
+        highPrice: priced[priced.length - 1],
+        offerCount: String(priced.length),
+        url: abs(pages.pricing.path),
+      },
+    });
+    webPage['@type'] = ['WebPage', 'FAQPage'];
+    webPage.about = [{ '@id': `${url}#service` }, { '@id': ids.org }];
+    webPage.mainEntity = questions(city.faq);
   }
 
   return { '@context': 'https://schema.org', '@graph': graph };

@@ -37,7 +37,7 @@ export const faq: FaqItem[] = [
   },
   {
     q: 'Where do you work?',
-    a: 'Leeds. In person across West Yorkshire, remote across the UK and worldwide.',
+    a: 'Leeds. In person across Leeds and West Yorkshire, Harrogate, York and Manchester; remote across the UK and worldwide.',
   },
 ];
 

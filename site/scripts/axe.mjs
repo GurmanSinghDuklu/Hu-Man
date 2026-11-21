@@ -13,6 +13,8 @@ const PAGES = [
   'how-we-build/',
   'business-websites/',
   'agentic-ai-ready/',
+  'web-design-leeds/',
+  'web-design-manchester/',
   'free-ai-check/',
   'portfolio/',
   'contact/',

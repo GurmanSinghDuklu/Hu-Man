@@ -37,6 +37,8 @@ run_worker_first = [
   "/start/",
   "/terms/",
   "/user-agreement/",
+  "/web-design-leeds/",
+  "/web-design-manchester/",
 ]
 
 # Email for the enquiry form. The address must be verified in Cloudflare Email Routing first.

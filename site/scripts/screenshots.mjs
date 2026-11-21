@@ -18,6 +18,8 @@ const pages = [
   ['how-we-build', 'how-we-build/'],
   ['business-websites', 'business-websites/'],
   ['agentic-ai-ready', 'agentic-ai-ready/'],
+  ['web-design-leeds', 'web-design-leeds/'],
+  ['web-design-manchester', 'web-design-manchester/'],
   ['free-ai-check', 'free-ai-check/'],
   ['portfolio', 'portfolio/'],
   ['contact', 'contact/'],

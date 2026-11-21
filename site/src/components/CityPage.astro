@@ -1,0 +1,385 @@
+---
+/**
+ * The body of a city page (/web-design-leeds/, /web-design-manchester/). All the words come from
+ * src/data/cities.ts, where each city has its own copy and FAQ; this file only lays them out.
+ */
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import InnerHero from './InnerHero.astro';
+import TalkBanner from './TalkBanner.astro';
+import HeadlineCards from './HeadlineCards.astro';
+import Shape from './play/Shape.astro';
+import BookingLink from './BookingLink.astro';
+import { cities, type CityKey } from '../data/cities';
+import { businessSiteConcepts } from '../data/portfolioConcepts';
+import { tiers } from '../data/pricing';
+import { withBase } from '../config/paths';
+
+interface Props {
+  city: CityKey;
+}
+
+const c = cities[Astro.props.city];
+const concepts = c.concepts
+  .map((slug) => businessSiteConcepts.find((x) => x.slug === slug))
+  .filter((x): x is NonNullable<typeof x> => Boolean(x));
+
+const posters = import.meta.glob<{ default: ImageMetadata }>(
+  '../assets/portfolio-concepts/*.{jpg,webp,png}',
+  { eager: true },
+);
+const posterFor = (slug: string) =>
+  Object.entries(posters).find(([path]) => path.split('/').pop()?.split('.')[0] === slug)?.[1]
+    .default;
+const n = (i: number) => String(i).padStart(2, '0');
+---
+
+<InnerHero label={c.label} lens={`Lens 09 / ${c.name}`}>
+  <Fragment slot="title">{c.title}</Fragment>
+  <Fragment slot="lede">{c.lede}</Fragment>
+</InnerHero>
+
+<section class="band band--ink city-meet" aria-labelledby="meet-title">
+  <div class="grid grid--ink">
+    <div class="sheet section city-meet__sheet">
+      <div>
+        <p class="label" data-reveal>
+          {n(1)} / In person
+        </p>
+        <h2 id="meet-title" class="display display--m" data-reveal="lines">
+          {c.meet.title} <Shape kind="ring" tone="indigo" />
+        </h2>
+        <p class="city-meet__text">{c.meet.text}</p>
+        <BookingLink class="pill-btn city-meet__btn" />
+      </div>
+      <div>
+        <ul class="city-meet__groups">
+          {c.meet.groups.map((g, i) => (
+            <li data-reveal style={`--reveal-delay:${i * 0.08}s`}>
+              <h3>{g.name}</h3>
+              <p>{g.places}</p>
+            </li>
+          ))}
+        </ul>
+        <p class="city-meet__note">{c.meet.note}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band grid section city-how" aria-labelledby="how-title">
+  <div class="sheet">
+    <p class="label" data-reveal>
+      {n(2)} / How it works
+    </p>
+    <h2 id="how-title" class="display display--m" data-reveal="lines">
+      {c.how.title}
+    </h2>
+    <ol class="city-how__list" data-pick style={`--steps:${c.how.steps.length}`}>
+      {c.how.steps.map((s, i) => (
+        <li data-reveal style={`--reveal-delay:${i * 0.06}s`} tabindex="0">
+          <span class="city-how__n">{n(i + 1)}</span>
+          <h3>{s.title}</h3>
+          <p>{s.text}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<section class="band band--paper-2 section city-extra" aria-labelledby="extra-title">
+  <div class="sheet city-extra__sheet">
+    <div>
+      <p class="label" data-reveal>
+        {n(3)} / {c.extra.label}
+      </p>
+      <h2 id="extra-title" class="display display--m" data-reveal="lines">
+        {c.extra.title}
+      </h2>
+    </div>
+    <div class="city-extra__text">
+      {c.extra.paragraphs.map((p) => (
+        <p>{p}</p>
+      ))}
+    </div>
+  </div>
+</section>
+
+{concepts.length > 0 && (
+  <section class="band grid section city-concepts" aria-labelledby="concepts-title">
+    <div class="sheet">
+      <p class="label" data-reveal>
+        {n(4)} / Concepts near you
+      </p>
+      <h2 id="concepts-title" class="display display--m" data-reveal="lines">
+        Sample sites, <Shape kind="sparkle" tone="lilac" /> running live.
+      </h2>
+      <p class="city-concepts__text">
+        Concepts for sample businesses in and around {c.name}, each on the tier that fits it. Open
+        one to see it move.
+      </p>
+      <ul class="city-concepts__list">
+        {concepts.map((x) => {
+          const img = posterFor(x.slug);
+          return (
+            <li class="city-concept" data-reveal>
+              <a href={withBase(`/concepts/${x.slug}/`)} target="_blank" rel="noopener noreferrer">
+                {img && (
+                  <Image
+                    src={img}
+                    alt={x.alt}
+                    widths={[480, 720]}
+                    sizes="(min-width: 64rem) 30vw, (min-width: 48rem) 45vw, 92vw"
+                    format="webp"
+                    loading="lazy"
+                    class:list={['city-concept__img', `city-concept__img--${x.device}`]}
+                  />
+                )}
+                <span class="city-concept__tag">Concept</span>
+                <span class="city-concept__name">{x.name}</span>
+                <span class="city-concept__role">{x.role}</span>
+                <span class="city-concept__shows">{x.shows}</span>
+                <span class="visually-hidden"> (opens in a new tab)</span>
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+      <a class="city-concepts__all" href={`${withBase('/business-websites/')}#concepts`}>
+        See all {businessSiteConcepts.length} business concepts
+      </a>
+    </div>
+  </section>
+)}
+
+<section class="band grid section city-tiers" aria-labelledby="tiers-title">
+  <div class="sheet">
+    <p class="label" data-reveal>
+      {n(concepts.length > 0 ? 5 : 4)} / Prices
+    </p>
+    <h2 id="tiers-title" class="display display--m" data-reveal="lines">
+      The same {tiers.length} tiers, <Shape kind="pill" tone="peach" /> wherever you are.
+    </h2>
+    <p class="city-tiers__text">
+      Pay once, three revision rounds and full ownership. Move up any time and only pay the
+      difference.
+    </p>
+    <div class="city-tiers__grid">
+      <HeadlineCards />
+    </div>
+  </div>
+</section>
+
+<section class="band band--paper-2 section city-faq" aria-labelledby="faq-title">
+  <div class="sheet">
+    <p class="label">Questions</p>
+    <h2 id="faq-title" class="display display--s">
+      Web design in {c.name}, answered
+    </h2>
+    <dl class="city-faq__list">
+      {c.faq.map((item) => (
+        <div class="city-faq__item">
+          <dt>{item.q}</dt>
+          <dd>{item.a}</dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+</section>
+
+<TalkBanner />
+
+<style>
+  .city-meet__sheet,
+  .city-extra__sheet {
+    display: grid;
+    gap: clamp(2rem, calc(var(--u) * 0.6), 3.5rem);
+  }
+
+  .city-meet__text {
+    margin-top: 1.25rem;
+    max-width: 30em;
+    font-size: clamp(1rem, calc(var(--u) * 0.19), 1.2rem);
+  }
+
+  .city-meet__btn {
+    margin-top: 1.5rem;
+  }
+
+  .city-meet__groups {
+    display: grid;
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .city-meet__groups li {
+    padding: clamp(1.1rem, calc(var(--u) * 0.3), 1.75rem);
+    border: 1px solid currentColor;
+    border-top-right-radius: calc(var(--u) * 0.72);
+  }
+
+  .city-meet__groups h3 {
+    font: 800 clamp(1.2rem, calc(var(--u) * 0.28), 1.6rem) / 1.05 var(--font-display);
+    text-transform: uppercase;
+  }
+
+  .city-meet__groups p {
+    margin-top: 0.5rem;
+  }
+
+  .city-meet__note {
+    margin-top: 1rem;
+    opacity: 0.85;
+  }
+
+  .city-how__list {
+    display: grid;
+    gap: max(12px, calc(var(--u) * 0.2));
+    margin: clamp(2rem, calc(var(--u) * 0.6), 3.5rem) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .city-how__list li {
+    padding: clamp(1.25rem, calc(var(--u) * 0.33), 2rem);
+    border: 1px solid var(--ink);
+    background: var(--paper);
+    border-top-right-radius: calc(var(--u) * 0.72);
+  }
+
+  .city-how__n {
+    font: 800 clamp(1.6rem, calc(var(--u) * 0.45), 2.6rem) / 1 var(--font-display);
+  }
+
+  .city-how__list h3 {
+    margin-top: 0.75rem;
+    font: 800 clamp(1.05rem, calc(var(--u) * 0.24), 1.4rem) / 1.05 var(--font-display);
+    text-transform: uppercase;
+  }
+
+  .city-how__list p {
+    margin-top: 0.5rem;
+  }
+
+  .city-extra__text {
+    display: grid;
+    gap: 1rem;
+    max-width: 40em;
+    font-size: clamp(1rem, calc(var(--u) * 0.19), 1.2rem);
+    line-height: 1.55;
+  }
+
+  .city-concepts__text,
+  .city-tiers__text {
+    margin-top: 1rem;
+    max-width: 38em;
+  }
+
+  .city-concepts__list {
+    display: grid;
+    gap: max(16px, calc(var(--u) * 0.3));
+    margin: clamp(2rem, calc(var(--u) * 0.6), 3.5rem) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .city-concept a {
+    display: grid;
+    gap: 0.35rem;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .city-concept__img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    object-position: top;
+    border: 1px solid var(--ink);
+    margin-bottom: 0.5rem;
+  }
+
+  .city-concept__tag {
+    justify-self: start;
+    padding: 0.15rem 0.6rem;
+    border: 1px solid var(--ink);
+    border-radius: 99px;
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+
+  .city-concept__name {
+    font: 800 clamp(1.1rem, calc(var(--u) * 0.26), 1.5rem) / 1.05 var(--font-display);
+    text-transform: uppercase;
+  }
+
+  .city-concept__role {
+    font-weight: 700;
+  }
+
+  .city-concept a:hover .city-concept__name,
+  .city-concept a:focus-visible .city-concept__name {
+    text-decoration: underline;
+  }
+
+  .city-concepts__all {
+    display: inline-block;
+    margin-top: 2rem;
+    font-weight: 700;
+    color: inherit;
+  }
+
+  .city-tiers__grid {
+    margin-top: clamp(2rem, calc(var(--u) * 0.6), 3.5rem);
+  }
+
+  .city-faq__list {
+    display: grid;
+    gap: 1rem max(16px, calc(var(--u) * 0.33));
+    margin: clamp(2rem, calc(var(--u) * 0.6), 3.5rem) 0 0;
+  }
+
+  .city-faq__item {
+    padding: clamp(1.25rem, calc(var(--u) * 0.33), 2rem);
+    border: 1px solid var(--ink);
+    border-top-right-radius: calc(var(--u) * 0.72);
+    background: var(--paper);
+  }
+
+  .city-faq__item dt {
+    font: 800 clamp(1.05rem, calc(var(--u) * 0.22), 1.35rem) / 1.05 var(--font-display);
+    text-transform: uppercase;
+  }
+
+  .city-faq__item dd {
+    margin: 0.6rem 0 0;
+    line-height: 1.5;
+  }
+
+  @media (min-width: 48rem) {
+    .city-how__list,
+    .city-faq__list,
+    .city-concepts__list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .city-meet__sheet,
+    .city-extra__sheet {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      align-items: start;
+    }
+
+    .city-how__list {
+      grid-template-columns: repeat(var(--steps, 4), minmax(0, 1fr));
+    }
+
+    .city-concepts__list {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>
