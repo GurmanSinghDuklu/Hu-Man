@@ -810,7 +810,7 @@ Copy is a draft awaiting Gurman's sign-off.
   sample businesses: spiceroute (Essential, phone), ashby (Start), northgate (Launch), movewell (Launch,
   Manchester), atelierrose (Growth, phone), brightsquare (Growth). Each `shows` line names its tier, so the
   wall runs Essential to Growth. Fields `Food`, `Health`, `Beauty` added. Same rules as the CV concepts
-  (badge back to `../../business-websites/`, `preview.js`, GSAP under matchMedia, JS-driven hover). Sample
+  (Atelier Rose uses Kalnia and Instrument Sans: Gurman found Cormorant "slop", 2026-11-21) (badge back to `../../business-websites/`, `preview.js`, GSAP under matchMedia, JS-driven hover). Sample
   phone numbers are Ofcom drama numbers (0113 496 0xxx, 0161 496 0xxx, 01632 960xxx). Forms send nothing.
 - **City pages `/web-design-leeds/` and `/web-design-manchester/`** (`CityPage.astro`, words in
   `src/data/cities.ts`, each with its own sections and FAQ, never a swapped-name copy). Gurman confirmed
