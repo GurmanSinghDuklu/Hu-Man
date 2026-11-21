@@ -26,7 +26,10 @@ export interface PortfolioConcept {
     | 'Engineering'
     | 'Pets'
     | 'Sales'
-    | 'Retail';
+    | 'Retail'
+    | 'Food'
+    | 'Health'
+    | 'Beauty';
   /** One factual line about what the page shows. */
   shows: string;
   /** Alt text for the poster: what is in the picture. */
@@ -306,5 +309,76 @@ export const businessConceptsIntro = {
   },
 };
 
-/** Empty since 16 Nov 2026 (the six business concepts were removed); the section hides while empty. */
-export const businessSiteConcepts: PortfolioConcept[] = [];
+/**
+ * Six sample businesses from docs/03's sector table (names, domains, headlines and prices), drawn
+ * with no photos (Gurman, 21 Nov 2026). Each `shows` line names the tier it's built on, so the wall
+ * runs from Essential to Growth: the right fit, not the biggest.
+ */
+export const businessSiteConcepts: PortfolioConcept[] = [
+  {
+    slug: 'spiceroute',
+    name: 'Spice Route Kitchen',
+    role: 'Takeaway, Bradford',
+    field: 'Food',
+    shows:
+      'Built on Essential: one page with tonight’s favourites, prices, allergens, hours and a big call button.',
+    alt: 'The Spice Route Kitchen concept: “Order direct. Skip the app fees.” in cream and orange on dark brown, beside a drawn orange cooking pot with steam and chillies.',
+    domain: 'spice-route-kitchen.example',
+    device: 'phone',
+  },
+  {
+    slug: 'ashby',
+    name: 'Ashby Electrical',
+    role: 'Electricians, Leeds',
+    field: 'Trades',
+    shows:
+      'Built on Start: services with prices, a quote form that takes a photo, how it works and the areas covered.',
+    alt: 'The Ashby Electrical concept: “Certified electricians. Fixed quotes within 24 hours.” in navy capitals on a blueprint grid, beside a quote card with a drawn fuse board and light bulb.',
+    domain: 'ashby-electrical.example',
+    device: 'desktop',
+  },
+  {
+    slug: 'northgate',
+    name: 'Northgate Barbers',
+    role: 'Barbershop, Leeds',
+    field: 'Beauty',
+    shows:
+      'Built on Launch: a who’s-in board and next free chair the shop updates from its phone, prices and styles.',
+    alt: 'The Northgate Barbers concept: “Sharp cuts. No waiting around.” in huge cream and gold capitals on near-black, beside a turning barber’s pole.',
+    domain: 'northgate-barbers.example',
+    device: 'desktop',
+  },
+  {
+    slug: 'movewell',
+    name: 'Move Well Physio',
+    role: 'Physiotherapy clinic, Manchester',
+    field: 'Health',
+    shows:
+      'Built on Launch: a body map to pick where it hurts, prices, and exercise plans sent by message.',
+    alt: 'The Move Well Physio concept: “Back to moving well.” in white and lime on deep green, above a line-drawn figure stretching inside a dotted ring.',
+    domain: 'move-well-physio.example',
+    device: 'desktop',
+  },
+  {
+    slug: 'atelierrose',
+    name: 'Atelier Rose',
+    role: 'Hair salon, York',
+    field: 'Beauty',
+    shows:
+      'Built on Growth: a board of saved looks, prices, and booking with a stylist and a deposit online.',
+    alt: 'The Atelier Rose concept: “Book the look you’ve been saving.” in a dark serif with “saving” in rose italics, over a pale drawn rose on blush pink.',
+    domain: 'atelier-rose.example',
+    device: 'phone',
+  },
+  {
+    slug: 'brightsquare',
+    name: 'Bright Square Dental',
+    role: 'Dental practice, Harrogate',
+    field: 'Health',
+    shows:
+      'Built on Growth: online booking, text reminders, prices, and an assistant that answers questions any time.',
+    alt: 'The Bright Square Dental concept: “Calm, modern dentistry near you.” in dark green on pale mint, beside a grid of rounded teal squares with a drawn tooth.',
+    domain: 'bright-square-dental.example',
+    device: 'desktop',
+  },
+];

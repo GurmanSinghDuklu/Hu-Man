@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bright Square Dental, Harrogate (concept site)</title>
+<meta name="description" content="Concept website for Bright Square Dental, a sample dental practice in Harrogate: online booking, text reminders, prices and an assistant for questions.">
+<meta name="robots" content="noindex,nofollow">
+<style>
+@font-face{font-family:'Bricolage Grotesque';font-style:normal;font-weight:200 800;font-stretch:75% 100%;font-display:swap;src:url(../fonts/bricolage-grotesque-latin-standard-normal.woff2) format('woff2')}
+@font-face{font-family:'Figtree';font-style:normal;font-weight:400;font-display:swap;src:url(../fonts/figtree-latin-400-normal.woff2) format('woff2')}
+@font-face{font-family:'Figtree';font-style:normal;font-weight:500;font-display:swap;src:url(../fonts/figtree-latin-500-normal.woff2) format('woff2')}
+@font-face{font-family:'Figtree';font-style:normal;font-weight:700;font-display:swap;src:url(../fonts/figtree-latin-700-normal.woff2) format('woff2')}
+</style>
+<style>
+:root{--bg:#F7FBFA;--ink:#12332F;--deep:#06211D;--teal:#2A9D8F;--tealD:#1D7469;--mint:#DDF1EC;--mint2:#C6E8E0;--mute:#43625C;--line:#D3E6E1;--pad:clamp(16px,4vw,64px);--disp:'Bricolage Grotesque','Segoe UI',system-ui,sans-serif;--body:'Figtree',system-ui,-apple-system,'Segoe UI',Arial,sans-serif}
+*{box-sizing:border-box;margin:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.page{overflow-x:clip}
+a{color:var(--tealD)}
+a:focus-visible,button:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
+.disp{font-family:var(--disp);font-weight:700;line-height:1;letter-spacing:-.035em}
+.label{font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--tealD)}
+.wrap{padding-inline:var(--pad);max-width:1380px;margin-inline:auto}
+.btn{display:inline-flex;align-items:center;gap:10px;font-weight:700;font-size:16px;text-decoration:none;padding:15px 24px;border-radius:16px;border:2px solid var(--ink);color:var(--ink);background:transparent;cursor:pointer;font-family:inherit;transition:background .2s,color .2s,transform .2s;white-space:nowrap}
+.btn.solid{background:var(--teal);border-color:var(--teal);color:var(--deep)}
+.btn.is-hot{background:var(--ink);border-color:var(--ink);color:#fff;transform:translateY(-2px)}
+
+.top{position:sticky;top:0;z-index:40;background:rgba(247,251,250,.92);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:14px}
+.logo{display:flex;align-items:center;gap:10px;color:var(--ink);text-decoration:none;font-family:var(--disp);font-weight:700;font-size:20px;letter-spacing:-.03em}
+.logo svg{width:36px;height:36px;flex:none}
+.minitag{font-family:var(--body);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:var(--mint);color:var(--ink);padding:3px 8px;border-radius:6px}
+.top nav{display:flex;align-items:center;gap:26px}
+.top nav a:not(.btn){color:var(--ink);text-decoration:none;font-weight:500;font-size:15px}
+.top nav a:not(.btn).is-hot{color:var(--tealD)}
+.top .btn{padding:10px 16px;font-size:15px;border-radius:12px}
+@media (max-width:900px){.top nav a:not(.btn){display:none}}
+@media (max-width:480px){.logo .nm{display:none}}
+
+/* hero */
+.hero{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(28px,5vw,80px);align-items:center;padding-block:clamp(36px,6vw,96px) clamp(56px,7vw,110px)}
+.hero h1{font-size:clamp(48px,7.4vw,118px);margin-top:18px}
+.hero h1 em{font-style:normal;color:var(--tealD)}
+.hero .lede{font-size:clamp(17px,1.5vw,21px);color:var(--mute);max-width:30em;margin-top:22px}
+.hero .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.pill{display:inline-flex;align-items:center;gap:8px;background:var(--mint);border-radius:99px;padding:6px 14px 6px 8px;font-weight:700;font-size:14px}
+.pill i{width:10px;height:10px;border-radius:50%;background:var(--teal)}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;aspect-ratio:1/1;position:relative}
+.tile{border-radius:22%;background:var(--mint)}
+.tile.t1{background:var(--teal)}.tile.t2{background:var(--mint2)}.tile.t3{background:var(--ink)}
+.tile.smile{background:#fff;border:2px solid var(--line);display:grid;place-items:center}
+.tile.smile svg{width:60%;height:60%}
+.slotcard{position:absolute;left:-8%;bottom:6%;background:#fff;border-radius:20px;border:2px solid var(--ink);padding:14px 18px;font-size:14px;line-height:1.35;max-width:250px}
+.slotcard strong{display:block;font-family:var(--disp);font-size:20px;letter-spacing:-.02em}
+@media (max-width:860px){.hero{grid-template-columns:1fr}.tiles{max-width:420px;width:100%;margin-inline:auto}.slotcard{left:0}}
+
+/* booking */
+.sec{padding-block:clamp(64px,9vw,140px)}
+.sec h2.disp{font-size:clamp(38px,5.6vw,88px)}
+.sec .intro{color:var(--mute);max-width:34em;margin-top:16px;font-size:18px}
+.book{background:var(--ink);color:#fff}
+.book .label{color:#8EDBCF}
+.book .intro{color:#B9D3CE}
+.bookgrid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:clamp(28px,5vw,80px);align-items:start;margin-top:48px}
+.widget{background:#fff;color:var(--ink);border-radius:28px;padding:clamp(18px,2.4vw,30px)}
+.widget .hd{display:flex;justify-content:space-between;align-items:center;gap:10px;font-weight:700}
+.widget .hd span{font-size:14px;color:var(--mute);font-weight:500}
+.svc{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.svc span{border:2px solid var(--line);border-radius:12px;padding:8px 12px;font-weight:700;font-size:14px}
+.svc span.on{border-color:var(--teal);background:var(--mint)}
+.days{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin-top:18px}
+.day{border-radius:14px;border:2px solid var(--line);text-align:center;padding:10px 4px;font-size:13px;font-weight:700;color:var(--mute)}
+.day b{display:block;font-family:var(--disp);font-size:24px;color:var(--ink);letter-spacing:-.02em}
+.day.on{border-color:var(--ink);background:var(--ink);color:#B9D3CE}
+.day.on b{color:#fff}
+.slots{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:14px}
+.slots span{border-radius:12px;background:var(--mint);text-align:center;padding:10px 4px;font-weight:700;font-size:14px}
+.slots span.gone{background:transparent;color:#5A746D;text-decoration:line-through}
+.slots span.on{background:var(--teal);color:var(--deep)}
+.confirm{margin-top:16px;border-radius:16px;background:var(--mint);padding:14px 16px;display:flex;align-items:center;gap:12px;font-size:15px}
+.confirm i{width:30px;height:30px;border-radius:50%;background:var(--ink);flex:none;display:grid;place-items:center}
+.confirm i::after{content:'';width:10px;height:6px;border-left:2.5px solid #fff;border-bottom:2.5px solid #fff;transform:rotate(-45deg) translate(1px,-1px)}
+.cursor{position:absolute;width:22px;height:22px;pointer-events:none;z-index:3;left:0;top:0;opacity:0}
+.widget{position:relative}
+.sms{background:#0D2A26;border-radius:28px;padding:22px;display:grid;gap:12px}
+.sms .t{font-size:13px;color:#B9D3CE;text-align:center}
+.bubble{background:#fff;color:var(--ink);border-radius:18px 18px 18px 4px;padding:12px 14px;font-size:15px;max-width:90%}
+.bubble.me{background:var(--teal);color:var(--deep);border-radius:18px 18px 4px 18px;justify-self:end;font-weight:700}
+.pts{list-style:none;padding:0;display:grid;gap:12px;margin-top:20px}
+.pts li{display:flex;gap:12px;color:#D5E6E2}
+.pts li::before{content:'';flex:none;width:18px;height:18px;border-radius:6px;background:var(--teal);margin-top:3px}
+@media (max-width:900px){.bookgrid{grid-template-columns:1fr}}
+@media (max-width:480px){.slots{grid-template-columns:repeat(3,minmax(0,1fr))}.day b{font-size:19px}}
+
+/* treatments */
+.tlist{list-style:none;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:48px}
+.tcard{background:#fff;border:2px solid var(--line);border-radius:28px;padding:26px;display:flex;flex-direction:column;gap:12px;transition:border-color .3s,transform .3s}
+.tcard.is-hot{border-color:var(--teal);transform:translateY(-6px)}
+.tcard .ic{width:64px;height:64px;border-radius:20px;background:var(--mint);display:grid;place-items:center}
+.tcard .ic svg{width:36px;height:36px;fill:none;stroke:var(--ink);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.tcard h3{font-family:var(--disp);font-weight:700;font-size:28px;letter-spacing:-.03em}
+.tcard p{color:var(--mute)}
+.tcard .meta{margin-top:auto;display:flex;justify-content:space-between;align-items:baseline;border-top:1.5px solid var(--line);padding-top:14px;font-weight:700}
+.tcard .meta strong{font-family:var(--disp);font-size:38px;letter-spacing:-.03em}
+@media (max-width:900px){.tlist{grid-template-columns:1fr}}
+
+/* assistant */
+.ask{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(28px,5vw,80px);align-items:center}
+.chat{background:#fff;border:2px solid var(--line);border-radius:28px;padding:18px;display:grid;gap:10px;min-height:420px;align-content:start}
+.chat .hd{display:flex;align-items:center;gap:10px;font-weight:700;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.chat .hd i{width:30px;height:30px;border-radius:10px;background:var(--teal)}
+.chat .hd small{display:block;font-weight:500;color:var(--mute);font-size:12px}
+.cq{justify-self:end;background:var(--ink);color:#fff;border-radius:18px 18px 4px 18px;padding:10px 14px;font-size:15px;max-width:85%}
+.ca{background:var(--mint);border-radius:18px 18px 18px 4px;padding:10px 14px;font-size:15px;max-width:90%}
+.ca.hand{background:#FFF4E0;border:1.5px solid #E7C27A}
+.typing{display:flex;gap:4px;padding:12px 14px;background:var(--mint);border-radius:18px;width:max-content}
+.typing i{width:7px;height:7px;border-radius:50%;background:var(--tealD)}
+.ask .note{margin-top:20px;padding:16px 18px;border-left:4px solid var(--teal);background:#fff;border-radius:0 12px 12px 0;color:var(--mute);font-size:15px}
+@media (max-width:900px){.ask{grid-template-columns:1fr}}
+
+/* first visit */
+.first{background:var(--mint)}
+.steps{list-style:none;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin-top:48px;counter-reset:s}
+.steps li{background:#fff;border-radius:24px;padding:22px}
+.steps li::before{counter-increment:s;content:counter(s);display:grid;place-items:center;width:44px;height:44px;border-radius:14px;background:var(--ink);color:#fff;font-family:var(--disp);font-weight:700;font-size:22px;margin-bottom:14px}
+.steps h3{font-family:var(--disp);font-size:22px;letter-spacing:-.02em}
+.steps p{color:var(--mute);font-size:15px;margin-top:6px}
+@media (max-width:900px){.steps{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.steps{grid-template-columns:1fr}}
+
+.vgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:40px}
+.vbox{border:2px solid var(--line);background:#fff;border-radius:24px;padding:24px}
+.vbox h3{font-family:var(--disp);font-size:22px;letter-spacing:-.02em;margin-bottom:12px}
+.vbox ul{list-style:none;padding:0;display:grid;gap:8px;color:var(--mute)}
+.vbox li{display:flex;justify-content:space-between;gap:10px}
+@media (max-width:860px){.vgrid{grid-template-columns:1fr}}
+footer{background:var(--ink);color:#B9D3CE;padding-block:48px 36px}
+footer .big{font-family:var(--disp);font-weight:700;letter-spacing:-.05em;font-size:clamp(56px,11vw,190px);line-height:.9;color:#fff}
+footer .big span{color:var(--teal)}
+footer .bot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;font-size:14px;margin-top:24px;border-top:1px solid #2C4E49;padding-top:16px}
+
+.badge{position:fixed;z-index:90;left:max(12px, env(safe-area-inset-left, 0px));bottom:max(12px, env(safe-area-inset-bottom, 0px));display:inline-flex;align-items:center;gap:8px;background:#121317;color:#EDECE6;border-radius:99px;padding:8px 14px 8px 11px;font-size:12px;font-weight:600;line-height:1.2;box-shadow:0 0 0 1.5px #EDECE6,0 10px 24px -8px rgba(18,19,23,.5);max-width:calc(100vw - 24px);pointer-events:none}
+.badge i{width:9px;height:9px;border-radius:50%;background:#FFD23F;flex:none}
+/* HU/MAN concept badge */
+.badge{display:flex;flex-wrap:wrap;align-items:center;gap:2px 12px;pointer-events:auto;border-radius:18px;line-height:1.3}
+.badge a{color:inherit;font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.badge a:focus-visible{outline:2px solid currentColor;outline-offset:3px;border-radius:3px}
+@media (max-width:640px){.badge{position:static;margin:24px max(16px,env(safe-area-inset-left,0px)) max(16px,env(safe-area-inset-bottom,0px));max-width:none;justify-content:center;text-align:center;border-radius:14px}footer{padding-bottom:26px!important}}
+
+.badge-made{display:inline-flex;align-items:center;gap:6px}
+.badge-logo{display:block;height:11px;width:auto;flex:none}
+.badge-logo path{animation:badge-logo-fade 14s linear infinite}
+@keyframes badge-logo-fade{0%{fill:#cea4ee}12.5%{fill:#93aee0}25%{fill:#4a9bb0}37.5%{fill:#edd1a8}50%{fill:#f8cea2}62.5%{fill:#e79569}75%{fill:#e85e8f}87.5%{fill:#db92db}100%{fill:#cea4ee}}
+@media (prefers-reduced-motion: reduce){.badge-logo path{animation-duration:14s!important;animation-iteration-count:infinite!important}}
+</style>
+</head>
+<body>
+<div class="page" id="top">
+<header class="top">
+ <div class="wrap">
+  <a class="logo" href="#top"><svg viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="36" rx="10" fill="#2A9D8F"/><path d="M10 15c2 7 14 7 16 0" stroke="#06211D" stroke-width="3" fill="none" stroke-linecap="round"/></svg><span class="nm">Bright Square Dental</span><span class="minitag">Concept</span></a>
+  <nav aria-label="Main"><a href="#treatments">Treatments</a><a href="#book">Book</a><a href="#ask">Questions</a><a href="#visit">Visit</a><a class="btn solid" href="#book">Book a check-up</a></nav>
+ </div>
+</header>
+
+<main>
+<section class="wrap hero" aria-labelledby="hero-title">
+ <div>
+  <p class="pill" data-in><i></i>Dentist in Harrogate</p>
+  <h1 id="hero-title" class="disp">Calm, modern dentistry <em>near you.</em></h1>
+  <p class="lede" data-in>New patients welcome. Book online, get reminders by text, and ask questions any time.</p>
+  <div class="cta" data-in><a class="btn solid" href="#book">Book a check-up</a><a class="btn" href="#treatments">See prices</a></div>
+ </div>
+ <div class="tiles" aria-hidden="true">
+  <span class="tile t1"></span><span class="tile"></span><span class="tile t2"></span>
+  <span class="tile t2"></span><span class="tile smile"><svg viewBox="0 0 60 60"><path data-draw d="M18 14c-6 0-9 6-8 13 1 6 3 9 4 16 1 6 2 9 5 9 4 0 3-12 11-12s7 12 11 12c3 0 4-3 5-9 1-7 3-10 4-16 1-7-2-13-8-13-5 0-7 3-12 3s-7-3-12-3Z" fill="none" stroke="#12332F" stroke-width="2.6" stroke-linejoin="round" pathLength="1"/></svg></span><span class="tile t3"></span>
+  <span class="tile"></span><span class="tile t1"></span><span class="tile t2"></span>
+  <p class="slotcard"><strong>New patients</strong>Appointments this week</p>
+ </div>
+</section>
+
+<section class="book" id="book" aria-labelledby="book-title">
+ <div class="wrap sec">
+  <p class="label">Book online</p>
+  <h2 id="book-title" class="disp split">Pick a time. That's it booked.</h2>
+  <p class="intro">Choose a treatment and a slot, any time of day. You get a text to confirm and a reminder the day before.</p>
+  <div class="bookgrid">
+   <div class="widget" aria-hidden="true">
+    <svg class="cursor" viewBox="0 0 22 22"><path d="M3 2l15 8-7 2-3 7Z" fill="#12332F" stroke="#fff" stroke-width="1.5"/></svg>
+    <div class="hd">Book an appointment <span>Week of 7 Dec</span></div>
+    <div class="svc"><span class="on">Check-up</span><span>Hygiene visit</span><span>Whitening consultation</span></div>
+    <div class="days"><span class="day">Mon<b>7</b></span><span class="day">Tue<b>8</b></span><span class="day">Wed<b>9</b></span><span class="day on" data-day>Thu<b>10</b></span><span class="day">Fri<b>11</b></span></div>
+    <div class="slots"><span class="gone">8:20</span><span>9:00</span><span class="gone">9:40</span><span data-slot>10:40</span><span>11:20</span><span class="gone">1:30</span><span>2:10</span><span>3:50</span></div>
+    <p class="confirm" data-confirm><i></i><span><b>Booked: Thursday, 10:40 am.</b> Check-up. We'll text a reminder the day before.</span></p>
+   </div>
+   <div>
+    <div class="sms" aria-hidden="true">
+     <p class="t">Text message · Wednesday</p>
+     <p class="bubble" data-sms>Bright Square Dental: your check-up is tomorrow at 10:40 am. Reply C to confirm or R to rearrange.</p>
+     <p class="bubble me" data-sms>C</p>
+     <p class="bubble" data-sms>Thanks, see you tomorrow.</p>
+    </div>
+    <ul class="pts">
+     <li>Book, change or cancel online, day or night.</li>
+     <li>Pay for treatments online or at the desk.</li>
+     <li>Reminders by text, so fewer missed appointments.</li>
+    </ul>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section class="wrap sec" id="treatments" aria-labelledby="treat-title">
+ <p class="label">Treatments and prices</p>
+ <h2 id="treat-title" class="disp split">Prices you can see before you sit down.</h2>
+ <p class="intro">Every treatment is explained and priced before it starts.</p>
+ <ul class="tlist">
+  <li class="tcard"><span class="ic" aria-hidden="true"><svg viewBox="0 0 36 36"><circle cx="15" cy="15" r="9"/><path d="m22 22 8 8"/></svg></span><h3>Check-up</h3><p>A full look at your teeth and gums, with X-rays when they're due.</p><div class="meta"><span>30 minutes</span><strong>£<span data-count="55">55</span></strong></div></li>
+  <li class="tcard"><span class="ic" aria-hidden="true"><svg viewBox="0 0 36 36"><path d="M8 28 24 12M22 8l6 6M6 30l4-1-3-3Z"/></svg></span><h3>Hygiene visit</h3><p>A deep clean and polish, with tips on keeping your gums healthy.</p><div class="meta"><span>40 minutes</span><strong>£<span data-count="65">65</span></strong></div></li>
+  <li class="tcard"><span class="ic" aria-hidden="true"><svg viewBox="0 0 36 36"><path d="M18 4v6M18 26v6M4 18h6M26 18h6M8 8l4 4M24 24l4 4M8 28l4-4M24 12l4-4"/></svg></span><h3>Whitening</h3><p>Home whitening trays made for you, after a check that it's right for you.</p><div class="meta"><span>Two visits</span><strong>£<span data-count="295">295</span></strong></div></li>
+ </ul>
+</section>
+
+<section class="wrap sec ask" id="ask" aria-labelledby="ask-title">
+ <div>
+  <p class="label">Questions, any time</p>
+  <h2 id="ask-title" class="disp split">Ask at 11pm. Get an answer at 11pm.</h2>
+  <p class="intro">The assistant answers questions about the practice, from the practice's own information.</p>
+  <p class="note">It handles admin only: times, prices, parking, new patients. Anything about your health goes straight to the team.</p>
+ </div>
+ <div class="chat" aria-hidden="true">
+  <div class="hd"><i></i><div>Bright Square assistant<small>Answers from the practice's information</small></div></div>
+  <div data-chat></div>
+ </div>
+</section>
+
+<section class="first" aria-labelledby="first-title">
+ <div class="wrap sec">
+  <p class="label">Your first visit</p>
+  <h2 id="first-title" class="disp split">What happens, step by step.</h2>
+  <ol class="steps">
+   <li><h3>Book online</h3><p>Pick a new patient check-up at a time that suits you.</p></li>
+   <li><h3>Fill in a short form</h3><p>A link by text, so you're not doing paperwork in the waiting room.</p></li>
+   <li><h3>Your check-up</h3><p>We take our time, explain what we see, and answer your questions.</p></li>
+   <li><h3>A clear plan</h3><p>If you need anything, you get the options and prices in writing.</p></li>
+  </ol>
+ </div>
+</section>
+
+<section class="wrap sec" id="visit" aria-labelledby="visit-title">
+ <p class="label">Visit</p>
+ <h2 id="visit-title" class="disp split">Harrogate, HG1.</h2>
+ <div class="vgrid">
+  <div class="vbox"><h3>Opening hours</h3><ul><li><span>Mon to Thu</span><span>8am to 6pm</span></li><li><span>Friday</span><span>8am to 4pm</span></li><li><span>Saturday</span><span>9am to 1pm</span></li></ul></div>
+  <div class="vbox"><h3>Contact</h3><ul><li><span>Phone</span><a href="tel:01632960423">01632 960423</a></li><li><span>Email</span><a href="mailto:hello@bright-square-dental.example">Email us</a></li></ul></div>
+  <div class="vbox"><h3>Getting here</h3><ul><li><span>Parking</span><span>Four spaces behind</span></li><li><span>Access</span><span>Step-free, ground floor</span></li></ul></div>
+ </div>
+</section>
+</main>
+
+<footer>
+ <div class="wrap">
+  <p class="big" aria-hidden="true">Bright <span>Square.</span></p>
+  <div class="bot"><span>&copy; Bright Square Dental</span><span>Concept · sample content</span></div>
+ </div>
+</footer>
+</div>
+<div class="badge" role="note"><a href="../../business-websites/">&larr; Back to HU/MAN</a><span class="badge-made">Made by <svg class="badge-logo" role="img" aria-label="Hu/man" viewBox="0 0 2054.33 438.67" focusable="false"><path fill-rule="evenodd" d="M928.67,21.00 L845.00,21.00 L843.67,22.00 L677.67,437.33 L678.33,438.33 L762.67,437.67 L928.67,23.00Z M1735.00,0.33 L1734.67,390.33 L1815.67,390.00 L1816.33,154.33 L1991.67,390.67 L2053.67,390.67 L2054.00,0.33 L1973.67,0.00 L1973.00,1.00 L1973.00,231.33 L1969.00,227.33 L1796.67,0.00Z M1488.00,0.33 L1355.67,390.00 L1443.67,390.67 L1469.33,312.33 L1471.00,310.67 L1612.33,310.67 L1614.33,313.33 L1639.67,390.67 L1727.33,390.67 L1728.00,390.00 L1718.00,360.00 L1711.00,341.67 L1695.00,292.00 L1688.00,273.67 L1672.00,224.00 L1665.00,205.67 L1596.00,0.33Z M1541.33,90.33 L1542.67,91.00 L1550.33,114.33 L1554.33,129.00 L1576.00,193.67 L1576.33,197.00 L1590.33,238.33 L1590.00,240.33 L1493.00,240.00 L1493.00,237.67Z M940.67,0.00 L940.67,390.67 L1020.67,390.67 L1021.67,389.67 L1022.00,134.67 L1139.67,291.00 L1149.67,291.00 L1152.67,288.00 L1268.00,139.33 L1268.33,390.33 L1349.33,390.00 L1348.67,0.00 L1271.67,0.00 L1269.67,1.00 L1147.00,168.67 L1138.00,158.33 L1018.67,0.00Z M345.33,0.33 L345.33,261.00 L348.33,281.00 L353.33,299.00 L361.33,317.00 L370.67,332.00 L382.67,347.00 L391.67,356.00 L412.67,372.00 L440.67,386.00 L469.67,394.00 L483.67,396.00 L508.67,397.00 L525.67,396.00 L548.33,392.33 L575.33,383.33 L590.67,375.67 L604.33,367.00 L614.67,359.00 L625.67,348.67 L635.67,337.00 L644.67,324.00 L649.67,315.00 L657.00,297.33 L660.67,285.00 L663.67,269.00 L665.00,250.00 L664.67,0.33 L584.00,0.33 L584.00,242.67 L581.33,264.33 L577.33,276.33 L572.33,286.33 L564.33,297.33 L555.00,306.67 L545.00,313.67 L533.67,319.00 L520.33,322.67 L508.33,323.67 L494.00,323.33 L484.00,321.33 L473.33,317.67 L460.33,310.67 L450.00,302.00 L443.00,294.33 L435.00,281.67 L428.67,264.67 L426.00,242.67 L426.00,0.67Z M0.33,0.33 L0.00,390.00 L81.00,390.33 L81.00,240.33 L82.00,239.33 L232.33,239.33 L233.33,240.33 L233.33,390.33 L314.33,390.33 L314.33,0.33 L233.33,0.67 L233.33,168.33 L232.33,169.00 L81.33,168.67 L81.00,0.67Z "/></svg></span></div>
+<script src="../vendor/gsap.min.js"></script>
+<script src="../vendor/ScrollTrigger.min.js"></script>
+<script src="../vendor/SplitText.min.js"></script>
+<script>
+(function(){
+  var $=function(s,r){return (r||document).querySelector(s)};
+  var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+  var CHAT=[
+    {q:'Are you taking new patients?',a:'Yes. There are new patient check-ups this week, from £55. Want me to show you the times?'},
+    {q:'Is there parking?',a:'Yes, four spaces behind the practice, and the bus stops right outside.'},
+    {q:'My tooth really hurts, what should I take?',a:"I can't give advice about your health, but I've passed this to the team and they'll ring you. If it's urgent, call 01632 960423.",hand:true}
+  ];
+  var box=$('[data-chat]');
+  function renderAll(){box.innerHTML=CHAT.map(function(c){return '<p class="cq">'+c.q+'</p><p class="ca'+(c.hand?' hand':'')+'">'+c.a+'</p>'}).join('');box.style.display='grid';box.style.gap='10px'}
+  renderAll();
+
+  var HOT='.btn,.tcard,.top nav a';
+  document.addEventListener('mouseover',function(e){var t=e.target.closest&&e.target.closest(HOT);if(t)t.classList.add('is-hot')});
+  document.addEventListener('mouseout',function(e){var t=e.target.closest&&e.target.closest(HOT);if(t&&!t.contains(e.relatedTarget))t.classList.remove('is-hot')});
+
+  if(!window.gsap||!window.ScrollTrigger)return;
+  gsap.registerPlugin(ScrollTrigger);
+  var hasSplit=!!window.SplitText;if(hasSplit)gsap.registerPlugin(SplitText);
+  Promise.race([document.fonts.ready,new Promise(function(r){setTimeout(r,1500)})]).then(function(){
+    var mm=gsap.matchMedia();
+    mm.add({motion:'(prefers-reduced-motion: no-preference)'},function(ctx){
+      if(!ctx.conditions.motion)return;
+      function lines(el,st,delay){
+        if(!el)return;
+        if(!hasSplit){gsap.from(el,{y:40,autoAlpha:0,duration:1,scrollTrigger:st});return}
+        SplitText.create(el,{type:'lines',mask:'lines',autoSplit:true,onSplit:function(s){return gsap.from(s.lines,{yPercent:110,duration:1,ease:'power4.out',stagger:.1,delay:delay||0,scrollTrigger:st})}});
+      }
+      lines($('.hero h1'),null,.1);
+      $$('.split').forEach(function(el){lines(el,{trigger:el,start:'top 86%'})});
+      gsap.from('.hero [data-in]',{y:20,autoAlpha:0,duration:.8,stagger:.1,delay:.5});
+
+      /* tiles: squares pop in from the centre, then drift; the tooth draws itself */
+      gsap.from('.tile',{scale:0,rotation:-30,duration:.8,ease:'back.out(1.8)',stagger:{each:.07,from:'center'},delay:.2});
+      gsap.fromTo('[data-draw]',{strokeDasharray:1,strokeDashoffset:1},{strokeDashoffset:0,duration:1.6,ease:'power2.inOut',delay:.9});
+      $$('.tile').forEach(function(t,i){if(!t.classList.contains('smile'))gsap.to(t,{rotation:i%2?8:-8,scale:.92,duration:2.4+i*.2,yoyo:true,repeat:-1,ease:'sine.inOut',delay:1.2})});
+      gsap.from('.slotcard',{x:-40,autoAlpha:0,duration:.8,ease:'power3.out',delay:1.3});
+      gsap.to('.slotcard',{y:-8,duration:2,yoyo:true,repeat:-1,ease:'sine.inOut',delay:2.1});
+      gsap.to('.tiles',{rotation:4,yPercent:-6,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}});
+
+      /* booking: a cursor picks Thursday at 10:40 and it confirms; the text arrives */
+      var cur=$('.cursor'),w=$('.widget'),day=$('[data-day]'),slot=$('[data-slot]'),conf=$('[data-confirm]');
+      function pos(el){var a=w.getBoundingClientRect(),b=el.getBoundingClientRect();return {x:b.left-a.left+b.width*.55,y:b.top-a.top+b.height*.6}}
+      var bk=gsap.timeline({repeat:-1,repeatDelay:1.4,paused:true});
+      bk.add(function(){day.classList.remove('on');slot.classList.remove('on');gsap.set(conf,{autoAlpha:0,y:10})})
+        .set(cur,{x:function(){return w.clientWidth*.8},y:function(){return w.clientHeight*.15},autoAlpha:1})
+        .to(cur,{x:function(){return pos(day).x},y:function(){return pos(day).y},duration:.9,ease:'power2.inOut'})
+        .to(cur,{scale:.8,duration:.1,yoyo:true,repeat:1}).add(function(){day.classList.add('on')})
+        .to(cur,{x:function(){return pos(slot).x},y:function(){return pos(slot).y},duration:.8,ease:'power2.inOut'},'+=.3')
+        .to(cur,{scale:.8,duration:.1,yoyo:true,repeat:1}).add(function(){slot.classList.add('on')})
+        .to(conf,{autoAlpha:1,y:0,duration:.5,ease:'back.out(2)'},'+=.2')
+        .to(cur,{autoAlpha:0,duration:.3})
+        .from('[data-sms]',{y:20,autoAlpha:0,duration:.45,stagger:.7})
+        .to({},{duration:2.2});
+      ScrollTrigger.create({trigger:'.widget',start:'top 85%',end:'bottom 10%',onToggle:function(s){s.isActive?bk.play():bk.pause()}});
+      gsap.from('.widget',{y:60,autoAlpha:0,duration:.9,ease:'power3.out',scrollTrigger:{trigger:'.widget',start:'top 88%'}});
+
+      /* treatments rise; prices count up */
+      gsap.from('.tcard',{y:60,autoAlpha:0,duration:.8,stagger:.12,ease:'power3.out',scrollTrigger:{trigger:'.tlist',start:'top 85%'}});
+      $$('[data-count]').forEach(function(el){var to=+el.dataset.count,o={v:0};gsap.to(o,{v:to,duration:1.2,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 92%'},onUpdate:function(){el.textContent=Math.round(o.v)}})});
+
+      /* assistant: each question is typed, the answer follows */
+      var ch=gsap.timeline({repeat:-1,repeatDelay:2.4,paused:true});
+      ch.add(function(){box.innerHTML=''});
+      CHAT.forEach(function(c,i){
+        ch.add(function(){var q=document.createElement('p');q.className='cq';q.textContent=c.q;box.appendChild(q);gsap.from(q,{y:14,autoAlpha:0,duration:.35})},'+=.5')
+          .add(function(){var t=document.createElement('div');t.className='typing';t.innerHTML='<i></i><i></i><i></i>';box.appendChild(t);gsap.to($$('i',t),{y:-4,duration:.3,stagger:.1,yoyo:true,repeat:-1})},'+=.5')
+          .add(function(){var t=box.querySelector('.typing');if(t)t.remove();var a=document.createElement('p');a.className='ca'+(c.hand?' hand':'');a.textContent=c.a;box.appendChild(a);gsap.from(a,{y:14,autoAlpha:0,duration:.35})},'+=.9');
+      });
+      ch.to({},{duration:2});
+      ScrollTrigger.create({trigger:'.chat',start:'top 85%',end:'bottom 10%',onToggle:function(s){if(s.isActive){ch.play()}else{ch.pause()}}});
+
+      gsap.from('.steps li',{y:50,autoAlpha:0,rotation:-3,duration:.7,stagger:.1,ease:'power3.out',scrollTrigger:{trigger:'.steps',start:'top 86%'}});
+      gsap.from('.vbox',{y:40,autoAlpha:0,duration:.6,stagger:.1,scrollTrigger:{trigger:'.vgrid',start:'top 88%'}});
+      gsap.from('footer .big',{yPercent:60,autoAlpha:0,duration:1.1,ease:'power4.out',scrollTrigger:{trigger:'footer',start:'top 92%'}});
+    });
+  });
+})();
+</script>
+<script src="../preview.js" defer></script>
+</body>
+</html>

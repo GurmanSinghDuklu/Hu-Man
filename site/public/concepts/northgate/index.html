@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Northgate Barbers, Leeds (concept site)</title>
+<meta name="description" content="Concept website for Northgate Barbers, a sample barbershop in Leeds: who's in today, every price, styles and the next free chair.">
+<meta name="robots" content="noindex,nofollow">
+<style>
+@font-face{font-family:'Big Shoulders Display';font-style:normal;font-weight:800;font-display:swap;src:url(../fonts/big-shoulders-display-latin-800-normal.woff2) format('woff2')}
+@font-face{font-family:'Big Shoulders Display';font-style:normal;font-weight:900;font-display:swap;src:url(../fonts/big-shoulders-display-latin-900-normal.woff2) format('woff2')}
+@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url(../fonts/inter-latin-400-normal.woff2) format('woff2')}
+@font-face{font-family:'Inter';font-style:normal;font-weight:600;font-display:swap;src:url(../fonts/inter-latin-600-normal.woff2) format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:500;font-display:swap;src:url(../fonts/ibm-plex-mono-latin-500-normal.woff2) format('woff2')}
+</style>
+<style>
+:root{--bg:#101114;--bg2:#17181C;--line:#2A2B31;--cream:#F2EFE8;--mute:#B9B4A8;--gold:#D9A441;--ink:#16130B;--red:#C8442F;--pad:clamp(16px,4vw,64px);--disp:'Big Shoulders Display','Arial Narrow',system-ui,sans-serif;--body:'Inter',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace}
+*{box-sizing:border-box;margin:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--cream);font-family:var(--body);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.page{overflow-x:clip}
+a{color:var(--gold)}
+a:focus-visible,button:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.disp{font-family:var(--disp);font-weight:900;text-transform:uppercase;line-height:.86;letter-spacing:-.005em}
+.label{font-family:var(--mono);font-size:13px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+.wrap{padding-inline:var(--pad);max-width:1440px;margin-inline:auto}
+.btn{display:inline-flex;align-items:center;gap:10px;font-weight:600;font-size:16px;text-decoration:none;padding:15px 24px;border:1.5px solid var(--cream);color:var(--cream);transition:background .2s,color .2s,border-color .2s;white-space:nowrap}
+.btn.gold{background:var(--gold);border-color:var(--gold);color:var(--ink)}
+.btn.is-hot{background:var(--cream);border-color:var(--cream);color:var(--ink)}
+.btn svg{width:18px;height:18px}
+
+.top{position:sticky;top:0;z-index:40;background:rgba(16,17,20,.92);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:14px}
+.logo{display:flex;align-items:center;gap:12px;color:var(--cream);text-decoration:none;font-family:var(--disp);font-weight:900;font-size:24px;text-transform:uppercase;letter-spacing:.02em}
+.logo .pole-s{width:14px;height:34px;border-radius:7px;overflow:hidden;border:2px solid var(--cream);background:repeating-linear-gradient(135deg,var(--cream) 0 5px,var(--red) 5px 10px,var(--cream) 10px 15px,#2E5AA8 15px 20px)}
+.minitag{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--mute);border:1px solid var(--line);padding:3px 7px}
+.top nav{display:flex;align-items:center;gap:28px}
+.top nav a:not(.btn){color:var(--cream);text-decoration:none;font-weight:600;font-size:15px}
+.top nav a:not(.btn).is-hot{color:var(--gold)}
+.top .btn{padding:10px 16px;font-size:15px}
+@media (max-width:860px){.top nav a:not(.btn){display:none}}
+@media (max-width:420px){.logo{font-size:19px;gap:8px}.top .btn{padding:9px 12px}}
+
+/* hero */
+.hero{position:relative;padding-block:clamp(36px,6vw,90px) clamp(40px,6vw,80px);display:grid;grid-template-columns:minmax(0,1fr) auto;gap:clamp(24px,4vw,64px);align-items:end}
+.hero h1{font-size:clamp(68px,13.2vw,230px)}
+.hero h1 .gold{color:var(--gold)}
+.hero h1 .hrow{display:block}
+.hero .lede{max-width:30em;color:var(--mute);font-size:clamp(17px,1.4vw,20px);margin-top:26px}
+.hero .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+.pole{width:clamp(70px,8vw,120px);height:clamp(320px,38vw,560px);position:relative}
+.pole .cap{height:9%;background:var(--gold);border-radius:40px 40px 8px 8px}
+.pole .cap.b{border-radius:8px 8px 40px 40px}
+.pole .glass{height:82%;margin-inline:10%;border-inline:3px solid var(--gold);overflow:hidden;position:relative;background:var(--cream)}
+.pole .stripes{position:absolute;left:-60%;right:-60%;top:-100%;height:300%;background:repeating-linear-gradient(150deg,var(--red) 0 28px,var(--cream) 28px 50px,#2E5AA8 50px 78px,var(--cream) 78px 100px)}
+.pole .shine{position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.25),transparent 30%,rgba(255,255,255,.35) 45%,transparent 60%,rgba(0,0,0,.3))}
+@media (max-width:760px){.hero{grid-template-columns:1fr}.pole{position:absolute;right:var(--pad);top:24px;height:150px;width:44px;opacity:.95}.hero h1{padding-right:56px}}
+
+/* chairs */
+.board{border-block:1px solid var(--line);background:var(--bg2)}
+.board .wrap{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,2fr);gap:clamp(24px,4vw,64px);padding-block:clamp(40px,5vw,72px);align-items:center}
+.next h2{font-size:clamp(28px,3vw,44px);margin-top:10px}
+.flap{display:flex;gap:6px;margin-top:16px;font-family:var(--disp);font-weight:900;font-size:clamp(52px,6vw,92px);line-height:1}
+.flap span{background:#0B0C0E;border:1px solid var(--line);padding:.06em .12em;min-width:.7em;text-align:center;position:relative;color:var(--gold)}
+.flap span::after{content:'';position:absolute;left:0;right:0;top:50%;height:1px;background:#000}
+.flap .sep{background:none;border:0;min-width:0;color:var(--mute)}
+.flap .sep::after{display:none}
+.next p{color:var(--mute);margin-top:12px;font-size:15px}
+.chairs{list-style:none;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.chair{border:1px solid var(--line);background:var(--bg);padding:18px;display:grid;gap:12px;transition:border-color .25s,transform .25s}
+.chair.is-hot{border-color:var(--gold);transform:translateY(-4px)}
+.chair .face{width:64px;height:64px;border-radius:50%;background:#26272d;overflow:hidden}
+.chair .face svg{width:100%;height:100%}
+.chair h3{font-family:var(--disp);font-weight:900;text-transform:uppercase;font-size:30px;line-height:1}
+.chair .st{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:13px;color:var(--mute)}
+.chair .st i{width:9px;height:9px;border-radius:50%;background:#6b6b6b}
+.chair.free .st i{background:#5FCB78;box-shadow:0 0 0 4px rgba(95,203,120,.18)}
+.chair.busy .st i{background:var(--gold)}
+@media (max-width:900px){.board .wrap{grid-template-columns:1fr}}
+@media (max-width:560px){.chairs{grid-template-columns:1fr}}
+
+/* bands */
+.band{overflow:hidden;padding-block:clamp(18px,2.4vw,34px)}
+.band .r{display:flex;width:max-content;white-space:nowrap}
+.band span{font-family:var(--disp);font-weight:900;text-transform:uppercase;font-size:clamp(56px,9vw,150px);line-height:.9;padding-right:.35em;color:transparent;-webkit-text-stroke:1.5px var(--mute)}
+.band span:nth-child(3n+2){color:var(--gold);-webkit-text-stroke:0}
+
+/* prices */
+.sec{padding-block:clamp(64px,9vw,140px)}
+.sec h2.disp{font-size:clamp(52px,8vw,128px)}
+.prices{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:clamp(28px,5vw,90px);align-items:start}
+.plist{list-style:none;padding:0;margin-top:10px}
+.plist li{display:grid;grid-template-columns:auto 1fr auto;align-items:baseline;gap:14px;padding:22px 0;border-bottom:1px solid var(--line)}
+.plist h3{font-family:var(--disp);font-weight:800;text-transform:uppercase;font-size:clamp(32px,3.4vw,50px);line-height:1}
+.plist .dots{border-bottom:2px dotted #4a4b52;transform:translateY(-8px);transform-origin:0 50%}
+.plist strong{font-family:var(--disp);font-weight:900;font-size:clamp(36px,3.6vw,56px);color:var(--gold)}
+.plist p{grid-column:1/-1;color:var(--mute);font-size:15px;margin-top:-4px}
+.prices .intro{color:var(--mute);margin-top:20px;max-width:28em}
+.prices .note{font-family:var(--mono);font-size:13px;color:var(--mute);margin-top:22px}
+
+/* styles */
+.styles{background:var(--cream);color:var(--ink)}
+.styles .label{color:#7A5A12}
+.styles .head{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap}
+.track{display:flex;gap:20px;margin-top:48px;width:max-content;padding-inline:var(--pad)}
+.style{width:clamp(240px,24vw,340px);flex:none}
+.style .art{aspect-ratio:4/5;background:#E5E0D4;position:relative;overflow:hidden}
+.style .art svg{position:absolute;inset:0;width:100%;height:100%}
+.style h3{font-family:var(--disp);font-weight:900;text-transform:uppercase;font-size:30px;margin-top:14px;line-height:1}
+.style p{font-size:15px;color:#4A463C}
+.trackwrap{overflow:hidden}
+@media (max-width:860px){.trackwrap{overflow-x:auto;scroll-snap-type:x mandatory}.style{scroll-snap-align:start}}
+
+/* dashboard */
+.dash{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,5vw,90px);align-items:center}
+.phone{width:min(100%,320px);margin-inline:auto;border:10px solid #2A2B31;border-radius:38px;background:var(--bg2);padding:20px 16px 26px;display:grid;gap:12px}
+.phone .bar{display:flex;justify-content:space-between;font-family:var(--mono);font-size:12px;color:var(--mute)}
+.phone h3{font-family:var(--disp);font-weight:900;text-transform:uppercase;font-size:26px}
+.row{display:flex;justify-content:space-between;align-items:center;padding:12px;border:1px solid var(--line);font-size:15px}
+.sw{width:46px;height:26px;border-radius:13px;background:#3a3b42;position:relative;flex:none;transition:background .25s}
+.sw::after{content:'';position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:var(--cream);transition:transform .25s}
+.sw.on{background:#3B9A57}
+.sw.on::after{transform:translateX(20px)}
+.phone .time{font-family:var(--mono);color:var(--gold)}
+.dash ul.pts{list-style:none;padding:0;margin-top:26px;display:grid;gap:16px}
+.dash ul.pts li{padding-left:22px;position:relative;color:var(--mute)}
+.dash ul.pts li::before{content:'';position:absolute;left:0;top:.6em;width:10px;height:10px;background:var(--gold)}
+.dash ul.pts strong{color:var(--cream)}
+@media (max-width:860px){.prices,.dash{grid-template-columns:1fr}}
+
+/* visit */
+.visit{border-top:1px solid var(--line)}
+.visit .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:40px}
+.visit .box{border:1px solid var(--line);padding:24px}
+.visit h3{font-family:var(--disp);font-weight:900;text-transform:uppercase;font-size:28px;margin-bottom:12px}
+.visit ul{list-style:none;padding:0;display:grid;gap:8px;color:var(--mute)}
+.visit li{display:flex;justify-content:space-between;gap:10px}
+@media (max-width:860px){.visit .grid{grid-template-columns:1fr}}
+
+footer{padding-block:40px;border-top:1px solid var(--line)}
+footer .big{font-family:var(--disp);font-weight:900;text-transform:uppercase;font-size:clamp(70px,15vw,260px);line-height:.82;color:var(--gold)}
+footer .bot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;font-family:var(--mono);font-size:13px;color:var(--mute);margin-top:22px}
+
+.badge{position:fixed;z-index:90;left:max(12px, env(safe-area-inset-left, 0px));bottom:max(12px, env(safe-area-inset-bottom, 0px));display:inline-flex;align-items:center;gap:8px;background:#121317;color:#EDECE6;border-radius:99px;padding:8px 14px 8px 11px;font-size:12px;font-weight:600;line-height:1.2;box-shadow:0 0 0 1.5px #EDECE6,0 10px 24px -8px rgba(18,19,23,.5);max-width:calc(100vw - 24px);pointer-events:none}
+.badge i{width:9px;height:9px;border-radius:50%;background:#FFD23F;flex:none}
+/* HU/MAN concept badge */
+.badge{display:flex;flex-wrap:wrap;align-items:center;gap:2px 12px;pointer-events:auto;border-radius:18px;line-height:1.3}
+.badge a{color:inherit;font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.badge a:focus-visible{outline:2px solid currentColor;outline-offset:3px;border-radius:3px}
+@media (max-width:640px){.badge{position:static;margin:24px max(16px,env(safe-area-inset-left,0px)) max(16px,env(safe-area-inset-bottom,0px));max-width:none;justify-content:center;text-align:center;border-radius:14px}footer{padding-bottom:26px!important}}
+
+.badge-made{display:inline-flex;align-items:center;gap:6px}
+.badge-logo{display:block;height:11px;width:auto;flex:none}
+.badge-logo path{animation:badge-logo-fade 14s linear infinite}
+@keyframes badge-logo-fade{0%{fill:#cea4ee}12.5%{fill:#93aee0}25%{fill:#4a9bb0}37.5%{fill:#edd1a8}50%{fill:#f8cea2}62.5%{fill:#e79569}75%{fill:#e85e8f}87.5%{fill:#db92db}100%{fill:#cea4ee}}
+@media (prefers-reduced-motion: reduce){.badge-logo path{animation-duration:14s!important;animation-iteration-count:infinite!important}}
+</style>
+</head>
+<body>
+<div class="page" id="top">
+<header class="top">
+ <div class="wrap">
+  <a class="logo" href="#top"><span class="pole-s" aria-hidden="true"></span>Northgate<span class="minitag">Concept</span></a>
+  <nav aria-label="Main"><a href="#today">Who's in</a><a href="#prices">Prices</a><a href="#styles">Styles</a><a href="#visit">Find us</a><a class="btn gold" href="tel:01134960782">Ring ahead</a></nav>
+ </div>
+</header>
+
+<main>
+<section class="wrap hero" aria-labelledby="hero-title">
+ <div>
+  <p class="label" data-in>Northgate Barbers · Leeds</p>
+  <h1 id="hero-title" class="disp" style="margin-top:16px"><span class="hrow">Sharp cuts.</span><span class="hrow gold">No waiting</span><span class="hrow gold">around.</span></h1>
+  <p class="lede" data-in>See who's in today, every price, and the next free chair. Ring ahead and walk straight in.</p>
+  <div class="cta" data-in><a class="btn gold" href="tel:01134960782"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2Z"/></svg>0113 496 0782</a><a class="btn" href="#prices">See prices</a></div>
+ </div>
+ <div class="pole" aria-hidden="true"><div class="cap"></div><div class="glass"><div class="stripes"></div><div class="shine"></div></div><div class="cap b"></div></div>
+</section>
+
+<section class="board" id="today" aria-labelledby="today-title">
+ <div class="wrap">
+  <div class="next">
+   <p class="label">Next free chair</p>
+   <h2 id="today-title" class="disp">Today</h2>
+   <div class="flap" aria-label="4:30 pm"><span data-flap="4">4</span><span class="sep">:</span><span data-flap="3">3</span><span data-flap="0">0</span><span class="sep" style="font-size:.5em;align-self:end">PM</span></div>
+   <p>Updated by the shop from their phone.</p>
+  </div>
+  <ul class="chairs">
+   <li class="chair busy"><span class="face" aria-hidden="true"><svg viewBox="0 0 64 64"><circle cx="32" cy="38" r="16" fill="#C68B5E"/><path d="M16 34c0-14 8-20 16-20s16 6 16 20c-4-6-10-8-16-8s-12 2-16 8Z" fill="#1d1d1d"/><path d="M14 64c2-10 9-14 18-14s16 4 18 14Z" fill="#D9A441"/></svg></span><h3>Jay</h3><span class="st"><i></i>In the chair until 4:30</span></li>
+   <li class="chair free"><span class="face" aria-hidden="true"><svg viewBox="0 0 64 64"><circle cx="32" cy="38" r="16" fill="#E2B48C"/><path d="M17 33c1-12 7-18 15-18s14 5 15 18c-6-3-10-9-15-9s-9 6-15 9Z" fill="#7a4b26"/><path d="M22 44c4 8 16 8 20 0-2 6-18 6-20 0Z" fill="#7a4b26"/><path d="M14 64c2-10 9-14 18-14s16 4 18 14Z" fill="#F2EFE8"/></svg></span><h3>Marek</h3><span class="st"><i></i>Free now</span></li>
+   <li class="chair"><span class="face" aria-hidden="true"><svg viewBox="0 0 64 64"><circle cx="32" cy="38" r="16" fill="#8D5B3A"/><path d="M16 36c0-8 2-12 16-12s16 4 16 12c-2-4-8-6-16-6s-14 2-16 6Z" fill="#111"/><path d="M14 64c2-10 9-14 18-14s16 4 18 14Z" fill="#2E5AA8"/></svg></span><h3>Sami</h3><span class="st"><i></i>In from 5pm</span></li>
+  </ul>
+ </div>
+</section>
+
+<div class="band" aria-hidden="true"><div class="r r1"><span>Fades</span><span>Beards</span><span>Crops</span><span>Hot towel</span><span>Lineups</span><span>Fades</span><span>Beards</span><span>Crops</span><span>Hot towel</span><span>Lineups</span></div></div>
+
+<section class="wrap sec prices" id="prices" aria-labelledby="prices-title">
+ <div>
+  <p class="label">Prices</p>
+  <h2 id="prices-title" class="disp split">Every price, on the wall and online.</h2>
+  <p class="intro">No surprises at the till. What you see here is what you pay.</p>
+  <p class="note">Card or cash. Walk-ins welcome when there's a chair.</p>
+ </div>
+ <ul class="plist">
+  <li><h3>Skin fade</h3><span class="dots" aria-hidden="true"></span><strong>£18</strong><p>Down to the skin at the sides, blended into the length you want on top.</p></li>
+  <li><h3>Beard sculpt</h3><span class="dots" aria-hidden="true"></span><strong>£12</strong><p>Shaped, lined up and finished with a hot towel.</p></li>
+  <li><h3>Cut and beard</h3><span class="dots" aria-hidden="true"></span><strong>£28</strong><p>Any cut with a beard sculpt, in one sitting.</p></li>
+ </ul>
+</section>
+
+<section class="styles sec" id="styles" aria-labelledby="styles-title">
+ <div class="wrap head">
+  <div><p class="label">Styles we cut</p><h2 id="styles-title" class="disp split">Point at one.</h2></div>
+  <p style="max-width:24em;color:#4A463C">Not sure what to ask for? Show us the one you like when you sit down.</p>
+ </div>
+ <div class="trackwrap" tabindex="0" role="region" aria-label="Styles we cut"><div class="track">
+  <article class="style"><div class="art" aria-hidden="true"><svg viewBox="0 0 200 250"><circle cx="100" cy="120" r="54" fill="#C68B5E"/><path d="M48 112c0-46 24-64 52-64s52 18 52 64c-4-18-20-24-52-24s-48 6-52 24Z" fill="#16130B"/><path d="M46 112c2 10 4 16 8 20M154 112c-2 10-4 16-8 20" stroke="#5a4a3a" stroke-width="3" stroke-dasharray="3 3"/><path d="M40 250c4-50 28-70 60-70s56 20 60 70Z" fill="#16130B"/></svg></div><h3>Skin fade</h3><p>Tight at the sides, length on top.</p></article>
+  <article class="style"><div class="art" aria-hidden="true"><svg viewBox="0 0 200 250"><circle cx="100" cy="120" r="54" fill="#E2B48C"/><path d="M46 110c4-44 26-60 54-60 32 0 52 20 54 56-10-10-18-6-26-14-6 8-16 6-24-2-8 10-18 8-26 2-8 10-20 10-32 18Z" fill="#7a4b26"/><path d="M40 250c4-50 28-70 60-70s56 20 60 70Z" fill="#D9A441"/></svg></div><h3>Textured crop</h3><p>Short, choppy fringe, easy to style.</p></article>
+  <article class="style"><div class="art" aria-hidden="true"><svg viewBox="0 0 200 250"><circle cx="100" cy="120" r="54" fill="#8D5B3A"/><path d="M46 116c0-44 22-64 54-64s54 20 54 64c-8-26-30-34-60-30-12 2-14-8-6-14-18 4-34 20-42 44Z" fill="#111"/><path d="M60 146c10 28 70 28 80 0-6 40-74 40-80 0Z" fill="#111"/><path d="M40 250c4-50 28-70 60-70s56 20 60 70Z" fill="#C8442F"/></svg></div><h3>Side part and beard</h3><p>Classic part, full beard sculpt.</p></article>
+  <article class="style"><div class="art" aria-hidden="true"><svg viewBox="0 0 200 250"><circle cx="100" cy="120" r="54" fill="#C68B5E"/><path d="M48 108c0-34 22-50 52-50s52 16 52 50c-14-8-30-12-52-12s-38 4-52 12Z" fill="#3a2a1a" opacity=".85"/><path d="M40 250c4-50 28-70 60-70s56 20 60 70Z" fill="#2E5AA8"/></svg></div><h3>Buzz cut</h3><p>One length all over, done in minutes.</p></article>
+  <article class="style"><div class="art" aria-hidden="true"><svg viewBox="0 0 200 250"><circle cx="100" cy="120" r="54" fill="#E2B48C"/><path d="M44 120c0-50 24-72 56-72s56 22 56 72c-6-34-22-40-56-40s-50 6-56 40Z" fill="#B5732E"/><path d="M44 118c-6 20-4 36 4 44M156 118c6 20 4 36-4 44" stroke="#B5732E" stroke-width="10" stroke-linecap="round"/><path d="M40 250c4-50 28-70 60-70s56 20 60 70Z" fill="#16130B"/></svg></div><h3>Scissor cut</h3><p>Longer hair, cut by hand, kept natural.</p></article>
+ </div></div>
+</section>
+
+<section class="wrap sec dash" aria-labelledby="dash-title">
+ <div class="phone" aria-hidden="true">
+  <div class="bar"><span>9:41</span><span>Northgate · Shop</span></div>
+  <h3>Today</h3>
+  <div class="row"><span>Jay in</span><span class="sw on" data-sw></span></div>
+  <div class="row"><span>Marek in</span><span class="sw on" data-sw></span></div>
+  <div class="row"><span>Sami in</span><span class="sw" data-sw></span></div>
+  <div class="row"><span>Next free chair</span><span class="time" data-time>4:30 pm</span></div>
+  <div class="row"><span>Skin fade</span><span class="time">£18</span></div>
+ </div>
+ <div>
+  <p class="label">Run by the shop</p>
+  <h2 id="dash-title" class="disp split">Change it from your phone between cuts.</h2>
+  <ul class="pts">
+   <li><strong>Who's in.</strong> Flip a switch and the board on the site changes.</li>
+   <li><strong>The next free chair.</strong> Set the time, and it's on the home page.</li>
+   <li><strong>Prices and hours.</strong> Change them once; the site and the price list match.</li>
+  </ul>
+ </div>
+</section>
+
+<section class="wrap sec visit" id="visit" aria-labelledby="visit-title">
+ <p class="label">Find us</p>
+ <h2 id="visit-title" class="disp split">Leeds, LS2.</h2>
+ <div class="grid">
+  <div class="box"><h3>Hours</h3><ul><li><span>Mon to Fri</span><span>9am to 7pm</span></li><li><span>Saturday</span><span>8am to 5pm</span></li><li><span>Sunday</span><span>Closed</span></li></ul></div>
+  <div class="box"><h3>Contact</h3><ul><li><span>Phone</span><a href="tel:01134960782">0113 496 0782</a></li><li><span>Email</span><a href="mailto:hello@northgate-barbers.example">Email us</a></li></ul></div>
+  <div class="box"><h3>Getting here</h3><ul><li><span>Leeds station</span><span>8 min walk</span></li><li><span>Parking</span><span>Multi-storey nearby</span></li></ul></div>
+ </div>
+</section>
+</main>
+
+<footer>
+ <div class="wrap">
+  <p class="big" aria-hidden="true">Northgate</p>
+  <div class="bot"><span>&copy; Northgate Barbers</span><span>Concept · sample content</span></div>
+ </div>
+</footer>
+</div>
+<div class="badge" role="note"><a href="../../business-websites/">&larr; Back to HU/MAN</a><span class="badge-made">Made by <svg class="badge-logo" role="img" aria-label="Hu/man" viewBox="0 0 2054.33 438.67" focusable="false"><path fill-rule="evenodd" d="M928.67,21.00 L845.00,21.00 L843.67,22.00 L677.67,437.33 L678.33,438.33 L762.67,437.67 L928.67,23.00Z M1735.00,0.33 L1734.67,390.33 L1815.67,390.00 L1816.33,154.33 L1991.67,390.67 L2053.67,390.67 L2054.00,0.33 L1973.67,0.00 L1973.00,1.00 L1973.00,231.33 L1969.00,227.33 L1796.67,0.00Z M1488.00,0.33 L1355.67,390.00 L1443.67,390.67 L1469.33,312.33 L1471.00,310.67 L1612.33,310.67 L1614.33,313.33 L1639.67,390.67 L1727.33,390.67 L1728.00,390.00 L1718.00,360.00 L1711.00,341.67 L1695.00,292.00 L1688.00,273.67 L1672.00,224.00 L1665.00,205.67 L1596.00,0.33Z M1541.33,90.33 L1542.67,91.00 L1550.33,114.33 L1554.33,129.00 L1576.00,193.67 L1576.33,197.00 L1590.33,238.33 L1590.00,240.33 L1493.00,240.00 L1493.00,237.67Z M940.67,0.00 L940.67,390.67 L1020.67,390.67 L1021.67,389.67 L1022.00,134.67 L1139.67,291.00 L1149.67,291.00 L1152.67,288.00 L1268.00,139.33 L1268.33,390.33 L1349.33,390.00 L1348.67,0.00 L1271.67,0.00 L1269.67,1.00 L1147.00,168.67 L1138.00,158.33 L1018.67,0.00Z M345.33,0.33 L345.33,261.00 L348.33,281.00 L353.33,299.00 L361.33,317.00 L370.67,332.00 L382.67,347.00 L391.67,356.00 L412.67,372.00 L440.67,386.00 L469.67,394.00 L483.67,396.00 L508.67,397.00 L525.67,396.00 L548.33,392.33 L575.33,383.33 L590.67,375.67 L604.33,367.00 L614.67,359.00 L625.67,348.67 L635.67,337.00 L644.67,324.00 L649.67,315.00 L657.00,297.33 L660.67,285.00 L663.67,269.00 L665.00,250.00 L664.67,0.33 L584.00,0.33 L584.00,242.67 L581.33,264.33 L577.33,276.33 L572.33,286.33 L564.33,297.33 L555.00,306.67 L545.00,313.67 L533.67,319.00 L520.33,322.67 L508.33,323.67 L494.00,323.33 L484.00,321.33 L473.33,317.67 L460.33,310.67 L450.00,302.00 L443.00,294.33 L435.00,281.67 L428.67,264.67 L426.00,242.67 L426.00,0.67Z M0.33,0.33 L0.00,390.00 L81.00,390.33 L81.00,240.33 L82.00,239.33 L232.33,239.33 L233.33,240.33 L233.33,390.33 L314.33,390.33 L314.33,0.33 L233.33,0.67 L233.33,168.33 L232.33,169.00 L81.33,168.67 L81.00,0.67Z "/></svg></span></div>
+<script src="../vendor/gsap.min.js"></script>
+<script src="../vendor/ScrollTrigger.min.js"></script>
+<script src="../vendor/SplitText.min.js"></script>
+<script>
+(function(){
+  var $=function(s,r){return (r||document).querySelector(s)};
+  var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+  var HOT='.btn,.chair,.top nav a';
+  document.addEventListener('mouseover',function(e){var t=e.target.closest&&e.target.closest(HOT);if(t)t.classList.add('is-hot')});
+  document.addEventListener('mouseout',function(e){var t=e.target.closest&&e.target.closest(HOT);if(t&&!t.contains(e.relatedTarget))t.classList.remove('is-hot')});
+  if(!window.gsap||!window.ScrollTrigger)return;
+  gsap.registerPlugin(ScrollTrigger);
+  var hasSplit=!!window.SplitText;if(hasSplit)gsap.registerPlugin(SplitText);
+  Promise.race([document.fonts.ready,new Promise(function(r){setTimeout(r,1500)})]).then(function(){
+    var mm=gsap.matchMedia();
+    mm.add({motion:'(prefers-reduced-motion: no-preference)',wide:'(min-width: 861px)'},function(ctx){
+      if(!ctx.conditions.motion)return;
+      var wide=ctx.conditions.wide;
+      function lines(el,st,delay){
+        if(!el)return;
+        if(!hasSplit){gsap.from(el,{y:40,autoAlpha:0,duration:1,scrollTrigger:st});return}
+        SplitText.create(el,{type:'lines',mask:'lines',autoSplit:true,onSplit:function(s){return gsap.from(s.lines,{yPercent:105,duration:1,ease:'power4.out',stagger:.1,delay:delay||0,scrollTrigger:st})}});
+      }
+      gsap.from('.hero h1 .hrow',{yPercent:100,clipPath:'inset(0 0 100% 0)',duration:1.1,stagger:.12,ease:'power4.out',delay:.1});
+      $$('.split').forEach(function(el){lines(el,{trigger:el,start:'top 86%'})});
+      gsap.from('.hero [data-in]',{y:20,autoAlpha:0,duration:.8,stagger:.1,delay:.6});
+
+      /* the pole turns for ever, faster as you scroll */
+      var pole=gsap.to('.pole .stripes',{yPercent:33.333,duration:3,repeat:-1,ease:'none'});
+      ScrollTrigger.create({start:0,end:'max',onUpdate:function(s){pole.timeScale(1+Math.min(5,Math.abs(s.getVelocity())/250))}});
+      gsap.ticker.add(function(){if(pole.timeScale()>1)pole.timeScale(Math.max(1,pole.timeScale()*.96))});
+      gsap.from('.pole',{scaleY:0,transformOrigin:'50% 0',duration:1.2,ease:'power4.out',delay:.2});
+      gsap.to('.hero h1 .hrow:first-child',{xPercent:-6,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}});
+      gsap.to('.hero h1 .hrow:not(:first-child)',{xPercent:5,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}});
+
+      /* split-flap: the next free chair flips through and lands */
+      function flip(){
+        $$('[data-flap]').forEach(function(el,i){
+          var final=el.dataset.flap,n={v:0};
+          gsap.fromTo(n,{v:0},{v:12+i*4,duration:1+i*.25,ease:'power2.out',onUpdate:function(){el.textContent=Math.floor(n.v)%10},onComplete:function(){el.textContent=final}});
+          gsap.fromTo(el,{rotationX:-90},{rotationX:0,duration:.25,repeat:4+i,ease:'none',transformPerspective:300});
+        });
+      }
+      ScrollTrigger.create({trigger:'.board',start:'top 80%',onEnter:flip,onEnterBack:flip});
+      gsap.from('.chair',{y:40,autoAlpha:0,duration:.7,stagger:.12,scrollTrigger:{trigger:'.chairs',start:'top 85%'}});
+      gsap.to('.chair.free .st i',{scale:1.5,duration:.8,yoyo:true,repeat:-1,ease:'sine.inOut'});
+
+      /* outlined band scrubs sideways */
+      gsap.fromTo('.band .r1',{xPercent:0},{xPercent:-50,ease:'none',scrollTrigger:{trigger:'.band',start:'top bottom',end:'bottom top',scrub:true}});
+
+      /* prices: leaders draw, prices tick up */
+      gsap.from('.plist .dots',{scaleX:0,duration:.9,stagger:.15,ease:'power3.inOut',scrollTrigger:{trigger:'.plist',start:'top 80%'}});
+      gsap.from('.plist h3,.plist strong,.plist p',{y:24,autoAlpha:0,duration:.6,stagger:.05,scrollTrigger:{trigger:'.plist',start:'top 82%'}});
+
+      /* styles: a sideways run, pinned on wide screens */
+      var track=$('.track');
+      if(wide){
+        gsap.to(track,{x:function(){return -(track.scrollWidth-innerWidth)},ease:'none',scrollTrigger:{trigger:'.styles',start:'top top',end:function(){return '+='+(track.scrollWidth-innerWidth)},pin:true,scrub:1,invalidateOnRefresh:true}});
+      }
+      gsap.from('.style .art svg',{scale:1.25,duration:1.2,stagger:.08,ease:'power3.out',scrollTrigger:{trigger:'.styles',start:'top 70%'}});
+      $$('.style .art svg').forEach(function(s,i){gsap.to(s,{rotation:i%2?3:-3,y:-6,duration:2+i*.3,yoyo:true,repeat:-1,ease:'sine.inOut',transformOrigin:'50% 100%'})});
+
+      /* the dashboard: switches flip and the board time changes, on a loop */
+      var sws=$$('[data-sw]'),time=$('[data-time]');
+      var dl=gsap.timeline({repeat:-1,paused:true,repeatDelay:.6});
+      dl.add(function(){sws[2].classList.add('on')},.8).add(function(){time.textContent='5:00 pm'},1.6)
+        .add(function(){sws[0].classList.remove('on')},2.6).add(function(){time.textContent='5:15 pm'},3.2)
+        .add(function(){sws[0].classList.add('on');sws[2].classList.remove('on');time.textContent='4:30 pm'},4.6).to({},{duration:.6});
+      ScrollTrigger.create({trigger:'.phone',start:'top 85%',end:'bottom 15%',onToggle:function(s){s.isActive?dl.play():dl.pause()}});
+      gsap.from('.phone',{y:80,rotation:-6,autoAlpha:0,duration:1,ease:'power3.out',scrollTrigger:{trigger:'.phone',start:'top 85%'}});
+      gsap.from('.dash .pts li',{x:40,autoAlpha:0,duration:.6,stagger:.12,scrollTrigger:{trigger:'.dash .pts',start:'top 88%'}});
+
+      gsap.from('.visit .box',{y:40,autoAlpha:0,duration:.6,stagger:.1,scrollTrigger:{trigger:'.visit .grid',start:'top 88%'}});
+      gsap.from('footer .big',{yPercent:70,duration:1.2,ease:'power4.out',scrollTrigger:{trigger:'footer',start:'top 92%'}});
+    });
+  });
+})();
+</script>
+<script src="../preview.js" defer></script>
+</body>
+</html>

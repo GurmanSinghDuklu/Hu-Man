@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Move Well Physio, Manchester (concept site)</title>
+<meta name="description" content="Concept website for Move Well Physio, a sample physiotherapy clinic in Manchester: where it hurts, treatments with prices and exercise plans by message.">
+<meta name="robots" content="noindex,nofollow">
+<style>
+@font-face{font-family:'Unbounded';font-style:normal;font-weight:800;font-display:swap;src:url(../fonts/unbounded-latin-800-normal.woff2) format('woff2')}
+@font-face{font-family:'Figtree';font-style:normal;font-weight:400;font-display:swap;src:url(../fonts/figtree-latin-400-normal.woff2) format('woff2')}
+@font-face{font-family:'Figtree';font-style:normal;font-weight:500;font-display:swap;src:url(../fonts/figtree-latin-500-normal.woff2) format('woff2')}
+@font-face{font-family:'Figtree';font-style:normal;font-weight:700;font-display:swap;src:url(../fonts/figtree-latin-700-normal.woff2) format('woff2')}
+</style>
+<style>
+:root{--bg:#0F2A24;--bg2:#143630;--line:#2B4C45;--paper:#ECF5EF;--mute:#B5CCC2;--lime:#A6E36E;--ink:#0F2A24;--pad:clamp(16px,4vw,64px);--disp:'Unbounded','Arial Black',system-ui,sans-serif;--body:'Figtree',system-ui,-apple-system,'Segoe UI',Arial,sans-serif}
+*{box-sizing:border-box;margin:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--paper);font-family:var(--body);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.page{overflow-x:clip}
+a{color:var(--lime)}
+a:focus-visible,button:focus-visible{outline:3px solid var(--lime);outline-offset:3px}
+.disp{font-family:var(--disp);font-weight:800;line-height:.98;letter-spacing:-.025em}
+.label{font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--lime)}
+.wrap{padding-inline:var(--pad);max-width:1400px;margin-inline:auto}
+.btn{display:inline-flex;align-items:center;gap:10px;font-weight:700;font-size:16px;text-decoration:none;padding:15px 24px;border-radius:99px;border:2px solid var(--paper);color:var(--paper);background:transparent;cursor:pointer;font-family:inherit;transition:background .2s,color .2s,transform .2s;white-space:nowrap}
+.btn.lime{background:var(--lime);border-color:var(--lime);color:var(--ink)}
+.btn.is-hot{background:var(--paper);border-color:var(--paper);color:var(--ink);transform:translateY(-2px)}
+
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:16px}
+.top{position:sticky;top:0;z-index:40;background:rgba(15,42,36,.92);border-bottom:1px solid var(--line)}
+.logo{display:flex;align-items:center;gap:10px;color:var(--paper);text-decoration:none;font-family:var(--disp);font-weight:800;font-size:17px;letter-spacing:-.02em}
+.logo svg{width:34px;height:34px;flex:none}
+.minitag{font-family:var(--body);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);background:var(--lime);padding:3px 8px;border-radius:99px}
+.top nav{display:flex;align-items:center;gap:26px}
+.top nav a:not(.btn){color:var(--paper);text-decoration:none;font-weight:500;font-size:15px}
+.top nav a:not(.btn).is-hot{color:var(--lime)}
+.top .btn{padding:10px 16px;font-size:15px}
+.narrow{display:none}
+@media (max-width:900px){.top nav a:not(.btn){display:none}}
+@media (max-width:520px){.wide{display:none}.narrow{display:inline}.logo .nm{display:none}}
+
+/* hero */
+.hero{text-align:center;padding-block:clamp(36px,6vw,80px) clamp(56px,7vw,100px);position:relative}
+.hero h1{font-size:clamp(46px,9vw,150px);position:relative;z-index:2}
+.hero h1 .l{color:var(--lime)}
+.hero .lede{max-width:34em;margin:24px auto 0;color:var(--mute);font-size:clamp(17px,1.5vw,21px)}
+.hero .cta{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:28px}
+.stage{position:relative;width:min(100%,640px);aspect-ratio:16/10;margin:clamp(-30px,-2vw,-10px) auto 0}
+.stage svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.slot{position:absolute;right:-2%;bottom:12%;background:var(--paper);color:var(--ink);border-radius:18px;padding:12px 16px;text-align:left;font-size:14px;line-height:1.3;box-shadow:0 0 0 3px var(--lime)}
+.slot strong{display:block;font-size:16px}
+.slot i{display:inline-block;width:8px;height:8px;border-radius:50%;background:#2F8F4E;margin-right:6px}
+@media (max-width:640px){.slot{right:0;bottom:-8px}}
+
+/* band */
+.band{background:var(--lime);color:var(--ink);overflow:hidden;padding-block:16px}
+.band .r{display:flex;width:max-content;white-space:nowrap}
+.band span{font-family:var(--disp);font-weight:800;font-size:clamp(34px,5vw,80px);letter-spacing:-.03em;padding-right:.4em;display:flex;align-items:center;gap:.4em}
+.band span::after{content:'';width:.55em;height:.55em;border-radius:50%;border:.12em solid var(--ink)}
+
+/* body map */
+.sec{padding-block:clamp(64px,9vw,140px)}
+.sec h2.disp{font-size:clamp(36px,5.4vw,84px)}
+.sec .intro{color:var(--mute);max-width:34em;margin-top:16px;font-size:18px}
+.mapgrid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(28px,5vw,80px);align-items:center;margin-top:48px}
+.body{position:relative;width:min(100%,380px);margin-inline:auto;aspect-ratio:3/5}
+.body svg{position:absolute;inset:0;width:100%;height:100%}
+.spot{fill:var(--lime);opacity:.35;transition:opacity .25s}
+.spot.on{opacity:1}
+.pulse{fill:none;stroke:var(--lime);stroke-width:2;opacity:0}
+.areas-list{display:flex;flex-wrap:wrap;gap:10px;list-style:none;padding:0}
+.areas-list button{font:inherit;font-weight:700;font-size:15px;padding:10px 18px;border-radius:99px;border:2px solid var(--line);background:transparent;color:var(--paper);cursor:pointer;transition:background .2s,border-color .2s,color .2s}
+.areas-list button[aria-pressed="true"],.areas-list button.is-hot{background:var(--lime);border-color:var(--lime);color:var(--ink)}
+.panel{margin-top:24px;background:var(--bg2);border:1px solid var(--line);border-radius:24px;padding:26px;min-height:220px}
+.panel h3{font-family:var(--disp);font-weight:800;font-size:clamp(24px,2.4vw,34px);letter-spacing:-.02em}
+.panel p{color:var(--mute);margin-top:10px}
+.panel ul{margin-top:14px;padding:0;list-style:none;display:grid;gap:6px}
+.panel li{display:flex;gap:10px}
+.panel li::before{content:'';flex:none;width:14px;height:14px;margin-top:5px;border-radius:50%;border:3px solid var(--lime)}
+@media (max-width:860px){.mapgrid{grid-template-columns:1fr}.body{width:min(70%,300px)}}
+
+/* treatments */
+.treat{background:var(--paper);color:var(--ink)}
+.treat .label{color:#2F6B2A}
+.treat .intro{color:#3D5A52}
+.tlist{list-style:none;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:48px}
+.tcard{border-radius:28px;background:#fff;border:2px solid var(--ink);padding:26px;display:flex;flex-direction:column;gap:12px;transition:transform .3s,background .3s}
+.tcard.is-hot{transform:translateY(-6px);background:#F4FBEA}
+.tcard .ring{width:72px;height:72px}
+.tcard h3{font-family:var(--disp);font-weight:800;font-size:26px;letter-spacing:-.02em}
+.tcard p{color:#3D5A52}
+.tcard .meta{margin-top:auto;display:flex;justify-content:space-between;align-items:baseline;border-top:1.5px solid #CFE0D7;padding-top:14px;font-weight:700}
+.tcard .meta strong{font-family:var(--disp);font-size:36px}
+@media (max-width:900px){.tlist{grid-template-columns:1fr}}
+
+/* plan */
+.plan{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(28px,5vw,80px);align-items:center}
+.phone{width:min(100%,330px);margin-inline:auto;border-radius:44px;border:10px solid #22423b;background:#F6FAF7;color:var(--ink);padding:18px 14px 22px;display:grid;gap:10px}
+.phone .hd{display:flex;align-items:center;gap:10px;padding-bottom:10px;border-bottom:1px solid #DCE8E2}
+.phone .hd i{width:34px;height:34px;border-radius:50%;background:var(--bg);display:grid;place-items:center}
+.phone .hd b{font-size:15px}
+.phone .hd small{display:block;color:#4C665E;font-size:12px}
+.msg{background:#fff;border:1px solid #DCE8E2;border-radius:16px 16px 16px 4px;padding:12px 14px;font-size:14px}
+.msg.me{background:var(--lime);border-color:var(--lime);border-radius:16px 16px 4px 16px;justify-self:end}
+.ex{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;font-size:14px;padding:8px 0;border-bottom:1px dashed #DCE8E2}
+.ex .tick{width:22px;height:22px;border-radius:50%;border:2px solid #9BB5AA;display:grid;place-items:center}
+.ex.done .tick{background:#2F8F4E;border-color:#2F8F4E}
+.ex.done .tick::after{content:'';width:8px;height:5px;border-left:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(-45deg) translate(1px,-1px)}
+.ex small{color:#4C665E}
+.plan ul.pts{list-style:none;padding:0;margin-top:26px;display:grid;gap:16px}
+.plan ul.pts li{padding-left:28px;position:relative;color:var(--mute)}
+.plan ul.pts li::before{content:'';position:absolute;left:0;top:.35em;width:16px;height:16px;border-radius:50%;border:3px solid var(--lime)}
+.plan ul.pts strong{color:var(--paper)}
+@media (max-width:860px){.plan{grid-template-columns:1fr}}
+
+/* visit */
+.visit{border-top:1px solid var(--line)}
+.vgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:40px}
+.vbox{border:1px solid var(--line);border-radius:24px;padding:24px}
+.vbox h3{font-family:var(--disp);font-weight:800;font-size:22px;margin-bottom:12px}
+.vbox ul{list-style:none;padding:0;display:grid;gap:8px;color:var(--mute)}
+.vbox li{display:flex;justify-content:space-between;gap:10px}
+@media (max-width:860px){.vgrid{grid-template-columns:1fr}}
+footer{padding-block:40px;border-top:1px solid var(--line);text-align:center}
+footer .big{font-family:var(--disp);font-weight:800;font-size:clamp(56px,13vw,220px);letter-spacing:-.05em;line-height:.9;color:var(--lime)}
+footer .bot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;color:var(--mute);font-size:14px;margin-top:22px}
+
+.badge{position:fixed;z-index:90;left:max(12px, env(safe-area-inset-left, 0px));bottom:max(12px, env(safe-area-inset-bottom, 0px));display:inline-flex;align-items:center;gap:8px;background:#121317;color:#EDECE6;border-radius:99px;padding:8px 14px 8px 11px;font-size:12px;font-weight:600;line-height:1.2;box-shadow:0 0 0 1.5px #EDECE6,0 10px 24px -8px rgba(18,19,23,.5);max-width:calc(100vw - 24px);pointer-events:none}
+.badge i{width:9px;height:9px;border-radius:50%;background:#FFD23F;flex:none}
+/* HU/MAN concept badge */
+.badge{display:flex;flex-wrap:wrap;align-items:center;gap:2px 12px;pointer-events:auto;border-radius:18px;line-height:1.3}
+.badge a{color:inherit;font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.badge a:focus-visible{outline:2px solid currentColor;outline-offset:3px;border-radius:3px}
+@media (max-width:640px){.badge{position:static;margin:24px max(16px,env(safe-area-inset-left,0px)) max(16px,env(safe-area-inset-bottom,0px));max-width:none;justify-content:center;text-align:center;border-radius:14px}footer{padding-bottom:26px!important}}
+
+.badge-made{display:inline-flex;align-items:center;gap:6px}
+.badge-logo{display:block;height:11px;width:auto;flex:none}
+.badge-logo path{animation:badge-logo-fade 14s linear infinite}
+@keyframes badge-logo-fade{0%{fill:#cea4ee}12.5%{fill:#93aee0}25%{fill:#4a9bb0}37.5%{fill:#edd1a8}50%{fill:#f8cea2}62.5%{fill:#e79569}75%{fill:#e85e8f}87.5%{fill:#db92db}100%{fill:#cea4ee}}
+@media (prefers-reduced-motion: reduce){.badge-logo path{animation-duration:14s!important;animation-iteration-count:infinite!important}}
+</style>
+</head>
+<body>
+<div class="page" id="top">
+<header class="top">
+ <div class="wrap">
+  <a class="logo" href="#top"><svg viewBox="0 0 34 34" aria-hidden="true"><circle cx="17" cy="17" r="16" fill="#A6E36E"/><path d="M9 22c3-8 13-8 16-12" stroke="#0F2A24" stroke-width="3.4" fill="none" stroke-linecap="round"/><circle cx="24" cy="9" r="3" fill="#0F2A24"/></svg><span class="nm">Move Well Physio</span><span class="minitag">Concept</span></a>
+  <nav aria-label="Main"><a href="#where">Where it hurts</a><a href="#treatments">Treatments</a><a href="#plan">Your plan</a><a href="#visit">Visit</a><a class="btn lime" href="#visit"><span class="wide">Request an assessment</span><span class="narrow">Book a call</span></a></nav>
+ </div>
+</header>
+
+<main>
+<section class="wrap hero" aria-labelledby="hero-title">
+ <p class="label" data-in>Physiotherapy in Manchester</p>
+ <h1 id="hero-title" class="disp" style="margin-top:16px">Back to <span class="l">moving well.</span></h1>
+ <div class="stage" aria-hidden="true">
+  <svg viewBox="0 0 640 400">
+   <circle class="orbit" cx="320" cy="210" r="170" fill="none" stroke="#2B4C45" stroke-width="2" stroke-dasharray="4 10"/>
+   <circle class="sat" cx="490" cy="210" r="8" fill="#A6E36E"/>
+   <path d="M120 360h400" stroke="#2B4C45" stroke-width="3" stroke-linecap="round"/>
+   <g id="fig" fill="none" stroke="#ECF5EF" stroke-width="16" stroke-linecap="round" stroke-linejoin="round">
+    <g id="hip" transform="translate(320 250)">
+     <g id="thighL"><path d="M0 0v58"/><g id="shinL" transform="translate(0 58)"><path d="M0 0v52"/></g></g>
+     <g id="thighR"><path d="M0 0v58" stroke="#A6E36E"/><g id="shinR" transform="translate(0 58)"><path d="M0 0v52" stroke="#A6E36E"/></g></g>
+     <g id="torso"><path d="M0 0v-88"/><circle cx="0" cy="-118" r="22" fill="#ECF5EF" stroke="none"/>
+      <g id="armL" transform="translate(0 -82)"><path d="M0 0v46"/><g id="foreL" transform="translate(0 46)"><path d="M0 0v40"/></g></g>
+      <g id="armR" transform="translate(0 -82)"><path d="M0 0v46" stroke="#A6E36E"/><g id="foreR" transform="translate(0 46)"><path d="M0 0v40" stroke="#A6E36E"/></g></g>
+     </g>
+    </g>
+   </g>
+  </svg>
+  <p class="slot"><strong>Next assessment</strong><i></i>Tomorrow, 9:15 am</p>
+ </div>
+ <p class="lede" data-in>Tell us where it hurts. We'll ring to book your assessment, then send your exercise plan by message.</p>
+ <div class="cta" data-in><a class="btn lime" href="#visit">Request an assessment</a><a class="btn" href="#where">Where does it hurt?</a></div>
+</section>
+
+<div class="band" aria-hidden="true"><div class="r"><span>Backs</span><span>Knees</span><span>Shoulders</span><span>Necks</span><span>Ankles</span><span>Sports injuries</span><span>Backs</span><span>Knees</span><span>Shoulders</span><span>Necks</span><span>Ankles</span><span>Sports injuries</span></div></div>
+
+<section class="wrap sec" id="where" aria-labelledby="where-title">
+ <p class="label">Where it hurts</p>
+ <h2 id="where-title" class="disp split">Pick the part that's sore.</h2>
+ <p class="intro">Each one tells you what we usually see and how a first session goes.</p>
+ <div class="mapgrid">
+  <div class="body" aria-hidden="true">
+   <svg viewBox="0 0 300 500">
+    <g fill="#1B423A"><circle cx="150" cy="52" r="34"/><rect x="100" y="96" width="100" height="160" rx="40"/><rect x="62" y="104" width="30" height="150" rx="15" transform="rotate(8 77 104)"/><rect x="208" y="104" width="30" height="150" rx="15" transform="rotate(-8 223 104)"/><rect x="106" y="236" width="40" height="230" rx="20"/><rect x="154" y="236" width="40" height="230" rx="20"/></g>
+    <g><circle class="spot" data-area="neck" cx="150" cy="96" r="13"/><circle class="pulse" data-pulse="neck" cx="150" cy="96" r="13"/>
+     <circle class="spot" data-area="shoulder" cx="96" cy="114" r="13"/><circle class="pulse" data-pulse="shoulder" cx="96" cy="114" r="13"/>
+     <circle class="spot" data-area="back" cx="150" cy="210" r="15"/><circle class="pulse" data-pulse="back" cx="150" cy="210" r="15"/>
+     <circle class="spot" data-area="knee" cx="174" cy="350" r="13"/><circle class="pulse" data-pulse="knee" cx="174" cy="350" r="13"/>
+     <circle class="spot" data-area="ankle" cx="126" cy="448" r="12"/><circle class="pulse" data-pulse="ankle" cx="126" cy="448" r="12"/></g>
+   </svg>
+  </div>
+  <div>
+   <ul class="areas-list">
+    <li><button type="button" data-pick="neck" aria-pressed="false">Neck</button></li>
+    <li><button type="button" data-pick="shoulder" aria-pressed="false">Shoulder</button></li>
+    <li><button type="button" data-pick="back" aria-pressed="true">Lower back</button></li>
+    <li><button type="button" data-pick="knee" aria-pressed="false">Knee</button></li>
+    <li><button type="button" data-pick="ankle" aria-pressed="false">Ankle</button></li>
+   </ul>
+   <div class="panel" aria-live="polite">
+    <h3 data-p="title">Lower back</h3>
+    <p data-p="text">Stiffness after sitting, or pain that runs into the leg. Often from desk work, lifting or a sudden twist.</p>
+    <ul data-p="list"><li>We check how you move and where it catches</li><li>Hands-on treatment to ease it</li><li>Three or four exercises to start at home</li></ul>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section class="treat" id="treatments" aria-labelledby="treat-title">
+ <div class="wrap sec">
+  <p class="label">Treatments and prices</p>
+  <h2 id="treat-title" class="disp split">Clear prices. No packages to sign up to.</h2>
+  <p class="intro">Pay per session. Most people come for an assessment and two or three follow-ups.</p>
+  <ul class="tlist">
+   <li class="tcard"><svg class="ring" viewBox="0 0 72 72" aria-hidden="true"><circle cx="36" cy="36" r="30" fill="none" stroke="#CFE0D7" stroke-width="8"/><circle data-fill="1" cx="36" cy="36" r="30" fill="none" stroke="#0F2A24" stroke-width="8" stroke-linecap="round" pathLength="1" stroke-dasharray="1" transform="rotate(-90 36 36)"/></svg><h3>Assessment</h3><p>An hour to find out what's going on, start treatment and leave with a plan.</p><div class="meta"><span>60 minutes</span><strong>£60</strong></div></li>
+   <li class="tcard"><svg class="ring" viewBox="0 0 72 72" aria-hidden="true"><circle cx="36" cy="36" r="30" fill="none" stroke="#CFE0D7" stroke-width="8"/><circle data-fill=".75" cx="36" cy="36" r="30" fill="none" stroke="#0F2A24" stroke-width="8" stroke-linecap="round" pathLength="1" stroke-dasharray="1" transform="rotate(-90 36 36)"/></svg><h3>Follow-up</h3><p>Treatment, a check on how the exercises are going, and the next step.</p><div class="meta"><span>45 minutes</span><strong>£45</strong></div></li>
+   <li class="tcard"><svg class="ring" viewBox="0 0 72 72" aria-hidden="true"><circle cx="36" cy="36" r="30" fill="none" stroke="#CFE0D7" stroke-width="8"/><circle data-fill=".75" cx="36" cy="36" r="30" fill="none" stroke="#0F2A24" stroke-width="8" stroke-linecap="round" pathLength="1" stroke-dasharray="1" transform="rotate(-90 36 36)"/></svg><h3>Sports massage</h3><p>Deep work on tight muscles, before an event or after a heavy week.</p><div class="meta"><span>45 minutes</span><strong>£40</strong></div></li>
+  </ul>
+ </div>
+</section>
+
+<section class="wrap sec plan" id="plan" aria-labelledby="plan-title">
+ <div>
+  <p class="label">Your plan</p>
+  <h2 id="plan-title" class="disp split">Your exercises, on your phone.</h2>
+  <ul class="pts">
+   <li><strong>Sent after each session.</strong> Each exercise, how many and how often.</li>
+   <li><strong>Tick them off.</strong> Your physio sees how the week went before you come back.</li>
+   <li><strong>Ask between visits.</strong> A message reaches the clinic, not a call centre.</li>
+  </ul>
+ </div>
+ <div class="phone" aria-hidden="true">
+  <div class="hd"><i><svg viewBox="0 0 34 34" width="22" height="22"><path d="M9 22c3-8 13-8 16-12" stroke="#A6E36E" stroke-width="3.4" fill="none" stroke-linecap="round"/></svg></i><div><b>Move Well Physio</b><small>Your plan · week 1</small></div></div>
+  <p class="msg">Morning! Here's this week. Little and often is the goal.</p>
+  <div class="ex done"><span class="tick"></span><span>Bridges<br><small>3 x 10</small></span><span>Mon</span></div>
+  <div class="ex"><span class="tick"></span><span>Cat and camel<br><small>2 x 8, slow</small></span><span>Tue</span></div>
+  <div class="ex"><span class="tick"></span><span>Knee hugs<br><small>30 seconds each side</small></span><span>Wed</span></div>
+  <p class="msg me">Done! Bit stiff after the second set.</p>
+ </div>
+</section>
+
+<section class="wrap sec visit" id="visit" aria-labelledby="visit-title">
+ <p class="label">Visit the clinic</p>
+ <h2 id="visit-title" class="disp split">Manchester, M4.</h2>
+ <div class="vgrid">
+  <div class="vbox"><h3>Opening hours</h3><ul><li><span>Mon to Thu</span><span>7am to 8pm</span></li><li><span>Friday</span><span>7am to 6pm</span></li><li><span>Saturday</span><span>8am to 1pm</span></li></ul></div>
+  <div class="vbox"><h3>Request an assessment</h3><ul><li><span>Phone</span><a href="tel:01614960315">0161 496 0315</a></li><li><span>Email</span><a href="mailto:hello@move-well-physio.example">Email us</a></li><li><span>We ring back</span><span>Same working day</span></li></ul></div>
+  <div class="vbox"><h3>Getting here</h3><ul><li><span>Tram</span><span>Shudehill, 4 min</span></li><li><span>Step-free</span><span>Ground floor</span></li></ul></div>
+ </div>
+</section>
+</main>
+
+<footer>
+ <div class="wrap">
+  <p class="big" aria-hidden="true">Move well.</p>
+  <div class="bot"><span>&copy; Move Well Physio</span><span>Concept · sample content</span></div>
+ </div>
+</footer>
+</div>
+<div class="badge" role="note"><a href="../../business-websites/">&larr; Back to HU/MAN</a><span class="badge-made">Made by <svg class="badge-logo" role="img" aria-label="Hu/man" viewBox="0 0 2054.33 438.67" focusable="false"><path fill-rule="evenodd" d="M928.67,21.00 L845.00,21.00 L843.67,22.00 L677.67,437.33 L678.33,438.33 L762.67,437.67 L928.67,23.00Z M1735.00,0.33 L1734.67,390.33 L1815.67,390.00 L1816.33,154.33 L1991.67,390.67 L2053.67,390.67 L2054.00,0.33 L1973.67,0.00 L1973.00,1.00 L1973.00,231.33 L1969.00,227.33 L1796.67,0.00Z M1488.00,0.33 L1355.67,390.00 L1443.67,390.67 L1469.33,312.33 L1471.00,310.67 L1612.33,310.67 L1614.33,313.33 L1639.67,390.67 L1727.33,390.67 L1728.00,390.00 L1718.00,360.00 L1711.00,341.67 L1695.00,292.00 L1688.00,273.67 L1672.00,224.00 L1665.00,205.67 L1596.00,0.33Z M1541.33,90.33 L1542.67,91.00 L1550.33,114.33 L1554.33,129.00 L1576.00,193.67 L1576.33,197.00 L1590.33,238.33 L1590.00,240.33 L1493.00,240.00 L1493.00,237.67Z M940.67,0.00 L940.67,390.67 L1020.67,390.67 L1021.67,389.67 L1022.00,134.67 L1139.67,291.00 L1149.67,291.00 L1152.67,288.00 L1268.00,139.33 L1268.33,390.33 L1349.33,390.00 L1348.67,0.00 L1271.67,0.00 L1269.67,1.00 L1147.00,168.67 L1138.00,158.33 L1018.67,0.00Z M345.33,0.33 L345.33,261.00 L348.33,281.00 L353.33,299.00 L361.33,317.00 L370.67,332.00 L382.67,347.00 L391.67,356.00 L412.67,372.00 L440.67,386.00 L469.67,394.00 L483.67,396.00 L508.67,397.00 L525.67,396.00 L548.33,392.33 L575.33,383.33 L590.67,375.67 L604.33,367.00 L614.67,359.00 L625.67,348.67 L635.67,337.00 L644.67,324.00 L649.67,315.00 L657.00,297.33 L660.67,285.00 L663.67,269.00 L665.00,250.00 L664.67,0.33 L584.00,0.33 L584.00,242.67 L581.33,264.33 L577.33,276.33 L572.33,286.33 L564.33,297.33 L555.00,306.67 L545.00,313.67 L533.67,319.00 L520.33,322.67 L508.33,323.67 L494.00,323.33 L484.00,321.33 L473.33,317.67 L460.33,310.67 L450.00,302.00 L443.00,294.33 L435.00,281.67 L428.67,264.67 L426.00,242.67 L426.00,0.67Z M0.33,0.33 L0.00,390.00 L81.00,390.33 L81.00,240.33 L82.00,239.33 L232.33,239.33 L233.33,240.33 L233.33,390.33 L314.33,390.33 L314.33,0.33 L233.33,0.67 L233.33,168.33 L232.33,169.00 L81.33,168.67 L81.00,0.67Z "/></svg></span></div>
+<script src="../vendor/gsap.min.js"></script>
+<script src="../vendor/ScrollTrigger.min.js"></script>
+<script src="../vendor/SplitText.min.js"></script>
+<script>
+(function(){
+  var $=function(s,r){return (r||document).querySelector(s)};
+  var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+  var AREAS={
+    neck:{t:'Neck',x:'Stiffness turning your head, or headaches that start at the base of the skull. Often from screens, phones or sleeping awkwardly.',l:['We check your posture and how your neck turns','Gentle hands-on work and mobility','Simple stretches for your desk']},
+    shoulder:{t:'Shoulder',x:'Pain reaching up or behind you, or a shoulder that clicks. Common in gym-goers, swimmers and people who lift at work.',l:['We test strength and range in every direction','Treatment to settle the pain','A band programme to rebuild strength']},
+    back:{t:'Lower back',x:'Stiffness after sitting, or pain that runs into the leg. Often from desk work, lifting or a sudden twist.',l:['We check how you move and where it catches','Hands-on treatment to ease it','Three or four exercises to start at home']},
+    knee:{t:'Knee',x:'Pain on stairs, after running or when you kneel. Sometimes a sports injury, sometimes it builds up over months.',l:['We look at how you walk, squat and land','Taping or treatment if it helps','A plan to get back to running or sport']},
+    ankle:{t:'Ankle',x:'A sprain that never quite settled, or an ankle that gives way. Very common after football and netball.',l:['We test balance and how the ankle holds','Treatment to calm the swelling','Balance work so it holds next time']}
+  };
+  var btns=$$('[data-pick]');
+  function pick(k){
+    var a=AREAS[k];if(!a)return;
+    btns.forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.pick===k))});
+    $$('.spot').forEach(function(s){s.classList.toggle('on',s.dataset.area===k)});
+    $('[data-p="title"]').textContent=a.t;$('[data-p="text"]').textContent=a.x;
+    $('[data-p="list"]').innerHTML=a.l.map(function(i){return '<li>'+i+'</li>'}).join('');
+    if(window.gsap&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
+      gsap.fromTo('.panel > *',{y:14,autoAlpha:0},{y:0,autoAlpha:1,duration:.45,stagger:.06,overwrite:true});
+      var p=$('[data-pulse="'+k+'"]');gsap.fromTo(p,{attr:{r:12},opacity:1},{attr:{r:40},opacity:0,duration:.9,ease:'power2.out'});
+    }
+  }
+  var userPicked=false;
+  btns.forEach(function(b){b.addEventListener('click',function(e){if(e.isTrusted)userPicked=true;pick(b.dataset.pick)})});
+  pick('back');
+
+  var HOT='.btn,.tcard,.top nav a,.areas-list button';
+  document.addEventListener('mouseover',function(e){var t=e.target.closest&&e.target.closest(HOT);if(t)t.classList.add('is-hot')});
+  document.addEventListener('mouseout',function(e){var t=e.target.closest&&e.target.closest(HOT);if(t&&!t.contains(e.relatedTarget))t.classList.remove('is-hot')});
+
+  if(!window.gsap||!window.ScrollTrigger)return;
+  gsap.registerPlugin(ScrollTrigger);
+  var hasSplit=!!window.SplitText;if(hasSplit)gsap.registerPlugin(SplitText);
+  Promise.race([document.fonts.ready,new Promise(function(r){setTimeout(r,1500)})]).then(function(){
+    var mm=gsap.matchMedia();
+    mm.add({motion:'(prefers-reduced-motion: no-preference)'},function(ctx){
+      if(!ctx.conditions.motion)return;
+      function lines(el,st,delay){
+        if(!el)return;
+        if(!hasSplit){gsap.from(el,{y:40,autoAlpha:0,duration:1,scrollTrigger:st});return}
+        SplitText.create(el,{type:'lines',mask:'lines',autoSplit:true,onSplit:function(s){return gsap.from(s.lines,{yPercent:110,duration:1,ease:'power4.out',stagger:.1,delay:delay||0,scrollTrigger:st})}});
+      }
+      lines($('.hero h1'),null,.1);
+      $$('.split').forEach(function(el){lines(el,{trigger:el,start:'top 86%'})});
+      gsap.from('.hero [data-in]',{y:20,autoAlpha:0,duration:.8,stagger:.1,delay:.5});
+      gsap.from('.slot',{scale:.6,autoAlpha:0,duration:.7,ease:'back.out(2)',delay:1.2});
+
+      /* the figure moves through a reach, a lunge and a squat, on a loop */
+      var J=['torso','armL','foreL','armR','foreR','thighL','shinL','thighR','shinR'];
+      var BASE={torso:[0,0],armL:[0,-82],foreL:[0,46],armR:[0,-82],foreR:[0,46],thighL:[0,0],shinL:[0,58],thighR:[0,0],shinR:[0,58]};
+      var poses=[
+        [0,10,0,-10,0,4,0,-4,0,0,0],
+        [0,170,10,-170,-10,6,0,-6,0,0,0],
+        [8,60,-30,-150,10,-60,80,30,-10,-10,14],
+        [18,-80,-40,80,40,-80,110,80,-110,0,40],
+        [-6,-160,0,160,0,20,-10,-30,40,0,0]
+      ];
+      var st={};J.forEach(function(j,n){st[j]=poses[0][n]});st.hx=0;st.hy=0;
+      var els={};J.concat(['hip']).forEach(function(j){els[j]=document.getElementById(j)});
+      function draw(){
+        J.forEach(function(j){els[j].setAttribute('transform','translate('+BASE[j][0]+' '+BASE[j][1]+') rotate('+st[j].toFixed(2)+')')});
+        els.hip.setAttribute('transform','translate('+(320+st.hx).toFixed(2)+' '+(250+st.hy).toFixed(2)+')');
+      }
+      var fig=gsap.timeline({repeat:-1,onUpdate:draw});
+      poses.slice(1).concat([poses[0]]).forEach(function(p,i){
+        var to={hx:p[9],hy:p[10]};J.forEach(function(j,n){to[j]=p[n]});
+        fig.to(st,Object.assign(to,{duration:1.1,ease:'power2.inOut'}),i*1.6);
+      });
+      fig.to({},{duration:.5});
+      gsap.to('.orbit',{rotation:360,svgOrigin:'320 210',duration:30,repeat:-1,ease:'none'});
+      var ang={a:0};gsap.to(ang,{a:Math.PI*2,duration:9,repeat:-1,ease:'none',onUpdate:function(){var s=$('.sat');s.setAttribute('cx',320+170*Math.cos(ang.a));s.setAttribute('cy',210+170*Math.sin(ang.a))}});
+
+      gsap.fromTo('.band .r',{xPercent:0},{xPercent:-50,ease:'none',scrollTrigger:{trigger:'.band',start:'top bottom',end:'bottom top',scrub:true}});
+
+      /* body map: the spots light up in turn until someone picks one */
+      gsap.from('.body svg > g:first-child > *',{scaleY:0,transformOrigin:'50% 0',duration:.8,stagger:.05,ease:'power3.out',scrollTrigger:{trigger:'.body',start:'top 80%'}});
+      var keys=Object.keys(AREAS),k=2;
+      var tour=gsap.timeline({repeat:-1,paused:true});
+      tour.to({},{duration:3.2,onComplete:function(){if(userPicked){tour.kill();return}k=(k+1)%keys.length;pick(keys[k])}});
+      ScrollTrigger.create({trigger:'.mapgrid',start:'top 75%',end:'bottom 25%',onToggle:function(s){s.isActive&&!userPicked?tour.play():tour.pause()}});
+
+      /* treatments: rings fill to show session length */
+      gsap.from('.tcard',{y:60,autoAlpha:0,duration:.8,stagger:.12,ease:'power3.out',scrollTrigger:{trigger:'.tlist',start:'top 85%'}});
+      $$('[data-fill]').forEach(function(c){gsap.fromTo(c,{strokeDashoffset:1},{strokeDashoffset:1-(+c.dataset.fill),duration:1.4,ease:'power2.out',scrollTrigger:{trigger:'.tlist',start:'top 80%'}})});
+      gsap.from('.treat',{clipPath:'inset(8% 4% 0 4% round 40px)',ease:'none',scrollTrigger:{trigger:'.treat',start:'top bottom',end:'top 30%',scrub:true}});
+
+      /* plan: messages arrive, exercises tick off one by one */
+      var exs=$$('.ex');
+      var pl=gsap.timeline({repeat:-1,repeatDelay:1.5,paused:true});
+      pl.set(exs.slice(1),{className:'ex'}).from('.phone .msg:first-of-type',{y:20,autoAlpha:0,duration:.4})
+        .add(function(){exs[1].classList.add('done')},1.4).add(function(){exs[2].classList.add('done')},2.4)
+        .fromTo('.phone .msg.me',{y:20,autoAlpha:0},{y:0,autoAlpha:1,duration:.4},3)
+        .to({},{duration:2}).add(function(){exs[1].classList.remove('done');exs[2].classList.remove('done')});
+      ScrollTrigger.create({trigger:'.phone',start:'top 85%',end:'bottom 15%',onToggle:function(s){s.isActive?pl.play():pl.pause()}});
+      gsap.from('.phone',{y:80,rotation:6,autoAlpha:0,duration:1,ease:'power3.out',scrollTrigger:{trigger:'.phone',start:'top 88%'}});
+      gsap.from('.plan .pts li',{x:-40,autoAlpha:0,duration:.6,stagger:.12,scrollTrigger:{trigger:'.plan .pts',start:'top 88%'}});
+
+      gsap.from('.vbox',{y:40,autoAlpha:0,duration:.6,stagger:.1,scrollTrigger:{trigger:'.vgrid',start:'top 88%'}});
+      gsap.from('footer .big',{scale:.6,autoAlpha:0,duration:1.1,ease:'back.out(1.6)',scrollTrigger:{trigger:'footer',start:'top 92%'}});
+    });
+  });
+})();
+</script>
+<script src="../preview.js" defer></script>
+</body>
+</html>

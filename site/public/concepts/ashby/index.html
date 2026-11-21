@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ashby Electrical, electricians in Leeds (concept site)</title>
+<meta name="description" content="Concept website for Ashby Electrical, a sample electrician in Leeds: fixed quotes from a photo, services with prices and the areas covered.">
+<meta name="robots" content="noindex,nofollow">
+<style>
+@font-face{font-family:'Barlow Condensed';font-style:normal;font-weight:800;font-display:swap;src:url(../fonts/barlow-condensed-latin-800-normal.woff2) format('woff2')}
+@font-face{font-family:'Barlow';font-style:normal;font-weight:400;font-display:swap;src:url(../fonts/barlow-latin-400-normal.woff2) format('woff2')}
+@font-face{font-family:'Barlow';font-style:normal;font-weight:600;font-display:swap;src:url(../fonts/barlow-latin-600-normal.woff2) format('woff2')}
+@font-face{font-family:'Barlow';font-style:normal;font-weight:700;font-display:swap;src:url(../fonts/barlow-latin-700-normal.woff2) format('woff2')}
+</style>
+<style>
+:root{--bg:#F3F6FA;--ink:#0B2545;--mid:#1D4F8A;--mute:#3D5470;--line:#D5DDE8;--amber:#FFB703;--tint:#E2E9F3;--pad:clamp(16px,4vw,64px);--disp:'Barlow Condensed','Arial Narrow',system-ui,sans-serif;--body:'Barlow',system-ui,-apple-system,'Segoe UI',Arial,sans-serif}
+*{box-sizing:border-box;margin:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.page{overflow-x:clip;background-image:linear-gradient(var(--tint) 1px,transparent 1px),linear-gradient(90deg,var(--tint) 1px,transparent 1px);background-size:40px 40px}
+a{color:var(--mid)}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--mid);outline-offset:3px}
+.disp{font-family:var(--disp);font-weight:800;text-transform:uppercase;line-height:.92;letter-spacing:-.01em}
+.label{font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--mid)}
+.wrap{padding-inline:var(--pad);max-width:1440px;margin-inline:auto}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.btn{display:inline-flex;align-items:center;gap:10px;font-weight:700;font-size:16px;text-decoration:none;padding:14px 22px;border:2px solid var(--ink);color:var(--ink);background:transparent;border-radius:6px;cursor:pointer;font-family:inherit;transition:background .2s,color .2s}
+.btn.amber{background:var(--amber);border-color:var(--amber);color:var(--ink)}
+.btn.is-hot{background:var(--ink);border-color:var(--ink);color:#fff}
+.btn svg{width:18px;height:18px;flex:none}
+
+/* header */
+.top{position:sticky;top:0;z-index:50;background:rgba(243,246,250,.94);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:14px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-family:var(--disp);font-weight:800;font-size:22px;text-transform:uppercase}
+.logo .mk{width:34px;height:34px;background:var(--ink);border-radius:6px;display:grid;place-items:center}
+.logo .mk svg{width:16px;height:20px}
+.minitag{font-family:var(--body);font-size:11px;font-weight:700;letter-spacing:.08em;background:var(--tint);color:var(--ink);padding:3px 7px;border-radius:4px}
+.top nav{display:flex;align-items:center;gap:26px}
+.top nav a:not(.btn){color:var(--ink);text-decoration:none;font-weight:600;font-size:15px}
+.top nav a:not(.btn).is-hot{color:var(--mid);text-decoration:underline;text-underline-offset:4px}
+.top .btn{padding:10px 16px;font-size:15px}
+@media (max-width:860px){.top nav a:not(.btn){display:none}}
+.top .btn{white-space:nowrap}.narrow-only{display:none}
+@media (max-width:520px){.wide-only{display:none}.narrow-only{display:inline}.logo{font-size:18px;gap:8px}.logo .mk{width:30px;height:30px}.top .btn{padding:9px 12px}}
+.prog{position:absolute;left:0;bottom:-1px;height:3px;width:100%;background:var(--amber);transform:scaleX(0);transform-origin:0 50%}
+
+/* hero */
+.hero{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:clamp(28px,4vw,72px);align-items:center;padding-block:clamp(40px,7vw,104px) clamp(48px,6vw,88px)}
+.pillnote{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:99px;padding:6px 14px 6px 8px;font-size:14px;font-weight:600}
+.pillnote i{width:10px;height:10px;border-radius:50%;background:var(--amber);box-shadow:0 0 0 4px rgba(255,183,3,.25)}
+.hero h1{font-size:clamp(46px,7.4vw,120px);margin-top:22px}
+.hero h1 .hl{color:var(--mid)}
+.hero .lede{font-size:clamp(18px,1.5vw,21px);color:var(--mute);max-width:32em;margin-top:22px}
+.hero .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.ticks{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:28px;padding:0;list-style:none;font-weight:600;font-size:15px}
+.ticks li{display:flex;align-items:center;gap:8px}
+.ticks li::before{content:'';width:16px;height:16px;border-radius:50%;background:var(--ink) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.4 6.8 11 12 5.4' fill='none' stroke='%23FFB703' stroke-width='2'/%3E%3C/svg%3E") center/16px no-repeat}
+.qcard{position:relative;background:#fff;border:2px solid var(--ink);border-radius:10px;padding:22px 22px 18px}
+.qcard h2{font-family:var(--disp);font-weight:800;text-transform:uppercase;font-size:26px;display:flex;justify-content:space-between;align-items:center}
+.qcard h2 small{font-family:var(--body);font-size:12px;font-weight:700;letter-spacing:.08em;background:var(--amber);padding:4px 8px;border-radius:4px}
+.qart{margin:14px 0;background:var(--tint);border-radius:8px;aspect-ratio:16/9;position:relative;overflow:hidden}
+.qart svg{position:absolute;inset:0;width:100%;height:100%}
+.qart .glow{fill:var(--amber);opacity:0}
+.steps-q{list-style:none;padding:0;display:grid;gap:10px}
+.steps-q li{display:grid;grid-template-columns:28px 1fr auto;gap:10px;align-items:center;font-size:15px;padding:10px 12px;border:1px solid var(--line);border-radius:8px}
+.steps-q b{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--tint);font-size:13px}
+.steps-q li.done b{background:var(--ink);color:var(--amber)}
+.steps-q em{font-style:normal;font-size:13px;font-weight:700;color:var(--mute)}
+.steps-q li.done em{color:var(--mid)}
+.qcard .sticky{position:absolute;right:-14px;top:-22px;background:var(--amber);font-family:var(--disp);font-weight:800;text-transform:uppercase;font-size:18px;line-height:1;padding:12px 14px;border-radius:6px;transform:rotate(5deg);border:2px solid var(--ink)}
+
+/* band */
+.band{border-block:2px solid var(--ink);background:var(--ink);color:#fff;overflow:hidden;padding-block:14px}
+.band .r{display:flex;white-space:nowrap;width:max-content}
+.band span{font-family:var(--disp);font-weight:800;text-transform:uppercase;font-size:clamp(30px,4.4vw,64px);line-height:1.05;padding-right:.5em;display:flex;align-items:center;gap:.5em}
+.band span::after{content:'';width:.42em;height:.6em;background:var(--amber);clip-path:polygon(55% 0,0 58%,42% 58%,30% 100%,100% 38%,56% 38%)}
+.band .r2 span{color:transparent;-webkit-text-stroke:1.5px #fff}
+
+/* sections */
+.sec{padding-block:clamp(64px,9vw,140px)}
+.sec h2.disp{font-size:clamp(40px,6vw,96px);margin-top:12px;max-width:12em}
+.sec .intro{color:var(--mute);max-width:36em;margin-top:18px;font-size:18px}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:48px;list-style:none;padding:0}
+.card{background:#fff;border:2px solid var(--ink);border-radius:10px;padding:24px;display:flex;flex-direction:column;gap:12px;transition:transform .3s,box-shadow .3s}
+.card.is-hot{transform:translateY(-6px);box-shadow:6px 6px 0 var(--ink)}
+.card .ic{width:64px;height:64px;border-radius:8px;background:var(--tint);display:grid;place-items:center}
+.card .ic svg{width:40px;height:40px;fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.card h3{font-family:var(--disp);font-weight:800;text-transform:uppercase;font-size:30px;line-height:1}
+.card p{color:var(--mute);font-size:16px}
+.card .price{margin-top:auto;padding-top:14px;border-top:1px dashed var(--line);display:flex;align-items:baseline;justify-content:space-between;font-weight:700}
+.card .price strong{font-family:var(--disp);font-size:40px;line-height:1}
+@media (max-width:900px){.cards{grid-template-columns:1fr}}
+
+/* how */
+.how{background:#fff;border-block:1px solid var(--line)}
+.track{position:relative;margin-top:56px}
+.track svg.wire{position:absolute;left:0;top:34px;width:100%;height:20px;overflow:visible}
+.track ol{list-style:none;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;position:relative}
+.track li b{width:68px;height:68px;border-radius:50%;background:var(--bg);border:2px solid var(--ink);display:grid;place-items:center;font-family:var(--disp);font-size:30px}
+.track li h3{font-family:var(--disp);text-transform:uppercase;font-size:30px;margin-top:18px}
+.track li p{color:var(--mute);margin-top:6px;max-width:22em}
+@media (max-width:760px){.track ol{grid-template-columns:1fr}.track svg.wire{display:none}}
+
+/* switch */
+.switch{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,5vw,80px);align-items:center}
+.room{position:relative;background:var(--ink);border-radius:12px;aspect-ratio:5/4;overflow:hidden}
+.room svg{position:absolute;inset:0;width:100%;height:100%}
+.room .light{opacity:.08;transition:opacity .5s}
+.room.on .light{opacity:1}
+.toggle{position:absolute;right:22px;bottom:22px;width:64px;height:96px;background:#fff;border-radius:10px;border:0;cursor:pointer;display:grid;place-items:center;box-shadow:inset 0 0 0 2px var(--line)}
+.toggle span{width:24px;height:44px;border-radius:5px;background:var(--line);position:relative}
+.toggle span::after{content:'';position:absolute;left:3px;right:3px;height:18px;bottom:3px;border-radius:3px;background:var(--ink);transition:bottom .25s}
+.room.on .toggle span::after{bottom:23px;background:var(--amber)}
+.covers{list-style:none;padding:0;margin-top:26px;display:grid;gap:12px}
+.covers li{display:flex;gap:14px;align-items:flex-start;padding:14px 16px;border-left:4px solid var(--amber);background:#fff;border-radius:0 8px 8px 0}
+.covers strong{display:block}
+.covers span{color:var(--mute);font-size:16px}
+@media (max-width:860px){.switch{grid-template-columns:1fr}}
+
+/* areas */
+.areas{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(28px,5vw,80px);align-items:center}
+.map{background:#fff;border:2px solid var(--ink);border-radius:12px;aspect-ratio:1/1;position:relative}
+.map svg{position:absolute;inset:0;width:100%;height:100%}
+.map text{font-family:var(--body);font-weight:700;font-size:15px;fill:var(--ink)}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px;list-style:none;padding:0}
+.chips li{border:2px solid var(--ink);border-radius:99px;padding:8px 16px;font-weight:700;background:#fff}
+.chips li.is-hot{background:var(--amber)}
+@media (max-width:860px){.areas{grid-template-columns:1fr}.map{max-width:520px}}
+
+/* quote form */
+.quote{background:var(--ink);color:#fff}
+.quote .label{color:var(--amber)}
+.quote .intro{color:#C9D5E6}
+.qform{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;margin-top:40px;max-width:900px}
+.qform label{display:grid;gap:6px;font-weight:700;font-size:15px}
+.qform .full{grid-column:1/-1}
+.qform input,.qform textarea{font:inherit;font-weight:400;padding:14px;border-radius:6px;border:2px solid #34507a;background:#10305a;color:#fff}
+.qform textarea{min-height:110px;resize:vertical}
+.drop{border:2px dashed #5d7aa6;border-radius:8px;padding:18px;display:flex;align-items:center;gap:14px;color:#C9D5E6;font-weight:600}
+.drop svg{width:34px;height:34px;flex:none;stroke:var(--amber);fill:none;stroke-width:2}
+.qform .row{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;gap:16px}
+.qform .note{font-size:14px;color:#C9D5E6}
+.sent{font-weight:700;color:var(--amber)}
+@media (max-width:700px){.qform{grid-template-columns:1fr}}
+
+/* footer */
+footer{background:#07182f;color:#C9D5E6;padding-block:56px 40px;font-size:15px}
+footer .cols{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:28px}
+footer h3{color:#fff;font-size:13px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px}
+footer ul{list-style:none;padding:0;display:grid;gap:4px}
+footer .big{font-family:var(--disp);font-weight:800;text-transform:uppercase;font-size:clamp(48px,9vw,150px);color:#fff;line-height:.9;margin-top:40px}
+footer .big em{font-style:normal;color:var(--amber)}
+footer .bot{display:flex;justify-content:space-between;gap:16px;border-top:1px solid #1e3a60;margin-top:30px;padding-top:18px}
+footer a{color:#fff}
+@media (max-width:860px){footer .cols{grid-template-columns:1fr 1fr}}
+
+.badge{position:fixed;z-index:90;left:max(12px, env(safe-area-inset-left, 0px));bottom:max(12px, env(safe-area-inset-bottom, 0px));display:inline-flex;align-items:center;gap:8px;background:#121317;color:#EDECE6;border-radius:99px;padding:8px 14px 8px 11px;font-size:12px;font-weight:600;line-height:1.2;box-shadow:0 0 0 1.5px #EDECE6,0 10px 24px -8px rgba(18,19,23,.5);max-width:calc(100vw - 24px);pointer-events:none}
+.badge i{width:9px;height:9px;border-radius:50%;background:#FFD23F;flex:none}
+/* HU/MAN concept badge */
+.badge{display:flex;flex-wrap:wrap;align-items:center;gap:2px 12px;pointer-events:auto;border-radius:18px;line-height:1.3}
+.badge a{color:inherit;font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.badge a:focus-visible{outline:2px solid currentColor;outline-offset:3px;border-radius:3px}
+@media (max-width:640px){.badge{position:static;margin:24px max(16px,env(safe-area-inset-left,0px)) max(16px,env(safe-area-inset-bottom,0px));max-width:none;justify-content:center;text-align:center;border-radius:14px}footer{padding-bottom:26px!important}}
+
+.badge-made{display:inline-flex;align-items:center;gap:6px}
+.badge-logo{display:block;height:11px;width:auto;flex:none}
+.badge-logo path{animation:badge-logo-fade 14s linear infinite}
+@keyframes badge-logo-fade{0%{fill:#cea4ee}12.5%{fill:#93aee0}25%{fill:#4a9bb0}37.5%{fill:#edd1a8}50%{fill:#f8cea2}62.5%{fill:#e79569}75%{fill:#e85e8f}87.5%{fill:#db92db}100%{fill:#cea4ee}}
+@media (prefers-reduced-motion: reduce){.badge-logo path{animation-duration:14s!important;animation-iteration-count:infinite!important}}
+@media (prefers-reduced-motion:reduce){.prog{display:none}}
+@media (max-width:860px){.hero{grid-template-columns:1fr}.qcard .sticky{right:8px}}
+</style>
+</head>
+<body>
+<div class="page" id="top">
+<header class="top">
+ <div class="wrap">
+  <a class="logo" href="#top"><span class="mk"><svg viewBox="0 0 16 20" aria-hidden="true"><path d="M9.5 0 1 11.5h6L5.5 20 15 7.8H9Z" fill="#FFB703"/></svg></span>Ashby Electrical<span class="minitag">Concept</span></a>
+  <nav aria-label="Main">
+   <a href="#services">Services</a><a href="#how">How it works</a><a href="#areas">Areas</a>
+   <a class="btn amber" href="#quote"><span class="wide-only">Get a fixed quote</span><span class="narrow-only">Get a quote</span></a>
+  </nav>
+ </div>
+ <div class="prog" aria-hidden="true"></div>
+</header>
+
+<main>
+<section class="wrap hero" aria-labelledby="hero-title">
+ <div>
+  <p class="pillnote" data-in><i></i>Electricians in Leeds</p>
+  <h1 id="hero-title" class="disp">Certified electricians. <span class="hl">Fixed quotes</span> within 24 hours.</h1>
+  <p class="lede" data-in>Tell us about the job and send a photo. We reply with a fixed price, not a guess.</p>
+  <div class="cta" data-in>
+   <a class="btn amber" href="#quote">Get a fixed quote</a>
+   <a class="btn" href="tel:01134960418"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2Z"/></svg>0113 496 0418</a>
+  </div>
+  <ul class="ticks" data-in><li>Fully insured</li><li>Fixed prices</li><li>Tidy work</li></ul>
+ </div>
+ <aside class="qcard" aria-label="How a quote comes back" data-in>
+  <span class="sticky" aria-hidden="true">No guesses</span>
+  <h2>Your quote <small>Sample</small></h2>
+  <div class="qart" aria-hidden="true">
+   <svg viewBox="0 0 320 180">
+    <circle class="glow" cx="230" cy="70" r="46"/>
+    <g fill="none" stroke="#0B2545" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+     <path data-draw d="M40 150V40h110v110Z"/>
+     <path data-draw d="M52 56h86M52 76h86"/>
+     <path data-draw d="M60 92v40M80 92v40M100 92v40M120 92v40"/>
+     <path data-draw d="M150 70c30 0 40-36 80-30"/>
+     <path data-draw d="M216 92c0-16-10-22-10-36a24 24 0 0 1 48 0c0 14-10 20-10 36Z"/>
+     <path data-draw d="M218 100h24M222 108h16"/>
+    </g>
+    <g fill="#FFB703"><rect class="fuse" x="56" y="96" width="8" height="14" rx="2"/><rect class="fuse" x="76" y="96" width="8" height="14" rx="2"/><rect class="fuse" x="96" y="96" width="8" height="14" rx="2"/><rect class="fuse" x="116" y="96" width="8" height="14" rx="2"/></g>
+   </svg>
+  </div>
+  <ol class="steps-q">
+   <li class="done"><b>1</b><span>Job and photo received</span><em>9:02 am</em></li>
+   <li class="done"><b>2</b><span>Looked at by an electrician</span><em>11:40 am</em></li>
+   <li><b>3</b><span>Fixed price sent to you</span><em>Within 24 hours</em></li>
+  </ol>
+ </aside>
+</section>
+
+<div class="band" aria-hidden="true">
+ <div class="r r1"><span>Rewires</span><span>Consumer units</span><span>EV chargers</span><span>Safety inspections</span><span>Lighting</span><span>Fault finding</span><span>Rewires</span><span>Consumer units</span><span>EV chargers</span><span>Safety inspections</span><span>Lighting</span><span>Fault finding</span></div>
+ <div class="r r2"><span>Fixed prices</span><span>Leeds</span><span>Bradford</span><span>Wakefield</span><span>Harrogate</span><span>Fixed prices</span><span>Leeds</span><span>Bradford</span><span>Wakefield</span><span>Harrogate</span></div>
+</div>
+
+<section class="wrap sec" id="services" aria-labelledby="svc-title">
+ <p class="label">Services and prices</p>
+ <h2 id="svc-title" class="disp split">Prices on the page, before you call.</h2>
+ <p class="intro">Every job gets a fixed price in writing. These are where the common ones start.</p>
+ <ul class="cards">
+  <li class="card">
+   <span class="ic" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M8 32V12l12-6 12 6v20Z"/><path d="m15 21 4 4 7-8"/></svg></span>
+   <h3>Safety inspection</h3>
+   <p>A full check of your wiring, sockets and board, with a written report you can keep.</p>
+   <div class="price"><span>From</span><strong>£<span data-count="120">120</span></strong></div>
+  </li>
+  <li class="card">
+   <span class="ic" aria-hidden="true"><svg viewBox="0 0 40 40"><rect x="7" y="8" width="26" height="24" rx="2"/><path d="M12 16h16M14 21v6M20 21v6M26 21v6"/></svg></span>
+   <h3>Consumer unit upgrade</h3>
+   <p>Swap an old fuse box for a modern board, tested and certified on the day.</p>
+   <div class="price"><span>Price</span><strong>Fixed quote</strong></div>
+  </li>
+  <li class="card">
+   <span class="ic" aria-hidden="true"><svg viewBox="0 0 40 40"><rect x="10" y="6" width="16" height="28" rx="3"/><path d="M26 14h4v10a3 3 0 0 0 6 0M17 14l-3 6h6l-3 6"/></svg></span>
+   <h3>EV charger install</h3>
+   <p>A home charger fitted on your drive or wall, with the paperwork done for you.</p>
+   <div class="price"><span>From</span><strong>£<span data-count="799">799</span></strong></div>
+  </li>
+ </ul>
+</section>
+
+<section class="how" id="how" aria-labelledby="how-title">
+ <div class="wrap sec">
+  <p class="label">How it works</p>
+  <h2 id="how-title" class="disp split">Three steps to a fixed price.</h2>
+  <div class="track">
+   <svg class="wire" viewBox="0 0 1000 20" preserveAspectRatio="none" aria-hidden="true"><path data-wire d="M34 10H966" fill="none" stroke="#FFB703" stroke-width="4" stroke-dasharray="1" pathLength="1"/></svg>
+   <ol>
+    <li><b>1</b><h3>Tell us the job</h3><p>A few words is enough: what's wrong, or what you'd like fitted.</p></li>
+    <li><b>2</b><h3>Send a photo</h3><p>A picture of the board, the socket or the wall saves a visit just to look.</p></li>
+    <li><b>3</b><h3>Get a fixed price</h3><p>One price in writing, within 24 hours. You decide, no pressure.</p></li>
+   </ol>
+  </div>
+ </div>
+</section>
+
+<section class="wrap sec switch" aria-labelledby="cover-title">
+ <div class="room on" id="room">
+  <svg viewBox="0 0 500 400" aria-hidden="true">
+   <defs><radialGradient id="lg" cx="50%" cy="20%" r="70%"><stop offset="0" stop-color="#FFB703" stop-opacity=".9"/><stop offset=".6" stop-color="#FFB703" stop-opacity=".12"/><stop offset="1" stop-color="#FFB703" stop-opacity="0"/></radialGradient></defs>
+   <path class="light" d="M210 80h80l150 320H60Z" fill="url(#lg)"/>
+   <path d="M250 0v62" stroke="#5d7aa6" stroke-width="3"/>
+   <path d="M222 62h56l-8 22h-40Z" fill="#E2E9F3"/>
+   <circle class="light" cx="250" cy="92" r="11" fill="#FFB703"/>
+   <path d="M60 330h380" stroke="#34507a" stroke-width="3"/>
+   <rect x="120" y="270" width="150" height="60" rx="6" fill="#1D4F8A"/><rect x="132" y="250" width="40" height="22" rx="4" fill="#34507a"/>
+   <rect x="300" y="210" width="70" height="120" rx="4" fill="#10305a"/><rect x="312" y="224" width="46" height="40" fill="#34507a"/>
+  </svg>
+  <button class="toggle" type="button" aria-pressed="true" aria-label="Light switch"><span></span></button>
+ </div>
+ <div>
+  <p class="label">What a fixed price covers</p>
+  <h2 id="cover-title" class="disp split">The price you agree is the price you pay.</h2>
+  <ul class="covers">
+   <li><div><strong>Parts and labour</strong><span>Everything on the quote, itemised.</span></div></li>
+   <li><div><strong>Testing and certificates</strong><span>Done before we leave, sent by email.</span></div></li>
+   <li><div><strong>Anything extra, asked first</strong><span>If we find something else, we stop and ask.</span></div></li>
+  </ul>
+ </div>
+</section>
+
+<section class="wrap sec areas" id="areas" aria-labelledby="areas-title">
+ <div>
+  <p class="label">Areas we cover</p>
+  <h2 id="areas-title" class="disp split">Based in Leeds, out across West Yorkshire.</h2>
+  <p class="intro">We work within about 30 minutes of our Leeds workshop.</p>
+  <ul class="chips"><li>Leeds</li><li>Bradford</li><li>Wakefield</li><li>Harrogate</li></ul>
+ </div>
+ <div class="map" aria-hidden="true">
+  <svg viewBox="0 0 400 400">
+   <circle cx="210" cy="210" r="150" fill="#E2E9F3"/>
+   <circle class="ring" cx="210" cy="210" r="150" fill="none" stroke="#1D4F8A" stroke-width="2" stroke-dasharray="6 8"/>
+   <g fill="none" stroke="#0B2545" stroke-width="2.5" stroke-linecap="round">
+    <path data-route pathLength="1" d="M210 210C180 200 140 196 110 200"/>
+    <path data-route pathLength="1" d="M210 210c10 30 24 60 40 84"/>
+    <path data-route pathLength="1" d="M210 210c4-36 8-70 6-108"/>
+   </g>
+   <g class="pin"><circle cx="210" cy="210" r="16" fill="#FFB703" stroke="#0B2545" stroke-width="3"/><text x="160" y="248">Leeds</text></g>
+   <g class="pin"><circle cx="110" cy="200" r="8" fill="#0B2545"/><text x="64" y="232">Bradford</text></g>
+   <g class="pin"><circle cx="250" cy="294" r="8" fill="#0B2545"/><text x="266" y="300">Wakefield</text></g>
+   <g class="pin"><circle cx="216" cy="102" r="8" fill="#0B2545"/><text x="128" y="92">Harrogate</text></g>
+  </svg>
+ </div>
+</section>
+
+<section class="quote" id="quote" aria-labelledby="quote-title">
+ <div class="wrap sec">
+  <p class="label">Get a fixed quote</p>
+  <h2 id="quote-title" class="disp split">Tell us the job. We'll reply within 24 hours.</h2>
+  <p class="intro">A name, a postcode and a few words is all we need. Add a photo if you can.</p>
+  <div class="qform" role="group" aria-label="Quote request (concept, nothing is sent)">
+   <label>Your name<input type="text" autocomplete="off" placeholder="Priya Sharma"></label>
+   <label>Postcode<input type="text" autocomplete="off" placeholder="LS6"></label>
+   <label class="full">What's the job?<textarea placeholder="Fuse box keeps tripping"></textarea></label>
+   <div class="drop full"><svg viewBox="0 0 34 34" aria-hidden="true"><rect x="3" y="7" width="28" height="22" rx="3"/><circle cx="17" cy="18" r="6"/><path d="M11 7l2-3h8l2 3"/></svg>Add a photo of the board or the problem</div>
+   <div class="row"><button class="btn amber" type="button" id="send">Send for a fixed quote</button><span class="note" id="note">Concept: this form doesn't send anything.</span></div>
+  </div>
+ </div>
+</section>
+</main>
+
+<footer>
+ <div class="wrap">
+  <div class="cols">
+   <div><h3>Ashby Electrical</h3><p>Electricians in Leeds. Fixed quotes from a photo, within 24 hours.</p></div>
+   <div><h3>Hours</h3><ul><li>Mon to Fri, 8am to 6pm</li><li>Sat, by arrangement</li></ul></div>
+   <div><h3>Areas</h3><ul><li>Leeds</li><li>Bradford</li><li>Wakefield</li><li>Harrogate</li></ul></div>
+   <div><h3>Contact</h3><ul><li><a href="tel:01134960418">0113 496 0418</a></li><li><a href="mailto:hello@ashby-electrical.example">hello@ashby-electrical.example</a></li></ul></div>
+  </div>
+  <p class="big" aria-hidden="true">Fixed <em>price.</em></p>
+  <div class="bot"><span>&copy; Ashby Electrical</span><span>Concept · sample content</span></div>
+ </div>
+</footer>
+</div>
+<div class="badge" role="note"><a href="../../business-websites/">&larr; Back to HU/MAN</a><span class="badge-made">Made by <svg class="badge-logo" role="img" aria-label="Hu/man" viewBox="0 0 2054.33 438.67" focusable="false"><path fill-rule="evenodd" d="M928.67,21.00 L845.00,21.00 L843.67,22.00 L677.67,437.33 L678.33,438.33 L762.67,437.67 L928.67,23.00Z M1735.00,0.33 L1734.67,390.33 L1815.67,390.00 L1816.33,154.33 L1991.67,390.67 L2053.67,390.67 L2054.00,0.33 L1973.67,0.00 L1973.00,1.00 L1973.00,231.33 L1969.00,227.33 L1796.67,0.00Z M1488.00,0.33 L1355.67,390.00 L1443.67,390.67 L1469.33,312.33 L1471.00,310.67 L1612.33,310.67 L1614.33,313.33 L1639.67,390.67 L1727.33,390.67 L1728.00,390.00 L1718.00,360.00 L1711.00,341.67 L1695.00,292.00 L1688.00,273.67 L1672.00,224.00 L1665.00,205.67 L1596.00,0.33Z M1541.33,90.33 L1542.67,91.00 L1550.33,114.33 L1554.33,129.00 L1576.00,193.67 L1576.33,197.00 L1590.33,238.33 L1590.00,240.33 L1493.00,240.00 L1493.00,237.67Z M940.67,0.00 L940.67,390.67 L1020.67,390.67 L1021.67,389.67 L1022.00,134.67 L1139.67,291.00 L1149.67,291.00 L1152.67,288.00 L1268.00,139.33 L1268.33,390.33 L1349.33,390.00 L1348.67,0.00 L1271.67,0.00 L1269.67,1.00 L1147.00,168.67 L1138.00,158.33 L1018.67,0.00Z M345.33,0.33 L345.33,261.00 L348.33,281.00 L353.33,299.00 L361.33,317.00 L370.67,332.00 L382.67,347.00 L391.67,356.00 L412.67,372.00 L440.67,386.00 L469.67,394.00 L483.67,396.00 L508.67,397.00 L525.67,396.00 L548.33,392.33 L575.33,383.33 L590.67,375.67 L604.33,367.00 L614.67,359.00 L625.67,348.67 L635.67,337.00 L644.67,324.00 L649.67,315.00 L657.00,297.33 L660.67,285.00 L663.67,269.00 L665.00,250.00 L664.67,0.33 L584.00,0.33 L584.00,242.67 L581.33,264.33 L577.33,276.33 L572.33,286.33 L564.33,297.33 L555.00,306.67 L545.00,313.67 L533.67,319.00 L520.33,322.67 L508.33,323.67 L494.00,323.33 L484.00,321.33 L473.33,317.67 L460.33,310.67 L450.00,302.00 L443.00,294.33 L435.00,281.67 L428.67,264.67 L426.00,242.67 L426.00,0.67Z M0.33,0.33 L0.00,390.00 L81.00,390.33 L81.00,240.33 L82.00,239.33 L232.33,239.33 L233.33,240.33 L233.33,390.33 L314.33,390.33 L314.33,0.33 L233.33,0.67 L233.33,168.33 L232.33,169.00 L81.33,168.67 L81.00,0.67Z "/></svg></span></div>
+<script src="../vendor/gsap.min.js"></script>
+<script src="../vendor/ScrollTrigger.min.js"></script>
+<script src="../vendor/SplitText.min.js"></script>
+<script>
+(function(){
+  var $=function(s,r){return (r||document).querySelector(s)};
+  var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+  var room=$('#room'),tog=$('.toggle');
+  function setLight(on){room.classList.toggle('on',on);tog.setAttribute('aria-pressed',String(on))}
+  tog.addEventListener('click',function(){setLight(!room.classList.contains('on'))});
+  $('#send').addEventListener('click',function(){var n=$('#note');n.textContent='Concept: nothing was sent. On the real site, this goes to the electrician.';n.classList.add('sent')});
+
+  /* hover state from JS, so the wall's synthetic pointer events show it too */
+  var HOT='.btn,.card,.top nav a,.chips li';
+  document.addEventListener('mouseover',function(e){var t=e.target.closest&&e.target.closest(HOT);if(t)t.classList.add('is-hot')});
+  document.addEventListener('mouseout',function(e){var t=e.target.closest&&e.target.closest(HOT);if(t&&!t.contains(e.relatedTarget))t.classList.remove('is-hot')});
+
+  if(!window.gsap||!window.ScrollTrigger)return;
+  gsap.registerPlugin(ScrollTrigger);
+  var hasSplit=!!window.SplitText;if(hasSplit)gsap.registerPlugin(SplitText);
+  gsap.to('.prog',{scaleX:1,ease:'none',scrollTrigger:{start:0,end:'max',scrub:true}});
+
+  var ready=Promise.race([document.fonts.ready,new Promise(function(r){setTimeout(r,1500)})]);
+  ready.then(function(){
+    var mm=gsap.matchMedia();
+    mm.add({motion:'(prefers-reduced-motion: no-preference)',wide:'(min-width: 861px)'},function(ctx){
+      if(!ctx.conditions.motion)return;
+      var wide=ctx.conditions.wide;
+      function lines(el,st,delay){
+        if(!el)return;
+        if(!hasSplit){gsap.from(el,{y:40,autoAlpha:0,duration:1,scrollTrigger:st});return}
+        SplitText.create(el,{type:'lines',mask:'lines',autoSplit:true,onSplit:function(s){return gsap.from(s.lines,{yPercent:110,duration:1,ease:'power4.out',stagger:.1,delay:delay||0,scrollTrigger:st})}});
+      }
+      lines($('.hero h1'),null,.15);
+      $$('.split').forEach(function(el){lines(el,{trigger:el,start:'top 85%'})});
+
+      /* hero: fade ins, quote card drawing and steps ticking */
+      gsap.from('.hero [data-in]',{y:24,autoAlpha:0,duration:.8,stagger:.1,delay:.45,ease:'power3.out'});
+      var art=$$('.qart [data-draw]');
+      art.forEach(function(p){var l=p.getTotalLength();gsap.set(p,{strokeDasharray:l,strokeDashoffset:l})});
+      var loop=gsap.timeline({repeat:-1,repeatDelay:1.2,delay:.9});
+      loop.to(art,{strokeDashoffset:0,duration:1.1,stagger:.12,ease:'power2.inOut'})
+          .from('.fuse',{scaleY:0,transformOrigin:'50% 100%',stagger:.08,duration:.3},'-=.6')
+          .to('.qart .glow',{opacity:.55,duration:.4,yoyo:true,repeat:3})
+          .add(function(){$$('.steps-q li')[2].classList.add('done')})
+          .to('.steps-q li:nth-child(3)',{backgroundColor:'#FFF4D6',duration:.3})
+          .to({},{duration:2.2})
+          .add(function(){$$('.steps-q li')[2].classList.remove('done')})
+          .to('.steps-q li:nth-child(3)',{backgroundColor:'#ffffff',duration:.3})
+          .to(art,{strokeDashoffset:function(i,t){return t.getTotalLength()},duration:.5,ease:'power1.in'});
+      gsap.to('.qcard .sticky',{rotation:-2,y:-4,duration:2.2,yoyo:true,repeat:-1,ease:'sine.inOut'});
+
+      /* bands scrub in opposite directions */
+      gsap.fromTo('.band .r1',{xPercent:0},{xPercent:-50,ease:'none',scrollTrigger:{trigger:'.band',start:'top bottom',end:'bottom top',scrub:true}});
+      gsap.fromTo('.band .r2',{xPercent:-50},{xPercent:0,ease:'none',scrollTrigger:{trigger:'.band',start:'top bottom',end:'bottom top',scrub:true}});
+
+      /* cards rise, prices count */
+      gsap.from('.card',{y:60,autoAlpha:0,duration:.8,stagger:.12,ease:'power3.out',scrollTrigger:{trigger:'.cards',start:'top 82%'}});
+      $$('[data-count]').forEach(function(el){var to=+el.dataset.count,o={v:0};gsap.to(o,{v:to,duration:1.2,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 90%'},onUpdate:function(){el.textContent=Math.round(o.v)}})});
+
+      /* how: the wire draws with the scroll, each step lights as it's reached */
+      gsap.fromTo('[data-wire]',{strokeDashoffset:1},{strokeDashoffset:0,ease:'none',scrollTrigger:{trigger:'.track',start:'top 75%',end:'bottom 55%',scrub:true}});
+      $$('.track li').forEach(function(li,i){
+        gsap.from(li,{y:30,autoAlpha:0,duration:.6,scrollTrigger:{trigger:'.track',start:'top '+(75-i*9)+'%'}});
+        gsap.to($('b',li),{backgroundColor:'#FFB703',duration:.3,scrollTrigger:{trigger:'.track',start:'top '+(68-i*9)+'%',toggleActions:'play none none reverse'}});
+      });
+
+      /* the light flicks on and off by itself while on screen */
+      var flick=gsap.timeline({repeat:-1,paused:true});
+      flick.add(function(){setLight(false)},1.6).add(function(){setLight(true)},2.4).to({},{duration:2.4});
+      ScrollTrigger.create({trigger:'#room',start:'top 80%',end:'bottom 20%',onToggle:function(s){s.isActive?flick.play():flick.pause()}});
+      gsap.from('.covers li',{x:-40,autoAlpha:0,stagger:.12,duration:.7,scrollTrigger:{trigger:'.covers',start:'top 85%'}});
+      gsap.from('#room',{clipPath:'inset(0 0 100% 0)',duration:1.2,ease:'power3.inOut',scrollTrigger:{trigger:'#room',start:'top 80%'}});
+
+      /* areas: routes draw out from Leeds, pins drop, ring turns */
+      gsap.fromTo('[data-route]',{strokeDasharray:1,strokeDashoffset:1},{strokeDashoffset:0,duration:1,stagger:.2,ease:'power2.out',scrollTrigger:{trigger:'.map',start:'top 75%'}});
+      gsap.from('.map .pin',{y:-24,autoAlpha:0,duration:.6,stagger:.15,ease:'bounce.out',scrollTrigger:{trigger:'.map',start:'top 70%'}});
+      gsap.to('.map .ring',{rotation:360,svgOrigin:'210 210',duration:40,repeat:-1,ease:'none'});
+      gsap.from('.chips li',{scale:.6,autoAlpha:0,stagger:.08,duration:.4,ease:'back.out(2)',scrollTrigger:{trigger:'.chips',start:'top 90%'}});
+
+      /* quote form: the fields fill themselves in while it's on screen */
+      var fields=$$('.qform input,.qform textarea');
+      var typing=gsap.timeline({repeat:-1,repeatDelay:2,paused:true});
+      fields.forEach(function(f){var full=f.getAttribute('placeholder'),o={n:0};f.dataset.full=full;typing.to(o,{n:full.length,duration:full.length*.05,ease:'none',onStart:function(){f.setAttribute('placeholder','')},onUpdate:function(){f.value=full.slice(0,Math.round(o.n))}})});
+      typing.to('.drop',{borderColor:'#FFB703',color:'#ffffff',duration:.3}).to('#send',{scale:.95,duration:.12,yoyo:true,repeat:1}).to({},{duration:1.6})
+            .add(function(){fields.forEach(function(f){f.value=''})}).to('.drop',{borderColor:'#5d7aa6',color:'#C9D5E6',duration:.3});
+      ScrollTrigger.create({trigger:'.qform',start:'top 85%',end:'bottom 10%',onToggle:function(s){s.isActive?typing.play():typing.pause()}});
+      var stopTyping=function(){typing.pause(0);typing.kill();fields.forEach(function(f){f.value='';f.setAttribute('placeholder',f.dataset.full)})};
+      fields.forEach(function(f){f.addEventListener('focus',stopTyping,{once:true})});
+
+      gsap.from('footer .big',{yPercent:60,autoAlpha:0,duration:1.1,ease:'power4.out',scrollTrigger:{trigger:'footer',start:'top 85%'}});
+      if(wide)gsap.to('.hero .qcard',{yPercent:-8,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}});
+    });
+  });
+})();
+</script>
+<script src="../preview.js" defer></script>
+</body>
+</html>
