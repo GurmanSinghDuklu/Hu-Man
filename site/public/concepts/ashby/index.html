@@ -170,6 +170,7 @@ footer a{color:#fff}
 @media (prefers-reduced-motion: reduce){.badge-logo path{animation-duration:14s!important;animation-iteration-count:infinite!important}}
 @media (prefers-reduced-motion:reduce){.prog{display:none}}
 @media (max-width:860px){.hero{grid-template-columns:1fr}.qcard .sticky{right:8px}}
+.ln-mask{padding-bottom:.14em;margin-bottom:-.14em}
 </style>
 </head>
 <body>
@@ -378,7 +379,7 @@ footer a{color:#fff}
       function lines(el,st,delay){
         if(!el)return;
         if(!hasSplit){gsap.from(el,{y:40,autoAlpha:0,duration:1,scrollTrigger:st});return}
-        SplitText.create(el,{type:'lines',mask:'lines',autoSplit:true,onSplit:function(s){return gsap.from(s.lines,{yPercent:110,duration:1,ease:'power4.out',stagger:.1,delay:delay||0,scrollTrigger:st})}});
+        SplitText.create(el,{type:'lines',mask:'lines',linesClass:'ln',autoSplit:true,onSplit:function(s){return gsap.from(s.lines,{yPercent:110,duration:1,ease:'power4.out',stagger:.1,delay:delay||0,scrollTrigger:st})}});
       }
       lines($('.hero h1'),null,.15);
       $$('.split').forEach(function(el){lines(el,{trigger:el,start:'top 85%'})});

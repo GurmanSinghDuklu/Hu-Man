@@ -366,7 +366,7 @@ export const businessSiteConcepts: PortfolioConcept[] = [
     field: 'Beauty',
     shows:
       'Built on Growth: a board of saved looks, prices, and booking with a stylist and a deposit online.',
-    alt: 'The Atelier Rose concept: “Book the look you’ve been saving.” in a fine, wide serif with “saving” in heavy rose capitals of the same face, over a pale drawn rose on blush pink.',
+    alt: 'The Atelier Rose concept: “Book the look you’ve been saving.” in a fine, wide serif with “saving” in heavy rose letters of the same face, over a pale drawn rose on blush pink.',
     domain: 'atelier-rose.example',
     device: 'phone',
   },

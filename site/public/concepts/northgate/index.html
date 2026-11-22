@@ -154,6 +154,7 @@ footer .bot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;f
 .badge-logo path{animation:badge-logo-fade 14s linear infinite}
 @keyframes badge-logo-fade{0%{fill:#cea4ee}12.5%{fill:#93aee0}25%{fill:#4a9bb0}37.5%{fill:#edd1a8}50%{fill:#f8cea2}62.5%{fill:#e79569}75%{fill:#e85e8f}87.5%{fill:#db92db}100%{fill:#cea4ee}}
 @media (prefers-reduced-motion: reduce){.badge-logo path{animation-duration:14s!important;animation-iteration-count:infinite!important}}
+.ln-mask{padding-bottom:.14em;margin-bottom:-.14em}
 </style>
 </head>
 <body>
@@ -283,7 +284,7 @@ footer .bot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;f
       function lines(el,st,delay){
         if(!el)return;
         if(!hasSplit){gsap.from(el,{y:40,autoAlpha:0,duration:1,scrollTrigger:st});return}
-        SplitText.create(el,{type:'lines',mask:'lines',autoSplit:true,onSplit:function(s){return gsap.from(s.lines,{yPercent:105,duration:1,ease:'power4.out',stagger:.1,delay:delay||0,scrollTrigger:st})}});
+        SplitText.create(el,{type:'lines',mask:'lines',linesClass:'ln',autoSplit:true,onSplit:function(s){return gsap.from(s.lines,{yPercent:105,duration:1,ease:'power4.out',stagger:.1,delay:delay||0,scrollTrigger:st})}});
       }
       gsap.from('.hero h1 .hrow',{yPercent:100,clipPath:'inset(0 0 100% 0)',duration:1.1,stagger:.12,ease:'power4.out',delay:.1});
       $$('.split').forEach(function(el){lines(el,{trigger:el,start:'top 86%'})});
