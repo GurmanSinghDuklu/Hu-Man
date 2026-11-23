@@ -82,11 +82,12 @@ simple = { limit = 1, period = 60 }
 # Before the first deploy that includes them: `npx wrangler d1 create hm_accounts`, paste its id
 # below, `npx wrangler r2 bucket create hm-client-files`, then
 # `npx wrangler d1 migrations apply hm_accounts --remote` (docs/10-launch.md, "Client accounts").
-# `wrangler dev` uses its own local copies, so the placeholder id is fine locally.
+# Database created 2026-11-23 (Western Europe) and migrated. The R2 bucket still needs R2 switched
+# on in the Cloudflare dashboard first (docs/10-launch.md). `wrangler dev` uses local copies.
 [[d1_databases]]
 binding = "DB"
 database_name = "hm_accounts"
-database_id = "00000000-0000-0000-0000-000000000000"
+database_id = "33f482bf-7898-43e9-9909-7cc5793759d8"
 migrations_dir = "migrations"
 
 [[r2_buckets]]
