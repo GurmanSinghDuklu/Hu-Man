@@ -26,6 +26,30 @@ import {
 
 const PREFIXES = ['/api/auth/', '/api/account/', '/api/admin/'];
 
+/**
+ * The admin pages (/admin/…) only exist for admins: anyone else, logged in or not, gets the site's
+ * own "Page not found" with a 404, so the dashboard's address gives nothing away. wrangler.toml
+ * sends /admin and /admin/* to the Worker first so this runs before any static file. Never cached,
+ * so an admin's copy can't be served to someone else. Returns null for every other path.
+ */
+export async function gateAdminPages(request, env) {
+  const url = new URL(request.url);
+  if (url.pathname !== '/admin' && !url.pathname.startsWith('/admin/')) return null;
+  const session = await getSession(request, env);
+  const page =
+    session?.user.role === 'admin'
+      ? await env.ASSETS.fetch(request)
+      : await env.ASSETS.fetch(new Request(new URL('/__not-found__/', url), { method: 'GET' }));
+  const headers = new Headers(page.headers);
+  headers.set('Cache-Control', 'private, no-store');
+  headers.set('X-Robots-Tag', 'noindex');
+  headers.set('Vary', 'Cookie');
+  return new Response(page.body, {
+    status: session?.user.role === 'admin' ? page.status : 404,
+    headers,
+  });
+}
+
 export async function handleAccounts(request, env) {
   const url = new URL(request.url);
   const path = url.pathname.replace(/\/+$/, '');
@@ -39,7 +63,8 @@ export async function handleAccounts(request, env) {
   if (path === '/api/auth/logout' && method === 'POST') return logout(request, env);
 
   const session = await getSession(request, env);
-  if (!session) return fail(401, 'Please log in.');
+  // The admin API, like the admin pages, doesn't admit to existing for anyone but an admin.
+  if (!session) return path.startsWith('/api/admin/') ? notFound() : fail(401, 'Please log in.');
   const { user } = session;
 
   if (path === '/api/account/me' && method === 'GET') return me(env, user);

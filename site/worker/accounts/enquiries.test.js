@@ -68,7 +68,7 @@ test('admins mark enquiries; clients and strangers cannot see them', async () =>
   const [enquiry] = await list(env, admin);
 
   assert.equal((await call(env, 'GET', '/api/admin/enquiries', { cookie: client })).status, 404);
-  assert.equal((await call(env, 'GET', '/api/admin/enquiries')).status, 401);
+  assert.equal((await call(env, 'GET', '/api/admin/enquiries')).status, 404);
 
   const mark = (status, cookie = admin, id = enquiry.id) =>
     call(env, 'POST', `/api/admin/enquiries/${id}`, { cookie, body: { status } });

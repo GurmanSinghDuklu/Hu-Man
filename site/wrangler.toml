@@ -23,8 +23,12 @@ not_found_handling = "404-page"
 # built pages (worker/pages.json) differ, so add a line when you add a page.
 # "/api/*" is the forms and client accounts API: without it the static-asset handler answers those
 # paths itself (the 404 page, or 405 for a POST) and the Worker never sees them.
+# "/admin" and "/admin/*": the team's dashboard, served only to a logged-in admin; everyone else gets
+# the 404 page (gateAdminPages in worker/accounts/index.js).
 run_worker_first = [
   "/api/*",
+  "/admin",
+  "/admin/*",
   "/",
   "/about/",
   "/agentic-ai-ready/",

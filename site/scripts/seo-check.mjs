@@ -321,9 +321,12 @@ if (basePath === '/' && !noindexBuild) {
   const firstBlock = (wrangler.match(/run_worker_first = \[([\s\S]*?)\]/) ?? [])[1] ?? '';
   const first = [...firstBlock.matchAll(/"([^"]+)"/g)]
     .map((m) => m[1])
-    .filter((path) => path !== '/api/*') // the API, not a page
+    .filter((path) => !['/api/*', '/admin', '/admin/*'].includes(path)) // API and admin gate, not pages
     .sort();
   if (!firstBlock.includes('"/api/*"')) fail('wrangler.toml', 'run_worker_first lacks "/api/*"');
+  // The dashboard is only served after the Worker checks for an admin (gateAdminPages).
+  for (const gate of ['"/admin"', '"/admin/*"'])
+    if (!firstBlock.includes(gate)) fail('wrangler.toml', `run_worker_first lacks ${gate}`);
   const want = indexable.map((u) => new URL(u).pathname).sort();
   const listed = Object.keys(manifest.pages).sort();
   if (want.join() !== listed.join())

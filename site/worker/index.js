@@ -9,7 +9,7 @@
 import { EmailMessage } from 'cloudflare:email';
 import { handleEnquiry } from './enquiry.js';
 import { servePage } from './pages.js';
-import { handleAccounts } from './accounts/index.js';
+import { handleAccounts, gateAdminPages } from './accounts/index.js';
 
 /** The same protective headers public/_headers gives every static file. */
 const SECURITY_HEADERS = {
@@ -28,6 +28,7 @@ export default {
     } else {
       response =
         (await handleAccounts(request, { ...env, EmailMessage })) ??
+        (await gateAdminPages(request, env)) ??
         (await servePage(request, env.ASSETS)) ??
         (await env.ASSETS.fetch(request));
     }

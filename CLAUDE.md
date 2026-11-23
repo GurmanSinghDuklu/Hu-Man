@@ -864,3 +864,10 @@ client", which deletes the account, sessions, setup links, projects, briefs, fil
 uploads and every enquiry from that account or email (`deleteClient` in admin.js; child rows are
 deleted explicitly, not left to cascades). Admin accounts can't be deleted there (404). Both ask to
 confirm first. Use it for deletion requests under the privacy notice.
+
+## /admin/ is hidden (2026-11-23)
+`/admin` and `/admin/*` are in `run_worker_first`; `gateAdminPages` (worker/accounts/index.js) serves
+them only to a logged-in admin and gives everyone else (strangers and clients) the site's own 404,
+`Cache-Control: private, no-store`. The admin API answers 404, not 401, to anyone but an admin.
+Admins log in at `/login/`, which sends them to `/admin/`. seo-check fails if the gate entries leave
+run_worker_first. If an admin's session expires they see the 404 too: log in again at /login/.
