@@ -82,8 +82,9 @@ To switch it on (Gurman's decision, it costs money):
 Built 2026-11-23 (spec `docs/superpowers/specs/2026-11-23-client-accounts-design.md`). Invited clients
 log in at `/login/`, fill in their project brief and upload files; the team manages them at
 `/admin/`. It needs a database (D1) and a file store (R2) in the same Cloudflare account. Both are
-free at this size (D1: 5 GB; R2: 10 GB and no fees for downloads). **Do these before the first
-deploy that includes the client area** (otherwise `wrangler deploy` fails on the placeholder id):
+free at this size (D1: 5 GB; R2: 10 GB and no fees for downloads). Steps 1 to 3 were done on
+2026-11-23 (both in Western Europe; R2 needed switching on in the dashboard with a card, free tier).
+For reference, the steps were:
 1. `cd site && npx wrangler d1 create hm_accounts`. Copy the `database_id` it prints into
    `site/wrangler.toml` (the `[[d1_databases]]` block), replacing the zeros. Commit.
 2. `npx wrangler r2 bucket create hm-client-files` (keep it private: never turn on public access).

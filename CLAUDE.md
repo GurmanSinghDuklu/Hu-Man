@@ -842,6 +842,7 @@ and 4 (Stripe, then publish) are next and plug into `projects.status` and the "Y
    `textContent`, never HTML. Styles are global under `acct-` in `AccountShell.astro`.
 5. **Admins are made only by `npm run make-admin -- <email> "<name>" [--remote]`**; no screen makes
    admins. PBKDF2 at 100,000 iterations (the Workers maximum); tokens stored as SHA-256 hashes.
-6. Setup steps (D1, R2, migrations, admins): `docs/10-launch.md` "Client accounts". The
-   `database_id` in wrangler.toml is a placeholder until then, so don't merge before step 1.
+6. Setup steps: `docs/10-launch.md` "Client accounts". Steps 1-3 done 2026-11-23 (D1 `hm_accounts`
+   and private R2 `hm-client-files`, both Western Europe; R2 switched on with a card, free tier).
+   Still to do at go-live: deploy, then `npm run make-admin -- ... --remote` for Gurman and Mandeep.
 7. Footer Legal column has "Client login"; the footer line says "No tracking" (was "No cookies").
