@@ -5,6 +5,8 @@
  */
 import { DatabaseSync } from 'node:sqlite';
 import { readdirSync, readFileSync } from 'node:fs';
+import { handleAccounts } from './index.js';
+import { addUser, createInvite } from './auth.js';
 
 const MIGRATIONS = new URL('../../migrations/', import.meta.url);
 export const ORIGIN = 'https://humansoftwareagency.com';
@@ -108,3 +110,14 @@ export const cookieFrom = (res) => (res.headers.get('Set-Cookie') ?? '').split('
 /** The decoded text body of a raw MIME message. */
 export const bodyOf = (raw) =>
   Buffer.from(raw.split('\r\n\r\n')[1].replace(/\r\n/g, ''), 'base64').toString('utf8');
+
+/** Adds a user, sets their password through their setup link, and returns their session cookie. */
+export async function loggedIn(env, email, role = 'client') {
+  const user = await addUser(env, { email, name: role === 'admin' ? 'Gurman' : 'Client', role });
+  const token = new URL(await createInvite(env, user.id, ORIGIN)).searchParams.get('t');
+  const res = await handleAccounts(
+    req('POST', '/api/auth/setup', { body: { token, name: user.name, password: 'a long enough password' } }),
+    env,
+  );
+  return cookieFrom(res);
+}

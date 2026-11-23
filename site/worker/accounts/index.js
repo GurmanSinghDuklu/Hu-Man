@@ -12,6 +12,7 @@
 import { fail, notFound, sameOrigin, getSession } from './http.js';
 import { setupInfo, setup, login, logout } from './auth.js';
 import { me } from './account.js';
+import { listClients, createClient, clientDetail, newInvite, reopenBrief } from './admin.js';
 
 const PREFIXES = ['/api/auth/', '/api/account/', '/api/admin/'];
 
@@ -32,6 +33,23 @@ export async function handleAccounts(request, env) {
   const { user } = session;
 
   if (path === '/api/account/me' && method === 'GET') return me(env, user);
+
+  if (path.startsWith('/api/admin/')) {
+    if (user.role !== 'admin') return notFound();
+    const parts = path.split('/').slice(3); // after /api/admin/
+    const id = parts[1];
+    if (parts[0] === 'clients') {
+      if (parts.length === 1 && method === 'GET') return listClients(env);
+      if (parts.length === 1 && method === 'POST') return createClient(request, env, url.origin);
+      if (parts.length === 2 && method === 'GET') return clientDetail(env, id);
+      if (parts.length === 3 && parts[2] === 'invite' && method === 'POST') {
+        return newInvite(env, id, url.origin);
+      }
+    }
+    if (parts[0] === 'projects' && parts[2] === 'reopen' && parts.length === 3 && method === 'POST') {
+      return reopenBrief(env, id);
+    }
+  }
 
   return notFound();
 }
