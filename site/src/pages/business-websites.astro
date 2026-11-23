@@ -76,7 +76,7 @@ const pairs = businessConcepts.filter((c) => c.before);
         slot="after"
         class="bcue"
         href="#concepts"
-        label={`See all ${businessSiteConcepts.length} concepts below`}
+        label={`See all ${businessSiteConcepts.length} designs below`}
       />
     )}
   </InnerHero>
@@ -238,7 +238,7 @@ const pairs = businessConcepts.filter((c) => c.before);
               </div>
               {c.href && (
                 <a class="btn" href={withBase(c.href)}>
-                  {c.hrefLabel ?? 'Open the concept'}
+                  {c.hrefLabel ?? 'Open the design'}
                 </a>
               )}
             </article>

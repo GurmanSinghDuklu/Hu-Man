@@ -275,7 +275,7 @@ function renderProject(project: Detail['projects'][number]) {
       text: [
         projectTypeLabels[project.type],
         project.tier && `Tier: ${project.tier.replace(/^Portfolio: /, '')}`,
-        project.concept && `Concept: ${project.concept}`,
+        project.concept && `Design: ${project.concept}`,
       ]
         .filter(Boolean)
         .join(' · '),

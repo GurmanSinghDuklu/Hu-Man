@@ -124,20 +124,20 @@ export const contactFaq: FaqItem[] = [
  */
 export const portfolioFaq: FaqItem[] = [
   {
-    q: 'Can I use one of these concepts for my site?',
-    a: 'Yes. Any concept on this page can be the starting point for your site. We swap the sample content for your own words, photos, projects and links.',
+    q: 'Can I use one of these designs for my site?',
+    a: 'Yes. Any design on this page can be the starting point for your site. We swap the sample content for your own words, photos, projects and links.',
   },
   {
     q: 'Will anyone else have the same design?',
-    a: 'They might. The concepts are not exclusive, so more than one person may pick the same one, and the design stays ours. A design that’s yours alone comes with Portfolio Pro, or ask and we’ll quote it.',
+    a: 'They might. The designs are not exclusive, so more than one person may pick the same one, and the design stays ours. A design that’s yours alone comes with Portfolio Pro, or ask and we’ll quote it.',
   },
   {
-    q: 'Which tier do I need for a concept?',
-    a: `It depends on the concept. Some are one page; others have several pages, motion and video. Tell us which one you like and we’ll tell you the tier it needs before you pay anything. Tiers run from ${portfolioTiers[0].price} to ${portfolioTiers[portfolioTiers.length - 1].price}.`,
+    q: 'Which tier do I need for a design?',
+    a: `It depends on the design. Some are one page; others have several pages, motion and video. Tell us which one you like and we’ll tell you the tier it needs before you pay anything. Tiers run from ${portfolioTiers[0].price} to ${portfolioTiers[portfolioTiers.length - 1].price}.`,
   },
   {
-    q: 'Are the people in the concepts real?',
-    a: 'No. Every concept is filled with sample content to show how the design works. Your site shows your own details.',
+    q: 'Are the people in the designs real?',
+    a: 'No. Every design is filled with sample content to show how the design works. Your site shows your own details.',
   },
   {
     q: 'Will my site help me get past an applicant tracking system?',

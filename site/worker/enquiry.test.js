@@ -109,7 +109,7 @@ test('a chosen concept is enough without a message, and leads the subject', asyn
   });
   assert.ok(data);
   const raw = buildEmail(data, { from: 'web@x.com', to: 'in@x.com' });
-  assert.match(bodyOf(raw), /Concept: +Noor Haddad/);
+  assert.match(bodyOf(raw), /Design: +Noor Haddad/);
   assert.equal(
     Buffer.from(header(raw, 'Subject').split('?B?')[1].split('?=')[0], 'base64').toString('utf8'),
     '[Contact page] Website enquiry: Noor Haddad concept from A',

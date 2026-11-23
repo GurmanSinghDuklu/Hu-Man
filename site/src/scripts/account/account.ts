@@ -521,7 +521,7 @@ async function start() {
     const facts = [
       projectTypeLabels[project.type],
       project.tier ? `Tier: ${project.tier.replace(/^Portfolio: /, '')}` : '',
-      project.concept ? `Concept: ${project.concept}` : '',
+      project.concept ? `Design: ${project.concept}` : '',
     ].filter(Boolean);
     list.append(
       el(

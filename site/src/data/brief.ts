@@ -228,7 +228,7 @@ export const briefSteps: BriefStep[] = [
     fields: [
       {
         id: 'concept',
-        label: 'The concept you chose',
+        label: 'The design you chose',
         kind: 'text',
         hint: 'Leave it empty if you haven’t picked one.',
         max: 60,

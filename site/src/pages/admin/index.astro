@@ -74,13 +74,13 @@ import { projectTypeLabels } from '../../data/brief';
               </label>
               <select id="nc-concept" name="concept">
                 <option value="">None</option>
-                <optgroup label="CV and portfolio concepts">
+                <optgroup label="CV and portfolio designs">
                   {portfolioConcepts.map((c) => (
                     <option value={c.name}>{c.name}</option>
                   ))}
                 </optgroup>
                 {businessSiteConcepts.length > 0 && (
-                  <optgroup label="Business concepts">
+                  <optgroup label="Business designs">
                     {businessSiteConcepts.map((c) => (
                       <option value={c.name}>{c.name}</option>
                     ))}

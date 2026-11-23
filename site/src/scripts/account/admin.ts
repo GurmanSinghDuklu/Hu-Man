@@ -190,7 +190,7 @@ const readable = (text: string) => {
 function about(e: Enquiry): string {
   return [
     e.tier && `Tier: ${e.tier}`,
-    e.concept && `Concept: ${e.concept}`,
+    e.concept && `Design: ${e.concept}`,
     e.service,
     !e.tier && !e.service && e.topic ? TOPICS[e.topic] : '',
   ]

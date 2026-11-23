@@ -12,7 +12,7 @@ Build the studio's own marketing website: high-end, fast, local-SEO-ready, with 
 - Explain things plainly and show your plan before big changes.
 
 ## Hard rules (never break)
-1. No invented proof. No fake testimonials, ratings, review counts, client logos, awards, statistics or "as seen in". Concept work is labelled just "Concept" wherever it appears (Gurman, 2 Nov 2026: no "fictional person", "fictional business" or "concept design" on the site or in ads). Fictional domains use `.example`.
+1. No invented proof. No fake testimonials, ratings, review counts, client logos, awards, statistics or "as seen in". Concept work is labelled just "Concept" wherever it appears (Gurman, 2 Nov 2026: no "fictional person", "fictional business" or "concept design" on the site or in ads). Fictional domains use `.example`. The word "concept" is only that tag (2026-11-23, Mandeep): everywhere else the site says "design" ("Choose this design", "See all 22 designs") or "example" (image descriptions).
 2. Credentials appear exactly as listed under "Verified credentials" in `docs/01-business-context.md`. Essence Hair Treatment was built unpaid for his aunt's business: never call it a paid client, and do not mention family on the public site (client request, Nov 2026). Claude Certified Architect is in progress: show it only as "in progress" until he confirms a pass. The Arm contribution is a submitted pull request unless he says it was merged.
 3. No guarantees: not rankings, not Google AI Overviews or ChatGPT recommendations, not sales. State what is done and what is measured.
 4. Publish only the contact details listed under "Public contact details". Never publish a home address.

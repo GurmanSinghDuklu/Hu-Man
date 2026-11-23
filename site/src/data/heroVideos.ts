@@ -41,7 +41,7 @@ export const heroVideos = {
     start: 9.3,
     label: 'The Hu/man showreel',
     description:
-      'The Hu/man showreel: real developers and the software behind every site, concept portfolio websites, builds that are secure, fast and built to be found, the aftercare that follows launch, and an invitation to book a free 1-hour call.',
+      'The Hu/man showreel: real developers and the software behind every site, example portfolio websites, builds that are secure, fast and built to be found, the aftercare that follows launch, and an invitation to book a free 1-hour call.',
     seconds: 81.81,
   },
   found: {
@@ -63,7 +63,7 @@ export const heroVideos = {
     start: 0,
     label: 'Be seen: portfolio sites by Hu/man, from £156',
     description:
-      'Hu/man builds portfolio sites that show who you are: a run through concept portfolio and CV websites designed for everyone, from graduates to nurses.',
+      'Hu/man builds portfolio sites that show who you are: a run through example portfolio and CV websites designed for everyone, from graduates to nurses.',
     seconds: 28.39,
   },
   'portfolio-ad': {

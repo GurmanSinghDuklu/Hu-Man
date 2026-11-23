@@ -45,16 +45,16 @@ export interface PortfolioConcept {
 }
 
 export const portfolioConceptsIntro = {
-  label: 'Concept portfolios',
+  label: 'Portfolio designs',
   title: 'The level we build to.',
   text: 'Not just for designers. Portfolio sites for every kind of job, each designed around the person, not a template. Move your mouse over any of them: they are running live.',
   /** Shown on every card. */
   note: 'Concept',
-  linkText: 'View the concept',
+  linkText: 'View the design',
   /** The cream button beside it: opens the contact form with this concept already chosen.
    *  null hides it (the business wall). */
-  chooseText: 'Choose this concept' as string | null,
-  staticNote: 'Showing still previews. Open any concept to see it move.',
+  chooseText: 'Choose this design' as string | null,
+  staticNote: 'Showing still previews. Open any design to see it move.',
   /** The last tile on the wall: a call to start your own. */
   next: {
     label: 'Your page',
@@ -72,7 +72,7 @@ export const portfolioConcepts: PortfolioConcept[] = [
     field: 'Operations',
     shows:
       'A scrapbook of speech bubbles and queue tickets, with moving type bands and a before-and-after script.',
-    alt: 'The Imran Shah concept portfolio: his name in chunky black type on sage dotted paper, with his photo in queue-ticket frames and tomato-red tags.',
+    alt: 'The Imran Shah example portfolio: his name in chunky black type on sage dotted paper, with his photo in queue-ticket frames and tomato-red tags.',
     domain: 'imranshah.example',
     device: 'desktop',
   },
@@ -83,7 +83,7 @@ export const portfolioConcepts: PortfolioConcept[] = [
     field: 'Sales',
     shows:
       'Giant italic type that slides as you scroll, a deal-stage pipeline and a pinned sideways run through her jobs.',
-    alt: 'The Lucía Ferro concept portfolio: ACCOUNTS in huge cream letters on aubergine beside a black and white cut-out portrait and tangerine bars.',
+    alt: 'The Lucía Ferro example portfolio: ACCOUNTS in huge cream letters on aubergine beside a black and white cut-out portrait and tangerine bars.',
     domain: 'luciaferro.example',
     device: 'desktop',
   },
@@ -94,7 +94,7 @@ export const portfolioConcepts: PortfolioConcept[] = [
     field: 'Finance',
     shows:
       'A résumé laid out like a payslip: tear-off sections, pay-reference bands that scroll past and dials that fill.',
-    alt: 'The Ivy Laurent concept portfolio: IVY in huge white letters on navy over a coral RESUME block, beside a warm photo of her.',
+    alt: 'The Ivy Laurent example portfolio: IVY in huge white letters on navy over a coral RESUME block, beside a warm photo of her.',
     domain: 'ivylaurent.example',
     device: 'desktop',
   },
@@ -105,7 +105,7 @@ export const portfolioConcepts: PortfolioConcept[] = [
     field: 'Tech',
     shows:
       'A spreadsheet-style CV: a cell cursor that walks the cover, a ring chart that draws and cards that stack as you scroll.',
-    alt: 'The Nadia Kerr concept portfolio: .ANAL-YSIS in heavy black letters on a graph-paper grid with electric blue and mint panels.',
+    alt: 'The Nadia Kerr example portfolio: .ANAL-YSIS in heavy black letters on a graph-paper grid with electric blue and mint panels.',
     domain: 'nadiakerr.example',
     device: 'desktop',
   },
@@ -116,7 +116,7 @@ export const portfolioConcepts: PortfolioConcept[] = [
     field: 'Operations',
     shows:
       'Building signage throughout: floor numbers, a directory board, an LED notice band and an exit sign.',
-    alt: 'The Aiko Tan concept portfolio: SPACES THAT WORK in black and orange capitals beside her portrait on a safety-orange panel.',
+    alt: 'The Aiko Tan example portfolio: SPACES THAT WORK in black and orange capitals beside her portrait on a safety-orange panel.',
     domain: 'aikotan.example',
     device: 'desktop',
   },
@@ -127,7 +127,7 @@ export const portfolioConcepts: PortfolioConcept[] = [
     field: 'Retail',
     shows:
       'A boutique look: her portrait in a shop-window arch, swing-tag project cards and a timeline printed like a receipt.',
-    alt: 'The Clara Voss concept portfolio: I run stores people love in cream and brass serif on navy beside her portrait in a brass arch.',
+    alt: 'The Clara Voss example portfolio: I run stores people love in cream and brass serif on navy beside her portrait in a brass arch.',
     domain: 'claravoss.example',
     device: 'desktop',
   },
@@ -138,7 +138,7 @@ export const portfolioConcepts: PortfolioConcept[] = [
     field: 'Operations',
     shows:
       'A dot that follows your cursor, and a pinned "I run…" section that changes colour as you scroll.',
-    alt: 'The Priya Nair concept portfolio: her name in a huge serif on warm paper, with a coloured dot as the full stop.',
+    alt: 'The Priya Nair example portfolio: her name in a huge serif on warm paper, with a coloured dot as the full stop.',
     domain: 'priyanair.example',
     device: 'desktop',
   },
@@ -149,7 +149,7 @@ export const portfolioConcepts: PortfolioConcept[] = [
     role: 'Product and UX designer, Leeds',
     field: 'Creative',
     shows: 'Fanned app-screen cards that re-deal on hover.',
-    alt: 'The Noor Haddad concept portfolio: her name in huge black capitals over four fanned phone screens in blue, yellow, grey and green.',
+    alt: 'The Noor Haddad example portfolio: her name in huge black capitals over four fanned phone screens in blue, yellow, grey and green.',
     domain: 'noorhaddad.example',
     device: 'desktop',
   },
@@ -160,7 +160,7 @@ export const portfolioConcepts: PortfolioConcept[] = [
     field: 'Marketing',
     shows:
       'A video inside the headline that grows to full screen, and skill tiles that fall and pile up.',
-    alt: 'The Chloe Park concept portfolio: a huge white headline on black with a small video playing inside one line.',
+    alt: 'The Chloe Park example portfolio: a huge white headline on black with a small video playing inside one line.',
     domain: 'chloepark.example',
     device: 'desktop',
   },
@@ -170,7 +170,7 @@ export const portfolioConcepts: PortfolioConcept[] = [
     role: 'Construction site manager, Bradford',
     field: 'Trades',
     shows: 'Giant outline menu words that fill in and change the moving site scene behind them.',
-    alt: 'The Dan Okafor concept portfolio: a duotone construction scene behind his name and huge outlined menu words.',
+    alt: 'The Dan Okafor example portfolio: a duotone construction scene behind his name and huge outlined menu words.',
     domain: 'danokafor.example',
     device: 'desktop',
   },
@@ -181,7 +181,7 @@ export const portfolioConcepts: PortfolioConcept[] = [
     field: 'Hospitality',
     shows:
       'A real window seat with a plane passing, then a split-flap departures board of her trips.',
-    alt: 'The Sofia Marín concept portfolio: the view from an aircraft window seat, a distant plane leaving a contrail.',
+    alt: 'The Sofia Marín example portfolio: the view from an aircraft window seat, a distant plane leaving a contrail.',
     domain: 'sofiamarin.example',
     device: 'desktop',
   },
@@ -191,7 +191,7 @@ export const portfolioConcepts: PortfolioConcept[] = [
     role: 'Dog walker and pet sitter, Harrogate',
     field: 'Pets',
     shows: "Throw a ball to get in, then a dog's red lead draws itself down the page.",
-    alt: 'The Ellie Brooks concept portfolio: tomato-red capitals on cream above a hand-drawn scruffy dog holding a red lead.',
+    alt: 'The Ellie Brooks example portfolio: tomato-red capitals on cream above a hand-drawn scruffy dog holding a red lead.',
     domain: 'elliebrooks.example',
     device: 'phone',
   },
@@ -201,7 +201,7 @@ export const portfolioConcepts: PortfolioConcept[] = [
     role: 'Short-form video creator, London',
     field: 'Creative',
     shows: 'Short-video reels in phone frames, and service stickers you can drag around.',
-    alt: 'The Maya Okonkwo concept portfolio: her name in chunky teal letters with a pink shadow beside three phone frames on pink and yellow shapes.',
+    alt: 'The Maya Okonkwo example portfolio: her name in chunky teal letters with a pink shadow beside three phone frames on pink and yellow shapes.',
     domain: 'mayaokonkwo.example',
     device: 'phone',
   },
@@ -211,7 +211,7 @@ export const portfolioConcepts: PortfolioConcept[] = [
     role: 'Vehicle technician, Wakefield',
     field: 'Trades',
     shows: 'A 3D brake assembly that turns under a moving light and tilts with your cursor.',
-    alt: 'The Ryan Holt concept portfolio: a black and grey page with a 3D-shaded mechanical part under hard light.',
+    alt: 'The Ryan Holt example portfolio: a black and grey page with a 3D-shaded mechanical part under hard light.',
     domain: 'ryanholt.example',
     device: 'desktop',
   },
@@ -222,7 +222,7 @@ export const portfolioConcepts: PortfolioConcept[] = [
     field: 'Engineering',
     shows:
       'A spinning red-and-white 3D sphere on a red circle that travels from section to section.',
-    alt: 'The Marcus Reid concept portfolio: his name in black beside a red-and-white ribbon sphere on a big red circle.',
+    alt: 'The Marcus Reid example portfolio: his name in black beside a red-and-white ribbon sphere on a big red circle.',
     domain: 'marcusreid.example',
     device: 'desktop',
   },
@@ -232,7 +232,7 @@ export const portfolioConcepts: PortfolioConcept[] = [
     role: 'Nurse educator, Sheffield',
     field: 'Care',
     shows: 'A heartbeat line behind her name, then panels rising over one bold band of colour.',
-    alt: 'The Grace Whitfield concept portfolio: her name in white capitals over a deep colour field with a heartbeat line.',
+    alt: 'The Grace Whitfield example portfolio: her name in white capitals over a deep colour field with a heartbeat line.',
     domain: 'gracewhitfield.example',
     device: 'desktop',
   },
@@ -242,7 +242,7 @@ export const portfolioConcepts: PortfolioConcept[] = [
     role: 'Bookkeeper, York',
     field: 'Finance',
     shows: 'A bookcase where every book is a past job: pull one out and it opens on that chapter.',
-    alt: 'The Hannah Cole concept portfolio: a lamp-lit bookcase at night, each book spine named after a workplace.',
+    alt: 'The Hannah Cole example portfolio: a lamp-lit bookcase at night, each book spine named after a workplace.',
     domain: 'hannahcole.example',
     device: 'desktop',
   },
@@ -253,7 +253,7 @@ export const portfolioConcepts: PortfolioConcept[] = [
     role: 'Project manager, Bristol',
     field: 'Operations',
     shows: 'A looping project timeline in the hero, and a contact area you can click anywhere on.',
-    alt: 'The Leah Morgan concept portfolio: bold black capitals on pale grey beside an animated project timeline.',
+    alt: 'The Leah Morgan example portfolio: bold black capitals on pale grey beside an animated project timeline.',
     domain: 'leahmorgan.example',
     device: 'desktop',
   },
@@ -264,7 +264,7 @@ export const portfolioConcepts: PortfolioConcept[] = [
     role: 'Backend and platform engineer, Manchester',
     field: 'Tech',
     shows: 'A map drawn in text characters that parts around your cursor.',
-    alt: 'The Theo Lindqvist concept portfolio: his name in large pale capitals on a dark page, over a map drawn in grey and amber text characters.',
+    alt: 'The Theo Lindqvist example portfolio: his name in large pale capitals on a dark page, over a map drawn in grey and amber text characters.',
     domain: 'theolindqvist.example',
     device: 'desktop',
   },
@@ -275,7 +275,7 @@ export const portfolioConcepts: PortfolioConcept[] = [
     field: 'Hospitality',
     shows:
       'Four shapes for four strengths that regroup as you scroll, and venue panels that unfold into a carousel.',
-    alt: 'The Kai Thompson concept portfolio: a dark grainy page with a big centred headline over a giant K and four coloured shapes.',
+    alt: 'The Kai Thompson example portfolio: a dark grainy page with a big centred headline over a giant K and four coloured shapes.',
     domain: 'kaithompson.example',
     device: 'desktop',
   },
@@ -285,7 +285,7 @@ export const portfolioConcepts: PortfolioConcept[] = [
     role: 'UX design student, Leeds',
     field: 'Graduate',
     shows: 'Full-screen black-and-white projects that slice apart as you move between them.',
-    alt: 'The Tom Ashworth concept portfolio: a dark full-screen black-and-white photo with a large project title and a 01 / 06 counter.',
+    alt: 'The Tom Ashworth example portfolio: a dark full-screen black-and-white photo with a large project title and a 01 / 06 counter.',
     domain: 'tomashworth.example',
     device: 'desktop',
   },
@@ -296,7 +296,7 @@ export const portfolioConcepts: PortfolioConcept[] = [
     field: 'Graduate',
     shows:
       'A striped monogram that bends to your cursor, and a skills finder that re-sorts itself.',
-    alt: 'The Amira Hussain concept portfolio: a striped AH monogram beside colour-coded skill chips.',
+    alt: 'The Amira Hussain example portfolio: a striped AH monogram beside colour-coded skill chips.',
     domain: 'amirahussain.example',
     device: 'desktop',
   },
@@ -309,7 +309,7 @@ export const portfolioConcepts: PortfolioConcept[] = [
  */
 export const businessConceptsIntro = {
   ...portfolioConceptsIntro,
-  label: 'Concept business sites',
+  label: 'Business site designs',
   title: 'The right fit, running live.',
   chooseText: null,
   text: 'Six kinds of business, six different answers. Each site is built around what its customers need, and no bigger. Move your mouse over any of them: they are running live.',

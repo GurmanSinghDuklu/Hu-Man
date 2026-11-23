@@ -203,7 +203,7 @@ export function llmsFullTxt(): string {
     '',
     `${portfolioExpress.title} (${portfolioExpress.price}): ${portfolioExpress.text}`,
     '',
-    '### Questions about the CV concepts',
+    '### Questions about the CV designs',
     '',
     ...portfolioFaq.flatMap((item) => [`#### ${item.q}`, '', item.a, '']),
     `## How we build (${link('how-we-build')})`,

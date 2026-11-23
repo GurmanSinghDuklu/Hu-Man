@@ -53,7 +53,7 @@ export const API_DESCRIPTION = {
       required: false,
       maxLength: 60,
       description:
-        'The concept design picked as a starting point, by name, e.g. "Noor Haddad" (from /portfolio/).',
+        'The design picked as a starting point, by name, e.g. "Noor Haddad" (from /portfolio/).',
     },
     service: {
       required: false,
@@ -242,7 +242,7 @@ export function buildEmail(
     data.phone ? `Phone:    ${data.phone}` : null,
     data.website ? `Website:  ${data.website}` : null,
     data.tier ? `Tier:     ${data.tier}` : null,
-    data.concept ? `Concept:  ${data.concept}` : null,
+    data.concept ? `Design:   ${data.concept}` : null,
     data.service ? `Service:  ${data.service}` : null,
     '',
     data.message || '(No message.)',
