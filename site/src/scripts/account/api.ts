@@ -81,6 +81,10 @@ export interface Me {
     previewBase: string;
     liveUrl: string | null;
     liveAt: number | null;
+    kind: 'brief' | 'request';
+    route: 'instant' | 'custom' | null;
+    customDomain: string | null;
+    customDomainStatus: string | null;
   }[];
 }
 

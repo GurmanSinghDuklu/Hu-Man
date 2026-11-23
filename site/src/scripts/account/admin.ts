@@ -286,16 +286,17 @@ function card(e: Enquiry) {
     ),
   ];
   const actions = el('div', { class: 'acct-actions' });
-  if (e.status === 'client' && e.clientId) {
+  // Portfolio requests come with an account already; other enquiries can be made into one.
+  if (e.clientId) {
     actions.append(
       el('a', {
-        class: 'btn btn--outline',
+        class: e.status === 'client' ? 'btn btn--outline' : 'pill-btn',
         href: sitePath(`/admin/client/?id=${encodeURIComponent(e.clientId)}`),
         text: 'Open their client page',
       }),
     );
-  } else {
-    actions.append(button('Make client', () => makeClient(e), 'pill-btn'));
+  } else actions.append(button('Make client', () => makeClient(e), 'pill-btn'));
+  if (e.status !== 'client') {
     if (e.status !== 'replied') actions.append(button('Replied', () => void mark(e, 'replied')));
     if (e.status !== 'not-a-fit')
       actions.append(button('Not a fit', () => void mark(e, 'not-a-fit')));

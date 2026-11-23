@@ -249,7 +249,7 @@ export const pages: Record<PageKey, PageInfo> = {
     key: 'login',
     path: '/login/',
     title: 'Client login | Hu/man',
-    description: 'Log in to your Hu/man client account.',
+    description: 'Log in to your Hu/man account, or create one.',
     label: 'Client login',
     ogHeadline: 'Talk to a human.',
     schemaType: 'WebPage',

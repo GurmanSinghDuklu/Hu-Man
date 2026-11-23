@@ -2,6 +2,7 @@
 -- Public sign-up needs a verified email; codes are stored as SHA-256 hashes, five tries each.
 
 ALTER TABLE users ADD COLUMN email_verified_at INTEGER;
+ALTER TABLE users ADD COLUMN last_login_at INTEGER;
 -- Everyone who set a password through an emailed setup link has proved their email already.
 UPDATE users SET email_verified_at = created_at WHERE password_hash IS NOT NULL;
 

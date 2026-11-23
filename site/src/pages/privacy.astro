@@ -96,26 +96,52 @@ import { withBase } from '../config/paths';
       physiotherapy clients) get extra care here, in line with the rules for special-category data.
     </p>
 
-    <h2>If you have a client account</h2>
+    <h2>If you have an account</h2>
     <p>
-      We only create a client account for someone we're working with, after we've talked. The
-      account holds your name, your email address, your password (stored only in a scrambled form we
-      can't read back), your project brief and the files you upload. We use it to plan, build and
-      deliver your project; the lawful basis is that we need it to carry out our contract with you.
+      Anyone can create an account to ask for a portfolio, and we also make accounts for clients
+      we're working with. An account holds your name, your email address and your password (stored
+      only in a scrambled form we can't read back). When you send a portfolio request it also holds
+      what you put in the form (your name, contact details, job history, education, skills and any
+      links), your CV if you upload one, and any portfolio we build for you. We never ask for your
+      street address. We use all of this to make, deliver and look after your portfolio; the lawful
+      basis is that we need it to do what you've asked us to, under our contract with you.
     </p>
     <p>
-      It is stored with Cloudflare (their D1 database and R2 file storage), alongside the site
-      itself, along with the preview of the site we build for you. If you pay by card in your
-      account, the payment is handled by Stripe, which processes your card details as its own
-      controller under its own privacy policy; we only see the amount, the date and whether it went
-      through. Only you and the Hu/man team can see your brief and files. When you send your brief,
-      a summary of it is emailed to our inbox (Gmail). Logging in sets one cookie that keeps you
-      logged in: see the <a href={withBase('/cookies/')}>cookie policy</a>.
+      It is stored with Cloudflare, in their database and file storage, in Europe. Emails to you
+      (the code that confirms your email, password resets and "we've got your request") are sent by
+      Resend, which handles your email address and the message only to deliver it. When you send a
+      request, a summary is emailed to our inbox (Gmail). If you pay by card, the payment is handled
+      by Stripe, which processes your card details as its own controller under its own privacy
+      policy; we only see the amount, the date and whether it went through. Logging in sets one
+      cookie that keeps you logged in: see the <a href={withBase('/cookies/')}>cookie policy</a>.
     </p>
     <p>
-      We keep your account and files for the same time as other project files: 12 months after your
-      site goes live, or as long as we host or look after your site. Ask us and we'll delete your
-      account and everything in it sooner, unless we still need it to finish your project.
+      If you tick "Read my CV to fill this in", your CV is read by Cloudflare's AI (Workers AI) only
+      to fill in the form for you to check. It isn't kept by that step, it isn't used to train
+      anything, and nothing is read unless you tick the box. If you choose a design and send your CV
+      details, we build your portfolio from them automatically; it stays private to you and us until
+      you choose to publish it. Once published, what's on your portfolio is public.
+    </p>
+    <h3>How we keep your data safe</h3>
+    <ul>
+      <li>Everything is sent over an encrypted connection, and stored encrypted by Cloudflare.</li>
+      <li>
+        Passwords, login sessions and the codes we email are stored only in scrambled form, so even
+        we can't read them back. Logging in pauses after five wrong passwords in a row.
+      </li>
+      <li>
+        Your CV and files are kept in private storage with no public address. Only you and the
+        Hu/man team can open them, after logging in.
+      </li>
+      <li>We ask for as little as we need: no street address, no date of birth.</li>
+    </ul>
+    <h3>How long we keep it</h3>
+    <p>
+      You can delete your account and everything in it at any time, from your account page. If you
+      never confirm your email, the account is deleted after 7 days. If you don't log in for 12
+      months, we delete your account and everything in it, unless you've paid for something or your
+      site is live, in which case we keep what we need for as long as we host or look after it (then
+      12 months more). Invoices and payment records are kept for as long as HMRC requires.
     </p>
 
     <h2>Your rights</h2>
@@ -128,7 +154,7 @@ import { withBase } from '../config/paths';
     </p>
     <h2>Cookies</h2>
     <p>
-      Public pages set no cookies; a logged-in client has one login cookie. The{' '}
+      Public pages set no cookies; when you're logged in there is one login cookie. The{' '}
       <a href={withBase('/cookies/')}>cookie policy</a> has the details.
     </p>
   </LegalDoc>

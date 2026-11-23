@@ -14,6 +14,7 @@ import {
 } from './api';
 import { showSetupLink } from './admin-shared';
 import { stepsFor, answerText, projectTypeLabels, type BriefAnswers } from '../../data/brief';
+import { requestFields, requestAnswerText } from '../../data/portfolioRequest';
 
 interface Detail {
   client: {
@@ -309,6 +310,55 @@ function renderProject(project: Detail['projects'][number]) {
     card.append(el('div', { class: 'acct-actions' }, reopen));
   }
 
+  if (project.kind === 'request') {
+    // A portfolio request from /contact/: its own questions, then the CV.
+    const rows: HTMLElement[] = [];
+    for (const field of requestFields) {
+      const text = requestAnswerText(field, project.answers[field.id]);
+      if (text) rows.push(el('div', {}, el('dt', { text: field.label }), el('dd', { text })));
+    }
+    const cvs = project.files.filter((f) => f.field === 'cv');
+    if (cvs.length) {
+      rows.push(
+        el(
+          'div',
+          {},
+          el('dt', { text: 'CV' }),
+          el(
+            'dd',
+            {},
+            el(
+              'ul',
+              { class: 'bfiles' },
+              ...cvs.map((f) =>
+                el(
+                  'li',
+                  {},
+                  el('a', {
+                    class: 'acct-link',
+                    href: fileUrl(f.id),
+                    target: '_blank',
+                    rel: 'noopener',
+                    text: f.name,
+                  }),
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+    card.append(
+      el('p', {
+        class: 'acct-small',
+        text: `${project.route === 'instant' ? 'Choose design + upload CV' : 'Custom made portfolio'}${project.concept ? ` · Design: ${project.concept}` : ''}`,
+      }),
+      rows.length
+        ? el('dl', { class: 'acct-dl' }, ...rows)
+        : el('p', { class: 'acct-small', text: 'Nothing filled in yet.' }),
+    );
+    return card;
+  }
   for (const step of stepsFor(project.type)) {
     if (step.id === 'send') continue;
     const rows: HTMLElement[] = [];

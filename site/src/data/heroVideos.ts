@@ -100,6 +100,7 @@ export const pageHeroVideo: Partial<Record<PageKey, HeroVideoKey>> = {
   about: 'found',
   portfolio: 'portfolio-seen',
   pricing: 'pricing',
+  contact: 'portfolio-ad',
 };
 
 /** The poster as the page ships it (also the schema's and sitemap's thumbnail). */

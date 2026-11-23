@@ -1,0 +1,504 @@
+---
+/**
+ * The portfolio request form, the left half of /contact/ (script: src/scripts/account/request-
+ * form.ts). Fields come from src/data/portfolioRequest.ts. Two routes: choose a design + upload a CV
+ * (built straight away) or a custom made portfolio. Sending needs an account: logged out, Send opens
+ * the sign-in panel (AuthPanel, dialog) over the page and carries on once they're in, with nothing
+ * re-typed and nothing stored in the browser. Styled for the Ink ground.
+ */
+import {
+  requestFields,
+  requestRoutes,
+  requestSections,
+  type RequestField,
+} from '../../data/portfolioRequest';
+import { portfolioConcepts } from '../../data/portfolioConcepts';
+import { withBase } from '../../config/paths';
+import AuthPanel from './AuthPanel.astro';
+
+const id = (name: string) => `rq-${name}`;
+const inputType = (f: RequestField) =>
+  f.kind === 'email' ? 'email' : f.kind === 'tel' ? 'tel' : f.kind === 'url' ? 'url' : 'text';
+const maxOf = (f: { kind: string; max?: number }) =>
+  f.max ?? (f.kind === 'textarea' ? 2000 : f.kind === 'url' ? 300 : 200);
+---
+
+<form class="rq" data-request novalidate>
+  <fieldset class="rq__routes" data-field="route">
+    <legend class="rq__legend">How would you like it made?</legend>
+    {requestRoutes.map((r, i) => (
+      <label class="rq__route">
+        <input type="radio" name="route" value={r.value} checked={i === 0} />
+        <span>
+          <strong>{r.label}</strong>
+          <span>{r.text}</span>
+        </span>
+      </label>
+    ))}
+  </fieldset>
+
+  <div class="rq__field" data-field="concept">
+    <label for={id('concept')}>
+      Design{' '}
+      <span data-concept-optional hidden>
+        (optional)
+      </span>
+    </label>
+    <select id={id('concept')} name="concept">
+      <option value="">Choose a design</option>
+      {portfolioConcepts.map((c) => (
+        <option value={c.name}>
+          {c.name}, {c.role}
+        </option>
+      ))}
+    </select>
+    <p class="rq__hint">
+      See them all on <a href={withBase('/portfolio/')}>CV portfolio</a>.
+    </p>
+    <p class="rq__error" data-error-for="concept"></p>
+  </div>
+
+  <div class="rq__field rq__cv" data-field="cv">
+    <label for={id('cv')}>
+      Your CV <span>(optional)</span>
+    </label>
+    <input
+      id={id('cv')}
+      type="file"
+      accept=".pdf,.docx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      data-cv-input
+    />
+    <p class="rq__hint">PDF or Word (.docx), up to 10 MB.</p>
+    <div class="rq__read" data-cv-read hidden>
+      <label class="rq__check">
+        <input type="checkbox" data-cv-consent />
+        <span>
+          Read my CV to fill this in. It’s read by Cloudflare’s AI only to fill in this form, and
+          never used to train anything.
+        </span>
+      </label>
+      <button type="button" class="rq__ghost" data-cv-read-button>
+        Fill in from my CV
+      </button>
+    </div>
+    <p class="rq__error" data-error-for="cv"></p>
+  </div>
+
+  {requestSections.map((section) => (
+    <fieldset class="rq__section" data-section={section.id}>
+      <legend class="rq__legend">{section.title}</legend>
+      <div class="rq__grid">
+        {requestFields
+          .filter((f) => f.section === section.id)
+          .map((f) => {
+            const req = f.required && <span class="rq__req"> (required)</span>;
+            const hintId = f.hint ? id(`${f.id}-hint`) : undefined;
+            if (f.kind === 'consent') {
+              return (
+                <div class="rq__field rq__wide" data-field={f.id} data-kind="consent">
+                  <label class="rq__check">
+                    <input type="checkbox" name={f.id} id={id(f.id)} />
+                    <span>
+                      {f.label}
+                      {req}
+                    </span>
+                  </label>
+                  <p class="rq__error" data-error-for={f.id} />
+                </div>
+              );
+            }
+            if (f.kind === 'repeat') {
+              return (
+                <div
+                  class="rq__field rq__wide"
+                  data-field={f.id}
+                  data-kind="repeat"
+                  data-max={f.maxItems}
+                >
+                  <div class="rq__entries" data-entries />
+                  <template data-entry-template>
+                    <div class="rq__entry" data-entry>
+                      <p class="rq__entry-title" data-entry-number />
+                      <div class="rq__grid">
+                        {f.parts?.map((p) =>
+                          p.kind === 'check' ? (
+                            <label class="rq__check rq__wide">
+                              <input type="checkbox" data-part={p.id} />
+                              <span>{p.label}</span>
+                            </label>
+                          ) : (
+                            <div class:list={['rq__field', { rq__wide: p.kind === 'textarea' }]}>
+                              <label data-part-label={p.id}>{p.label}</label>
+                              {p.kind === 'textarea' ? (
+                                <textarea data-part={p.id} rows="4" maxlength={maxOf(p)}></textarea>
+                              ) : (
+                                <input
+                                  type={p.kind === 'month' ? 'month' : 'text'}
+                                  data-part={p.id}
+                                  maxlength={p.kind === 'month' ? undefined : maxOf(p)}
+                                  placeholder={p.kind === 'month' ? 'YYYY-MM' : undefined}
+                                />
+                              )}
+                              {p.hint && <p class="rq__hint">{p.hint}</p>}
+                            </div>
+                          ),
+                        )}
+                      </div>
+                      <button type="button" class="rq__ghost" data-entry-remove>
+                        Remove
+                      </button>
+                    </div>
+                  </template>
+                  <button type="button" class="rq__ghost" data-entry-add>
+                    Add {f.id === 'experience' ? 'a job' : 'a qualification'}
+                  </button>
+                  <p class="rq__error" data-error-for={f.id} />
+                </div>
+              );
+            }
+            return (
+              <div
+                class:list={['rq__field', { rq__wide: f.kind === 'textarea' }]}
+                data-field={f.id}
+                data-kind={f.kind}
+              >
+                <label for={id(f.id)}>
+                  {f.label}
+                  {req}
+                </label>
+                {f.kind === 'textarea' ? (
+                  <textarea
+                    id={id(f.id)}
+                    name={f.id}
+                    rows="4"
+                    maxlength={maxOf(f)}
+                    aria-describedby={hintId}
+                  ></textarea>
+                ) : (
+                  <input
+                    id={id(f.id)}
+                    name={f.id}
+                    type={inputType(f)}
+                    inputmode={f.kind === 'url' ? 'url' : f.kind === 'email' ? 'email' : undefined}
+                    autocomplete={f.autocomplete}
+                    maxlength={maxOf(f)}
+                    aria-describedby={hintId}
+                  />
+                )}
+                {f.hint && (
+                  <p class="rq__hint" id={hintId}>
+                    {f.hint}
+                  </p>
+                )}
+                <p class="rq__error" data-error-for={f.id} />
+              </div>
+            );
+          })}
+      </div>
+    </fieldset>
+  ))}
+
+  <p class="rq__status" role="status" aria-live="polite" data-rq-status></p>
+  <div class="rq__actions">
+    <button type="submit" class="rq__send" data-rq-send>
+      Send my request
+    </button>
+    <p class="rq__hint" data-rq-who>
+      You’ll be asked to log in or create an account first, so you can see your request and
+      portfolio afterwards. Nothing you’ve typed is lost.
+    </p>
+  </div>
+  <p class="rq__trust">
+    Your details and CV are encrypted, stored privately in Europe and only seen by our team. Delete
+    them any time from your account.
+  </p>
+</form>
+
+<div class="rq__done" data-rq-done hidden tabindex="-1"></div>
+
+<AuthPanel mode="dialog" />
+
+<style is:global>
+  .rq {
+    display: grid;
+    gap: 1.6rem;
+    color: var(--paper);
+  }
+
+  .rq__legend,
+  .rq__field > label,
+  .rq__entry-title {
+    font: 500 0.75rem/1.3 var(--font-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted-on-ink);
+  }
+
+  .rq__legend {
+    margin-bottom: 0.85rem;
+    color: var(--paper);
+    font-size: 0.8rem;
+  }
+
+  .rq fieldset {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    min-width: 0;
+  }
+
+  .rq__section {
+    padding-top: 1.4rem;
+    border-top: 1px solid rgb(241 242 236 / 0.16);
+  }
+
+  .rq__grid {
+    display: grid;
+    gap: 1rem 1.1rem;
+  }
+
+  @media (min-width: 40rem) {
+    .rq__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .rq__wide {
+      grid-column: 1 / -1;
+    }
+  }
+
+  .rq__field {
+    display: grid;
+    gap: 0.4rem;
+    align-content: start;
+    min-width: 0;
+  }
+
+  .rq__field > label span,
+  .rq__req {
+    color: var(--muted-on-ink);
+    letter-spacing: 0.06em;
+  }
+
+  .rq input[type='text'],
+  .rq input[type='email'],
+  .rq input[type='tel'],
+  .rq input[type='url'],
+  .rq input[type='month'],
+  .rq select,
+  .rq textarea {
+    width: 100%;
+    min-height: 50px;
+    padding: 0.75rem 1.1rem;
+    border: 1px solid rgb(241 242 236 / 0.28);
+    border-radius: 999px;
+    background: var(--ink-2);
+    color: var(--paper);
+    font: 400 1rem/1.4 var(--font-text);
+    color-scheme: dark;
+  }
+
+  .rq textarea {
+    border-radius: 18px;
+    resize: vertical;
+  }
+
+  .rq select {
+    appearance: none;
+  }
+
+  .rq input[type='file'] {
+    color: var(--muted-on-ink);
+    font: inherit;
+    max-width: 100%;
+  }
+
+  .rq input::placeholder,
+  .rq textarea::placeholder {
+    color: var(--muted-on-ink);
+  }
+
+  .rq :is(input, select, textarea, button):focus-visible {
+    outline: 3px solid var(--lilac, #c9b6ff);
+    outline-offset: 2px;
+  }
+
+  .rq__field[data-invalid] :is(input, select, textarea) {
+    border-color: #ff8fb1;
+    box-shadow: inset 0 0 0 1px #ff8fb1;
+  }
+
+  .rq__hint {
+    color: var(--muted-on-ink);
+    font-size: 0.9rem;
+    line-height: 1.45;
+  }
+
+  .rq__hint a {
+    color: var(--paper);
+  }
+
+  .rq__error {
+    color: #ff8fb1;
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+
+  .rq__error:empty {
+    display: none;
+  }
+
+  .rq__routes {
+    display: grid;
+    gap: 0.6rem;
+  }
+
+  .rq__route,
+  .rq__check {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    line-height: 1.45;
+    cursor: pointer;
+  }
+
+  .rq__route {
+    padding: 0.9rem 1.1rem;
+    border: 1px solid rgb(241 242 236 / 0.28);
+    border-radius: 18px;
+  }
+
+  .rq__route:has(input:checked) {
+    border-color: var(--paper);
+    background: rgb(241 242 236 / 0.06);
+  }
+
+  .rq__route > span {
+    display: grid;
+    gap: 0.2rem;
+  }
+
+  .rq__route > span span {
+    color: var(--muted-on-ink);
+    font-size: 0.92rem;
+  }
+
+  .rq__route input,
+  .rq__check input {
+    flex: none;
+    width: 1.2rem;
+    height: 1.2rem;
+    margin-top: 0.15rem;
+    accent-color: #c9b6ff;
+  }
+
+  .rq__read {
+    display: grid;
+    gap: 0.6rem;
+    margin-top: 0.4rem;
+  }
+
+  .rq__entries {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .rq__entry {
+    display: grid;
+    gap: 0.9rem;
+    padding: 1rem;
+    border: 1px solid rgb(241 242 236 / 0.16);
+    border-radius: 18px;
+  }
+
+  .rq__ghost {
+    justify-self: start;
+    min-height: 44px;
+    padding: 0.55rem 1rem;
+    border: 1px solid rgb(241 242 236 / 0.5);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--paper);
+    font: 500 0.75rem/1 var(--font-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  .rq__ghost:hover {
+    background: var(--paper);
+    color: var(--ink);
+  }
+
+  .rq__ghost[hidden] {
+    display: none;
+  }
+
+  .rq__actions {
+    display: grid;
+    gap: 0.7rem;
+  }
+
+  .rq__send {
+    justify-self: start;
+    min-height: 54px;
+    padding: 0.9rem 2rem;
+    border: 0;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #e6a3c8, #c9b6ff);
+    color: var(--ink);
+    font: 800 1rem/1 var(--font-display);
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  .rq__send:disabled {
+    opacity: 0.6;
+    cursor: progress;
+  }
+
+  .rq__status:empty {
+    display: none;
+  }
+
+  .rq__status {
+    padding: 0.8rem 1rem;
+    border-radius: 14px;
+    background: rgb(241 242 236 / 0.08);
+    line-height: 1.45;
+  }
+
+  .rq__status[data-tone='warn'] {
+    background: #3a1420;
+    color: #ffd3e0;
+  }
+
+  .rq__trust {
+    color: var(--muted-on-ink);
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+
+  .rq__done {
+    display: grid;
+    gap: 1rem;
+    color: var(--paper);
+  }
+
+  .rq__done[hidden] {
+    display: none;
+  }
+
+  .rq__done h2 {
+    font: 800 clamp(1.8rem, 4vw, 2.6rem) / 1 var(--font-display);
+    text-transform: uppercase;
+  }
+
+  .rq__done a {
+    justify-self: start;
+  }
+</style>
+
+<script>
+  import '../../scripts/account/request-form';
+</script>

@@ -69,11 +69,13 @@ export function tokenFrom(request) {
 /** Starts a session for a user; returns the Set-Cookie header value. */
 export async function startSession(env, userId, now = Date.now()) {
   const token = newToken();
-  await env.DB.prepare(
-    'INSERT INTO sessions (token_hash, user_id, expires_at, created_at) VALUES (?, ?, ?, ?)',
-  )
-    .bind(await sha256Hex(token), userId, now + SESSION_DAYS * DAY, now)
-    .run();
+  await env.DB.batch([
+    env.DB.prepare(
+      'INSERT INTO sessions (token_hash, user_id, expires_at, created_at) VALUES (?, ?, ?, ?)',
+    ).bind(await sha256Hex(token), userId, now + SESSION_DAYS * DAY, now),
+    // For the 12-month clean-up of unused accounts (cleanup.js).
+    env.DB.prepare('UPDATE users SET last_login_at = ? WHERE id = ?').bind(now, userId),
+  ]);
   return sessionCookie(token);
 }
 

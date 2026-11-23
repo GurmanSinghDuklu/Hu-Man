@@ -188,6 +188,11 @@ async function start() {
     );
   }
   for (const project of me.projects) {
+    if (project.kind === 'request') {
+      list.append(requestCard(project));
+      if (project.route === 'instant' || project.previewPath) list.append(previewCard(project));
+      continue;
+    }
     const briefHref = sitePath(`/account/brief/?p=${encodeURIComponent(project.id)}`);
     const action =
       project.briefState === 'sent'
@@ -230,8 +235,78 @@ async function start() {
       previewCard(project),
     );
   }
+  if (me.user.role === 'client') root.append(deleteCard());
   root.hidden = false;
   if (new URLSearchParams(location.search).get('paid')) void waitForPayment();
+}
+
+const ROUTE_LABEL = {
+  instant: 'Choose design + upload CV',
+  custom: 'Custom made portfolio',
+} as const;
+
+/** A portfolio request from /contact/. */
+function requestCard(project: Project) {
+  const sent = project.briefState === 'sent';
+  const facts = [
+    project.route ? ROUTE_LABEL[project.route as keyof typeof ROUTE_LABEL] : '',
+    project.concept ? `Design: ${project.concept}` : '',
+  ].filter(Boolean);
+  const edit = sitePath(`/contact/?p=${encodeURIComponent(project.id)}`);
+  return el(
+    'article',
+    { class: 'acct-card' },
+    el('h2', { text: project.name }),
+    el('p', { class: 'acct-small', text: facts.join(' · ') }),
+    el('p', {
+      class: 'acct-tag',
+      'data-state': sent ? 'sent' : 'draft',
+      text: sent ? 'Request sent' : 'Not sent yet',
+    }),
+    el('p', {
+      class: 'acct-small',
+      text: sent
+        ? project.route === 'custom'
+          ? `Sent on ${formatDate(project.sentAt)}. A real person will reply by email within 48 hours.`
+          : `Sent on ${formatDate(project.sentAt)}.`
+        : 'You started this but haven’t sent it yet.',
+    }),
+    sent && project.route !== 'instant'
+      ? null
+      : el(
+          'div',
+          { class: 'acct-actions' },
+          el('a', {
+            class: sent ? 'btn btn--outline' : 'pill-btn',
+            href: edit,
+            text: sent ? 'Change your details' : 'Finish your request',
+          }),
+        ),
+  );
+}
+
+/** Delete my account: everything about them goes, after a confirm. */
+function deleteCard() {
+  const button = el('button', { type: 'button', class: 'acct-danger', text: 'Delete my account' });
+  button.addEventListener('click', async () => {
+    const sure = window.confirm(
+      'Delete your account and everything in it: your details, requests, CV and any portfolio we built? This can’t be undone.',
+    );
+    if (!sure) return;
+    const { status } = await api('/api/account/me', { method: 'DELETE' });
+    if (status === 200) location.replace(sitePath('/?deleted=1'));
+    else setStatus(UNAVAILABLE, 'warn');
+  });
+  return el(
+    'section',
+    { class: 'acct-card', 'aria-labelledby': 'delete-title' },
+    el('h2', { id: 'delete-title', text: 'Your data' }),
+    el('p', {
+      class: 'acct-small',
+      text: 'Your details and CV are encrypted, stored privately in Europe and only seen by our team. You can delete everything at any time.',
+    }),
+    el('div', { class: 'acct-actions' }, button),
+  );
 }
 
 void start();

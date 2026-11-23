@@ -84,6 +84,10 @@ name = "REPLY_PER_ADDRESS"
 namespace_id = "1003"
 simple = { limit = 1, period = 60 }
 
+# Daily clean-up of unconfirmed sign-ups and accounts unused for 12 months (worker/accounts/cleanup.js).
+[triggers]
+crons = ["17 3 * * *"]
+
 # Client accounts (worker/accounts/, spec docs/superpowers/specs/2026-11-23-client-accounts-design.md).
 # Before the first deploy that includes them: `npx wrangler d1 create hm_accounts`, paste its id
 # below, `npx wrangler r2 bucket create hm-client-files`, then

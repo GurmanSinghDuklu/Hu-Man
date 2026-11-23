@@ -1,64 +1,21 @@
 ---
-/** Client and admin login (worker/accounts/auth.js). Accounts are invite-only: no sign-up here. */
+/**
+ * Log in, create an account or reset a password (components/account/AuthPanel.astro). Anyone can
+ * create an account since 2026-11-23 (self-serve portfolios); the team logs in here too.
+ */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import AccountShell from '../components/account/AccountShell.astro';
-import { site } from '../config/site';
-
-const reset = `mailto:${site.contact.email}?subject=${encodeURIComponent('New setup link, please')}`;
+import AuthPanel from '../components/account/AuthPanel.astro';
 ---
 
 <BaseLayout page="login">
   <SiteHeader slot="header" />
 
-  <AccountShell
-    label="Client area"
-    title="Log in"
-    lede="For clients we’re working with. We send you a setup link after your first call."
-  >
-    <form class="acct-form" data-login novalidate>
-      <div class="acct-field" data-field="email">
-        <label for="login-email">Email</label>
-        <input
-          id="login-email"
-          name="email"
-          type="email"
-          autocomplete="username"
-          inputmode="email"
-          required
-          maxlength="200"
-        />
-      </div>
-      <div class="acct-field" data-field="password">
-        <label for="login-password">Password</label>
-        <input
-          id="login-password"
-          name="password"
-          type="password"
-          autocomplete="current-password"
-          required
-          maxlength="200"
-        />
-      </div>
-      <div class="acct-actions">
-        <button class="pill-btn" type="submit" data-submit>
-          Log in
-        </button>
-      </div>
-      <p class="acct-small">
-        Forgotten your password?{' '}
-        <a class="acct-link" href={reset}>
-          Ask us for a new setup link
-        </a>
-        .
-      </p>
-    </form>
+  <AccountShell label="Client area" title="Your account">
+    <AuthPanel mode="inline" start="login" />
   </AccountShell>
 
   <SiteFooter slot="footer" />
 </BaseLayout>
-
-<script>
-  import '../scripts/account/login.ts';
-</script>

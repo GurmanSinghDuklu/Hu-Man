@@ -13,6 +13,7 @@ import { handleAccounts, gateAdminPages } from './accounts/index.js';
 import { servePreview } from './accounts/preview.js';
 import { handlePreviewUpload } from './accounts/upload.js';
 import { handleStripeWebhook } from './accounts/payments.js';
+import { cleanUp } from './accounts/cleanup.js';
 
 /** The same protective headers public/_headers gives every static file. */
 const SECURITY_HEADERS = {
@@ -23,6 +24,11 @@ const SECURITY_HEADERS = {
 };
 
 export default {
+  /** Daily (wrangler.toml [triggers]): unconfirmed sign-ups and unused accounts (cleanup.js). */
+  async scheduled(event, env, ctx) {
+    ctx.waitUntil(cleanUp(env).then((r) => console.log('clean-up', JSON.stringify(r))));
+  },
+
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
     let response;
