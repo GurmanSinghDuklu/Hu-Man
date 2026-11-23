@@ -48,7 +48,7 @@ const maxOf = (f: { kind: string; max?: number }) =>
     <select id={id('concept')} name="concept">
       <option value="">Choose a design</option>
       {portfolioConcepts.map((c) => (
-        <option value={c.name} data-instant={c.instantTier ? 'yes' : undefined}>
+        <option value={c.name} data-slug={c.slug} data-instant={c.instantTier ? 'yes' : undefined}>
           {c.name}, {c.role}
           {c.instantTier ? ' · instant' : ''}
         </option>
@@ -88,14 +88,54 @@ const maxOf = (f: { kind: string; max?: number }) =>
   </div>
 
   {requestSections.map((section) => (
-    <fieldset class="rq__section" data-section={section.id}>
+    <fieldset class="rq__section" data-section={section.id} hidden={section.id === 'design'}>
       <legend class="rq__legend">{section.title}</legend>
+      {section.id === 'design' && (
+        <p class="rq__hint rq__wide">
+          The parts of this design your CV doesn’t cover. All optional: anything left empty is left
+          off your page, never filled with sample words.
+        </p>
+      )}
       <div class="rq__grid">
         {requestFields
           .filter((f) => f.section === section.id)
           .map((f) => {
             const req = f.required && <span class="rq__req"> (required)</span>;
             const hintId = f.hint ? id(`${f.id}-hint`) : undefined;
+            const designs = f.designs?.join(' ');
+            if (f.kind === 'image') {
+              return (
+                <div
+                  class="rq__field rq__wide"
+                  data-field={f.id}
+                  data-kind="image"
+                  data-designs={designs}
+                  hidden={Boolean(designs)}
+                >
+                  <label for={id(f.id)}>{f.label}</label>
+                  <div class="rq__image" data-image>
+                    <input type="hidden" data-image-id />
+                    <img alt="" width="72" height="72" data-image-thumb hidden />
+                    <input
+                      id={id(f.id)}
+                      type="file"
+                      accept="image/jpeg,image/png,image/webp"
+                      aria-describedby={hintId}
+                      data-image-input
+                    />
+                    <button type="button" class="rq__ghost" data-image-clear hidden>
+                      Remove picture
+                    </button>
+                  </div>
+                  {f.hint && (
+                    <p class="rq__hint" id={hintId}>
+                      {f.hint}
+                    </p>
+                  )}
+                  <p class="rq__error" data-error-for={f.id} />
+                </div>
+              );
+            }
             if (f.kind === 'consent') {
               return (
                 <div class="rq__field rq__wide" data-field={f.id} data-kind="consent">
@@ -117,14 +157,36 @@ const maxOf = (f: { kind: string; max?: number }) =>
                   data-field={f.id}
                   data-kind="repeat"
                   data-max={f.maxItems}
+                  data-noun={f.noun}
+                  data-designs={designs}
+                  hidden={Boolean(designs)}
                 >
+                  {f.designs && <p class="rq__sub">{f.label}</p>}
                   <div class="rq__entries" data-entries />
                   <template data-entry-template>
                     <div class="rq__entry" data-entry>
                       <p class="rq__entry-title" data-entry-number />
                       <div class="rq__grid">
                         {f.parts?.map((p) =>
-                          p.kind === 'check' ? (
+                          p.kind === 'image' ? (
+                            <div class="rq__field rq__wide">
+                              <label data-part-label={p.id}>{p.label}</label>
+                              <div class="rq__image" data-image>
+                                <input type="hidden" data-part={p.id} data-image-id />
+                                <img alt="" width="72" height="72" data-image-thumb hidden />
+                                <input
+                                  type="file"
+                                  accept="image/jpeg,image/png,image/webp"
+                                  data-image-input
+                                  data-part-file={p.id}
+                                />
+                                <button type="button" class="rq__ghost" data-image-clear hidden>
+                                  Remove picture
+                                </button>
+                              </div>
+                              {p.hint && <p class="rq__hint">{p.hint}</p>}
+                            </div>
+                          ) : p.kind === 'check' ? (
                             <label class="rq__check rq__wide">
                               <input type="checkbox" data-part={p.id} />
                               <span>{p.label}</span>
@@ -153,7 +215,7 @@ const maxOf = (f: { kind: string; max?: number }) =>
                     </div>
                   </template>
                   <button type="button" class="rq__ghost" data-entry-add>
-                    Add {f.id === 'experience' ? 'a job' : 'a qualification'}
+                    {f.add ?? 'Add another'}
                   </button>
                   <p class="rq__error" data-error-for={f.id} />
                 </div>
@@ -164,6 +226,8 @@ const maxOf = (f: { kind: string; max?: number }) =>
                 class:list={['rq__field', { rq__wide: f.kind === 'textarea' }]}
                 data-field={f.id}
                 data-kind={f.kind}
+                data-designs={designs}
+                hidden={Boolean(designs)}
               >
                 <label for={id(f.id)}>
                   {f.label}
@@ -249,6 +313,39 @@ const maxOf = (f: { kind: string; max?: number }) =>
     padding: 0;
     margin: 0;
     min-width: 0;
+  }
+
+  .rq__section[hidden],
+  .rq__field[hidden] {
+    display: none;
+  }
+
+  .rq__section > .rq__hint {
+    margin: -0.35rem 0 1rem;
+  }
+
+  .rq__sub {
+    margin: 0.4rem 0 0.6rem;
+    font: 700 1.05rem/1.2 var(--font-text);
+    color: var(--paper);
+  }
+
+  .rq__image {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .rq__image img {
+    width: 72px;
+    height: 72px;
+    object-fit: cover;
+    border: 1px solid rgb(241 242 236 / 0.4);
+  }
+
+  .rq__image img[hidden] {
+    display: none;
   }
 
   .rq__section {

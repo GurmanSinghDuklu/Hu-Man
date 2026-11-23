@@ -13,6 +13,9 @@ import { projectFor } from './account.js';
 import { fileFieldsFor } from '../../src/data/brief.ts';
 
 export const MAX_BYTES = 10 * 1024 * 1024;
+const REQUEST_FIELDS = ['cv', 'image'];
+/** Pictures shown on a built portfolio: never SVG (it can carry script). */
+export const PICTURES = new Set(['image/jpeg', 'image/png', 'image/webp']);
 export const MAX_FILES = 20;
 const ATTACH = new Set([
   'image/svg+xml',
@@ -72,9 +75,17 @@ export async function uploadFile(request, url, env, user, now = Date.now()) {
   const found = await editable(env, user, url.searchParams.get('p'));
   if (!found) return notFound();
   const { project, sent } = found;
-  if (sent) return fail(409, 'This brief has been sent. Ask us if you need to add files.');
   const field = url.searchParams.get('field') ?? '';
-  if (!fileFieldsFor(project.type).includes(field)) return fail(400, 'Unknown upload.');
+  // Portfolio requests take their CV and pictures for the design (photo, project screenshots).
+  const isRequest = project.kind === 'request';
+  if (!(isRequest ? REQUEST_FIELDS : fileFieldsFor(project.type)).includes(field)) {
+    return fail(400, 'Unknown upload.');
+  }
+  // An instant portfolio can be edited and rebuilt after sending, pictures included.
+  const rebuilding = isRequest && project.route === 'instant' && field === 'image';
+  if (sent && !rebuilding) {
+    return fail(409, 'This brief has been sent. Ask us if you need to add files.');
+  }
   if (!(await allowed(env.UPLOAD_PER_USER, user.id))) {
     return fail(429, 'Lots of uploads at once. Please wait a minute and carry on.');
   }
@@ -86,6 +97,9 @@ export async function uploadFile(request, url, env, user, now = Date.now()) {
   if (bytes.length === 0) return fail(400, 'That file is empty.');
   const type = sniff(bytes);
   if (!type) return fail(415, 'Please upload a JPG, PNG, WebP, SVG, PDF or Word (.docx) file.');
+  if (field === 'image' && !PICTURES.has(type)) {
+    return fail(415, 'Please upload a JPG, PNG or WebP picture.');
+  }
   const count = await env.DB.prepare('SELECT COUNT(*) AS n FROM files WHERE project_id = ?')
     .bind(project.id)
     .first('n');

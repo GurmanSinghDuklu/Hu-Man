@@ -6,10 +6,10 @@ import { handleAccounts } from './index.js';
 import { servePublished, instantDesign } from './instant.js';
 import { servePreview } from './preview.js';
 import { handleStripeWebhook } from './payments.js';
-import { leah } from './templates/leah.js';
-import { noor } from './templates/noor.js';
-import { theo } from './templates/theo.js';
-import { profile } from './templates/shared.js';
+import { leah } from './concepts/leah.js';
+import { noor } from './concepts/noor.js';
+import { theo } from './concepts/theo.js';
+import { profile } from './concepts/profile.js';
 
 const call = (env, ...args) => handleAccounts(req(...args), env);
 const ANSWERS = {
@@ -32,7 +32,6 @@ const ANSWERS = {
 
 function setUp() {
   const env = makeEnv();
-  env.ASSETS = { fetch: async () => new Response('<h1>Page not found</h1>', { status: 404 }) };
   env.mails = [];
   env.RESEND_API_KEY = 're_test';
   env.RESEND_FETCH = async (url, init) => {
@@ -92,13 +91,13 @@ test('the three instant designs exist, priced from pricing.ts', () => {
   assert.equal(instantDesign('Ellie Brooks'), null, 'hand-made designs are not instant');
 });
 
-test('every template escapes what people type and never links to javascript:', () => {
+test('every design escapes what people type and never links to javascript:', async () => {
   const p = profile(
     { ...ANSWERS, firstName: '<script>alert(1)</script>', website: 'javascript:alert(1)' },
     { cvUrl: 'cv.pdf' },
   );
   for (const t of [leah, noor, theo]) {
-    const html = t(p, { fontBase: 'https://humansoftwareagency.com' });
+    const { html } = await t(makeEnv(), p);
     assert.doesNotMatch(html, /<script>alert/);
     assert.doesNotMatch(html, /<img src=x/);
     assert.doesNotMatch(html, /href="javascript:/i);
@@ -135,8 +134,13 @@ test('send builds it at once; the preview shows it; editing rebuilds it', async 
   ).text();
   assert.match(rebuilt, /Head of operations/);
   assert.equal(
-    [...env.FILES.store.keys()].filter((k) => k.startsWith(`preview/${projectId}/`)).length,
+    new Set(
+      [...env.FILES.store.keys()]
+        .filter((k) => k.startsWith(`preview/${projectId}/`))
+        .map((k) => k.split('/')[2]),
+    ).size,
     1,
+    'only the newest version is kept',
   );
 });
 

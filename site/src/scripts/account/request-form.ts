@@ -1,5 +1,5 @@
 /**
- * The portfolio request form on /contact/ (components/account/RequestForm.astro).
+ * The portfolio request form on /portfolio/ (components/account/RequestForm.astro).
  * - The design comes from ?concept= (the "Choose this concept" buttons); ?p=<project> reopens a saved
  *   request to change it (the instant route's "Edit and rebuild").
  * - Send: checked here first; logged out → the sign-in panel opens over the page and sending
@@ -22,6 +22,8 @@ let cvFile: File | null = null;
 let cvUploaded = false;
 /** Reopened an instant portfolio that's already built: Send rebuilds it instead. */
 let rebuildMode = false;
+/** Pictures chosen but not uploaded yet, by the hidden input that will hold their file id. */
+const pendingImages = new Map<HTMLInputElement, File>();
 
 const status = (text: string, tone: '' | 'warn' = '') => {
   const s = form!.querySelector<HTMLElement>('[data-rq-status]')!;
@@ -34,7 +36,89 @@ const route = () =>
     'instant' | 'custom';
 const concept = () => (form!.elements.namedItem('concept') as HTMLSelectElement).value;
 
-// ---------- repeat entries (jobs, qualifications) ----------
+// ---------- pictures (a design's photo, project screenshots) ----------
+
+const IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
+
+function showImage(box: HTMLElement, src: string | null) {
+  const thumb = box.querySelector<HTMLImageElement>('[data-image-thumb]')!;
+  if (src) thumb.src = src;
+  else thumb.removeAttribute('src');
+  thumb.hidden = !src;
+  box.querySelector<HTMLElement>('[data-image-clear]')!.hidden = !src;
+}
+
+/** Wires one picture box; `id` is a file already uploaded (reopening a saved request). */
+function setUpImage(box: HTMLElement, id = '') {
+  const hidden = box.querySelector<HTMLInputElement>('[data-image-id]')!;
+  const input = box.querySelector<HTMLInputElement>('[data-image-input]')!;
+  hidden.value = id;
+  showImage(box, id ? sitePath(`/api/account/files/${encodeURIComponent(id)}`) : null);
+  input.addEventListener('change', () => {
+    const file = input.files?.[0];
+    if (!file) return;
+    const field = box.closest<HTMLElement>('[data-field]')?.dataset.field ?? '';
+    if (!IMAGE_TYPES.includes(file.type) || file.size > 10 * 1024 * 1024) {
+      showErrors(form!, { [field]: 'Please choose a JPG, PNG or WebP picture under 10 MB.' });
+      input.value = '';
+      return;
+    }
+    showErrors(form!, {});
+    pendingImages.set(hidden, file);
+    showImage(box, URL.createObjectURL(file));
+  });
+  box.querySelector('[data-image-clear]')!.addEventListener('click', () => {
+    hidden.value = '';
+    input.value = '';
+    pendingImages.delete(hidden);
+    showImage(box, null);
+    input.focus();
+  });
+}
+
+/** Uploads every picture chosen since the last save, putting its file id in the form. */
+async function uploadImages(): Promise<boolean> {
+  for (const [hidden, file] of pendingImages) {
+    if (!hidden.isConnected) {
+      pendingImages.delete(hidden);
+      continue;
+    }
+    status(`Uploading ${file.name}…`);
+    const { status: code, data } = await api<{ file: { id: string } }>(
+      `/api/account/files?p=${encodeURIComponent(projectId)}&field=image`,
+      {
+        method: 'POST',
+        body: file,
+        headers: { 'X-File-Name': encodeURIComponent(file.name), 'Content-Type': file.type },
+      },
+    );
+    if (code !== 201) {
+      const field = hidden.closest<HTMLElement>('[data-field]')?.dataset.field ?? '';
+      showErrors(form!, { [field]: data.error ?? 'That picture didn’t upload. Please try again.' });
+      status(data.error ?? 'A picture didn’t upload. Please try again.', 'warn');
+      return false;
+    }
+    hidden.value = data.file.id;
+    pendingImages.delete(hidden);
+  }
+  return true;
+}
+
+// ---------- the chosen design's own questions ----------
+
+function showDesignFields() {
+  const select = form!.elements.namedItem('concept') as HTMLSelectElement;
+  const slug = route() === 'instant' ? (select.selectedOptions[0]?.dataset.slug ?? '') : '';
+  let any = false;
+  form!.querySelectorAll<HTMLElement>('[data-designs]').forEach((wrap) => {
+    const on = Boolean(slug) && (wrap.dataset.designs ?? '').split(' ').includes(slug);
+    wrap.hidden = !on;
+    any ||= on;
+  });
+  form!.querySelector<HTMLElement>('[data-section="design"]')!.hidden = !any;
+}
+
+// ---------- repeat entries (jobs, qualifications, projects…) ----------
 
 function addEntry(wrap: HTMLElement, values: Record<string, string | boolean> = {}) {
   const list = wrap.querySelector<HTMLElement>('[data-entries]')!;
@@ -48,7 +132,14 @@ function addEntry(wrap: HTMLElement, values: Record<string, string | boolean> = 
     entry.querySelector(`[data-part-label="${input.dataset.part}"]`)?.setAttribute('for', uid);
     const v = values[input.dataset.part!];
     if (input instanceof HTMLInputElement && input.type === 'checkbox') input.checked = v === true;
-    else if (typeof v === 'string') input.value = v;
+    else if (typeof v === 'string' && !input.hasAttribute('data-image-id')) input.value = v;
+  });
+  entry.querySelectorAll<HTMLElement>('[data-image]').forEach((box) => {
+    const part = box.querySelector<HTMLInputElement>('[data-image-id]')!.dataset.part!;
+    const file = box.querySelector<HTMLInputElement>('[data-image-input]')!;
+    file.id = `rq-${wrap.dataset.field}-${part}-file-${Math.random().toString(36).slice(2, 8)}`;
+    entry.querySelector(`[data-part-label="${part}"]`)?.setAttribute('for', file.id);
+    setUpImage(box, typeof values[part] === 'string' ? (values[part] as string) : '');
   });
   entry.querySelector('[data-entry-remove]')!.addEventListener('click', () => {
     entry.remove();
@@ -62,7 +153,7 @@ function addEntry(wrap: HTMLElement, values: Record<string, string | boolean> = 
 
 function renumber(wrap: HTMLElement) {
   const entries = [...wrap.querySelectorAll<HTMLElement>('[data-entry]')];
-  const noun = wrap.dataset.field === 'experience' ? 'Job' : 'Qualification';
+  const noun = wrap.dataset.noun ?? 'Entry';
   entries.forEach((e, i) => {
     e.querySelector('[data-entry-number]')!.textContent = `${noun} ${i + 1}`;
     e.querySelector('[data-entry-remove]')!.setAttribute(
@@ -83,6 +174,9 @@ function readAnswers(): RequestAnswers {
     if (!wrap) continue;
     if (field.kind === 'consent') {
       if (wrap.querySelector<HTMLInputElement>('input')!.checked) answers[field.id] = true;
+    } else if (field.kind === 'image') {
+      const id = wrap.querySelector<HTMLInputElement>('[data-image-id]')!.value;
+      if (id) answers[field.id] = id;
     } else if (field.kind === 'repeat') {
       const entries = [...wrap.querySelectorAll<HTMLElement>('[data-entry]')].map((entry) => {
         const out: Record<string, string | boolean> = {};
@@ -95,7 +189,9 @@ function readAnswers(): RequestAnswers {
           });
         return out;
       });
-      const kept = entries.filter((e) => Object.keys(e).some((k) => k !== 'current'));
+      const kept = entries.filter((e) =>
+        Object.keys(e).some((k) => k !== 'current' && k !== 'image'),
+      );
       if (kept.length) answers[field.id] = kept;
     } else {
       const input = wrap.querySelector<HTMLInputElement | HTMLTextAreaElement>('input, textarea');
@@ -112,6 +208,15 @@ function fill(answers: RequestAnswers, { overwrite = true } = {}) {
     const value = answers[field.id];
     if (!wrap || value === undefined) continue;
     if (field.kind === 'consent') continue;
+    if (field.kind === 'image') {
+      const box = wrap.querySelector<HTMLElement>('[data-image]')!;
+      const hidden = box.querySelector<HTMLInputElement>('[data-image-id]')!;
+      if (typeof value === 'string' && (overwrite || !hidden.value)) {
+        hidden.value = value;
+        showImage(box, sitePath(`/api/account/files/${encodeURIComponent(value)}`));
+      }
+      continue;
+    }
     if (field.kind === 'repeat') {
       if (!Array.isArray(value)) continue;
       const list = wrap.querySelector<HTMLElement>('[data-entries]')!;
@@ -149,6 +254,7 @@ function showConceptRule() {
   form!.querySelector<HTMLElement>('[data-rq-send]')!.textContent = optional
     ? 'Send my request'
     : 'Build my portfolio';
+  showDesignFields();
 }
 
 // ---------- sending ----------
@@ -259,10 +365,14 @@ form?.addEventListener('submit', async (event) => {
   const button = form.querySelector<HTMLButtonElement>('[data-rq-send]')!;
   button.disabled = true;
   if (rebuildMode) {
+    if (!(await uploadImages())) {
+      button.disabled = false;
+      return;
+    }
     status('Rebuilding…');
     const { status: code, data } = await api<{ previewPath: string; live: boolean }>(
       `/api/account/request/rebuild?p=${encodeURIComponent(projectId)}`,
-      { method: 'POST', body: { answers } },
+      { method: 'POST', body: { answers: readAnswers() } },
     );
     button.disabled = false;
     if (code === 200) finished('instant', data.previewPath, data.live);
@@ -274,13 +384,17 @@ form?.addEventListener('submit', async (event) => {
   }
   try {
     if (!(await saveDraft()) || !(await uploadCv())) return;
+    if (pendingImages.size) {
+      // Pictures need the saved request to belong to; then save again with their ids.
+      if (!(await uploadImages()) || !(await saveDraft())) return;
+    }
     status('Sending…');
     const { status: code, data } = await api<{
       route: 'instant' | 'custom';
       previewPath: string | null;
     }>(`/api/account/request/send?p=${encodeURIComponent(projectId)}`, {
       method: 'POST',
-      body: { answers },
+      body: { answers: readAnswers() },
     });
     if (code === 200) finished(data.route, data.previewPath);
     else {
@@ -393,8 +507,12 @@ async function start() {
   form
     .querySelectorAll('input[name="route"]')
     .forEach((r) => r.addEventListener('change', showConceptRule));
+  form
+    .querySelectorAll<HTMLElement>('[data-field][data-kind="image"] [data-image]')
+    .forEach((box) => setUpImage(box));
 
   const conceptSelect = form.elements.namedItem('concept') as HTMLSelectElement;
+  conceptSelect.addEventListener('change', showDesignFields);
   const wanted = params.get('concept');
   if (wanted) applyConcept(wanted);
 

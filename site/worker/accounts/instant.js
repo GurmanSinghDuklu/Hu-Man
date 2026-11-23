@@ -12,16 +12,19 @@ import { typeFor } from './preview.js';
 import { saveEnquiry } from './enquiries.js';
 import { tellStudio } from './mail.js';
 import { sendToPerson } from './send.js';
-import { profile } from './templates/shared.js';
-import { leah } from './templates/leah.js';
-import { noor } from './templates/noor.js';
-import { theo } from './templates/theo.js';
+import { profile } from './concepts/profile.js';
+import { leah } from './concepts/leah.js';
+import { noor } from './concepts/noor.js';
+import { theo } from './concepts/theo.js';
+import { PICTURES } from './files.js';
 import { validateRequest } from '../../src/data/portfolioRequest.ts';
 import { portfolioConcepts } from '../../src/data/portfolioConcepts.ts';
 import { portfolioTiers } from '../../src/data/pricing.ts';
 import { productionUrl } from '../../src/config/domain.ts';
 
-const TEMPLATES = { leah, noor, theo };
+/** Each instant design's renderer: the real concept page with their content (concepts/). */
+const RENDERERS = { leah, noor, theo };
+const EXT = { 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp' };
 export const APEX = new URL(productionUrl).hostname;
 const RESERVED = new Set([
   'www',
@@ -42,16 +45,44 @@ const RESERVED = new Set([
 /** The instant design for a concept name, with its template and price in pence, or null. */
 export function instantDesign(name) {
   const concept = portfolioConcepts.find((c) => c.name === name && c.instantTier);
-  const template = concept && TEMPLATES[concept.slug];
-  if (!template) return null;
+  const render = concept && RENDERERS[concept.slug];
+  if (!render) return null;
   const tier = portfolioTiers.find((t) => t.name === concept.instantTier);
   const pence = Math.round(Number(String(tier?.price ?? '').replace(/[£,]/g, '')) * 100);
   return {
     concept,
-    template,
+    render,
     tier: concept.instantTier,
     pence: Number.isFinite(pence) ? pence : null,
   };
+}
+
+/**
+ * The pictures their answers use (photo, project screenshots): uploads of theirs, JPG/PNG/WebP
+ * only, each given a path on the site. Pictures they uploaded but no longer use are deleted.
+ */
+async function pictures(env, project, answers) {
+  const wanted = new Set(
+    [
+      answers.photo,
+      ...(Array.isArray(answers.projects) ? answers.projects : []).map((x) => x?.image),
+    ].filter((id) => typeof id === 'string'),
+  );
+  const { results } = await env.DB.prepare(
+    "SELECT id, r2_key, type FROM files WHERE project_id = ? AND field = 'image'",
+  )
+    .bind(project.id)
+    .all();
+  const found = new Map();
+  for (const file of results ?? []) {
+    if (wanted.has(file.id) && PICTURES.has(file.type)) {
+      found.set(file.id, { ...file, path: `img/${file.id}.${EXT[file.type]}` });
+    } else if (!wanted.has(file.id)) {
+      await env.FILES.delete(file.r2_key);
+      await env.DB.prepare('DELETE FROM files WHERE id = ?').bind(file.id).run();
+    }
+  }
+  return found;
 }
 
 /** Builds the portfolio into R2 as a new preview version and switches to it. */
@@ -65,14 +96,27 @@ export async function buildInstant(env, project, answers, origin, now = Date.now
     .bind(project.id)
     .first();
   const cvBytes = cv ? await env.FILES.get(cv.r2_key) : null;
-  const html = design.template(profile(answers, { cvUrl: cvBytes ? 'cv.pdf' : null }), {
-    fontBase: productionUrl,
+  const images = await pictures(env, project, answers);
+  const p = profile(answers, {
+    cvUrl: cvBytes ? 'cv.pdf' : null,
+    images: new Map([...images].map(([id, file]) => [id, file.path])),
   });
+  const { html, assets } = await design.render(env, p);
   const version = `v${now}-${Math.random().toString(36).slice(2, 8).padEnd(6, '0')}`;
   const prefix = `preview/${project.id}/${version}/`;
-  await env.FILES.put(`${prefix}index.html`, new TextEncoder().encode(html), {
-    httpMetadata: { contentType: typeFor('index.html') },
-  });
+  const put = (path, body) =>
+    env.FILES.put(`${prefix}${path}`, body, { httpMetadata: { contentType: typeFor(path) } });
+  await put('index.html', new TextEncoder().encode(html));
+  // The design's own fonts and scripts, so the site needs nothing from ours.
+  for (const asset of assets) {
+    const res = await env.ASSETS.fetch(new Request(`https://assets.local${asset.from}`));
+    if (!res.ok) throw new Error(`Missing design file ${asset.from}`);
+    await put(asset.to, await res.arrayBuffer());
+  }
+  for (const file of images.values()) {
+    const object = await env.FILES.get(file.r2_key);
+    if (object) await put(file.path, await new Response(object.body).arrayBuffer());
+  }
   if (cvBytes) {
     await env.FILES.put(`${prefix}cv.pdf`, await new Response(cvBytes.body).arrayBuffer(), {
       httpMetadata: { contentType: 'application/pdf' },
@@ -202,7 +246,7 @@ const PUBLISHED_HEADERS = {
   'X-Content-Type-Options': 'nosniff',
   'Referrer-Policy': 'strict-origin-when-cross-origin',
   'Strict-Transport-Security': 'max-age=31536000',
-  'Content-Security-Policy': `default-src 'none'; style-src 'unsafe-inline'; font-src ${productionUrl}; img-src 'self' data:; script-src 'unsafe-inline'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'`,
+  'Content-Security-Policy': `default-src 'none'; style-src 'unsafe-inline'; font-src 'self'; img-src 'self' data:; media-src 'self'; script-src 'self' 'unsafe-inline'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'`,
 };
 
 /**

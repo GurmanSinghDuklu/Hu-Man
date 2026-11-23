@@ -1,5 +1,5 @@
 /**
- * The portfolio request form on /contact/ (spec: docs/superpowers/specs/2026-11-23-self-serve-
+ * The portfolio request form on /portfolio/ (spec: docs/superpowers/specs/2026-11-23-self-serve-
  * portfolios-design.md): what a CV builder asks, minus anything we don't need (no street address).
  * One list drives the page (components/account/RequestForm.astro), the Worker's checks
  * (worker/accounts/requests.js), the admin view and the instant templates.
@@ -11,7 +11,8 @@ export type RequestRoute = 'custom' | 'instant';
 export interface RequestPart {
   id: string;
   label: string;
-  kind: 'text' | 'textarea' | 'month' | 'check';
+  /** 'image': an uploaded picture, kept as its file id (worker/accounts/files.js, field 'image'). */
+  kind: 'text' | 'textarea' | 'month' | 'check' | 'image';
   max?: number;
   hint?: string;
   required?: boolean;
@@ -20,8 +21,8 @@ export interface RequestPart {
 export interface RequestField {
   id: string;
   label: string;
-  kind: 'text' | 'email' | 'tel' | 'url' | 'textarea' | 'repeat' | 'consent';
-  section: 'you' | 'links' | 'story' | 'experience' | 'education' | 'more' | 'send';
+  kind: 'text' | 'email' | 'tel' | 'url' | 'textarea' | 'repeat' | 'consent' | 'image';
+  section: 'you' | 'links' | 'story' | 'experience' | 'education' | 'design' | 'more' | 'send';
   required?: boolean;
   max?: number;
   hint?: string;
@@ -29,6 +30,15 @@ export interface RequestField {
   /** For 'repeat': the parts of each entry, and the most entries. */
   parts?: RequestPart[];
   maxItems?: number;
+  /** For 'repeat': what one entry is called ("Job"), and the add button's words. */
+  noun?: string;
+  add?: string;
+  /**
+   * Only asked when one of these designs (portfolioConcepts slugs) is chosen for an instant build:
+   * the parts of that design's page the CV questions don't cover. Each design's renderer
+   * (worker/accounts/concepts/) uses them, and leaves a part of the page out when they're empty.
+   */
+  designs?: string[];
 }
 
 export const requestRoutes: { value: RequestRoute; label: string; text: string }[] = [
@@ -50,6 +60,7 @@ export const requestSections: { id: RequestField['section']; title: string }[] =
   { id: 'story', title: 'Your story' },
   { id: 'experience', title: 'Work history' },
   { id: 'education', title: 'Education' },
+  { id: 'design', title: 'For your design' },
   { id: 'more', title: 'Anything else' },
   { id: 'send', title: 'Check and send' },
 ];
@@ -142,6 +153,8 @@ export const requestFields: RequestField[] = [
     kind: 'repeat',
     section: 'experience',
     maxItems: 15,
+    noun: 'Job',
+    add: 'Add a job',
     parts: [
       { id: 'title', label: 'Job title', kind: 'text', max: 120 },
       { id: 'employer', label: 'Employer', kind: 'text', max: 120 },
@@ -164,10 +177,141 @@ export const requestFields: RequestField[] = [
     kind: 'repeat',
     section: 'education',
     maxItems: 10,
+    noun: 'Qualification',
+    add: 'Add a qualification',
     parts: [
       { id: 'qualification', label: 'Qualification', kind: 'text', max: 160 },
       { id: 'where', label: 'School, college or university', kind: 'text', max: 160 },
       { id: 'year', label: 'Year', kind: 'text', max: 20 },
+    ],
+  },
+  // ---------- for your design (only the chosen design's questions show) ----------
+  {
+    id: 'headline',
+    label: 'One line under your name',
+    kind: 'text',
+    section: 'design',
+    max: 160,
+    hint: 'For example: Six years designing money and health apps.',
+    designs: ['noor', 'theo'],
+  },
+  {
+    id: 'heroWords',
+    label: 'Three words for your work',
+    kind: 'text',
+    section: 'design',
+    max: 80,
+    hint: 'Shown huge at the top, separated by commas. For example: Planned, Delivered, Handed over.',
+    designs: ['leah'],
+  },
+  {
+    id: 'belief',
+    label: 'What you believe about your work',
+    kind: 'text',
+    section: 'design',
+    max: 160,
+    hint: 'One sentence, shown large. For example: Software should fail loudly and recover quietly.',
+    designs: ['theo'],
+  },
+  {
+    id: 'availability',
+    label: 'What you’re open to',
+    kind: 'text',
+    section: 'design',
+    max: 120,
+    hint: 'For example: Open to roles from January 2027. Leave empty to leave it off.',
+    designs: ['noor', 'theo'],
+  },
+  {
+    id: 'photo',
+    label: 'A photo',
+    kind: 'image',
+    section: 'design',
+    hint: 'Of you, or of your work. JPG, PNG or WebP, up to 10 MB. Without one we show your initials.',
+    designs: ['leah'],
+  },
+  {
+    id: 'facts',
+    label: 'Three short facts',
+    kind: 'repeat',
+    section: 'design',
+    maxItems: 3,
+    noun: 'Fact',
+    add: 'Add a fact',
+    designs: ['noor'],
+    parts: [
+      { id: 'title', label: 'In a few words', kind: 'text', max: 40 },
+      { id: 'text', label: 'A sentence about it', kind: 'textarea', max: 200 },
+    ],
+  },
+  {
+    id: 'projects',
+    label: 'Projects',
+    kind: 'repeat',
+    section: 'design',
+    maxItems: 6,
+    noun: 'Project',
+    add: 'Add a project',
+    designs: ['noor', 'leah', 'theo'],
+    parts: [
+      { id: 'title', label: 'Project name', kind: 'text', max: 80 },
+      { id: 'what', label: 'What it is, in a line', kind: 'text', max: 120 },
+      { id: 'role', label: 'Your role', kind: 'text', max: 100 },
+      { id: 'year', label: 'Year', kind: 'text', max: 20 },
+      { id: 'tools', label: 'Tools or skills used', kind: 'text', max: 120 },
+      { id: 'link', label: 'Link', kind: 'text', max: 300, hint: 'Optional.' },
+      { id: 'problem', label: 'The problem', kind: 'textarea', max: 600 },
+      { id: 'built', label: 'What you did', kind: 'textarea', max: 600 },
+      { id: 'outcome', label: 'What changed', kind: 'textarea', max: 600 },
+      {
+        id: 'image',
+        label: 'A picture of it',
+        kind: 'image',
+        hint: 'A screenshot or photo. JPG, PNG or WebP, up to 10 MB. Optional.',
+      },
+    ],
+  },
+  {
+    id: 'services',
+    label: 'What you do',
+    kind: 'repeat',
+    section: 'design',
+    maxItems: 6,
+    noun: 'Area',
+    add: 'Add an area',
+    designs: ['leah'],
+    parts: [
+      { id: 'title', label: 'Area', kind: 'text', max: 40, hint: 'For example: Budgets.' },
+      { id: 'text', label: 'A sentence about it', kind: 'textarea', max: 300 },
+      { id: 'points', label: 'Details', kind: 'textarea', max: 600, hint: 'One per line.' },
+    ],
+  },
+  {
+    id: 'steps',
+    label: 'How you work',
+    kind: 'repeat',
+    section: 'design',
+    maxItems: 4,
+    noun: 'Step',
+    add: 'Add a step',
+    designs: ['noor', 'leah'],
+    parts: [
+      { id: 'title', label: 'Step', kind: 'text', max: 40, hint: 'For example: Listen.' },
+      { id: 'text', label: 'What happens', kind: 'textarea', max: 300 },
+    ],
+  },
+  {
+    id: 'faqs',
+    label: 'Questions people ask you',
+    kind: 'repeat',
+    section: 'design',
+    maxItems: 6,
+    noun: 'Question',
+    add: 'Add a question',
+    designs: ['leah'],
+    parts: [
+      { id: 'question', label: 'Question', kind: 'text', max: 160 },
+      { id: 'answer', label: 'Your answer', kind: 'textarea', max: 600 },
     ],
   },
   {
@@ -203,6 +347,7 @@ function clean(value: unknown, kind: string): string {
   return text.trim();
 }
 
+const FILE_ID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
 const EMAIL = /^[^\s@<>()[\]\\,;:"]+@[^\s@<>()[\]\\,;:"]+\.[^\s@<>()[\]\\,;:".]{2,}$/;
 const MONTH = /^\d{4}-(0[1-9]|1[0-2])$/;
 
@@ -222,6 +367,8 @@ export function validateRequest(
     const value = input[field.id];
     if (field.kind === 'consent') {
       if (value === true) answers[field.id] = true;
+    } else if (field.kind === 'image') {
+      if (typeof value === 'string' && FILE_ID.test(value)) answers[field.id] = value;
     } else if (field.kind === 'repeat') {
       if (Array.isArray(value)) {
         const entries = value
@@ -232,6 +379,8 @@ export function validateRequest(
               const v = (entry as Record<string, unknown> | null)?.[part.id];
               if (part.kind === 'check') {
                 if (v === true) out[part.id] = true;
+              } else if (part.kind === 'image') {
+                if (typeof v === 'string' && FILE_ID.test(v)) out[part.id] = v;
               } else {
                 let text = clean(v, part.kind);
                 if (part.kind === 'month' && text && !MONTH.test(text)) text = '';
@@ -242,7 +391,7 @@ export function validateRequest(
             }
             return out;
           })
-          .filter((e) => Object.keys(e).some((k) => k !== 'current'));
+          .filter((e) => Object.keys(e).some((k) => k !== 'current' && k !== 'image'));
         if (entries.length) answers[field.id] = entries;
       }
     } else {
@@ -270,13 +419,14 @@ export function validateRequest(
 export function requestAnswerText(field: RequestField, value: unknown): string {
   if (value === undefined || value === null || value === '') return '';
   if (field.kind === 'consent') return value === true ? 'Yes' : '';
+  if (field.kind === 'image') return 'A picture (in the files)';
   if (field.kind === 'repeat' && Array.isArray(value)) {
     return value
       .map((entry, i) => {
         const e = entry as Record<string, string | boolean>;
         const parts = (field.parts ?? [])
           .filter((p) => e[p.id] !== undefined && p.kind !== 'check')
-          .map((p) => `${p.label}: ${e[p.id]}`);
+          .map((p) => (p.kind === 'image' ? `${p.label}: in the files` : `${p.label}: ${e[p.id]}`));
         if (e.current) parts.push('Current');
         return `${i + 1}. ${parts.join(' · ')}`;
       })

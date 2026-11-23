@@ -922,3 +922,24 @@ picks the route (instant designs → instant, hand-made → custom) and scrolls 
 in heroVideos.ts feeds the schema (a page may now describe several VideoObjects) and hero-video.ts
 wires every `[data-hv]`. A short UK GDPR privacy notice (`PrivacyShort.astro`) sits under the trust
 line in the form and the sign-in panel; keep it consistent with /privacy/ (drafts, solicitor review).
+
+## Instant portfolios are the real concept pages (2026-11-23, branch `client-accounts`)
+An instant build is now the concept's own page (`public/concepts/<slug>/index.html`) with the customer's
+content swapped in, so the design's CSS, structure and motion come with it (Gurman/Mandeep: "they want the
+animations, structures and designs"). Renderers live in `site/worker/accounts/concepts/<slug>.js`
+(Noor, Leah and Theo so far; all 22 to follow in batches); `page.js` loads the page through `env.ASSETS`,
+`swap()`s each sample section (it throws if the concept's markup changes, so tests catch drift) and
+`finish()` removes the badge, preview.js and noindex, adds Person schema and copies `../vendor/` and
+`../fonts/` files into the site itself (published CSP is all 'self').
+1. **No sample content survives.** A section with nothing from the customer is left out (and the page's
+   script is guarded so it still runs); `concepts.test.js` checks each design's sample words, built with
+   full and with minimal answers. Never let ® or ™ follow a customer's name (Leah's marks become °).
+2. **Design-only questions**: fields with `designs: [...]` in `src/data/portfolioRequest.ts` (section
+   'design') show only when that design is chosen for an instant build. Add a design's slug there when
+   its renderer uses the field. Pictures (`kind: 'image'`) upload to field `image` (JPG/PNG/WebP only,
+   allowed after sending so Edit and rebuild works) and are stored in the answers as file ids; a build
+   copies the used ones to `img/` and deletes unused ones.
+3. Noor's deck always has four phone screens (their pictures, then screens drawn in Noor's palettes from
+   projects, jobs, qualifications and contact). Theo's commit heatmap is always left out (sample data).
+4. Sample renders for checking by eye: a scratch script renders a design with sample answers and
+   screenshots it at 1280 and 390px; render every new design this way before showing it.

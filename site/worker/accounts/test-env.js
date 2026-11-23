@@ -5,6 +5,7 @@
  */
 import { DatabaseSync } from 'node:sqlite';
 import { readdirSync, readFileSync } from 'node:fs';
+import { readFile } from 'node:fs/promises';
 import { handleAccounts } from './index.js';
 import { addUser, createInvite } from './auth.js';
 
@@ -102,10 +103,25 @@ class FakeEmailMessage {
   }
 }
 
+/** The site's static files, as the ASSETS binding serves them (public/ is enough for tests). */
+const PUBLIC = new URL('../../public/', import.meta.url);
+const fakeAssets = {
+  async fetch(request) {
+    const path = decodeURIComponent(new URL(request.url).pathname).replace(/^\/+/, '');
+    if (path.split('/').includes('..')) return new Response('Not found', { status: 404 });
+    try {
+      return new Response(await readFile(new URL(path, PUBLIC)));
+    } catch {
+      return new Response('Not found', { status: 404 });
+    }
+  },
+};
+
 export function makeEnv() {
   const sent = [];
   return {
     sent,
+    ASSETS: fakeAssets,
     EmailMessage: FakeEmailMessage,
     DB: fakeD1(),
     FILES: fakeR2(),
