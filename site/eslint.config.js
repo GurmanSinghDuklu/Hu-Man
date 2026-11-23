@@ -16,6 +16,7 @@ export default tseslint.config(
   {
     ignores: [
       'dist/**',
+      '.wrangler/**',
       '.og-build/**',
       '.astro/**',
       'node_modules/**',

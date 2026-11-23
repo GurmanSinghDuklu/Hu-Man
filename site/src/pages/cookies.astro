@@ -9,17 +9,21 @@ import { withBase } from '../config/paths';
 
 // Checked 2026-11-17: no Set-Cookie on any page or the enquiry endpoint, and no localStorage,
 // sessionStorage or document.cookie anywhere in src/ (motion-check fails if a page stores any).
+// 2026-11-23: the client area (worker/accounts/) sets one login cookie, __Host-hm_session, only
+// from /api/auth/* (setup and login); worker tests check no other route sets a cookie.
 ---
 
 <BaseLayout page="cookies">
   <SiteHeader slot="header" />
 
-  <LegalDoc title="Cookie policy" updated="2 November 2026">
+  <LegalDoc title="Cookie policy" updated="23 November 2026">
     <h2>The short version</h2>
     <p>
-      This website sets no cookies. It runs no analytics, advertising or tracking, and it stores
-      nothing in your browser. That is why there is no cookie banner asking you to accept anything.
-      The fingerprint button at the bottom right of every page shows this summary at any time.
+      The public pages of this website set no cookies. It runs no analytics, advertising or
+      tracking, and stores nothing in your browser. That is why there is no cookie banner asking you
+      to accept anything. The one cookie we ever set is for clients who log in to their client
+      account: it keeps them logged in. The fingerprint button at the bottom right of every page
+      shows this summary at any time.
     </p>
 
     <h2>What cookies are</h2>
@@ -32,9 +36,20 @@ import { withBase } from '../config/paths';
 
     <h2>Cookies on this site</h2>
     <p>
-      None. We don't set cookies on any page, on the contact form or on the free AI check form, and
-      we don't use local storage or similar tools. The site's fonts, images and videos are all
-      served from our own domain, so no other company's content loads when you visit.
+      On the public pages, none. We don't set cookies on any page, on the contact form or on the
+      free AI check form, and we don't use local storage or similar tools. The site's fonts, images
+      and videos are all served from our own domain, so no other company's content loads when you
+      visit.
+    </p>
+
+    <h2>If you have a client account</h2>
+    <p>
+      Clients we're working with can log in to a private client area to send us their project brief
+      and files. When you log in, we set one cookie, <code>__Host-hm_session</code>. It holds a
+      random code that tells our site you're logged in, and nothing about you. It is sent only to
+      our own site, can't be read by scripts on the page, and lasts 30 days or until you log out,
+      whichever comes first. It is strictly necessary for a service you asked for, so under PECR it
+      doesn't need consent. If you never log in, it is never set.
     </p>
 
     <h2>Security cookies from our host</h2>

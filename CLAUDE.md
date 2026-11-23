@@ -753,6 +753,8 @@ to play once per visit; they now play on every visit by link and skip on a refre
 read from the browser's navigation record (`introWanted()` in `hero-intro.ts`, and the same rule in
 `scripts/inline/contact-intro-gate.js`). `motion-check` fails if any page stores anything. If
 something ever needs storage, change the cookies page first and ask whether it needs consent.
+Exception since 2026-11-23: the client area sets one strictly necessary login cookie
+(`__Host-hm_session`), only from `/api/auth/*`; public pages still set none (a worker test checks).
 
 ## CV concepts FAQ on /portfolio (2026-11-18)
 Eight questions about the CV concepts, under the ATS section (`#faq`, same open-card style as the About FAQ).
@@ -819,3 +821,27 @@ Copy is a draft awaiting Gurman's sign-off.
   AggregateOffer from the tiers, and FAQPage. Footer "Leeds · Manchester" link to them; `/leeds` and
   `/manchester` redirect. Copy is a draft awaiting his sign-off.
 Lighthouse 95/100/100/100 on both city pages and /business-websites/, axe 0 on 19 pages and the six concepts.
+
+## Client accounts: login and the brief (2026-11-23, branch `client-accounts`)
+Parts 1 and 2 of Gurman's "access before payment" plan (spec
+`docs/superpowers/specs/2026-11-23-client-accounts-design.md`, plan in `docs/superpowers/plans/`).
+Invite-only: an admin creates a client at `/admin/` and pastes the one-time setup link (7 days) into
+an email; the client sets a password, fills in the brief at `/account/brief/` (saves to the server as
+they go) with uploads, and sends it; the studio inbox gets a summary. Parts 3 (watermarked preview)
+and 4 (Stripe, then publish) are next and plug into `projects.status` and the "Your preview" box.
+1. **API in the Worker** (`site/worker/accounts/`, JSON, no new npm dependencies): D1 (`DB`,
+   migrations in `site/migrations/`), R2 (`FILES`, private). Changes need our own `Origin`; anything
+   a user may not see is 404. Tests run on `node:sqlite` with the real migrations (`npm test`).
+2. **`"/api/*"` is in `run_worker_first`.** Without it the static-asset handler answered every API
+   path itself (404 page, 405 for POST), the enquiry endpoint included. seo-check requires it.
+3. **The brief's questions are data** (`src/data/brief.ts`, plain erasable TypeScript with no imports,
+   so the Worker and Node import it directly). Feature options list the tiers that include them
+   (`in`); a test checks the names against `pricing.ts`. No prices in the brief.
+4. **Pages are static shells** (noindex, out of the sitemap, llms files and Markdown copies; listed
+   in seo-check's `NOINDEX_FILES`); scripts in `src/scripts/account/` build everything with
+   `textContent`, never HTML. Styles are global under `acct-` in `AccountShell.astro`.
+5. **Admins are made only by `npm run make-admin -- <email> "<name>" [--remote]`**; no screen makes
+   admins. PBKDF2 at 100,000 iterations (the Workers maximum); tokens stored as SHA-256 hashes.
+6. Setup steps (D1, R2, migrations, admins): `docs/10-launch.md` "Client accounts". The
+   `database_id` in wrangler.toml is a placeholder until then, so don't merge before step 1.
+7. Footer Legal column has "Client login"; the footer line says "No tracking" (was "No cookies").

@@ -18,7 +18,7 @@ import { withBase } from '../config/paths';
 
   <LegalDoc
     title="Privacy notice"
-    updated="17 November 2026"
+    updated="23 November 2026"
     note="Draft: this notice has not been reviewed by a solicitor yet. It describes the site as it works today. The section on clients was added on 17 November 2026."
   >
     <h2>Who this covers</h2>
@@ -31,10 +31,10 @@ import { withBase } from '../config/paths';
 
     <h2>This site itself</h2>
     <p>
-      This site sets no cookies and runs no analytics, advertising or tracking scripts of any kind.
-      It is a static set of pages: visiting it does not create an account, a session or a tracking
-      profile. If analytics are added later, this notice will be updated first and a cookie or
-      consent notice will be added if required.
+      The public pages set no cookies and run no analytics, advertising or tracking scripts of any
+      kind. Visiting them does not create an account, a session or a tracking profile. Clients we
+      work with can log in to a private client area, described below. If analytics are added later,
+      this notice will be updated first and a cookie or consent notice will be added if required.
     </p>
 
     <h2>Hosting</h2>
@@ -96,6 +96,25 @@ import { withBase } from '../config/paths';
       physiotherapy clients) get extra care here, in line with the rules for special-category data.
     </p>
 
+    <h2>If you have a client account</h2>
+    <p>
+      We only create a client account for someone we're working with, after we've talked. The
+      account holds your name, your email address, your password (stored only in a scrambled form we
+      can't read back), your project brief and the files you upload. We use it to plan, build and
+      deliver your project; the lawful basis is that we need it to carry out our contract with you.
+    </p>
+    <p>
+      It is stored with Cloudflare (their D1 database and R2 file storage), alongside the site
+      itself. Only you and the Hu/man team can see your brief and files. When you send your brief, a
+      summary of it is emailed to our inbox (Gmail). Logging in sets one cookie that keeps you
+      logged in: see the <a href={withBase('/cookies/')}>cookie policy</a>.
+    </p>
+    <p>
+      We keep your account and files for the same time as other project files: 12 months after your
+      site goes live, or as long as we host or look after your site. Ask us and we'll delete your
+      account and everything in it sooner, unless we still need it to finish your project.
+    </p>
+
     <h2>Your rights</h2>
     <p>
       You can ask what information is held about you, ask for it to be corrected or deleted, or
@@ -106,8 +125,8 @@ import { withBase } from '../config/paths';
     </p>
     <h2>Cookies</h2>
     <p>
-      This site sets no cookies. The <a href={withBase('/cookies/')}>cookie policy</a> has the
-      details.
+      Public pages set no cookies; a logged-in client has one login cookie. The{' '}
+      <a href={withBase('/cookies/')}>cookie policy</a> has the details.
     </p>
   </LegalDoc>
 

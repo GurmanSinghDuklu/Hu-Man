@@ -78,6 +78,32 @@ To switch it on (Gurman's decision, it costs money):
    in place: an auto-reply is an email to an address someone typed, so flooding must be blocked.
 6. Test: send an enquiry from `/contact/` with a second address of yours and check both emails.
 
+### Client accounts (login, brief, uploads)
+Built 2026-11-23 (spec `docs/superpowers/specs/2026-11-23-client-accounts-design.md`). Invited clients
+log in at `/login/`, fill in their project brief and upload files; the team manages them at
+`/admin/`. It needs a database (D1) and a file store (R2) in the same Cloudflare account. Both are
+free at this size (D1: 5 GB; R2: 10 GB and no fees for downloads). **Do these before the first
+deploy that includes the client area** (otherwise `wrangler deploy` fails on the placeholder id):
+1. `cd site && npx wrangler d1 create hm_accounts`. Copy the `database_id` it prints into
+   `site/wrangler.toml` (the `[[d1_databases]]` block), replacing the zeros. Commit.
+2. `npx wrangler r2 bucket create hm-client-files` (keep it private: never turn on public access).
+3. `npx wrangler d1 migrations apply hm_accounts --remote` (creates the tables).
+4. Deploy as usual.
+5. `npm run make-admin -- <email> "<name>" --remote` for Gurman, then for Mandeep. Each prints a
+   one-time setup link (7 days); open it and choose a password. Run it again for a forgotten admin
+   password.
+6. Check: log in at `/admin/`, create a test client with your own second address, open its setup
+   link in a private window, fill in and send the brief with a small upload, and check the
+   "[Client brief]" email arrives. Then delete the test client:
+   `npx wrangler d1 execute hm_accounts --remote --command "DELETE FROM users WHERE email = '<test address>'"`
+   (its project, brief and file records go with it; the uploaded file stays in R2 until you delete
+   it in the dashboard).
+
+Local testing: `npx wrangler d1 migrations apply hm_accounts --local`, `npm run build`,
+`npx wrangler dev`, then `npm run make-admin -- you@example.com "You"` prints a localhost link.
+Locally, setup links the admin page makes point at the live domain (wrangler dev reports the route's
+host): swap the host for `localhost:8787` by hand.
+
 ## 2. DNS
 1. Add humansoftwareagency.com to Cloudflare (free plan). Cloudflare gives two nameservers.
 2. Namecheap → Domain List → Manage → Nameservers → Custom DNS → paste Cloudflare's two.

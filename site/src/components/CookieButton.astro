@@ -1,7 +1,8 @@
 ---
 /**
  * The fingerprint-head button fixed to the bottom right of every page, which opens a short cookie
- * panel. The site sets no cookies, so the panel says so: no switches to flip, nothing to accept.
+ * panel. Public pages set no cookies, so the panel says so: no switches to flip, nothing to
+ * accept. The client area's login cookie (strictly necessary) is listed for completeness.
  * It uses the native popover (no script needed: Esc and clicking outside close it); browsers
  * without popover support follow the button to the cookie policy instead.
  */
@@ -14,6 +15,11 @@ const rows = [
     name: 'Strictly necessary',
     status: 'Only if needed',
     text: 'Cloudflare, our host, may set a security cookie to check a visitor is not a bot.',
+  },
+  {
+    name: 'Client login',
+    status: 'Clients only',
+    text: 'One cookie keeps clients logged in to their account. Public pages never set it.',
   },
   { name: 'Analytics', status: 'Not used', text: 'We don’t measure or track visits.' },
   { name: 'Advertising', status: 'Not used', text: 'No ads, no tracking pixels.' },
@@ -41,11 +47,11 @@ const rows = [
 >
   <p class="label cookie-panel__label">Cookies</p>
   <h2 id="cookie-panel-title" class="cookie-panel__title">
-    No cookies here.
+    No tracking here.
   </h2>
   <p class="cookie-panel__text">
-    This site runs no analytics, advertising or tracking, and stores nothing in your browser. There
-    is nothing to accept or turn off.
+    Public pages set no cookies. This site runs no analytics, advertising or tracking, and stores
+    nothing in your browser. There is nothing to accept or turn off.
   </p>
   <ul class="cookie-panel__rows">
     {rows.map((row) => (

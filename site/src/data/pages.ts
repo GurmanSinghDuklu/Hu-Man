@@ -209,7 +209,7 @@ export const pages: Record<PageKey, PageInfo> = {
     path: '/privacy/',
     title: 'Privacy notice | Hu/man Software Agency',
     description:
-      'How the Hu/man website handles your information: no cookies, no tracking, and what happens when you email, call or message us.',
+      'How the Hu/man website handles your information: no tracking, and what happens when you email, call or message us, or log in as a client.',
     label: 'Privacy notice',
     ogHeadline: 'Privacy notice.',
     schemaType: 'WebPage',
@@ -219,7 +219,7 @@ export const pages: Record<PageKey, PageInfo> = {
     path: '/cookies/',
     title: 'Cookie policy | Hu/man Software Agency',
     description:
-      'The Hu/man website sets no cookies and runs no analytics or tracking. What that means, and the one security cookie our host may set.',
+      'Public pages set no cookies and run no tracking. The one login cookie for clients, and the security cookie our host may set.',
     label: 'Cookie policy',
     ogHeadline: 'Cookie policy.',
     schemaType: 'WebPage',

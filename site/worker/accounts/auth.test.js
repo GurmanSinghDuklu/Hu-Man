@@ -115,3 +115,28 @@ test('changes need our own Origin; reads without a session are 401', async () =>
   assert.equal((await call(env, 'GET', '/api/account/me')).status, 401);
   assert.equal(await handleAccounts(req('GET', '/api/enquiry'), env), null, 'not ours');
 });
+
+test('only setup and login set a cookie; nothing else, and not the enquiry form', async () => {
+  const env = makeEnv();
+  const { token } = await invited(env);
+  const setup = await call(env, 'POST', '/api/auth/setup', {
+    body: { token, name: 'Sam', password: 'a long enough password' },
+  });
+  const cookie = cookieFrom(setup);
+  for (const [method, path] of [
+    ['GET', '/api/account/me'],
+    ['GET', '/api/auth/setup?t=x'],
+    ['GET', '/api/account/brief?p=x'],
+    ['GET', '/api/admin/clients'],
+  ]) {
+    const res = await call(env, method, path, { cookie });
+    assert.equal(res.headers.get('Set-Cookie'), null, `${method} ${path}`);
+  }
+  const { handleEnquiry } = await import('../enquiry.js');
+  const enquiry = await handleEnquiry(
+    req('POST', '/api/enquiry', { body: { name: 'A', email: 'a@b.co', message: 'Hi' } }),
+    env,
+    env.EmailMessage,
+  );
+  assert.equal(enquiry.headers.get('Set-Cookie'), null);
+});
