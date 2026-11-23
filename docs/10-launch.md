@@ -153,15 +153,15 @@ button says reading isn't available and people type it in.
 
 **Instant portfolios published at <name>.humansoftwareagency.com**
 1. Cloudflare → DNS → add record: type `AAAA`, name `*`, address `100::`, Proxied.
-2. Cloudflare → Workers & Pages → humansoftwareagency → Settings → Domains & Routes → Add route:
-   `*.humansoftwareagency.com/*`, zone humansoftwareagency.com.
+2. The Worker route `*.humansoftwareagency.com/*` is in `site/wrangler.toml`; it arrives with the
+   next deploy.
 3. Card payments need Stripe (see "Client previews and card payments" above).
 
 **"Connect my own domain": Cloudflare for SaaS**
 1. Cloudflare → humansoftwareagency.com → SSL/TLS → Custom Hostnames → enable (first 100 free,
    then $0.10 each a month).
 2. DNS → add `sites` → `AAAA 100::`, Proxied. Set it as the Fallback Origin on that page.
-3. Workers routes: add `*/*` → humansoftwareagency (so customers' domains reach the Worker).
+3. The Worker route `*/*` (so customers' domains reach the Worker) is in `site/wrangler.toml`.
 4. My Profile → API Tokens → Create token → permission "Zone · SSL and Certificates · Edit" for
    humansoftwareagency.com only. `npx wrangler secret put CF_API_TOKEN`, then
    `npx wrangler secret put CF_ZONE_ID` with the zone id from the zone's Overview page.

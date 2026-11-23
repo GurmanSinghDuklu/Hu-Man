@@ -8,7 +8,15 @@ workers_dev = false
 
 # The bare domain only: www redirects to it with a Cloudflare Redirect Rule (docs/10-launch.md),
 # so the site never answers on two addresses.
-routes = [{ pattern = "humansoftwareagency.com", custom_domain = true }]
+# The two other routes serve published portfolios (worker/accounts/instant.js servePublished, first
+# thing in worker/index.js): <name>.humansoftwareagency.com (needs the wildcard AAAA * record), and
+# customers' own domains through Cloudflare for SaaS (*/* catches them; needs the sites fallback
+# origin). Anything that isn't a portfolio falls through to the main site. docs/10-launch.md.
+routes = [
+  { pattern = "humansoftwareagency.com", custom_domain = true },
+  { pattern = "*.humansoftwareagency.com/*", zone_name = "humansoftwareagency.com" },
+  { pattern = "*/*", zone_name = "humansoftwareagency.com" },
+]
 
 [assets]
 directory = "./dist"
