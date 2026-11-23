@@ -214,7 +214,7 @@ export async function servePublished(request, env) {
   const host = url.hostname.toLowerCase();
   if (host === APEX || host === `www.${APEX}` || host === 'localhost' || host === '127.0.0.1')
     return null;
-  let project = null;
+  let project;
   if (host.endsWith(`.${APEX}`)) {
     const slug = host.slice(0, -APEX.length - 1);
     project = await env.DB.prepare(
