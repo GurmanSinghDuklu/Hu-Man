@@ -132,7 +132,7 @@ IDs are random (`crypto.randomUUID()`), never sequential.
 
 ## Security
 
-- Passwords: PBKDF2-SHA256, 210,000 iterations, 16-byte random salt per user (Web Crypto). Compared
+- Passwords: PBKDF2-SHA256, 100,000 iterations (the most Cloudflare Workers allow), 16-byte random salt per user (Web Crypto). Compared
   in constant time.
 - Setup links and session tokens: 32 random bytes, base64url. Only SHA-256 hashes are stored.
 - Cookie `__Host-hm_session`: HttpOnly, Secure, SameSite=Lax, Path=/, Max-Age 30 days. Only
