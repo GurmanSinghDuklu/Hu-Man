@@ -106,6 +106,12 @@ name = "LOGIN_PER_IP"
 namespace_id = "1004"
 simple = { limit = 5, period = 60 }
 
+# Sign-up, code resends and "forgot password": 5 a minute from one address (each sends an email).
+[[ratelimits]]
+name = "SIGNUP_PER_IP"
+namespace_id = "1006"
+simple = { limit = 5, period = 60 }
+
 # Brief uploads: 10 a minute per user.
 [[ratelimits]]
 name = "UPLOAD_PER_USER"
@@ -116,5 +122,7 @@ simple = { limit = 10, period = 60 }
 #   PREVIEW_UPLOAD_TOKEN   lets `npm run preview-upload` put a client's build in their preview.
 #   STRIPE_SECRET_KEY      Stripe's secret key (sk_test_… while testing, sk_live_… for real).
 #   STRIPE_WEBHOOK_SECRET  the signing secret of the webhook to /api/stripe/webhook (whsec_…).
+#   RESEND_API_KEY         Resend's API key, for emails to people (sign-up codes, resets, receipts).
+# Plain setting (not secret), in [vars] when set: RESEND_FROM = "Hu/man <hello@humansoftwareagency.com>".
 # Without the Stripe ones the pay button says payment details will be emailed instead. For
 # `wrangler dev`, put them in site/.dev.vars (git-ignored). Steps: docs/10-launch.md.

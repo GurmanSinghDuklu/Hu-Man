@@ -10,7 +10,7 @@
  * the email class comes in on env.EmailMessage (worker/index.js sets it).
  */
 import { fail, notFound, sameOrigin, getSession, notFoundPage } from './http.js';
-import { setupInfo, setup, login, logout } from './auth.js';
+import { setupInfo, setup, login, logout, signup, verify, resendCode, forgot } from './auth.js';
 import { me } from './account.js';
 import { getBrief, putBrief, sendBrief } from './briefs.js';
 import { uploadFile, downloadFile, deleteFile } from './files.js';
@@ -57,6 +57,10 @@ export async function handleAccounts(request, env) {
   if (path === '/api/auth/setup' && method === 'POST') return setup(request, env);
   if (path === '/api/auth/login' && method === 'POST') return login(request, env);
   if (path === '/api/auth/logout' && method === 'POST') return logout(request, env);
+  if (path === '/api/auth/signup' && method === 'POST') return signup(request, env);
+  if (path === '/api/auth/verify' && method === 'POST') return verify(request, env);
+  if (path === '/api/auth/resend' && method === 'POST') return resendCode(request, env);
+  if (path === '/api/auth/forgot' && method === 'POST') return forgot(request, env);
 
   const session = await getSession(request, env);
   // The admin API, like the admin pages, doesn't admit to existing for anyone but an admin.
