@@ -9,4 +9,6 @@ site/reports/
 site/reports/
 site/.og-build/
 site/.wrangler/
+site/.dev.vars
+site/.dev.vars.*
 .superpowers/
