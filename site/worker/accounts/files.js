@@ -14,7 +14,11 @@ import { fileFieldsFor } from '../../src/data/brief.ts';
 
 export const MAX_BYTES = 10 * 1024 * 1024;
 export const MAX_FILES = 20;
-const ATTACH = new Set(['image/svg+xml', 'application/pdf']);
+const ATTACH = new Set([
+  'image/svg+xml',
+  'application/pdf',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+]);
 
 const starts = (bytes, sig, at = 0) => sig.every((b, i) => bytes[at + i] === b);
 const ascii = (s) => [...s].map((c) => c.charCodeAt(0));
@@ -25,6 +29,13 @@ export function sniff(bytes) {
   if (starts(bytes, [0xff, 0xd8, 0xff])) return 'image/jpeg';
   if (starts(bytes, ascii('RIFF')) && starts(bytes, ascii('WEBP'), 8)) return 'image/webp';
   if (starts(bytes, ascii('%PDF-'))) return 'application/pdf';
+  // A Word document is a zip whose parts include word/document.xml.
+  if (
+    starts(bytes, [0x50, 0x4b, 0x03, 0x04]) &&
+    new TextDecoder().decode(bytes).includes('word/')
+  ) {
+    return 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+  }
   // TextDecoder drops a leading byte-order mark itself.
   const head = new TextDecoder().decode(bytes.subarray(0, 1024)).trimStart();
   if (
@@ -74,7 +85,7 @@ export async function uploadFile(request, url, env, user, now = Date.now()) {
   if (bytes.length > MAX_BYTES) return fail(413, 'Files can be up to 10 MB each.');
   if (bytes.length === 0) return fail(400, 'That file is empty.');
   const type = sniff(bytes);
-  if (!type) return fail(415, 'Please upload a JPG, PNG, WebP, SVG or PDF.');
+  if (!type) return fail(415, 'Please upload a JPG, PNG, WebP, SVG, PDF or Word (.docx) file.');
   const count = await env.DB.prepare('SELECT COUNT(*) AS n FROM files WHERE project_id = ?')
     .bind(project.id)
     .first('n');

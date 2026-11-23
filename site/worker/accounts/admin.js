@@ -7,6 +7,7 @@ import { json, fail, notFound, readJson, line } from './http.js';
 import { addUser, createInvite, normaliseEmail, EMAIL } from './auth.js';
 import { projectsOf } from './account.js';
 import { linkEnquiry } from './enquiries.js';
+import { keysUnder } from './upload.js';
 
 export const PROJECT_TYPES = ['business', 'portfolio', 'custom'];
 
@@ -144,16 +145,33 @@ export async function newInvite(env, id, origin) {
  * Admin accounts can't be deleted here (404), so nobody locks the team out by mistake.
  */
 export async function deleteClient(env, id) {
+  const removed = await deleteClientData(env, id);
+  return removed === null ? notFound() : json({ ok: true, removedFiles: removed });
+}
+
+/**
+ * Everything about a client, gone: uploads and previews in R2, then every row. Returns how many
+ * stored files went, or null if there's no such client. Used by the admin removal and by a client's
+ * own "Delete my account".
+ */
+export async function deleteClientData(env, id) {
   const user = await env.DB.prepare("SELECT id, email FROM users WHERE id = ? AND role = 'client'")
     .bind(id)
     .first();
-  if (!user) return notFound();
+  if (!user) return null;
   const { results: stored } = await env.DB.prepare(
     'SELECT files.r2_key FROM files JOIN projects ON projects.id = files.project_id WHERE projects.user_id = ?',
   )
     .bind(id)
     .all();
   for (const { r2_key: key } of stored) await env.FILES.delete(key);
+  const { results: own } = await env.DB.prepare('SELECT id FROM projects WHERE user_id = ?')
+    .bind(id)
+    .all();
+  for (const { id: projectId } of own) {
+    const keys = await keysUnder(env, `preview/${projectId}/`);
+    for (let i = 0; i < keys.length; i += 1000) await env.FILES.delete(keys.slice(i, i + 1000));
+  }
   const projects = 'SELECT id FROM projects WHERE user_id = ?';
   await env.DB.batch([
     env.DB.prepare(`DELETE FROM files WHERE project_id IN (${projects})`).bind(id),
@@ -161,10 +179,11 @@ export async function deleteClient(env, id) {
     env.DB.prepare('DELETE FROM projects WHERE user_id = ?').bind(id),
     env.DB.prepare('DELETE FROM invites WHERE user_id = ?').bind(id),
     env.DB.prepare('DELETE FROM sessions WHERE user_id = ?').bind(id),
+    env.DB.prepare('DELETE FROM email_codes WHERE user_id = ?').bind(id),
     env.DB.prepare('DELETE FROM enquiries WHERE user_id = ? OR email = ?').bind(id, user.email),
     env.DB.prepare('DELETE FROM users WHERE id = ?').bind(id),
   ]);
-  return json({ ok: true, removedFiles: stored.length });
+  return stored.length;
 }
 
 /** POST /api/admin/projects/<id>/reopen : a sent brief goes back to draft. */

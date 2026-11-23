@@ -4,12 +4,15 @@
  * worked out from the fields: brief → building (deposit paid) → preview (a version uploaded) →
  * paid → live. Money is in whole pence.
  */
-import { json } from './http.js';
+import { json, fail, clearCookie } from './http.js';
+import { deleteClientData } from './admin.js';
 
 const PROJECT_FIELDS = `projects.id, projects.user_id, projects.name, projects.type, projects.tier,
   projects.concept, projects.status, projects.created_at, projects.quote_pence,
   projects.deposit_pence, projects.deposit_paid_at, projects.preview_version, projects.preview_at,
-  projects.paid_pence, projects.paid_at, projects.payment_ref, projects.live_url, projects.live_at`;
+  projects.paid_pence, projects.paid_at, projects.payment_ref, projects.live_url, projects.live_at,
+  projects.kind, projects.route, projects.site_slug, projects.custom_domain,
+  projects.custom_domain_status, projects.cancel_waiver_at`;
 
 export function stageOf(p) {
   if (p.live_at) return 'live';
@@ -36,6 +39,10 @@ export function moneyOf(p) {
     previewBase: `/preview/${p.id}/`,
     liveUrl: p.live_url ?? null,
     liveAt: p.live_at ?? null,
+    kind: p.kind ?? 'brief',
+    route: p.route ?? null,
+    customDomain: p.custom_domain ?? null,
+    customDomainStatus: p.custom_domain_status ?? null,
   };
 }
 
@@ -61,6 +68,13 @@ export async function projectsOf(env, userId) {
     sentAt: p.sent_at,
     ...moneyOf(p),
   }));
+}
+
+/** DELETE /api/account/me : a client deletes their own account and everything in it. */
+export async function deleteMe(env, user) {
+  if (user.role !== 'client') return fail(403, 'Team accounts can’t be deleted here.');
+  await deleteClientData(env, user.id);
+  return json({ ok: true }, 200, { 'Set-Cookie': clearCookie() });
 }
 
 /** GET /api/account/me */

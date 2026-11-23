@@ -26,7 +26,7 @@ function goodPath(path) {
 }
 
 /** Every key under a prefix (R2 lists 1,000 at a time). */
-async function keysUnder(env, prefix) {
+export async function keysUnder(env, prefix) {
   const keys = [];
   let cursor;
   do {
