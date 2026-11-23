@@ -13,9 +13,10 @@ import { esc } from './profile.js';
 
 /** The concept page's HTML, read from the site's own static files. */
 export async function loadConcept(env, slug) {
-  const res = await env.ASSETS.fetch(
-    new Request(`https://assets.local/concepts/${slug}/index.html`),
-  );
+  // The folder address: Cloudflare answers /index.html with a redirect to it.
+  let res = await env.ASSETS.fetch(new Request(`https://assets.local/concepts/${slug}/`));
+  const moved = res.status >= 300 && res.status < 400 && res.headers.get('Location');
+  if (moved) res = await env.ASSETS.fetch(new Request(new URL(moved, 'https://assets.local/')));
   if (!res.ok) throw new Error(`The ${slug} design couldn't be loaded (${res.status}).`);
   return res.text();
 }

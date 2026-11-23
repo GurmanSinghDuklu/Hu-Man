@@ -107,7 +107,8 @@ class FakeEmailMessage {
 const PUBLIC = new URL('../../public/', import.meta.url);
 const fakeAssets = {
   async fetch(request) {
-    const path = decodeURIComponent(new URL(request.url).pathname).replace(/^\/+/, '');
+    let path = decodeURIComponent(new URL(request.url).pathname).replace(/^\/+/, '');
+    if (path.endsWith('/')) path += 'index.html';
     if (path.split('/').includes('..')) return new Response('Not found', { status: 404 });
     try {
       return new Response(await readFile(new URL(path, PUBLIC)));
