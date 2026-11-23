@@ -9,7 +9,7 @@
  * 404, never 403, so ids can't be probed. Free of Cloudflare-only imports, so it runs in Node tests;
  * the email class comes in on env.EmailMessage (worker/index.js sets it).
  */
-import { fail, notFound, sameOrigin, getSession } from './http.js';
+import { fail, notFound, sameOrigin, getSession, notFoundPage } from './http.js';
 import { setupInfo, setup, login, logout } from './auth.js';
 import { me } from './account.js';
 import { getBrief, putBrief, sendBrief } from './briefs.js';
@@ -36,18 +36,13 @@ export async function gateAdminPages(request, env) {
   const url = new URL(request.url);
   if (url.pathname !== '/admin' && !url.pathname.startsWith('/admin/')) return null;
   const session = await getSession(request, env);
-  const page =
-    session?.user.role === 'admin'
-      ? await env.ASSETS.fetch(request)
-      : await env.ASSETS.fetch(new Request(new URL('/__not-found__/', url), { method: 'GET' }));
+  if (session?.user.role !== 'admin') return notFoundPage(env, url);
+  const page = await env.ASSETS.fetch(request);
   const headers = new Headers(page.headers);
   headers.set('Cache-Control', 'private, no-store');
   headers.set('X-Robots-Tag', 'noindex');
   headers.set('Vary', 'Cookie');
-  return new Response(page.body, {
-    status: session?.user.role === 'admin' ? page.status : 404,
-    headers,
-  });
+  return new Response(page.body, { status: page.status, headers });
 }
 
 export async function handleAccounts(request, env) {

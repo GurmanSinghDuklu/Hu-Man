@@ -80,7 +80,18 @@ function fakeR2() {
       };
     },
     async delete(key) {
-      store.delete(key);
+      for (const k of Array.isArray(key) ? key : [key]) store.delete(k);
+    },
+    async list({ prefix = '', cursor, limit = 1000 } = {}) {
+      const keys = [...store.keys()].filter((k) => k.startsWith(prefix)).sort();
+      const start = cursor ? Number(cursor) : 0;
+      const page = keys.slice(start, start + limit);
+      const truncated = start + limit < keys.length;
+      return {
+        objects: page.map((key) => ({ key })),
+        truncated,
+        cursor: truncated ? String(start + limit) : undefined,
+      };
     },
   };
 }

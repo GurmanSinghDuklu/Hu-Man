@@ -101,3 +101,19 @@ export async function allowed(binding, key) {
   const { success } = await binding.limit({ key });
   return success;
 }
+
+/**
+ * The site's own "Page not found" (404, never cached), for pages that exist only for some people:
+ * /admin/ and /preview/. Asks the static files for a path that doesn't exist, so it's the real 404
+ * page in the site's look.
+ */
+export async function notFoundPage(env, url) {
+  const page = await env.ASSETS.fetch(
+    new Request(new URL('/__not-found__/', url), { method: 'GET' }),
+  );
+  const headers = new Headers(page.headers);
+  headers.set('Cache-Control', 'private, no-store');
+  headers.set('X-Robots-Tag', 'noindex');
+  headers.set('Vary', 'Cookie');
+  return new Response(page.body, { status: 404, headers });
+}
