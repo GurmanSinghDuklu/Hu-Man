@@ -847,3 +847,15 @@ and 4 (Stripe, then publish) are next and plug into `projects.status` and the "Y
    Live since 2026-11-23 (deployed from `client-accounts` with `npm run deploy`, version 575310b6);
    admins: humansoftwareagency@gmail.com (Gurman) and mandeepduklu@googlemail.com (Mandeep).
 7. Footer Legal column has "Client login"; the footer line says "No tracking" (was "No cookies").
+
+## Enquiries list in /admin/ (2026-11-23, branch `client-accounts`)
+Every valid form send (contact, landing, free AI check, "Choose this concept", agents' JSON) is
+saved to D1 (`enquiries`, migration 0002) before its email goes out, and listed at the top of
+`/admin/` (`worker/accounts/enquiries.js`, `src/scripts/account/admin.ts`). The page checks every 30
+seconds while visible (and on returning to the tab), re-renders only when something changed, shows
+the count of new ones in the tab title and announces arrivals. Statuses: new, replied, not a fit,
+client. "Make client" fills the New client form (type guessed from tier, service or concept) and
+links the enquiry to the account. Kept 12 months unless it became a client (deleted when the list
+loads). If saving works, a failed email still answers "sent", since the team sees it in /admin/.
+The privacy notice ("If you use a form") and the contact FAQ say a copy is kept; the honeypot
+spam field still means nothing is saved.

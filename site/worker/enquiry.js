@@ -3,8 +3,10 @@
  * an AI agent acting for someone (the fields are documented in llms.txt and by GET /api/enquiry).
  *
  * It validates the fields, drops spam quietly (a hidden honeypot field), and emails the enquiry to
- * the studio's inbox through Cloudflare's send_email binding. Nothing is stored. Replies go
- * straight to the sender (Reply-To).
+ * the studio's inbox through Cloudflare's send_email binding. Each valid enquiry is also saved to the
+ * D1 database (binding DB) for the Enquiries list at /admin/ (worker/accounts/enquiries.js, kept 12
+ * months); if saving works, a failed email still counts as sent, since the team will see it there.
+ * Replies go straight to the sender (Reply-To).
  *
  * The studio's copy also says where the enquiry came from, when the reply is due and what a quick
  * look at the sender's website found. When the REPLY_EMAIL binding is set up, the sender gets an
@@ -14,6 +16,7 @@
  * worker/index.js passes in Cloudflare's EmailMessage class.
  */
 import { checkLinks, describeLook, lookAtSite } from './site-look.js';
+import { saveEnquiry } from './accounts/enquiries.js';
 
 export const TOPICS = {
   'ai-check': 'Free AI check',
@@ -486,17 +489,30 @@ export async function handleEnquiry(request, env, EmailMessage, ctx, deps = {}) 
     return Response.redirect(back.toString(), 303);
   }
 
+  const source = sourceOf(request, url.origin, wantsJson);
+  // Saved first, so an email hiccup can't lose it (the Enquiries list in /admin/).
+  let saved = false;
+  if (env.DB) {
+    try {
+      await saveEnquiry(env, data, source);
+      saved = true;
+    } catch (error) {
+      console.error('enquiry: save failed', error instanceof Error ? error.message : error);
+    }
+  }
+
   try {
     const look = data.website ? await lookAtSite(data.website, deps) : null;
     const raw822 = buildEmail(data, {
       from: env.FROM_ADDRESS,
       to: env.TO_ADDRESS,
-      source: sourceOf(request, url.origin, wantsJson),
+      source,
       look,
     });
     await env.SEND_EMAIL.send(new EmailMessage(env.FROM_ADDRESS, env.TO_ADDRESS, raw822));
   } catch (error) {
     console.error('enquiry: send failed', error instanceof Error ? error.message : error);
+    if (saved) return done(); // The team sees it in /admin/; the sender needn't try again.
     if (wantsJson)
       return json(502, { ok: false, errors: { form: 'Sending failed. Please email us instead.' } });
     return Response.redirect(`${url.origin}/contact/?error=send`, 303);

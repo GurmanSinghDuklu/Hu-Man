@@ -21,6 +21,8 @@ import { projectTypeLabels } from '../../data/brief';
       <details class="acct-card" data-new-client-box>
         <summary class="pill-btn admin__summary">New client</summary>
         <form class="acct-form" data-new-client novalidate>
+          <input type="hidden" name="enquiryId" value="" />
+          <p class="acct-small" data-from-enquiry hidden></p>
           <div class="admin__grid">
             <div class="acct-field" data-field="name">
               <label for="nc-name">Their name</label>
@@ -121,6 +123,24 @@ import { projectTypeLabels } from '../../data/brief';
         </div>
       </section>
 
+      <section aria-labelledby="enq-title" class="acct-form">
+        <div class="admin__head">
+          <h2 id="enq-title" class="bstep__title">
+            Enquiries
+          </h2>
+          <div class="admin__filter" role="group" aria-label="Which enquiries to show">
+            <button type="button" class="acct__logout" aria-pressed="true" data-enq-filter="open">
+              Open
+            </button>
+            <button type="button" class="acct__logout" aria-pressed="false" data-enq-filter="all">
+              All
+            </button>
+          </div>
+        </div>
+        <p class="acct-small" data-enq-updated aria-live="polite"></p>
+        <div class="acct-form" data-enquiries></div>
+      </section>
+
       <section aria-labelledby="clients-title" class="acct-form">
         <h2 id="clients-title" class="bstep__title">
           All clients
@@ -138,6 +158,33 @@ import { projectTypeLabels } from '../../data/brief';
 </script>
 
 <style>
+  .admin__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem 1rem;
+  }
+
+  :global(.admin__message) {
+    padding: 0.85rem 1rem;
+    background: var(--paper);
+    border-left: 4px solid var(--btn);
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    line-height: 1.5;
+  }
+
+  .admin__filter {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .admin__filter [aria-pressed='true'] {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
   .admin__summary {
     justify-self: start;
     list-style: none;

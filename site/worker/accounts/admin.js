@@ -6,6 +6,7 @@
 import { json, fail, notFound, readJson, line } from './http.js';
 import { addUser, createInvite, normaliseEmail, EMAIL } from './auth.js';
 import { projectsOf } from './account.js';
+import { linkEnquiry } from './enquiries.js';
 
 export const PROJECT_TYPES = ['business', 'portfolio', 'custom'];
 
@@ -29,7 +30,10 @@ export async function listClients(env) {
   return json({ ok: true, clients });
 }
 
-/** POST /api/admin/clients { name, email, project: { name, type, tier?, concept? } } */
+/**
+ * POST /api/admin/clients { name, email, project: { name, type, tier?, concept? }, enquiryId? }
+ * With enquiryId (the Enquiries list's "Make client"), that enquiry is marked as now a client.
+ */
 export async function createClient(request, env, origin, now = Date.now()) {
   const body = await readJson(request);
   if (!body) return fail(413, 'Too large.');
@@ -70,6 +74,7 @@ export async function createClient(request, env, origin, now = Date.now()) {
     ),
   ]);
   const setupUrl = await createInvite(env, user.id, origin, now);
+  await linkEnquiry(env, body.enquiryId, user.id);
   return json({ ok: true, client: { id: user.id }, projectId, setupUrl }, 201);
 }
 

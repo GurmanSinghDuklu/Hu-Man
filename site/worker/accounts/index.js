@@ -14,6 +14,7 @@ import { setupInfo, setup, login, logout } from './auth.js';
 import { me } from './account.js';
 import { getBrief, putBrief, sendBrief } from './briefs.js';
 import { uploadFile, downloadFile, deleteFile } from './files.js';
+import { listEnquiries, setEnquiryStatus } from './enquiries.js';
 import { listClients, createClient, clientDetail, newInvite, reopenBrief } from './admin.js';
 
 const PREFIXES = ['/api/auth/', '/api/account/', '/api/admin/'];
@@ -51,6 +52,10 @@ export async function handleAccounts(request, env) {
     if (user.role !== 'admin') return notFound();
     const parts = path.split('/').slice(3); // after /api/admin/
     const id = parts[1];
+    if (parts[0] === 'enquiries') {
+      if (parts.length === 1 && method === 'GET') return listEnquiries(env);
+      if (parts.length === 2 && method === 'POST') return setEnquiryStatus(request, env, id);
+    }
     if (parts[0] === 'clients') {
       if (parts.length === 1 && method === 'GET') return listClients(env);
       if (parts.length === 1 && method === 'POST') return createClient(request, env, url.origin);

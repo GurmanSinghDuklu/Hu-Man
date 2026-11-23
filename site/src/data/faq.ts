@@ -113,7 +113,7 @@ export const contactFaq: FaqItem[] = [
   },
   {
     q: 'What happens to my details?',
-    a: 'We use them only to answer you. The form emails your message to us; the website stores nothing. The privacy notice has the details.',
+    a: 'We use them only to answer you. The form emails your message to us and keeps a copy in our private enquiries list, which only our team can see; we delete it after 12 months. The privacy notice has the details.',
   },
 ];
 

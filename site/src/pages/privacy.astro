@@ -48,11 +48,11 @@ import { withBase } from '../config/paths';
     <p>
       The contact form and the free AI check form ask for your name, an email to reply to, and
       optionally your website, phone number and a message. When you press send, those details are
-      passed through Cloudflare and emailed straight to our inbox (Gmail, run by Google). They are
-      not saved on the website or in any database, and we use them only to answer you. The enquiry
-      email is kept only as long as needed to answer you and, if you become a client, as part of the
-      project record. Our lawful basis is our legitimate interest in replying to an enquiry you
-      started.
+      passed through Cloudflare and emailed straight to our inbox (Gmail, run by Google). A copy is
+      also kept in our private enquiries list (a Cloudflare D1 database), which only the Hu/man team
+      can see, so no enquiry gets lost. We use them only to answer you. We delete enquiries after 12
+      months, unless you become a client, when they become part of the project record. Our lawful
+      basis is our legitimate interest in replying to an enquiry you started.
     </p>
     <p>
       If you give a website address, we load that site's public home page, robots.txt and llms.txt
