@@ -137,6 +137,36 @@ export async function newInvite(env, id, origin) {
   return json({ ok: true, setupUrl: await createInvite(env, id, origin) });
 }
 
+/**
+ * DELETE /api/admin/clients/<id> : removes a client and everything about them: uploads in R2, then
+ * their files, briefs, projects, setup links, sessions, the enquiries they sent (by account or
+ * email) and the account itself. Child rows are deleted explicitly rather than trusting cascades.
+ * Admin accounts can't be deleted here (404), so nobody locks the team out by mistake.
+ */
+export async function deleteClient(env, id) {
+  const user = await env.DB.prepare("SELECT id, email FROM users WHERE id = ? AND role = 'client'")
+    .bind(id)
+    .first();
+  if (!user) return notFound();
+  const { results: stored } = await env.DB.prepare(
+    'SELECT files.r2_key FROM files JOIN projects ON projects.id = files.project_id WHERE projects.user_id = ?',
+  )
+    .bind(id)
+    .all();
+  for (const { r2_key: key } of stored) await env.FILES.delete(key);
+  const projects = 'SELECT id FROM projects WHERE user_id = ?';
+  await env.DB.batch([
+    env.DB.prepare(`DELETE FROM files WHERE project_id IN (${projects})`).bind(id),
+    env.DB.prepare(`DELETE FROM briefs WHERE project_id IN (${projects})`).bind(id),
+    env.DB.prepare('DELETE FROM projects WHERE user_id = ?').bind(id),
+    env.DB.prepare('DELETE FROM invites WHERE user_id = ?').bind(id),
+    env.DB.prepare('DELETE FROM sessions WHERE user_id = ?').bind(id),
+    env.DB.prepare('DELETE FROM enquiries WHERE user_id = ? OR email = ?').bind(id, user.email),
+    env.DB.prepare('DELETE FROM users WHERE id = ?').bind(id),
+  ]);
+  return json({ ok: true, removedFiles: stored.length });
+}
+
 /** POST /api/admin/projects/<id>/reopen : a sent brief goes back to draft. */
 export async function reopenBrief(env, projectId) {
   const { meta } = await env.DB.prepare(

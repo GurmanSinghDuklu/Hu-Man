@@ -14,8 +14,15 @@ import { setupInfo, setup, login, logout } from './auth.js';
 import { me } from './account.js';
 import { getBrief, putBrief, sendBrief } from './briefs.js';
 import { uploadFile, downloadFile, deleteFile } from './files.js';
-import { listEnquiries, setEnquiryStatus } from './enquiries.js';
-import { listClients, createClient, clientDetail, newInvite, reopenBrief } from './admin.js';
+import { listEnquiries, setEnquiryStatus, deleteEnquiry } from './enquiries.js';
+import {
+  listClients,
+  createClient,
+  clientDetail,
+  newInvite,
+  reopenBrief,
+  deleteClient,
+} from './admin.js';
 
 const PREFIXES = ['/api/auth/', '/api/account/', '/api/admin/'];
 
@@ -55,11 +62,13 @@ export async function handleAccounts(request, env) {
     if (parts[0] === 'enquiries') {
       if (parts.length === 1 && method === 'GET') return listEnquiries(env);
       if (parts.length === 2 && method === 'POST') return setEnquiryStatus(request, env, id);
+      if (parts.length === 2 && method === 'DELETE') return deleteEnquiry(env, id);
     }
     if (parts[0] === 'clients') {
       if (parts.length === 1 && method === 'GET') return listClients(env);
       if (parts.length === 1 && method === 'POST') return createClient(request, env, url.origin);
       if (parts.length === 2 && method === 'GET') return clientDetail(env, id);
+      if (parts.length === 2 && method === 'DELETE') return deleteClient(env, id);
       if (parts.length === 3 && parts[2] === 'invite' && method === 'POST') {
         return newInvite(env, id, url.origin);
       }

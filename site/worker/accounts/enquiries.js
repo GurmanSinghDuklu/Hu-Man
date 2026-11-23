@@ -80,6 +80,12 @@ export async function setEnquiryStatus(request, env, id) {
   return meta.changes ? json({ ok: true }) : notFound();
 }
 
+/** DELETE /api/admin/enquiries/<id> */
+export async function deleteEnquiry(env, id) {
+  const { meta } = await env.DB.prepare('DELETE FROM enquiries WHERE id = ?').bind(id).run();
+  return meta.changes ? json({ ok: true }) : notFound();
+}
+
 /** Marks an enquiry as made into a client (admin.js, after creating the account). */
 export async function linkEnquiry(env, enquiryId, userId) {
   if (typeof enquiryId !== 'string' || !enquiryId || enquiryId.length > 64) return;

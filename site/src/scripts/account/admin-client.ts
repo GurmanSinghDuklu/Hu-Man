@@ -153,6 +153,21 @@ async function load() {
   root!.querySelector('[data-client-projects]')!.replaceChildren(...projects.map(renderProject));
   root!.hidden = false;
 
+  // Clients can be removed here; admins (the team) can't.
+  const remove = root!.querySelector<HTMLElement>('[data-remove]')!;
+  remove.hidden = client.role !== 'client';
+  root!.querySelector<HTMLButtonElement>('[data-delete-client]')!.onclick = async () => {
+    const sure = window.confirm(
+      `Delete ${client.name} (${client.email}) and everything about them: account, brief, files and enquiries? This can’t be undone.`,
+    );
+    if (!sure) return;
+    const { status: s } = await api(`/api/admin/clients/${encodeURIComponent(id)}`, {
+      method: 'DELETE',
+    });
+    if (s === 200) location.replace(sitePath(`/admin/?deleted=${encodeURIComponent(client.name)}`));
+    else setStatus(UNAVAILABLE, 'warn');
+  };
+
   const button = root!.querySelector<HTMLButtonElement>('[data-new-link]')!;
   button.onclick = async () => {
     const { status: s, data: d } = await api<{ setupUrl: string }>(

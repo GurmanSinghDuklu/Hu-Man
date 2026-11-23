@@ -133,3 +133,62 @@ test('an admin can reopen a sent brief', async () => {
     .first('state');
   assert.equal(state, 'draft');
 });
+
+test('deleting a client removes their account, sessions, brief, files and enquiries', async () => {
+  const env = makeEnv();
+  const admin = await loggedIn(env, 'admin@example.co.uk', 'admin');
+  const { handleEnquiry } = await import('../enquiry.js');
+  await handleEnquiry(
+    req('POST', '/api/enquiry', {
+      body: { name: 'Noor', email: 'noor@example.co.uk', message: 'Hi' },
+    }),
+    env,
+    env.EmailMessage,
+  );
+  const { client, projectId, setupUrl } = await (
+    await call(env, 'POST', '/api/admin/clients', { cookie: admin, body: newClient })
+  ).json();
+  const setup = await call(env, 'POST', '/api/auth/setup', {
+    body: { token: tokenOf(setupUrl), name: 'Noor', password: 'noor’s long password' },
+  });
+  const clientCookie = cookieFrom(setup);
+  const png = new Uint8Array([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 1]);
+  await call(env, 'POST', `/api/account/files?p=${projectId}&field=photos`, {
+    cookie: clientCookie,
+    body: png,
+    headers: { 'X-File-Name': 'a.png' },
+  });
+  assert.equal(env.FILES.store.size, 1);
+
+  // Clients can't delete anyone; admins can't be deleted this way.
+  assert.equal(
+    (await call(env, 'DELETE', `/api/admin/clients/${client.id}`, { cookie: clientCookie })).status,
+    404,
+  );
+  const adminId = await env.DB.prepare("SELECT id FROM users WHERE role = 'admin'").first('id');
+  assert.equal(
+    (await call(env, 'DELETE', `/api/admin/clients/${adminId}`, { cookie: admin })).status,
+    404,
+  );
+
+  const res = await call(env, 'DELETE', `/api/admin/clients/${client.id}`, { cookie: admin });
+  assert.equal(res.status, 200);
+  assert.equal(env.FILES.store.size, 0, 'uploads removed from storage');
+  for (const table of ['users', 'sessions', 'invites', 'projects', 'briefs', 'files']) {
+    const where = table === 'users' ? "role = 'client'" : '1 = 1';
+    const n = await env.DB.prepare(`SELECT COUNT(*) AS n FROM ${table} WHERE ${where}`).first('n');
+    if (table === 'sessions' || table === 'invites') {
+      const theirs = await env.DB.prepare(`SELECT COUNT(*) AS n FROM ${table} WHERE user_id = ?`)
+        .bind(client.id)
+        .first('n');
+      assert.equal(theirs, 0, `their ${table}`);
+    } else assert.equal(n, 0, table);
+  }
+  const enquiries = await env.DB.prepare('SELECT COUNT(*) AS n FROM enquiries').first('n');
+  assert.equal(enquiries, 0, 'their enquiries');
+  assert.equal((await call(env, 'GET', '/api/account/me', { cookie: clientCookie })).status, 401);
+  assert.equal(
+    (await call(env, 'DELETE', `/api/admin/clients/${client.id}`, { cookie: admin })).status,
+    404,
+  );
+});

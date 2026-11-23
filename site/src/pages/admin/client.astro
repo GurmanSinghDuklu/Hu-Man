@@ -54,6 +54,20 @@ import AccountShell from '../../components/account/AccountShell.astro';
       </section>
 
       <div class="acct-form" data-client-projects></div>
+
+      <section class="acct-card" aria-labelledby="remove-title" data-remove hidden>
+        <h2 id="remove-title">Remove this client</h2>
+        <p class="acct-small">
+          Deletes their account and logs them out, along with their brief, every file they uploaded
+          and the enquiries they sent. Use it when they ask to be removed, or when a project won’t
+          go ahead. This can’t be undone. Emails already in your inbox aren’t touched.
+        </p>
+        <div class="acct-actions">
+          <button class="acct-danger" type="button" data-delete-client>
+            Delete this client
+          </button>
+        </div>
+      </section>
     </div>
   </AccountShell>
 

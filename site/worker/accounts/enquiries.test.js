@@ -120,3 +120,17 @@ test('enquiries older than 12 months are deleted, unless they became clients', a
     ['Kept'],
   );
 });
+
+test('admins delete an enquiry; clients cannot', async () => {
+  const env = makeEnv();
+  const admin = await loggedIn(env, 'admin@example.co.uk', 'admin');
+  const client = await loggedIn(env, 'client@example.co.uk', 'client');
+  await send(env, { name: 'Sam', email: 'sam@example.co.uk', message: 'Hello' });
+  const [enquiry] = await list(env, admin);
+  const del = (cookie, id = enquiry.id) =>
+    call(env, 'DELETE', `/api/admin/enquiries/${id}`, { cookie });
+  assert.equal((await del(client)).status, 404);
+  assert.equal((await del(admin)).status, 200);
+  assert.equal((await list(env, admin)).length, 0);
+  assert.equal((await del(admin)).status, 404);
+});

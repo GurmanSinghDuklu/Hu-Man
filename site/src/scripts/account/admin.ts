@@ -245,6 +245,21 @@ async function mark(e: Enquiry, status: 'new' | 'replied' | 'not-a-fit') {
   } else setStatus(UNAVAILABLE, 'warn');
 }
 
+async function remove(e: Enquiry) {
+  const sure = window.confirm(
+    `Delete ${e.name}’s enquiry? It goes from this list for good (the email in your inbox stays).`,
+  );
+  if (!sure) return;
+  const { status } = await api(`/api/admin/enquiries/${encodeURIComponent(e.id)}`, {
+    method: 'DELETE',
+  });
+  if (status === 200) {
+    setStatus(`${e.name}’s enquiry deleted.`, 'ok');
+    await loadEnquiries();
+    root!.querySelector<HTMLElement>('#enq-title')?.focus();
+  } else setStatus(UNAVAILABLE, 'warn');
+}
+
 function card(e: Enquiry) {
   const button = (text: string, onClick: () => void, cls = 'acct__logout') => {
     const b = el('button', { type: 'button', class: cls, text });
@@ -286,6 +301,7 @@ function card(e: Enquiry) {
       actions.append(button('Not a fit', () => void mark(e, 'not-a-fit')));
     if (e.status !== 'new') actions.append(button('Back to new', () => void mark(e, 'new')));
   }
+  actions.append(button('Delete', () => void remove(e), 'acct-danger'));
   return el(
     'article',
     { class: 'acct-card', 'data-enquiry': e.id },
@@ -365,6 +381,11 @@ async function start() {
   const me = await requireLogin({ admin: true });
   if (!me || !root) return;
   root.hidden = false;
+  const deleted = new URLSearchParams(location.search).get('deleted');
+  if (deleted) {
+    setStatus(`${deleted.slice(0, 100)} and everything about them has been deleted.`, 'ok');
+    history.replaceState(null, '', location.pathname);
+  }
   await Promise.all([loadEnquiries(), loadClients()]);
   keepFresh();
 }

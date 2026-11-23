@@ -859,3 +859,8 @@ links the enquiry to the account. Kept 12 months unless it became a client (dele
 loads). If saving works, a failed email still answers "sent", since the team sees it in /admin/.
 The privacy notice ("If you use a form") and the contact FAQ say a copy is kept; the honeypot
 spam field still means nothing is saved.
+**Deleting** (Gurman, 2026-11-23): each enquiry has Delete; each client page has "Remove this
+client", which deletes the account, sessions, setup links, projects, briefs, file records, their R2
+uploads and every enquiry from that account or email (`deleteClient` in admin.js; child rows are
+deleted explicitly, not left to cascades). Admin accounts can't be deleted there (404). Both ask to
+confirm first. Use it for deletion requests under the privacy notice.
