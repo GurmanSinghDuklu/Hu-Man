@@ -10,6 +10,7 @@
  */
 import { api, sitePath, el, showErrors } from './api';
 import { openAuth } from './auth-panel';
+import { scroller } from '../motion/scroller';
 import { requestFields, validateRequest, type RequestAnswers } from '../../data/portfolioRequest';
 
 const form = document.querySelector<HTMLFormElement>('[data-request]');
@@ -342,6 +343,43 @@ form?.querySelector('[data-cv-read-button]')?.addEventListener('click', async ()
     );
 });
 
+// ---------- choosing a design from a concept card ----------
+
+/**
+ * Picks a design: instant designs take the instant route, hand-made ones the custom route (so the
+ * choice is never lost). Returns false if there's no such design.
+ */
+function applyConcept(name: string): boolean {
+  if (!form || rebuildMode) return false;
+  const select = form.elements.namedItem('concept') as HTMLSelectElement;
+  const option = [...select.options].find((o) => o.value === name);
+  if (!option) return false;
+  const routeValue = option.dataset.instant === 'yes' ? 'instant' : 'custom';
+  form.querySelector<HTMLInputElement>(`input[name="route"][value="${routeValue}"]`)!.checked =
+    true;
+  showConceptRule();
+  select.value = name;
+  showErrors(form, {});
+  return true;
+}
+
+// "Choose this concept" on the wall: fill the design in and bring them to the form, without
+// reloading (a reload would replay the page's opening). The link still works without JavaScript.
+document.addEventListener('click', (event) => {
+  const link = (event.target as HTMLElement).closest<HTMLAnchorElement>('a[data-choose-concept]');
+  if (!link || !form || event.metaKey || event.ctrlKey || event.shiftKey) return;
+  if (!applyConcept(link.dataset.chooseConcept ?? '')) return;
+  event.preventDefault();
+  const url = new URL(location.href);
+  url.searchParams.set('concept', link.dataset.chooseConcept ?? '');
+  history.replaceState(null, '', `${url.pathname}${url.search}#request`);
+  const band = document.getElementById('request');
+  // Through the shared scroller, so it never fights Lenis's smooth scrolling.
+  if (band) scroller.to(band.getBoundingClientRect().top + scroller.target() - 72);
+  document.getElementById('rq-title')?.focus({ preventScroll: true });
+  status(`${link.dataset.chooseConcept}’s design is chosen. Fill in your details below.`);
+});
+
 // ---------- start ----------
 
 async function start() {
@@ -358,17 +396,7 @@ async function start() {
 
   const conceptSelect = form.elements.namedItem('concept') as HTMLSelectElement;
   const wanted = params.get('concept');
-  if (wanted) {
-    conceptSelect.value = wanted;
-    if (conceptSelect.value !== wanted) conceptSelect.value = '';
-    // A hand-made design: start them on the custom route rather than lose their choice.
-    if (
-      conceptSelect.selectedOptions[0]?.value &&
-      conceptSelect.selectedOptions[0].dataset.instant !== 'yes'
-    ) {
-      form.querySelector<HTMLInputElement>('input[name="route"][value="custom"]')!.checked = true;
-    }
-  }
+  if (wanted) applyConcept(wanted);
 
   const me = await api<{ user: { name: string; email: string } }>('/api/account/me');
   loggedIn = me.status === 200;

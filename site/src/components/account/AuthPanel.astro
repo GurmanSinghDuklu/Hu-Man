@@ -5,6 +5,8 @@
  * answers stay on the page underneath), and `inline` on /login/. Views: create an account, log in,
  * the emailed 6-digit code, forgotten password. The panel is always light, whatever the page.
  */
+import PrivacyShort from './PrivacyShort.astro';
+
 interface Props {
   mode?: 'dialog' | 'inline';
   /** Which view opens first. */
@@ -174,6 +176,7 @@ const Tag = mode === 'dialog' ? 'dialog' : 'div';
     Your details and CV are encrypted, stored privately in Europe and only seen by our team. You can
     delete them any time from your account.
   </p>
+  <PrivacyShort tone="light" />
 </Tag>
 
 <style is:global>

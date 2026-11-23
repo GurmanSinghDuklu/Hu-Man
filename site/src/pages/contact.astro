@@ -9,9 +9,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import ContactIntro from '../components/landing/ContactIntro.astro';
-import BrandMark from '../components/BrandMark.astro';
-import HeroVideo from '../components/HeroVideo.astro';
-import RequestForm from '../components/account/RequestForm.astro';
+import Landing from '../components/landing/Landing.astro';
 import EnquiryForm from '../components/EnquiryForm.astro';
 import Sparkle from '../components/Sparkle.astro';
 import { site } from '../config/site';
@@ -45,31 +43,14 @@ const tel = `tel:${site.contact.phone.replace(/\s+/g, '')}`;
 <BaseLayout page="contact">
   <ContactIntro slot="header" />
 
-  <!-- The portfolio request (left) beside the video (right); phones: form first. The class "lp"
-       is what the intro's TV switch-on opens (scripts/contact-intro.ts). -->
-  <section class="lp cxs" aria-labelledby="rq-title">
-    <div class="cxs__form">
-      <a class="cxs__brand" href={withBase('/')} aria-label={`${site.name} home`}>
-        <BrandMark class="cxs__mark" />
-      </a>
-      <p class="label cxs__label">CV portfolio</p>
-      <h1 id="rq-title" class="cxs__title">
-        Talk to a human.
-      </h1>
-      <p class="cxs__lede">
-        Choose a design and send your CV, and we’ll build your portfolio. Or ask for one made from
-        scratch. A real person reads every request.
-      </p>
-      <p class="cxs__other">
-        Need a business website, an app, or just have a question?{' '}
-        <a href="#contact-title">Write to us below</a>, no account needed.
-      </p>
-      <RequestForm />
-    </div>
-    <div class="cxs__video">
-      <HeroVideo video="portfolio-ad" />
-    </div>
-  </section>
+  <Landing
+    title="Talk to a human."
+    lede="Tell us about your website, app or idea. A real person reads every message and replies by email. No sales team, no bots."
+    via="Contact page"
+    legal={false}
+    tierField
+    handoff
+  />
 
   <div class="cx">
     <section class="cx__band cx-write" aria-labelledby="contact-title">
@@ -193,77 +174,6 @@ const tel = `tel:${site.contact.phone.replace(/\s+/g, '')}`;
 </style>
 
 <style>
-  .cxs {
-    display: grid;
-    background: var(--ink);
-    color: var(--paper);
-  }
-
-  .cxs__form {
-    display: grid;
-    gap: 1.1rem;
-    align-content: start;
-    padding: clamp(1.5rem, 5vw, 3.5rem) var(--pad) clamp(2.5rem, 6vw, 4.5rem);
-    min-width: 0;
-  }
-
-  .cxs__brand {
-    justify-self: start;
-    margin-bottom: 0.75rem;
-    --led-colours: #cea4ee, #93aee0, #4a9bb0, #edd1a8, #f8cea2, #e79569, #e85e8f, #db92db, #cea4ee;
-  }
-
-  .cxs__brand :global(.cxs__mark) {
-    --lw: clamp(110px, 10vw, 150px);
-    --hh: clamp(32px, 3vw, 42px);
-  }
-
-  .cxs__label {
-    color: var(--muted-on-ink);
-  }
-
-  .cxs__title {
-    font: 800 clamp(2.6rem, 7vw, 5rem) / 0.92 var(--font-display);
-    letter-spacing: -0.03em;
-    text-transform: uppercase;
-  }
-
-  .cxs__lede {
-    max-width: 46ch;
-    font-size: 1.1rem;
-    line-height: 1.5;
-  }
-
-  .cxs__other {
-    max-width: 52ch;
-    margin-bottom: 0.75rem;
-    color: var(--muted-on-ink);
-    line-height: 1.5;
-  }
-
-  .cxs__other a {
-    color: var(--paper);
-  }
-
-  .cxs__video {
-    position: relative;
-    min-width: 0;
-  }
-
-  /* Wide screens: the form scrolls in the left half; the video stays put in the right half. */
-  @media (min-width: 64rem) {
-    .cxs {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      align-items: start;
-    }
-
-    .cxs__video {
-      position: sticky;
-      top: 0;
-      height: 100svh;
-    }
-  }
-
   /* The landing screen's ground and boxes, carried on down the page. */
   /* Positioned, so it slides over the landing screen as that sinks (scroll story hand-off). */
   .cx {

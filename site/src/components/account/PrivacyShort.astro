@@ -1,0 +1,106 @@
+---
+/**
+ * The short privacy notice shown where people give us their details (the portfolio request form
+ * and the sign-in panel), under "Your details and CV are encrypted…". UK GDPR (Articles 13 and 14)
+ * asks that people are told, when their data is collected: who we are and how to reach us, what we
+ * collect and why, our lawful basis, who else handles it, how long we keep it, their rights and
+ * that they can complain to the ICO. This is the short version; /privacy/ has the full notice and
+ * must stay consistent with it. Draft wording for the solicitor's review, like the other legal pages.
+ */
+import { site } from '../../config/site';
+import { withBase } from '../../config/paths';
+
+interface Props {
+  /** 'ink' on the dark form, 'light' in the sign-in panel. */
+  tone?: 'ink' | 'light';
+}
+const { tone = 'ink' } = Astro.props;
+---
+
+<details class:list={['pshort', `pshort--${tone}`]}>
+  <summary>How we use your information (privacy notice)</summary>
+  <div class="pshort__body">
+    <p>
+      <strong>Who we are.</strong>
+      {site.name} Software Agency, run by {site.founder}, Leeds. Contact us about your data at
+      <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>.
+    </p>
+    <p>
+      <strong>What we collect and why.</strong> Your account details (name, email, password stored
+      only in scrambled form) and what you send in this form, including your CV if you add one. We
+      use it to set up your account, build and deliver your portfolio, and reply to you. Our lawful
+      basis is that we need it to do what you’ve asked us to, before and under our contract with you
+      (UK GDPR Article 6(1)(b)). Phone, town and links are optional.
+    </p>
+    <p>
+      <strong>Who else handles it.</strong> Cloudflare (hosting and private storage in Europe, and
+      reading your CV, only if you tick the box), Resend (sending you emails), Google (our Gmail
+      inbox) and, if you pay by card, Stripe. Some of them may handle data outside the UK, with the
+      safeguards UK law requires. We never sell your data, use it for advertising, or use it to
+      train AI. No decisions with legal or similar effects are made about you automatically.
+    </p>
+    <p>
+      <strong>How long we keep it.</strong> Until you delete your account (you can, at any time,
+      from your account page). Unconfirmed sign-ups are deleted after 7 days, and accounts not used
+      for 12 months are deleted, unless your site is live or you’ve paid us, in which case we keep
+      what we need while we look after it. Payment records are kept as long as HMRC requires.
+    </p>
+    <p>
+      <strong>Your rights.</strong> You can ask to see, correct or get a copy of your data, ask us
+      to delete it, or object to how we use it: email us and we’ll reply within a month. You can
+      also complain to the Information Commissioner’s Office, the UK’s data protection regulator:
+      <a href="https://ico.org.uk/make-a-complaint/" target="_blank" rel="noopener noreferrer">
+        ico.org.uk<span class="visually-hidden"> (opens in a new tab)</span>
+      </a>
+    </p>
+    <p>
+      <a href={withBase('/privacy/')}>Read our full privacy notice</a>.
+    </p>
+  </div>
+</details>
+
+<style>
+  .pshort {
+    font-size: 0.85rem;
+    line-height: 1.55;
+  }
+
+  .pshort summary {
+    width: fit-content;
+    cursor: pointer;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .pshort summary:focus-visible {
+    outline: 3px solid var(--lilac, #c9b6ff);
+    outline-offset: 3px;
+  }
+
+  .pshort__body {
+    display: grid;
+    gap: 0.6rem;
+    margin-top: 0.75rem;
+  }
+
+  .pshort--ink {
+    color: var(--muted-on-ink);
+  }
+
+  .pshort--ink summary,
+  .pshort--ink strong,
+  .pshort--ink a {
+    color: var(--paper);
+  }
+
+  .pshort--light {
+    color: #45473f;
+  }
+
+  .pshort--light summary,
+  .pshort--light strong,
+  .pshort--light a {
+    color: #0b0d0a;
+  }
+</style>

@@ -1,0 +1,107 @@
+---
+/**
+ * The portfolio request on /portfolio, straight after the hero: the form on the left half
+ * (RequestForm, with its sign-in panel) beside the portfolio ad on the right (sticky on wide
+ * screens; phones: form first). Every concept card's "Choose this concept" fills in the design and
+ * brings people here (src/scripts/account/request-form.ts). Ink ground, like the rest of the page's
+ * dark bands.
+ */
+import HeroVideo from '../HeroVideo.astro';
+import RequestForm from './RequestForm.astro';
+import { withBase } from '../../config/paths';
+---
+
+<section class="rqb" id="request" aria-labelledby="rq-title">
+  <div class="rqb__form">
+    <p class="label rqb__label">Start your portfolio</p>
+    <h2 id="rq-title" class="rqb__title" tabindex="-1">
+      Choose a design, send your CV.
+    </h2>
+    <p class="rqb__lede">
+      Pick a design and we’ll build your portfolio from your details. Or ask for one made from
+      scratch. A real person reads every request.
+    </p>
+    <p class="rqb__other">
+      Need a business website, an app, or just have a question?{' '}
+      <a href={withBase('/contact/')}>Contact us</a>, no account needed.
+    </p>
+    <RequestForm />
+  </div>
+  <div class="rqb__video">
+    <HeroVideo video="portfolio-ad" />
+  </div>
+</section>
+
+<style>
+  .rqb {
+    display: grid;
+    background: var(--ink);
+    color: var(--paper);
+    scroll-margin-top: 80px;
+  }
+
+  .rqb__form {
+    display: grid;
+    gap: 1.1rem;
+    align-content: start;
+    padding: clamp(2.5rem, 6vw, 4.5rem) var(--pad);
+    min-width: 0;
+  }
+
+  .rqb__label {
+    color: var(--muted-on-ink);
+  }
+
+  .rqb__title {
+    font: 800 clamp(2.2rem, 5.5vw, 4rem) / 0.95 var(--font-display);
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+  }
+
+  .rqb__title:focus {
+    outline: none;
+  }
+
+  .rqb__lede {
+    max-width: 46ch;
+    font-size: 1.1rem;
+    line-height: 1.5;
+  }
+
+  .rqb__other {
+    max-width: 52ch;
+    margin-bottom: 0.75rem;
+    color: var(--muted-on-ink);
+    line-height: 1.5;
+  }
+
+  .rqb__other a {
+    color: var(--paper);
+  }
+
+  .rqb__video {
+    position: relative;
+    min-width: 0;
+  }
+
+  /* Wide screens: the form scrolls in the left half; the video stays put in the right half. */
+  @media (min-width: 64rem) {
+    .rqb {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      align-items: start;
+    }
+
+    .rqb__video {
+      position: sticky;
+      top: 0;
+      height: 100svh;
+    }
+
+    /* Bottom left of the video, clear of the fixed back-to-top and cookie buttons on the right. */
+    .rqb__video :global(.hv__controls) {
+      right: auto;
+      left: 24px;
+      bottom: 24px;
+    }
+  }
+</style>

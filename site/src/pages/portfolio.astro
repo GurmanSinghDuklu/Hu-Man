@@ -9,6 +9,7 @@ import { contactPath } from '../config/links';
 import { withBase } from '../config/paths';
 import ScrollCue from '../components/ScrollCue.astro';
 import ConceptWall from '../components/ConceptWall.astro';
+import RequestBand from '../components/account/RequestBand.astro';
 import { portfolioConcepts, portfolioConceptsIntro } from '../data/portfolioConcepts';
 import { ats } from '../data/ats';
 import { portfolioFaq } from '../data/faq';
@@ -40,6 +41,8 @@ const choose = (name: string) => withBase(contactPath({ tier: `Portfolio: ${name
       label={`See all ${portfolioConcepts.length} concepts below`}
     />
   </InnerHero>
+
+  <RequestBand />
 
   <section id="concepts" class="band pconcepts" aria-labelledby="concepts-title">
     <div class="sheet">

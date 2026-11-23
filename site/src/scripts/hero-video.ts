@@ -1,5 +1,5 @@
 /**
- * The hero video (components/HeroVideo.astro). The file starts loading once the page has loaded,
+ * The hero video (components/HeroVideo.astro), and any other HeroVideo on the page. The file starts loading once the page has loaded,
  * then plays muted on a loop from the poster's moment, and pauses while the hero is off screen.
  * Pause and Sound buttons; browsers allow sound because pressing the button is a user gesture.
  * Reduced motion or Data Saver: nothing loads or plays until Play is pressed.
@@ -8,9 +8,8 @@ import { introWanted, runIntro } from './hero-intro';
 import { runCvIntro } from './hero-intro-cv';
 import { runReceiptIntro } from './hero-intro-receipt';
 
-const fig = document.querySelector<HTMLElement>('[data-hv]');
-
-if (fig) {
+/** Wires up one video (a page can have more than one: Portfolio's hero and its request form). */
+function setUp(fig: HTMLElement) {
   const video = fig.querySelector<HTMLVideoElement>('video')!;
   const playBtn = fig.querySelector<HTMLButtonElement>('[data-hv-play]')!;
   const soundBtn = fig.querySelector<HTMLButtonElement>('[data-hv-sound]')!;
@@ -119,3 +118,5 @@ if (fig) {
     else window.addEventListener('load', go, { once: true });
   }
 }
+
+document.querySelectorAll<HTMLElement>('[data-hv]').forEach(setUp);

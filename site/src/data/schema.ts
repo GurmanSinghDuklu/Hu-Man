@@ -53,7 +53,7 @@ export interface PageVideo {
   thumbnailUrl: string;
 }
 
-export function buildSchema(key: PageKey, abs: AbsUrl, video?: PageVideo): Node {
+export function buildSchema(key: PageKey, abs: AbsUrl, videos: PageVideo[] = []): Node {
   const page = pages[key];
   const url = abs(page.path);
   const ids = {
@@ -160,14 +160,19 @@ export function buildSchema(key: PageKey, abs: AbsUrl, video?: PageVideo): Node 
 
   const graph: Node[] = [organization, website, webPage];
 
-  // The hero video (Home, About, Portfolio, Pricing). Google needs an upload date, so with no git
-  // history (a bare export) the video is left out rather than given an invented date.
-  const uploadDate = video && firstAdded(`public${heroVideos[video.key].src}`);
-  if (video && uploadDate) {
+  // The page's videos: the hero's first (Home, About, Portfolio, Pricing), then any in its sections
+  // (Portfolio's request form). Google needs an upload date, so with no git history (a bare export)
+  // a video is left out rather than given an invented date.
+  const videoIds: { '@id': string }[] = [];
+  videos.forEach((video, i) => {
+    const uploadDate = firstAdded(`public${heroVideos[video.key].src}`);
+    if (!uploadDate) return;
     const v = heroVideos[video.key];
+    const id = `${url}#video${i ? `-${i + 1}` : ''}`;
+    videoIds.push({ '@id': id });
     graph.push({
       '@type': 'VideoObject',
-      '@id': `${url}#video`,
+      '@id': id,
       name: v.label,
       description: v.description,
       thumbnailUrl: video.thumbnailUrl,
@@ -179,8 +184,8 @@ export function buildSchema(key: PageKey, abs: AbsUrl, video?: PageVideo): Node 
       inLanguage: 'en-GB',
       publisher: { '@id': ids.org },
     });
-    webPage.video = { '@id': `${url}#video` };
-  }
+  });
+  if (videoIds.length) webPage.video = videoIds.length === 1 ? videoIds[0] : videoIds;
 
   if (key !== 'index') {
     graph.push({

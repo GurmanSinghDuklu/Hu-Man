@@ -8,7 +8,12 @@ import { site } from '../config/site';
 import { withBase } from '../config/paths';
 import { pages, type PageKey } from '../data/pages';
 import { buildSchema } from '../data/schema';
-import { pageHeroVideo, heroPoster } from '../data/heroVideos';
+import {
+  pageHeroVideo,
+  pageSectionVideos,
+  heroPoster,
+  type HeroVideoKey,
+} from '../data/heroVideos';
 
 interface Props {
   page: PageKey;
@@ -25,12 +30,17 @@ const abs = (path: string) => new URL(withBase(path), site.url).toString();
 const canonicalUrl = abs(page.path);
 const ogImage = abs(`/og/${page.noindex ? 'index' : key}.png`);
 const ogAlt = `${page.ogHeadline} ${site.fullName}, Leeds.`;
-const heroVideo = pageHeroVideo[key];
-const video = heroVideo && {
-  key: heroVideo,
-  thumbnailUrl: new URL((await heroPoster(heroVideo)).src, site.url).toString(),
-};
-const schema = page.noindex ? undefined : buildSchema(key, abs, video);
+// The hero's video first, then any a section plays (src/data/heroVideos.ts).
+const videoKeys = [pageHeroVideo[key], ...(pageSectionVideos[key] ?? [])].filter(
+  (k): k is HeroVideoKey => Boolean(k),
+);
+const videos = await Promise.all(
+  videoKeys.map(async (k) => ({
+    key: k,
+    thumbnailUrl: new URL((await heroPoster(k)).src, site.url).toString(),
+  })),
+);
+const schema = page.noindex ? undefined : buildSchema(key, abs, videos);
 ---
 
 {index && <link rel="canonical" href={canonicalUrl} />}

@@ -15,6 +15,7 @@ import {
 import { portfolioConcepts } from '../../data/portfolioConcepts';
 import { withBase } from '../../config/paths';
 import AuthPanel from './AuthPanel.astro';
+import PrivacyShort from './PrivacyShort.astro';
 
 const id = (name: string) => `rq-${name}`;
 const inputType = (f: RequestField) =>
@@ -214,6 +215,7 @@ const maxOf = (f: { kind: string; max?: number }) =>
     Your details and CV are encrypted, stored privately in Europe and only seen by our team. Delete
     them any time from your account.
   </p>
+  <PrivacyShort tone="ink" />
 </form>
 
 <div class="rq__done" data-rq-done hidden tabindex="-1"></div>

@@ -912,3 +912,13 @@ Mandeep's direction (replaces "invite only" for portfolio clients). Spec
    Cloudflare for SaaS (`domains.js`).
 5. Daily cron (`cleanup.js`): unconfirmed sign-ups after 7 days, accounts unused for 12 months
    (unless paid or live). Delete my account on /account/.
+
+## Request form moved to /portfolio; contact page restored (2026-11-23)
+Mandeep liked the original /contact/ (landing + short form), so it is back exactly as before. The
+portfolio request form and its video now sit on /portfolio straight after the hero
+(`components/account/RequestBand.astro`, `#request`). "Choose this concept" fills in the design,
+picks the route (instant designs → instant, hand-made → custom) and scrolls there without a reload
+(a reload would replay the CV intro). This is a second video on a page, by request: `pageSectionVideos`
+in heroVideos.ts feeds the schema (a page may now describe several VideoObjects) and hero-video.ts
+wires every `[data-hv]`. A short UK GDPR privacy notice (`PrivacyShort.astro`) sits under the trust
+line in the form and the sign-in panel; keep it consistent with /privacy/ (drafts, solicitor review).
