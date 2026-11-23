@@ -74,3 +74,30 @@ simple = { limit = 20, period = 60 }
 name = "REPLY_PER_ADDRESS"
 namespace_id = "1003"
 simple = { limit = 1, period = 60 }
+
+# Client accounts (worker/accounts/, spec docs/superpowers/specs/2026-11-23-client-accounts-design.md).
+# Before the first deploy that includes them: `npx wrangler d1 create hm_accounts`, paste its id
+# below, `npx wrangler r2 bucket create hm-client-files`, then
+# `npx wrangler d1 migrations apply hm_accounts --remote` (docs/10-launch.md, "Client accounts").
+# `wrangler dev` uses its own local copies, so the placeholder id is fine locally.
+[[d1_databases]]
+binding = "DB"
+database_name = "hm_accounts"
+database_id = "00000000-0000-0000-0000-000000000000"
+migrations_dir = "migrations"
+
+[[r2_buckets]]
+binding = "FILES"
+bucket_name = "hm-client-files"
+
+# Login: 5 tries a minute from one address (plus the per-account lock in worker/accounts/auth.js).
+[[ratelimits]]
+name = "LOGIN_PER_IP"
+namespace_id = "1004"
+simple = { limit = 5, period = 60 }
+
+# Brief uploads: 10 a minute per user.
+[[ratelimits]]
+name = "UPLOAD_PER_USER"
+namespace_id = "1005"
+simple = { limit = 10, period = 60 }

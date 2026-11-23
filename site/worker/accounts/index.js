@@ -13,6 +13,7 @@ import { fail, notFound, sameOrigin, getSession } from './http.js';
 import { setupInfo, setup, login, logout } from './auth.js';
 import { me } from './account.js';
 import { getBrief, putBrief, sendBrief } from './briefs.js';
+import { uploadFile, downloadFile, deleteFile } from './files.js';
 import { listClients, createClient, clientDetail, newInvite, reopenBrief } from './admin.js';
 
 const PREFIXES = ['/api/auth/', '/api/account/', '/api/admin/'];
@@ -39,6 +40,12 @@ export async function handleAccounts(request, env) {
   if (path === '/api/account/brief/send' && method === 'POST') {
     return sendBrief(request, url, env, user);
   }
+  if (path === '/api/account/files' && method === 'POST') {
+    return uploadFile(request, url, env, user);
+  }
+  const fileId = path.match(/^\/api\/account\/files\/([^/]+)$/)?.[1];
+  if (fileId && method === 'GET') return downloadFile(env, user, fileId);
+  if (fileId && method === 'DELETE') return deleteFile(env, user, fileId);
 
   if (path.startsWith('/api/admin/')) {
     if (user.role !== 'admin') return notFound();

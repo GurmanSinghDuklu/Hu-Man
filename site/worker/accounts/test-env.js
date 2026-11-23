@@ -110,7 +110,12 @@ export function req(method, path, { body, cookie, origin = ORIGIN, headers = {} 
   if (origin) h.set('Origin', origin);
   if (cookie) h.set('Cookie', cookie);
   let payload = body;
-  if (body && !(body instanceof FormData) && typeof body !== 'string') {
+  const raw =
+    body instanceof FormData ||
+    body instanceof Uint8Array ||
+    body instanceof Blob ||
+    typeof body === 'string';
+  if (body && !raw) {
     h.set('Content-Type', 'application/json');
     payload = JSON.stringify(body);
   }

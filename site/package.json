@@ -21,7 +21,8 @@
     "indexnow": "node scripts/indexnow.mjs",
     "deploy": "node scripts/deploy.mjs",
     "seo-check": "node scripts/seo-check.mjs",
-    "test": "node --test worker/enquiry.test.js worker/pages.test.js tests/palettes.test.mjs",
+    "test": "node --test worker/enquiry.test.js worker/pages.test.js 'worker/accounts/*.test.js' tests/palettes.test.mjs",
+    "make-admin": "node scripts/make-admin.mjs",
     "build:site": "astro build",
     "concept-posters": "node scripts/concept-posters.mjs",
     "compress-video": "node scripts/compress-video.mjs"
