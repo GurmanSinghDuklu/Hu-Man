@@ -1,6 +1,6 @@
 # Duklu Digital: project memory
 
-Gurman Singh Duklu's web, AI and local-search studio (public line: "Gurman Singh and team") (Leeds, UK; Bradford before 2026-10-19). Working brand since 2026-09-23: **Hu/man** (wordmark "HU/MAN"), replacing "Duklu Digital". Still a working name: keep it in `src/config/site.ts` (`name`, `wordmark`, `descriptor`) so it is easy to change.
+Gurman Singh Duklu's web, AI and local-search studio (public line: "Gurman Duklu and team") (Leeds, UK; Bradford before 2026-10-19). Working brand since 2026-09-23: **Hu/man** (wordmark "HU/MAN"), replacing "Duklu Digital". Still a working name: keep it in `src/config/site.ts` (`name`, `wordmark`, `descriptor`) so it is easy to change.
 
 ## Current goal
 Build the studio's own marketing website: high-end, fast, local-SEO-ready, with concept before/after renders, services, pricing, credentials, FAQ and a free-audit contact path. Build it in the phases in `docs/08-roadmap.md`. Do not deploy, buy domains or publish anything without asking first.

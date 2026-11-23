@@ -75,10 +75,10 @@ export const promises: Card[] = [
  */
 
 export const founderNote = {
-  title: 'Founded by Gurman Singh and team',
+  title: 'Founded by Gurman Duklu and team',
   lines: [
     'Hu/man started in 2026, with a simple idea: software and websites made by people who stay. One human team, from first call to aftercare.',
-    'Gurman Singh: development and builds. He writes and builds every site.',
-    'Mandeep: consultancy and client care. Your first call, every enquiry and ongoing customer service.',
+    'Gurman Duklu: development and builds. He writes and builds every site.',
+    'Gurman Duklu and team: consultancy and client care. Your first call, every enquiry and ongoing customer service.',
   ],
 };
