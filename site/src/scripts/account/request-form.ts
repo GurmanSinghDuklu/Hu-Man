@@ -114,8 +114,9 @@ function fill(answers: RequestAnswers, { overwrite = true } = {}) {
     if (field.kind === 'repeat') {
       if (!Array.isArray(value)) continue;
       const list = wrap.querySelector<HTMLElement>('[data-entries]')!;
-      const hasTyping = [...list.querySelectorAll<HTMLInputElement>('[data-part]')].some((i) =>
-        i.value.trim(),
+      // Tick boxes say "on" even when unticked, so only real typing counts.
+      const hasTyping = [...list.querySelectorAll<HTMLInputElement>('[data-part]')].some(
+        (i) => i.type !== 'checkbox' && i.value.trim(),
       );
       if (hasTyping && !overwrite) continue;
       list.replaceChildren();

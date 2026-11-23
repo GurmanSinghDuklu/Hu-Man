@@ -890,3 +890,25 @@ Parts 3 and 4 (spec `docs/superpowers/specs/2026-11-23-preview-and-payment-desig
    No Stripe account yet (2026-11-23): steps in docs/10-launch.md.
 4. Local secrets for `wrangler dev` go in `site/.dev.vars` (git-ignored).
 5. Terms (sections 3 and 7), privacy and cookies mention previews and Stripe (drafts).
+
+## Self-serve CV portfolios (2026-11-23, branch `client-accounts`, not deployed)
+Mandeep's direction (replaces "invite only" for portfolio clients). Spec
+`docs/superpowers/specs/2026-11-23-self-serve-portfolios-design.md`; setup steps docs/10-launch.md.
+1. **/contact/** opens with the portfolio request form (left, `RequestForm.astro`, fields in
+   `src/data/portfolioRequest.ts`) beside the portfolio-ad video (right, sticky; `.lp` keeps the
+   intro's TV switch-on). The general enquiry form stays below, no account needed.
+2. **Anyone can sign up** (`AuthPanel.astro` + `auth-panel.ts`, dialog on /contact/, inline on
+   /login/): 6-digit emailed code, resend, forgotten password (one-hour link). Emails to people go
+   through **Resend** (`worker/accounts/send.js`, secret RESEND_API_KEY); studio emails still use
+   SEND_EMAIL. Local testing: `DEV_SHOW_CODES=yes` in .dev.vars, and run wrangler dev with
+   `--local-upstream localhost:8787`.
+3. **Fill in from my CV**: Workers AI toMarkdown + Llama 3.3 with a JSON schema where every field is
+   required (optional fields made models stop early). Tick required; nothing stored by reading.
+4. **Instant portfolios**: designs with `instantTier` in `portfolioConcepts.ts` (Leah, Noor, Theo;
+   Profile £156 for now) have templates in `worker/accounts/templates/` (all text through esc()).
+   Built on send and on Edit and rebuild, into the preview. Pay now needs the 14-day waiver tick;
+   the Stripe webhook publishes at `<slug>.humansoftwareagency.com` (`servePublished`, first thing
+   in worker/index.js). Speak with us / Contact us to change it make enquiries. Own domains via
+   Cloudflare for SaaS (`domains.js`).
+5. Daily cron (`cleanup.js`): unconfirmed sign-ups after 7 days, accounts unused for 12 months
+   (unless paid or live). Delete my account on /account/.

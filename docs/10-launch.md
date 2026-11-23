@@ -132,6 +132,40 @@ Built 2026-11-23 (spec `docs/superpowers/specs/2026-11-23-preview-and-payment-de
 6. Payments land as "Paid" on the client's page and as a "[Paid]" email. Then connect their domain
    and press **Mark live**.
 
+### Self-serve portfolios: accounts, CV reading, instant builds, own domains
+Built 2026-11-23 (spec `docs/superpowers/specs/2026-11-23-self-serve-portfolios-design.md`). Before
+the deploy that includes it: `npx wrangler d1 migrations apply hm_accounts --remote` (adds 0003 and
+0004). Each part below works on its own; until its step is done, the site says so politely.
+
+**Emails to people (sign-up codes, resets, receipts): Resend**
+1. resend.com → sign up (free: 3,000 emails a month, 100 a day) → Domains → add
+   humansoftwareagency.com and add the DNS records it shows in Cloudflare (they sit alongside the
+   Email Routing ones). Wait until it says Verified.
+2. API Keys → create one with "Sending access" for that domain only.
+   `npx wrangler secret put RESEND_API_KEY` and paste it.
+3. In `site/wrangler.toml` `[vars]`, add `RESEND_FROM = "Hu/man <hello@humansoftwareagency.com>"`.
+4. Test: create an account at /login/ with a real address of yours; the code arrives.
+
+**Reading CVs: Workers AI** (binding `AI`, nothing to set up). It uses the free daily allowance
+(10,000 neurons, about a few hundred CVs a day). If Cloudflare ever moves the model
+(`@cf/meta/llama-3.3-70b-instruct-fp8-fast`, `worker/accounts/cvread.js`) to Workers Paid, the
+button says reading isn't available and people type it in.
+
+**Instant portfolios published at <name>.humansoftwareagency.com**
+1. Cloudflare → DNS → add record: type `AAAA`, name `*`, address `100::`, Proxied.
+2. Cloudflare → Workers & Pages → humansoftwareagency → Settings → Domains & Routes → Add route:
+   `*.humansoftwareagency.com/*`, zone humansoftwareagency.com.
+3. Card payments need Stripe (see "Client previews and card payments" above).
+
+**"Connect my own domain": Cloudflare for SaaS**
+1. Cloudflare → humansoftwareagency.com → SSL/TLS → Custom Hostnames → enable (first 100 free,
+   then $0.10 each a month).
+2. DNS → add `sites` → `AAAA 100::`, Proxied. Set it as the Fallback Origin on that page.
+3. Workers routes: add `*/*` → humansoftwareagency (so customers' domains reach the Worker).
+4. My Profile → API Tokens → Create token → permission "Zone · SSL and Certificates · Edit" for
+   humansoftwareagency.com only. `npx wrangler secret put CF_API_TOKEN`, then
+   `npx wrangler secret put CF_ZONE_ID` with the zone id from the zone's Overview page.
+
 ## 2. DNS
 1. Add humansoftwareagency.com to Cloudflare (free plan). Cloudflare gives two nameservers.
 2. Namecheap → Domain List → Manage → Nameservers → Custom DNS → paste Cloudflare's two.

@@ -52,6 +52,8 @@ export function setStatus(message: string, tone: 'warn' | 'ok' | '' = '') {
   el.textContent = message;
   if (tone) el.dataset.tone = tone;
   else delete el.dataset.tone;
+  // The line sits at the top of the page; bring it into view so a reply is never missed.
+  if (message) el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
 }
 
 export const UNAVAILABLE =
