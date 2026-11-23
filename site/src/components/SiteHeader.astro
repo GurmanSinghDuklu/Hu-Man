@@ -2,7 +2,6 @@
 import { site } from '../config/site';
 import { withBase } from '../config/paths';
 import BrandMark from './BrandMark.astro';
-import BookingLink from './BookingLink.astro';
 import { serviceAreas } from '../data/services';
 
 const servicesPath = withBase('/services/');
@@ -79,7 +78,25 @@ const navLinks: { href: string; label: string; menu?: 'services' }[] = [
       </ul>
     </nav>
 
-    <BookingLink class="btn site-header__cta" />
+    <!-- Sign in; once signed in (checked after load, src/scripts/account/header-account.ts) the
+         visitor's name, with View dashboard and Sign out on hover or focus. -->
+    <div class="site-header__account acctnav" data-acctnav>
+      <a class="btn site-header__cta" href={withBase('/login/')} data-acctnav-link>
+        Sign in
+      </a>
+      <ul class="acctnav__menu" data-acctnav-menu hidden>
+        <li>
+          <a href={withBase('/account/')} data-acctnav-dash>
+            View dashboard
+          </a>
+        </li>
+        <li>
+          <button type="button" data-acctnav-out>
+            Sign out
+          </button>
+        </li>
+      </ul>
+    </div>
 
     <details class="site-header__menu">
       <summary aria-label="Menu">
@@ -105,7 +122,12 @@ const navLinks: { href: string; label: string; menu?: 'services' }[] = [
             </li>
           ))}
         </ul>
-        <BookingLink class="btn" />
+        <a class="btn" href={withBase('/login/')} data-acctnav-mobile>
+          Sign in
+        </a>
+        <button type="button" class="btn btn--outline" data-acctnav-out-mobile hidden>
+          Sign out
+        </button>
         <a href={withBase('/free-ai-check/')} class="btn btn--outline">
           Free AI check
         </a>
@@ -115,6 +137,8 @@ const navLinks: { href: string; label: string; menu?: 'services' }[] = [
 </header>
 
 <script>
+  import '../scripts/account/header-account';
+
   // Out of the way while reading (Gurman, 2026-11-13): the header slides up once you scroll down
   // past it, and comes back when you scroll up a little (UP_PX) or reach the top. It stays while a
   // menu is open or something in it has keyboard focus.
@@ -434,6 +458,66 @@ const navLinks: { href: string; label: string; menu?: 'services' }[] = [
   }
 
   .site-header :global(.site-header__cta) {
+    display: none;
+  }
+
+  /* ---------- sign in / account ---------- */
+  .acctnav {
+    position: relative;
+  }
+
+  .acctnav__menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    z-index: 30;
+    display: none;
+    min-width: 12rem;
+    margin: 0;
+    padding: 0.5rem;
+    list-style: none;
+    border: 1px solid var(--ink);
+    border-radius: 14px;
+    background: var(--paper);
+    box-shadow: 0 12px 30px -16px rgb(11 13 10 / 0.35);
+  }
+
+  /* Hover or keyboard focus opens it; a small bridge keeps it open on the way down. */
+  .acctnav:hover .acctnav__menu:not([hidden]),
+  .acctnav:focus-within .acctnav__menu:not([hidden]) {
+    display: grid;
+  }
+
+  .acctnav__menu::before {
+    content: '';
+    position: absolute;
+    inset: -10px 0 auto;
+    height: 10px;
+  }
+
+  .acctnav__menu a,
+  .acctnav__menu button {
+    display: block;
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    border: 0;
+    border-radius: 8px;
+    background: none;
+    color: var(--ink);
+    font: 500 0.95rem/1.2 var(--font-text);
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .acctnav__menu a:hover,
+  .acctnav__menu button:hover,
+  .acctnav__menu a:focus-visible,
+  .acctnav__menu button:focus-visible {
+    background: var(--paper-2);
+  }
+
+  [data-acctnav-out-mobile][hidden] {
     display: none;
   }
 
