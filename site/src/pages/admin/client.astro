@@ -77,3 +77,14 @@ import AccountShell from '../../components/account/AccountShell.astro';
 <script>
   import '../../scripts/account/admin-client.ts';
 </script>
+
+<style>
+  :global(.admin__code) {
+    padding: 0.85rem 1rem;
+    background: var(--ink);
+    color: var(--paper);
+    font: 500 0.85rem/1.6 var(--font-mono);
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+</style>

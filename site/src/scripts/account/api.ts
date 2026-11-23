@@ -69,8 +69,29 @@ export interface Me {
     briefState: 'not-started' | 'draft' | 'sent';
     updatedAt: number | null;
     sentAt: number | null;
+    stage: 'brief' | 'building' | 'preview' | 'paid' | 'live';
+    quotePence: number | null;
+    depositPence: number | null;
+    depositPaidAt: number | null;
+    duePence: number;
+    paidPence: number | null;
+    paidAt: number | null;
+    previewAt: number | null;
+    previewPath: string | null;
+    previewBase: string;
+    liveUrl: string | null;
+    liveAt: number | null;
   }[];
 }
+
+/** Whole pence as money: £466, or £466.50 when there are pence. */
+export const money = (pence: number | null) =>
+  pence === null
+    ? ''
+    : `£${(pence / 100).toLocaleString('en-GB', {
+        minimumFractionDigits: pence % 100 ? 2 : 0,
+        maximumFractionDigits: 2,
+      })}`;
 
 /**
  * The logged-in user, or null after sending them to /login/ (and back here afterwards).

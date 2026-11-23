@@ -7,6 +7,8 @@ import {
   sitePath,
   briefStateLabel,
   formatDate,
+  money,
+  showErrors,
   UNAVAILABLE,
   type Me,
 } from './api';
@@ -34,6 +36,233 @@ const id = new URLSearchParams(location.search).get('id') ?? '';
 const fact = (term: string, value: string) =>
   el('div', {}, el('dt', { text: term }), el('dd', { text: value || '–' }));
 const fileUrl = (fileId: string) => sitePath(`/api/account/files/${encodeURIComponent(fileId)}`);
+
+type Project = Detail['projects'][number];
+
+const STAGES = {
+  brief: 'Brief',
+  building: 'Deposit paid, building',
+  preview: 'Preview up, waiting for payment',
+  paid: 'Paid, ready to go live',
+  live: 'Live',
+} as const;
+
+/** Posts an admin action for a project, then reloads the page's data. */
+async function act(project: Project, action: string, body: object, done: string) {
+  const { status, data } = await api(
+    `/api/admin/projects/${encodeURIComponent(project.id)}/${action}`,
+    { method: 'POST', body },
+  );
+  if (status === 200) {
+    setStatus(done, 'ok');
+    await load();
+  } else setStatus(data.error ?? UNAVAILABLE, 'warn');
+}
+
+/** Quote, deposit, preview, final payment and going live, for one project. */
+function moneyCard(project: Project, clientEmail: string) {
+  const id = (name: string) => `m-${project.id}-${name}`;
+  const card = el(
+    'section',
+    { class: 'acct-card', 'aria-labelledby': id('title') },
+    el('h2', { id: id('title'), text: `${project.name}: money, preview and going live` }),
+    el('p', {
+      class: 'acct-tag',
+      'data-state': project.stage === 'live' ? 'sent' : 'draft',
+      text: STAGES[project.stage],
+    }),
+  );
+
+  // 1. Quote and deposit.
+  const form = el('form', { class: 'acct-form', novalidate: '' });
+  const pounds = (pence: number | null) => (pence === null ? '' : String(pence / 100));
+  const field = (name: string, label: string, value: string) =>
+    el(
+      'div',
+      { class: 'acct-field', 'data-field': name },
+      el('label', { for: id(name), text: label }),
+      el('input', {
+        id: id(name),
+        name,
+        type: 'text',
+        inputmode: 'decimal',
+        value,
+        placeholder: 'e.g. 932',
+      }),
+      el('p', { class: 'acct-field__error', 'data-error-for': name }),
+    );
+  form.append(
+    el('h3', { text: '1. Fixed price' }),
+    field('quote', 'Quote (£)', pounds(project.quotePence)),
+    field('deposit', 'Deposit (£)', pounds(project.depositPence)),
+    el(
+      'div',
+      { class: 'acct-actions' },
+      el('button', { type: 'submit', class: 'btn btn--outline', text: 'Save amounts' }),
+    ),
+  );
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const value = (name: string) => (form.elements.namedItem(name) as HTMLInputElement).value;
+    showErrors(form, {});
+    void act(
+      project,
+      'money',
+      { quote: value('quote'), deposit: value('deposit') },
+      'Amounts saved.',
+    );
+  });
+  card.append(form);
+
+  const depositButton = el('button', {
+    type: 'button',
+    class: 'btn btn--outline',
+    text: project.depositPaidAt ? 'Undo: deposit not paid' : 'Mark deposit paid',
+  });
+  depositButton.addEventListener(
+    'click',
+    () =>
+      void act(
+        project,
+        'deposit',
+        { paid: !project.depositPaidAt },
+        project.depositPaidAt ? 'Deposit unmarked.' : 'Deposit marked paid.',
+      ),
+  );
+  card.append(
+    el('p', {
+      class: 'acct-small',
+      text: project.depositPaidAt
+        ? `Deposit of ${money(project.depositPence ?? 0)} marked paid on ${formatDate(project.depositPaidAt)}.`
+        : 'Deposit not marked paid yet (it’s paid off the site, by invoice or transfer).',
+    }),
+    el('div', { class: 'acct-actions' }, depositButton),
+  );
+
+  // 2. Preview.
+  card.append(el('h3', { text: '2. Preview' }));
+  if (project.previewPath) {
+    card.append(
+      el('p', {
+        class: 'acct-small',
+        text: `Up since ${formatDate(project.previewAt)}. Upload again to update it.`,
+      }),
+      el(
+        'div',
+        { class: 'acct-actions' },
+        el('a', {
+          class: 'btn btn--outline',
+          href: sitePath(project.previewPath),
+          target: '_blank',
+          rel: 'noopener',
+          text: 'Open the preview',
+        }),
+      ),
+    );
+  } else {
+    card.append(
+      el('p', {
+        class: 'acct-small',
+        text: 'No preview yet. Build the site with this base path, then upload it:',
+      }),
+    );
+  }
+  card.append(
+    el('pre', {
+      class: 'admin__code',
+      text: `Base path: ${project.previewBase}
+npm run preview-upload -- ${clientEmail} <built folder>`,
+    }),
+  );
+
+  // 3. Final payment.
+  card.append(el('h3', { text: '3. Final payment' }));
+  if (project.paidAt) {
+    card.append(
+      el('p', {
+        class: 'acct-small',
+        text: `${money(project.paidPence)} paid on ${formatDate(project.paidAt)}.`,
+      }),
+    );
+  } else {
+    card.append(
+      el('p', {
+        class: 'acct-small',
+        text: project.previewPath
+          ? `${money(project.duePence) || 'The amount'} left to pay. They can pay by card in their account, or mark it paid here if they paid another way.`
+          : 'They can pay once the preview is up.',
+      }),
+    );
+    const paid = el('button', {
+      type: 'button',
+      class: 'btn btn--outline',
+      text: 'Mark final payment received',
+    });
+    paid.addEventListener('click', () => {
+      if (
+        window.confirm(
+          `Mark ${money(project.duePence) || 'the final payment'} as received for ${project.name}?`,
+        )
+      ) {
+        void act(project, 'paid', {}, 'Final payment marked received.');
+      }
+    });
+    card.append(el('div', { class: 'acct-actions' }, paid));
+  }
+
+  // 4. Live.
+  card.append(el('h3', { text: '4. Going live' }));
+  if (project.liveUrl) {
+    card.append(
+      el(
+        'p',
+        { class: 'acct-small' },
+        `Live since ${formatDate(project.liveAt)} at `,
+        el('a', {
+          class: 'acct-link',
+          href: project.liveUrl,
+          target: '_blank',
+          rel: 'noopener noreferrer',
+          text: project.liveUrl,
+        }),
+        '.',
+      ),
+    );
+  } else if (project.paidAt) {
+    const live = el('form', { class: 'acct-form', novalidate: '' });
+    live.append(
+      el(
+        'div',
+        { class: 'acct-field' },
+        el('label', { for: id('url'), text: 'Live address' }),
+        el('input', {
+          id: id('url'),
+          name: 'url',
+          type: 'url',
+          inputmode: 'url',
+          placeholder: 'https://their-domain.co.uk',
+        }),
+      ),
+      el(
+        'div',
+        { class: 'acct-actions' },
+        el('button', { type: 'submit', class: 'pill-btn', text: 'Mark live' }),
+      ),
+    );
+    live.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const url = (live.elements.namedItem('url') as HTMLInputElement).value;
+      void act(project, 'live', { url }, 'Marked live. Their account now shows the address.');
+    });
+    card.append(
+      el('p', { class: 'acct-small', text: 'Connect their domain, then enter the address.' }),
+      live,
+    );
+  } else {
+    card.append(el('p', { class: 'acct-small', text: 'Available once the final payment is in.' }));
+  }
+  return card;
+}
 
 function renderProject(project: Detail['projects'][number]) {
   const card = el(
@@ -150,7 +379,9 @@ async function load() {
       fact('Account', client.hasPassword ? 'Set up' : 'Invited, password not set yet'),
       fact('Added', formatDate(client.createdAt)),
     );
-  root!.querySelector('[data-client-projects]')!.replaceChildren(...projects.map(renderProject));
+  root!
+    .querySelector('[data-client-projects]')!
+    .replaceChildren(...projects.flatMap((p) => [moneyCard(p, client.email), renderProject(p)]));
   root!.hidden = false;
 
   // Clients can be removed here; admins (the team) can't.

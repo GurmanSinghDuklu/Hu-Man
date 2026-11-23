@@ -152,5 +152,5 @@ if (!finishRes.ok) {
   console.error(finish.error ?? `Finish failed (${finishRes.status}).`);
   process.exit(1);
 }
-console.log(`\nPreview is live for the client (and you): ${finish.url}`);
+console.log(`\nPreview is up for the client (and you): ${origin}${start.basePath}`);
 console.log(`${finish.files} files; ${finish.removed} old file(s) removed.\n`);

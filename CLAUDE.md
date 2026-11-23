@@ -871,3 +871,22 @@ them only to a logged-in admin and gives everyone else (strangers and clients) t
 `Cache-Control: private, no-store`. The admin API answers 404, not 401, to anyone but an admin.
 Admins log in at `/login/`, which sends them to `/admin/`. seo-check fails if the gate entries leave
 run_worker_first. If an admin's session expires they see the 404 too: log in again at /login/.
+
+## Client previews and final payment (2026-11-23, branch `client-accounts`)
+Parts 3 and 4 (spec `docs/superpowers/specs/2026-11-23-preview-and-payment-design.md`). Migration
+0003 adds money, preview and live fields to `projects`; the stage (brief → building → preview → paid
+→ live) is worked out from them (`moneyOf` in worker/accounts/account.js).
+1. **Previews** (`worker/accounts/preview.js`, `"/preview/*"` in run_worker_first): R2
+   `preview/<project>/<version>/…`, only for the project's client and admins, 404 page for anyone
+   else. HTML gets noindex, loses any meta CSP and gains a bottom bar "Preview for <name> · not live
+   yet". Sites must be built with base `/preview/<project>/` (shown on the admin client page).
+2. **Uploads**: `npm run preview-upload -- <email> <folder>` → `/api/upload/preview/*`
+   (`upload.js`), bearer token = Worker secret `PREVIEW_UPLOAD_TOKEN` (laptop copy in
+   `~/.hu-man/preview-token`). Versions switch in one step; old ones are deleted.
+3. **Money** (`payments.js`): admins enter the quote and deposit (pence stored) and mark the deposit
+   paid; only the final payment is taken on the site, by Stripe Checkout over plain `fetch`. Only the
+   signed webhook (`/api/stripe/webhook`, `STRIPE_WEBHOOK_SECRET`) marks it paid; "Mark live" needs
+   payment. Without `STRIPE_SECRET_KEY` the pay button answers 503 ("we'll email payment details").
+   No Stripe account yet (2026-11-23): steps in docs/10-launch.md.
+4. Local secrets for `wrangler dev` go in `site/.dev.vars` (git-ignored).
+5. Terms (sections 3 and 7), privacy and cookies mention previews and Stripe (drafts).

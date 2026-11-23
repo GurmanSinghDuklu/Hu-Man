@@ -105,6 +105,32 @@ Local testing: `npx wrangler d1 migrations apply hm_accounts --local`, `npm run 
 Locally, setup links the admin page makes point at the live domain (wrangler dev reports the route's
 host): swap the host for `localhost:8787` by hand.
 
+### Client previews and card payments
+Built 2026-11-23 (spec `docs/superpowers/specs/2026-11-23-preview-and-payment-design.md`).
+
+**Preview uploads (needed before the first preview):**
+1. Make a long random token: `openssl rand -base64 32`.
+2. `cd site && npx wrangler secret put PREVIEW_UPLOAD_TOKEN` and paste it.
+3. On each laptop that uploads (Gurman's), save the same token as one line in
+   `~/.hu-man/preview-token`. Share it privately (in person or a password manager), never by chat
+   or email, and never commit it.
+4. For each client: on their page in `/admin/` copy the **base path**, build the site with it (Astro:
+   `base: '/preview/<id>'`), then `npm run preview-upload -- <client email> <dist folder>`.
+   `--base` prints the base path without uploading; `--local` uploads to `wrangler dev`.
+
+**Card payments (Stripe; until this is done the pay button says payment details will be emailed):**
+1. Open a Stripe account (stripe.com, UK, sole trader), add the bank account for payouts.
+2. Stripe → Developers → API keys: copy the **secret key** (`sk_live_…`, or `sk_test_…` to try it
+   with Stripe's test cards first). `npx wrangler secret put STRIPE_SECRET_KEY` and paste it.
+3. Stripe → Developers → Webhooks → Add endpoint: URL
+   `https://humansoftwareagency.com/api/stripe/webhook`, event `checkout.session.completed`.
+   Copy its **signing secret** (`whsec_…`): `npx wrangler secret put STRIPE_WEBHOOK_SECRET`.
+4. Stripe → Settings → Customer emails: turn on **successful payment receipts**.
+5. Test with a test-mode key and card 4242 4242 4242 4242 on a dummy client, then swap both secrets
+   for the live ones (the live webhook has its own signing secret).
+6. Payments land as "Paid" on the client's page and as a "[Paid]" email. Then connect their domain
+   and press **Mark live**.
+
 ## 2. DNS
 1. Add humansoftwareagency.com to Cloudflare (free plan). Cloudflare gives two nameservers.
 2. Namecheap → Domain List → Manage → Nameservers → Custom DNS → paste Cloudflare's two.
