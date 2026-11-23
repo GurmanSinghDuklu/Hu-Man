@@ -21,7 +21,10 @@ not_found_handling = "404-page"
 # fonts, images, video, llms.txt, concepts) stays a plain static file. Exact paths only: /about
 # (no slash) still gets its 301 from public/_redirects. seo-check fails if this list and the
 # built pages (worker/pages.json) differ, so add a line when you add a page.
+# "/api/*" is the forms and client accounts API: without it the static-asset handler answers those
+# paths itself (the 404 page, or 405 for a POST) and the Worker never sees them.
 run_worker_first = [
+  "/api/*",
   "/",
   "/about/",
   "/agentic-ai-ready/",

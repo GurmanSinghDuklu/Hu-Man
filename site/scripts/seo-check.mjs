@@ -319,7 +319,11 @@ if (basePath === '/' && !noindexBuild) {
   );
   const wrangler = await readFile(new URL('../wrangler.toml', import.meta.url), 'utf8');
   const firstBlock = (wrangler.match(/run_worker_first = \[([\s\S]*?)\]/) ?? [])[1] ?? '';
-  const first = [...firstBlock.matchAll(/"([^"]+)"/g)].map((m) => m[1]).sort();
+  const first = [...firstBlock.matchAll(/"([^"]+)"/g)]
+    .map((m) => m[1])
+    .filter((path) => path !== '/api/*') // the API, not a page
+    .sort();
+  if (!firstBlock.includes('"/api/*"')) fail('wrangler.toml', 'run_worker_first lacks "/api/*"');
   const want = indexable.map((u) => new URL(u).pathname).sort();
   const listed = Object.keys(manifest.pages).sort();
   if (want.join() !== listed.join())
