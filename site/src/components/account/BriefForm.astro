@@ -1,0 +1,313 @@
+---
+/**
+ * The project brief, drawn from src/data/brief.ts. Every step and field for every project type is
+ * rendered here; the page script (src/scripts/account/brief.ts) removes the ones that aren't for this
+ * project, shows one step at a time, fills in saved answers, saves as the client goes, uploads files
+ * and sends. Each field is a [data-field] wrapper with its kind, so the script can read and fill it.
+ */
+import { briefSteps, type BriefField } from '../../data/brief';
+
+const id = (fieldId: string, suffix = '') => `b-${fieldId}${suffix}`;
+const ACCEPT =
+  '.jpg,.jpeg,.png,.webp,.svg,.pdf,image/jpeg,image/png,image/webp,image/svg+xml,application/pdf';
+const inputType = (field: BriefField) =>
+  field.kind === 'url' ? 'url' : field.kind === 'date' ? 'date' : 'text';
+const maxOf = (field: BriefField) =>
+  field.max ?? (field.kind === 'textarea' ? 2000 : field.kind === 'url' ? 300 : 200);
+---
+
+<form class="bform acct-form" data-brief hidden novalidate>
+  <div class="bform__progress" data-progress-wrap>
+    <p class="bform__progress-text" data-progress aria-live="polite"></p>
+    <div class="bform__bar" aria-hidden="true">
+      <span data-progress-bar></span>
+    </div>
+  </div>
+
+  {briefSteps.map((step) => (
+    <section class="bstep" data-step={step.id} aria-labelledby={`bstep-${step.id}`} hidden>
+      <h2 id={`bstep-${step.id}`} class="bstep__title" tabindex="-1">
+        {step.title}
+      </h2>
+      {step.intro && <p class="acct-small">{step.intro}</p>}
+
+      {step.fields.map((field) => {
+        const req = field.required && <span class="acct-field__req"> (required)</span>;
+        const hintId = field.hint ? id(field.id, '-hint') : undefined;
+        const hint = field.hint && (
+          <p class="acct-field__hint" id={hintId}>
+            {field.hint}
+          </p>
+        );
+        const error = <p class="acct-field__error" data-error-for={field.id} />;
+        const wrap = {
+          'data-field': field.id,
+          'data-kind': field.kind,
+          'data-types': (field.types ?? []).join(' '),
+        };
+
+        if (field.kind === 'choice' || field.kind === 'checks') {
+          return (
+            <fieldset class="acct-field acct-choices" {...wrap} aria-describedby={hintId}>
+              <legend>
+                {field.label}
+                {req}
+              </legend>
+              {hint}
+              {field.options?.map((option) => (
+                <label class="acct-choice" data-in={option.in ? option.in.join('|') : undefined}>
+                  <input
+                    type={field.kind === 'choice' ? 'radio' : 'checkbox'}
+                    name={field.id}
+                    value={option.value}
+                  />
+                  <span>
+                    {option.label}
+                    {option.in && <span class="acct-choice__note" data-tier-note />}
+                  </span>
+                </label>
+              ))}
+              {error}
+            </fieldset>
+          );
+        }
+
+        if (field.kind === 'consent') {
+          return (
+            <div class="acct-field" {...wrap}>
+              <label class="acct-choice">
+                <input type="checkbox" name={field.id} value="true" id={id(field.id)} />
+                <span>
+                  {field.label}
+                  {req}
+                </span>
+              </label>
+              {error}
+            </div>
+          );
+        }
+
+        if (field.kind === 'files') {
+          return (
+            <div class="acct-field" {...wrap}>
+              <label for={id(field.id)}>{field.label}</label>
+              {hint}
+              <ul class="bfiles" data-file-list={field.id} />
+              <input
+                class="bfiles__input"
+                id={id(field.id)}
+                type="file"
+                multiple
+                accept={ACCEPT}
+                aria-describedby={[hintId, id(field.id, '-limits')].filter(Boolean).join(' ')}
+                data-file-input={field.id}
+              />
+              <p class="acct-field__hint" id={id(field.id, '-limits')}>
+                JPG, PNG, WebP, SVG or PDF, up to 10 MB each.
+              </p>
+              {error}
+            </div>
+          );
+        }
+
+        if (field.kind === 'repeat') {
+          return (
+            <fieldset
+              class="acct-field acct-choices"
+              {...wrap}
+              data-max={field.maxItems ?? 10}
+              aria-describedby={hintId}
+            >
+              <legend>{field.label}</legend>
+              {hint}
+              <div class="brepeat" data-repeat-list />
+              <template data-repeat-template>
+                <div class="brepeat__card" data-repeat-card>
+                  <p class="brepeat__title" data-repeat-number />
+                  {field.fields?.map((part) => (
+                    <div class="acct-field">
+                      <label data-part-label={part.id}>{part.label}</label>
+                      {part.kind === 'textarea' ? (
+                        <textarea data-part={part.id} rows="3" maxlength={maxOf(part)}></textarea>
+                      ) : (
+                        <input
+                          type={part.kind === 'url' ? 'url' : 'text'}
+                          inputmode={part.kind === 'url' ? 'url' : undefined}
+                          data-part={part.id}
+                          maxlength={maxOf(part)}
+                        />
+                      )}
+                    </div>
+                  ))}
+                  <button type="button" class="acct__logout" data-repeat-remove>
+                    Remove
+                  </button>
+                </div>
+              </template>
+              <div class="acct-actions">
+                <button type="button" class="btn btn--outline" data-repeat-add>
+                  Add {field.id === 'likes' ? 'a site' : 'a project'}
+                </button>
+              </div>
+              {error}
+            </fieldset>
+          );
+        }
+
+        return (
+          <div class="acct-field" {...wrap}>
+            <label for={id(field.id)}>
+              {field.label}
+              {req}
+            </label>
+            {hint}
+            {field.kind === 'textarea' ? (
+              <textarea
+                id={id(field.id)}
+                name={field.id}
+                rows="5"
+                maxlength={maxOf(field)}
+                aria-describedby={hintId}
+              ></textarea>
+            ) : (
+              <input
+                id={id(field.id)}
+                name={field.id}
+                type={inputType(field)}
+                inputmode={field.kind === 'url' ? 'url' : undefined}
+                maxlength={maxOf(field)}
+                aria-describedby={hintId}
+              />
+            )}
+            {error}
+          </div>
+        );
+      })}
+
+      {step.id === 'send' && <div class="breview" data-review />}
+    </section>
+  ))}
+
+  <div class="bform__nav acct-actions">
+    <button type="button" class="btn btn--outline" data-back>
+      Back
+    </button>
+    <button type="button" class="pill-btn" data-next>
+      Save and continue
+    </button>
+    <button type="button" class="pill-btn" data-send hidden>
+      Send brief
+    </button>
+    <a class="acct-link acct-small" data-later href="../">
+      Save and come back later
+    </a>
+  </div>
+  <p class="acct-small" data-save-state aria-live="polite"></p>
+</form>
+
+<div class="breview" data-readonly hidden></div>
+
+<style is:global>
+  .bform {
+    gap: 1.75rem;
+  }
+
+  .bform__progress {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .bform__progress-text {
+    font: 500 0.75rem/1.3 var(--font-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .bform__bar {
+    height: 6px;
+    background: var(--paper-2);
+  }
+
+  .bform__bar span {
+    display: block;
+    height: 100%;
+    width: 0;
+    background: var(--btn);
+    transition: width 0.3s var(--ease-out);
+  }
+
+  .bstep {
+    display: grid;
+    gap: 1.4rem;
+  }
+
+  .bstep__title {
+    font: 800 clamp(1.6rem, 5vw, 2.4rem) / 1.05 var(--font-display);
+    letter-spacing: -0.02em;
+  }
+
+  .bstep__title:focus {
+    outline: none;
+  }
+
+  .bfiles {
+    display: grid;
+    gap: 0.4rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .bfiles:empty {
+    display: none;
+  }
+
+  .bfiles li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem 1rem;
+    padding: 0.55rem 0.8rem;
+    border: 1px solid var(--grid-line, #d9d9d0);
+    background: #fff;
+    overflow-wrap: anywhere;
+  }
+
+  .bfiles__input {
+    max-width: 100%;
+    font: inherit;
+  }
+
+  .brepeat {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .brepeat__card {
+    display: grid;
+    gap: 0.9rem;
+    padding: 1rem;
+    border: 1px solid var(--grid-line, #d9d9d0);
+    background: #fff;
+  }
+
+  .brepeat__card .acct__logout {
+    justify-self: start;
+  }
+
+  .brepeat__title {
+    font: 500 0.75rem/1.3 var(--font-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .breview {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .breview h3 {
+    font: 800 1.25rem/1.1 var(--font-display);
+  }
+</style>

@@ -1,0 +1,27 @@
+---
+/** The project brief (?p=<project id>): what the client wants and what we need to build it. */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import AccountShell from '../../components/account/AccountShell.astro';
+import BriefForm from '../../components/account/BriefForm.astro';
+---
+
+<BaseLayout page="account-brief">
+  <SiteHeader slot="header" />
+
+  <AccountShell label="Client area · Brief" title="Your project brief">
+    <p class="acct-small">
+      <a class="acct-link" href="../">
+        Back to your account
+      </a>
+    </p>
+    <BriefForm />
+  </AccountShell>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<script>
+  import '../../scripts/account/brief.ts';
+</script>

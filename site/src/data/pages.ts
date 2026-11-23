@@ -27,6 +27,12 @@ export type PageKey =
   | 'cookies'
   | 'terms'
   | 'user-agreement'
+  | 'login'
+  | 'account'
+  | 'account-setup'
+  | 'account-brief'
+  | 'admin'
+  | 'admin-client'
   | '404';
 
 export interface PageInfo {
@@ -237,6 +243,67 @@ export const pages: Record<PageKey, PageInfo> = {
     label: 'User agreement',
     ogHeadline: 'User agreement.',
     schemaType: 'WebPage',
+  },
+  // The client area (worker/accounts/): never indexed, never in the sitemap or llms files.
+  login: {
+    key: 'login',
+    path: '/login/',
+    title: 'Client login | Hu/man',
+    description: 'Log in to your Hu/man client account.',
+    label: 'Client login',
+    ogHeadline: 'Talk to a human.',
+    schemaType: 'WebPage',
+    noindex: true,
+  },
+  account: {
+    key: 'account',
+    path: '/account/',
+    title: 'Your account | Hu/man',
+    description: 'Your Hu/man project and brief.',
+    label: 'Your account',
+    ogHeadline: 'Talk to a human.',
+    schemaType: 'WebPage',
+    noindex: true,
+  },
+  'account-setup': {
+    key: 'account-setup',
+    path: '/account/setup/',
+    title: 'Set up your account | Hu/man',
+    description: 'Choose a password for your Hu/man client account.',
+    label: 'Set up your account',
+    ogHeadline: 'Talk to a human.',
+    schemaType: 'WebPage',
+    noindex: true,
+  },
+  'account-brief': {
+    key: 'account-brief',
+    path: '/account/brief/',
+    title: 'Your project brief | Hu/man',
+    description: 'Tell us what you want and send what we need to build it.',
+    label: 'Your project brief',
+    ogHeadline: 'Talk to a human.',
+    schemaType: 'WebPage',
+    noindex: true,
+  },
+  admin: {
+    key: 'admin',
+    path: '/admin/',
+    title: 'Clients | Hu/man admin',
+    description: 'Hu/man clients, setup links and briefs.',
+    label: 'Clients',
+    ogHeadline: 'Talk to a human.',
+    schemaType: 'WebPage',
+    noindex: true,
+  },
+  'admin-client': {
+    key: 'admin-client',
+    path: '/admin/client/',
+    title: 'Client | Hu/man admin',
+    description: 'A Hu/man client, their brief and their files.',
+    label: 'Client',
+    ogHeadline: 'Talk to a human.',
+    schemaType: 'WebPage',
+    noindex: true,
   },
   '404': {
     key: '404',

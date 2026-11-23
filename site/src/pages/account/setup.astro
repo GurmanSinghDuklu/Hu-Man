@@ -1,0 +1,90 @@
+---
+/** Where a setup link lands (?t=…): the client confirms their name and chooses a password. */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import AccountShell from '../../components/account/AccountShell.astro';
+import { site } from '../../config/site';
+
+const ask = `mailto:${site.contact.email}?subject=${encodeURIComponent('New setup link, please')}`;
+---
+
+<BaseLayout page="account-setup">
+  <SiteHeader slot="header" />
+
+  <AccountShell label="Client area" title="Set up your account">
+    <form class="acct-form" data-setup hidden novalidate>
+      <p class="acct-small">
+        Setting up <strong data-setup-email></strong>. Choose a password you don’t use anywhere
+        else.
+      </p>
+      <div class="acct-field" data-field="name">
+        <label for="setup-name">Your name</label>
+        <input
+          id="setup-name"
+          name="name"
+          type="text"
+          autocomplete="name"
+          required
+          maxlength="100"
+        />
+        <p class="acct-field__error" data-error-for="name"></p>
+      </div>
+      <input type="email" name="username" autocomplete="username" hidden data-setup-username />
+      <div class="acct-field" data-field="password">
+        <label for="setup-password">Password</label>
+        <p class="acct-field__hint" id="setup-password-hint">
+          At least 10 characters.
+        </p>
+        <input
+          id="setup-password"
+          name="password"
+          type="password"
+          autocomplete="new-password"
+          aria-describedby="setup-password-hint"
+          required
+          minlength="10"
+          maxlength="200"
+        />
+        <p class="acct-field__error" data-error-for="password"></p>
+      </div>
+      <div class="acct-field" data-field="confirm">
+        <label for="setup-confirm">Type it again</label>
+        <input
+          id="setup-confirm"
+          name="confirm"
+          type="password"
+          autocomplete="new-password"
+          required
+          maxlength="200"
+        />
+        <p class="acct-field__error" data-error-for="confirm"></p>
+      </div>
+      <div class="acct-actions">
+        <button class="pill-btn" type="submit" data-submit>
+          Set my password
+        </button>
+      </div>
+    </form>
+
+    <div data-setup-bad hidden>
+      <p class="acct-small">
+        Setup links work once and last 7 days.{' '}
+        <a class="acct-link" href={ask}>
+          Ask us for a new one
+        </a>
+        , or{' '}
+        <a class="acct-link" href="../../login/">
+          log in
+        </a>{' '}
+        if you’ve already set your password.
+      </p>
+    </div>
+  </AccountShell>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<script>
+  import '../../scripts/account/setup.ts';
+</script>

@@ -1,0 +1,24 @@
+---
+/** A client's home in the client area: their project(s), the brief's state, the preview to come. */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import AccountShell from '../../components/account/AccountShell.astro';
+---
+
+<BaseLayout page="account">
+  <SiteHeader slot="header" />
+
+  <AccountShell label="Client area" title="Your account">
+    <div class="acct-form" data-account hidden>
+      <p class="acct__lede" data-account-hello></p>
+      <div class="acct-form" data-account-projects></div>
+    </div>
+  </AccountShell>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<script>
+  import '../../scripts/account/account.ts';
+</script>

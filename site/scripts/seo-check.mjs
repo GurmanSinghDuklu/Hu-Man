@@ -18,7 +18,17 @@ const fail = (where, msg) => errors.push(`${where}: ${msg}`);
 
 const noindexBuild = Boolean(process.env.PUBLIC_NOINDEX);
 /** Pages that are never indexed (src/data/pages.ts `noindex`). */
-const NOINDEX_FILES = new Set(['404.html', 'thanks/index.html']);
+const NOINDEX_FILES = new Set([
+  '404.html',
+  'thanks/index.html',
+  // The client area (worker/accounts/).
+  'login/index.html',
+  'account/index.html',
+  'account/setup/index.html',
+  'account/brief/index.html',
+  'admin/index.html',
+  'admin/client/index.html',
+]);
 
 async function walk(dir, prefix = '') {
   const out = [];

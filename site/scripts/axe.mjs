@@ -24,6 +24,8 @@ const PAGES = [
   'cookies/',
   'terms/',
   'user-agreement/',
+  'login/',
+  'account/setup/',
   '404.html',
 ];
 

@@ -1,0 +1,164 @@
+---
+/**
+ * The team's client list and "New client" form. Creating a client shows their one-time setup link
+ * to paste into an email (the site doesn't email clients). Admins only: the API refuses everyone
+ * else, and this page then just says so.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import AccountShell from '../../components/account/AccountShell.astro';
+import { tiers, portfolioTiers } from '../../data/pricing';
+import { portfolioConcepts, businessSiteConcepts } from '../../data/portfolioConcepts';
+import { projectTypeLabels } from '../../data/brief';
+---
+
+<BaseLayout page="admin">
+  <SiteHeader slot="header" />
+
+  <AccountShell label="Hu/man team" title="Clients" wide>
+    <div class="acct-form" data-admin hidden>
+      <details class="acct-card" data-new-client-box>
+        <summary class="pill-btn admin__summary">New client</summary>
+        <form class="acct-form" data-new-client novalidate>
+          <div class="admin__grid">
+            <div class="acct-field" data-field="name">
+              <label for="nc-name">Their name</label>
+              <input id="nc-name" name="name" type="text" required maxlength="100" />
+              <p class="acct-field__error" data-error-for="name"></p>
+            </div>
+            <div class="acct-field" data-field="email">
+              <label for="nc-email">Their email</label>
+              <input id="nc-email" name="email" type="email" required maxlength="200" />
+              <p class="acct-field__error" data-error-for="email"></p>
+            </div>
+            <div class="acct-field" data-field="type">
+              <label for="nc-type">Project type</label>
+              <select id="nc-type" name="type" required>
+                <option value="">Choose…</option>
+                {Object.entries(projectTypeLabels).map(([value, label]) => (
+                  <option value={value}>{label}</option>
+                ))}
+              </select>
+              <p class="acct-field__error" data-error-for="type"></p>
+            </div>
+            <div class="acct-field">
+              <label for="nc-project">
+                Project name <span class="acct-field__req">(optional)</span>
+              </label>
+              <input id="nc-project" name="projectName" type="text" maxlength="100" />
+            </div>
+            <div class="acct-field">
+              <label for="nc-tier">
+                Tier <span class="acct-field__req">(optional)</span>
+              </label>
+              <select id="nc-tier" name="tier">
+                <option value="">Not decided</option>
+                <optgroup label="Websites">
+                  {tiers.map((t) => (
+                    <option value={t.name}>{t.name}</option>
+                  ))}
+                </optgroup>
+                <optgroup label="Portfolio and CV sites">
+                  {portfolioTiers.map((t) => (
+                    <option value={`Portfolio: ${t.name}`}>{t.name}</option>
+                  ))}
+                </optgroup>
+              </select>
+            </div>
+            <div class="acct-field">
+              <label for="nc-concept">
+                Concept <span class="acct-field__req">(optional)</span>
+              </label>
+              <select id="nc-concept" name="concept">
+                <option value="">None</option>
+                <optgroup label="CV and portfolio concepts">
+                  {portfolioConcepts.map((c) => (
+                    <option value={c.name}>{c.name}</option>
+                  ))}
+                </optgroup>
+                {businessSiteConcepts.length > 0 && (
+                  <optgroup label="Business concepts">
+                    {businessSiteConcepts.map((c) => (
+                      <option value={c.name}>{c.name}</option>
+                    ))}
+                  </optgroup>
+                )}
+              </select>
+            </div>
+          </div>
+          <div class="acct-actions">
+            <button class="pill-btn" type="submit" data-submit>
+              Create and get their setup link
+            </button>
+          </div>
+        </form>
+      </details>
+
+      <section class="acct-card" data-link-box hidden aria-labelledby="link-title">
+        <h2 id="link-title" tabindex="-1">
+          Setup link for <span data-link-name></span>
+        </h2>
+        <p class="acct-small">
+          Copy this into an email to them. It works once and lasts 7 days. It isn’t shown again; if
+          it gets lost, make a new one from their page.
+        </p>
+        <div class="acct-field">
+          <label for="link-url">Setup link</label>
+          <input id="link-url" type="text" readonly data-link-url />
+        </div>
+        <div class="acct-field">
+          <label for="link-message">A message you can send</label>
+          <textarea id="link-message" readonly rows="6" data-link-message></textarea>
+        </div>
+        <div class="acct-actions">
+          <button class="pill-btn" type="button" data-copy="link-url">
+            Copy the link
+          </button>
+          <button class="btn btn--outline" type="button" data-copy="link-message">
+            Copy the message
+          </button>
+        </div>
+      </section>
+
+      <section aria-labelledby="clients-title" class="acct-form">
+        <h2 id="clients-title" class="bstep__title">
+          All clients
+        </h2>
+        <div data-clients></div>
+      </section>
+    </div>
+  </AccountShell>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<script>
+  import '../../scripts/account/admin.ts';
+</script>
+
+<style>
+  .admin__summary {
+    justify-self: start;
+    list-style: none;
+  }
+
+  .admin__summary::-webkit-details-marker {
+    display: none;
+  }
+
+  details[open] > .admin__summary {
+    margin-bottom: 1rem;
+  }
+
+  .admin__grid {
+    display: grid;
+    gap: 1.1rem 1.25rem;
+  }
+
+  @media (min-width: 48rem) {
+    .admin__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>

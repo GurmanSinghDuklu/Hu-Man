@@ -1,0 +1,352 @@
+---
+/**
+ * The frame every client-area page shares (/login/, /account/…, /admin/…): label, headline, a
+ * status line for the page script, a log-out button (shown once someone is logged in), and the
+ * form styles the pages use. The pages are static shells; their scripts (src/scripts/account/)
+ * fetch everything from the Worker's API, so without JavaScript they say so.
+ *
+ * Styles are global but every class starts `acct`, so nothing leaks into the rest of the site.
+ */
+interface Props {
+  label: string;
+  title: string;
+  lede?: string;
+  /** Wider sheet for the admin tables. */
+  wide?: boolean;
+}
+
+const { label, title, lede, wide = false } = Astro.props;
+---
+
+<section class:list={['wrap', 'acct', { 'acct--wide': wide }]} data-acct>
+  <div class="acct__top">
+    <p class="label">{label}</p>
+    <button type="button" class="acct__logout" data-logout hidden>
+      Log out
+    </button>
+  </div>
+  <h1 class="acct__title" data-acct-title>
+    {title}
+  </h1>
+  {lede && <p class="acct__lede">{lede}</p>}
+  <noscript>
+    <p class="acct__note">
+      This area needs JavaScript switched on. Everything else on the site works without it.
+    </p>
+  </noscript>
+  <p class="acct__status" role="status" aria-live="polite" data-acct-status></p>
+  <slot />
+</section>
+
+<style is:global>
+  .acct {
+    display: grid;
+    gap: var(--space-4);
+    align-content: start;
+    max-width: calc(46rem + 2 * var(--pad));
+    padding-block: clamp(2.5rem, 8vw, 5rem) clamp(3.5rem, 10vw, 7rem);
+  }
+
+  .acct--wide {
+    max-width: calc(72rem + 2 * var(--pad));
+  }
+
+  .acct__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .acct__title {
+    font-size: clamp(2.2rem, 7vw, 4.2rem);
+    overflow-wrap: anywhere;
+  }
+
+  .acct__lede {
+    max-width: 60ch;
+    font-size: 1.1rem;
+    line-height: 1.55;
+  }
+
+  .acct__note,
+  .acct__status:not(:empty) {
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--ink);
+    background: var(--paper-2);
+    line-height: 1.5;
+  }
+
+  .acct__status[data-tone='warn'] {
+    border-color: #b3261e;
+    background: #fdecea;
+    color: #6e140f;
+  }
+
+  .acct__status[data-tone='ok'] {
+    border-color: #1f6b3a;
+    background: #e8f4ec;
+    color: #12401f;
+  }
+
+  .acct__status:empty {
+    display: none;
+  }
+
+  .acct__logout {
+    min-height: 44px;
+    padding: 0.5rem 0.9rem;
+    border: 1px solid var(--ink);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--ink);
+    font: 500 0.75rem/1 var(--font-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  .acct__logout[hidden],
+  .acct [hidden] {
+    display: none !important;
+  }
+
+  .acct__logout:hover {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  /* ---- forms ---- */
+  .acct-form {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .acct-field {
+    display: grid;
+    gap: 0.4rem;
+    align-content: start;
+    min-width: 0;
+  }
+
+  .acct-field > label,
+  .acct-field > legend,
+  .acct-field__label {
+    font: 500 0.75rem/1.35 var(--font-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .acct-field legend {
+    padding: 0;
+    margin-bottom: 0.4rem;
+  }
+
+  .acct-field__hint {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.45;
+  }
+
+  .acct-field__req {
+    color: var(--muted);
+    letter-spacing: 0.08em;
+  }
+
+  .acct input[type='text'],
+  .acct input[type='email'],
+  .acct input[type='password'],
+  .acct input[type='url'],
+  .acct input[type='date'],
+  .acct select,
+  .acct textarea {
+    width: 100%;
+    min-height: 48px;
+    padding: 0.75rem 0.9rem;
+    border: 1px solid var(--ink);
+    border-radius: 0;
+    background: #fff;
+    color: var(--ink);
+    font: 400 1rem/1.45 var(--font-text);
+  }
+
+  .acct textarea {
+    min-height: 7.5rem;
+    resize: vertical;
+  }
+
+  .acct input:focus-visible,
+  .acct select:focus-visible,
+  .acct textarea:focus-visible,
+  .acct button:focus-visible,
+  .acct a:focus-visible {
+    outline: 3px solid var(--btn);
+    outline-offset: 2px;
+  }
+
+  .acct-field[data-invalid] input,
+  .acct-field[data-invalid] textarea,
+  .acct-field[data-invalid] select {
+    border-color: #b3261e;
+    border-width: 2px;
+  }
+
+  .acct-field__error {
+    color: #b3261e;
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+
+  .acct-field__error:empty {
+    display: none;
+  }
+
+  .acct-choices {
+    display: grid;
+    gap: 0.5rem;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    min-width: 0;
+  }
+
+  .acct-choice {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    padding: 0.7rem 0.85rem;
+    border: 1px solid var(--grid-line, #d9d9d0);
+    background: #fff;
+    line-height: 1.4;
+    cursor: pointer;
+  }
+
+  .acct-choice:has(input:checked) {
+    border-color: var(--ink);
+    box-shadow: inset 4px 0 0 var(--btn);
+  }
+
+  .acct-choice input {
+    flex: none;
+    width: 1.15rem;
+    height: 1.15rem;
+    margin-top: 0.1rem;
+    accent-color: var(--btn);
+  }
+
+  .acct-choice__note {
+    display: block;
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+
+  .acct-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .acct-link {
+    color: var(--ink);
+    text-underline-offset: 0.2em;
+  }
+
+  .acct-small {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  /* ---- cards and tables ---- */
+  .acct-card {
+    display: grid;
+    gap: 0.75rem;
+    padding: clamp(1.1rem, 3vw, 1.6rem);
+    border: 1px solid var(--ink);
+    background: #fff;
+  }
+
+  .acct-card h2,
+  .acct-card h3 {
+    font: 800 clamp(1.25rem, 3vw, 1.6rem) / 1.1 var(--font-display);
+    letter-spacing: -0.01em;
+  }
+
+  .acct-tag {
+    justify-self: start;
+    padding: 0.3rem 0.6rem;
+    border: 1px solid var(--ink);
+    border-radius: 999px;
+    font: 500 0.7rem/1 var(--font-mono);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .acct-tag[data-state='sent'] {
+    border-color: #1f6b3a;
+    background: #e8f4ec;
+    color: #12401f;
+  }
+
+  .acct-tag[data-state='draft'] {
+    background: #fff6d6;
+  }
+
+  .acct-dl {
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .acct-dl dt {
+    font: 500 0.75rem/1.35 var(--font-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .acct-dl dd {
+    margin: 0.2rem 0 0;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    line-height: 1.5;
+  }
+
+  .acct-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+  }
+
+  .acct-table th,
+  .acct-table td {
+    padding: 0.75rem 0.8rem;
+    border-bottom: 1px solid var(--grid-line, #d9d9d0);
+    text-align: left;
+    vertical-align: top;
+    overflow-wrap: anywhere;
+  }
+
+  .acct-table th {
+    font: 500 0.7rem/1.3 var(--font-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 40rem) {
+    .acct-table thead {
+      display: none;
+    }
+
+    .acct-table tr {
+      display: grid;
+      padding-block: 0.5rem;
+      border-bottom: 1px solid var(--grid-line, #d9d9d0);
+    }
+
+    .acct-table td {
+      padding: 0.2rem 0.8rem;
+      border: 0;
+    }
+  }
+</style>

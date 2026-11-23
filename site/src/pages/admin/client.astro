@@ -1,0 +1,65 @@
+---
+/** One client (?id=…): details, a new setup link, each project's brief and files, reopen a brief. */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import AccountShell from '../../components/account/AccountShell.astro';
+---
+
+<BaseLayout page="admin-client">
+  <SiteHeader slot="header" />
+
+  <AccountShell label="Hu/man team · Client" title="Client" wide>
+    <p class="acct-small">
+      <a class="acct-link" href="../">
+        Back to all clients
+      </a>
+    </p>
+    <div class="acct-form" data-client hidden>
+      <section class="acct-card" aria-labelledby="client-details">
+        <h2 id="client-details">Details</h2>
+        <dl class="acct-dl" data-client-facts></dl>
+        <div class="acct-actions">
+          <button class="btn btn--outline" type="button" data-new-link>
+            New setup link
+          </button>
+        </div>
+        <p class="acct-small">
+          A new setup link ends their older links and logs them out everywhere. Use it when they’ve
+          forgotten their password.
+        </p>
+      </section>
+
+      <section class="acct-card" data-link-box hidden aria-labelledby="link-title">
+        <h2 id="link-title" tabindex="-1">
+          Setup link for <span data-link-name></span>
+        </h2>
+        <p class="acct-small">Copy this into an email to them. It works once and lasts 7 days.</p>
+        <div class="acct-field">
+          <label for="link-url">Setup link</label>
+          <input id="link-url" type="text" readonly data-link-url />
+        </div>
+        <div class="acct-field">
+          <label for="link-message">A message you can send</label>
+          <textarea id="link-message" readonly rows="6" data-link-message></textarea>
+        </div>
+        <div class="acct-actions">
+          <button class="pill-btn" type="button" data-copy="link-url">
+            Copy the link
+          </button>
+          <button class="btn btn--outline" type="button" data-copy="link-message">
+            Copy the message
+          </button>
+        </div>
+      </section>
+
+      <div class="acct-form" data-client-projects></div>
+    </div>
+  </AccountShell>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<script>
+  import '../../scripts/account/admin-client.ts';
+</script>
