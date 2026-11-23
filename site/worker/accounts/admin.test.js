@@ -9,7 +9,12 @@ const tokenOf = (url) => new URL(url).searchParams.get('t');
 const newClient = {
   name: 'Noor Haddad',
   email: 'noor@example.co.uk',
-  project: { name: 'Noor’s portfolio', type: 'portfolio', tier: 'Portfolio: Portfolio', concept: 'Noor Haddad' },
+  project: {
+    name: 'Noor’s portfolio',
+    type: 'portfolio',
+    tier: 'Portfolio: Portfolio',
+    concept: 'Noor Haddad',
+  },
 };
 
 test('clients get 404 from every admin route', async () => {
@@ -22,7 +27,10 @@ test('clients get 404 from every admin route', async () => {
     ['POST', '/api/admin/clients/x/invite'],
     ['POST', '/api/admin/projects/x/reopen'],
   ]) {
-    const res = await call(env, method, path, { cookie: client, body: method === 'POST' ? {} : undefined });
+    const res = await call(env, method, path, {
+      cookie: client,
+      body: method === 'POST' ? {} : undefined,
+    });
     assert.equal(res.status, 404, `${method} ${path}`);
   }
 });
@@ -33,7 +41,10 @@ test('an admin creates a client with a project and gets a working setup link onc
   const res = await call(env, 'POST', '/api/admin/clients', { cookie: admin, body: newClient });
   assert.equal(res.status, 201);
   const { client, setupUrl } = await res.json();
-  assert.match(setupUrl, /^https:\/\/humansoftwareagency\.com\/account\/setup\/\?t=[A-Za-z0-9_-]{43}$/);
+  assert.match(
+    setupUrl,
+    /^https:\/\/humansoftwareagency\.com\/account\/setup\/\?t=[A-Za-z0-9_-]{43}$/,
+  );
 
   const dupe = await call(env, 'POST', '/api/admin/clients', {
     cookie: admin,
@@ -65,7 +76,9 @@ test('an admin creates a client with a project and gets a working setup link onc
     body: { token: tokenOf(setupUrl), name: 'Noor Haddad', password: 'noor’s long password' },
   });
   assert.equal(setup.status, 200);
-  const me = await (await call(env, 'GET', '/api/account/me', { cookie: cookieFrom(setup) })).json();
+  const me = await (
+    await call(env, 'GET', '/api/account/me', { cookie: cookieFrom(setup) })
+  ).json();
   assert.equal(me.projects[0].name, 'Noor’s portfolio');
 });
 
@@ -86,8 +99,14 @@ test('a new setup link ends older links and every session of that client', async
     await call(env, 'POST', `/api/admin/clients/${client.id}/invite`, { cookie: admin })
   ).json();
   assert.equal((await call(env, 'GET', '/api/account/me', { cookie: clientCookie })).status, 401);
-  assert.equal((await call(env, 'GET', `/api/auth/setup?t=${tokenOf(older.setupUrl)}`)).status, 404);
-  assert.equal((await call(env, 'GET', `/api/auth/setup?t=${tokenOf(fresh.setupUrl)}`)).status, 200);
+  assert.equal(
+    (await call(env, 'GET', `/api/auth/setup?t=${tokenOf(older.setupUrl)}`)).status,
+    404,
+  );
+  assert.equal(
+    (await call(env, 'GET', `/api/auth/setup?t=${tokenOf(fresh.setupUrl)}`)).status,
+    200,
+  );
   assert.equal(
     (await call(env, 'POST', '/api/admin/clients/nope/invite', { cookie: admin })).status,
     404,

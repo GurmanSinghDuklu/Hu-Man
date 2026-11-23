@@ -22,7 +22,8 @@ export async function projectsOf(env, userId) {
     tier: p.tier,
     concept: p.concept,
     status: p.status,
-    briefState: p.state === 'sent' ? 'sent' : !p.answers || p.answers === '{}' ? 'not-started' : 'draft',
+    briefState:
+      p.state === 'sent' ? 'sent' : !p.answers || p.answers === '{}' ? 'not-started' : 'draft',
     updatedAt: p.updated_at,
     sentAt: p.sent_at,
   }));

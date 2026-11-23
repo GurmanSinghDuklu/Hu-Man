@@ -12,6 +12,7 @@
 import { fail, notFound, sameOrigin, getSession } from './http.js';
 import { setupInfo, setup, login, logout } from './auth.js';
 import { me } from './account.js';
+import { getBrief, putBrief, sendBrief } from './briefs.js';
 import { listClients, createClient, clientDetail, newInvite, reopenBrief } from './admin.js';
 
 const PREFIXES = ['/api/auth/', '/api/account/', '/api/admin/'];
@@ -33,6 +34,11 @@ export async function handleAccounts(request, env) {
   const { user } = session;
 
   if (path === '/api/account/me' && method === 'GET') return me(env, user);
+  if (path === '/api/account/brief' && method === 'GET') return getBrief(url, env, user);
+  if (path === '/api/account/brief' && method === 'PUT') return putBrief(request, url, env, user);
+  if (path === '/api/account/brief/send' && method === 'POST') {
+    return sendBrief(request, url, env, user);
+  }
 
   if (path.startsWith('/api/admin/')) {
     if (user.role !== 'admin') return notFound();
@@ -46,7 +52,12 @@ export async function handleAccounts(request, env) {
         return newInvite(env, id, url.origin);
       }
     }
-    if (parts[0] === 'projects' && parts[2] === 'reopen' && parts.length === 3 && method === 'POST') {
+    if (
+      parts[0] === 'projects' &&
+      parts[2] === 'reopen' &&
+      parts.length === 3 &&
+      method === 'POST'
+    ) {
       return reopenBrief(env, id);
     }
   }

@@ -41,7 +41,9 @@ export async function createClient(request, env, origin, now = Date.now()) {
     tier: line(project.tier, 60) || null,
     concept: line(project.concept, 60) || null,
   };
-  data.projectName = line(project.name, 100) || `${data.name}’s ${data.type === 'portfolio' ? 'portfolio' : data.type === 'custom' ? 'project' : 'website'}`;
+  data.projectName =
+    line(project.name, 100) ||
+    `${data.name}’s ${data.type === 'portfolio' ? 'portfolio' : data.type === 'custom' ? 'project' : 'website'}`;
   const errors = {};
   if (!data.name) errors.name = 'Add their name.';
   if (!EMAIL.test(data.email)) errors.email = 'Add a valid email address.';
@@ -51,7 +53,10 @@ export async function createClient(request, env, origin, now = Date.now()) {
   const existing = await env.DB.prepare('SELECT id FROM users WHERE email = ?')
     .bind(data.email)
     .first();
-  if (existing) return fail(409, 'There is already an account with that email.', { errors: { email: 'Already has an account.' } });
+  if (existing)
+    return fail(409, 'There is already an account with that email.', {
+      errors: { email: 'Already has an account.' },
+    });
 
   const user = await addUser(env, { email: data.email, name: data.name, role: 'client' }, now);
   const projectId = crypto.randomUUID();
@@ -59,7 +64,10 @@ export async function createClient(request, env, origin, now = Date.now()) {
     env.DB.prepare(
       'INSERT INTO projects (id, user_id, name, type, tier, concept, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)',
     ).bind(projectId, user.id, data.projectName, data.type, data.tier, data.concept, now),
-    env.DB.prepare('INSERT INTO briefs (project_id, updated_at) VALUES (?, ?)').bind(projectId, now),
+    env.DB.prepare('INSERT INTO briefs (project_id, updated_at) VALUES (?, ?)').bind(
+      projectId,
+      now,
+    ),
   ]);
   const setupUrl = await createInvite(env, user.id, origin, now);
   return json({ ok: true, client: { id: user.id }, projectId, setupUrl }, 201);
@@ -76,7 +84,9 @@ export async function clientDetail(env, id) {
   if (!client) return notFound();
   const projects = [];
   for (const p of await projectsOf(env, id)) {
-    const brief = await env.DB.prepare('SELECT answers, consent_at FROM briefs WHERE project_id = ?')
+    const brief = await env.DB.prepare(
+      'SELECT answers, consent_at FROM briefs WHERE project_id = ?',
+    )
       .bind(p.id)
       .first();
     const { results: files } = await env.DB.prepare(
@@ -88,7 +98,13 @@ export async function clientDetail(env, id) {
       ...p,
       answers: brief ? JSON.parse(brief.answers) : {},
       consentAt: brief?.consent_at ?? null,
-      files: files.map((f) => ({ id: f.id, field: f.field, name: f.name, type: f.type, size: f.size })),
+      files: files.map((f) => ({
+        id: f.id,
+        field: f.field,
+        name: f.name,
+        type: f.type,
+        size: f.size,
+      })),
     });
   }
   return json({

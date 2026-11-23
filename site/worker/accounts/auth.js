@@ -24,14 +24,20 @@ const LOCK_AFTER = 5;
 const LOCK_MS = 15 * 60 * 1000;
 export const MIN_PASSWORD = 10;
 const MAX_PASSWORD = 200;
-const WRONG = 'Wrong email or password. After 5 wrong tries in a row, logging in pauses for 15 minutes.';
+const WRONG =
+  'Wrong email or password. After 5 wrong tries in a row, logging in pauses for 15 minutes.';
 
 export const normaliseEmail = (email) => line(email, 200).toLowerCase();
 export const EMAIL = /^[^\s@<>()[\]\\,;:"]+@[^\s@<>()[\]\\,;:"]+\.[^\s@<>()[\]\\,;:".]{2,}$/;
 
 /** Adds a user with no password yet. Returns { id, email, name, role }. */
 export async function addUser(env, { email, name, role = 'client' }, now = Date.now()) {
-  const user = { id: crypto.randomUUID(), email: normaliseEmail(email), name: line(name, 100), role };
+  const user = {
+    id: crypto.randomUUID(),
+    email: normaliseEmail(email),
+    name: line(name, 100),
+    role,
+  };
   await env.DB.prepare(
     'INSERT INTO users (id, email, name, role, created_at) VALUES (?, ?, ?, ?, ?)',
   )
@@ -43,9 +49,7 @@ export async function addUser(env, { email, name, role = 'client' }, now = Date.
 /** A new setup link for a user. Only the token's hash is stored. */
 export async function createInvite(env, userId, origin, now = Date.now()) {
   const token = newToken();
-  await env.DB.prepare(
-    'INSERT INTO invites (token_hash, user_id, expires_at) VALUES (?, ?, ?)',
-  )
+  await env.DB.prepare('INSERT INTO invites (token_hash, user_id, expires_at) VALUES (?, ?, ?)')
     .bind(await sha256Hex(token), userId, now + INVITE_DAYS * DAY)
     .run();
   return `${origin}/account/setup/?t=${token}`;

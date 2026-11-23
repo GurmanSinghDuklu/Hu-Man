@@ -15,7 +15,9 @@ export const ORIGIN = 'https://humansoftwareagency.com';
 function fakeD1() {
   const db = new DatabaseSync(':memory:');
   db.exec('PRAGMA foreign_keys = ON;');
-  for (const file of readdirSync(MIGRATIONS).filter((f) => f.endsWith('.sql')).sort()) {
+  for (const file of readdirSync(MIGRATIONS)
+    .filter((f) => f.endsWith('.sql'))
+    .sort()) {
     db.exec(readFileSync(new URL(file, MIGRATIONS), 'utf8'));
   }
   const statement = (sql, params = []) => ({
@@ -27,7 +29,12 @@ function fakeD1() {
       return column ? plain[column] : plain;
     },
     async all() {
-      return { results: db.prepare(sql).all(...params).map((row) => ({ ...row })) };
+      return {
+        results: db
+          .prepare(sql)
+          .all(...params)
+          .map((row) => ({ ...row })),
+      };
     },
     async run() {
       const info = db.prepare(sql).run(...params);
@@ -58,13 +65,19 @@ function fakeR2() {
   return {
     store,
     async put(key, body, options = {}) {
-      const bytes = new Uint8Array(body instanceof ArrayBuffer ? body : await new Response(body).arrayBuffer());
+      const bytes = new Uint8Array(
+        body instanceof ArrayBuffer ? body : await new Response(body).arrayBuffer(),
+      );
       store.set(key, { bytes, httpMetadata: options.httpMetadata ?? {} });
     },
     async get(key) {
       const item = store.get(key);
       if (!item) return null;
-      return { body: new Blob([item.bytes]).stream(), size: item.bytes.length, httpMetadata: item.httpMetadata };
+      return {
+        body: new Blob([item.bytes]).stream(),
+        size: item.bytes.length,
+        httpMetadata: item.httpMetadata,
+      };
     },
     async delete(key) {
       store.delete(key);
@@ -116,7 +129,9 @@ export async function loggedIn(env, email, role = 'client') {
   const user = await addUser(env, { email, name: role === 'admin' ? 'Gurman' : 'Client', role });
   const token = new URL(await createInvite(env, user.id, ORIGIN)).searchParams.get('t');
   const res = await handleAccounts(
-    req('POST', '/api/auth/setup', { body: { token, name: user.name, password: 'a long enough password' } }),
+    req('POST', '/api/auth/setup', {
+      body: { token, name: user.name, password: 'a long enough password' },
+    }),
     env,
   );
   return cookieFrom(res);

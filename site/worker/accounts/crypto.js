@@ -52,7 +52,8 @@ export async function verifyPassword(password, hash, salt) {
 /** A random token: 32 bytes, base64url (43 characters). */
 export const newToken = () => toB64url(crypto.getRandomValues(new Uint8Array(32)));
 
-export const sha256Hex = async (text) => hex(await crypto.subtle.digest('SHA-256', enc.encode(text)));
+export const sha256Hex = async (text) =>
+  hex(await crypto.subtle.digest('SHA-256', enc.encode(text)));
 
 /** Runs the hash anyway when there is no user, so a wrong email takes as long as a wrong password. */
 export const DUMMY = { hash: 'x'.repeat(43), salt: 'AAAAAAAAAAAAAAAAAAAAAA' };
