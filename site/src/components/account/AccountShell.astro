@@ -129,7 +129,7 @@ const { label, title, lede, wide = false } = Astro.props;
     min-width: 0;
   }
 
-  .acct-field > label,
+  .acct-field > label:not(.acct-choice),
   .acct-field > legend,
   .acct-field__label {
     font: 500 0.75rem/1.35 var(--font-mono);
@@ -271,6 +271,37 @@ const { label, title, lede, wide = false } = Astro.props;
   .acct-card h3 {
     font: 800 clamp(1.25rem, 3vw, 1.6rem) / 1.1 var(--font-display);
     letter-spacing: -0.01em;
+  }
+
+  .acct-card h3 {
+    margin-top: 1.25rem;
+    font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+  }
+
+  /* File lists (the brief and the admin client page). */
+  .bfiles {
+    display: grid;
+    gap: 0.4rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .bfiles:empty {
+    display: none;
+  }
+
+  .bfiles li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem 1rem;
+    padding: 0.55rem 0.8rem;
+    border: 1px solid var(--grid-line, #d9d9d0);
+    background: #fff;
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
 
   .acct-tag {

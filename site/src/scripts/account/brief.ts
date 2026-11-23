@@ -421,7 +421,15 @@ async function start() {
     .querySelectorAll<HTMLInputElement>('[data-file-input]')
     .forEach((input) => input.addEventListener('change', () => void upload(input)));
   form.addEventListener('input', (event) => {
-    if (!(event.target as HTMLElement).matches('[data-file-input]')) scheduleSave();
+    const target = event.target as HTMLElement;
+    // A field's error goes as soon as it's touched again.
+    const wrap = target.closest<HTMLElement>('[data-field]');
+    if (wrap?.hasAttribute('data-invalid')) {
+      wrap.removeAttribute('data-invalid');
+      const error = wrap.querySelector<HTMLElement>('[data-error-for]');
+      if (error) error.textContent = '';
+    }
+    if (!target.matches('[data-file-input]')) scheduleSave();
   });
   form.querySelector('[data-next]')!.addEventListener('click', () => {
     void save();

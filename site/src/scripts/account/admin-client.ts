@@ -44,7 +44,7 @@ function renderProject(project: Detail['projects'][number]) {
       class: 'acct-small',
       text: [
         projectTypeLabels[project.type],
-        project.tier && `Tier: ${project.tier}`,
+        project.tier && `Tier: ${project.tier.replace(/^Portfolio: /, '')}`,
         project.concept && `Concept: ${project.concept}`,
       ]
         .filter(Boolean)

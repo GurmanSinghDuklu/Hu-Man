@@ -250,30 +250,7 @@ const maxOf = (field: BriefField) =>
     outline: none;
   }
 
-  .bfiles {
-    display: grid;
-    gap: 0.4rem;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .bfiles:empty {
-    display: none;
-  }
-
-  .bfiles li {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.5rem 1rem;
-    padding: 0.55rem 0.8rem;
-    border: 1px solid var(--grid-line, #d9d9d0);
-    background: #fff;
-    overflow-wrap: anywhere;
-  }
-
+  /* .bfiles (the file lists) is styled in AccountShell, shared with the admin page. */
   .bfiles__input {
     max-width: 100%;
     font: inherit;
