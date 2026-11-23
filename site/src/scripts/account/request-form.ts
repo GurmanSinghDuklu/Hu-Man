@@ -277,6 +277,7 @@ form?.querySelector('[data-cv-read-button]')?.addEventListener('click', async ()
     headers: {
       'X-File-Name': encodeURIComponent(cvFile.name),
       'Content-Type': cvFile.type || 'application/octet-stream',
+      'X-Consent': 'yes',
     },
   });
   if (code === 200) {

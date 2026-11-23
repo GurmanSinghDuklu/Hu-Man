@@ -104,6 +104,12 @@ migrations_dir = "migrations"
 binding = "FILES"
 bucket_name = "hm-client-files"
 
+# Cloudflare Workers AI: reads uploaded CVs to fill in the portfolio form (worker/accounts/cvread.js).
+[ai]
+binding = "AI"
+# Workers AI only runs on Cloudflare; this lets `wrangler dev` use it too (from the free allowance).
+remote = true
+
 # Login: 5 tries a minute from one address (plus the per-account lock in worker/accounts/auth.js).
 [[ratelimits]]
 name = "LOGIN_PER_IP"

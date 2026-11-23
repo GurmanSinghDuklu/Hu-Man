@@ -13,6 +13,7 @@ import { fail, notFound, sameOrigin, getSession, notFoundPage } from './http.js'
 import { setupInfo, setup, login, logout, signup, verify, resendCode, forgot } from './auth.js';
 import { me, deleteMe } from './account.js';
 import { saveRequest, getRequest, sendRequest } from './requests.js';
+import { readCv } from './cvread.js';
 import { getBrief, putBrief, sendBrief } from './briefs.js';
 import { uploadFile, downloadFile, deleteFile } from './files.js';
 import { listEnquiries, setEnquiryStatus, deleteEnquiry } from './enquiries.js';
@@ -72,6 +73,7 @@ export async function handleAccounts(request, env) {
   if (path === '/api/account/me' && method === 'DELETE') return deleteMe(env, user);
   if (path === '/api/account/request' && method === 'POST') return saveRequest(request, env, user);
   if (path === '/api/account/request' && method === 'GET') return getRequest(url, env, user);
+  if (path === '/api/account/cv/read' && method === 'POST') return readCv(request, env, user);
   if (path === '/api/account/request/send' && method === 'POST') {
     return sendRequest(request, url, env, user);
   }
