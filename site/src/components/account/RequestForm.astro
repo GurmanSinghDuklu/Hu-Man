@@ -226,7 +226,7 @@ const maxOf = (f: { kind: string; max?: number }) =>
   }
 
   .rq__legend,
-  .rq__field > label,
+  .rq__field > label:not(.rq__check),
   .rq__entry-title {
     font: 500 0.75rem/1.3 var(--font-mono);
     letter-spacing: 0.14em;
@@ -274,7 +274,7 @@ const maxOf = (f: { kind: string; max?: number }) =>
     min-width: 0;
   }
 
-  .rq__field > label span,
+  .rq__field > label:not(.rq__check) span,
   .rq__req {
     color: var(--muted-on-ink);
     letter-spacing: 0.06em;

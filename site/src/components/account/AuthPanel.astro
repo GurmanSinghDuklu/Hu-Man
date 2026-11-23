@@ -189,7 +189,13 @@ const Tag = mode === 'dialog' ? 'dialog' : 'div';
     color: var(--auth-ink);
   }
 
+  /* Our display: grid beats the browser's own "closed dialogs are hidden", so say it again. */
+  .auth--dialog:not([open]) {
+    display: none;
+  }
+
   .auth--dialog {
+    position: fixed;
     margin: auto;
     max-height: calc(100dvh - 2rem);
     overflow-y: auto;
@@ -200,16 +206,21 @@ const Tag = mode === 'dialog' ? 'dialog' : 'div';
   }
 
   .auth__close {
-    justify-self: end;
+    position: absolute;
+    top: 12px;
+    right: 12px;
     width: 44px;
     height: 44px;
-    margin: -0.5rem -0.5rem -1.5rem 0;
     border: 1px solid var(--auth-ink);
     border-radius: 50%;
     background: transparent;
     color: var(--auth-ink);
     font-size: 1.4rem;
     cursor: pointer;
+  }
+
+  .auth--dialog .auth__title {
+    padding-right: 2.75rem;
   }
 
   .auth__title {

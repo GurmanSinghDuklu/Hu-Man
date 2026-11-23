@@ -101,9 +101,10 @@ For reference, the steps were:
    it in the dashboard).
 
 Local testing: `npx wrangler d1 migrations apply hm_accounts --local`, `npm run build`,
-`npx wrangler dev`, then `npm run make-admin -- you@example.com "You"` prints a localhost link.
-Locally, setup links the admin page makes point at the live domain (wrangler dev reports the route's
-host): swap the host for `localhost:8787` by hand.
+`npx wrangler dev --local --local-upstream localhost:8787` (without `--local-upstream`, wrangler
+reports the live domain as the address, so links point there and the test codes below never show),
+then `npm run make-admin -- you@example.com "You"` prints a localhost link. Put
+`DEV_SHOW_CODES=yes` in `site/.dev.vars` to see sign-up codes on screen instead of by email.
 
 ### Client previews and card payments
 Built 2026-11-23 (spec `docs/superpowers/specs/2026-11-23-preview-and-payment-design.md`).
