@@ -10,6 +10,9 @@ import { EmailMessage } from 'cloudflare:email';
 import { handleEnquiry } from './enquiry.js';
 import { servePage } from './pages.js';
 import { handleAccounts, gateAdminPages } from './accounts/index.js';
+import { servePreview } from './accounts/preview.js';
+import { handlePreviewUpload } from './accounts/upload.js';
+import { handleStripeWebhook } from './accounts/payments.js';
 
 /** The same protective headers public/_headers gives every static file. */
 const SECURITY_HEADERS = {
@@ -27,7 +30,10 @@ export default {
       response = await handleEnquiry(request, env, EmailMessage, ctx);
     } else {
       response =
+        (await handleStripeWebhook(request, { ...env, EmailMessage })) ??
+        (await handlePreviewUpload(request, env)) ??
         (await handleAccounts(request, { ...env, EmailMessage })) ??
+        (await servePreview(request, env)) ??
         (await gateAdminPages(request, env)) ??
         (await servePage(request, env.ASSETS)) ??
         (await env.ASSETS.fetch(request));

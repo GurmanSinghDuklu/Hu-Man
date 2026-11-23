@@ -24,11 +24,13 @@ not_found_handling = "404-page"
 # "/api/*" is the forms and client accounts API: without it the static-asset handler answers those
 # paths itself (the 404 page, or 405 for a POST) and the Worker never sees them.
 # "/admin" and "/admin/*": the team's dashboard, served only to a logged-in admin; everyone else gets
-# the 404 page (gateAdminPages in worker/accounts/index.js).
+# the 404 page (gateAdminPages in worker/accounts/index.js). "/preview/*": a client's preview of their
+# site, from R2, only for them and admins (worker/accounts/preview.js).
 run_worker_first = [
   "/api/*",
   "/admin",
   "/admin/*",
+  "/preview/*",
   "/",
   "/about/",
   "/agentic-ai-ready/",
@@ -109,3 +111,10 @@ simple = { limit = 5, period = 60 }
 name = "UPLOAD_PER_USER"
 namespace_id = "1005"
 simple = { limit = 10, period = 60 }
+
+# Secrets (never in this file or the repo): set each with `npx wrangler secret put <NAME>`.
+#   PREVIEW_UPLOAD_TOKEN   lets `npm run preview-upload` put a client's build in their preview.
+#   STRIPE_SECRET_KEY      Stripe's secret key (sk_test_… while testing, sk_live_… for real).
+#   STRIPE_WEBHOOK_SECRET  the signing secret of the webhook to /api/stripe/webhook (whsec_…).
+# Without the Stripe ones the pay button says payment details will be emailed instead. For
+# `wrangler dev`, put them in site/.dev.vars (git-ignored). Steps: docs/10-launch.md.

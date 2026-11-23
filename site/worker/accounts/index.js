@@ -15,6 +15,7 @@ import { me } from './account.js';
 import { getBrief, putBrief, sendBrief } from './briefs.js';
 import { uploadFile, downloadFile, deleteFile } from './files.js';
 import { listEnquiries, setEnquiryStatus, deleteEnquiry } from './enquiries.js';
+import { setMoney, setDeposit, markPaid, markLive, pay } from './payments.js';
 import {
   listClients,
   createClient,
@@ -68,6 +69,7 @@ export async function handleAccounts(request, env) {
   if (path === '/api/account/brief/send' && method === 'POST') {
     return sendBrief(request, url, env, user);
   }
+  if (path === '/api/account/pay' && method === 'POST') return pay(url, env, user);
   if (path === '/api/account/files' && method === 'POST') {
     return uploadFile(request, url, env, user);
   }
@@ -92,6 +94,12 @@ export async function handleAccounts(request, env) {
       if (parts.length === 3 && parts[2] === 'invite' && method === 'POST') {
         return newInvite(env, id, url.origin);
       }
+    }
+    if (parts[0] === 'projects' && parts.length === 3 && method === 'POST') {
+      if (parts[2] === 'money') return setMoney(request, env, id);
+      if (parts[2] === 'deposit') return setDeposit(request, env, id);
+      if (parts[2] === 'paid') return markPaid(request, env, id);
+      if (parts[2] === 'live') return markLive(request, env, id);
     }
     if (
       parts[0] === 'projects' &&
