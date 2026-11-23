@@ -46,6 +46,9 @@ export const portfolioConceptsIntro = {
   /** Shown on every card. */
   note: 'Concept',
   linkText: 'View the concept',
+  /** The cream button beside it: opens the contact form with this concept already chosen.
+   *  null hides it (the business wall). */
+  chooseText: 'Choose this concept' as string | null,
   staticNote: 'Showing still previews. Open any concept to see it move.',
   /** The last tile on the wall: a call to start your own. */
   next: {
@@ -300,6 +303,7 @@ export const businessConceptsIntro = {
   ...portfolioConceptsIntro,
   label: 'Concept business sites',
   title: 'The right fit, running live.',
+  chooseText: null,
   text: 'Six kinds of business, six different answers. Each site is built around what its customers need, and no bigger. Move your mouse over any of them: they are running live.',
   next: {
     label: 'Your business',

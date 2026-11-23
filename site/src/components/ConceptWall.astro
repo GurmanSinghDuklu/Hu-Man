@@ -15,6 +15,7 @@ import {
   type PortfolioConcept,
 } from '../data/portfolioConcepts';
 import { withBase } from '../config/paths';
+import { contactPath } from '../config/links';
 import BookingLink from './BookingLink.astro';
 
 const posters = import.meta.glob<{ default: ImageMetadata }>(
@@ -109,10 +110,21 @@ const size = { desktop: { w: 1440, h: 900 }, phone: { w: 390, h: 844 } };
                 </h3>
                 <p class="ctile__role">{concept.role}</p>
                 <p class="ctile__shows">{concept.shows}</p>
-                <a class="ctile__link" href={href}>
-                  {intro.linkText}
-                  <span class="visually-hidden"> for {concept.name}</span>
-                </a>
+                <div class="ctile__actions">
+                  <a class="ctile__link" href={href}>
+                    {intro.linkText}
+                    <span class="visually-hidden"> for {concept.name}</span>
+                  </a>
+                  {intro.chooseText && (
+                    <a
+                      class="ctile__link ctile__link--choose"
+                      href={withBase(contactPath({ concept: concept.name }))}
+                    >
+                      {intro.chooseText}
+                      <span class="visually-hidden"> ({concept.name})</span>
+                    </a>
+                  )}
+                </div>
               </div>
             </article>
           );
@@ -341,15 +353,22 @@ const size = { desktop: { w: 1440, h: 900 }, phone: { w: 390, h: 844 } };
     line-height: 1.45;
   }
 
-  .ctile__link {
-    justify-self: start;
+  .ctile__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
     margin-top: 0.35rem;
-    padding: 0.55rem 1rem;
+  }
+
+  /* Tight enough that both buttons share a line on a desktop card; they wrap on phones. */
+  .ctile__link {
+    padding: 0.55rem 0.8rem;
     border: 1px solid var(--paper);
     border-radius: 999px;
     color: var(--paper);
     font: 500 0.75rem var(--font-mono);
-    letter-spacing: 0.14em;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
     text-decoration: none;
     text-transform: uppercase;
     transition:
@@ -366,6 +385,18 @@ const size = { desktop: { w: 1440, h: 900 }, phone: { w: 390, h: 844 } };
   .ctile__link:focus-visible {
     outline: 2px solid var(--paper);
     outline-offset: 3px;
+  }
+
+  /* Choose: solid cream (Paper), so it reads as the next step beside the outlined view link. */
+  .ctile__link--choose,
+  .ctile:has(.ctile__hit:hover) .ctile__link--choose {
+    background: var(--paper);
+    color: var(--ink);
+  }
+
+  .ctile__link--choose:hover {
+    background: var(--paper-2);
+    border-color: var(--paper-2);
   }
 
   .cwall__next {

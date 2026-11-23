@@ -145,3 +145,27 @@ if (video && playBtn && soundBtn) {
 const tierField = document.querySelector<HTMLInputElement>('[data-lp-tier]');
 const tier = new URLSearchParams(location.search).get('tier');
 if (tierField && tier) tierField.value = tier.slice(0, 60);
+
+// ---- /contact/: a "Choose this concept" card on /portfolio/ sends ?concept=<name> ----
+const conceptField = document.querySelector<HTMLInputElement>('[data-lp-concept]');
+const concept = new URLSearchParams(location.search).get('concept');
+if (conceptField && concept) {
+  let names: string[] = [];
+  try {
+    names = JSON.parse(conceptField.dataset.lpConcept ?? '[]') as string[];
+  } catch {
+    /* no list: leave the field empty */
+  }
+  if (names.includes(concept)) {
+    conceptField.value = concept;
+    const form = conceptField.form;
+    const service = form?.elements.namedItem('service') as HTMLSelectElement | null;
+    if (service) service.value = 'Portfolio or CV website';
+    const chosen = form?.querySelector<HTMLElement>('[data-lp-chosen]');
+    const name = chosen?.querySelector<HTMLElement>('[data-lp-chosen-name]');
+    if (chosen && name) {
+      name.textContent = concept;
+      chosen.hidden = false;
+    }
+  }
+}

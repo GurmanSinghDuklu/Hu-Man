@@ -26,6 +26,7 @@ import firstStill from '../../assets/landing/seen-poster.jpg';
 import { site } from '../../config/site';
 import { withBase } from '../../config/paths';
 import { serviceAreas } from '../../data/services';
+import { portfolioConcepts } from '../../data/portfolioConcepts';
 
 interface Props {
   /** The page's h1, in the white box. */
@@ -36,7 +37,8 @@ interface Props {
   via: string;
   /** Privacy, terms, cookies and copyright in the corner (off when the site footer follows). */
   legal?: boolean;
-  /** Carry a pricing button's ?tier= with the short form (the contact page). */
+  /** Carry a pricing button's ?tier= (and a concept card's ?concept=) with the short form (the
+   *  contact page). */
   tierField?: boolean;
   /** Sink under the content that follows as the page scrolls (the contact page; scroll story). */
   handoff?: boolean;
@@ -144,6 +146,19 @@ const first = playlist[0]!;
         <!-- Tells the inbox this came from the landing page (subject and first line of the email). -->
         <input type="hidden" name="via" value={via} />
         {tierField && <input type="hidden" name="tier" value="" data-lp-tier />}
+        {tierField && (
+          <input
+            type="hidden"
+            name="concept"
+            value=""
+            data-lp-concept={JSON.stringify(portfolioConcepts.map((c) => c.name))}
+          />
+        )}
+        {tierField && (
+          <p class="lp__chosen" data-lp-chosen hidden>
+            Concept chosen: <strong data-lp-chosen-name></strong>
+          </p>
+        )}
 
         <div class="lp__fields" data-fields>
           <div class="lp__field lp__field--half">
@@ -445,6 +460,15 @@ const first = playlist[0]!;
   .lp__form-title {
     font: 400 1rem/1.2 var(--font-text);
     text-transform: none;
+  }
+
+  .lp__chosen {
+    color: var(--paper);
+    font-size: 0.875rem;
+  }
+
+  .lp__chosen[hidden] {
+    display: none;
   }
 
   .lp__status:empty {

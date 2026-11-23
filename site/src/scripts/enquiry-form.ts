@@ -26,12 +26,15 @@ function mailtoFor(email: string, f: Fields): string {
   const topic =
     f.topic === 'tier' && f.tier
       ? `${f.tier} tier`
-      : (f.service ?? TOPIC_LABELS[f.topic] ?? 'Enquiry');
+      : f.concept
+        ? `${f.concept} concept`
+        : (f.service ?? TOPIC_LABELS[f.topic] ?? 'Enquiry');
   const lines = [
     'Hi,',
     '',
     f.message || '',
     '',
+    f.concept ? `Concept: ${f.concept}` : '',
     f.service ? `Service: ${f.service}` : '',
     f.via ? `Sent from: the ${f.via.toLowerCase()}` : '',
     `Name: ${f.name ?? ''}`,
@@ -70,7 +73,7 @@ function check(f: Fields): Record<string, string> {
   }
   if (f.topic === 'ai-check' && !f.website) errors.website = 'Please add the website to check.';
   // A chosen service is enough (the short /start/ form has a service list and no message box).
-  if (f.topic !== 'ai-check' && !f.message && !f.service) {
+  if (f.topic !== 'ai-check' && !f.message && !f.service && !f.concept) {
     if ('service' in f) errors.service = 'Please choose what you need.';
     else errors.message = 'Please tell us a little about what you need.';
   }
@@ -96,6 +99,17 @@ function prefill(form: HTMLFormElement): void {
   const tier = params.get('tier');
   set('topic', tier ? 'tier' : params.get('topic'));
   set('tier', tier);
+  // From a "Choose this concept" card: show the Concept list with it picked.
+  const concept = params.get('concept');
+  const conceptField = form.querySelector<HTMLElement>('[data-concept-field]');
+  const conceptSelect = form.elements.namedItem('concept');
+  if (concept && conceptField && conceptSelect instanceof HTMLSelectElement) {
+    conceptSelect.value = concept;
+    if (conceptSelect.value === concept) {
+      conceptField.hidden = false;
+      if (!tier) set('topic', 'website');
+    }
+  }
   const error = params.get('error');
   if (error) {
     const email = form.dataset.email ?? '';

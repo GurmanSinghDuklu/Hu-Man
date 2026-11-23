@@ -12,6 +12,7 @@
 import { site } from '../config/site';
 import { withBase } from '../config/paths';
 import { tiers, portfolioTiers } from '../data/pricing';
+import { portfolioConcepts } from '../data/portfolioConcepts';
 
 interface Props {
   variant: 'contact' | 'check';
@@ -123,6 +124,23 @@ const isCheck = variant === 'check';
       </div>
     )}
 
+    {/* Hidden until a "Choose this concept" card on /portfolio/ brings ?concept= (enquiry-form.ts). */}
+    {!isCheck && (
+      <div class="enquiry__field enquiry__field--wide" data-concept-field hidden>
+        <label for={id('concept')}>
+          Concept <span>(optional)</span>
+        </label>
+        <select id={id('concept')} name="concept">
+          <option value="">None chosen</option>
+          {portfolioConcepts.map((c) => (
+            <option value={c.name}>
+              {c.name}, {c.role}
+            </option>
+          ))}
+        </select>
+      </div>
+    )}
+
     <div class="enquiry__field enquiry__field--wide">
       <label for={id('message')}>
         {isCheck ? (
@@ -190,6 +208,10 @@ const isCheck = variant === 'check';
     display: grid;
     gap: 0.4rem;
     align-content: start;
+  }
+
+  .enquiry__field[hidden] {
+    display: none;
   }
 
   .enquiry__field label {

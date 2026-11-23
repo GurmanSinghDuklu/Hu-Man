@@ -46,6 +46,12 @@ export const API_DESCRIPTION = {
       description: 'The website to check or redesign.',
     },
     tier: { required: false, maxLength: 60, description: 'Pricing tier name, e.g. "Launch".' },
+    concept: {
+      required: false,
+      maxLength: 60,
+      description:
+        'The concept design picked as a starting point, by name, e.g. "Noor Haddad" (from /portfolio/).',
+    },
     service: {
       required: false,
       maxLength: 80,
@@ -78,6 +84,7 @@ const LIMITS = {
   phone: 40,
   website: 200,
   tier: 60,
+  concept: 60,
   service: 80,
   via: 60,
   message: 4000,
@@ -149,6 +156,7 @@ export function validate(raw) {
     phone: oneLine(raw.phone),
     website: oneLine(raw.website),
     tier: oneLine(raw.tier),
+    concept: oneLine(raw.concept),
     service: oneLine(raw.service),
     via: oneLine(raw.via),
     topic: TOPICS[oneLine(raw.topic)] ? oneLine(raw.topic) : raw.tier ? 'tier' : 'other',
@@ -164,8 +172,9 @@ export function validate(raw) {
   if (!EMAIL.test(data.email)) errors.email = 'Please add an email address we can reply to.';
   if (data.topic === 'ai-check' && !data.website)
     errors.website = 'Please add the website to check.';
-  // A chosen service is enough to start a conversation (the short /start/ form).
-  if (data.topic !== 'ai-check' && !data.service && !data.message)
+  // A chosen service or concept is enough to start a conversation (the short /start/ form, or a
+  // "Choose this concept" button on /portfolio/).
+  if (data.topic !== 'ai-check' && !data.service && !data.concept && !data.message)
     errors.message = 'Please tell us a little about what you need.';
   for (const [field, max] of Object.entries(LIMITS)) {
     if (data[field].length > max) errors[field] = `Please keep this under ${max} characters.`;
@@ -211,9 +220,11 @@ export function buildEmail(
   const what =
     data.topic === 'tier' && data.tier
       ? `${data.tier} tier`
-      : data.service && data.topic === 'other'
-        ? data.service
-        : TOPICS[data.topic];
+      : data.concept
+        ? `${data.concept} concept`
+        : data.service && data.topic === 'other'
+          ? data.service
+          : TOPICS[data.topic];
   // "[Landing page] ..." when one of the site's forms says where it is, so it stands out in the inbox.
   const subject = `${data.via ? `[${data.via}] ` : ''}Website enquiry: ${what}${data.website ? ` (${data.website})` : ''} from ${data.name}`;
   const due = new Date(now.getTime() + REPLY_HOURS * 3600 * 1000);
@@ -228,6 +239,7 @@ export function buildEmail(
     data.phone ? `Phone:    ${data.phone}` : null,
     data.website ? `Website:  ${data.website}` : null,
     data.tier ? `Tier:     ${data.tier}` : null,
+    data.concept ? `Concept:  ${data.concept}` : null,
     data.service ? `Service:  ${data.service}` : null,
     '',
     data.message || '(No message.)',

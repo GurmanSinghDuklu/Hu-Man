@@ -99,6 +99,25 @@ test('a chosen service is enough without a message, and shows in the email', asy
   assert.ok(validate({ name: 'A', email: 'a@b.co', service: 'x'.repeat(81) }).errors.service);
 });
 
+test('a chosen concept is enough without a message, and leads the subject', async () => {
+  const { data } = validate({
+    name: 'A',
+    email: 'a@b.co',
+    concept: 'Noor Haddad',
+    service: 'Portfolio or CV website',
+    via: 'Contact page',
+  });
+  assert.ok(data);
+  const raw = buildEmail(data, { from: 'web@x.com', to: 'in@x.com' });
+  assert.match(bodyOf(raw), /Concept: +Noor Haddad/);
+  assert.equal(
+    Buffer.from(header(raw, 'Subject').split('?B?')[1].split('?=')[0], 'base64').toString('utf8'),
+    '[Contact page] Website enquiry: Noor Haddad concept from A',
+  );
+  assert.ok(validate({ name: 'A', email: 'a@b.co', concept: 'Noor Haddad' }).data);
+  assert.ok(validate({ name: 'A', email: 'a@b.co', concept: 'x'.repeat(61) }).errors.concept);
+});
+
 test('bad input is refused with field errors and nothing is sent', async () => {
   const env = makeEnv();
   const res = await handleEnquiry(
