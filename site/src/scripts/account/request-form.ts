@@ -19,6 +19,8 @@ let loggedIn = false;
 let projectId = params.get('p') ?? '';
 let cvFile: File | null = null;
 let cvUploaded = false;
+/** Reopened an instant portfolio that's already built: Send rebuilds it instead. */
+let rebuildMode = false;
 
 const status = (text: string, tone: '' | 'warn' = '') => {
   const s = form!.querySelector<HTMLElement>('[data-rq-status]')!;
@@ -130,6 +132,18 @@ function fill(answers: RequestAnswers, { overwrite = true } = {}) {
 function showConceptRule() {
   const optional = route() === 'custom';
   form!.querySelector<HTMLElement>('[data-concept-optional]')!.hidden = !optional;
+  // Instant builds only exist for some designs: the others can't be picked for that route.
+  const select = form!.elements.namedItem('concept') as HTMLSelectElement;
+  [...select.options].forEach((o) => {
+    o.disabled = !optional && Boolean(o.value) && o.dataset.instant !== 'yes';
+  });
+  if (select.selectedOptions[0]?.disabled) {
+    select.value = '';
+    showErrors(form!, {
+      concept:
+        'That design is made by hand. Choose one marked “instant”, or a custom made portfolio.',
+    });
+  }
   form!.querySelector<HTMLElement>('[data-rq-send]')!.textContent = optional
     ? 'Send my request'
     : 'Build my portfolio';
@@ -185,18 +199,38 @@ async function uploadCv(): Promise<boolean> {
   return false;
 }
 
-function finished(routeSent: 'instant' | 'custom') {
+function finished(
+  routeSent: 'instant' | 'custom',
+  previewPath: string | null = null,
+  live = false,
+) {
   form!.hidden = true;
-  done!.replaceChildren(
-    el('h2', { text: routeSent === 'instant' ? 'Your portfolio is on its way' : 'Request sent' }),
+  const instant = routeSent === 'instant';
+  const parts: (HTMLElement | null)[] = [
+    el('h2', {
+      text: rebuildMode ? 'Rebuilt' : instant ? 'Your portfolio is ready' : 'Request sent',
+    }),
     el('p', {
-      text:
-        routeSent === 'instant'
-          ? 'We’ve got everything we need. Your portfolio is in your account, and we’ve emailed you a copy of what you sent.'
+      text: rebuildMode
+        ? live
+          ? 'Your changes are live now.'
+          : 'Your portfolio has your changes. Have a look.'
+        : instant
+          ? 'We’ve built it from your design and details. Have a look, then choose what happens next in your account. We’ve emailed you a copy of what you sent.'
           : 'A real person will read it and reply by email within 48 hours. We’ve emailed you a copy of what you sent.',
     }),
-    el('a', { class: 'rq__send', href: sitePath('/account/'), text: 'Go to my account' }),
-  );
+    previewPath
+      ? el('a', {
+          class: 'rq__send',
+          href: sitePath(previewPath),
+          target: '_blank',
+          rel: 'noopener',
+          text: 'See my portfolio',
+        })
+      : null,
+    el('a', { class: 'rq__ghost', href: sitePath('/account/'), text: 'Go to my account' }),
+  ];
+  done!.replaceChildren(...parts.filter((part): part is HTMLElement => part !== null));
   done!.hidden = false;
   done!.focus();
 }
@@ -222,14 +256,31 @@ form?.addEventListener('submit', async (event) => {
   }
   const button = form.querySelector<HTMLButtonElement>('[data-rq-send]')!;
   button.disabled = true;
+  if (rebuildMode) {
+    status('Rebuilding…');
+    const { status: code, data } = await api<{ previewPath: string; live: boolean }>(
+      `/api/account/request/rebuild?p=${encodeURIComponent(projectId)}`,
+      { method: 'POST', body: { answers } },
+    );
+    button.disabled = false;
+    if (code === 200) finished('instant', data.previewPath, data.live);
+    else {
+      if (data.errors) showErrors(form, data.errors);
+      status(data.error ?? 'That didn’t rebuild. Please try again.', 'warn');
+    }
+    return;
+  }
   try {
     if (!(await saveDraft()) || !(await uploadCv())) return;
     status('Sending…');
-    const { status: code, data } = await api<{ route: 'instant' | 'custom' }>(
-      `/api/account/request/send?p=${encodeURIComponent(projectId)}`,
-      { method: 'POST', body: { answers } },
-    );
-    if (code === 200) finished(data.route);
+    const { status: code, data } = await api<{
+      route: 'instant' | 'custom';
+      previewPath: string | null;
+    }>(`/api/account/request/send?p=${encodeURIComponent(projectId)}`, {
+      method: 'POST',
+      body: { answers },
+    });
+    if (code === 200) finished(data.route, data.previewPath);
     else {
       if (data.errors) showErrors(form, data.errors);
       status(data.error ?? 'That didn’t send. Please try again.', 'warn');
@@ -309,6 +360,13 @@ async function start() {
   if (wanted) {
     conceptSelect.value = wanted;
     if (conceptSelect.value !== wanted) conceptSelect.value = '';
+    // A hand-made design: start them on the custom route rather than lose their choice.
+    if (
+      conceptSelect.selectedOptions[0]?.value &&
+      conceptSelect.selectedOptions[0].dataset.instant !== 'yes'
+    ) {
+      form.querySelector<HTMLInputElement>('input[name="route"][value="custom"]')!.checked = true;
+    }
   }
 
   const me = await api<{ user: { name: string; email: string } }>('/api/account/me');
@@ -322,18 +380,34 @@ async function start() {
     );
   }
   if (loggedIn && projectId) {
-    const saved = await api<{ route: string; concept: string | null; answers: RequestAnswers }>(
-      `/api/account/request?p=${encodeURIComponent(projectId)}`,
-    );
+    const saved = await api<{
+      route: string;
+      concept: string | null;
+      state: string;
+      answers: RequestAnswers;
+    }>(`/api/account/request?p=${encodeURIComponent(projectId)}`);
     if (saved.status === 200) {
       fill(saved.data.answers);
       form.querySelector<HTMLInputElement>(
         `input[name="route"][value="${saved.data.route}"]`,
       )!.checked = true;
       if (saved.data.concept) conceptSelect.value = saved.data.concept;
+      if (saved.data.state === 'sent' && saved.data.route === 'instant') {
+        rebuildMode = true;
+        form
+          .querySelectorAll<HTMLInputElement>('input[name="route"]')
+          .forEach((r) => (r.disabled = true));
+        form.querySelector<HTMLElement>('[data-field="cv"]')!.hidden = true;
+      }
     } else projectId = '';
   }
   showConceptRule();
+  if (rebuildMode) {
+    form.querySelector<HTMLElement>('[data-rq-send]')!.textContent = 'Rebuild my portfolio';
+    status(
+      'Change anything below, then rebuild. To change your CV file, contact us from your account.',
+    );
+  }
 }
 
 void start();

@@ -23,6 +23,7 @@
   Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'none'; frame-ancestors 'self'; base-uri 'self'; form-action 'none'; object-src 'none'
 /concepts/fonts/*
   Cache-Control: public, max-age=604800
+  Access-Control-Allow-Origin: *
 /concepts/vendor/*
   Cache-Control: public, max-age=604800
 

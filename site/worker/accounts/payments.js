@@ -12,6 +12,7 @@ import { json, fail, notFound, readJson, line } from './http.js';
 import { projectFor, moneyOf } from './account.js';
 import { safeEqual } from './crypto.js';
 import { tellStudio } from './mail.js';
+import { publish } from './instant.js';
 
 const MAX_PENCE = 100_000_000; // £1,000,000: a typo guard
 export const pounds = (pence) =>
@@ -96,13 +97,28 @@ export async function markLive(request, env, id, now = Date.now()) {
   return json({ ok: true });
 }
 
-/** POST /api/account/pay?p= : the client's own project, preview up, something due. */
-export async function pay(url, env, user) {
+/**
+ * POST /api/account/pay?p= { waiver } : the client's own project, preview up, something due.
+ * Instant portfolios go live the moment they're paid for, so the person first ticks that they want
+ * that and lose the 14-day cancellation right once it's live (`waiver: true`, time recorded).
+ */
+export async function pay(request, url, env, user, now = Date.now()) {
   const p = await projectFor(env, user, url.searchParams.get('p'));
   if (!p || p.user_id !== user.id) return notFound();
   const money = moneyOf(p);
   if (!p.preview_version || p.paid_at || !money.duePence) {
     return fail(409, 'There’s nothing to pay for this project just now.');
+  }
+  if (p.route === 'instant') {
+    const body = (await readJson(request)) ?? {};
+    if (body.waiver !== true) {
+      return fail(400, 'Please tick the box to say you want it published straight away.', {
+        errors: { waiver: 'Please tick this to pay and publish.' },
+      });
+    }
+    await env.DB.prepare('UPDATE projects SET cancel_waiver_at = ? WHERE id = ?')
+      .bind(now, p.id)
+      .run();
   }
   if (!env.STRIPE_SECRET_KEY) {
     return fail(503, 'Card payments aren’t switched on yet. We’ll email you payment details.');
@@ -196,6 +212,7 @@ export async function handleStripeWebhook(request, env, now = Date.now()) {
     .bind(amount, now, line(session.id, 100), String(projectId ?? ''))
     .run();
   if (meta.changes) {
+    const liveUrl = await publish(env, String(projectId), now);
     const p = await env.DB.prepare(
       'SELECT projects.name, users.name AS client, users.email, users.id AS user_id FROM projects JOIN users ON users.id = projects.user_id WHERE projects.id = ?',
     )
@@ -207,7 +224,9 @@ export async function handleStripeWebhook(request, env, now = Date.now()) {
       [
         `${p?.client ?? 'A client'} (${p?.email ?? 'unknown'}) has paid ${pounds(amount)} by card for ${p?.name ?? projectId}.`,
         '',
-        'Next: connect their domain, then press "Mark live" on their page.',
+        liveUrl
+          ? `It's an instant portfolio, so it published itself: ${liveUrl}`
+          : 'Next: connect their domain, then press "Mark live" on their page.',
         `${url.origin}/admin/client/?id=${p?.user_id ?? ''}`,
         '',
         `Stripe reference: ${session.id}`,

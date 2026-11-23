@@ -14,6 +14,8 @@ import { setupInfo, setup, login, logout, signup, verify, resendCode, forgot } f
 import { me, deleteMe } from './account.js';
 import { saveRequest, getRequest, sendRequest } from './requests.js';
 import { readCv } from './cvread.js';
+import { rebuild, talk } from './instant.js';
+import { connectDomain, checkDomain, disconnectDomain } from './domains.js';
 import { getBrief, putBrief, sendBrief } from './briefs.js';
 import { uploadFile, downloadFile, deleteFile } from './files.js';
 import { listEnquiries, setEnquiryStatus, deleteEnquiry } from './enquiries.js';
@@ -82,7 +84,17 @@ export async function handleAccounts(request, env) {
   if (path === '/api/account/brief/send' && method === 'POST') {
     return sendBrief(request, url, env, user);
   }
-  if (path === '/api/account/pay' && method === 'POST') return pay(url, env, user);
+  if (path === '/api/account/pay' && method === 'POST') return pay(request, url, env, user);
+  if (path === '/api/account/request/rebuild' && method === 'POST') {
+    return rebuild(request, url, env, user);
+  }
+  if (path === '/api/account/request/talk' && method === 'POST')
+    return talk(request, url, env, user);
+  if (path === '/api/account/domain' && method === 'POST')
+    return connectDomain(request, url, env, user);
+  if (path === '/api/account/domain' && method === 'GET') return checkDomain(url, env, user);
+  if (path === '/api/account/domain' && method === 'DELETE')
+    return disconnectDomain(url, env, user);
   if (path === '/api/account/files' && method === 'POST') {
     return uploadFile(request, url, env, user);
   }

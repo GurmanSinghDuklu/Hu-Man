@@ -37,6 +37,11 @@ export interface PortfolioConcept {
   /** The fictional address shown in the tile's browser bar. */
   domain: string;
   device: 'desktop' | 'phone';
+  /**
+   * Set on designs that can be built instantly from a CV (worker/accounts/templates/): the pricing
+   * tier (src/data/pricing.ts portfolioTiers) that "Pay now and publish" charges. Team's call.
+   */
+  instantTier?: 'Profile' | 'Portfolio';
 }
 
 export const portfolioConceptsIntro = {
@@ -139,6 +144,7 @@ export const portfolioConcepts: PortfolioConcept[] = [
   },
   {
     slug: 'noor',
+    instantTier: 'Profile',
     name: 'Noor Haddad',
     role: 'Product and UX designer, Leeds',
     field: 'Creative',
@@ -242,6 +248,7 @@ export const portfolioConcepts: PortfolioConcept[] = [
   },
   {
     slug: 'leah',
+    instantTier: 'Profile',
     name: 'Leah Morgan',
     role: 'Project manager, Bristol',
     field: 'Operations',
@@ -252,6 +259,7 @@ export const portfolioConcepts: PortfolioConcept[] = [
   },
   {
     slug: 'theo',
+    instantTier: 'Profile',
     name: 'Theo Lindqvist',
     role: 'Backend and platform engineer, Manchester',
     field: 'Tech',

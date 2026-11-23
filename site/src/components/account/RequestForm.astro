@@ -47,13 +47,15 @@ const maxOf = (f: { kind: string; max?: number }) =>
     <select id={id('concept')} name="concept">
       <option value="">Choose a design</option>
       {portfolioConcepts.map((c) => (
-        <option value={c.name}>
+        <option value={c.name} data-instant={c.instantTier ? 'yes' : undefined}>
           {c.name}, {c.role}
+          {c.instantTier ? ' · instant' : ''}
         </option>
       ))}
     </select>
     <p class="rq__hint">
-      See them all on <a href={withBase('/portfolio/')}>CV portfolio</a>.
+      Designs marked “instant” are built straight away; the rest are made by hand. See them all on
+      <a href={withBase('/portfolio/')}>CV portfolio</a>.
     </p>
     <p class="rq__error" data-error-for="concept"></p>
   </div>

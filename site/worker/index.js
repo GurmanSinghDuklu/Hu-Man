@@ -14,6 +14,7 @@ import { servePreview } from './accounts/preview.js';
 import { handlePreviewUpload } from './accounts/upload.js';
 import { handleStripeWebhook } from './accounts/payments.js';
 import { cleanUp } from './accounts/cleanup.js';
+import { servePublished } from './accounts/instant.js';
 
 /** The same protective headers public/_headers gives every static file. */
 const SECURITY_HEADERS = {
@@ -31,6 +32,9 @@ export default {
 
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
+    // A published portfolio (<name>.<our domain> or someone's own domain): nothing else applies.
+    const published = await servePublished(request, env);
+    if (published) return published;
     let response;
     if (url.pathname === '/api/enquiry' || url.pathname === '/api/enquiry/') {
       response = await handleEnquiry(request, env, EmailMessage, ctx);

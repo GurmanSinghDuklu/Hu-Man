@@ -18,6 +18,7 @@ import { portfolioConcepts } from '../../src/data/portfolioConcepts.ts';
 import { saveEnquiry } from './enquiries.js';
 import { tellStudio } from './mail.js';
 import { sendToPerson } from './send.js';
+import { instantDesign, buildInstant } from './instant.js';
 
 const ROUTES = { instant: 'Choose design + upload CV', custom: 'Custom made portfolio' };
 const conceptName = (value) => portfolioConcepts.find((c) => c.name === value)?.name ?? null;
@@ -33,9 +34,12 @@ export async function saveRequest(request, env, user, now = Date.now()) {
   if (!body) return fail(413, 'That’s too much to save in one go.');
   const route = body.route === 'instant' ? 'instant' : 'custom';
   const concept = conceptName(body.concept);
-  if (route === 'instant' && !concept) {
-    return fail(400, 'Choose a design for us to build from.', {
-      errors: { concept: 'Choose a design.' },
+  if (route === 'instant' && !instantDesign(concept)) {
+    return fail(400, 'Choose one of the designs we can build straight away.', {
+      errors: {
+        concept:
+          'This design is made by hand: choose one marked “instant”, or a custom made portfolio.',
+      },
     });
   }
   const { answers } = validateRequest(body.answers);
@@ -171,5 +175,13 @@ export async function sendRequest(request, url, env, user, now = Date.now()) {
         ? `Thanks${answers.firstName ? `, ${answers.firstName}` : ''}. We've got your details${project.concept ? ` and your chosen design (${project.concept})` : ''}.\n\nYour portfolio is in your account: ${url.origin}/account/\n\nA person at Hu/man also reads every request. Reply to this email any time.`
         : `Thanks${answers.firstName ? `, ${answers.firstName}` : ''}. We've got your request for a custom made portfolio${project.concept ? `, starting from the ${project.concept} design` : ''}.\n\nA real person will read it and reply by email within 48 hours. You can see what you sent in your account: ${url.origin}/account/`,
   });
-  return json({ ok: true, projectId: project.id, route: project.route });
+  let previewPath = null;
+  if (project.route === 'instant') {
+    try {
+      previewPath = await buildInstant(env, project, answers, url.origin, now);
+    } catch (error) {
+      console.error('instant build failed', error instanceof Error ? error.message : error);
+    }
+  }
+  return json({ ok: true, projectId: project.id, route: project.route, previewPath });
 }
