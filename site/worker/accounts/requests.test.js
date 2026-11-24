@@ -36,7 +36,7 @@ test('draft, CV, send: it lands in /admin/ and both emails go out', async () => 
   const { env, admin, client } = await setUp();
   const draft = await call(env, 'POST', '/api/account/request', {
     cookie: client,
-    body: { route: 'instant', concept: 'Noor Haddad', answers: ANSWERS },
+    body: { concept: 'Noor Haddad', answers: ANSWERS },
   });
   assert.equal(draft.status, 200);
   const { projectId } = await draft.json();
@@ -60,15 +60,20 @@ test('draft, CV, send: it lands in /admin/ and both emails go out', async () => 
     body: { answers: { ...ANSWERS, consent: true } },
   });
   assert.equal(sent.status, 200);
+  const sentBody = await sent.json();
+  assert.equal(sentBody.previewPath, undefined, 'nothing is built automatically');
+  assert.ok(sentBody.editableUntil > Date.now() + 2.9 * 3600 * 1000);
 
-  // The person's confirmation (Resend), to their login email.
+  // The person's confirmation (Resend), to their login email: 48 hours, and 3 hours to add more.
   assert.equal(env.mails.length, 1);
   assert.equal(env.mails[0].to, 'priya.login@example.co.uk');
   assert.equal(env.mails[0].subject, 'We’ve got your portfolio request');
+  assert.match(env.mails[0].text, /reply by email within 48 hours/);
+  assert.match(env.mails[0].text, /until \d\d:\d\d on \w+day \d+ \w+ \(3 hours after sending\)/);
   // The studio's copy (SEND_EMAIL), with every answer but no street address.
   assert.equal(env.sent.length, 1);
   const studio = bodyOf(env.sent[0].raw);
-  assert.match(studio, /Route: Choose design \+ upload CV · Design: Noor Haddad/);
+  assert.match(studio, /Route: Fill in details now · Design: Noor Haddad/);
   assert.match(
     studio,
     /Jobs: 1\. Job title: Ops lead · Employer: Acme · From: 2021-03 · What you did: Ran things · Current/,
@@ -82,12 +87,17 @@ test('draft, CV, send: it lands in /admin/ and both emails go out', async () => 
   ).json();
   assert.equal(enquiries[0].via, 'Portfolio request');
   assert.ok(enquiries[0].clientId);
-  // Locked once sent; others can't see it.
+  // Sent once; others can't see it.
   const again = await call(env, 'POST', `/api/account/request/send?p=${projectId}`, {
     cookie: client,
     body: { answers: { ...ANSWERS, consent: true } },
   });
   assert.equal(again.status, 409);
+  assert.equal(
+    (await call(env, 'POST', `/api/admin/projects/${projectId}/build`, { cookie: client })).status,
+    404,
+    'only the team can build from a design',
+  );
   const other = await loggedIn(env, 'other@example.co.uk');
   assert.equal(
     (await call(env, 'GET', `/api/account/request?p=${projectId}`, { cookie: other })).status,
@@ -100,17 +110,57 @@ test('draft, CV, send: it lands in /admin/ and both emails go out', async () => 
   assert.equal(mine.answers.street, undefined, 'unknown fields are never kept');
 });
 
-test('the instant route needs a real design; Word CVs are accepted', async () => {
+test('changes for 3 hours after sending, then locked', async () => {
   const { env, client } = await setUp();
-  const bad = await call(env, 'POST', '/api/account/request', {
-    cookie: client,
-    body: { route: 'instant', concept: 'Not A Design', answers: ANSWERS },
-  });
-  assert.equal(bad.status, 400);
   const { projectId } = await (
     await call(env, 'POST', '/api/account/request', {
       cookie: client,
-      body: { route: 'custom', answers: ANSWERS },
+      body: { route: 'instant', concept: 'Noor Haddad', answers: ANSWERS },
+    })
+  ).json();
+  const project = await env.DB.prepare('SELECT route FROM projects WHERE id = ?')
+    .bind(projectId)
+    .first('route');
+  assert.equal(project, 'details', 'nobody can ask for an automatic build any more');
+  const update = (answers) =>
+    call(env, 'POST', `/api/account/request/update?p=${projectId}`, {
+      cookie: client,
+      body: { answers },
+    });
+  assert.equal((await update({ ...ANSWERS, consent: true })).status, 409, 'not sent yet');
+  await call(env, 'POST', `/api/account/request/send?p=${projectId}`, {
+    cookie: client,
+    body: { answers: { ...ANSWERS, consent: true } },
+  });
+  const changed = await update({ ...ANSWERS, jobTitle: 'Head of operations', consent: true });
+  assert.equal(changed.status, 200);
+  assert.match(bodyOf(env.sent.at(-1).raw), /changed their portfolio request/);
+  assert.match(bodyOf(env.sent.at(-1).raw), /Head of operations/);
+  const cv = () =>
+    call(env, 'POST', `/api/account/files?p=${projectId}&field=cv`, {
+      cookie: client,
+      body: PDF,
+      headers: { 'X-File-Name': 'cv2.pdf' },
+    });
+  assert.equal((await cv()).status, 201, 'files can be added in the window');
+  // Four hours later.
+  await env.DB.prepare('UPDATE briefs SET sent_at = ? WHERE project_id = ?')
+    .bind(Date.now() - 4 * 3600 * 1000, projectId)
+    .run();
+  assert.equal((await update({ ...ANSWERS, consent: true })).status, 409);
+  assert.equal((await cv()).status, 409);
+  const mine = await (
+    await call(env, 'GET', `/api/account/request?p=${projectId}`, { cookie: client })
+  ).json();
+  assert.ok(mine.editableUntil < Date.now());
+});
+
+test('Word CVs are accepted', async () => {
+  const { env, client } = await setUp();
+  const { projectId } = await (
+    await call(env, 'POST', '/api/account/request', {
+      cookie: client,
+      body: { answers: ANSWERS },
     })
   ).json();
   const docx = new TextEncoder().encode('PK\u0003\u0004....word/document.xml....');

@@ -1,0 +1,77 @@
+---
+/**
+ * Where Google or Microsoft sign-in finishes (worker/accounts/oauth.js redirects here). In the small
+ * sign-in window (?popup=1) it tells the page that opened it, on a BroadcastChannel, and closes;
+ * otherwise it carries on to ?next=, or to /login/ with the code step or the problem. Noindex.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout page="auth-done">
+  <section class="adone">
+    <h1 data-adone-title>Signing you in…</h1>
+    <p data-adone-text>This window closes by itself.</p>
+  </section>
+</BaseLayout>
+
+<style>
+  .adone {
+    display: grid;
+    gap: 0.75rem;
+    min-height: 60svh;
+    place-content: center;
+    padding: 2rem var(--pad);
+    text-align: center;
+  }
+
+  .adone h1 {
+    font: 800 clamp(1.6rem, 5vw, 2.4rem) / 1.05 var(--font-display);
+    text-transform: uppercase;
+  }
+</style>
+
+<script>
+  import { sitePath } from '../../scripts/account/api';
+  import { OAUTH_ERRORS, type AuthResult } from '../../scripts/account/auth-panel';
+
+  const params = new URLSearchParams(location.search);
+  const result: AuthResult = {
+    ok: params.get('ok') === '1',
+    verify: params.get('verify'),
+    devCode: params.get('devCode'),
+    error: params.get('error'),
+  };
+  const title = document.querySelector('[data-adone-title]')!;
+  const text = document.querySelector('[data-adone-text]')!;
+
+  if (params.get('popup') === '1') {
+    try {
+      const channel = new BroadcastChannel('hm-auth');
+      channel.postMessage(result);
+      channel.close();
+    } catch {
+      // Very old browsers: the message below still says what to do.
+    }
+    title.textContent = result.ok
+      ? 'You’re signed in'
+      : result.verify
+        ? 'Check your email'
+        : 'That didn’t work';
+    text.textContent = result.ok
+      ? 'You can close this window and carry on.'
+      : result.verify
+        ? 'We’ve emailed you a code. Close this window and enter it on the page.'
+        : `${OAUTH_ERRORS[result.error ?? ''] ?? OAUTH_ERRORS.failed} You can close this window.`;
+    setTimeout(() => window.close(), 300);
+  } else {
+    const next = params.get('next') ?? '';
+    const safe = /^\/(?!\/)[\w\-./?=&%#~+]*$/.test(next) ? next : '/account/';
+    if (result.ok) location.replace(sitePath(safe));
+    else if (result.verify) {
+      const q = new URLSearchParams({ verify: result.verify, next: safe });
+      if (result.devCode) q.set('devCode', result.devCode);
+      location.replace(sitePath(`/login/?${q}`));
+    } else
+      location.replace(sitePath(`/login/?oauth=${encodeURIComponent(result.error ?? 'failed')}`));
+  }
+</script>

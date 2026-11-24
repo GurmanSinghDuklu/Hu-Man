@@ -11,6 +11,7 @@
 import { json, fail, notFound, line, allowed } from './http.js';
 import { projectFor } from './account.js';
 import { fileFieldsFor } from '../../src/data/brief.ts';
+import { editableUntil } from './requests.js';
 
 export const MAX_BYTES = 10 * 1024 * 1024;
 const REQUEST_FIELDS = ['cv', 'image'];
@@ -64,10 +65,15 @@ const cleanName = (raw) => {
 async function editable(env, user, projectId) {
   const project = await projectFor(env, user, projectId);
   if (!project || project.user_id !== user.id) return null;
-  const state = await env.DB.prepare('SELECT state FROM briefs WHERE project_id = ?')
+  const brief = await env.DB.prepare('SELECT state, sent_at FROM briefs WHERE project_id = ?')
     .bind(project.id)
-    .first('state');
-  return { project, sent: state === 'sent' };
+    .first();
+  // A sent portfolio request still takes files for 3 hours (details can be added from the dashboard).
+  const until = project.kind === 'request' ? editableUntil(brief) : null;
+  return {
+    project,
+    sent: brief?.state === 'sent' && !(until !== null && Date.now() <= until),
+  };
 }
 
 /** POST /api/account/files?p=&field= */
@@ -158,11 +164,8 @@ export async function downloadFile(env, user, id) {
 export async function deleteFile(env, user, id) {
   const found = await fileFor(env, user, id);
   if (!found || found.project.user_id !== user.id) return notFound();
-  const state = await env.DB.prepare('SELECT state FROM briefs WHERE project_id = ?')
-    .bind(found.project.id)
-    .first('state');
-  if (state === 'sent')
-    return fail(409, 'This brief has been sent. Ask us if you need to remove a file.');
+  const { sent } = await editable(env, user, found.project.id);
+  if (sent) return fail(409, 'This brief has been sent. Ask us if you need to remove a file.');
   await env.FILES.delete(found.file.r2_key);
   await env.DB.prepare('DELETE FROM files WHERE id = ?').bind(found.file.id).run();
   return json({ ok: true });

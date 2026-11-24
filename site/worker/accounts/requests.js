@@ -1,11 +1,13 @@
 /**
- * Portfolio requests from the form on /contact/ (spec:
- * docs/superpowers/specs/2026-11-23-self-serve-portfolios-design.md). Always for a logged-in
- * account. Three steps, so the CV can go to private storage before sending:
- *   POST /api/account/request            { answers, route, concept, projectId? } → draft project
- *   POST /api/account/files?p=&field=cv  (files.js) the CV, if there is one
- *   POST /api/account/request/send?p=    { answers } → checked, locked, in /admin/, emails sent
- *   GET  /api/account/request?p=         the answers (to edit and rebuild, phase C)
+ * Portfolio requests from the form on /portfolio/start/ ("Fill in details now"). Always for a
+ * logged-in account. Three steps, so the CV can go to private storage before sending:
+ *   POST /api/account/request             { answers, concept, projectId? } → draft project
+ *   POST /api/account/files?p=&field=cv   (files.js) the CV, if there is one
+ *   POST /api/account/request/send?p=     { answers } → checked, in /admin/, emails sent
+ *   POST /api/account/request/update?p=   { answers } → changes within 3 hours of sending
+ *   GET  /api/account/request?p=          the answers, and until when they can be changed
+ * A person replies within 48 hours; nothing is built automatically (the team can build a preview
+ * from the chosen design in /admin/: instant.js, buildFromDesign).
  */
 import { json, fail, notFound, readJson, line } from './http.js';
 import { projectFor } from './account.js';
@@ -18,9 +20,33 @@ import { portfolioConcepts } from '../../src/data/portfolioConcepts.ts';
 import { saveEnquiry } from './enquiries.js';
 import { tellStudio } from './mail.js';
 import { sendToPerson } from './send.js';
-import { instantDesign, buildInstant } from './instant.js';
 
-const ROUTES = { instant: 'Choose design + upload CV', custom: 'Custom made portfolio' };
+const ROUTES = {
+  details: 'Fill in details now',
+  instant: 'Built from a design',
+  custom: 'Custom made portfolio',
+};
+/** After sending, details can be added or changed from the dashboard for this long. */
+export const EDIT_WINDOW_MS = 3 * 60 * 60 * 1000;
+/** When a sent request stops taking changes (ms), or null if it isn't sent. */
+export const editableUntil = (brief) =>
+  brief?.state === 'sent' && brief.sent_at ? Number(brief.sent_at) + EDIT_WINDOW_MS : null;
+const briefOf = (env, projectId) =>
+  env.DB.prepare('SELECT state, sent_at FROM briefs WHERE project_id = ?').bind(projectId).first();
+
+/** "14:32 on Tuesday 24 November", in UK time. */
+export function ukTime(ms) {
+  const parts = new Intl.DateTimeFormat('en-GB', {
+    timeZone: 'Europe/London',
+    hour: '2-digit',
+    minute: '2-digit',
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+  }).formatToParts(new Date(ms));
+  const get = (type) => parts.find((x) => x.type === type)?.value ?? '';
+  return `${get('hour')}:${get('minute')} on ${get('weekday')} ${get('day')} ${get('month')}`;
+}
 const conceptName = (value) => portfolioConcepts.find((c) => c.name === value)?.name ?? null;
 
 async function ownRequest(env, user, id) {
@@ -32,31 +58,18 @@ async function ownRequest(env, user, id) {
 export async function saveRequest(request, env, user, now = Date.now()) {
   const body = await readJson(request);
   if (!body) return fail(413, 'That’s too much to save in one go.');
-  const route = body.route === 'instant' ? 'instant' : 'custom';
   const concept = conceptName(body.concept);
-  if (route === 'instant' && !instantDesign(concept)) {
-    return fail(400, 'Choose one of the designs we can build straight away.', {
-      errors: {
-        concept:
-          'This design is made by hand: choose one marked “instant”, or a custom made portfolio.',
-      },
-    });
-  }
   const { answers } = validateRequest(body.answers);
   const name =
     [answers.firstName, answers.surname].filter(Boolean).join(' ') || user.name || 'Your portfolio';
 
   let project = body.projectId ? await ownRequest(env, user, body.projectId) : null;
   if (project) {
-    const sent = await env.DB.prepare('SELECT state FROM briefs WHERE project_id = ?')
-      .bind(project.id)
-      .first('state');
-    if (sent === 'sent' && project.route !== 'instant')
-      return fail(409, 'This request has been sent.');
+    const until = editableUntil(await briefOf(env, project.id));
+    if (until !== null && now > until) return fail(409, LOCKED);
     await env.DB.batch([
-      env.DB.prepare('UPDATE projects SET name = ?, route = ?, concept = ? WHERE id = ?').bind(
+      env.DB.prepare('UPDATE projects SET name = ?, concept = ? WHERE id = ?').bind(
         `${name}’s portfolio`,
-        route,
         concept,
         project.id,
       ),
@@ -71,7 +84,7 @@ export async function saveRequest(request, env, user, now = Date.now()) {
     await env.DB.batch([
       env.DB.prepare(
         "INSERT INTO projects (id, user_id, name, type, concept, kind, route, created_at) VALUES (?, ?, ?, 'portfolio', ?, 'request', ?, ?)",
-      ).bind(id, user.id, `${name}’s portfolio`, concept, route, now),
+      ).bind(id, user.id, `${name}’s portfolio`, concept, 'details', now),
       env.DB.prepare('INSERT INTO briefs (project_id, answers, updated_at) VALUES (?, ?, ?)').bind(
         id,
         JSON.stringify(answers),
@@ -87,7 +100,9 @@ export async function saveRequest(request, env, user, now = Date.now()) {
 export async function getRequest(url, env, user) {
   const project = await projectFor(env, user, url.searchParams.get('p'));
   if (!project || project.kind !== 'request') return notFound();
-  const row = await env.DB.prepare('SELECT answers, state FROM briefs WHERE project_id = ?')
+  const row = await env.DB.prepare(
+    'SELECT answers, state, sent_at FROM briefs WHERE project_id = ?',
+  )
     .bind(project.id)
     .first();
   return json({
@@ -96,14 +111,18 @@ export async function getRequest(url, env, user) {
     route: project.route,
     concept: project.concept,
     state: row?.state ?? 'draft',
+    editableUntil: editableUntil(row),
     answers: row ? JSON.parse(row.answers) : {},
   });
 }
 
+const LOCKED =
+  'This request can no longer be changed here (changes are open for 3 hours after sending). Reply to our email and we’ll add it for you.';
+
 /** The studio's copy: every answer, and where to read it. */
-function summary(user, project, answers, files, origin) {
+function summary(user, project, answers, files, origin, updated = false) {
   const lines = [
-    `${user.name} (${user.email}) has sent a portfolio request.`,
+    `${user.name} (${user.email}) has ${updated ? 'changed their' : 'sent a'} portfolio request.`,
     `Route: ${ROUTES[project.route] ?? project.route}${project.concept ? ` · Design: ${project.concept}` : ''}`,
     '',
   ];
@@ -164,24 +183,50 @@ export async function sendRequest(request, url, env, user, now = Date.now()) {
 
   await tellStudio(
     env,
-    `[Portfolio request] ${ROUTES[project.route]}${project.concept ? `: ${project.concept}` : ''} from ${user.name}`,
+    `[Portfolio request] ${project.concept ? `${project.concept}: ` : ''}${user.name}`,
     summary(user, project, answers, files, url.origin),
   );
+  const until = now + EDIT_WINDOW_MS;
   await sendToPerson(env, {
     to: user.email,
     subject: 'We’ve got your portfolio request',
-    text:
-      project.route === 'instant'
-        ? `Thanks${answers.firstName ? `, ${answers.firstName}` : ''}. We've got your details${project.concept ? ` and your chosen design (${project.concept})` : ''}.\n\nYour portfolio is in your account: ${url.origin}/account/\n\nA person at Hu/man also reads every request. Reply to this email any time.`
-        : `Thanks${answers.firstName ? `, ${answers.firstName}` : ''}. We've got your request for a custom made portfolio${project.concept ? `, starting from the ${project.concept} design` : ''}.\n\nA real person will read it and reply by email within 48 hours. You can see what you sent in your account: ${url.origin}/account/`,
+    text: [
+      `Thanks${answers.firstName ? `, ${answers.firstName}` : ''}. We've got your portfolio request${project.concept ? `, starting from the ${project.concept} design` : ''}.`,
+      'A real person will read it and reply by email within 48 hours.',
+      `Want to add something? You can add or change details from your dashboard until ${ukTime(until)} (3 hours after sending): ${url.origin}/account/`,
+      'After that, just reply to this email.',
+    ].join('\n\n'),
   });
-  let previewPath = null;
-  if (project.route === 'instant') {
-    try {
-      previewPath = await buildInstant(env, project, answers, url.origin, now);
-    } catch (error) {
-      console.error('instant build failed', error instanceof Error ? error.message : error);
-    }
-  }
-  return json({ ok: true, projectId: project.id, route: project.route, previewPath });
+  return json({ ok: true, projectId: project.id, editableUntil: until });
+}
+
+/** POST /api/account/request/update?p= { answers } : changes within 3 hours of sending. */
+export async function updateRequest(request, url, env, user, now = Date.now()) {
+  const project = await ownRequest(env, user, url.searchParams.get('p'));
+  if (!project) return notFound();
+  const until = editableUntil(await briefOf(env, project.id));
+  if (until === null) return fail(409, 'This request hasn’t been sent yet.');
+  if (now > until) return fail(409, LOCKED);
+  const body = (await readJson(request)) ?? {};
+  const { answers, errors } = validateRequest(body.answers, { sending: true });
+  if (Object.keys(errors).length)
+    return fail(400, 'A few things need filling in first.', { errors });
+  const concept = body.concept === undefined ? project.concept : conceptName(body.concept);
+  await env.DB.batch([
+    env.DB.prepare('UPDATE briefs SET answers = ?, updated_at = ? WHERE project_id = ?').bind(
+      JSON.stringify(answers),
+      now,
+      project.id,
+    ),
+    env.DB.prepare('UPDATE projects SET concept = ? WHERE id = ?').bind(concept, project.id),
+  ]);
+  const { results: files } = await env.DB.prepare('SELECT name FROM files WHERE project_id = ?')
+    .bind(project.id)
+    .all();
+  await tellStudio(
+    env,
+    `[Portfolio request changed] ${concept ? `${concept}: ` : ''}${user.name}`,
+    summary(user, { ...project, concept }, answers, files, url.origin, true),
+  );
+  return json({ ok: true, projectId: project.id, editableUntil: until });
 }

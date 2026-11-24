@@ -129,7 +129,7 @@ async function build(concept, answers, { image = false } = {}) {
   const cookie = await loggedIn(env, 'sam.login@example.co.uk');
   const draft = await call(env, 'POST', '/api/account/request', {
     cookie,
-    body: { route: 'instant', concept, answers },
+    body: { concept, answers },
   });
   const { projectId } = await draft.json();
   let body = answers;
@@ -155,6 +155,11 @@ async function build(concept, answers, { image = false } = {}) {
     body: { answers: body },
   });
   assert.equal(sent.status, 200, await sent.clone().text());
+  const admin = await loggedIn(env, 'team@example.co.uk', 'admin');
+  const built = await call(env, 'POST', `/api/admin/projects/${projectId}/build`, {
+    cookie: admin,
+  });
+  assert.equal(built.status, 200, await built.clone().text());
   const keys = [...env.FILES.store.keys()].filter((k) => k.startsWith(`preview/${projectId}/`));
   const file = (end) => env.FILES.store.get(keys.find((k) => k.endsWith(end)));
   const html = new TextDecoder().decode(file('/index.html').bytes);
@@ -221,13 +226,13 @@ test('Noor with only the required answers: still four cards, empty sections left
   );
 });
 
-test('pictures: JPG, PNG or WebP only, and they can be added after sending to rebuild', async () => {
+test('pictures: JPG, PNG or WebP only; added within 3 hours of sending, or to rebuild a preview', async () => {
   const env = makeEnv();
   const cookie = await loggedIn(env, 'sam.login@example.co.uk');
   const { projectId } = await (
     await call(env, 'POST', '/api/account/request', {
       cookie,
-      body: { route: 'instant', concept: 'Noor Haddad', answers: BASE },
+      body: { concept: 'Noor Haddad', answers: BASE },
     })
   ).json();
   const upload = (body) =>
@@ -242,13 +247,21 @@ test('pictures: JPG, PNG or WebP only, and they can be added after sending to re
     cookie,
     body: { answers: BASE },
   });
-  assert.equal((await upload(PNG)).status, 201, 'instant: pictures for a rebuild');
-  const cv = await call(env, 'POST', `/api/account/files?p=${projectId}&field=cv`, {
-    cookie,
-    body: new TextEncoder().encode('%PDF-1.7'),
-    headers: { 'X-File-Name': 'cv.pdf' },
-  });
-  assert.equal(cv.status, 409, 'the CV is fixed once sent');
+  const cv = () =>
+    call(env, 'POST', `/api/account/files?p=${projectId}&field=cv`, {
+      cookie,
+      body: new TextEncoder().encode('%PDF-1.7'),
+      headers: { 'X-File-Name': 'cv.pdf' },
+    });
+  assert.equal((await upload(PNG)).status, 201, 'within 3 hours of sending');
+  assert.equal((await cv()).status, 201, 'within 3 hours of sending');
+  await env.DB.prepare('UPDATE briefs SET sent_at = ? WHERE project_id = ?')
+    .bind(Date.now() - 4 * 3600 * 1000, projectId)
+    .run();
+  assert.equal((await cv()).status, 409, 'locked after 3 hours');
+  assert.equal((await upload(PNG)).status, 409, 'locked after 3 hours');
+  await env.DB.prepare("UPDATE projects SET route = 'instant' WHERE id = ?").bind(projectId).run();
+  assert.equal((await upload(PNG)).status, 201, 'a built preview takes pictures for a rebuild');
 });
 
 test('Leah: their words in the heading, chart and ticker; pictures in the cards', async () => {

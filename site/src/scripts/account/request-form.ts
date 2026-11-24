@@ -1,9 +1,12 @@
 /**
- * The portfolio request form on /portfolio/ (components/account/RequestForm.astro).
- * - The design comes from ?concept= (the "Choose this concept" buttons); ?p=<project> reopens a saved
- *   request to change it (the instant route's "Edit and rebuild").
- * - Send: checked here first; logged out → the sign-in panel opens over the page and sending
- *   carries on once they're in. Then: save the draft → upload the CV (private) → send.
+ * The portfolio request form on /portfolio/start/ (components/account/RequestForm.astro).
+ * - The design comes from ?concept= (the "Choose this design" buttons on /portfolio/).
+ * - Two choices: "Fill in details now" (the full form and CV; needs an account) or "Chat with us
+ *   instead" (a short message to /api/enquiry, no account; or WhatsApp).
+ * - Send: checked here first; signed out → the sign-in panel opens over the page and sending
+ *   carries on once they're in. Then: save the draft → upload the CV and pictures → send. A pop-up
+ *   says we reply within 48 hours and that details can be changed for 3 hours (?p=<project> from the
+ *   dashboard reopens it in that window).
  * - "Fill in from my CV" (with a tick): the CV is read by /api/account/cv/read and the answers
  *   filled in, for them to check. Needs an account too.
  * Nothing is kept in browser storage; the page itself holds the answers until they're sent.
@@ -15,15 +18,17 @@ import { requestFields, validateRequest, type RequestAnswers } from '../../data/
 
 const form = document.querySelector<HTMLFormElement>('[data-request]');
 const done = document.querySelector<HTMLElement>('[data-rq-done]');
+const pop = document.querySelector<HTMLDialogElement>('[data-rq-pop]');
 const params = new URLSearchParams(location.search);
 let loggedIn = false;
 let projectId = params.get('p') ?? '';
 let cvFile: File | null = null;
 let cvUploaded = false;
-/** Reopened an instant portfolio that's already built: Send rebuilds it instead. */
-let rebuildMode = false;
+/** Reopened from the dashboard within 3 hours of sending: Send saves changes instead. */
+let editUntil: number | null = null;
 /** Pictures chosen but not uploaded yet, by the hidden input that will hold their file id. */
 const pendingImages = new Map<HTMLInputElement, File>();
+const WHATSAPP = 'https://wa.me/447988450280';
 
 const status = (text: string, tone: '' | 'warn' = '') => {
   const s = form!.querySelector<HTMLElement>('[data-rq-status]')!;
@@ -32,9 +37,15 @@ const status = (text: string, tone: '' | 'warn' = '') => {
   else delete s.dataset.tone;
 };
 const route = () =>
-  (form!.querySelector<HTMLInputElement>('input[name="route"]:checked')?.value ?? 'instant') as
-    'instant' | 'custom';
+  (form!.querySelector<HTMLInputElement>('input[name="route"]:checked')?.value ?? 'details') as
+    'details' | 'chat';
 const concept = () => (form!.elements.namedItem('concept') as HTMLSelectElement).value;
+const ukTime = (ms: number) =>
+  new Intl.DateTimeFormat('en-GB', {
+    timeZone: 'Europe/London',
+    hour: '2-digit',
+    minute: '2-digit',
+  }).format(new Date(ms));
 
 // ---------- pictures (a design's photo, project screenshots) ----------
 
@@ -108,7 +119,7 @@ async function uploadImages(): Promise<boolean> {
 
 function showDesignFields() {
   const select = form!.elements.namedItem('concept') as HTMLSelectElement;
-  const slug = route() === 'instant' ? (select.selectedOptions[0]?.dataset.slug ?? '') : '';
+  const slug = route() === 'details' ? (select.selectedOptions[0]?.dataset.slug ?? '') : '';
   let any = false;
   form!.querySelectorAll<HTMLElement>('[data-designs]').forEach((wrap) => {
     const on = Boolean(slug) && (wrap.dataset.designs ?? '').split(' ').includes(slug);
@@ -207,7 +218,12 @@ function fill(answers: RequestAnswers, { overwrite = true } = {}) {
     const wrap = form!.querySelector<HTMLElement>(`[data-field="${field.id}"]`);
     const value = answers[field.id];
     if (!wrap || value === undefined) continue;
-    if (field.kind === 'consent') continue;
+    if (field.kind === 'consent') {
+      // Their own saved answer (reopening a sent request); a CV read never ticks it for them.
+      if (overwrite && value === true)
+        wrap.querySelector<HTMLInputElement>('input')!.checked = true;
+      continue;
+    }
     if (field.kind === 'image') {
       const box = wrap.querySelector<HTMLElement>('[data-image]')!;
       const hidden = box.querySelector<HTMLInputElement>('[data-image-id]')!;
@@ -236,25 +252,22 @@ function fill(answers: RequestAnswers, { overwrite = true } = {}) {
   }
 }
 
-function showConceptRule() {
-  const optional = route() === 'custom';
-  form!.querySelector<HTMLElement>('[data-concept-optional]')!.hidden = !optional;
-  // Instant builds only exist for some designs: the others can't be picked for that route.
-  const select = form!.elements.namedItem('concept') as HTMLSelectElement;
-  [...select.options].forEach((o) => {
-    o.disabled = !optional && Boolean(o.value) && o.dataset.instant !== 'yes';
-  });
-  if (select.selectedOptions[0]?.disabled) {
-    select.value = '';
-    showErrors(form!, {
-      concept:
-        'That design is made by hand. Choose one marked “instant”, or a custom made portfolio.',
-    });
-  }
-  form!.querySelector<HTMLElement>('[data-rq-send]')!.textContent = optional
-    ? 'Send my request'
-    : 'Build my portfolio';
+/** Shows the chosen route's part of the form, and the design's own questions. */
+function showRoute() {
+  const chat = route() === 'chat';
+  form!.querySelector<HTMLElement>('[data-panel="chat"]')!.hidden = !chat;
+  form!.querySelector<HTMLElement>('[data-panel="details"]')!.hidden = chat;
+  form!.querySelector<HTMLElement>('[data-rq-who]')!.hidden = chat || loggedIn;
+  form!.querySelector<HTMLElement>('[data-rq-send]')!.textContent = chat
+    ? 'Send my message'
+    : editUntil
+      ? 'Save my changes'
+      : 'Send my details';
   showDesignFields();
+  const design = concept();
+  const text = `Hi Hu/man, I'd like a portfolio website${design ? ` based on the ${design} design` : ''}.`;
+  form!.querySelector<HTMLAnchorElement>('[data-rq-wa]')!.href =
+    `${WHATSAPP}?text=${encodeURIComponent(text)}`;
 }
 
 // ---------- sending ----------
@@ -307,48 +320,97 @@ async function uploadCv(): Promise<boolean> {
   return false;
 }
 
-function finished(
-  routeSent: 'instant' | 'custom',
-  previewPath: string | null = null,
-  live = false,
-) {
-  form!.hidden = true;
-  const instant = routeSent === 'instant';
-  const parts: (HTMLElement | null)[] = [
-    el('h2', {
-      text: rebuildMode ? 'Rebuilt' : instant ? 'Your portfolio is ready' : 'Request sent',
-    }),
-    el('p', {
-      text: rebuildMode
-        ? live
-          ? 'Your changes are live now.'
-          : 'Your portfolio has your changes. Have a look.'
-        : instant
-          ? 'We’ve built it from your design and details. Have a look, then choose what happens next in your account. We’ve emailed you a copy of what you sent.'
-          : 'A real person will read it and reply by email within 48 hours. We’ve emailed you a copy of what you sent.',
-    }),
-    previewPath
-      ? el('a', {
-          class: 'rq__send',
-          href: sitePath(previewPath),
-          target: '_blank',
-          rel: 'noopener',
-          text: 'See my portfolio',
-        })
-      : null,
-    el('a', { class: 'rq__ghost', href: sitePath('/account/'), text: 'Go to my account' }),
-  ];
-  done!.replaceChildren(...parts.filter((part): part is HTMLElement => part !== null));
-  done!.hidden = false;
-  done!.focus();
+/** The pop-up after sending: 48 hours to a reply, and (for details) 3 hours to add more. */
+function showSent(kind: 'details' | 'changes' | 'chat', until: number | null = null) {
+  const first = (form!.elements.namedItem('firstName') as HTMLInputElement | null)?.value.trim();
+  pop!.querySelector('[data-rq-pop-title]')!.textContent =
+    kind === 'changes' ? 'Changes saved' : `Thanks${first ? `, ${first}` : ''}. We’ve got it`;
+  pop!.querySelector('[data-rq-pop-reply]')!.textContent =
+    kind === 'changes'
+      ? 'We’ve got your changes, and the team has been told.'
+      : 'A real person will read it and reply by email within 48 hours.';
+  pop!.querySelector('[data-rq-pop-extra]')!.textContent = until
+    ? `Want to add something? You can add or change details from your dashboard until ${ukTime(until)} today (3 hours after sending). After that, just reply to our email.`
+    : kind === 'chat'
+      ? 'If it’s easier, you can also message us on WhatsApp.'
+      : '';
+  pop!.querySelector('[data-rq-pop-mail]')!.textContent =
+    kind === 'details' ? 'We’ve emailed you a copy of what you sent.' : '';
+  pop!.querySelector<HTMLElement>('[data-rq-pop-dash]')!.hidden = kind === 'chat';
+  const after = () => {
+    form!.hidden = true;
+    done!.replaceChildren(
+      el('h2', { text: kind === 'chat' ? 'Message sent' : 'Request sent' }),
+      el('p', { text: 'A real person will reply by email within 48 hours.' }),
+      ...(kind === 'chat'
+        ? []
+        : [
+            el('a', { class: 'rq__send', href: sitePath('/account/'), text: 'Go to my dashboard' }),
+          ]),
+    );
+    done!.hidden = false;
+    done!.focus();
+  };
+  pop!.addEventListener('close', after, { once: true });
+  pop!.showModal();
+  pop!.querySelector<HTMLElement>('[data-rq-pop-title]')!.focus();
+}
+
+/** "Chat with us instead": a short message to the enquiry endpoint. No account needed. */
+async function sendChat() {
+  const value = (id: string) =>
+    (
+      form!.querySelector<HTMLInputElement | HTMLTextAreaElement>(`#rq-chat-${id}`)?.value ?? ''
+    ).trim();
+  const errors: Record<string, string> = {};
+  if (!value('name')) errors.chatName = 'Please tell us your name.';
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value('email')))
+    errors.chatEmail = 'Please check this email address.';
+  if (!value('message')) errors.chatMessage = 'Please write a short message.';
+  showErrors(form!, errors);
+  if (Object.keys(errors).length) {
+    status('A few things need filling in first. They’re marked below.', 'warn');
+    return;
+  }
+  const button = form!.querySelector<HTMLButtonElement>('[data-rq-send]')!;
+  button.disabled = true;
+  status('Sending…');
+  try {
+    const res = await fetch(sitePath('/api/enquiry'), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({
+        name: value('name'),
+        email: value('email'),
+        phone: value('phone') || undefined,
+        message: value('message'),
+        concept: concept() || undefined,
+        topic: 'website',
+        via: 'Portfolio: chat',
+      }),
+    });
+    if (res.ok) {
+      status('');
+      showSent('chat');
+    } else {
+      status('That didn’t send. Please try again, or message us on WhatsApp.', 'warn');
+    }
+  } catch {
+    status('That didn’t send. Please try again, or message us on WhatsApp.', 'warn');
+  } finally {
+    button.disabled = false;
+  }
 }
 
 form?.addEventListener('submit', async (event) => {
   event.preventDefault();
   status('');
+  if (route() === 'chat') {
+    await sendChat();
+    return;
+  }
   const answers = readAnswers();
   const { errors } = validateRequest(answers, { sending: true });
-  if (route() === 'instant' && !concept()) errors.concept = 'Choose a design for us to build from.';
   showErrors(form, errors);
   if (Object.keys(errors).length) {
     status('A few things need filling in first. They’re marked below.', 'warn');
@@ -356,7 +418,7 @@ form?.addEventListener('submit', async (event) => {
   }
   if (
     !(await ensureLoggedIn(
-      'Create an account (or log in) to send your request. Your answers are kept on the page.',
+      'Create an account (or sign in) to send your details. Your answers are kept on the page.',
     ))
   ) {
     status('Your answers are still here. Send again whenever you’re ready.');
@@ -364,40 +426,37 @@ form?.addEventListener('submit', async (event) => {
   }
   const button = form.querySelector<HTMLButtonElement>('[data-rq-send]')!;
   button.disabled = true;
-  if (rebuildMode) {
-    if (!(await uploadImages())) {
-      button.disabled = false;
+  try {
+    if (editUntil) {
+      if (!(await uploadCv()) || !(await uploadImages())) return;
+      status('Saving…');
+      const { status: code, data } = await api<{ editableUntil: number }>(
+        `/api/account/request/update?p=${encodeURIComponent(projectId)}`,
+        { method: 'POST', body: { answers: readAnswers(), concept: concept() } },
+      );
+      if (code === 200) {
+        status('');
+        showSent('changes', data.editableUntil);
+      } else {
+        if (data.errors) showErrors(form, data.errors);
+        status(data.error ?? 'That didn’t save. Please try again.', 'warn');
+      }
       return;
     }
-    status('Rebuilding…');
-    const { status: code, data } = await api<{ previewPath: string; live: boolean }>(
-      `/api/account/request/rebuild?p=${encodeURIComponent(projectId)}`,
-      { method: 'POST', body: { answers: readAnswers() } },
-    );
-    button.disabled = false;
-    if (code === 200) finished('instant', data.previewPath, data.live);
-    else {
-      if (data.errors) showErrors(form, data.errors);
-      status(data.error ?? 'That didn’t rebuild. Please try again.', 'warn');
-    }
-    return;
-  }
-  try {
     if (!(await saveDraft()) || !(await uploadCv())) return;
     if (pendingImages.size) {
       // Pictures need the saved request to belong to; then save again with their ids.
       if (!(await uploadImages()) || !(await saveDraft())) return;
     }
     status('Sending…');
-    const { status: code, data } = await api<{
-      route: 'instant' | 'custom';
-      previewPath: string | null;
-    }>(`/api/account/request/send?p=${encodeURIComponent(projectId)}`, {
-      method: 'POST',
-      body: { answers: readAnswers() },
-    });
-    if (code === 200) finished(data.route, data.previewPath);
-    else {
+    const { status: code, data } = await api<{ editableUntil: number }>(
+      `/api/account/request/send?p=${encodeURIComponent(projectId)}`,
+      { method: 'POST', body: { answers: readAnswers() } },
+    );
+    if (code === 200) {
+      status('');
+      showSent('details', data.editableUntil);
+    } else {
       if (data.errors) showErrors(form, data.errors);
       status(data.error ?? 'That didn’t send. Please try again.', 'warn');
     }
@@ -405,6 +464,8 @@ form?.addEventListener('submit', async (event) => {
     button.disabled = false;
   }
 });
+
+pop?.querySelector('[data-rq-pop-close]')?.addEventListener('click', () => pop.close());
 
 // ---------- the CV ----------
 
@@ -457,40 +518,26 @@ form?.querySelector('[data-cv-read-button]')?.addEventListener('click', async ()
     );
 });
 
-// ---------- choosing a design from a concept card ----------
+// ---------- choosing a design ----------
 
-/**
- * Picks a design: instant designs take the instant route, hand-made ones the custom route (so the
- * choice is never lost). Returns false if there's no such design.
- */
 function applyConcept(name: string): boolean {
-  if (!form || rebuildMode) return false;
+  if (!form) return false;
   const select = form.elements.namedItem('concept') as HTMLSelectElement;
-  const option = [...select.options].find((o) => o.value === name);
-  if (!option) return false;
-  const routeValue = option.dataset.instant === 'yes' ? 'instant' : 'custom';
-  form.querySelector<HTMLInputElement>(`input[name="route"][value="${routeValue}"]`)!.checked =
-    true;
-  showConceptRule();
+  if (![...select.options].some((o) => o.value === name)) return false;
   select.value = name;
   showErrors(form, {});
+  showRoute();
   return true;
 }
 
-// "Choose this concept" on the wall: fill the design in and bring them to the form, without
-// reloading (a reload would replay the page's opening). The link still works without JavaScript.
+// A "Choose this design" link on this same page: fill it in and bring them to the form.
 document.addEventListener('click', (event) => {
   const link = (event.target as HTMLElement).closest<HTMLAnchorElement>('a[data-choose-concept]');
   if (!link || !form || event.metaKey || event.ctrlKey || event.shiftKey) return;
   if (!applyConcept(link.dataset.chooseConcept ?? '')) return;
   event.preventDefault();
-  const url = new URL(location.href);
-  url.searchParams.set('concept', link.dataset.chooseConcept ?? '');
-  history.replaceState(null, '', `${url.pathname}${url.search}#request`);
   const band = document.getElementById('request');
-  // Through the shared scroller, so it never fights Lenis's smooth scrolling.
   if (band) scroller.to(band.getBoundingClientRect().top + scroller.target() - 72);
-  document.getElementById('rq-title')?.focus({ preventScroll: true });
   status(`${link.dataset.chooseConcept}’s design is chosen. Fill in your details below.`);
 });
 
@@ -506,55 +553,62 @@ async function start() {
   });
   form
     .querySelectorAll('input[name="route"]')
-    .forEach((r) => r.addEventListener('change', showConceptRule));
+    .forEach((r) => r.addEventListener('change', showRoute));
   form
     .querySelectorAll<HTMLElement>('[data-field][data-kind="image"] [data-image]')
     .forEach((box) => setUpImage(box));
-
   const conceptSelect = form.elements.namedItem('concept') as HTMLSelectElement;
-  conceptSelect.addEventListener('change', showDesignFields);
+  conceptSelect.addEventListener('change', showRoute);
   const wanted = params.get('concept');
-  if (wanted) applyConcept(wanted);
+  if (wanted && applyConcept(wanted)) {
+    status(`${wanted}’s design is chosen. Fill in your details below, or chat with us first.`);
+  }
+  showRoute();
 
   const me = await api<{ user: { name: string; email: string } }>('/api/account/me');
   loggedIn = me.status === 200;
   if (loggedIn) {
-    form.querySelector<HTMLElement>('[data-rq-who]')!.hidden = true;
     const [first, ...rest] = me.data.user.name.split(' ');
     fill(
       { firstName: first, surname: rest.join(' '), email: me.data.user.email },
       { overwrite: false },
     );
+    const name = form.querySelector<HTMLInputElement>('#rq-chat-name');
+    const email = form.querySelector<HTMLInputElement>('#rq-chat-email');
+    if (name && !name.value) name.value = me.data.user.name;
+    if (email && !email.value) email.value = me.data.user.email;
   }
   if (loggedIn && projectId) {
     const saved = await api<{
-      route: string;
       concept: string | null;
       state: string;
+      editableUntil: number | null;
       answers: RequestAnswers;
     }>(`/api/account/request?p=${encodeURIComponent(projectId)}`);
     if (saved.status === 200) {
       fill(saved.data.answers);
-      form.querySelector<HTMLInputElement>(
-        `input[name="route"][value="${saved.data.route}"]`,
-      )!.checked = true;
       if (saved.data.concept) conceptSelect.value = saved.data.concept;
-      if (saved.data.state === 'sent' && saved.data.route === 'instant') {
-        rebuildMode = true;
+      if (saved.data.state === 'sent') {
         form
           .querySelectorAll<HTMLInputElement>('input[name="route"]')
-          .forEach((r) => (r.disabled = true));
-        form.querySelector<HTMLElement>('[data-field="cv"]')!.hidden = true;
+          .forEach((r) => (r.disabled = r.value !== 'details'));
+        const until = saved.data.editableUntil;
+        if (until && until > Date.now()) {
+          editUntil = until;
+          status(
+            `Add or change anything below, then save. Open until ${ukTime(until)} today (3 hours after sending).`,
+          );
+        } else {
+          form.querySelector<HTMLButtonElement>('[data-rq-send]')!.disabled = true;
+          status(
+            'This request was sent more than 3 hours ago, so it can’t be changed here. Reply to our email and we’ll add anything for you.',
+            'warn',
+          );
+        }
       }
     } else projectId = '';
   }
-  showConceptRule();
-  if (rebuildMode) {
-    form.querySelector<HTMLElement>('[data-rq-send]')!.textContent = 'Rebuild my portfolio';
-    status(
-      'Change anything below, then rebuild. To change your CV file, contact us from your account.',
-    );
-  }
+  showRoute();
 }
 
 void start();

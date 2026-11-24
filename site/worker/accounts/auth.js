@@ -161,7 +161,7 @@ const CODE_TRIES = 5;
 const RESET_MS = 60 * 60 * 1000;
 
 /** A 6-digit code, stored only as a hash tied to the user. */
-async function issueCode(env, userId, now) {
+export async function issueCode(env, userId, now) {
   const code = String(crypto.getRandomValues(new Uint32Array(1))[0] % 1_000_000).padStart(6, '0');
   await env.DB.prepare(
     `INSERT INTO email_codes (user_id, code_hash, expires_at, tries) VALUES (?, ?, ?, 0)
@@ -172,7 +172,7 @@ async function issueCode(env, userId, now) {
   return code;
 }
 
-const sendCode = (env, to, code) =>
+export const sendCode = (env, to, code) =>
   sendToPerson(env, {
     to,
     subject: `Your Hu/man code: ${code}`,
@@ -276,7 +276,8 @@ export async function resendCode(request, env, now = Date.now()) {
   }
   const body = (await readJson(request)) ?? {};
   const user = await env.DB.prepare(
-    'SELECT id, email FROM users WHERE email = ? AND email_verified_at IS NULL AND password_hash IS NOT NULL',
+    `SELECT id, email FROM users WHERE email = ? AND email_verified_at IS NULL
+     AND (password_hash IS NOT NULL OR EXISTS (SELECT 1 FROM oauth_identities WHERE user_id = users.id))`,
   )
     .bind(normaliseEmail(body.email))
     .first();

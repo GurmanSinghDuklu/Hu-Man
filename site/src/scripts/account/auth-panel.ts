@@ -4,8 +4,13 @@
  * password → a reset link by email. Talks to /api/auth/* (worker/accounts/auth.js).
  *
  * Inline (/login/): on success it goes to where they were heading, or their home in the area.
- * Dialog (/contact/): `openAuth()` shows it over the page and resolves true once they're in, false
- * if they close it, so the form underneath can carry on sending with nothing re-typed.
+ * Dialog (/portfolio/start/): `openAuth()` shows it over the page and resolves true once they're
+ * in, false if they close it, so the form underneath can carry on sending with nothing re-typed.
+ *
+ * Continue with Google / Microsoft (worker/accounts/oauth.js): opens the provider in a small window,
+ * so the page and its answers stay put; /auth/done/ in that window reports back on a
+ * BroadcastChannel (the site's opener policy cuts window.opener) and closes. If the window is
+ * blocked, the whole page goes instead and comes back to `next`.
  */
 import { api, sitePath, showErrors } from './api';
 
@@ -22,11 +27,29 @@ const TITLES: Record<View, [string, string]> = {
 
 const done = new WeakMap<HTMLElement, (ok: boolean) => void>();
 
+/** Messages /auth/done/ sends back (src/pages/auth/done.astro). */
+export interface AuthResult {
+  ok?: boolean;
+  verify?: string | null;
+  devCode?: string | null;
+  error?: string | null;
+}
+export const OAUTH_ERRORS: Record<string, string> = {
+  cancelled: 'Sign-in was cancelled. You can try again, or use your email below.',
+  expired: 'That sign-in took too long or was interrupted. Please try again.',
+  failed: 'We couldn’t confirm that sign-in. Please try again, or use your email below.',
+  exists:
+    'An account already uses that email. Sign in with your email and password instead (or choose “Forgotten your password?”).',
+  noemail:
+    'That account didn’t share an email address with us, so we can’t sign you in with it. Please use your email below.',
+  busy: 'Lots of tries just now. Please wait a minute and try again.',
+};
+
 /** Where an inline panel sends people after logging in: only somewhere inside the client area. */
 function nextPath(role: string): string {
   const next = new URLSearchParams(location.search).get('next') ?? '';
   if (
-    /^\/(?:[\w-]+\/)?(?:account|admin|contact)\/[\w\-/?=&%.]*$/.test(next) &&
+    /^\/(?:[\w-]+\/)?(?:account|admin|contact|portfolio\/start)\/[\w\-/?=&%.]*$/.test(next) &&
     !next.includes('//')
   ) {
     return next;
@@ -44,10 +67,13 @@ export function setupAuth(root: HTMLElement) {
   };
   let email = '';
 
+  const providerBox = root.querySelector<HTMLElement>('[data-auth-providers]');
+  let providersOn = false;
   const show = (view: View, keepStatus = false) => {
     root.querySelectorAll<HTMLElement>('[data-auth-view]').forEach((form) => {
       form.hidden = form.dataset.authView !== view;
     });
+    if (providerBox) providerBox.hidden = !providersOn || !(view === 'signup' || view === 'login');
     const [title, lede] = TITLES[view];
     root.querySelector('[data-auth-title]')!.textContent = title;
     const ledeEl = root.querySelector<HTMLElement>('[data-auth-lede]')!;
@@ -190,12 +216,74 @@ export function setupAuth(root: HTMLElement) {
     } else trouble(code, data.error);
   });
 
+  // ---------- Continue with Google / Microsoft ----------
+  const fromProvider = async (result: AuthResult) => {
+    root
+      .querySelectorAll<HTMLButtonElement>('[data-auth-provider]')
+      .forEach((b) => (b.disabled = false));
+    if (result.ok) {
+      const me = await api<{ user: { role: string } }>('/api/account/me');
+      if (me.status === 200) finish(me.data.user.role);
+      else trouble(me.status);
+    } else if (result.verify) toCode(result.verify, result.devCode ?? undefined);
+    else if (result.error) say(OAUTH_ERRORS[result.error] ?? OAUTH_ERRORS.failed, 'warn');
+  };
+  if (providerBox && 'BroadcastChannel' in window) {
+    const channel = new BroadcastChannel('hm-auth');
+    channel.addEventListener('message', (event: MessageEvent<AuthResult>) => {
+      // Only the panel that's in use answers (a page can hold the dialog and nothing else).
+      if (isDialog && !(root as HTMLDialogElement).open) return;
+      void fromProvider(event.data ?? {});
+    });
+  }
+  root.querySelectorAll<HTMLButtonElement>('[data-auth-provider]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const provider = button.dataset.authProvider!;
+      const here = `${location.pathname}${location.search}`;
+      const popup = window.open(
+        sitePath(`/api/auth/oauth/${provider}/start?popup=1`),
+        'hm-oauth',
+        'popup,width=520,height=680',
+      );
+      if (!popup) {
+        location.assign(
+          sitePath(`/api/auth/oauth/${provider}/start?next=${encodeURIComponent(here)}`),
+        );
+        return;
+      }
+      button.disabled = true;
+      say(
+        `Finish signing in with ${button.textContent?.trim().replace('Continue with ', '')} in the new window.`,
+      );
+      // If they close it without finishing, let them try again.
+      setTimeout(() => (button.disabled = false), 4000);
+    });
+  });
+  void api<{ providers: string[] }>('/api/auth/providers').then(({ status: code, data }) => {
+    if (code !== 200 || !providerBox) return;
+    for (const p of data.providers ?? []) {
+      const b = root.querySelector<HTMLElement>(`[data-auth-provider="${p}"]`);
+      if (b) {
+        b.hidden = false;
+        providersOn = true;
+      }
+    }
+    const view = [...root.querySelectorAll<HTMLElement>('[data-auth-view]')].find((f) => !f.hidden)
+      ?.dataset.authView;
+    providerBox.hidden = !providersOn || !(view === 'signup' || view === 'login');
+  });
+
   const params = new URLSearchParams(location.search);
   const first: View = params.get('forgot')
     ? 'forgot'
     : ((root.dataset.authStart as View) ?? 'signup');
   show(first, true);
   if (params.get('out')) say('You’ve logged out.', 'ok');
+  // Back from Google or Microsoft without a pop-up (/auth/done/ sends them here).
+  if (!isDialog && params.get('verify'))
+    toCode(params.get('verify')!, params.get('devCode') ?? undefined);
+  const oauthError = params.get('oauth');
+  if (!isDialog && oauthError) say(OAUTH_ERRORS[oauthError] ?? OAUTH_ERRORS.failed, 'warn');
   // Keep focus on the page heading until someone opens a dialog.
   if (!isDialog) (document.activeElement as HTMLElement | null)?.blur();
 }

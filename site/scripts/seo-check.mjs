@@ -21,6 +21,8 @@ const noindexBuild = Boolean(process.env.PUBLIC_NOINDEX);
 const NOINDEX_FILES = new Set([
   '404.html',
   'thanks/index.html',
+  'portfolio/start/index.html',
+  'auth/done/index.html',
   // The client area (worker/accounts/).
   'login/index.html',
   'account/index.html',

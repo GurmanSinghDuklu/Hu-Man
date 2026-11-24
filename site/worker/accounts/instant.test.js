@@ -46,18 +46,23 @@ function setUp() {
   return env;
 }
 
+/** Sends a request, then the team builds a preview from its design in /admin/. */
 async function sendInstant(env, cookie, concept = 'Leah Morgan') {
   const { projectId } = await (
     await call(env, 'POST', '/api/account/request', {
       cookie,
-      body: { route: 'instant', concept, answers: ANSWERS },
+      body: { concept, answers: ANSWERS },
     })
   ).json();
-  const sent = await call(env, 'POST', `/api/account/request/send?p=${projectId}`, {
+  await call(env, 'POST', `/api/account/request/send?p=${projectId}`, {
     cookie,
     body: { answers: ANSWERS },
   });
-  return { projectId, sent: await sent.json() };
+  const admin = await loggedIn(env, `team.${Math.random()}@example.co.uk`, 'admin');
+  const built = await call(env, 'POST', `/api/admin/projects/${projectId}/build`, {
+    cookie: admin,
+  });
+  return { projectId, sent: await built.json() };
 }
 
 const paid = (projectId) => {
@@ -108,7 +113,7 @@ test('every design escapes what people type and never links to javascript:', asy
   }
 });
 
-test('send builds it at once; the preview shows it; editing rebuilds it', async () => {
+test('the team builds it from the design; the preview shows it; editing rebuilds it', async () => {
   const env = setUp();
   const cookie = await loggedIn(env, 'priya.login@example.co.uk');
   const { projectId, sent } = await sendInstant(env, cookie);

@@ -1,0 +1,19 @@
+---
+/**
+ * /portfolio/start/: the CV portfolio request on its own page (Mandeep, 2026-11-24). "Choose this
+ * design" on /portfolio/ links here with ?concept=; the dashboard's "Add or change details" links
+ * here with ?p= for 3 hours after sending. Noindex (a form behind an account, like /login/).
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import RequestBand from '../../components/account/RequestBand.astro';
+import SecureNote from '../../components/account/SecureNote.astro';
+---
+
+<BaseLayout page="portfolio-start">
+  <SiteHeader slot="header" />
+  <RequestBand />
+  <SecureNote />
+  <SiteFooter slot="footer" />
+</BaseLayout>

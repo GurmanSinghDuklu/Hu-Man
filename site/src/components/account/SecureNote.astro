@@ -1,0 +1,129 @@
+---
+/**
+ * "How we keep your details safe" on /portfolio/start/ (Mandeep, 2026-11-24: the security measures
+ * must be clearly shown). Every line is true of worker/accounts/ today; change it here the moment any
+ * of it changes. Paper ground.
+ */
+import { withBase } from '../../config/paths';
+
+const points = [
+  {
+    title: 'Encrypted all the way',
+    text: 'Every page, form and upload goes over an encrypted connection (HTTPS, enforced by the browser). Your CV and details are stored encrypted, in private storage that is never public.',
+  },
+  {
+    title: 'Only you and our team',
+    text: 'Your CV, pictures and answers can only be opened by you and the Hu/man team, signed in. Anyone else asking for them gets nothing back, not even a sign they exist.',
+  },
+  {
+    title: 'We never keep your password',
+    text: 'We store only a salted, deliberately slow fingerprint of it (PBKDF2, 100,000 rounds). Sign in with Google or Microsoft and no password reaches us at all.',
+  },
+  {
+    title: 'Checked sign-ins',
+    text: 'New accounts confirm their email with a 6-digit code, and repeated sign-in or sign-up attempts are slowed down and blocked, so passwords can’t be guessed at speed.',
+  },
+  {
+    title: 'One cookie, no tracking',
+    text: 'Signing in sets one secure login cookie that scripts can’t read. No adverts, no analytics, no tracking.',
+  },
+  {
+    title: 'You stay in control',
+    text: 'Your CV is only read by AI if you tick the box, and it’s never used to train anything. Delete your account and everything in it from your dashboard, any time.',
+  },
+];
+---
+
+<section class="secure" id="secure" aria-labelledby="secure-title">
+  <div class="secure__head">
+    <p class="label">Security</p>
+    <h2 id="secure-title" class="secure__title">
+      How we keep your details safe.
+    </h2>
+    <p class="secure__lede">
+      A CV holds your name, contact details and work history, so we treat it that way. This is what
+      protects it, in plain words.
+    </p>
+  </div>
+  <ul class="secure__list">
+    {points.map((p, i) => (
+      <li class="secure__item">
+        <span class="secure__n" aria-hidden="true">
+          {String(i + 1).padStart(2, '0')}
+        </span>
+        <h3>{p.title}</h3>
+        <p>{p.text}</p>
+      </li>
+    ))}
+  </ul>
+  <p class="secure__more">
+    Who sees your data, why, and for how long:{' '}
+    <a href={withBase('/privacy/')}>our privacy notice</a>.
+  </p>
+</section>
+
+<style>
+  .secure {
+    display: grid;
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+    padding: clamp(3rem, 7vw, 6rem) var(--pad);
+    background: var(--paper);
+    color: var(--ink);
+  }
+
+  .secure__head {
+    display: grid;
+    gap: 0.9rem;
+    max-width: 52rem;
+  }
+
+  .secure__title {
+    font: 800 clamp(2rem, 5vw, 3.5rem) / 0.95 var(--font-display);
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+  }
+
+  .secure__lede {
+    max-width: 46ch;
+    font-size: 1.1rem;
+    line-height: 1.5;
+  }
+
+  .secure__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+    gap: 1px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    background: var(--ink);
+    border: 1px solid var(--ink);
+  }
+
+  .secure__item {
+    display: grid;
+    align-content: start;
+    gap: 0.6rem;
+    padding: clamp(1.25rem, 2.5vw, 1.75rem);
+    background: var(--paper);
+  }
+
+  .secure__n {
+    font: 500 0.75rem/1 var(--font-mono);
+    letter-spacing: 0.14em;
+  }
+
+  .secure__item h3 {
+    font: 700 1.2rem/1.2 var(--font-text);
+  }
+
+  .secure__item p {
+    line-height: 1.55;
+  }
+
+  .secure__more a {
+    color: inherit;
+    font-weight: 700;
+    text-underline-offset: 0.2em;
+  }
+</style>

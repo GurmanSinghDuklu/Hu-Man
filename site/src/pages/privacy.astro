@@ -100,11 +100,14 @@ import { withBase } from '../config/paths';
     <p>
       Anyone can create an account to ask for a portfolio, and we also make accounts for clients
       we're working with. An account holds your name, your email address and your password (stored
-      only in a scrambled form we can't read back). When you send a portfolio request it also holds
-      what you put in the form (your name, contact details, job history, education, skills and any
-      links), your CV if you upload one, and any portfolio we build for you. We never ask for your
-      street address. We use all of this to make, deliver and look after your portfolio; the lawful
-      basis is that we need it to do what you've asked us to, under our contract with you.
+      only in a scrambled form we can't read back). If you sign in with Google or Microsoft instead,
+      they tell us only your name, your email address, whether they've confirmed that email, and an
+      account number that's yours with them; your Google or Microsoft password never reaches us.
+      When you send a portfolio request it also holds what you put in the form (your name, contact
+      details, job history, education, skills and any links), your CV if you upload one, and any
+      portfolio we build for you. We never ask for your street address. We use all of this to make,
+      deliver and look after your portfolio; the lawful basis is that we need it to do what you've
+      asked us to, under our contract with you.
     </p>
     <p>
       It is stored with Cloudflare, in their database and file storage, in Europe. Emails to you
@@ -118,9 +121,11 @@ import { withBase } from '../config/paths';
     <p>
       If you tick "Read my CV to fill this in", your CV is read by Cloudflare's AI (Workers AI) only
       to fill in the form for you to check. It isn't kept by that step, it isn't used to train
-      anything, and nothing is read unless you tick the box. If you choose a design and send your CV
-      details, we build your portfolio from them automatically; it stays private to you and us until
-      you choose to publish it. Once published, what's on your portfolio is public.
+      anything, and nothing is read unless you tick the box. A person on our team reads every
+      request. For some designs we may build a preview from your details; it stays private to you
+      and us until you choose to publish it. Once published, what's on your portfolio is public. If
+      you choose "Chat with us instead", your message is handled like any other enquiry (see "If you
+      use a form").
     </p>
     <h3>How we keep your data safe</h3>
     <ul>

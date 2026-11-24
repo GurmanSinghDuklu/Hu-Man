@@ -12,9 +12,10 @@
 import { fail, notFound, sameOrigin, getSession, notFoundPage } from './http.js';
 import { setupInfo, setup, login, logout, signup, verify, resendCode, forgot } from './auth.js';
 import { me, deleteMe } from './account.js';
-import { saveRequest, getRequest, sendRequest } from './requests.js';
+import { saveRequest, getRequest, sendRequest, updateRequest } from './requests.js';
 import { readCv } from './cvread.js';
-import { rebuild, talk } from './instant.js';
+import { providers, start as oauthStart, callback as oauthCallback } from './oauth.js';
+import { rebuild, talk, buildFromDesign } from './instant.js';
 import { connectDomain, checkDomain, disconnectDomain } from './domains.js';
 import { getBrief, putBrief, sendBrief } from './briefs.js';
 import { uploadFile, downloadFile, deleteFile } from './files.js';
@@ -65,6 +66,13 @@ export async function handleAccounts(request, env) {
   if (path === '/api/auth/verify' && method === 'POST') return verify(request, env);
   if (path === '/api/auth/resend' && method === 'POST') return resendCode(request, env);
   if (path === '/api/auth/forgot' && method === 'POST') return forgot(request, env);
+  if (path === '/api/auth/providers' && method === 'GET') return providers(env);
+  const oauth = path.match(/^\/api\/auth\/oauth\/(google|microsoft)\/(start|callback)$/);
+  if (oauth && method === 'GET') {
+    return oauth[2] === 'start'
+      ? oauthStart(request, url, env, oauth[1])
+      : oauthCallback(request, url, env, oauth[1]);
+  }
 
   const session = await getSession(request, env);
   // The admin API, like the admin pages, doesn't admit to existing for anyone but an admin.
@@ -78,6 +86,9 @@ export async function handleAccounts(request, env) {
   if (path === '/api/account/cv/read' && method === 'POST') return readCv(request, env, user);
   if (path === '/api/account/request/send' && method === 'POST') {
     return sendRequest(request, url, env, user);
+  }
+  if (path === '/api/account/request/update' && method === 'POST') {
+    return updateRequest(request, url, env, user);
   }
   if (path === '/api/account/brief' && method === 'GET') return getBrief(url, env, user);
   if (path === '/api/account/brief' && method === 'PUT') return putBrief(request, url, env, user);
@@ -125,6 +136,7 @@ export async function handleAccounts(request, env) {
       if (parts[2] === 'deposit') return setDeposit(request, env, id);
       if (parts[2] === 'paid') return markPaid(request, env, id);
       if (parts[2] === 'live') return markLive(request, env, id);
+      if (parts[2] === 'build') return buildFromDesign(env, id, url.origin);
     }
     if (
       parts[0] === 'projects' &&

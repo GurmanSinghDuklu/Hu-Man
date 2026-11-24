@@ -27,6 +27,8 @@ export type PageKey =
   | 'cookies'
   | 'terms'
   | 'user-agreement'
+  | 'portfolio-start'
+  | 'auth-done'
   | 'login'
   | 'account'
   | 'account-setup'
@@ -245,6 +247,27 @@ export const pages: Record<PageKey, PageInfo> = {
     schemaType: 'WebPage',
   },
   // The client area (worker/accounts/): never indexed, never in the sitemap or llms files.
+  'portfolio-start': {
+    key: 'portfolio-start',
+    path: '/portfolio/start/',
+    title: 'Start your portfolio | Hu/man',
+    description:
+      'Choose a portfolio design and send your details and CV, or chat with us first. A real person replies within 48 hours.',
+    label: 'Start your portfolio',
+    ogHeadline: 'Your experience, made visible.',
+    schemaType: 'WebPage',
+    noindex: true,
+  },
+  'auth-done': {
+    key: 'auth-done',
+    path: '/auth/done/',
+    title: 'Signing you in | Hu/man',
+    description: 'Finishing signing in with Google or Microsoft.',
+    label: 'Signing in',
+    ogHeadline: 'Talk to a human.',
+    schemaType: 'WebPage',
+    noindex: true,
+  },
   login: {
     key: 'login',
     path: '/login/',

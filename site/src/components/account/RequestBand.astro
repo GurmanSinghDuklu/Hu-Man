@@ -1,10 +1,8 @@
 ---
 /**
- * The portfolio request on /portfolio, straight after the hero: the form on the left half
- * (RequestForm, with its sign-in panel) beside the portfolio ad on the right (sticky on wide
- * screens; phones: form first). Every concept card's "Choose this concept" fills in the design and
- * brings people here (src/scripts/account/request-form.ts). Ink ground, like the rest of the page's
- * dark bands.
+ * The top of /portfolio/start/: the request form on the left (RequestForm, with its sign-in panel)
+ * beside the portfolio ad on the right (sticky on wide screens; phones: form first). Every design
+ * card's "Choose this design" on /portfolio/ links here with ?concept=. Ink ground.
  */
 import HeroVideo from '../HeroVideo.astro';
 import RequestForm from './RequestForm.astro';
@@ -14,12 +12,12 @@ import { withBase } from '../../config/paths';
 <section class="rqb" id="request" aria-labelledby="rq-title">
   <div class="rqb__form">
     <p class="label rqb__label">Start your portfolio</p>
-    <h2 id="rq-title" class="rqb__title" tabindex="-1">
+    <h1 id="rq-title" class="rqb__title" tabindex="-1">
       Choose a design, send your CV.
-    </h2>
+    </h1>
     <p class="rqb__lede">
-      Pick a design and we’ll build your portfolio from your details. Or ask for one made from
-      scratch. A real person reads every request.
+      Fill in your details now, or chat with us first. A real person reads every request and replies
+      within 48 hours. <a href="#secure">How we keep your details safe</a>.
     </p>
     <p class="rqb__other">
       Need a business website, an app, or just have a question?{' '}
@@ -75,6 +73,7 @@ import { withBase } from '../../config/paths';
     line-height: 1.5;
   }
 
+  .rqb__lede a,
   .rqb__other a {
     color: var(--paper);
   }

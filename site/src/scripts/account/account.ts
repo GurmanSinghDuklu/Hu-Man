@@ -46,14 +46,6 @@ async function talkTo(project: Project, about: 'launch' | 'change', message = ''
 /** An instant portfolio: ready (three choices) or live (change it, own domain). */
 function instantCard(project: Project) {
   const card = el('article', { class: 'acct-card', 'data-preview-card': project.id });
-  const edit = el('a', {
-    class: 'btn btn--outline',
-    href: sitePath(`/contact/?p=${encodeURIComponent(project.id)}`),
-    text:
-      project.stage === 'live'
-        ? 'Edit details (updates your live site)'
-        : 'Edit details and rebuild',
-  });
   const open = (text: string, href: string, external = false) =>
     el(
       'a',
@@ -83,7 +75,7 @@ function instantCard(project: Project) {
         }),
         '.',
       ),
-      el('div', { class: 'acct-actions' }, open('Visit my portfolio', project.liveUrl, true), edit),
+      el('div', { class: 'acct-actions' }, open('Visit my portfolio', project.liveUrl, true)),
     );
 
     // A) Contact us to change it.
@@ -142,13 +134,12 @@ function instantCard(project: Project) {
     el('h2', { text: 'Your portfolio is ready' }),
     el('p', {
       class: 'acct-small',
-      text: 'Only you can see it for now. Have a look on your phone and computer, change anything you like, then choose what happens next.',
+      text: 'We’ve built it from your design and details. Only you can see it for now. Have a look on your phone and computer, then choose what happens next. Want something changed? Choose “Speak with us”.',
     }),
     el(
       'div',
       { class: 'acct-actions' },
       open('See my portfolio', sitePath(project.previewPath ?? '/account/')),
-      edit,
     ),
     el('h3', { text: 'What would you like to do?' }),
   );
@@ -554,18 +545,30 @@ async function start() {
 }
 
 const ROUTE_LABEL = {
-  instant: 'Choose design + upload CV',
+  details: 'Fill in details now',
+  instant: 'Built from a design',
   custom: 'Custom made portfolio',
 } as const;
+/** Details can be added or changed for this long after sending (worker/accounts/requests.js). */
+const EDIT_WINDOW_MS = 3 * 60 * 60 * 1000;
+const ukTime = (ms: number) =>
+  new Intl.DateTimeFormat('en-GB', {
+    timeZone: 'Europe/London',
+    hour: '2-digit',
+    minute: '2-digit',
+  }).format(new Date(ms));
 
-/** A portfolio request from /contact/. */
+/** A portfolio request from /portfolio/start/. */
 function requestCard(project: Project) {
   const sent = project.briefState === 'sent';
+  const sentAt = project.sentAt ? Number(project.sentAt) : 0;
+  const until = sent && sentAt ? sentAt + EDIT_WINDOW_MS : 0;
+  const open = !sent || until > Date.now();
   const facts = [
     project.route ? ROUTE_LABEL[project.route as keyof typeof ROUTE_LABEL] : '',
     project.concept ? `Design: ${project.concept}` : '',
   ].filter(Boolean);
-  const edit = sitePath(`/contact/?p=${encodeURIComponent(project.id)}`);
+  const edit = sitePath(`/portfolio/start/?p=${encodeURIComponent(project.id)}`);
   return el(
     'article',
     { class: 'acct-card' },
@@ -579,22 +582,24 @@ function requestCard(project: Project) {
     el('p', {
       class: 'acct-small',
       text: sent
-        ? project.route === 'custom'
-          ? `Sent on ${formatDate(project.sentAt)}. A real person will reply by email within 48 hours.`
-          : `Sent on ${formatDate(project.sentAt)}.`
+        ? `Sent on ${formatDate(project.sentAt)}. A real person will reply by email within 48 hours.${
+            open
+              ? ` You can add or change details until ${ukTime(until)} today.`
+              : ' To add anything now, reply to our email.'
+          }`
         : 'You started this but haven’t sent it yet.',
     }),
-    sent && project.route !== 'instant'
-      ? null
-      : el(
+    open
+      ? el(
           'div',
           { class: 'acct-actions' },
           el('a', {
             class: sent ? 'btn btn--outline' : 'pill-btn',
             href: edit,
-            text: sent ? 'Change your details' : 'Finish your request',
+            text: sent ? 'Add or change details' : 'Finish your request',
           }),
-        ),
+        )
+      : null,
   );
 }
 

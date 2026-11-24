@@ -132,6 +132,30 @@ export async function buildInstant(env, project, answers, origin, now = Date.now
   return `/preview/${project.id}/`;
 }
 
+/**
+ * POST /api/admin/projects/<id>/build : the team builds a preview from the request's chosen design
+ * (Noor, Leah and Theo so far). From then on it works like any preview: the client sees it in their
+ * account, pays, and it's published (payments.js, publish below).
+ */
+export async function buildFromDesign(env, projectId, origin, now = Date.now()) {
+  const project = await env.DB.prepare("SELECT * FROM projects WHERE id = ? AND kind = 'request'")
+    .bind(projectId)
+    .first();
+  if (!project) return notFound();
+  if (project.live_at) return fail(409, 'This portfolio is already live.');
+  if (!instantDesign(project.concept)) {
+    return fail(400, 'There’s no automatic build for this design yet: build it by hand.');
+  }
+  const answers = JSON.parse(
+    (await env.DB.prepare('SELECT answers FROM briefs WHERE project_id = ?')
+      .bind(projectId)
+      .first('answers')) ?? '{}',
+  );
+  const previewPath = await buildInstant(env, project, answers, origin, now);
+  await env.DB.prepare("UPDATE projects SET route = 'instant' WHERE id = ?").bind(projectId).run();
+  return json({ ok: true, previewPath });
+}
+
 async function ownInstant(env, user, id) {
   const project = await projectFor(env, user, id);
   return project &&

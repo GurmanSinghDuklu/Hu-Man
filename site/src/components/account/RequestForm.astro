@@ -40,93 +40,266 @@ const maxOf = (f: { kind: string; max?: number }) =>
 
   <div class="rq__field" data-field="concept">
     <label for={id('concept')}>
-      Design{' '}
-      <span data-concept-optional hidden>
-        (optional)
-      </span>
+      Design <span>(optional)</span>
     </label>
     <select id={id('concept')} name="concept">
-      <option value="">Choose a design</option>
+      <option value="">Not sure yet</option>
       {portfolioConcepts.map((c) => (
-        <option value={c.name} data-slug={c.slug} data-instant={c.instantTier ? 'yes' : undefined}>
+        <option value={c.name} data-slug={c.slug}>
           {c.name}, {c.role}
-          {c.instantTier ? ' · instant' : ''}
         </option>
       ))}
     </select>
     <p class="rq__hint">
-      Designs marked “instant” are built straight away; the rest are made by hand. See them all on
-      <a href={withBase('/portfolio/')}>CV portfolio</a>.
+      Every design is a starting point: we make it yours. See them all on{' '}
+      <a href={withBase('/portfolio/#concepts')}>CV portfolio</a>.
     </p>
     <p class="rq__error" data-error-for="concept"></p>
   </div>
 
-  <div class="rq__field rq__cv" data-field="cv">
-    <label for={id('cv')}>
-      Your CV <span>(optional)</span>
-    </label>
-    <input
-      id={id('cv')}
-      type="file"
-      accept=".pdf,.docx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-      data-cv-input
-    />
-    <p class="rq__hint">PDF or Word (.docx), up to 10 MB.</p>
-    <div class="rq__read" data-cv-read hidden>
-      <label class="rq__check">
-        <input type="checkbox" data-cv-consent />
-        <span>
-          Read my CV to fill this in. It’s read by Cloudflare’s AI only to fill in this form, and
-          never used to train anything.
-        </span>
-      </label>
-      <button type="button" class="rq__ghost" data-cv-read-button>
-        Fill in from my CV
-      </button>
+  <div class="rq__panel" data-panel="chat" hidden>
+    <div class="rq__grid">
+      <div class="rq__field" data-field="chatName">
+        <label for={id('chat-name')}>
+          Your name <span class="rq__req">(required)</span>
+        </label>
+        <input id={id('chat-name')} autocomplete="name" maxlength="100" />
+        <p class="rq__error" data-error-for="chatName"></p>
+      </div>
+      <div class="rq__field" data-field="chatEmail">
+        <label for={id('chat-email')}>
+          Email <span class="rq__req">(required)</span>
+        </label>
+        <input
+          id={id('chat-email')}
+          type="email"
+          inputmode="email"
+          autocomplete="email"
+          maxlength="200"
+        />
+        <p class="rq__error" data-error-for="chatEmail"></p>
+      </div>
+      <div class="rq__field" data-field="chatPhone">
+        <label for={id('chat-phone')}>
+          Phone <span>(optional)</span>
+        </label>
+        <input id={id('chat-phone')} type="tel" autocomplete="tel" maxlength="40" />
+      </div>
+      <div class="rq__field rq__wide" data-field="chatMessage">
+        <label for={id('chat-message')}>
+          What would you like to talk about? <span class="rq__req">(required)</span>
+        </label>
+        <textarea id={id('chat-message')} rows="4" maxlength="2000"></textarea>
+        <p class="rq__error" data-error-for="chatMessage"></p>
+      </div>
     </div>
-    <p class="rq__error" data-error-for="cv"></p>
+    <p class="rq__wa">
+      Or{' '}
+      <a href="https://wa.me/447988450280" target="_blank" rel="noopener noreferrer" data-rq-wa>
+        message us on WhatsApp<span class="visually-hidden"> (opens in a new tab)</span>
+      </a>
+      . No account needed either way.
+    </p>
   </div>
 
-  {requestSections.map((section) => (
-    <fieldset class="rq__section" data-section={section.id} hidden={section.id === 'design'}>
-      <legend class="rq__legend">{section.title}</legend>
-      {section.id === 'design' && (
-        <p class="rq__hint rq__wide">
-          The parts of this design your CV doesn’t cover. All optional: anything left empty is left
-          off your page, never filled with sample words.
-        </p>
-      )}
-      <div class="rq__grid">
-        {requestFields
-          .filter((f) => f.section === section.id)
-          .map((f) => {
-            const req = f.required && <span class="rq__req"> (required)</span>;
-            const hintId = f.hint ? id(`${f.id}-hint`) : undefined;
-            const designs = f.designs?.join(' ');
-            if (f.kind === 'image') {
+  <div class="rq__panel" data-panel="details">
+    <div class="rq__field rq__cv" data-field="cv">
+      <label for={id('cv')}>
+        Your CV <span>(optional)</span>
+      </label>
+      <input
+        id={id('cv')}
+        type="file"
+        accept=".pdf,.docx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        data-cv-input
+      />
+      <p class="rq__hint">PDF or Word (.docx), up to 10 MB.</p>
+      <div class="rq__read" data-cv-read hidden>
+        <label class="rq__check">
+          <input type="checkbox" data-cv-consent />
+          <span>
+            Read my CV to fill this in. It’s read by Cloudflare’s AI only to fill in this form, and
+            never used to train anything.
+          </span>
+        </label>
+        <button type="button" class="rq__ghost" data-cv-read-button>
+          Fill in from my CV
+        </button>
+      </div>
+      <p class="rq__error" data-error-for="cv"></p>
+    </div>
+
+    {requestSections.map((section) => (
+      <fieldset class="rq__section" data-section={section.id} hidden={section.id === 'design'}>
+        <legend class="rq__legend">{section.title}</legend>
+        {section.id === 'design' && (
+          <p class="rq__hint rq__wide">
+            The parts of this design your CV doesn’t cover. All optional: anything left empty is
+            left off your page, never filled with sample words.
+          </p>
+        )}
+        <div class="rq__grid">
+          {requestFields
+            .filter((f) => f.section === section.id)
+            .map((f) => {
+              const req = f.required && <span class="rq__req"> (required)</span>;
+              const hintId = f.hint ? id(`${f.id}-hint`) : undefined;
+              const designs = f.designs?.join(' ');
+              if (f.kind === 'image') {
+                return (
+                  <div
+                    class="rq__field rq__wide"
+                    data-field={f.id}
+                    data-kind="image"
+                    data-designs={designs}
+                    hidden={Boolean(designs)}
+                  >
+                    <label for={id(f.id)}>{f.label}</label>
+                    <div class="rq__image" data-image>
+                      <input type="hidden" data-image-id />
+                      <img alt="" width="72" height="72" data-image-thumb hidden />
+                      <input
+                        id={id(f.id)}
+                        type="file"
+                        accept="image/jpeg,image/png,image/webp"
+                        aria-describedby={hintId}
+                        data-image-input
+                      />
+                      <button type="button" class="rq__ghost" data-image-clear hidden>
+                        Remove picture
+                      </button>
+                    </div>
+                    {f.hint && (
+                      <p class="rq__hint" id={hintId}>
+                        {f.hint}
+                      </p>
+                    )}
+                    <p class="rq__error" data-error-for={f.id} />
+                  </div>
+                );
+              }
+              if (f.kind === 'consent') {
+                return (
+                  <div class="rq__field rq__wide" data-field={f.id} data-kind="consent">
+                    <label class="rq__check">
+                      <input type="checkbox" name={f.id} id={id(f.id)} />
+                      <span>
+                        {f.label}
+                        {req}
+                      </span>
+                    </label>
+                    <p class="rq__error" data-error-for={f.id} />
+                  </div>
+                );
+              }
+              if (f.kind === 'repeat') {
+                return (
+                  <div
+                    class="rq__field rq__wide"
+                    data-field={f.id}
+                    data-kind="repeat"
+                    data-max={f.maxItems}
+                    data-noun={f.noun}
+                    data-designs={designs}
+                    hidden={Boolean(designs)}
+                  >
+                    {f.designs && <p class="rq__sub">{f.label}</p>}
+                    <div class="rq__entries" data-entries />
+                    <template data-entry-template>
+                      <div class="rq__entry" data-entry>
+                        <p class="rq__entry-title" data-entry-number />
+                        <div class="rq__grid">
+                          {f.parts?.map((p) =>
+                            p.kind === 'image' ? (
+                              <div class="rq__field rq__wide">
+                                <label data-part-label={p.id}>{p.label}</label>
+                                <div class="rq__image" data-image>
+                                  <input type="hidden" data-part={p.id} data-image-id />
+                                  <img alt="" width="72" height="72" data-image-thumb hidden />
+                                  <input
+                                    type="file"
+                                    accept="image/jpeg,image/png,image/webp"
+                                    data-image-input
+                                    data-part-file={p.id}
+                                  />
+                                  <button type="button" class="rq__ghost" data-image-clear hidden>
+                                    Remove picture
+                                  </button>
+                                </div>
+                                {p.hint && <p class="rq__hint">{p.hint}</p>}
+                              </div>
+                            ) : p.kind === 'check' ? (
+                              <label class="rq__check rq__wide">
+                                <input type="checkbox" data-part={p.id} />
+                                <span>{p.label}</span>
+                              </label>
+                            ) : (
+                              <div class:list={['rq__field', { rq__wide: p.kind === 'textarea' }]}>
+                                <label data-part-label={p.id}>{p.label}</label>
+                                {p.kind === 'textarea' ? (
+                                  <textarea
+                                    data-part={p.id}
+                                    rows="4"
+                                    maxlength={maxOf(p)}
+                                  ></textarea>
+                                ) : (
+                                  <input
+                                    type={p.kind === 'month' ? 'month' : 'text'}
+                                    data-part={p.id}
+                                    maxlength={p.kind === 'month' ? undefined : maxOf(p)}
+                                    placeholder={p.kind === 'month' ? 'YYYY-MM' : undefined}
+                                  />
+                                )}
+                                {p.hint && <p class="rq__hint">{p.hint}</p>}
+                              </div>
+                            ),
+                          )}
+                        </div>
+                        <button type="button" class="rq__ghost" data-entry-remove>
+                          Remove
+                        </button>
+                      </div>
+                    </template>
+                    <button type="button" class="rq__ghost" data-entry-add>
+                      {f.add ?? 'Add another'}
+                    </button>
+                    <p class="rq__error" data-error-for={f.id} />
+                  </div>
+                );
+              }
               return (
                 <div
-                  class="rq__field rq__wide"
+                  class:list={['rq__field', { rq__wide: f.kind === 'textarea' }]}
                   data-field={f.id}
-                  data-kind="image"
+                  data-kind={f.kind}
                   data-designs={designs}
                   hidden={Boolean(designs)}
                 >
-                  <label for={id(f.id)}>{f.label}</label>
-                  <div class="rq__image" data-image>
-                    <input type="hidden" data-image-id />
-                    <img alt="" width="72" height="72" data-image-thumb hidden />
+                  <label for={id(f.id)}>
+                    {f.label}
+                    {req}
+                  </label>
+                  {f.kind === 'textarea' ? (
+                    <textarea
+                      id={id(f.id)}
+                      name={f.id}
+                      rows="4"
+                      maxlength={maxOf(f)}
+                      aria-describedby={hintId}
+                    ></textarea>
+                  ) : (
                     <input
                       id={id(f.id)}
-                      type="file"
-                      accept="image/jpeg,image/png,image/webp"
+                      name={f.id}
+                      type={inputType(f)}
+                      inputmode={
+                        f.kind === 'url' ? 'url' : f.kind === 'email' ? 'email' : undefined
+                      }
+                      autocomplete={f.autocomplete}
+                      maxlength={maxOf(f)}
                       aria-describedby={hintId}
-                      data-image-input
                     />
-                    <button type="button" class="rq__ghost" data-image-clear hidden>
-                      Remove picture
-                    </button>
-                  </div>
+                  )}
                   {f.hint && (
                     <p class="rq__hint" id={hintId}>
                       {f.hint}
@@ -135,144 +308,20 @@ const maxOf = (f: { kind: string; max?: number }) =>
                   <p class="rq__error" data-error-for={f.id} />
                 </div>
               );
-            }
-            if (f.kind === 'consent') {
-              return (
-                <div class="rq__field rq__wide" data-field={f.id} data-kind="consent">
-                  <label class="rq__check">
-                    <input type="checkbox" name={f.id} id={id(f.id)} />
-                    <span>
-                      {f.label}
-                      {req}
-                    </span>
-                  </label>
-                  <p class="rq__error" data-error-for={f.id} />
-                </div>
-              );
-            }
-            if (f.kind === 'repeat') {
-              return (
-                <div
-                  class="rq__field rq__wide"
-                  data-field={f.id}
-                  data-kind="repeat"
-                  data-max={f.maxItems}
-                  data-noun={f.noun}
-                  data-designs={designs}
-                  hidden={Boolean(designs)}
-                >
-                  {f.designs && <p class="rq__sub">{f.label}</p>}
-                  <div class="rq__entries" data-entries />
-                  <template data-entry-template>
-                    <div class="rq__entry" data-entry>
-                      <p class="rq__entry-title" data-entry-number />
-                      <div class="rq__grid">
-                        {f.parts?.map((p) =>
-                          p.kind === 'image' ? (
-                            <div class="rq__field rq__wide">
-                              <label data-part-label={p.id}>{p.label}</label>
-                              <div class="rq__image" data-image>
-                                <input type="hidden" data-part={p.id} data-image-id />
-                                <img alt="" width="72" height="72" data-image-thumb hidden />
-                                <input
-                                  type="file"
-                                  accept="image/jpeg,image/png,image/webp"
-                                  data-image-input
-                                  data-part-file={p.id}
-                                />
-                                <button type="button" class="rq__ghost" data-image-clear hidden>
-                                  Remove picture
-                                </button>
-                              </div>
-                              {p.hint && <p class="rq__hint">{p.hint}</p>}
-                            </div>
-                          ) : p.kind === 'check' ? (
-                            <label class="rq__check rq__wide">
-                              <input type="checkbox" data-part={p.id} />
-                              <span>{p.label}</span>
-                            </label>
-                          ) : (
-                            <div class:list={['rq__field', { rq__wide: p.kind === 'textarea' }]}>
-                              <label data-part-label={p.id}>{p.label}</label>
-                              {p.kind === 'textarea' ? (
-                                <textarea data-part={p.id} rows="4" maxlength={maxOf(p)}></textarea>
-                              ) : (
-                                <input
-                                  type={p.kind === 'month' ? 'month' : 'text'}
-                                  data-part={p.id}
-                                  maxlength={p.kind === 'month' ? undefined : maxOf(p)}
-                                  placeholder={p.kind === 'month' ? 'YYYY-MM' : undefined}
-                                />
-                              )}
-                              {p.hint && <p class="rq__hint">{p.hint}</p>}
-                            </div>
-                          ),
-                        )}
-                      </div>
-                      <button type="button" class="rq__ghost" data-entry-remove>
-                        Remove
-                      </button>
-                    </div>
-                  </template>
-                  <button type="button" class="rq__ghost" data-entry-add>
-                    {f.add ?? 'Add another'}
-                  </button>
-                  <p class="rq__error" data-error-for={f.id} />
-                </div>
-              );
-            }
-            return (
-              <div
-                class:list={['rq__field', { rq__wide: f.kind === 'textarea' }]}
-                data-field={f.id}
-                data-kind={f.kind}
-                data-designs={designs}
-                hidden={Boolean(designs)}
-              >
-                <label for={id(f.id)}>
-                  {f.label}
-                  {req}
-                </label>
-                {f.kind === 'textarea' ? (
-                  <textarea
-                    id={id(f.id)}
-                    name={f.id}
-                    rows="4"
-                    maxlength={maxOf(f)}
-                    aria-describedby={hintId}
-                  ></textarea>
-                ) : (
-                  <input
-                    id={id(f.id)}
-                    name={f.id}
-                    type={inputType(f)}
-                    inputmode={f.kind === 'url' ? 'url' : f.kind === 'email' ? 'email' : undefined}
-                    autocomplete={f.autocomplete}
-                    maxlength={maxOf(f)}
-                    aria-describedby={hintId}
-                  />
-                )}
-                {f.hint && (
-                  <p class="rq__hint" id={hintId}>
-                    {f.hint}
-                  </p>
-                )}
-                <p class="rq__error" data-error-for={f.id} />
-              </div>
-            );
-          })}
-      </div>
-    </fieldset>
-  ))}
+            })}
+        </div>
+      </fieldset>
+    ))}
+  </div>
 
   <p class="rq__status" role="status" aria-live="polite" data-rq-status></p>
   <div class="rq__actions">
     <button type="submit" class="rq__send" data-rq-send>
-      Send my request
+      Send my details
     </button>
     <p class="rq__hint" data-rq-who>
-      You’ll be asked to log in or create an account first, so you can see your request and
-      portfolio afterwards. Nothing you’ve typed is lost.
+      You’ll be asked to sign in or create an account first (Google and Microsoft work too), so you
+      can see your request afterwards. Nothing you’ve typed is lost.
     </p>
   </div>
   <p class="rq__trust">
@@ -283,6 +332,26 @@ const maxOf = (f: { kind: string; max?: number }) =>
 </form>
 
 <div class="rq__done" data-rq-done hidden tabindex="-1"></div>
+
+<dialog class="rq-pop" data-rq-pop aria-labelledby="rq-pop-title">
+  <p class="rq-pop__mark" aria-hidden="true">
+    ✓
+  </p>
+  <h2 id="rq-pop-title" class="rq-pop__title" data-rq-pop-title>
+    Thanks, we’ve got it
+  </h2>
+  <p data-rq-pop-reply>A real person will read it and reply by email within 48 hours.</p>
+  <p data-rq-pop-extra></p>
+  <p class="rq-pop__small" data-rq-pop-mail></p>
+  <div class="rq-pop__actions">
+    <a class="rq__send" href={withBase('/account/')} data-rq-pop-dash>
+      Go to my dashboard
+    </a>
+    <button type="button" class="rq__ghost" data-rq-pop-close>
+      Close
+    </button>
+  </div>
+</dialog>
 
 <AuthPanel mode="dialog" />
 
@@ -578,6 +647,104 @@ const maxOf = (f: { kind: string; max?: number }) =>
     color: var(--muted-on-ink);
     font-size: 0.85rem;
     line-height: 1.5;
+  }
+
+  .rq__panel {
+    display: grid;
+    gap: 1.6rem;
+  }
+
+  .rq__panel[hidden] {
+    display: none;
+  }
+
+  .rq__wa {
+    margin-top: 1rem;
+    color: var(--muted-on-ink);
+  }
+
+  .rq__wa a {
+    color: var(--paper);
+    font-weight: 700;
+    text-underline-offset: 0.2em;
+  }
+
+  .rq-pop {
+    width: min(100% - 2rem, 32rem);
+    margin: auto;
+    padding: clamp(1.5rem, 4vw, 2.25rem);
+    border: 1px solid var(--ink);
+    border-radius: 18px;
+    background: #fbfbf7;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+
+  .rq-pop:not([open]) {
+    display: none;
+  }
+
+  .rq-pop[open] {
+    display: grid;
+    gap: 0.85rem;
+  }
+
+  .rq-pop::backdrop {
+    background: rgb(11 13 10 / 0.72);
+  }
+
+  .rq-pop__mark {
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--ink);
+    color: #39ff14;
+    font: 800 1.5rem/1 var(--font-display);
+  }
+
+  .rq-pop__title {
+    font: 800 clamp(1.5rem, 4vw, 2rem) / 1.05 var(--font-display);
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+
+  .rq-pop__title:focus {
+    outline: none;
+  }
+
+  .rq-pop__small {
+    font-size: 0.9rem;
+    color: #45473f;
+  }
+
+  .rq-pop__small:empty {
+    display: none;
+  }
+
+  .rq-pop__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+    margin-top: 0.5rem;
+  }
+
+  .rq-pop .rq__send[hidden],
+  .rq-pop [hidden] {
+    display: none;
+  }
+
+  .rq-pop .rq__send {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+  }
+
+  .rq-pop .rq__ghost {
+    color: var(--ink);
+    border-color: var(--ink);
   }
 
   .rq__done {

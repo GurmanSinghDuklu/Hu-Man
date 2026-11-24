@@ -6,7 +6,7 @@
  *
  * Plain, erasable TypeScript with no imports, so Node's tests and wrangler can load it directly.
  */
-export type RequestRoute = 'custom' | 'instant';
+export type RequestRoute = 'details' | 'chat';
 
 export interface RequestPart {
   id: string;
@@ -43,14 +43,14 @@ export interface RequestField {
 
 export const requestRoutes: { value: RequestRoute; label: string; text: string }[] = [
   {
-    value: 'instant',
-    label: 'Choose design + upload CV',
-    text: 'We build your portfolio from this design and your details straight away. See it in your account in seconds.',
+    value: 'details',
+    label: 'Fill in details now',
+    text: 'Your details and CV in one go. A real person reads it and replies within 48 hours.',
   },
   {
-    value: 'custom',
-    label: 'Custom made portfolio',
-    text: 'We design it with you. A person reads your request and replies by email.',
+    value: 'chat',
+    label: 'Chat with us instead',
+    text: 'Not ready to fill it all in? Send a short message or WhatsApp us, and we’ll talk it through first.',
   },
 ];
 

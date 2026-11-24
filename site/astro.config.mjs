@@ -73,7 +73,10 @@ export default defineConfig({
     sitemap({
       // Noindex pages (404, the form's thank-you page) stay out.
       // The client area (login, account, admin) is never in the sitemap either.
-      filter: (page) => !/\/(404|thanks)\/?$/.test(page) && !/\/(login|account|admin)\//.test(page),
+      filter: (page) =>
+        !/\/(404|thanks)\/?$/.test(page) &&
+        !/\/(login|account|admin|auth)\//.test(page) &&
+        !/\/portfolio\/start\/?$/.test(page),
       serialize(item) {
         const lastmod = lastModified(pageFile(pageKeyFor(item.url)));
         return lastmod ? { ...item, lastmod } : item;

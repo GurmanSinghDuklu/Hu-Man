@@ -166,6 +166,39 @@ button says reading isn't available and people type it in.
    humansoftwareagency.com only. `npx wrangler secret put CF_API_TOKEN`, then
    `npx wrangler secret put CF_ZONE_ID` with the zone id from the zone's Overview page.
 
+### Sign in with Google and Microsoft (built, switched off until these are set)
+
+The buttons only appear once both of a provider's settings are on the Worker. Nothing else changes.
+Then run the database update once: `npx wrangler d1 migrations apply hm_accounts --remote` (adds the
+`oauth_identities` table; safe to run again).
+
+**Google** (free):
+1. Go to console.cloud.google.com, create a project called "Hu/man website".
+2. Google Auth Platform → Branding: app name "Hu/man", support email humansoftwareagency@gmail.com,
+   logo optional, authorised domain `humansoftwareagency.com`, privacy policy
+   `https://humansoftwareagency.com/privacy/`, terms `https://humansoftwareagency.com/user-agreement/`.
+3. Audience: External. Data access (scopes): only `openid`, `email` and `profile` (these need no
+   Google review). Publish the app (Audience → Publish app), or only test users can sign in.
+4. Clients → Create client → Web application. Authorised redirect URI, exactly:
+   `https://humansoftwareagency.com/api/auth/oauth/google/callback`
+   (add `http://localhost:8787/api/auth/oauth/google/callback` too, for local testing).
+5. Copy the client ID and secret, then from `site/`:
+   `npx wrangler secret put GOOGLE_CLIENT_ID` and `npx wrangler secret put GOOGLE_CLIENT_SECRET`.
+
+**Microsoft** (free; Outlook, Hotmail and work accounts):
+1. Go to entra.microsoft.com → App registrations → New registration. Name "Hu/man website".
+   Supported account types: "Accounts in any organizational directory and personal Microsoft
+   accounts". Redirect URI: platform Web,
+   `https://humansoftwareagency.com/api/auth/oauth/microsoft/callback`.
+2. Certificates & secrets → New client secret (24 months; put a reminder in the diary to renew it).
+3. Optional but good: Token configuration → Add optional claim → ID → `xms_edov`, so work emails
+   whose domain is checked are trusted straight away (without it they get our 6-digit code first).
+4. From `site/`: `npx wrangler secret put MICROSOFT_CLIENT_ID` (the Application (client) ID) and
+   `npx wrangler secret put MICROSOFT_CLIENT_SECRET` (the secret's Value, not its ID).
+
+Check: open /login/ in a private window; the buttons show. Sign in with each; you land back signed
+in. Deleting the account in /account/ removes the Google or Microsoft link with it.
+
 ## 2. DNS
 1. Add humansoftwareagency.com to Cloudflare (free plan). Cloudflare gives two nameservers.
 2. Namecheap → Domain List → Manage → Nameservers → Custom DNS → paste Cloudflare's two.

@@ -143,6 +143,9 @@ simple = { limit = 10, period = 60 }
 #   STRIPE_SECRET_KEY      Stripe's secret key (sk_test_… while testing, sk_live_… for real).
 #   STRIPE_WEBHOOK_SECRET  the signing secret of the webhook to /api/stripe/webhook (whsec_…).
 #   RESEND_API_KEY         Resend's API key, for emails to people (sign-up codes, resets, receipts).
+#   GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET        "Continue with Google" (docs/10-launch.md).
+#   MICROSOFT_CLIENT_ID, MICROSOFT_CLIENT_SECRET  "Continue with Microsoft". Without a pair, that
+#                          provider's button doesn't show.
 # Plain setting (not secret), in [vars] when set: RESEND_FROM = "Hu/man <hello@humansoftwareagency.com>".
 # Without the Stripe ones the pay button says payment details will be emailed instead. For
 # `wrangler dev`, put them in site/.dev.vars (git-ignored). Steps: docs/10-launch.md.

@@ -104,7 +104,7 @@ export const pageHeroVideo: Partial<Record<PageKey, HeroVideoKey>> = {
 
 /** Videos a page plays in a section below its hero (the portfolio request form beside a video). */
 export const pageSectionVideos: Partial<Record<PageKey, HeroVideoKey[]>> = {
-  portfolio: ['portfolio-ad'],
+  'portfolio-start': ['portfolio-ad'],
 };
 
 /** The poster as the page ships it (also the schema's and sitemap's thumbnail). */

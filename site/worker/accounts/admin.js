@@ -180,6 +180,7 @@ export async function deleteClientData(env, id) {
     env.DB.prepare('DELETE FROM invites WHERE user_id = ?').bind(id),
     env.DB.prepare('DELETE FROM sessions WHERE user_id = ?').bind(id),
     env.DB.prepare('DELETE FROM email_codes WHERE user_id = ?').bind(id),
+    env.DB.prepare('DELETE FROM oauth_identities WHERE user_id = ?').bind(id),
     env.DB.prepare('DELETE FROM enquiries WHERE user_id = ? OR email = ?').bind(id, user.email),
     env.DB.prepare('DELETE FROM users WHERE id = ?').bind(id),
   ]);

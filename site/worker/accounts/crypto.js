@@ -8,12 +8,12 @@
 const ITERATIONS = 100_000;
 const enc = new TextEncoder();
 
-const toB64url = (bytes) =>
+export const toB64url = (bytes) =>
   btoa(String.fromCharCode(...bytes))
     .replace(/\+/g, '-')
     .replace(/\//g, '_')
     .replace(/=+$/, '');
-const fromB64url = (text) =>
+export const fromB64url = (text) =>
   Uint8Array.from(atob(text.replace(/-/g, '+').replace(/_/g, '/')), (c) => c.charCodeAt(0));
 const hex = (buffer) =>
   [...new Uint8Array(buffer)].map((b) => b.toString(16).padStart(2, '0')).join('');

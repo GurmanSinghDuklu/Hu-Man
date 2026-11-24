@@ -943,3 +943,27 @@ animations, structures and designs"). Renderers live in `site/worker/accounts/co
    projects, jobs, qualifications and contact). Theo's commit heatmap is always left out (sample data).
 4. Sample renders for checking by eye: a scratch script renders a design with sample answers and
    screenshots it at 1280 and 390px; render every new design this way before showing it.
+
+## CV request page, Google/Microsoft sign-in, no auto-build (2026-11-24, branch `client-accounts`)
+Mandeep's direction. The request form left /portfolio for its own page, **/portfolio/start/** (noindex,
+`RequestBand` + `SecureNote`); "Choose this design" links there with `?concept=`.
+1. **Two choices**: "Fill in details now" (full form + CV, needs an account, route `details`) and "Chat
+   with us instead" (short message to /api/enquiry with via "Portfolio: chat", no account, plus a
+   WhatsApp link naming the design). Clients can no longer ask for an automatic build: the server saves
+   every request as `details`. The team builds a preview from Noor, Leah or Theo with "Build a preview
+   from this design" in /admin/ (`POST /api/admin/projects/<id>/build`, sets route `instant`, then pay
+   and publish work as before).
+2. **After sending**: a pop-up (reply within 48 hours; add or change details from the dashboard for 3
+   hours) and the confirmation email saying the same with the exact time. `EDIT_WINDOW_MS` in
+   requests.js: within it `/api/account/request/update` saves changes (studio emailed "[Portfolio request
+   changed]") and files can still be uploaded; after it, locked (409). The dashboard card shows "Add or
+   change details" until then (it computes the time from `sentAt`, same 3 hours).
+3. **Continue with Google / Microsoft** (`worker/accounts/oauth.js`, migration 0005
+   `oauth_identities`): OIDC code flow with PKCE, state/nonce in a 10-minute `__Host-hm_oauth` cookie.
+   Matched by provider id; an email is only trusted when the provider vouches (Google `email_verified`,
+   Microsoft personal tenant or `xms_edov`), otherwise our 6-digit code first. Linking to a
+   never-confirmed account drops its password. The panel opens the provider in a small window and
+   `/auth/done/` reports back on a BroadcastChannel (the site's COOP header cuts `window.opener`).
+   Buttons show only when both of a provider's secrets are set (docs/10-launch.md); none are set yet.
+4. Concepts: Bradford/Wakefield became Birmingham, Leicester and Nottingham (Ashby stays in Leeds with
+   Huddersfield and York; Spice Route is now in Nottingham, so it's off the Leeds city page).

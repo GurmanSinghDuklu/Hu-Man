@@ -15,6 +15,7 @@ import {
 import { showSetupLink } from './admin-shared';
 import { stepsFor, answerText, projectTypeLabels, type BriefAnswers } from '../../data/brief';
 import { requestFields, requestAnswerText } from '../../data/portfolioRequest';
+import { portfolioConcepts } from '../../data/portfolioConcepts';
 
 interface Detail {
   client: {
@@ -311,7 +312,7 @@ function renderProject(project: Detail['projects'][number]) {
   }
 
   if (project.kind === 'request') {
-    // A portfolio request from /contact/: its own questions, then the CV.
+    // A portfolio request from /portfolio/start/: its own questions, then the CV.
     const rows: HTMLElement[] = [];
     for (const field of requestFields) {
       const text = requestAnswerText(field, project.answers[field.id]);
@@ -351,12 +352,38 @@ function renderProject(project: Detail['projects'][number]) {
     card.append(
       el('p', {
         class: 'acct-small',
-        text: `${project.route === 'instant' ? 'Choose design + upload CV' : 'Custom made portfolio'}${project.concept ? ` · Design: ${project.concept}` : ''}`,
+        text: `${project.route === 'instant' ? 'Built from a design' : project.route === 'custom' ? 'Custom made portfolio' : 'Fill in details now'}${project.concept ? ` · Design: ${project.concept}` : ''}`,
       }),
       rows.length
         ? el('dl', { class: 'acct-dl' }, ...rows)
         : el('p', { class: 'acct-small', text: 'Nothing filled in yet.' }),
     );
+    // Designs with an automatic build (worker/accounts/concepts/): the team can make the preview
+    // from their answers in one click; the client then sees it, pays and it's published.
+    const buildable = portfolioConcepts.some((c) => c.name === project.concept && c.instantTier);
+    if (buildable && !project.liveAt) {
+      const build = el('button', {
+        type: 'button',
+        class: 'btn btn--outline',
+        text: project.previewPath
+          ? 'Rebuild the preview from their answers'
+          : 'Build a preview from this design',
+      });
+      build.addEventListener('click', async () => {
+        build.disabled = true;
+        setStatus('Building…');
+        const { status, data } = await api<{ previewPath: string }>(
+          `/api/admin/projects/${encodeURIComponent(project.id)}/build`,
+          { method: 'POST' },
+        );
+        build.disabled = false;
+        if (status === 200) {
+          setStatus('Built. They can see it in their account now.', 'ok');
+          await load();
+        } else setStatus(data.error ?? UNAVAILABLE, 'warn');
+      });
+      card.append(el('div', { class: 'acct-actions' }, build));
+    }
     return card;
   }
   for (const step of stepsFor(project.type)) {

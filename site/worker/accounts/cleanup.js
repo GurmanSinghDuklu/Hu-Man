@@ -13,7 +13,8 @@ const DAY = 24 * 3600 * 1000;
 
 export async function cleanUp(env, now = Date.now()) {
   const { results: unconfirmed } = await env.DB.prepare(
-    "SELECT id FROM users WHERE role = 'client' AND email_verified_at IS NULL AND password_hash IS NOT NULL AND created_at < ?",
+    `SELECT id FROM users WHERE role = 'client' AND email_verified_at IS NULL AND created_at < ?
+     AND (password_hash IS NOT NULL OR EXISTS (SELECT 1 FROM oauth_identities WHERE user_id = users.id))`,
   )
     .bind(now - 7 * DAY)
     .all();
