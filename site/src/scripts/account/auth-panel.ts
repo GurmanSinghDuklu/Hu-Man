@@ -14,8 +14,12 @@
  */
 import { api, sitePath, showErrors } from './api';
 
-type View = 'signup' | 'login' | 'code' | 'forgot';
+type View = 'choose' | 'signup' | 'login' | 'code' | 'forgot';
 const TITLES: Record<View, [string, string]> = {
+  choose: [
+    'Log in or sign up in seconds',
+    'Use your email, Google or Microsoft to continue with Hu/man. It’s free.',
+  ],
   signup: [
     'Create your account',
     'So you can see your request, your portfolio and anything we send back.',
@@ -67,13 +71,12 @@ export function setupAuth(root: HTMLElement) {
   };
   let email = '';
 
-  const providerBox = root.querySelector<HTMLElement>('[data-auth-providers]');
-  let providersOn = false;
+  /** Providers with their keys set on the Worker (oauth.js); the others say they're coming. */
+  const providersOn = new Set<string>();
   const show = (view: View, keepStatus = false) => {
     root.querySelectorAll<HTMLElement>('[data-auth-view]').forEach((form) => {
       form.hidden = form.dataset.authView !== view;
     });
-    if (providerBox) providerBox.hidden = !providersOn || !(view === 'signup' || view === 'login');
     const [title, lede] = TITLES[view];
     root.querySelector('[data-auth-title]')!.textContent = title;
     const ledeEl = root.querySelector<HTMLElement>('[data-auth-lede]')!;
@@ -228,7 +231,10 @@ export function setupAuth(root: HTMLElement) {
     } else if (result.verify) toCode(result.verify, result.devCode ?? undefined);
     else if (result.error) say(OAUTH_ERRORS[result.error] ?? OAUTH_ERRORS.failed, 'warn');
   };
-  if (providerBox && 'BroadcastChannel' in window) {
+  root.querySelector('[data-auth-email]')?.addEventListener('click', () => {
+    show(root.dataset.authStart === 'login' ? 'login' : 'signup');
+  });
+  if ('BroadcastChannel' in window) {
     const channel = new BroadcastChannel('hm-auth');
     channel.addEventListener('message', (event: MessageEvent<AuthResult>) => {
       // Only the panel that's in use answers (a page can hold the dialog and nothing else).
@@ -239,6 +245,13 @@ export function setupAuth(root: HTMLElement) {
   root.querySelectorAll<HTMLButtonElement>('[data-auth-provider]').forEach((button) => {
     button.addEventListener('click', () => {
       const provider = button.dataset.authProvider!;
+      const label = provider === 'google' ? 'Google' : 'Microsoft';
+      if (!providersOn.has(provider)) {
+        say(
+          `Signing in with ${label} is being switched on soon. Please continue with email for now.`,
+        );
+        return;
+      }
       const here = `${location.pathname}${location.search}`;
       const popup = window.open(
         sitePath(`/api/auth/oauth/${provider}/start?popup=1`),
@@ -252,31 +265,17 @@ export function setupAuth(root: HTMLElement) {
         return;
       }
       button.disabled = true;
-      say(
-        `Finish signing in with ${button.textContent?.trim().replace('Continue with ', '')} in the new window.`,
-      );
+      say(`Finish signing in with ${label} in the new window.`);
       // If they close it without finishing, let them try again.
       setTimeout(() => (button.disabled = false), 4000);
     });
   });
   void api<{ providers: string[] }>('/api/auth/providers').then(({ status: code, data }) => {
-    if (code !== 200 || !providerBox) return;
-    for (const p of data.providers ?? []) {
-      const b = root.querySelector<HTMLElement>(`[data-auth-provider="${p}"]`);
-      if (b) {
-        b.hidden = false;
-        providersOn = true;
-      }
-    }
-    const view = [...root.querySelectorAll<HTMLElement>('[data-auth-view]')].find((f) => !f.hidden)
-      ?.dataset.authView;
-    providerBox.hidden = !providersOn || !(view === 'signup' || view === 'login');
+    if (code === 200) for (const p of data.providers ?? []) providersOn.add(p);
   });
 
   const params = new URLSearchParams(location.search);
-  const first: View = params.get('forgot')
-    ? 'forgot'
-    : ((root.dataset.authStart as View) ?? 'signup');
+  const first: View = params.get('forgot') ? 'forgot' : 'choose';
   show(first, true);
   if (params.get('out')) say('You’ve logged out.', 'ok');
   // Back from Google or Microsoft without a pop-up (/auth/done/ sends them here).
@@ -295,7 +294,8 @@ export function openAuth(start: 'signup' | 'login' = 'signup', message = ''): Pr
   return new Promise((resolve) => {
     done.set(dialog, resolve);
     dialog.showModal();
-    dialog.querySelector<HTMLButtonElement>(`[data-auth-show="${start}"]`)?.click();
+    dialog.dataset.authStart = start;
+    dialog.querySelector<HTMLButtonElement>('[data-auth-show="choose"]')?.click();
     const status = dialog.querySelector<HTMLElement>('[data-auth-status]')!;
     status.textContent = message;
     status.dataset.tone = 'ok';
