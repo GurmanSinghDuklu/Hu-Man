@@ -68,7 +68,7 @@ export const portfolioConcepts: PortfolioConcept[] = [
   {
     slug: 'imran',
     name: 'Imran Shah',
-    role: 'Customer service team leader, Bradford',
+    role: 'Customer service team leader, Leicester',
     field: 'Operations',
     shows:
       'A scrapbook of speech bubbles and queue tickets, with moving type bands and a before-and-after script.',
@@ -167,7 +167,7 @@ export const portfolioConcepts: PortfolioConcept[] = [
   {
     slug: 'dan',
     name: 'Dan Okafor',
-    role: 'Construction site manager, Bradford',
+    role: 'Construction site manager, Birmingham',
     field: 'Trades',
     shows: 'Giant outline menu words that fill in and change the moving site scene behind them.',
     alt: 'The Dan Okafor example portfolio: a duotone construction scene behind his name and huge outlined menu words.',
@@ -208,7 +208,7 @@ export const portfolioConcepts: PortfolioConcept[] = [
   {
     slug: 'ryan',
     name: 'Ryan Holt',
-    role: 'Vehicle technician, Wakefield',
+    role: 'Vehicle technician, Nottingham',
     field: 'Trades',
     shows: 'A 3D brake assembly that turns under a moving light and tilts with your cursor.',
     alt: 'The Ryan Holt example portfolio: a black and grey page with a 3D-shaded mechanical part under hard light.',
@@ -330,7 +330,7 @@ export const businessSiteConcepts: PortfolioConcept[] = [
   {
     slug: 'spiceroute',
     name: 'Spice Route Kitchen',
-    role: 'Takeaway, Bradford',
+    role: 'Takeaway, Nottingham',
     field: 'Food',
     shows:
       'Built on Essential: one page with tonight’s favourites, prices, allergens, hours and a big call button.',

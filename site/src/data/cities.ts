@@ -91,7 +91,7 @@ export const cities: Record<CityKey, City> = {
         'No one can promise rankings or a mention in AI answers, and we never will. We do the groundwork, show you how to check where you appear, and tell you honestly what we find.',
       ],
     },
-    concepts: ['ashby', 'northgate', 'spiceroute', 'brightsquare', 'atelierrose'],
+    concepts: ['ashby', 'northgate', 'brightsquare', 'atelierrose'],
     areas: [
       'Leeds',
       'Bradford',
