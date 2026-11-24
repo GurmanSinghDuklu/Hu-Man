@@ -86,10 +86,10 @@ section,div[id]{scroll-margin-top:84px}
 .cover-spark svg{flex:1;height:70px}
 .cover-spark .m{font-size:10px;white-space:nowrap;align-self:flex-start}
 .cover-body{padding:clamp(18px,3vw,44px) clamp(16px,3vw,44px) clamp(22px,3vw,40px);display:grid;gap:12px}
-.mark{font-weight:900;font-size:clamp(50px,min(19.2vw,23.5vh),272px);line-height:.92;letter-spacing:-.04em;margin-left:-.03em}
+.cover-body{container-type:inline-size}
+.mark{font-weight:900;font-size:clamp(30px,min(14cqw,36vh),272px);white-space:nowrap;line-height:.92;letter-spacing:-.04em;margin-left:-.03em}
 .mark>span{display:block;clip-path:inset(0 -8% 0 -8%)}
 .mark .dot{display:inline-block;width:.17em;height:.17em;background:var(--blue);margin-right:.05em;vertical-align:baseline}
-.mark .hy{color:var(--blue)}
 .cover-row{display:flex;gap:clamp(14px,3vw,48px);align-items:flex-end;flex-wrap:wrap;margin-top:6px}
 .cover-name{font-size:clamp(22px,3.8vw,56px);line-height:.95}
 .cover-name sup{font-size:.28em;vertical-align:top}
@@ -336,7 +336,6 @@ footer .in{max-width:1400px;margin:0 auto;padding:0 var(--gap);display:flex;just
   .cols span{font-size:9px;letter-spacing:0}
   .cover-top{grid-template-columns:auto 1fr}.cover-top .yr,.cover-spark{display:none}
   .barcode{width:64px}.cover-meta{margin-left:0}
-  .mark{font-size:20.5vw}
   .about{grid-template-columns:1fr}.about .frame{min-height:340px;order:-1}
   .rings{grid-template-columns:1fr}
   .role,.roles .th{grid-template-columns:1fr}.roles .th span:nth-child(n+2){display:none}
@@ -353,7 +352,6 @@ footer .in{max-width:1400px;margin:0 auto;padding:0 var(--gap);display:flex;just
   .card{min-height:0}
 }
 @media (prefers-reduced-motion:no-preference){
-  .mark .hy{animation:blink 1.6s steps(1) infinite}
   @keyframes blink{50%{opacity:0}}
 }
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
@@ -417,12 +415,11 @@ footer .in{max-width:1400px;margin:0 auto;padding:0 var(--gap);display:flex;just
   </div>
   <div class="cover-body">
     <h1 class="mark d" aria-label="Analysis">
-      <span><i class="dot"></i>ANAL<span class="hy">-</span></span>
-      <span>YSIS</span>
+      <span><i class="dot"></i>ANALYSIS</span>
     </h1>
     <div class="cover-row">
       <div class="cover-name d">Nadia<br>Kerr<sup>&reg;</sup></div>
-      <div class="cover-tag d">Data an-<br>alyst for<br>teams that<br>decide.</div>
+      <div class="cover-tag d">Data<br>analyst for<br>teams that<br>decide.</div>
       <p class="cover-meta"><span class="m">Open to new roles &middot; Leeds &amp; hybrid</span>I turn messy tables into clear answers, then explain them to the people who have to act on them. SQL, Python and Power BI, in that order.</p>
     </div>
   </div>
