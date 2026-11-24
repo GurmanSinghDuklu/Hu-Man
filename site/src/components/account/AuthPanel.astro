@@ -7,7 +7,7 @@
  * while signed out (their answers stay on the page underneath), and `inline` on /login/. Views:
  * choose, create an account, log in, the emailed 6-digit code, forgotten password.
  */
-import { Image } from 'astro:assets';
+import { getImage } from 'astro:assets';
 import head from '../../assets/brand/fingerprint-head.png';
 import PrivacyShort from './PrivacyShort.astro';
 import { withBase } from '../../config/paths';
@@ -20,6 +20,8 @@ interface Props {
 const { mode = 'inline', start = 'signup' } = Astro.props;
 const Tag = mode === 'dialog' ? 'dialog' : 'div';
 const back = '← Other ways to continue';
+// Decorative, so a background rather than an <img>.
+const headArt = await getImage({ src: head, format: 'webp', width: 440, quality: 82 });
 ---
 
 <Tag
@@ -256,7 +258,7 @@ const back = '← Other ways to continue';
 
   <div class="auth__art" aria-hidden="true">
     <div class="auth__halo">
-      <Image src={head} alt="" width={220} format="webp" quality={82} class="auth__head" />
+      <span class="auth__head" style={`background-image:url("${headArt.src}")`}></span>
     </div>
     <span class="auth__chip auth__chip--1">Encrypted</span>
     <span class="auth__chip auth__chip--2">Private storage</span>
@@ -396,8 +398,10 @@ const back = '← Other ways to continue';
   }
 
   .auth__head {
-    width: auto;
+    display: block;
+    width: calc(12rem * 120 / 172);
     height: 12rem;
+    background: center / contain no-repeat;
     filter: drop-shadow(0 0 18px rgb(78 40 223 / 0.45));
   }
 
