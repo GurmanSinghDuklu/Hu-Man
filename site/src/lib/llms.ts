@@ -208,7 +208,7 @@ export function llmsFullTxt(): string {
     ...portfolioFaq.flatMap((item) => [`#### ${item.q}`, '', item.a, '']),
     `## Brand identity (${link('brand')})`,
     '',
-    'Logo, type, colour, mockups and guidelines drawn by people. The page shows 44 original Concept directions, one complete Concept case study (Pura) and a brand board: collect inspiration, pick a palette, logo direction and typeface, see mockups with your own name, then sign in to send it to us. A person replies. Prices are agreed on a free 1-hour call, not published.',
+    'Logo, type, colour, mockups and guidelines drawn by people. The page shows 74 original Concept directions, two complete Concept case studies (Pura and Latte) and a brand board: collect inspiration, pick a palette, logo direction and typeface, see mockups with your own name, then sign in to send it to us. A person replies. Prices are agreed on a free 1-hour call, not published.',
     '',
     'What a brand identity can include (exact deliverables are agreed on the call):',
     '',

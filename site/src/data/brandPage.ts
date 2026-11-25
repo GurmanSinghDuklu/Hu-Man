@@ -1,5 +1,5 @@
 /**
- * Copy for /brand/ that isn't the 44 directions (src/data/brandStudio.ts): the 14 deliverables, the
+ * Copy for /brand/ that isn't the 74 directions (src/data/brandStudio.ts): the 14 deliverables, the
  * five steps, the Pura case study's palette and the board's mood words and logo types. Draft copy
  * awaiting Gurman's sign-off. Brand identity has no prices yet, so none appear here.
  */
