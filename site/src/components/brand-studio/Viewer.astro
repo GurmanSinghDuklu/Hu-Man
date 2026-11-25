@@ -1,0 +1,43 @@
+---
+/** The shared image viewer (<dialog>): a gallery direction with palette and typeface, or a case-study photo. */
+---
+
+<dialog id="bs-viewer" class="bs-viewer" aria-labelledby="bs-v-title">
+  <div class="bs-viewer__frame">
+    <button type="button" class="bs-viewer__close" data-close>
+      Close
+    </button>
+    <div class="bs-viewer__media">
+      <img id="bs-v-img" alt="" width="1120" height="1400" />
+    </div>
+    <div class="bs-viewer__side">
+      <p class="label" id="bs-v-kicker"></p>
+      <h3 id="bs-v-title"></h3>
+      <p class="bs-viewer__style" id="bs-v-style"></p>
+      <div class="bs-viewer__gal">
+        <h4 class="label">Palette</h4>
+        <ul class="bs-viewer__pal" id="bs-v-pal"></ul>
+        <button type="button" class="pill-btn pill-btn--outline" id="bs-v-usepal">
+          Use this palette
+        </button>
+        <h4 class="label">Suggested typeface</h4>
+        <p class="bs-viewer__sample" id="bs-v-type"></p>
+        <p class="bs-viewer__typename" id="bs-v-typename"></p>
+        <button type="button" class="pill-btn pill-btn--outline" id="bs-v-usefont">
+          Use this type
+        </button>
+        <button type="button" class="pill-btn" id="bs-v-save" aria-pressed="false">
+          Save to board
+        </button>
+      </div>
+      <nav class="bs-viewer__nav" aria-label="Browse directions">
+        <button type="button" class="pill-btn pill-btn--outline" id="bs-v-prev">
+          Previous
+        </button>
+        <button type="button" class="pill-btn pill-btn--outline" id="bs-v-next">
+          Next
+        </button>
+      </nav>
+    </div>
+  </div>
+</dialog>
