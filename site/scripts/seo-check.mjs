@@ -35,7 +35,9 @@ const fileSet = new Set(files);
 // Concept portfolios (public/concepts/) are standalone, noindex pages with their own checks below.
 const isConcept = (f) => f.startsWith('concepts/');
 const conceptFiles = files.filter((f) => isConcept(f) && f.endsWith('.html'));
-const htmlFiles = files.filter((f) => f.endsWith('.html') && !isConcept(f));
+// The Brand Board's sign-in landing page (public/studio/) is standalone too: noindex, no inline script.
+const isStudio = (f) => f.startsWith('studio/');
+const htmlFiles = files.filter((f) => f.endsWith('.html') && !isConcept(f) && !isStudio(f));
 const html = Object.fromEntries(
   await Promise.all(htmlFiles.map(async (f) => [f, await readFile(`${dist}${f}`, 'utf8')])),
 );
@@ -171,7 +173,9 @@ for (const file of htmlFiles) {
 
   // Images: alt text (empty is fine for decoration) and dimensions (no layout shift).
   for (const [tag] of doc.matchAll(/<img\s[^>]*>/g)) {
-    if (attr(tag, 'alt') === undefined) fail(where, `image without alt: ${tag.slice(0, 80)}`);
+    // Minified HTML writes an empty alt as a bare `alt`, which is still valid (decorative).
+    if (attr(tag, 'alt') === undefined && !/\salt[\s>/]/.test(tag))
+      fail(where, `image without alt: ${tag.slice(0, 80)}`);
     if (!attr(tag, 'width') || !attr(tag, 'height'))
       fail(where, `image without width/height: ${tag.slice(0, 80)}`);
   }
@@ -279,6 +283,14 @@ for (const f of conceptFiles) {
   for (const [, ref] of doc.matchAll(/(?:src|url)\(?=?["']?(\.\.\/(?:fonts|vendor)\/[^"')\s]+)/g)) {
     if (!fileSet.has(`concepts/${ref.slice(3)}`)) fail(f, `missing asset ${ref}`);
   }
+}
+
+// Studio sign-in page: noindex, its own script file (no inline script, the CSP forbids it).
+for (const f of files.filter((x) => isStudio(x) && x.endsWith('.html'))) {
+  const doc = await readFile(`${dist}${f}`, 'utf8');
+  if (!/<meta name="robots" content="noindex,nofollow"/.test(doc)) fail(f, 'not noindex,nofollow');
+  if (/<script(?![^>]*\bsrc=)[^>]*>/.test(doc)) fail(f, 'has an inline script');
+  if (!fileSet.has('studio/signed-in/signed-in.js')) fail(f, 'signed-in.js is missing');
 }
 
 // Sitemap: exactly the indexable pages.

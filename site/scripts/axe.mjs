@@ -15,6 +15,7 @@ const PAGES = [
   'agentic-ai-ready/',
   'free-ai-check/',
   'portfolio/',
+  'brand/',
   'contact/',
   'thanks/',
   'start/',

@@ -19,7 +19,8 @@ import {
   careRules,
   careFixPromise,
 } from '../data/pricing';
-import { faq, agenticFaq, checkFaq, contactFaq, portfolioFaq } from '../data/faq';
+import { faq, agenticFaq, checkFaq, contactFaq, portfolioFaq, brandFaq } from '../data/faq';
+import { deliverables, brandSteps } from '../data/brandPage';
 import { definition, ingredients } from '../data/agentic';
 import { method, methodName, methodNote, checklist, compare, bonnet } from '../data/process';
 import { projects } from '../data/projects';
@@ -53,6 +54,7 @@ const pageKeys: PageKey[] = [
   'how-we-build',
   'business-websites',
   'portfolio',
+  'brand',
   'about',
   'contact',
 ];
@@ -204,6 +206,21 @@ export function llmsFullTxt(): string {
     '### Questions about the CV concepts',
     '',
     ...portfolioFaq.flatMap((item) => [`#### ${item.q}`, '', item.a, '']),
+    `## Brand identity (${link('brand')})`,
+    '',
+    'Logo, type, colour, mockups and guidelines drawn by people. The page shows 44 original Concept directions, one complete Concept case study (Pura) and a brand board: collect inspiration, pick a palette, logo direction and typeface, see mockups with your own name, then sign in to send it to us. A person replies. Prices are agreed on a free 1-hour call, not published.',
+    '',
+    'What a brand identity can include (exact deliverables are agreed on the call):',
+    '',
+    ...deliverables.map((d) => `- ${d.title}`),
+    '',
+    'How it works:',
+    '',
+    ...brandSteps.map((s, i) => `${i + 1}. ${s.title}: ${s.text}`),
+    '',
+    '### Questions about brand identity',
+    '',
+    ...brandFaq.flatMap((item) => [`#### ${item.q}`, '', item.a, '']),
     `## How we build (${link('how-we-build')})`,
     '',
     `${methodName} A person signs off each step.`,
