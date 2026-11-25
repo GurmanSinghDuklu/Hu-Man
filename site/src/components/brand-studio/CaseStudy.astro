@@ -35,6 +35,8 @@ const rawLogo = logos[`../../assets/brand-studio/${s.id}/${s.id}-logo.svg`];
 const logoSvg = (box?: string, label = false) => {
   let out = rawLogo;
   if (box) out = out.replace(/viewBox="[^"]+"/, `viewBox="${box}"`);
+  // A logomark crop shows only the mark's own paths when the logo file tags them (Latte's mug).
+  if (box && out.includes('data-mark')) out = out.replace(/<path data-word[^>]*\/>/, '');
   if (!label)
     out = out.replace(/ role="img" aria-label="[^"]*"/, ' aria-hidden="true" focusable="false"');
   return out;

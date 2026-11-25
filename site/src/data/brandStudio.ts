@@ -1724,7 +1724,7 @@ export const caseStudies: CaseStudy[] = [
       sample: 'Good mornings, made here.',
     },
     body: { id: 'figtree', family: 'Figtree', weight: 400 },
-    markBox: '366 0 784 741',
+    markBox: '366 -25 787 787',
     clearX: 450,
     pattern: 'mug',
     social: [
