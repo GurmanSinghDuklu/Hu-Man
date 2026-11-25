@@ -1,6 +1,6 @@
 /**
- * Case-study switcher (Pura / Latte) and lazy fonts. Both studies are in the HTML (readable
- * without script); with JS one shows at a time. #pura and #latte open the matching tab.
+ * Case-study switcher and lazy fonts. Every study is in the HTML (readable without script); with
+ * JS one shows at a time. A hash with a study's id (#pura, #kira-fit...) opens the matching tab.
  */
 import { loadFonts } from './fonts';
 
@@ -38,13 +38,13 @@ tabs.forEach((t, i) => {
 
 const fromHash = () => {
   const id = location.hash.slice(1);
-  if (id === 'pura' || id === 'latte') {
+  if (panels.some((p) => p.dataset.cs === id)) {
     show(id);
     document.getElementById(id)?.scrollIntoView();
   }
 };
 window.addEventListener('hashchange', fromHash);
-if (location.hash === '#pura' || location.hash === '#latte') fromHash();
+if (panels.some((p) => `#${p.dataset.cs}` === location.hash)) fromHash();
 else show(panels[0]?.dataset.cs ?? 'pura');
 
 // Fonts for the visible study load when it nears the screen.
