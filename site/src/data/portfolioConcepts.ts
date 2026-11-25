@@ -345,7 +345,7 @@ export const businessSiteConcepts: PortfolioConcept[] = [
     field: 'Trades',
     shows:
       'Built on Start: services with prices, a quote form that takes a photo, how it works and the areas covered.',
-    alt: 'The Ashby Electrical concept: “Certified electricians. Fixed quotes within 24 hours.” in navy capitals on a blueprint grid, beside a quote card with a drawn fuse board and light bulb.',
+    alt: 'The Ashby Electrical concept: “Certified electricians. Fixed quotes within 24 hours.” in white and hi-vis yellow capitals on cable black, beside a quote card with a six-way fuse board wired to a lit bulb.',
     domain: 'ashby-electrical.example',
     device: 'desktop',
   },

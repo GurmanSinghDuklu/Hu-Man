@@ -984,3 +984,8 @@ under reduced motion; the default CSS state is the finished page.
    Windows build shipped the Worker with no security headers; it splits on `\r?\n` now. The contact
    intro's CSP hash (`inlineHash`, astro.config.mjs) has the same problem on Windows (motion-check
    reports it); CI and Cloudflare build on Linux, where it's fine.
+- The standalone **Ashby Electrical business concept** (`public/concepts/ashby/`) matches the same Live
+  wire look (2026-11-25): live ticker (its strip is `.tape`, since `.track` is the How-it-works list), a
+  six-way fuse board wired to a bulb in the quote card (the loop flips switches, then the wire draws),
+  cable-tag cards, job-ticket form, hazard-edged band and footer; the room and map re-coloured. Work on
+  this lives on `client-accounts` (what the live site runs), not `hu-man-rebrand`.
