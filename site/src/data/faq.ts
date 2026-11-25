@@ -180,7 +180,7 @@ export const brandFaq: FaqItem[] = [
     a: 'Ownership and file formats are confirmed in your proposal before any work starts.',
   },
   {
-    q: 'Are the 74 directions real brands?',
+    q: 'Are the 131 directions real brands?',
     a: 'No. They’re our Concept work, so you can see range. Your brand will be your own.',
   },
   {

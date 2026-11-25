@@ -1,5 +1,5 @@
 /**
- * Step 5, Typeface: all 25 display faces set in the visitor's own brand name, grouped, with the
+ * Step 5, Typeface: all 98 display faces set in the visitor's own brand name, grouped, with the
  * faces of their saved and chosen directions first, plus a body face and a hierarchy preview in
  * their colours. Fonts load only when this step is opened or nears the screen.
  */

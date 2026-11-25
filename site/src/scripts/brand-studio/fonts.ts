@@ -1,5 +1,5 @@
 /**
- * Lazy font loading for /brand/. The 25 display faces and two body faces live in
+ * Lazy font loading for /brand/. The 98 display faces and two body faces live in
  * public/brand-studio/fonts and are never in a stylesheet: each is fetched with the FontFace API
  * the first time something needs it (the type step, a mockup, the gallery viewer). font-src 'self'
  * in the page's CSP covers it.

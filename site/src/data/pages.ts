@@ -104,7 +104,7 @@ export const pages: Record<PageKey, PageInfo> = {
     path: '/brand/',
     title: 'Brand identity by people, not prompts | Hu/man',
     description:
-      'Logo, type, colour, mockups and guidelines drawn by people. Browse 74 concept directions, build a brand board, then talk it through on a free 1-hour call.',
+      'Logo, type, colour, mockups and guidelines drawn by people. Browse 131 concept directions, build a brand board, then talk it through on a free 1-hour call.',
     label: 'Brand identity',
     ogHeadline: 'Anyone can prompt a logo. Not everyone should.',
     schemaType: 'WebPage',
