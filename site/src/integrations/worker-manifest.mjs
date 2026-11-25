@@ -21,7 +21,8 @@ const root = new URL('../../', import.meta.url);
 export function siteWideHeaders(text) {
   const headers = {};
   let inBlock = false;
-  for (const line of text.split('\n')) {
+  // \r?\n: a Windows checkout has CRLF endings, and a trailing \r stopped every header matching.
+  for (const line of text.split(/\r?\n/)) {
     if (/^\S/.test(line)) {
       if (line.startsWith('#')) continue;
       inBlock = line.trim() === '/*';

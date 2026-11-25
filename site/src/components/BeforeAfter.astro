@@ -140,8 +140,8 @@ const beforeMarks: Record<number, [number | string, number | string]> = {
         <div class="ba__screen am">
           <div class="am__view">
             <div class="am__nav">
-              <span class="am__logo">
-                Ashby<b>.</b>
+              <span class="lw-logo">
+                <i class="lw-logo__mark"></i>ASHBY<small>Electrical</small>
               </span>
               <span class="am__links">
                 <span>Services</span>
@@ -152,20 +152,45 @@ const beforeMarks: Record<number, [number | string, number | string]> = {
               <span class="am__btn am__btn--sm">Get a fixed quote</span>
             </div>
             <div class="am__page" data-am-page>
+              <div class="lw-ticker">
+                <span class="lw-ticker__live">
+                  <i></i>Live
+                </span>
+                <span class="lw-ticker__run">
+                  <span class="lw-ticker__track">
+                    <span>Leeds</span>
+                    <span>Bradford</span>
+                    <span>Wakefield</span>
+                    <span>Harrogate</span>
+                    <span>Fixed quotes in 24 hours</span>
+                    <span>Leeds</span>
+                    <span>Bradford</span>
+                    <span>Wakefield</span>
+                    <span>Harrogate</span>
+                    <span>Fixed quotes in 24 hours</span>
+                  </span>
+                </span>
+              </div>
+
               <div class="am__hero" data-am-at="hero">
                 <div>
-                  <span class="am__pill" data-am-fade>
-                    Electricians in Leeds
+                  <span class="lw-kicker" data-am-fade>
+                    <b>01</b> Electricians in Leeds
                   </span>
                   <p class="am__h">
                     <span class="am__line">
-                      <span data-am-line>Certified electricians.</span>
+                      <span data-am-line>Certified</span>
+                    </span>
+                    <span class="am__line">
+                      <span data-am-line>electricians.</span>
                     </span>
                     <span class="am__line">
                       <span data-am-line>Fixed quotes</span>
                     </span>
                     <span class="am__line">
-                      <span data-am-line>within 24 hours.</span>
+                      <span data-am-line>
+                        within <span class="lw-hot">24 hours.</span>
+                      </span>
                     </span>
                   </p>
                   <p class="am__sub" data-am-fade>
@@ -174,7 +199,7 @@ const beforeMarks: Record<number, [number | string, number | string]> = {
                   </p>
                   <div class="am__ctas" data-am-fade>
                     <span class="am__btn" data-am-cta>
-                      Get a fixed quote
+                      Get a fixed quote <i class="lw-arrow"></i>
                       <span
                         class="ba__mark"
                         data-mark="3"
@@ -191,25 +216,75 @@ const beforeMarks: Record<number, [number | string, number | string]> = {
                     <li>Replies within 24 hours</li>
                   </ul>
                 </div>
+
+                <!-- The fuse board: switches flip on in turn, the wire draws, the bulb lights. -->
                 <div class="am__art">
-                  <span class="am__sun" data-am-sun></span>
-                  <span class="am__hill" data-am-hill></span>
-                  <svg class="am__bolt" viewBox="0 0 100 100">
+                  <span class="lw-board">
+                    <span class="lw-board__label">
+                      <span>Consumer unit</span>
+                      <span>6 way</span>
+                    </span>
+                    <span class="lw-board__row">
+                      <span class="lw-brk">
+                        <span class="lw-brk__t" data-lw-toggle></span>
+                        <i data-lw-led></i>
+                        <small>Lights</small>
+                      </span>
+                      <span class="lw-brk">
+                        <span class="lw-brk__t" data-lw-toggle></span>
+                        <i data-lw-led></i>
+                        <small>Sockets</small>
+                      </span>
+                      <span class="lw-brk">
+                        <span class="lw-brk__t" data-lw-toggle></span>
+                        <i data-lw-led></i>
+                        <small>Cooker</small>
+                      </span>
+                      <span class="lw-brk">
+                        <span class="lw-brk__t" data-lw-toggle></span>
+                        <i data-lw-led></i>
+                        <small>Shower</small>
+                      </span>
+                      <span class="lw-brk">
+                        <span class="lw-brk__t" data-lw-toggle></span>
+                        <i data-lw-led></i>
+                        <small>EV</small>
+                      </span>
+                      <span class="lw-brk">
+                        <span class="lw-brk__t" data-lw-toggle></span>
+                        <i data-lw-led></i>
+                        <small>Garden</small>
+                      </span>
+                    </span>
+                    <span class="lw-board__screws">
+                      <i></i>
+                      <i></i>
+                      <i></i>
+                      <i></i>
+                    </span>
+                  </span>
+                  <svg class="lw-wire" viewBox="0 0 100 32">
                     <path
                       data-am-draw
                       pathLength="1"
-                      d="M58 6 L26 54 H50 L40 94 L76 40 H52 Z"
+                      d="M22 0 V9 Q22 16 30 16 H70 Q78 16 78 23 V32"
                     ></path>
-                  </svg>
-                  <svg class="am__wires" viewBox="0 0 200 60" preserveAspectRatio="none">
                     <path
-                      data-am-draw
+                      class="lw-wire__pulse"
                       pathLength="1"
-                      d="M0 40 H40 Q52 40 56 28 T76 16 H120 Q132 16 136 28 T156 44 H200"
+                      d="M22 0 V9 Q22 16 30 16 H70 Q78 16 78 23 V32"
                     ></path>
                   </svg>
+                  <span class="lw-bulb">
+                    <span class="lw-bulb__glow" data-lw-glow></span>
+                    <span class="lw-bulb__cap"></span>
+                    <span class="lw-bulb__glass"></span>
+                  </span>
                   <span class="am__float" data-am-float>
-                    <i></i>Fixed price, no surprises
+                    <span class="lw-tag__hole"></span>
+                    <span>
+                      <small>Quote</small>Fixed price, no surprises
+                    </span>
                   </span>
                   <span class="ba__mark" data-mark="5" style="--x:90%;--y:9%;--i:5">
                     5
@@ -219,7 +294,7 @@ const beforeMarks: Record<number, [number | string, number | string]> = {
 
               <div class="am__section" data-am-at="services">
                 <p class="am__eyebrow">
-                  Services and prices
+                  <b>02</b> Services and prices
                   <span
                     class="ba__mark"
                     data-mark="4"
@@ -231,7 +306,11 @@ const beforeMarks: Record<number, [number | string, number | string]> = {
                 <p class="am__h2">Clear prices, before we start.</p>
                 <div class="am__cards">
                   <div class="am__card" data-am-card>
-                    <span class="am__ico am__ico--check"></span>
+                    <span class="lw-scan" data-lw-scan></span>
+                    <span class="lw-code">SVC / 01</span>
+                    <svg class="lw-ico" viewBox="0 0 24 24">
+                      <path d="M4 12h3l2-5 4 10 2-5h5"></path>
+                    </svg>
                     <b>Safety inspection</b>
                     <p>A full check of your wiring, with a written report.</p>
                     <span class="am__price">
@@ -239,13 +318,21 @@ const beforeMarks: Record<number, [number | string, number | string]> = {
                     </span>
                   </div>
                   <div class="am__card" data-am-card>
-                    <span class="am__ico am__ico--box"></span>
+                    <span class="lw-scan" data-lw-scan></span>
+                    <span class="lw-code">SVC / 02</span>
+                    <svg class="lw-ico" viewBox="0 0 24 24">
+                      <path d="M4 5h16v14H4zM8 9v6M12 9v6M16 9v6"></path>
+                    </svg>
                     <b>Consumer unit upgrade</b>
                     <p>A new fuse box, fitted and tested in a day.</p>
                     <span class="am__price am__price--quote">Fixed quote</span>
                   </div>
                   <div class="am__card" data-am-card>
-                    <span class="am__ico am__ico--plug"></span>
+                    <span class="lw-scan" data-lw-scan></span>
+                    <span class="lw-code">SVC / 03</span>
+                    <svg class="lw-ico" viewBox="0 0 24 24">
+                      <path d="M13 3 6 13h5l-1 8 7-10h-5z"></path>
+                    </svg>
                     <b>EV charger install</b>
                     <p>Home charging, fitted and registered for you.</p>
                     <span class="am__price">
@@ -256,12 +343,15 @@ const beforeMarks: Record<number, [number | string, number | string]> = {
               </div>
 
               <div class="am__section" data-am-at="steps">
-                <p class="am__eyebrow">How it works</p>
+                <p class="am__eyebrow">
+                  <b>03</b> How it works
+                </p>
                 <p class="am__h2">Three steps, no guesswork.</p>
                 <div class="am__track">
                   <svg class="am__path" viewBox="0 0 300 4" preserveAspectRatio="none">
                     <path data-am-draw pathLength="1" d="M0 2 H300"></path>
                   </svg>
+                  <span class="lw-pulse" data-lw-pulse></span>
                   <div class="am__step" data-am-step>
                     <span class="am__dot">1</span>
                     <b>Send a photo</b>
@@ -282,11 +372,17 @@ const beforeMarks: Record<number, [number | string, number | string]> = {
 
               <div class="am__section am__quote" data-am-at="form">
                 <div>
-                  <p class="am__eyebrow">Get a fixed quote</p>
+                  <p class="am__eyebrow">
+                    <b>04</b> Get a fixed quote
+                  </p>
                   <p class="am__h2">Three questions and a photo.</p>
                   <p class="am__sub">No call needed. We reply with one fixed price.</p>
                 </div>
                 <div class="am__form">
+                  <span class="lw-ticket">
+                    <span>Job ticket</span>
+                    <span>New</span>
+                  </span>
                   <div class="am__field">
                     <span>Name</span>
                     <span class="am__input" data-am-type="Priya Sharma">
@@ -306,10 +402,10 @@ const beforeMarks: Record<number, [number | string, number | string]> = {
                     </span>
                   </div>
                   <span class="am__chip" data-am-chip>
-                    fusebox.jpg added
+                    + fusebox.jpg added
                   </span>
                   <span class="am__btn am__send" data-am-send>
-                    Send for a quote
+                    Send for a quote <i class="lw-arrow"></i>
                   </span>
                   <span class="am__toast" data-am-toast>
                     Sent. We'll reply within 24 hours.
@@ -348,13 +444,37 @@ const beforeMarks: Record<number, [number | string, number | string]> = {
         <div class="ba__phone">
           <div class="ba__phone-screen">
             <div class="ba__phone-body" data-am-phone>
-              <span class="am__logo">
-                Ashby<b>.</b>
+              <span class="lw-logo">
+                <i class="lw-logo__mark"></i>ASHBY
               </span>
-              <span class="am__pill">Electricians in Leeds</span>
-              <p class="am__h">Certified electricians. Fixed quotes within 24 hours.</p>
+              <span class="lw-kicker">
+                <b>01</b> Electricians in Leeds
+              </span>
+              <p class="am__h">
+                Certified electricians. Fixed quotes within <span class="lw-hot">24 hours.</span>
+              </p>
               <span class="am__btn">Get a fixed quote</span>
-              <p class="am__k am__k--dark">Prices</p>
+              <span class="lw-board lw-board--mini">
+                <span class="lw-board__row">
+                  <span class="lw-brk">
+                    <span class="lw-brk__t"></span>
+                    <i></i>
+                  </span>
+                  <span class="lw-brk">
+                    <span class="lw-brk__t"></span>
+                    <i></i>
+                  </span>
+                  <span class="lw-brk">
+                    <span class="lw-brk__t"></span>
+                    <i></i>
+                  </span>
+                  <span class="lw-brk">
+                    <span class="lw-brk__t"></span>
+                    <i></i>
+                  </span>
+                </span>
+              </span>
+              <p class="am__k">Prices</p>
               <div class="am__row">
                 <b>Safety inspection</b>
                 <span>from £120</span>
@@ -367,7 +487,7 @@ const beforeMarks: Record<number, [number | string, number | string]> = {
                 <b>EV charger</b>
                 <span>from £799</span>
               </div>
-              <p class="am__k am__k--dark">How it works</p>
+              <p class="am__k">How it works</p>
               <div class="am__row">
                 <b>1 Send a photo</b>
               </div>
@@ -446,16 +566,17 @@ const beforeMarks: Record<number, [number | string, number | string]> = {
 <style>
   .ba {
     --win-radius: 14px;
-    --sample-navy: #0b2545;
-    --sample-amber: #ffb703;
-    --sample-bg: #f3f6fa;
-    /* The sample business's palette, shared by the after window and the phone. */
-    --am-navy: var(--sample-navy);
-    --am-amber: var(--sample-amber);
-    --am-mid: #1d4f8a;
-    --am-muted: #3d5470;
-    --am-line: #d5dde8;
-    --am-tint: #e2e9f3;
+    /* The sample business's "Live wire" palette, shared by the after window and the phone. */
+    --lw-black: #0e0f0d;
+    --lw-panel: #171917;
+    --lw-line: #2b2e2a;
+    --lw-grid: rgb(242 239 230 / 0.045);
+    --lw-hivis: #e4ff1a;
+    --lw-copper: #d9783f;
+    --lw-copper-hi: #f0a274;
+    --lw-paper: #f2efe6;
+    --lw-mute: #a7ada3;
+    --lw-live: #2be0c4;
     display: grid;
     gap: var(--space-4);
   }
@@ -658,7 +779,9 @@ const beforeMarks: Record<number, [number | string, number | string]> = {
     color: #444;
   }
 
-  /* ---------- after: the rebuilt site, a page that plays itself (scripts/before-after.ts) ---------- */
+  /* ---------- after: "Live wire", the rebuilt site, a page that plays itself (scripts/before-after.ts) ---------- */
+  /* Cable black, hi-vis and copper, with a fuse board for a hero. */
+  /* The default state is the finished page (switches on, wires drawn): reduced motion shows it complete. */
   /* A sketch, not a site to click through: nothing inside reacts to the pointer. */
   .ba__win--after,
   .ba__extras {
@@ -668,7 +791,7 @@ const beforeMarks: Record<number, [number | string, number | string]> = {
   .am {
     position: relative;
     aspect-ratio: 16 / 10.5;
-    background: var(--sample-bg);
+    background: var(--lw-black);
   }
 
   /* 40em across, so everything inside scales with the window. */
@@ -678,39 +801,75 @@ const beforeMarks: Record<number, [number | string, number | string]> = {
     overflow: hidden;
     font-size: 2.5cqw;
     font-family: var(--font-text);
-    color: var(--am-navy);
+    color: var(--lw-paper);
+  }
+
+  /* A faint wiring-diagram grid behind the page. */
+  .am__view::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(var(--lw-grid) 1px, transparent 1px) 0 0 / 2em 2em,
+      linear-gradient(90deg, var(--lw-grid) 1px, transparent 1px) 0 0 / 2em 2em;
   }
 
   .am__nav {
     position: absolute;
     inset: 0 0 auto;
-    z-index: 2;
+    z-index: 3;
     display: flex;
     align-items: center;
     gap: 1.2em;
     height: 3.4em;
     padding: 0 1.4em;
-    background: rgb(243 246 250 / 0.94);
-    border-bottom: 1px solid var(--am-line);
+    background: rgb(14 15 13 / 0.94);
+    border-bottom: 1px solid var(--lw-line);
   }
 
-  .am__logo {
+  .lw-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45em;
     font-family: var(--font-display);
     font-weight: 800;
-    font-size: 1.15em;
-    letter-spacing: -0.02em;
+    font-size: 1.05em;
+    letter-spacing: 0.03em;
   }
 
-  .am__logo b {
-    color: #b97f00;
+  .lw-logo small {
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-size: 0.48em;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--lw-mute);
+  }
+
+  .lw-logo__mark {
+    position: relative;
+    width: 1.15em;
+    aspect-ratio: 1;
+    background: var(--lw-hivis);
+  }
+
+  .lw-logo__mark::after {
+    content: '';
+    position: absolute;
+    inset: 16%;
+    background: var(--lw-black);
+    clip-path: polygon(58% 0, 14% 58%, 46% 58%, 38% 100%, 86% 38%, 55% 38%);
   }
 
   .am__links {
     display: flex;
     gap: 1.4em;
     margin-left: auto;
-    font-size: 0.72em;
-    font-weight: 500;
+    font-family: var(--font-mono);
+    font-size: 0.56em;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--lw-mute);
   }
 
   .am__btn {
@@ -718,63 +877,161 @@ const beforeMarks: Record<number, [number | string, number | string]> = {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 0.62em 1.15em;
-    border-radius: 99px;
-    background: var(--am-amber);
-    color: var(--am-navy);
-    font-weight: 700;
-    font-size: 0.76em;
+    gap: 0.55em;
+    padding: 0.75em 1.2em;
+    border-radius: 0.2em;
+    background: var(--lw-hivis);
+    color: var(--lw-black);
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 0.62em;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
     white-space: nowrap;
   }
 
   .am__btn--sm {
-    font-size: 0.66em;
+    font-size: 0.52em;
   }
 
   .am__btn--ghost {
     background: transparent;
-    box-shadow: inset 0 0 0 1.5px var(--am-navy);
+    color: var(--lw-paper);
+    box-shadow: inset 0 0 0 1.5px rgb(242 239 230 / 0.45);
+  }
+
+  .lw-arrow {
+    width: 0.85em;
+    height: 0.85em;
+    background: currentColor;
+    clip-path: polygon(0 42%, 56% 42%, 56% 12%, 100% 50%, 56% 88%, 56% 58%, 0 58%);
   }
 
   /* The page scrolls inside the window by a CSS variable in em, so it holds at every width. */
   .am__page {
     position: relative;
+    z-index: 1;
     padding: 3.4em 1.4em 0;
     translate: 0 calc(var(--sy, 0) * -1em);
   }
 
-  .am__hero {
-    display: grid;
-    grid-template-columns: 1.5fr 1fr;
-    gap: 1.4em;
-    align-items: center;
-    min-height: 22.85em;
-    padding: 1em 0;
+  /* ---------- the live ticker, edged with hazard tape ---------- */
+  .lw-ticker {
+    display: flex;
+    align-items: stretch;
+    height: 1.7em;
+    margin: 0 -1.4em;
+    border-bottom: 1px solid var(--lw-line);
+    background: var(--lw-panel);
   }
 
-  .am__pill {
-    display: inline-block;
-    padding: 0.4em 0.85em;
-    border-radius: 99px;
-    background: var(--am-tint);
-    font-size: 0.64em;
-    font-weight: 700;
-    letter-spacing: 0.02em;
+  .lw-ticker::before,
+  .lw-ticker::after {
+    content: '';
+    flex: none;
+    width: 1.4em;
+    background: repeating-linear-gradient(
+      -45deg,
+      var(--lw-hivis) 0 0.32em,
+      var(--lw-black) 0.32em 0.64em
+    );
+  }
+
+  .lw-ticker__live {
+    flex: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    padding: 0 0.9em;
+    border-right: 1px solid var(--lw-line);
+    color: var(--lw-hivis);
+    font-family: var(--font-mono);
+    font-size: 0.5em;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .lw-ticker__live i {
+    width: 0.6em;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--lw-live);
+  }
+
+  .lw-ticker__run {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .lw-ticker__track {
+    display: flex;
+    flex: none;
+    white-space: nowrap;
+    color: var(--lw-mute);
+    font-family: var(--font-mono);
+    font-size: 0.5em;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .lw-ticker__track span {
+    padding: 0 1.4em;
+    border-right: 1px solid var(--lw-line);
+  }
+
+  /* ---------- hero ---------- */
+  .am__hero {
+    display: grid;
+    grid-template-columns: 1.45fr 1fr;
+    gap: 1.6em;
+    align-items: center;
+    min-height: 21.15em;
+    padding: 0.8em 0;
+  }
+
+  .lw-kicker,
+  .am__eyebrow {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7em;
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 0.54em;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--lw-mute);
+  }
+
+  .lw-kicker b,
+  .am__eyebrow b {
+    padding: 0.15em 0.45em;
+    background: var(--lw-hivis);
+    color: var(--lw-black);
+    font-weight: 500;
   }
 
   .am__h {
-    margin: 0.5em 0 0.55em;
+    margin: 0.45em 0 0.5em;
     font-family: var(--font-display);
     font-weight: 800;
-    font-size: 1.95em;
-    line-height: 1.02;
-    letter-spacing: -0.025em;
+    font-size: 1.72em;
+    line-height: 0.98;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+  }
+
+  .lw-hot {
+    color: var(--lw-hivis);
   }
 
   .am__line {
     display: block;
     overflow: hidden;
-    padding-bottom: 0.06em;
+    padding-bottom: 0.05em;
   }
 
   .am__line > span {
@@ -783,28 +1040,30 @@ const beforeMarks: Record<number, [number | string, number | string]> = {
 
   .am__sub {
     margin: 0;
-    max-width: 24em;
-    font-size: 0.8em;
-    line-height: 1.45;
-    color: var(--am-muted);
+    max-width: 23em;
+    font-size: 0.72em;
+    line-height: 1.5;
+    color: var(--lw-mute);
   }
 
   .am__ctas {
     display: flex;
     gap: 0.6em;
-    margin-top: 1.1em;
+    margin-top: 1em;
   }
 
   .am__ticks {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.4em 1.2em;
-    margin: 1.2em 0 0;
+    gap: 0.4em 1.1em;
+    margin: 1.1em 0 0;
     padding: 0;
     list-style: none;
-    font-size: 0.64em;
-    font-weight: 600;
-    color: var(--am-muted);
+    font-family: var(--font-mono);
+    font-size: 0.5em;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--lw-mute);
   }
 
   .am__ticks li::before {
@@ -812,123 +1071,229 @@ const beforeMarks: Record<number, [number | string, number | string]> = {
     display: inline-block;
     width: 0.65em;
     height: 0.35em;
-    margin-right: 0.55em;
-    border-left: 2px solid var(--am-mid);
-    border-bottom: 2px solid var(--am-mid);
+    margin-right: 0.6em;
+    border-left: 2px solid var(--lw-hivis);
+    border-bottom: 2px solid var(--lw-hivis);
     rotate: -45deg;
     translate: 0 -0.2em;
   }
 
+  /* ---------- the fuse board, the wire and the bulb ---------- */
   .am__art {
     position: relative;
-    aspect-ratio: 1 / 1.05;
-    border-radius: 1.2em;
-    background: var(--am-navy);
-    overflow: hidden;
+    aspect-ratio: 1 / 1.08;
   }
 
-  .am__sun,
-  .am__hill {
-    position: absolute;
-    aspect-ratio: 1;
-    border-radius: 50%;
-  }
-
-  .am__sun {
-    right: 10%;
-    top: 10%;
-    width: 46%;
-    background: var(--am-amber);
-  }
-
-  .am__hill {
-    left: -18%;
-    bottom: -34%;
-    width: 82%;
-    background: var(--am-mid);
-  }
-
-  .am svg path {
-    fill: none;
-    stroke-dasharray: 1;
-    vector-effect: non-scaling-stroke;
-  }
-
-  .am__bolt {
-    position: absolute;
-    left: 16%;
-    top: 20%;
-    width: 40%;
-  }
-
-  .am__bolt path {
-    stroke: #fff;
-    stroke-width: 2.5;
-    stroke-linejoin: round;
-  }
-
-  .am__wires {
+  .lw-board {
     position: absolute;
     left: 0;
     right: 0;
-    bottom: 26%;
-    width: 100%;
-    height: 18%;
-  }
-
-  .am__wires path {
-    stroke: var(--am-amber);
-    stroke-width: 2;
-  }
-
-  .am__float {
-    position: absolute;
-    left: 8%;
-    bottom: 8%;
-    display: flex;
-    align-items: center;
+    top: 3%;
+    display: grid;
     gap: 0.55em;
-    padding: 0.65em 0.85em;
-    border-radius: 0.7em;
-    background: #fff;
-    font-size: 0.6em;
-    font-weight: 700;
-    box-shadow: 0 0.5em 1.4em rgb(11 37 69 / 0.28);
+    padding: 0.8em 0.8em 0.95em;
+    background: var(--lw-panel);
+    border: 1px solid var(--lw-line);
+    border-radius: 0.3em;
   }
 
-  .am__float i {
-    flex: none;
-    width: 1.5em;
+  .lw-board__label {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 0.44em;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--lw-mute);
+  }
+
+  .lw-board__row {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 0.3em;
+    padding: 0.5em 0.4em;
+    background: #090a09;
+    border-radius: 0.2em;
+    box-shadow: inset 0 0 0 1px var(--lw-line);
+  }
+
+  .lw-brk {
+    display: grid;
+    justify-items: center;
+    gap: 0.35em;
+    padding: 0.4em 0 0.3em;
+    background: #e9e6dc;
+    border-radius: 0.15em;
+  }
+
+  /* The lever sits up (on) by default; the tour drops it and flips it back up. */
+  .lw-brk__t {
+    width: 46%;
+    height: 1.05em;
+    background: var(--lw-black);
+    border-radius: 0.12em;
+    box-shadow: 0 0.18em 0 #a9a59a;
+  }
+
+  .lw-brk i {
+    width: 0.42em;
     aspect-ratio: 1;
     border-radius: 50%;
-    background: var(--am-amber) center / 55% no-repeat;
-    box-shadow:
-      inset 0 0 0 0.35em var(--am-amber),
-      inset 0 0 0 0.5em var(--am-navy);
+    background: var(--lw-hivis);
+    box-shadow: 0 0 0.5em 0 rgb(228 255 26 / 0.9);
   }
 
+  .lw-brk small {
+    font-family: var(--font-mono);
+    font-size: 0.28em;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: #2d302b;
+  }
+
+  .lw-board__screws i {
+    position: absolute;
+    width: 0.32em;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: #3a3d37;
+  }
+
+  .lw-board__screws i:nth-child(1) {
+    left: 0.3em;
+    top: 0.3em;
+  }
+
+  .lw-board__screws i:nth-child(2) {
+    right: 0.3em;
+    top: 0.3em;
+  }
+
+  .lw-board__screws i:nth-child(3) {
+    left: 0.3em;
+    bottom: 0.3em;
+  }
+
+  .lw-board__screws i:nth-child(4) {
+    right: 0.3em;
+    bottom: 0.3em;
+  }
+
+  /* Strokes scale with their drawing: non-scaling-stroke plus pathLength measured dashes in mismatched units and lines only half-drew. */
+  .am svg path {
+    fill: none;
+    stroke-dasharray: 1;
+  }
+
+  .lw-wire {
+    position: absolute;
+    left: 0;
+    top: 45%;
+    width: 100%;
+    height: 30%;
+    overflow: visible;
+  }
+
+  .lw-wire path {
+    stroke: var(--lw-copper);
+    stroke-width: 1.3;
+    stroke-linecap: round;
+  }
+
+  /* Current: a short hi-vis dash that runs along the wire while the window plays. */
+  .am svg .lw-wire__pulse {
+    stroke: var(--lw-hivis);
+    stroke-width: 1.3;
+    stroke-dasharray: 0.12 0.88;
+    stroke-dashoffset: 0.4;
+  }
+
+  .lw-bulb {
+    position: absolute;
+    left: 78%;
+    top: 75%;
+    display: grid;
+    justify-items: center;
+    translate: -50% 0;
+  }
+
+  .lw-bulb__cap {
+    width: 0.9em;
+    height: 0.6em;
+    background: var(--lw-copper);
+    border-radius: 0.1em 0.1em 0 0;
+  }
+
+  .lw-bulb__glass {
+    width: 2em;
+    aspect-ratio: 1;
+    margin-top: -0.1em;
+    border-radius: 50%;
+    background: var(--lw-hivis);
+    box-shadow: inset -0.3em -0.3em 0 rgb(14 15 13 / 0.18);
+  }
+
+  .lw-bulb__glow {
+    position: absolute;
+    left: 50%;
+    top: 1.5em;
+    z-index: -1;
+    width: 6.5em;
+    aspect-ratio: 1;
+    translate: -50% -50%;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgb(228 255 26 / 0.55), rgb(228 255 26 / 0) 65%);
+  }
+
+  /* A paper job tag, hung at an angle. */
+  .am__float {
+    position: absolute;
+    left: 0;
+    bottom: 3%;
+    display: flex;
+    align-items: center;
+    gap: 0.65em;
+    padding: 0.6em 0.9em 0.6em 0.6em;
+    border-radius: 0.2em;
+    background: var(--lw-paper);
+    color: var(--lw-black);
+    font-size: 0.56em;
+    font-weight: 700;
+    line-height: 1.2;
+    rotate: -4deg;
+  }
+
+  .am__float small {
+    display: block;
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-size: 0.75em;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #4b4f47;
+  }
+
+  .lw-tag__hole {
+    flex: none;
+    width: 0.75em;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 0.18em solid var(--lw-black);
+  }
+
+  /* ---------- sections ---------- */
   .am__section {
     padding: 2.6em 0 0.6em;
   }
 
-  .am__eyebrow {
-    position: relative;
-    display: inline-block;
-    margin: 0;
-    font-size: 0.6em;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--am-mid);
-  }
-
   .am__h2 {
-    margin: 0.35em 0 1em;
+    margin: 0.4em 0 1em;
     font-family: var(--font-display);
     font-weight: 800;
-    font-size: 1.5em;
-    line-height: 1.08;
-    letter-spacing: -0.02em;
+    font-size: 1.4em;
+    line-height: 1.04;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
   }
 
   .am__cards {
@@ -937,75 +1302,81 @@ const beforeMarks: Record<number, [number | string, number | string]> = {
     gap: 0.8em;
   }
 
+  /* Service cards look like cable tags: copper top edge, a code, and a scan line on arrival. */
   .am__card {
+    position: relative;
+    overflow: hidden;
     display: grid;
-    gap: 0.5em;
+    gap: 0.45em;
     align-content: start;
     padding: 1em;
-    border: 1px solid var(--am-line);
-    border-radius: 0.9em;
-    background: #fff;
+    border: 1px solid var(--lw-line);
+    border-top: 0.28em solid var(--lw-copper);
+    border-radius: 0.25em;
+    background: var(--lw-panel);
+  }
+
+  .lw-scan {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgb(228 255 26 / 0.24), transparent);
+    transform: translateX(-110%);
+  }
+
+  .lw-code {
+    font-family: var(--font-mono);
+    font-size: 0.46em;
+    letter-spacing: 0.18em;
+    color: var(--lw-copper-hi);
+  }
+
+  .lw-ico {
+    width: 1.6em;
+    height: 1.6em;
+  }
+
+  .am svg.lw-ico path {
+    stroke: var(--lw-hivis);
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: none;
   }
 
   .am__card b {
-    font-size: 0.8em;
+    font-size: 0.74em;
   }
 
   .am__card p {
     margin: 0;
-    font-size: 0.64em;
-    line-height: 1.4;
-    color: var(--am-muted);
-  }
-
-  .am__ico {
-    position: relative;
-    width: 2em;
-    aspect-ratio: 1;
-    border-radius: 0.6em;
-    background: var(--am-tint);
-  }
-
-  .am__ico::after {
-    content: '';
-    position: absolute;
-    inset: 28%;
-    background: var(--am-amber);
-  }
-
-  .am__ico--check::after {
-    border-radius: 50%;
-  }
-
-  .am__ico--box::after {
-    border-radius: 0.15em;
-    inset: 26% 30%;
-  }
-
-  .am__ico--plug::after {
-    clip-path: polygon(55% 0, 15% 58%, 46% 58%, 38% 100%, 85% 40%, 54% 40%);
-    inset: 18%;
+    font-size: 0.58em;
+    line-height: 1.45;
+    color: var(--lw-mute);
   }
 
   .am__price {
     margin-top: 0.2em;
     font-family: var(--font-display);
     font-weight: 800;
-    font-size: 1.2em;
+    font-size: 1.3em;
+    color: var(--lw-hivis);
   }
 
   .am__price small {
-    margin-right: 0.35em;
-    font-family: var(--font-text);
-    font-size: 0.5em;
-    font-weight: 600;
-    color: var(--am-muted);
+    margin-right: 0.4em;
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-size: 0.4em;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--lw-mute);
   }
 
   .am__price--quote {
     font-size: 0.95em;
   }
 
+  /* How it works: a copper circuit, with a pulse that travels from step to step. */
   .am__track {
     position: relative;
     display: grid;
@@ -1023,8 +1394,22 @@ const beforeMarks: Record<number, [number | string, number | string]> = {
   }
 
   .am__path path {
-    stroke: var(--am-navy);
-    stroke-width: 2;
+    stroke: var(--lw-copper);
+    stroke-width: 3;
+  }
+
+  .lw-pulse {
+    position: absolute;
+    left: calc(1em + (100% - 2em) * var(--p, 0));
+    top: 1.02em;
+    z-index: 1;
+    width: 0.75em;
+    aspect-ratio: 1;
+    translate: -50% -50%;
+    border-radius: 50%;
+    background: var(--lw-hivis);
+    box-shadow: 0 0 0.9em 0.25em rgb(228 255 26 / 0.6);
+    opacity: 0;
   }
 
   .am__step {
@@ -1036,14 +1421,17 @@ const beforeMarks: Record<number, [number | string, number | string]> = {
 
   .am__step b {
     margin-top: 0.3em;
-    font-size: 0.8em;
+    font-family: var(--font-display);
+    font-size: 0.72em;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
   }
 
   .am__step p {
     margin: 0;
-    font-size: 0.64em;
-    line-height: 1.4;
-    color: var(--am-muted);
+    font-size: 0.58em;
+    line-height: 1.45;
+    color: var(--lw-mute);
   }
 
   .am__dot {
@@ -1051,13 +1439,16 @@ const beforeMarks: Record<number, [number | string, number | string]> = {
     place-items: center;
     width: 1.8em;
     aspect-ratio: 1;
-    border-radius: 50%;
-    background: var(--am-amber);
-    box-shadow: 0 0 0 0.35em var(--sample-bg);
-    font-weight: 800;
-    font-size: 0.8em;
+    border: 2px solid var(--lw-hivis);
+    border-radius: 0.2em;
+    background: var(--lw-black);
+    color: var(--lw-hivis);
+    font-family: var(--font-mono);
+    font-size: 0.78em;
+    font-weight: 500;
   }
 
+  /* The quote form is a paper job ticket with a punched top edge. */
   .am__quote {
     display: grid;
     grid-template-columns: 1fr 1.25fr;
@@ -1066,12 +1457,40 @@ const beforeMarks: Record<number, [number | string, number | string]> = {
   }
 
   .am__form {
+    position: relative;
     display: grid;
     gap: 0.45em;
-    padding: 0.9em 1em;
-    border: 1px solid var(--am-line);
-    border-radius: 1em;
-    background: #fff;
+    padding: 1.1em 1em 1em;
+    border-radius: 0.25em;
+    background: var(--lw-paper);
+    color: var(--lw-black);
+  }
+
+  .am__form::before {
+    content: '';
+    position: absolute;
+    inset: -0.35em 0.4em auto;
+    height: 0.7em;
+    background: radial-gradient(circle, var(--lw-black) 0.22em, transparent 0.25em) 0 50% / 0.9em
+      100% repeat-x;
+  }
+
+  .lw-ticket {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 0.55em;
+    border-bottom: 1.5px dashed rgb(14 15 13 / 0.35);
+    font-family: var(--font-mono);
+    font-size: 0.48em;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .lw-ticket span:last-child {
+    padding: 0.1em 0.5em;
+    background: var(--lw-black);
+    color: var(--lw-hivis);
   }
 
   .am__field {
@@ -1080,28 +1499,42 @@ const beforeMarks: Record<number, [number | string, number | string]> = {
   }
 
   .am__field > span:first-child {
-    font-size: 0.56em;
-    font-weight: 700;
-    letter-spacing: 0.08em;
+    font-family: var(--font-mono);
+    font-size: 0.48em;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--am-muted);
+    color: #474a43;
   }
 
   .am__input {
-    min-height: 2.2em;
+    min-height: 2.1em;
     padding: 0.45em 0.7em;
-    border: 1px solid #b8c4d4;
-    border-radius: 0.5em;
-    font-size: 0.72em;
+    border: 1.5px solid var(--lw-black);
+    border-radius: 0.15em;
+    background: #fff;
+    font-size: 0.68em;
+  }
+
+  /* A typing caret after the text. */
+  .am__input::after {
+    content: '';
+    display: inline-block;
+    width: 0.09em;
+    height: 1em;
+    margin-left: 0.12em;
+    background: var(--lw-black);
+    vertical-align: -0.12em;
   }
 
   .am__chip {
     justify-self: start;
-    padding: 0.4em 0.8em;
-    border-radius: 99px;
-    background: var(--am-tint);
-    font-size: 0.62em;
-    font-weight: 700;
+    padding: 0.35em 0.7em;
+    border-radius: 0.15em;
+    background: var(--lw-black);
+    color: var(--lw-hivis);
+    font-family: var(--font-mono);
+    font-size: 0.52em;
+    letter-spacing: 0.06em;
   }
 
   .am__send {
@@ -1109,41 +1542,53 @@ const beforeMarks: Record<number, [number | string, number | string]> = {
   }
 
   .am__toast {
-    padding: 0.6em 0.8em;
-    border-radius: 0.6em;
-    background: #e3f2e7;
-    color: #14532d;
-    font-size: 0.64em;
-    font-weight: 700;
+    padding: 0.55em 0.8em;
+    border-radius: 0.15em;
+    background: var(--lw-black);
+    color: var(--lw-live);
+    font-family: var(--font-mono);
+    font-size: 0.54em;
+    letter-spacing: 0.04em;
   }
 
+  /* The footer is edged with hazard tape. */
   .am__foot {
+    position: relative;
     display: grid;
     grid-template-columns: 1.4fr 1fr 1fr;
     gap: 1.2em;
     margin: 2.6em -1.4em 0;
-    padding: 1.8em 1.4em 2.2em;
-    background: var(--am-navy);
-    color: var(--sample-bg);
+    padding: 2.3em 1.4em 2.2em;
+    background: var(--lw-panel);
+    color: var(--lw-paper);
+  }
+
+  .am__foot::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto;
+    height: 0.7em;
+    background: repeating-linear-gradient(
+      -45deg,
+      var(--lw-hivis) 0 0.5em,
+      var(--lw-black) 0.5em 1em
+    );
   }
 
   .am__foot p {
     margin: 0;
-    font-size: 0.72em;
-    line-height: 1.4;
+    font-size: 0.66em;
+    line-height: 1.45;
   }
 
   .am__k {
     margin: 0 0 0.6em !important;
-    font-size: 0.56em !important;
-    font-weight: 700;
-    letter-spacing: 0.12em;
+    font-family: var(--font-mono);
+    font-size: 0.48em !important;
+    font-weight: 500;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--am-amber);
-  }
-
-  .am__k--dark {
-    color: var(--am-mid);
+    color: var(--lw-hivis);
   }
 
   .am__chips {
@@ -1154,9 +1599,76 @@ const beforeMarks: Record<number, [number | string, number | string]> = {
 
   .am__chips span {
     padding: 0.3em 0.7em;
-    border: 1px solid rgb(243 246 250 / 0.45);
-    border-radius: 99px;
-    font-size: 0.64em;
+    border: 1px solid rgb(242 239 230 / 0.4);
+    border-radius: 0.15em;
+    font-family: var(--font-mono);
+    font-size: 0.54em;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* ---------- loops that run only while the window plays (and never under reduced motion) ---------- */
+  @media (prefers-reduced-motion: no-preference) {
+    .ba__col--after[data-am-play] .lw-ticker__track {
+      animation: lw-ticker 18s linear infinite;
+    }
+
+    .ba__col--after[data-am-play] .lw-ticker__live i {
+      animation: lw-blink 1.1s steps(1) infinite;
+    }
+
+    .ba__col--after[data-am-play] .am__view .lw-hot {
+      animation: lw-flicker 6s steps(1) infinite;
+    }
+
+    .ba__col--after[data-am-play] .lw-wire__pulse {
+      animation: lw-current 1.4s linear infinite;
+    }
+
+    .ba__col--after[data-am-play] .am__input::after {
+      animation: lw-blink 1s steps(1) infinite;
+    }
+  }
+
+  @keyframes lw-ticker {
+    to {
+      translate: -50% 0;
+    }
+  }
+
+  @keyframes lw-blink {
+    50% {
+      opacity: 0;
+    }
+  }
+
+  /* A tube light catching: two quick stutters, then steady. */
+  @keyframes lw-flicker {
+    0% {
+      opacity: 1;
+    }
+    3% {
+      opacity: 0.25;
+    }
+    4% {
+      opacity: 1;
+    }
+    6% {
+      opacity: 0.4;
+    }
+    7%,
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes lw-current {
+    from {
+      stroke-dashoffset: 1;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
   }
 
   /* ---------- phone view: the same site laid out for a phone, scrolling through it ---------- */
@@ -1183,7 +1695,7 @@ const beforeMarks: Record<number, [number | string, number | string]> = {
     aspect-ratio: 9 / 16;
     overflow: hidden;
     border-radius: 16px;
-    background: var(--sample-bg);
+    background: var(--lw-black);
   }
 
   .ba__phone-body {
@@ -1191,27 +1703,44 @@ const beforeMarks: Record<number, [number | string, number | string]> = {
     gap: 0.6em;
     align-content: start;
     padding: 1.1em 0.9em 1.4em;
-    color: var(--sample-navy);
+    color: var(--lw-paper);
     font-family: var(--font-text);
     font-size: 6.5cqw;
   }
 
-  .ba__phone-body .am__h {
-    margin: 0;
-    font-size: 1.35em;
+  .ba__phone-body .lw-logo {
+    font-size: 1em;
   }
 
-  .ba__phone-body .am__pill,
+  .ba__phone-body .am__h {
+    margin: 0;
+    font-size: 1.25em;
+  }
+
+  .ba__phone-body .lw-kicker,
   .ba__phone-body .am__btn {
     justify-self: start;
   }
 
+  .ba__phone-body .lw-kicker {
+    font-size: 0.6em;
+  }
+
   .ba__phone-body .am__btn {
-    font-size: 0.85em;
+    font-size: 0.72em;
   }
 
   .ba__phone-body .am__k {
     margin: 0.4em 0 0 !important;
+  }
+
+  .lw-board--mini {
+    position: static;
+    padding: 0.45em;
+  }
+
+  .lw-board--mini .lw-board__row {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
   .am__row {
@@ -1219,9 +1748,16 @@ const beforeMarks: Record<number, [number | string, number | string]> = {
     justify-content: space-between;
     gap: 0.5em;
     padding: 0.55em 0.6em;
-    border-radius: 0.5em;
-    background: #fff;
-    font-size: 0.78em;
+    border: 1px solid var(--lw-line);
+    border-left: 0.2em solid var(--lw-copper);
+    border-radius: 0.2em;
+    background: var(--lw-panel);
+    font-size: 0.72em;
+  }
+
+  .am__row span {
+    color: var(--lw-hivis);
+    font-family: var(--font-mono);
   }
 
   /* While the after window plays, the phone scrolls through its page too, pausing at each part. */
@@ -1310,7 +1846,7 @@ const beforeMarks: Record<number, [number | string, number | string]> = {
   .ba__col--after[data-am-on='services'] .ba__row[data-am-row='services'],
   .ba__col--after[data-am-on='form'] .ba__row[data-am-row='form'],
   .ba__col--after[data-am-on='foot'] .ba__row[data-am-row='foot'] {
-    background: rgb(255 183 3 / 0.16);
+    background: rgb(228 255 26 / 0.14);
     color: var(--paper);
   }
 
@@ -1318,7 +1854,7 @@ const beforeMarks: Record<number, [number | string, number | string]> = {
   .ba__col--after[data-am-on='services'] .ba__row[data-am-row='services'] dt,
   .ba__col--after[data-am-on='form'] .ba__row[data-am-row='form'] dt,
   .ba__col--after[data-am-on='foot'] .ba__row[data-am-row='foot'] dt {
-    color: var(--sample-amber);
+    color: var(--lw-hivis);
   }
 
   /* ---------- markers ---------- */

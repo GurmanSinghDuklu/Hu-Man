@@ -184,19 +184,37 @@ function buildTour(
     { autoAlpha: 1, y: 0, duration: 0.6, stagger: 0.1 },
     'hero+=0.45',
   );
+  // The fuse board: each switch drops and flips back on in turn, and its light comes on.
   tl.fromTo(
-    one('[data-am-sun]'),
-    { scale: 0 },
-    { scale: 1, duration: 0.9, ease: 'back.out(1.6)' },
-    'hero+=0.2',
+    q('[data-lw-toggle]'),
+    { y: '0.55em' },
+    { y: 0, duration: 0.16, stagger: 0.13, ease: 'back.out(3)' },
+    'hero+=0.25',
   );
-  tl.fromTo(one('[data-am-hill]'), { yPercent: 40 }, { yPercent: 0, duration: 1 }, 'hero+=0.1');
-  draw(q('.am__art [data-am-draw]'), 1.1, 'hero+=0.5');
+  tl.fromTo(
+    q('[data-lw-led]'),
+    { backgroundColor: '#3a3d36', boxShadow: '0 0 0em 0em rgba(228,255,26,0)' },
+    {
+      backgroundColor: '#e4ff1a',
+      boxShadow: '0 0 0.5em 0em rgba(228,255,26,0.9)',
+      duration: 0.08,
+      stagger: 0.13,
+    },
+    'hero+=0.33',
+  );
+  // Then the wire draws down to the bulb, which lights.
+  draw(q('.am__art [data-am-draw]'), 0.9, 'hero+=1.05');
+  tl.fromTo(
+    one('[data-lw-glow]'),
+    { autoAlpha: 0, scale: 0.4 },
+    { autoAlpha: 1, scale: 1, duration: 0.5, ease: 'power2.out' },
+    'hero+=1.85',
+  );
   tl.fromTo(
     one('[data-am-float]'),
-    { autoAlpha: 0, y: '1em', scale: 0.9 },
-    { autoAlpha: 1, y: 0, scale: 1, duration: 0.6, ease: 'back.out(2)' },
-    'hero+=1.1',
+    { autoAlpha: 0, y: '1em', rotate: 8 },
+    { autoAlpha: 1, y: 0, rotate: -4, duration: 0.7, ease: 'back.out(2)' },
+    'hero+=1.6',
   );
   tl.addLabel('hero-done');
   // The quote button gives a nudge: this is the next step.
@@ -214,6 +232,13 @@ function buildTour(
     { autoAlpha: 1, y: 0, duration: 0.6, stagger: 0.12 },
     'services',
   );
+  // A scan line sweeps across each card as it lands.
+  tl.fromTo(
+    q('[data-lw-scan]'),
+    { xPercent: -110 },
+    { xPercent: 110, duration: 0.8, stagger: 0.12, ease: 'power2.inOut' },
+    'services+=0.15',
+  );
   q('[data-am-count]').forEach((el, i) => count(el, `services+=${0.25 + i * 0.24}`));
   tl.addLabel('services-done', 'services+=1.2');
   hold(1.8);
@@ -222,6 +247,14 @@ function buildTour(
   scrollTo('steps');
   tl.addLabel('steps', '-=0.3');
   draw(q('.am__track [data-am-draw]'), 1.2, 'steps');
+  // A pulse of current travels along the line from step to step.
+  tl.fromTo(
+    one('[data-lw-pulse]'),
+    { autoAlpha: 1, '--p': 0 },
+    { '--p': 1, duration: 1.2, ease: 'power2.inOut' },
+    'steps',
+  );
+  tl.to(one('[data-lw-pulse]'), { autoAlpha: 0, duration: 0.3 }, 'steps+=1.3');
   tl.fromTo(
     q('[data-am-step]'),
     { autoAlpha: 0, y: '1em' },

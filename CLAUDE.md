@@ -967,3 +967,20 @@ Mandeep's direction. The request form left /portfolio for its own page, **/portf
    Buttons show only when both of a provider's secrets are set (docs/10-launch.md); none are set yet.
 4. Concepts: Bradford/Wakefield became Birmingham, Leicester and Nottingham (Ashby stays in Leeds with
    Huddersfield and York; Spice Route is now in Nottingham, so it's off the Leeds city page).
+## Before and after: "Live wire" look (2026-11-25)
+The after window's sample electrician was restyled from navy/yellow-sun shapes (read as generic, AI-made)
+to "Live wire" (Gurman's pick of three directions): cable black `--lw-black`, hi-vis `--lw-hivis`
+#E4FF1A and copper, mono spec labels, uppercase headlines. Same copy, prices and markers. Hero is a
+six-way fuse board: switches flip on in turn and their lights come on, a copper wire draws down to a
+bulb that lights, current pulses along it, "24 hours." flickers like a tube light; a hazard-taped
+"Live" ticker under the nav; cable-tag service cards with a scan line; a copper circuit with a
+travelling pulse for the steps; the quote form as a punched job ticket with a typing caret; a
+hazard-stripe footer. The phone and data panel match. Loops run only while `[data-am-play]` and never
+under reduced motion; the default CSS state is the finished page.
+1. **No `vector-effect: non-scaling-stroke` with `pathLength`**: browsers measured the dashes in
+   mismatched units and lines only half-drew. Drawings scale evenly instead (the wire's viewBox matches
+   its box: `0 0 100 32`).
+2. **Windows line endings**: `siteWideHeaders()` (worker-manifest.mjs) split `_headers` on `\n`, so a
+   Windows build shipped the Worker with no security headers; it splits on `\r?\n` now. The contact
+   intro's CSP hash (`inlineHash`, astro.config.mjs) has the same problem on Windows (motion-check
+   reports it); CI and Cloudflare build on Linux, where it's fine.
