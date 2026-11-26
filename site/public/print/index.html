@@ -278,7 +278,7 @@ function show(seedNum,name,mv,shared){
  const steady= mv==null?'—': mv<2?'Suspiciously steady (robot?)': mv<40?'Steady hand':'Wobbly, very human';
  $('idnum').textContent='Human #'+info.id;
  $('verified').textContent=shared?(name?name+"'s print":'A human print'):(name?'Verified human · '+name:'Verified human');
- $('traits').innerHTML=`<span>${info.type}</span><span>${info.ridges} ridges</span><span>${steady}</span>`;
+ $('traits').innerHTML=`<span>${info.type}</span><span>${info.ridges} ridges</span>`+(mv==null?'':`<span>${steady}</span>`);
  $('status').textContent=shared?'Shared print':'✓ Match: 0 of 8,100,000,000';
  ui.classList.add('res');layout();
  if(shared){$('again').textContent='Get my own';}
