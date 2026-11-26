@@ -39,7 +39,7 @@ const logoSvg = (box?: string, label = false) => {
   let out = rawLogo;
   if (box) out = out.replace(/viewBox="[^"]+"/, `viewBox="${box}"`);
   // A logomark crop shows only the mark's own paths when the logo file tags them (Latte's mug).
-  if (box && out.includes('data-mark')) out = out.replace(/<path data-word[^>]*\/>/, '');
+  if (box && out.includes('data-mark')) out = out.replace(/<path data-word[^>]*\/>/g, '');
   if (!label)
     out = out.replace(/ role="img" aria-label="[^"]*"/, ' aria-hidden="true" focusable="false"');
   return out;
@@ -49,6 +49,8 @@ const [, , logoW, logoH] = (rawLogo.match(/viewBox="([^"]+)"/)?.[1] ?? '0 0 1000
   .map(Number);
 const logoInner = rawLogo.replace(/^<svg[^>]*>/, '').replace(/<\/svg>\s*$/, '');
 const [, , mw, mh] = s.markBox.split(' ').map(Number);
+// A tall mark (Chancery's stacked C over H) is sized by height so it stays inside the icon tile.
+const iconMarkStyle = `aspect-ratio:${mw}/${mh}${mh > mw ? `;width:${((88 * mw) / mh).toFixed(1)}%` : ''}`;
 
 const P = s.roles;
 const swatches = s.palette.map((c) => {
@@ -90,7 +92,7 @@ const head = `${s.id}-title`;
     <Image
       src={coverMeta}
       alt=""
-      widths={[900, 1400, 2000]}
+      widths={[1000, 1600, 2400]}
       sizes="100vw"
       format="webp"
       loading="lazy"
@@ -144,25 +146,13 @@ const head = `${s.id}-title`;
       <figure class="cs-fill cs-fill--dark cs-icons">
         <div class="cs-icons__row">
           <span class="cs-icon cs-icon--l" aria-hidden="true">
-            <span
-              class="cs-mark"
-              style={`aspect-ratio:${mw}/${mh}`}
-              set:html={logoSvg(s.markBox)}
-            />
+            <span class="cs-mark" style={iconMarkStyle} set:html={logoSvg(s.markBox)} />
           </span>
           <span class="cs-icon cs-icon--m" aria-hidden="true">
-            <span
-              class="cs-mark"
-              style={`aspect-ratio:${mw}/${mh}`}
-              set:html={logoSvg(s.markBox)}
-            />
+            <span class="cs-mark" style={iconMarkStyle} set:html={logoSvg(s.markBox)} />
           </span>
           <span class="cs-icon cs-icon--s" aria-hidden="true">
-            <span
-              class="cs-mark"
-              style={`aspect-ratio:${mw}/${mh}`}
-              set:html={logoSvg(s.markBox)}
-            />
+            <span class="cs-mark" style={iconMarkStyle} set:html={logoSvg(s.markBox)} />
           </span>
         </div>
         <div class="cs-tab" aria-hidden="true">
@@ -480,7 +470,7 @@ const head = `${s.id}-title`;
               <Image
                 src={photo(p.photo)}
                 alt=""
-                widths={[360, 540]}
+                widths={[480, 800]}
                 sizes="(min-width: 64rem) 28vw, 90vw"
                 format="webp"
                 loading="lazy"
@@ -502,7 +492,7 @@ const head = `${s.id}-title`;
           <Image
             src={photo(s.cover.photo)}
             alt=""
-            widths={[600, 900]}
+            widths={[700, 1100, 1600]}
             sizes="50vw"
             format="webp"
             loading="lazy"
@@ -532,7 +522,7 @@ const head = `${s.id}-title`;
               <Image
                 src={m.meta}
                 alt={`${s.name} ${m.caption.toLowerCase()} mockup`}
-                widths={[360, 540, 800]}
+                widths={[480, 800, 1200]}
                 sizes="(min-width: 64rem) 28vw, 46vw"
                 format="webp"
                 loading="lazy"
