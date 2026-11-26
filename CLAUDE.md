@@ -964,9 +964,14 @@ Mandeep's direction. The request form left /portfolio for its own page, **/portf
    Microsoft personal tenant or `xms_edov`), otherwise our 6-digit code first. Linking to a
    never-confirmed account drops its password. The panel opens the provider in a small window and
    `/auth/done/` reports back on a BroadcastChannel (the site's COOP header cuts `window.opener`).
-   Buttons show only when both of a provider's secrets are set (docs/10-launch.md); none are set yet.
+   Both buttons always show (two-column sign-in card, 2026-11-24); one whose two secrets aren't set
+   says "being switched on soon" when clicked. Live on 2026-11-26: Google's set, Microsoft's not.
 4. Concepts: Bradford/Wakefield became Birmingham, Leicester and Nottingham (Ashby stays in Leeds with
    Huddersfield and York; Spice Route is now in Nottingham, so it's off the Leeds city page).
+5. **The header asks `/api/auth/session`** (200 either way, user or null), not `/api/account/me`
+   (401 when signed out logged a console error on every page). `scripts/serve.mjs` answers it with
+   user null so motion-check, axe and Lighthouse see what a signed-out visitor sees.
+
 ## Before and after: "Live wire" look (2026-11-25)
 The after window's sample electrician was restyled from navy/yellow-sun shapes (read as generic, AI-made)
 to "Live wire" (Gurman's pick of three directions): cable black `--lw-black`, hi-vis `--lw-hivis`

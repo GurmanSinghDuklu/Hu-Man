@@ -105,7 +105,7 @@ export const portfolioConcepts: PortfolioConcept[] = [
     field: 'Tech',
     shows:
       'A spreadsheet-style CV: a cell cursor that walks the cover, a ring chart that draws and cards that stack as you scroll.',
-    alt: 'The Nadia Kerr example portfolio: .ANAL-YSIS in heavy black letters on a graph-paper grid with electric blue and mint panels.',
+    alt: 'The Nadia Kerr example portfolio: ANALYSIS in heavy black letters on a graph-paper grid with electric blue and mint panels.',
     domain: 'nadiakerr.example',
     device: 'desktop',
   },

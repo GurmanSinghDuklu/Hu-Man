@@ -27,6 +27,13 @@ export function startServer(distDir, port) {
   const server = createServer(async (req, res) => {
     try {
       let urlPath = decodeURIComponent(req.url.split('?')[0]);
+      // The Worker's answer for a signed-out visitor (the header asks on every page), so test
+      // runs see what real visitors see rather than a 404 console error.
+      if (urlPath === '/api/auth/session') {
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end('{"ok":true,"user":null}');
+        return;
+      }
       if (urlPath === '/') urlPath = '/index.html';
       let filePath = join(distDir, urlPath);
 

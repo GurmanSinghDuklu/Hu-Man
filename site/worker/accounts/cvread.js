@@ -115,7 +115,9 @@ export async function readCv(request, env, user) {
     const [converted] = await env.AI.toMarkdown([{ name, blob: new Blob([bytes], { type }) }]);
     text = String(converted?.data ?? '').slice(0, MAX_TEXT);
   } catch (error) {
+    // Cloudflare couldn't convert it (the service, not the file): don't blame the file.
     console.error('CV toMarkdown failed', error instanceof Error ? error.message : error);
+    return fail(502, 'We couldn’t read that CV just now. You can still fill the form in yourself.');
   }
   if (!text?.trim()) {
     return fail(

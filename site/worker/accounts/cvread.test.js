@@ -91,6 +91,13 @@ test('a file with no text, or an AI hiccup, says so kindly', async () => {
   env.AI.toMarkdown = async () => [{ data: '   ' }];
   const cookie = await loggedIn(env, 'a@example.co.uk');
   assert.equal((await read(env, cookie)).status, 422);
+  // The converter failing is our problem, not the file's: no "scanned image" message.
+  env.AI.toMarkdown = async () => {
+    throw new Error('converter down');
+  };
+  const down = await read(env, cookie);
+  assert.equal(down.status, 502);
+  assert.doesNotMatch((await down.json()).error, /scanned/);
   env.AI.toMarkdown = async () => [{ data: 'text' }];
   env.AI.run = async () => {
     throw new Error('model down');

@@ -9,7 +9,7 @@
  * 404, never 403, so ids can't be probed. Free of Cloudflare-only imports, so it runs in Node tests;
  * the email class comes in on env.EmailMessage (worker/index.js sets it).
  */
-import { fail, notFound, sameOrigin, getSession, notFoundPage } from './http.js';
+import { json, fail, notFound, sameOrigin, getSession, notFoundPage } from './http.js';
 import { setupInfo, setup, login, logout, signup, verify, resendCode, forgot } from './auth.js';
 import { me, deleteMe } from './account.js';
 import { saveRequest, getRequest, sendRequest, updateRequest } from './requests.js';
@@ -75,6 +75,14 @@ export async function handleAccounts(request, env) {
   }
 
   const session = await getSession(request, env);
+  // The header's Sign in link asks this on every page. Signed out is a normal answer here (200,
+  // user null), not a 401, so visitors' consoles stay free of errors.
+  if (path === '/api/auth/session' && method === 'GET') {
+    return json({
+      ok: true,
+      user: session ? { name: session.user.name, role: session.user.role } : null,
+    });
+  }
   // The admin API, like the admin pages, doesn't admit to existing for anyone but an admin.
   if (!session) return path.startsWith('/api/admin/') ? notFound() : fail(401, 'Please log in.');
   const { user } = session;

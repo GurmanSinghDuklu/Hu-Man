@@ -103,6 +103,24 @@ test('logout ends the session and clears the cookie', async () => {
   assert.equal((await call(env, 'GET', '/api/account/me', { cookie })).status, 401);
 });
 
+test('the header’s session check is 200 either way: the user when signed in, null when not', async () => {
+  const env = makeEnv();
+  const out = await call(env, 'GET', '/api/auth/session');
+  assert.equal(out.status, 200);
+  assert.deepEqual(await out.json(), { ok: true, user: null });
+
+  const { token } = await invited(env);
+  const res = await call(env, 'POST', '/api/auth/setup', {
+    body: { token, name: 'Sam Patel', password: 'a long enough password' },
+  });
+  const signedIn = await call(env, 'GET', '/api/auth/session', { cookie: cookieFrom(res) });
+  assert.equal(signedIn.status, 200);
+  const body = await signedIn.json();
+  assert.deepEqual(body.user, { name: 'Sam Patel', role: 'client' });
+  assert.equal(body.user.email, undefined, 'no email on every page');
+  assert.equal(signedIn.headers.get('Cache-Control'), 'no-store');
+});
+
 test('changes need our own Origin; reads without a session are 401', async () => {
   const env = makeEnv();
   const { token } = await invited(env);

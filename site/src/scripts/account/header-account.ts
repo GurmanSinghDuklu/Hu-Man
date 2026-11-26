@@ -11,10 +11,13 @@ interface Me {
   user: { name: string; role: 'client' | 'admin' };
 }
 
+/** /api/auth/session answers 200 with user null when signed out, so no console error. */
 async function who(): Promise<Me | null> {
   try {
-    const res = await fetch(`${BASE}/api/account/me`, { credentials: 'same-origin' });
-    return res.ok ? ((await res.json()) as Me) : null;
+    const res = await fetch(`${BASE}/api/auth/session`, { credentials: 'same-origin' });
+    if (!res.ok) return null;
+    const data = (await res.json()) as { user: Me['user'] | null };
+    return data.user ? { user: data.user } : null;
   } catch {
     return null;
   }

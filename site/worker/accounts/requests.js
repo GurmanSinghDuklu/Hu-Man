@@ -174,7 +174,7 @@ export async function sendRequest(request, url, env, user, now = Date.now()) {
       message: answers.summary || answers.jobTitle,
       topic: 'website',
     },
-    '/contact/',
+    '/portfolio/start/',
     now,
   );
   await env.DB.prepare('UPDATE enquiries SET user_id = ? WHERE id = ?')

@@ -565,7 +565,11 @@ async function start() {
   }
   showRoute();
 
-  const me = await api<{ user: { name: string; email: string } }>('/api/account/me');
+  // Ask the quiet session check first, so a signed-out visitor's console shows no 401.
+  const session = await api<{ user: unknown }>('/api/auth/session');
+  const me = session.data.user
+    ? await api<{ user: { name: string; email: string } }>('/api/account/me')
+    : { status: 401, data: { user: { name: '', email: '' } } };
   loggedIn = me.status === 200;
   if (loggedIn) {
     const [first, ...rest] = me.data.user.name.split(' ');
