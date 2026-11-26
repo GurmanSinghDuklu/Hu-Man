@@ -37,7 +37,11 @@ const isConcept = (f) => f.startsWith('concepts/');
 const conceptFiles = files.filter((f) => isConcept(f) && f.endsWith('.html'));
 // The Brand Board's sign-in landing page (public/studio/) is standalone too: noindex, no inline script.
 const isStudio = (f) => f.startsWith('studio/');
-const htmlFiles = files.filter((f) => f.endsWith('.html') && !isConcept(f) && !isStudio(f));
+// Proof of Human (public/print/): a standalone campaign toy with its own inline script; noindex.
+const isPrint = (f) => f.startsWith('print/');
+const htmlFiles = files.filter(
+  (f) => f.endsWith('.html') && !isConcept(f) && !isStudio(f) && !isPrint(f),
+);
 const html = Object.fromEntries(
   await Promise.all(htmlFiles.map(async (f) => [f, await readFile(`${dist}${f}`, 'utf8')])),
 );
@@ -291,6 +295,14 @@ for (const f of files.filter((x) => isStudio(x) && x.endsWith('.html'))) {
   if (!/<meta name="robots" content="noindex,nofollow"/.test(doc)) fail(f, 'not noindex,nofollow');
   if (/<script(?![^>]*\bsrc=)[^>]*>/.test(doc)) fail(f, 'has an inline script');
   if (!fileSet.has('studio/signed-in/signed-in.js')) fail(f, 'signed-in.js is missing');
+}
+
+// Proof of Human: noindex, a canonical, and its share image present.
+for (const f of files.filter((x) => isPrint(x) && x.endsWith('.html'))) {
+  const doc = await readFile(`${dist}${f}`, 'utf8');
+  if (!/<meta name="robots" content="noindex,follow">/.test(doc)) fail(f, 'not noindex,follow');
+  if (!/<link rel="canonical" href="[^"]+\/print\/">/.test(doc)) fail(f, 'no canonical');
+  if (!fileSet.has('print/og.png')) fail(f, 'print/og.png is missing');
 }
 
 // Sitemap: exactly the indexable pages.

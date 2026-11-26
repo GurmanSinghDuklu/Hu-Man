@@ -1,0 +1,64 @@
+---
+/**
+ * #non-human: the agency's louder side, at the foot of /brand. Street posters, Indian kitsch and
+ * streetwear concepts for clients who want something less polished. New pieces are added over time.
+ */
+import { Image } from 'astro:assets';
+import BookingLink from '../BookingLink.astro';
+import chaiPortrait from '../../assets/brand-studio/nonhuman/chai-is-tea-portrait.jpg';
+import chaiStreet from '../../assets/brand-studio/nonhuman/chai-is-tea-street.jpg';
+import tee from '../../assets/brand-studio/nonhuman/human-not-found-tee.jpg';
+
+const pieces = [
+  {
+    src: chaiPortrait,
+    alt: 'A 1970s Bollywood-style kitsch poster: a painted woman holding a cup of chai inside floral borders, with the Hindi word for tea and the line Chai is tea.',
+    caption: 'Chai is tea · Indian kitsch poster',
+  },
+  {
+    src: chaiStreet,
+    alt: 'A truck-art street poster pasted on a weathered wall: a steel kettle pouring chai, marigolds and the line Chai is tea.',
+    caption: 'Chai is tea · street paste-up',
+  },
+  {
+    src: tee,
+    alt: 'The back of an oversized black streetwear tee with a dense manga, CAPTCHA, 404 and barcode graphic.',
+    caption: 'Human not found · streetwear concept',
+  },
+];
+---
+
+<section id="non-human" class="band band--ink bs-nh" aria-labelledby="nh-title">
+  <div class="sheet">
+    <p class="label" data-reveal>
+      Another side · NON/HUMAN
+    </p>
+    <h2 id="nh-title" class="display display--s" data-reveal="lines">
+      NON/HUMAN. For when clean isn't the brief.
+    </h2>
+    <p class="bs-nh__text">
+      Street posters, Indian kitsch, grain, ultraviolet and streetwear. Same humans, a louder brief.
+      If your brand needs edge more than polish, this is where we play. New work lands here over the
+      coming weeks.
+    </p>
+    <ul class="bs-nh__grid">
+      {pieces.map((p, i) => (
+        <li data-rise={i % 2}>
+          <figure>
+            <Image
+              src={p.src}
+              alt={p.alt}
+              widths={[480, 800, 1200]}
+              sizes="(min-width: 900px) 30vw, 90vw"
+              loading="lazy"
+            />
+            <figcaption>{p.caption}</figcaption>
+          </figure>
+        </li>
+      ))}
+    </ul>
+    <div class="bs-nh__cta">
+      <BookingLink class="btn btn--display" label="Ask for something different" />
+    </div>
+  </div>
+</section>

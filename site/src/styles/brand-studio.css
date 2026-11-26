@@ -2501,3 +2501,39 @@
 .cs-swatch__small--chip {
   padding: 0.6rem 0.7rem;
 }
+
+/* NON/HUMAN: the louder side, at the foot of /brand */
+.bs-nh__text {
+  max-width: 60ch;
+  margin-top: 1rem;
+}
+.bs-nh__grid {
+  list-style: none;
+  padding: 0;
+  margin: 2.5rem 0 0;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+}
+.bs-nh__grid figure {
+  margin: 0;
+}
+.bs-nh__grid img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  display: block;
+  border-radius: 6px;
+}
+.bs-nh__grid figcaption {
+  margin-top: 0.6rem;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+.bs-nh__cta {
+  margin-top: 2rem;
+}
