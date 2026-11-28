@@ -41,6 +41,10 @@ const { label, lens, longWords = false, as: Title = 'h1', video, intro = false }
       <div class="ihero__media">
         <HeroVideo video={video} intro={intro} />
       </div>
+    ) : Astro.slots.has('media') ? (
+      <div class="ihero__collage ihero__collage--custom">
+        <slot name="media" />
+      </div>
     ) : (
       <div class="ihero__collage">
         <Collage variant="inner" lens={lens} />

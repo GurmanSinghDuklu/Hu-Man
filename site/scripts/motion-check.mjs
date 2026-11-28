@@ -10,7 +10,7 @@ import { fileURLToPath } from 'node:url';
 import { startServer } from './serve.mjs';
 
 const PORT = 4393;
-const PAGES = ['', 'services/', 'pricing/', 'about/', 'contact/', 'terms/'];
+const PAGES = ['', 'services/', 'pricing/', 'about/', 'contact/', 'terms/', 'brand/'];
 // fileURLToPath, not URL.pathname: on Windows .pathname gives /C:/..., which matches no file.
 const server = await startServer(fileURLToPath(new URL('../dist/', import.meta.url)), PORT);
 // BROWSER=webkit or BROWSER=firefox runs the same checks in Safari's and Firefox's engines.

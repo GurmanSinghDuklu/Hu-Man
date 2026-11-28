@@ -42,10 +42,10 @@ export default defineConfig({
       algorithm: 'SHA-256',
       directives: [
         "default-src 'self'",
-        "img-src 'self' data:",
+        "img-src 'self' data: blob:",
         "font-src 'self'",
         "connect-src 'self'",
-        "media-src 'self'",
+        "media-src 'self' blob:",
         // /portfolio's live wall frames the concept pages (same origin only).
         "frame-src 'self'",
         "object-src 'none'",

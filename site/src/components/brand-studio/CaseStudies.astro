@@ -1,0 +1,46 @@
+---
+/**
+ * #case-studies: the case-study switcher (tabs; each also opens by its own hash, e.g. #pura) over one
+ * reusable CaseStudy component. Both studies are in the HTML, so they read without script.
+ */
+import { caseStudies } from '../../data/brandStudio';
+import CaseStudy from './CaseStudy.astro';
+import Shape from '../play/Shape.astro';
+---
+
+<section id="case-studies" class="band bs-cases" aria-labelledby="cases-title">
+  <div class="sheet">
+    <p class="label" data-reveal>
+      Case studies · {caseStudies.length} Concept identities
+    </p>
+    <h2 id="cases-title" class="display display--s" data-reveal="lines">
+      Five identities, start to finish. <Shape kind="orb" tone="indigo" />
+    </h2>
+    <p class="bs-cases__text">
+      Each one is laid out like a real launch: logo, mark, clear space, colour, type, pattern,
+      social and photographed mockups. Switch between them, or open one directly.
+    </p>
+    <div class="bs-tabs" role="tablist" aria-label="Case studies">
+      {caseStudies.map((c, i) => (
+        <button
+          type="button"
+          role="tab"
+          class="bs-tab"
+          id={`tab-${c.id}`}
+          data-cs-tab={c.id}
+          aria-controls={`${c.id}`}
+          aria-selected={i === 0 ? 'true' : 'false'}
+          tabindex={i === 0 ? 0 : -1}
+        >
+          <span class="bs-tab__n">0{i + 1}</span>
+          {c.tab}
+        </button>
+      ))}
+    </div>
+  </div>
+  <div class="bs-cases__panels">
+    {caseStudies.map((c, i) => (
+      <CaseStudy study={c} index={i} />
+    ))}
+  </div>
+</section>

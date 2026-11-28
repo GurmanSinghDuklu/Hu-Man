@@ -22,6 +22,7 @@ export default tseslint.config(
       'node_modules/**',
       'reports/**',
       'public/concepts/**',
+      'public/print/**',
     ],
   },
 );

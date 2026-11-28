@@ -156,3 +156,35 @@ export const portfolioFaq: FaqItem[] = [
     a: `With Portfolio Pro you get an owner dashboard to edit it yourself. On any tier, keep-it-live hosting with two content updates a year is ${keepLive.price}.`,
   },
 ];
+
+/** Brand identity page (/brand/, 2026-11-24). Draft copy awaiting Gurman's sign-off. No prices: none are agreed yet. */
+export const brandFaq: FaqItem[] = [
+  {
+    q: 'I don’t know what I want yet.',
+    a: 'That’s a normal place to start. Save the directions that feel like you, add anything you’ve seen and liked, and leave the rest blank. We work it out together on the call.',
+  },
+  {
+    q: 'Can I just upload things I like?',
+    a: 'Yes. Images, short videos and links all work, up to twelve files. Only upload things you’re happy to share, and nothing with ID or personal documents.',
+  },
+  {
+    q: 'Why do I need an account?',
+    a: 'So your uploads stay private and we can pick up your board. You sign in with a one-time code sent to your email. No password.',
+  },
+  {
+    q: 'Do you use AI?',
+    a: 'We use AI tools to explore ideas quickly. Every direction is chosen, drawn and refined by a person.',
+  },
+  {
+    q: 'Do I own the final logo?',
+    a: 'Ownership and file formats are confirmed in your proposal before any work starts.',
+  },
+  {
+    q: 'Are the 131 directions real brands?',
+    a: 'No. They’re our Concept work, so you can see range. Your brand will be your own.',
+  },
+  {
+    q: 'Can you build the website too?',
+    a: 'Yes. Websites, apps and software, built to be found by Google and AI search.',
+  },
+];

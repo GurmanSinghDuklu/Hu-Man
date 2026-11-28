@@ -1,0 +1,585 @@
+---
+/**
+ * #board: the Brand Board. A brief, not a generator: seven steps on the left, a live preview on the
+ * right (a sheet on phones). Everything is in memory in src/scripts/brand-studio/store.ts; nothing is
+ * stored in the browser. Markup is here; behaviour is board.ts and its modules.
+ */
+import { logoTypes } from '../../data/brandPage';
+import BookingLink from '../BookingLink.astro';
+import Shape from '../play/Shape.astro';
+
+const steps = [
+  { n: 1, title: 'Basics', hint: 'Name, what you do, three mood words' },
+  { n: 2, title: 'Inspiration', hint: 'Things you love: images, videos, links' },
+  { n: 3, title: 'Colour', hint: 'Generate, lock and load palettes' },
+  { n: 4, title: 'Logo direction', hint: 'Up to three directions and logo types' },
+  { n: 5, title: 'Typeface', hint: 'Your name in 98 display faces' },
+  { n: 6, title: 'Mockups', hint: 'Your name on real photos' },
+  { n: 7, title: 'Review and send', hint: 'A person picks it up' },
+];
+---
+
+<section id="board" class="band grid bs-board" aria-labelledby="board-title">
+  <div class="sheet">
+    <p class="label" data-reveal>
+      Brand board · 7 steps
+    </p>
+    <h2 id="board-title" class="display display--s" data-reveal="lines">
+      Build your brand board. <Shape kind="pill" tone="peach" />
+    </h2>
+    <p class="bs-board__lede">
+      A board is a brief, not a generator. Collect what you love, pick colours, a direction and a
+      typeface, see your name on real objects, then send it. A person reads it and replies within 48
+      hours. Nothing is stored in your browser, so keep this tab open until you send.
+    </p>
+
+    <ol class="bs-rail" aria-label="Board steps">
+      {steps.map((s) => (
+        <li>
+          <button type="button" class="bs-rail__btn" data-goto={s.n} data-done="false">
+            <span class="bs-rail__n">{s.n}</span>
+            <span class="bs-rail__t">{s.title}</span>
+            <span class="bs-rail__tick" aria-hidden="true"></span>
+          </button>
+        </li>
+      ))}
+    </ol>
+    <p class="bs-board__progress">
+      <span id="bs-progress">0 of 7 steps done</span> · Saved directions:{' '}
+      <b data-saved-count>0 of 6</b>
+    </p>
+
+    <div class="bs-cols">
+      <div class="bs-steps">
+        {/* 1 Basics */}
+        <article class="bs-step is-open" id="bs-step-1">
+          <h3 class="bs-step__h">
+            <button
+              type="button"
+              class="bs-step__head"
+              id="bs-head-1"
+              aria-expanded="true"
+              aria-controls="bs-body-1"
+            >
+              <span class="bs-step__n">01</span>
+              <span class="bs-step__t">
+                {steps[0].title}
+                <small>{steps[0].hint}</small>
+              </span>
+              <span class="bs-step__s" id="bs-status-1">
+                To do
+              </span>
+            </button>
+          </h3>
+          <div class="bs-step__body" id="bs-body-1" role="region" aria-labelledby="bs-head-1">
+            <div class="bs-field">
+              <label for="bs-name">Brand name</label>
+              <input
+                id="bs-name"
+                type="text"
+                autocomplete="off"
+                placeholder="Your brand"
+                maxlength="40"
+              />
+            </div>
+            <div class="bs-field">
+              <label for="bs-does">What you do, in one line</label>
+              <input
+                id="bs-does"
+                type="text"
+                autocomplete="off"
+                placeholder="An independent coffee shop and roastery"
+                maxlength="120"
+              />
+            </div>
+            <div class="bs-field">
+              <label for="bs-audience">Who it’s for</label>
+              <input
+                id="bs-audience"
+                type="text"
+                autocomplete="off"
+                placeholder="Neighbours, commuters, people who care about coffee"
+                maxlength="120"
+              />
+            </div>
+            <fieldset class="bs-field">
+              <legend>Up to three mood words</legend>
+              <div class="bs-chips" id="bs-moods"></div>
+              <p class="bs-msg" id="bs-mood-msg" role="status"></p>
+            </fieldset>
+            <p class="bs-step__foot">
+              <button type="button" class="pill-btn" data-next="2">
+                Next: inspiration
+              </button>
+            </p>
+          </div>
+        </article>
+
+        {/* 2 Inspiration */}
+        <article class="bs-step" id="bs-step-2">
+          <h3 class="bs-step__h">
+            <button
+              type="button"
+              class="bs-step__head"
+              id="bs-head-2"
+              aria-expanded="false"
+              aria-controls="bs-body-2"
+            >
+              <span class="bs-step__n">02</span>
+              <span class="bs-step__t">
+                {steps[1].title}
+                <small>{steps[1].hint}</small>
+              </span>
+              <span class="bs-step__s" id="bs-status-2">
+                Optional
+              </span>
+            </button>
+          </h3>
+          <div
+            class="bs-step__body"
+            id="bs-body-2"
+            role="region"
+            aria-labelledby="bs-head-2"
+            hidden
+          >
+            <div class="bs-drop" id="bs-drop">
+              <p>
+                <b>Drop images or short videos here</b>
+              </p>
+              <label class="pill-btn pill-btn--outline bs-drop__btn" for="bs-files">
+                Choose files
+              </label>
+              <input
+                id="bs-files"
+                class="visually-hidden"
+                type="file"
+                accept="image/*,video/*"
+                multiple
+              />
+              <p class="bs-note" id="bs-up-count">
+                0 of 12 files
+              </p>
+              <p class="bs-note">
+                Only upload things you’re happy to share. No ID or personal documents.
+              </p>
+            </div>
+            <ul class="bs-uploads" id="bs-uploads"></ul>
+
+            <div class="bs-field">
+              <label for="bs-link">Paste a link</label>
+              <div class="bs-inline">
+                <input
+                  id="bs-link"
+                  type="url"
+                  inputmode="url"
+                  autocomplete="off"
+                  placeholder="Paste a web address"
+                />
+                <button type="button" class="pill-btn pill-btn--outline" id="bs-link-add">
+                  Add link
+                </button>
+              </div>
+              <p class="bs-msg" id="bs-link-msg" role="status"></p>
+              <ul class="bs-links" id="bs-links"></ul>
+            </div>
+
+            <h4 class="label">From the gallery</h4>
+            <ul class="bs-saved" id="bs-saved"></ul>
+
+            <div id="bs-extracted-wrap" hidden>
+              <h4 class="label">Colours from your uploads</h4>
+              <p class="bs-note">Press a colour to add it to your palette.</p>
+              <ul class="bs-extracted" id="bs-extracted"></ul>
+            </div>
+            <p class="bs-step__foot">
+              <button type="button" class="pill-btn" data-next="3">
+                Next: colour
+              </button>
+            </p>
+          </div>
+        </article>
+
+        {/* 3 Colour */}
+        <article class="bs-step" id="bs-step-3">
+          <h3 class="bs-step__h">
+            <button
+              type="button"
+              class="bs-step__head"
+              id="bs-head-3"
+              aria-expanded="false"
+              aria-controls="bs-body-3"
+            >
+              <span class="bs-step__n">03</span>
+              <span class="bs-step__t">
+                {steps[2].title}
+                <small>{steps[2].hint}</small>
+              </span>
+              <span class="bs-step__s" id="bs-status-3">
+                To do
+              </span>
+            </button>
+          </h3>
+          <div
+            class="bs-step__body"
+            id="bs-body-3"
+            role="region"
+            aria-labelledby="bs-head-3"
+            hidden
+          >
+            <div class="bs-gen__top">
+              <div class="bs-chips" id="bs-modes" role="group" aria-label="Generator mode"></div>
+              <div class="bs-gen__btns">
+                <button type="button" class="pill-btn" id="bs-generate">
+                  Generate palette
+                </button>
+                <button type="button" class="pill-btn pill-btn--outline" id="bs-add-colour">
+                  Add a colour
+                </button>
+              </div>
+            </div>
+            <div
+              class="bs-barwrap"
+              id="bs-bar-wrap"
+              tabindex="0"
+              role="group"
+              aria-label="Palette generator. Press space to generate a new palette."
+            >
+              <div class="bs-bar" id="bs-bar"></div>
+            </div>
+            <p class="bs-msg bs-msg--big" id="bs-colour-msg" role="status"></p>
+            <p class="bs-note">
+              Press space to generate. Lock a colour to keep it. Up to five colours, each with a
+              role.
+            </p>
+            <ul class="bs-checks" id="bs-checks"></ul>
+
+            <h4 class="label">
+              Palette library · <span id="bs-lib-count"></span>
+            </h4>
+            <div class="bs-chips" id="bs-themes" role="group" aria-label="Palette theme"></div>
+            <div class="bs-field">
+              <label for="bs-search">Search palettes by name or hex</label>
+              <input
+                id="bs-search"
+                type="search"
+                autocomplete="off"
+                placeholder="Terracotta, 4F5B2A…"
+              />
+            </div>
+            <ul class="bs-lib" id="bs-lib"></ul>
+            <p>
+              <button type="button" class="pill-btn pill-btn--outline" id="bs-lib-more">
+                Show more palettes
+              </button>
+            </p>
+            <p class="bs-step__foot">
+              <button type="button" class="pill-btn" data-next="4">
+                Next: logo direction
+              </button>
+            </p>
+          </div>
+        </article>
+
+        {/* 4 Logo direction */}
+        <article class="bs-step" id="bs-step-4">
+          <h3 class="bs-step__h">
+            <button
+              type="button"
+              class="bs-step__head"
+              id="bs-head-4"
+              aria-expanded="false"
+              aria-controls="bs-body-4"
+            >
+              <span class="bs-step__n">04</span>
+              <span class="bs-step__t">
+                {steps[3].title}
+                <small>{steps[3].hint}</small>
+              </span>
+              <span class="bs-step__s" id="bs-status-4">
+                Optional
+              </span>
+            </button>
+          </h3>
+          <div
+            class="bs-step__body"
+            id="bs-body-4"
+            role="region"
+            aria-labelledby="bs-head-4"
+            hidden
+          >
+            <p class="bs-note bs-note--strong">
+              Directions, not final logos. Our designers draw the real thing.
+            </p>
+            <div
+              class="bs-chips"
+              id="bs-dir-filter"
+              role="group"
+              aria-label="Filter directions by mood"
+            ></div>
+            <p class="bs-note" id="bs-dir-count">
+              0 of 3 chosen
+            </p>
+            <ul class="bs-dirs" id="bs-dirs"></ul>
+
+            <h4 class="label">Logo types</h4>
+            <ul class="bs-ltypes" id="bs-logo-types">
+              {logoTypes.map((t) => (
+                <li>
+                  <button type="button" class="bs-ltype" data-logo-type={t.id} aria-pressed="false">
+                    <span class="bs-ltype__demo" aria-hidden="true"></span>
+                    <span class="bs-ltype__t">{t.label}</span>
+                    <span class="bs-ltype__d">{t.text}</span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+
+            <div class="bs-field">
+              <label for="bs-logo-file">Already have a logo? Add it (optional)</label>
+              <input id="bs-logo-file" type="file" accept="image/*,.svg,.pdf" />
+              <p class="bs-note" id="bs-logo-file-name">
+                No file chosen
+              </p>
+            </div>
+            <div class="bs-field">
+              <label for="bs-logo-notes">Notes on the logo</label>
+              <textarea
+                id="bs-logo-notes"
+                rows="3"
+                placeholder="Things to keep, things to avoid"
+              ></textarea>
+            </div>
+            <p class="bs-step__foot">
+              <button type="button" class="pill-btn" data-next="5">
+                Next: typeface
+              </button>
+            </p>
+          </div>
+        </article>
+
+        {/* 5 Typeface */}
+        <article class="bs-step" id="bs-step-5">
+          <h3 class="bs-step__h">
+            <button
+              type="button"
+              class="bs-step__head"
+              id="bs-head-5"
+              aria-expanded="false"
+              aria-controls="bs-body-5"
+            >
+              <span class="bs-step__n">05</span>
+              <span class="bs-step__t">
+                {steps[4].title}
+                <small>{steps[4].hint}</small>
+              </span>
+              <span class="bs-step__s" id="bs-status-5">
+                To do
+              </span>
+            </button>
+          </h3>
+          <div
+            class="bs-step__body"
+            id="bs-body-5"
+            role="region"
+            aria-labelledby="bs-head-5"
+            hidden
+          >
+            <p class="bs-note">
+              Pick one display face and one body face. Fonts load only when you get here.
+            </p>
+            <div id="bs-suggested-wrap" hidden>
+              <h4 class="label">Suggested from your picks</h4>
+              <ul class="bs-fontlist" id="bs-suggested"></ul>
+            </div>
+            <div id="bs-fonts"></div>
+            <h4 class="label">Body face</h4>
+            <ul class="bs-bodyfonts" id="bs-body-fonts"></ul>
+            <h4 class="label">In your colours</h4>
+            <div class="bs-tp" id="bs-type-preview"></div>
+            <p class="bs-step__foot">
+              <button type="button" class="pill-btn" data-next="6">
+                Next: mockups
+              </button>
+            </p>
+          </div>
+        </article>
+
+        {/* 6 Mockups */}
+        <article class="bs-step" id="bs-step-6">
+          <h3 class="bs-step__h">
+            <button
+              type="button"
+              class="bs-step__head"
+              id="bs-head-6"
+              aria-expanded="false"
+              aria-controls="bs-body-6"
+            >
+              <span class="bs-step__n">06</span>
+              <span class="bs-step__t">
+                {steps[5].title}
+                <small>{steps[5].hint}</small>
+              </span>
+              <span class="bs-step__s" id="bs-status-6">
+                To do
+              </span>
+            </button>
+          </h3>
+          <div
+            class="bs-step__body"
+            id="bs-body-6"
+            role="region"
+            aria-labelledby="bs-head-6"
+            hidden
+          >
+            <p class="bs-note">
+              Your name in your font and colours, on six real photographs. Change anything above and
+              these update.
+            </p>
+            <div class="bs-mockups" id="bs-mockups"></div>
+            <h4 class="label">Mini guidelines sheet</h4>
+            <div class="bs-guide" id="bs-guide"></div>
+            <p class="bs-step__foot">
+              <button type="button" class="pill-btn" data-next="7">
+                Next: review and send
+              </button>
+            </p>
+          </div>
+        </article>
+
+        {/* 7 Review */}
+        <article class="bs-step" id="bs-step-7">
+          <h3 class="bs-step__h">
+            <button
+              type="button"
+              class="bs-step__head"
+              id="bs-head-7"
+              aria-expanded="false"
+              aria-controls="bs-body-7"
+            >
+              <span class="bs-step__n">07</span>
+              <span class="bs-step__t">
+                {steps[6].title}
+                <small>{steps[6].hint}</small>
+              </span>
+              <span class="bs-step__s" id="bs-status-7">
+                To do
+              </span>
+            </button>
+          </h3>
+          <div
+            class="bs-step__body"
+            id="bs-body-7"
+            role="region"
+            aria-labelledby="bs-head-7"
+            hidden
+          >
+            <dl class="bs-summary" id="bs-summary"></dl>
+            <div class="bs-field">
+              <label for="bs-r-name">Your name</label>
+              <input id="bs-r-name" type="text" autocomplete="name" />
+            </div>
+            <div class="bs-field">
+              <label for="bs-r-email">Email</label>
+              <input id="bs-r-email" type="email" autocomplete="email" />
+            </div>
+            <div class="bs-field">
+              <label for="bs-r-business">Business or website (optional)</label>
+              <input id="bs-r-business" type="text" autocomplete="organization" />
+            </div>
+            <div class="bs-field">
+              <label for="bs-r-goal">What should this brand do for you?</label>
+              <textarea id="bs-r-goal" rows="3"></textarea>
+            </div>
+            <div class="bs-field">
+              <label for="bs-r-timeline">Timeline (optional)</label>
+              <input
+                id="bs-r-timeline"
+                type="text"
+                placeholder="For example, before we open in March"
+              />
+            </div>
+            <label class="bs-check">
+              <input id="bs-r-consent" type="checkbox" />{' '}
+              <span>
+                I’m happy for Hu/man to read this board and the files in it, and to reply to me
+                about it.
+              </span>
+            </label>
+            <p class="bs-msg bs-msg--err" id="bs-review-err" role="alert"></p>
+            <p class="bs-send">
+              <button type="button" class="pill-btn" id="bs-send">
+                Create an account or sign in to send
+              </button>
+            </p>
+            <p class="bs-note">
+              We use Cloudflare Access: a one-time code to your email. No password. It keeps your
+              uploads private and lets us pick up your board.
+            </p>
+
+            <div class="bs-panel" data-panel="waiting" tabindex="-1" hidden>
+              <p>
+                <b>Waiting for you to sign in.</b> A small window has opened. Enter your email, then
+                the code we send. This page sends your board as soon as you’re in.
+              </p>
+              <button type="button" class="pill-btn pill-btn--outline" id="bs-cancel-wait">
+                Cancel and go back
+              </button>
+            </div>
+            <div class="bs-panel" data-panel="blocked" tabindex="-1" hidden>
+              <p>
+                <b>Your browser blocked the sign-in window.</b> Allow pop-ups for this site, then
+                press “Create an account or sign in to send” again. Your board is still here.
+              </p>
+            </div>
+            <div class="bs-panel" data-panel="sending" tabindex="-1" hidden>
+              <p role="status">
+                <b>Sending your board…</b>
+              </p>
+            </div>
+            <div class="bs-panel bs-panel--ok" data-panel="success" tabindex="-1" hidden>
+              <p class="bs-panel__t">Your board is with us.</p>
+              <p>A person will reply within 48 hours. Want to talk it through sooner?</p>
+              <BookingLink class="pill-btn" />
+            </div>
+            <div class="bs-panel" data-panel="fallback" tabindex="-1" hidden>
+              <p class="bs-panel__t">We couldn’t send it from here just now.</p>
+              <p>
+                Nothing is lost. Download your board and bring it to a free call, or try again. Your
+                uploads aren’t inside the .json, so keep them to hand.
+              </p>
+              <p class="bs-panel__btns">
+                <button type="button" class="pill-btn" id="bs-download">
+                  Download my board (.json)
+                </button>
+                <BookingLink class="pill-btn pill-btn--outline" />
+                <button type="button" class="pill-btn pill-btn--outline" id="bs-retry">
+                  Try sending again
+                </button>
+              </p>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <aside class="bs-preview" aria-label="Live preview of your board">
+        <div class="bs-preview__in">
+          <p class="label">Live preview</p>
+          <div id="bs-preview-main" class="bs-pv"></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <button type="button" class="pill-btn bs-open-preview" id="bs-open-preview">
+    Preview
+  </button>
+  <dialog id="bs-sheet" class="bs-sheet" aria-label="Live preview of your board">
+    <div class="bs-sheet__bar">
+      <p class="label">Live preview</p>
+      <button type="button" class="pill-btn pill-btn--outline" id="bs-close-preview">
+        Close
+      </button>
+    </div>
+    <div id="bs-preview-sheet-body" class="bs-pv"></div>
+  </dialog>
+</section>

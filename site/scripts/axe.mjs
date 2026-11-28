@@ -17,6 +17,7 @@ const PAGES = [
   'web-design-manchester/',
   'free-ai-check/',
   'portfolio/',
+  'brand/',
   'contact/',
   'thanks/',
   'start/',

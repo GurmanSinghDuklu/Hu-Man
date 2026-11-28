@@ -1,0 +1,117 @@
+---
+/**
+ * #gallery: the 131 Concept directions. Filter by mood, save up to six to the board, open any in the
+ * viewer (palette and typeface). The filter, saving and viewer are src/scripts/brand-studio/gallery.ts.
+ */
+import { Image, getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import { gallery, moods } from '../../data/brandStudio';
+import Shape from '../play/Shape.astro';
+
+const files = import.meta.glob<{ default: ImageMetadata }>(
+  '../../assets/brand-studio/gallery/*.webp',
+  {
+    eager: true,
+  },
+);
+const meta = (slug: string) => files[`../../assets/brand-studio/gallery/${slug}.webp`].default;
+
+const tiles = await Promise.all(
+  gallery.map(async (g) => ({
+    ...g,
+    src: meta(g.slug),
+    thumb: (await getImage({ src: meta(g.slug), width: 240, format: 'webp' })).src,
+    large: (await getImage({ src: meta(g.slug), width: 1120, format: 'webp' })).src,
+  })),
+);
+---
+
+<section id="gallery" class="band bs-gallery" aria-labelledby="gallery-title">
+  <div class="sheet">
+    <p class="label" data-reveal>
+      Gallery · {gallery.length} Concept directions
+    </p>
+    <h2 id="gallery-title" class="display display--s" data-reveal="lines">
+      {gallery.length} directions. Pick the ones that feel like you.{' '}
+      <Shape kind="sparkle" tone="signal" />
+    </h2>
+    <p class="bs-gallery__text">
+      Every poster is an original Concept identity, so you can see our range. Save up to six to your
+      brand board and we start from what you love.
+    </p>
+
+    <div class="bs-gallery__bar">
+      <div class="bs-chips" role="group" aria-label="Filter by mood">
+        <button
+          type="button"
+          class="bs-pill bs-pill--ink"
+          data-mood-filter="All"
+          aria-pressed="true"
+        >
+          All
+        </button>
+        {moods.map((m) => (
+          <button
+            type="button"
+            class="bs-pill bs-pill--ink"
+            data-mood-filter={m}
+            aria-pressed="false"
+          >
+            {m}
+          </button>
+        ))}
+      </div>
+      <p class="bs-gallery__count">
+        <span id="bs-count">
+          Showing {gallery.length} of {gallery.length}
+        </span>
+        <span class="bs-gallery__saved">
+          Saved: <b data-saved-count>0 of 6</b>
+        </span>
+      </p>
+    </div>
+
+    <ul class="bs-tiles">
+      {tiles.map((t) => (
+        <li
+          class="bs-tile"
+          data-slug={t.slug}
+          data-mood={t.mood}
+          data-thumb={t.thumb}
+          data-large={t.large}
+        >
+          <div class="bs-tile__img">
+            <Image
+              src={t.src}
+              alt={`${t.name}: ${t.style.toLowerCase()}, an identity concept poster`}
+              widths={[300, 450, 600]}
+              sizes="(min-width: 64rem) 22vw, 46vw"
+              format="webp"
+              loading="lazy"
+              decoding="async"
+            />
+            <span class="bs-tag">Concept</span>
+          </div>
+          <div class="bs-tile__meta">
+            <h3 class="bs-tile__name">{t.name}</h3>
+            <p class="bs-tile__style">{t.style}</p>
+          </div>
+          <div class="bs-tile__actions">
+            <button type="button" class="bs-tbtn" data-save aria-pressed="false">
+              <span class="bs-tile__save-text">Save to board</span>
+              <span class="visually-hidden"> {t.name}</span>
+            </button>
+            <button type="button" class="bs-tbtn" data-view>
+              View<span class="visually-hidden"> {t.name}</span>
+            </button>
+          </div>
+        </li>
+      ))}
+    </ul>
+    <p class="bs-gallery__end">
+      <a class="pill-btn" href="#board">
+        Start your brand board
+      </a>
+    </p>
+  </div>
+</section>

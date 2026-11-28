@@ -1,0 +1,552 @@
+---
+/**
+ * One complete Concept identity, laid out like a client launch: cover, primary logo, logomark and
+ * app icon, clear space, palette with contrast, type, pattern, social, mockups. All five studies
+ * use it; everything specific to a brand comes from `caseStudies` in src/data/brandStudio.ts and
+ * the files in src/assets/brand-studio/<id>/. Contrast is computed here, never typed.
+ */
+import { Image, getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import type { CaseStudy } from '../../data/brandStudio';
+import { verdict } from '../../scripts/brand-studio/colour';
+
+interface Props {
+  study: CaseStudy;
+  /** Only the first study is the section's own heading level owner; both are h3 here. */
+  index: number;
+}
+const { study: s, index } = Astro.props;
+
+const photos = import.meta.glob<{ default: ImageMetadata }>(
+  '../../assets/brand-studio/{pura,latte,kira,chancery,physio}/*.jpg',
+  {
+    eager: true,
+  },
+);
+const logos = import.meta.glob<string>(
+  '../../assets/brand-studio/{pura,latte,kira,chancery,physio}/*-logo.svg',
+  {
+    eager: true,
+    query: '?raw',
+    import: 'default',
+  },
+);
+const photo = (name: string) =>
+  photos[`../../assets/brand-studio/${s.id}/${s.id}-${name}.jpg`].default;
+const rawLogo = logos[`../../assets/brand-studio/${s.id}/${s.id}-logo.svg`];
+// The one labelled logo is the first; every other use is decoration beside text that says the name.
+const logoSvg = (box?: string, label = false) => {
+  let out = rawLogo;
+  if (box) out = out.replace(/viewBox="[^"]+"/, `viewBox="${box}"`);
+  // A logomark crop shows only the mark's own paths when the logo file tags them (Latte's mug).
+  if (box && out.includes('data-mark')) out = out.replace(/<path data-word[^>]*\/>/g, '');
+  if (!label)
+    out = out.replace(/ role="img" aria-label="[^"]*"/, ' aria-hidden="true" focusable="false"');
+  return out;
+};
+const [, , logoW, logoH] = (rawLogo.match(/viewBox="([^"]+)"/)?.[1] ?? '0 0 1000 500')
+  .split(' ')
+  .map(Number);
+const logoInner = rawLogo.replace(/^<svg[^>]*>/, '').replace(/<\/svg>\s*$/, '');
+const [, , mw, mh] = s.markBox.split(' ').map(Number);
+// A tall mark (Chancery's stacked C over H) is sized by height so it stays inside the icon tile.
+const iconMarkStyle = `aspect-ratio:${mw}/${mh}${mh > mw ? `;width:${((88 * mw) / mh).toFixed(1)}%` : ''}`;
+
+const P = s.roles;
+const swatches = s.palette.map((c) => {
+  const onLight = verdict(c.hex, P.light);
+  const dark = verdict(P.dark, c.hex);
+  const light = verdict(P.light, c.hex);
+  const best =
+    light.ratio > dark.ratio
+      ? { fg: P.light, fgName: 'Light', ...light }
+      : { fg: P.dark, fgName: 'Dark', ...dark };
+  return { ...c, onLight, best };
+});
+
+const coverMeta = photo(s.cover.photo);
+const mockups = await Promise.all(
+  s.mockups.map(async (m) => ({
+    ...m,
+    meta: photo(m.photo),
+    large: (await getImage({ src: photo(m.photo), width: 1600, format: 'webp', quality: 80 })).src,
+  })),
+);
+const x = s.clearX;
+const pad = x;
+const vb = `${-pad} ${-pad} ${logoW + pad * 2} ${logoH + pad * 2}`;
+const fontIds = `${s.display.id} ${s.body.id}`;
+const head = `${s.id}-title`;
+---
+
+<article
+  id={s.id}
+  class={`cs cs--${s.id}`}
+  data-cs={s.id}
+  data-fonts={fontIds}
+  aria-labelledby={head}
+  style={`--cs-primary:${P.primary};--cs-light:${P.light};--cs-accent:${P.accent};--cs-soft:${P.soft};--cs-dark:${P.dark};--cs-display:'bs-${s.display.id}', var(--font-display);--cs-body:'bs-${s.body.id}', var(--font-text);--cs-dw:${s.display.weight}`}
+>
+  <!-- Cover -->
+  <div class="cs-cover">
+    <Image
+      src={coverMeta}
+      alt=""
+      widths={[1000, 1600, 2400]}
+      sizes="100vw"
+      format="webp"
+      loading="lazy"
+      decoding="async"
+      style={`object-position:${s.cover.position}`}
+    />
+    <div class="cs-cover__card">
+      <p class="label">Case study {String(index + 1).padStart(2, '0')} · Concept</p>
+      <h3 id={head} class="cs-cover__title">
+        {s.name}. {s.kicker}
+      </h3>
+      <p class="cs-cover__tag">{s.tagline}</p>
+      <dl class="cs-brief">
+        {s.brief.map((b) => (
+          <div>
+            <dt>{b.label}</dt>
+            <dd>{b.text}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </div>
+
+  <div class="cs-plates grid sheet">
+    <!-- 01 Primary logo -->
+    <section class="cs-plate cs-plate--logos" aria-label="Primary logo">
+      <figure class="cs-fill cs-fill--primary">
+        <div class="cs-logo cs-logo--light" set:html={logoSvg(undefined, true)} />
+        <figcaption class="label">
+          01 Primary logo · on {s.palette.find((c) => c.role === 'Primary')?.name}
+        </figcaption>
+      </figure>
+      <figure class="cs-fill cs-fill--light">
+        <div class="cs-logo cs-logo--primary" set:html={logoSvg()} />
+        <figcaption class="label">
+          01 Primary logo · on {s.palette.find((c) => c.role === 'Light')?.name}
+        </figcaption>
+      </figure>
+    </section>
+
+    <!-- 02 Logomark and app icon -->
+    <section class="cs-plate cs-plate--mark" aria-label="Logomark and app icon">
+      <figure class="cs-fill cs-fill--soft cs-mark-big">
+        <div
+          class="cs-mark cs-mark--dark"
+          style={`aspect-ratio:${mw}/${mh}`}
+          set:html={logoSvg(s.markBox)}
+        />
+        <figcaption class="label">02 Logomark</figcaption>
+      </figure>
+      <figure class="cs-fill cs-fill--dark cs-icons">
+        <div class="cs-icons__row">
+          <span class="cs-icon cs-icon--l" aria-hidden="true">
+            <span class="cs-mark" style={iconMarkStyle} set:html={logoSvg(s.markBox)} />
+          </span>
+          <span class="cs-icon cs-icon--m" aria-hidden="true">
+            <span class="cs-mark" style={iconMarkStyle} set:html={logoSvg(s.markBox)} />
+          </span>
+          <span class="cs-icon cs-icon--s" aria-hidden="true">
+            <span class="cs-mark" style={iconMarkStyle} set:html={logoSvg(s.markBox)} />
+          </span>
+        </div>
+        <div class="cs-tab" aria-hidden="true">
+          <span class="cs-tab__fav" set:html={logoSvg(s.markBox)} />
+          <span class="cs-tab__title">{s.name}</span>
+        </div>
+        <figcaption class="label">02 App icon at three sizes, favicon in a tab</figcaption>
+      </figure>
+    </section>
+
+    <!-- 03 Clear space -->
+    <section class="cs-plate cs-plate--space" aria-label="Clear space and minimum size">
+      <figure class="cs-fill cs-fill--paper">
+        <svg
+          class="cs-space"
+          viewBox={vb}
+          role="img"
+          aria-label={`Clear space: keep a margin of x, the height of the ${s.name} mark, around the logo.`}
+        >
+          <defs>
+            <pattern
+              id={`hatch-${s.id}`}
+              width="60"
+              height="60"
+              patternUnits="userSpaceOnUse"
+              patternTransform="rotate(45)"
+            >
+              <line
+                x1="0"
+                y1="0"
+                x2="0"
+                y2="60"
+                stroke="currentColor"
+                stroke-width="7"
+                opacity="0.18"
+              ></line>
+            </pattern>
+          </defs>
+          <path
+            fill={`url(#hatch-${s.id})`}
+            fill-rule="evenodd"
+            d={`M${-pad} ${-pad}H${logoW + pad}V${logoH + pad}H${-pad}Z M0 0H${logoW}V${logoH}H0Z`}
+          ></path>
+          <rect
+            x={-pad + 8}
+            y={-pad + 8}
+            width={logoW + pad * 2 - 16}
+            height={logoH + pad * 2 - 16}
+            fill="none"
+            stroke="currentColor"
+            stroke-width="10"
+            stroke-dasharray="46 30"
+          ></rect>
+          <rect
+            x="0"
+            y="0"
+            width={logoW}
+            height={logoH}
+            fill="none"
+            stroke="currentColor"
+            stroke-width="6"
+            opacity="0.5"
+          ></rect>
+          <g class="cs-space__logo" set:html={logoInner} />
+          <g class="cs-space__x">
+            <line
+              x1={logoW / 2}
+              y1={-pad}
+              x2={logoW / 2}
+              y2="0"
+              stroke="currentColor"
+              stroke-width="10"
+            ></line>
+            <line
+              x1={-pad}
+              y1={logoH / 2}
+              x2="0"
+              y2={logoH / 2}
+              stroke="currentColor"
+              stroke-width="10"
+            ></line>
+            <text x={logoW / 2 + 40} y={-pad / 2 + 50} font-size="150">
+              x
+            </text>
+            <text x={-pad / 2 - 40} y={logoH / 2 - 40} font-size="150">
+              x
+            </text>
+          </g>
+        </svg>
+        <figcaption class="label">03 Clear space: x is the height of the mark</figcaption>
+      </figure>
+      <div class="cs-fill cs-fill--paper cs-min">
+        <p class="label">Minimum sizes</p>
+        <div class="cs-min__row">
+          <div class="cs-min__logo" style="width:120px" set:html={logoSvg()} />
+          <p>
+            <b>Logo</b>
+            <br />
+            {s.minimum.logoMm} mm print
+            <br />
+            {s.minimum.logoPx} px screen
+          </p>
+        </div>
+        <div class="cs-min__row">
+          <div
+            class="cs-min__mark"
+            style={`width:${s.minimum.markPx}px;aspect-ratio:${mw}/${mh}`}
+            set:html={logoSvg(s.markBox)}
+          />
+          <p>
+            <b>Mark</b>
+            <br />
+            {s.minimum.markMm} mm print
+            <br />
+            {s.minimum.markPx} px screen
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 04 Palette -->
+    <section class="cs-plate cs-plate--palette" aria-label="Colour palette">
+      <ul class="cs-swatches">
+        {swatches.map((c) => (
+          <li class="cs-swatch" style={`background:${c.hex};color:${c.best.fg}`}>
+            <div
+              class:list={['cs-swatch__small', { 'cs-swatch__small--chip': !c.best.pass }]}
+              style={c.best.pass ? undefined : `background:${P.light};color:${P.dark}`}
+            >
+              <p class="label">{c.role}</p>
+              <p class="cs-swatch__name">{c.name}</p>
+              <p class="cs-swatch__hex">{c.hex}</p>
+              <p class="cs-swatch__use">{c.use}</p>
+              <p class="cs-swatch__aa">
+                {c.best.pass
+                  ? `${c.best.fgName} text · ${c.best.ratio.toFixed(1)}:1 · AA pass`
+                  : `Best on the swatch itself: ${c.best.fgName}, ${c.best.ratio.toFixed(1)}:1, large text only. Set on ${s.palette.find((x) => x.role === 'Light')?.name}.`}
+              </p>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <p class="label cs-cap">04 Colour palette, roles and contrast checked</p>
+    </section>
+
+    <!-- 05 Type -->
+    <section class="cs-plate cs-plate--type" aria-label="Typography">
+      <div class="cs-fill cs-fill--light cs-type">
+        <p class="cs-type__aa" aria-hidden="true">
+          Aa
+        </p>
+        <div>
+          <p class="label">05 Typeface</p>
+          <p class="cs-type__fam">
+            <b>
+              {s.display.family} {s.display.weight}
+            </b>{' '}
+            for display and headings. <b>{s.body.family}</b> for everything you read.
+          </p>
+          <dl class="cs-hier">
+            <div>
+              <dt>Display</dt>
+              <dd class="cs-h-display">{s.tagline}</dd>
+            </div>
+            <div>
+              <dt>H1</dt>
+              <dd class="cs-h-1">{s.name} is open</dd>
+            </div>
+            <div>
+              <dt>H2</dt>
+              <dd class="cs-h-2">Made by people who care</dd>
+            </div>
+            <div>
+              <dt>Body</dt>
+              <dd class="cs-h-body">
+                Body text is set in {s.body.family}: friendly, open and easy to read at any size on
+                any screen.
+              </dd>
+            </div>
+            <div>
+              <dt>Caption</dt>
+              <dd class="cs-h-cap">Caption, 12 px, for small print and labels</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <!-- 06 Pattern -->
+    <section class="cs-plate cs-plate--pattern" aria-label="Graphic pattern">
+      <figure class="cs-fill cs-pattern">
+        {s.pattern === 'leaf' && (
+          <svg
+            viewBox="0 0 600 340"
+            preserveAspectRatio="xMidYMid slice"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <defs>
+              <pattern id="pat-leaf" width="120" height="120" patternUnits="userSpaceOnUse">
+                <g fill="var(--cs-soft)">
+                  <path d="M30 52C30 28 44 14 64 10c2 22-10 40-34 42z"></path>
+                  <path d="M30 52C26 30 14 18 -4 16c-2 20 8 34 34 36z"></path>
+                  <circle cx="92" cy="86" r="7"></circle>
+                  <circle cx="106" cy="104" r="4.5"></circle>
+                  <path d="M92 26c0 -10 -6 -14 -6 -14s-6 4 -6 14a6 6 0 0 0 12 0z"></path>
+                </g>
+                <g fill="var(--cs-accent)">
+                  <circle cx="22" cy="100" r="5"></circle>
+                </g>
+              </pattern>
+            </defs>
+            <rect width="600" height="340" fill="url(#pat-leaf)"></rect>
+          </svg>
+        )}
+        {s.pattern === 'mug' && (
+          <svg
+            viewBox="0 0 600 340"
+            preserveAspectRatio="xMidYMid slice"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <defs>
+              <pattern id="pat-mug" width="140" height="140" patternUnits="userSpaceOnUse">
+                <g fill="var(--cs-accent)">
+                  <path d="M22 44h44v18a22 22 0 0 1-22 22 22 22 0 0 1-22-22z"></path>
+                  <path
+                    d="M66 50h8a9 9 0 0 1 0 18h-8"
+                    fill="none"
+                    stroke="var(--cs-accent)"
+                    stroke-width="7"
+                  ></path>
+                  <path
+                    d="M34 36c-6-6 6-10 0-18M50 36c-6-6 6-10 0-18"
+                    fill="none"
+                    stroke="var(--cs-accent)"
+                    stroke-width="5"
+                    stroke-linecap="round"
+                  ></path>
+                  <path d="M108 96l5 14 14 5-14 5-5 14-5-14-14-5 14-5z"></path>
+                  <circle cx="100" cy="30" r="5"></circle>
+                </g>
+              </pattern>
+            </defs>
+            <rect width="600" height="340" fill="url(#pat-mug)"></rect>
+          </svg>
+        )}
+        {s.pattern === 'pulse' && (
+          <svg
+            viewBox="0 0 600 340"
+            preserveAspectRatio="xMidYMid slice"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <defs>
+              <pattern id="pat-pulse" width="100" height="100" patternUnits="userSpaceOnUse">
+                <g fill="var(--cs-accent)">
+                  <path d="M10 70l30-50h14l-30 50z"></path>
+                  <path d="M38 70l30-50h8l-30 50z"></path>
+                </g>
+                <circle cx="84" cy="84" r="5" fill="var(--cs-soft)"></circle>
+              </pattern>
+            </defs>
+            <rect width="600" height="340" fill="url(#pat-pulse)"></rect>
+          </svg>
+        )}
+        {s.pattern === 'crest' && (
+          <svg
+            viewBox="0 0 600 340"
+            preserveAspectRatio="xMidYMid slice"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <defs>
+              <pattern id="pat-crest" width="90" height="90" patternUnits="userSpaceOnUse">
+                <g fill="none" stroke="var(--cs-accent)" stroke-width="1.6">
+                  <circle cx="45" cy="45" r="16"></circle>
+                  <circle cx="45" cy="45" r="12"></circle>
+                  <path d="M0 0l12 12M90 0l-12 12M0 90l12-12M90 90l-12-12"></path>
+                </g>
+              </pattern>
+            </defs>
+            <rect width="600" height="340" fill="url(#pat-crest)"></rect>
+          </svg>
+        )}
+        {s.pattern === 'cross' && (
+          <svg
+            viewBox="0 0 600 340"
+            preserveAspectRatio="xMidYMid slice"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <defs>
+              <pattern id="pat-cross" width="110" height="110" patternUnits="userSpaceOnUse">
+                <g fill="var(--cs-soft)">
+                  <path d="M26 14h12v12h12v12H38v12H26V38H14V26h12z"></path>
+                </g>
+                <circle cx="82" cy="80" r="9" fill="var(--cs-accent)"></circle>
+                <circle cx="82" cy="80" r="3.5" fill="var(--cs-primary)"></circle>
+              </pattern>
+            </defs>
+            <rect width="600" height="340" fill="url(#pat-cross)"></rect>
+          </svg>
+        )}
+        <figcaption class="label">06 Graphic pattern</figcaption>
+      </figure>
+    </section>
+
+    <!-- 07 Social -->
+    <section class="cs-plate cs-plate--social" aria-label="Social creatives and banner">
+      <ul class="cs-posts">
+        {s.social.map((p, i) => (
+          <li class={`cs-post cs-post--${i + 1}`} style={`--bg:${p.bg};--fg:${p.fg}`}>
+            <div class="cs-post__photo">
+              <Image
+                src={photo(p.photo)}
+                alt=""
+                widths={[480, 800]}
+                sizes="(min-width: 64rem) 28vw, 90vw"
+                format="webp"
+                loading="lazy"
+                style={`object-position:${p.position}`}
+              />
+            </div>
+            <div class="cs-post__copy">
+              <span class="cs-post__mark" set:html={logoSvg(s.markBox)} />
+              <p class="cs-post__kicker">{p.kicker}</p>
+              <p class="cs-post__head">{p.headline}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <div class="cs-banner" aria-hidden="true">
+        <span class="cs-banner__logo" set:html={logoSvg()} />
+        <p>{s.tagline}</p>
+        <div class="cs-banner__photo">
+          <Image
+            src={photo(s.cover.photo)}
+            alt=""
+            widths={[700, 1100, 1600]}
+            sizes="50vw"
+            format="webp"
+            loading="lazy"
+            style={`object-position:${s.cover.position}`}
+          />
+        </div>
+      </div>
+      <p class="label cs-cap">07 Social posts at 4:5 and a profile banner</p>
+    </section>
+
+    <!-- 08 Mockups -->
+    <section class="cs-plate cs-plate--mockups" aria-label="Mockups">
+      <p class="label cs-cap">
+        08 Mockups · {mockups.length} photographed applications. Press any to enlarge.
+      </p>
+      <ul class="cs-mocks">
+        {mockups.map((m) => (
+          <li>
+            <button
+              type="button"
+              class="cs-mock"
+              data-zoom-src={m.large}
+              data-zoom-alt={`${s.name} ${m.caption.toLowerCase()} mockup`}
+              data-zoom-caption={m.caption}
+              data-zoom-kicker={`${s.name} · Concept`}
+            >
+              <Image
+                src={m.meta}
+                alt={`${s.name} ${m.caption.toLowerCase()} mockup`}
+                widths={[480, 800, 1200]}
+                sizes="(min-width: 64rem) 28vw, 46vw"
+                format="webp"
+                loading="lazy"
+                decoding="async"
+              />
+              <span class="label">{m.caption}</span>
+            </button>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <!-- Close -->
+    <div class="cs-close">
+      <p class="cs-close__title">This is what you get.</p>
+      <p>The same set, drawn for your brand and agreed on a call.</p>
+      <p class="cs-close__links">
+        <a class="pill-btn" href="#get">
+          See the 14 deliverables
+        </a>
+        <a class="pill-btn pill-btn--outline" href="#board">
+          Start your brand board
+        </a>
+      </p>
+    </div>
+  </div>
+</article>

@@ -11,7 +11,7 @@ import { site } from '../config/site';
 import { pages, type PageKey } from './pages';
 import { serviceAreas } from './services';
 import { tiers, portfolioTiers, carePlans } from './pricing';
-import { faq, agenticFaq, checkFaq, portfolioFaq } from './faq';
+import { faq, agenticFaq, checkFaq, portfolioFaq, brandFaq } from './faq';
 import { term, definition } from './agentic';
 import { cities, type CityKey } from './cities';
 import { method, methodName } from './process';
@@ -337,6 +337,12 @@ export function buildSchema(key: PageKey, abs: AbsUrl, videos: PageVideo[] = [])
   if (key === 'portfolio') {
     webPage['@type'] = ['WebPage', 'FAQPage'];
     webPage.mainEntity = questions(portfolioFaq);
+  }
+
+  // The brand identity FAQ on /brand/ (2026-11-24): the page is also a FAQPage.
+  if (key === 'brand') {
+    webPage['@type'] = ['WebPage', 'FAQPage'];
+    webPage.mainEntity = questions(brandFaq);
   }
 
   if (key === 'agentic-ai-ready') {

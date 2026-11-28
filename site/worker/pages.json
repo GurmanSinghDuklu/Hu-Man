@@ -27,6 +27,12 @@
         "</_astro/archivo-latin-400-normal.Bq1okebX.woff2>; rel=preload; as=font; type=\"font/woff2\"; crossorigin"
       ]
     },
+    "/brand/": {
+      "preload": [
+        "</_astro/montserrat-latin-800-normal.DIlMgMlR.woff2>; rel=preload; as=font; type=\"font/woff2\"; crossorigin",
+        "</_astro/archivo-latin-400-normal.Bq1okebX.woff2>; rel=preload; as=font; type=\"font/woff2\"; crossorigin"
+      ]
+    },
     "/business-websites/": {
       "preload": [
         "</_astro/montserrat-latin-800-normal.DIlMgMlR.woff2>; rel=preload; as=font; type=\"font/woff2\"; crossorigin",

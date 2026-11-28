@@ -42,6 +42,7 @@ run_worker_first = [
   "/",
   "/about/",
   "/agentic-ai-ready/",
+  "/brand/",
   "/business-websites/",
   "/contact/",
   "/cookies/",

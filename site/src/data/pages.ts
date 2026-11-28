@@ -14,6 +14,7 @@ export type PageKey =
   | 'pricing'
   | 'business-websites'
   | 'portfolio'
+  | 'brand'
   | 'about'
   | 'how-we-build'
   | 'agentic-ai-ready'
@@ -106,6 +107,16 @@ export const pages: Record<PageKey, PageInfo> = {
     description: `Personal portfolio and CV websites for job seekers, graduates, creatives and freelancers, from ${portfolioTiers[0].price}. Mobile-first, readable by search and AI, with a PDF CV.`,
     label: 'Portfolio sites',
     ogHeadline: 'Be remembered, not just screened.',
+    schemaType: 'WebPage',
+  },
+  brand: {
+    key: 'brand',
+    path: '/brand/',
+    title: 'Brand identity by people, not prompts | Hu/man',
+    description:
+      'Logo, type, colour, mockups and guidelines drawn by people. Browse 131 concept directions, build a brand board, then talk it through on a free 1-hour call.',
+    label: 'Brand identity',
+    ogHeadline: 'Anyone can prompt a logo. Not everyone should.',
     schemaType: 'WebPage',
   },
   'business-websites': {
